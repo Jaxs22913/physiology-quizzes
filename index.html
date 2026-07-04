@@ -28,6 +28,10 @@
     li { margin: 6px 0; }
     a { color: #2563eb; text-decoration: none; }
     a:hover { text-decoration: underline; }
+
+    .divider { display: flex; align-items: center; margin: 18px 0 10px; color: #999; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid #ddd; }
+    .divider span { padding: 0 10px; }
   </style>
 </head>
 <body>
@@ -49,6 +53,10 @@
         <li><a href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
         <li><a href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
         <li><a href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
+      </ul>
+      <div class="divider"><span>Master Exams</span></div>
+      <ul>
+        <li><a href="physiology-master-exam.html">Physiology Master Exam</a></li>
       </ul>
     </div>
   </div>
