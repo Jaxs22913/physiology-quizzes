@@ -49,6 +49,14 @@
       }
     }
 
+    @keyframes decor-pulse-intro {
+      0% { opacity: 0; }
+      25% { opacity: 0.4; }
+      50% { opacity: 0.05; }
+      75% { opacity: 0.3; }
+      100% { opacity: 0.12; }
+    }
+
     .edge-decor {
       position: fixed;
       top: 0;
@@ -62,6 +70,7 @@
       pointer-events: none;
       z-index: -1;
       display: none;
+      animation: decor-pulse-intro 2.2s ease-in-out 1;
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
       mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
     }
@@ -86,6 +95,7 @@
       pointer-events: none;
       z-index: -1;
       display: none;
+      animation: decor-pulse-intro 2.2s ease-in-out 1;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
@@ -322,11 +332,23 @@
       <style>
         .mark-line { fill: none; stroke-linecap: butt; stroke-linejoin: miter; }
         .class-text { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 2.8px; }
+        .p-sweep {
+          fill: none;
+          stroke: var(--accent);
+          stroke-linecap: round;
+          filter: drop-shadow(0 0 6px var(--accent));
+          animation: p-sweep-move 3s linear infinite;
+        }
+        @keyframes p-sweep-move {
+          0% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -100; }
+        }
       </style>
       <g id="logo-mark">
         <polyline class="mark-line" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
         <line class="mark-line" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
         <path class="mark-line" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" stroke="var(--accent)" stroke-width="7.4" />
+        <path class="p-sweep" pathLength="100" stroke-dasharray="14 86" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
       </g>
       <text x="200" y="193" text-anchor="middle" class="class-text" fill="var(--ink)">Class of 2028</text>
     </svg>
