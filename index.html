@@ -120,15 +120,36 @@
     .brand-mark {
       width: 380px;
       max-width: 85%;
-      margin: 0 auto 24px;
+      margin: 0 auto -28px;
     }
     .brand-mark svg { width: 100%; height: auto; display: block; }
+
+    .brand-bars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 auto 24px;
+    }
+    .brand-bars span {
+      display: block;
+      height: 3px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+    .brand-bars span:nth-child(1) { width: 100px; }
+    .brand-bars span:nth-child(2) { width: 28px; }
+    .brand-bars span:nth-child(3) { width: 100px; }
 
     @media (max-width: 640px) {
       body { padding: 32px 16px; }
       .tabs { flex-wrap: wrap; }
       .tab-btn { flex: 1 1 auto; min-width: 45%; }
       .card { padding: 16px; }
+    }
+
+    @media (min-width: 900px) {
+      .brand-mark { width: 560px; }
     }
 
     header { margin-bottom: 28px; text-align: center; }
@@ -283,6 +304,12 @@
       </g>
       <text x="200" y="193" text-anchor="middle" class="class-text" fill="var(--ink)">Class of 2028</text>
     </svg>
+  </div>
+
+  <div class="brand-bars">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
   <div class="page">
