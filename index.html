@@ -44,6 +44,9 @@
       .edge-decor {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       }
+      .bottom-decor {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60'%3E%3Cpath d='M0,30 L120,30 L135,8 L150,52 L165,30 L300,30' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      }
     }
 
     .edge-decor {
@@ -67,6 +70,28 @@
 
     @media (min-width: 1000px) {
       .edge-decor { display: block; }
+    }
+
+    .bottom-decor {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60'%3E%3Cpath d='M0,30 L120,30 L135,8 L150,52 L165,30 L300,30' fill='none' stroke='%232563eb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+      background-position: center;
+      background-size: 300px 60px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: -1;
+      display: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    }
+
+    @media (max-width: 640px) {
+      .bottom-decor { display: block; }
     }
 
     * { box-sizing: border-box; }
@@ -283,6 +308,7 @@
 <body>
   <div class="edge-decor left"></div>
   <div class="edge-decor right"></div>
+  <div class="bottom-decor"></div>
 
   <div id="pull-refresh">
     <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
