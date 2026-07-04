@@ -66,7 +66,7 @@
       background: var(--bg);
       z-index: 1000;
     }
-    #pull-refresh svg { width: 160px; height: 44px; flex-shrink: 0; }
+    #pull-refresh svg { width: 100%; height: 44px; }
     #pull-refresh path {
       fill: none;
       stroke: var(--accent);
@@ -231,8 +231,8 @@
 </head>
 <body>
   <div id="pull-refresh">
-    <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,30 L90,30 L105,8 L120,52 L135,30 L300,30" />
+    <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
     </svg>
   </div>
 
