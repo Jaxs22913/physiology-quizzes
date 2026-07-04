@@ -25,6 +25,7 @@
       --accent2: #16a34a;
       --accent2-soft: #f0fdf4;
       --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+      --tab-border: rgba(37, 99, 235, 0.25);
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -38,6 +39,7 @@
         --accent2: #4ade80;
         --accent2-soft: #12251a;
         --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+        --tab-border: rgba(96, 165, 250, 0.3);
       }
     }
 
@@ -139,7 +141,8 @@
       font-weight: 600;
       cursor: pointer;
       color: var(--muted);
-      transition: background 0.15s ease, color 0.15s ease;
+      box-shadow: 0 0 7px 1px var(--tab-border);
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
     }
     .tab-btn:hover { color: var(--ink); }
     .tab-btn.active {
