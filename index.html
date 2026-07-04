@@ -332,37 +332,11 @@
       <style>
         .mark-line { fill: none; stroke-linecap: butt; stroke-linejoin: miter; }
         .class-text { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 2.8px; }
-        .p-sweep {
-          fill: none;
-          stroke: #ffffff;
-          stroke-linecap: round;
-          animation-duration: 3s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-        .p-sweep-outer { stroke-opacity: 0.15; filter: blur(2px); animation-name: p-sweep-outer; }
-        .p-sweep-mid { stroke-opacity: 0.3; filter: blur(1px); animation-name: p-sweep-mid; }
-        .p-sweep-core { stroke-opacity: 0.6; animation-name: p-sweep-core; }
-        @keyframes p-sweep-core {
-          0% { stroke-dashoffset: 0; }
-          100% { stroke-dashoffset: -100; }
-        }
-        @keyframes p-sweep-mid {
-          0% { stroke-dashoffset: -1.5; }
-          100% { stroke-dashoffset: -101.5; }
-        }
-        @keyframes p-sweep-outer {
-          0% { stroke-dashoffset: -3.5; }
-          100% { stroke-dashoffset: -103.5; }
-        }
       </style>
       <g id="logo-mark">
         <polyline class="mark-line" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
         <line class="mark-line" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
         <path class="mark-line" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" stroke="var(--accent)" stroke-width="7.4" />
-        <path class="p-sweep p-sweep-outer" pathLength="100" stroke-dasharray="10 90" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
-        <path class="p-sweep p-sweep-mid" pathLength="100" stroke-dasharray="6 94" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
-        <path class="p-sweep p-sweep-core" pathLength="100" stroke-dasharray="3 97" stroke-width="6.5" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
       </g>
       <text x="200" y="193" text-anchor="middle" class="class-text" fill="var(--ink)">Class of 2028</text>
     </svg>
