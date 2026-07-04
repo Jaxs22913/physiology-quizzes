@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2K06TXC2KK');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Class of 2028 Review</title>
@@ -50,15 +58,28 @@
 
     .brand-mark {
       position: fixed;
-      top: 20px;
-      left: 24px;
-      width: 52px;
-      height: 52px;
+      top: 28px;
+      left: 32px;
+      width: 76px;
+      height: 76px;
       z-index: 10;
     }
     .brand-mark svg { width: 100%; height: 100%; display: block; }
     .brand-mark .a-mark { stroke: var(--accent2); }
     .brand-mark .p-mark { stroke: var(--accent); }
+
+    @media (max-width: 640px) {
+      body { padding: 32px 16px; }
+      .brand-mark {
+        position: static;
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 16px;
+      }
+      .tabs { flex-wrap: wrap; }
+      .tab-btn { flex: 1 1 auto; min-width: 45%; }
+      .card { padding: 16px; }
+    }
 
     header { margin-bottom: 28px; text-align: center; }
     h1 {
@@ -106,32 +127,33 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    .subtabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-    .subtab-btn {
-      background: none;
+    .exam-section {
       border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 5px 14px;
-      font-size: 13px;
-      font-weight: 500;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .exam-section summary {
+      list-style: none;
       cursor: pointer;
-      color: var(--muted);
-      transition: all 0.15s ease;
-    }
-    .subtab-btn:hover { border-color: var(--accent2); color: var(--accent2); }
-    .subtab-btn.active {
-      background: var(--accent2-soft);
-      border-color: var(--accent2);
-      color: var(--accent2);
+      padding: 12px 16px;
+      font-size: 14px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      user-select: none;
     }
-    .subtab-panel { display: none; }
-    .subtab-panel.active { display: block; }
+    .exam-section summary::-webkit-details-marker { display: none; }
+    .exam-section summary::after {
+      content: "▾";
+      color: var(--muted);
+      font-weight: 400;
+      transition: transform 0.15s ease;
+    }
+    .exam-section[open] summary::after { transform: rotate(180deg); }
+    .exam-section .exam-content { padding: 14px 16px; }
 
     ul { list-style: none; margin: 0; padding: 0; }
     li { margin: 0; }
@@ -206,36 +228,36 @@
       </div>
 
       <div class="tab-panel active" id="physio" data-class="physio">
-        <div class="subtabs">
-          <button class="subtab-btn active" data-subtab="physio-exam3">Exam 3</button>
-        </div>
-        <div class="subtab-panel active" id="physio-exam3">
-          <ul>
-            <li><a class="quiz-link" href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
-            <li><a class="quiz-link" href="immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
-            <li><a class="quiz-link" href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
-            <li><a class="quiz-link" href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
-            <li><a class="quiz-link" href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
-          </ul>
-          <div class="divider"><span>Master Exams</span></div>
-          <ul>
-            <li><a class="quiz-link" href="physiology-master-exam.html">Physiology Master Exam</a></li>
-            <li><a class="quiz-link" href="physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
-          </ul>
-        </div>
+        <details class="exam-section" data-examid="physio-exam3" open>
+          <summary><span>Exam 3</span></summary>
+          <div class="exam-content">
+            <ul>
+              <li><a class="quiz-link" href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
+              <li><a class="quiz-link" href="immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
+              <li><a class="quiz-link" href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
+              <li><a class="quiz-link" href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
+              <li><a class="quiz-link" href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
+            </ul>
+            <div class="divider"><span>Master Exams</span></div>
+            <ul>
+              <li><a class="quiz-link" href="physiology-master-exam.html">Physiology Master Exam</a></li>
+              <li><a class="quiz-link" href="physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
+            </ul>
+          </div>
+        </details>
       </div>
 
       <div class="tab-panel" id="pharmacodynamics" data-class="pharmacodynamics">
-        <div class="subtabs">
-          <button class="subtab-btn active" data-subtab="pharm-exam2">Exam 2</button>
-        </div>
-        <div class="subtab-panel active" id="pharm-exam2">
-          <ul>
-            <li><a class="quiz-link" href="pharmacodynamics-quiz-1.html">Pharmacodynamics Quiz 1</a></li>
-            <li><a class="quiz-link" href="pharmacodynamics-quiz-2.html">Pharmacodynamics Quiz 2</a></li>
-            <li><a class="quiz-link" href="pharmacodynamics-quiz-3.html">Pharmacodynamics Quiz 3</a></li>
-          </ul>
-        </div>
+        <details class="exam-section" data-examid="pharm-exam2" open>
+          <summary><span>Exam 2</span></summary>
+          <div class="exam-content">
+            <ul>
+              <li><a class="quiz-link" href="pharmacodynamics-quiz-1.html">Pharmacodynamics Quiz 1</a></li>
+              <li><a class="quiz-link" href="pharmacodynamics-quiz-2.html">Pharmacodynamics Quiz 2</a></li>
+              <li><a class="quiz-link" href="pharmacodynamics-quiz-3.html">Pharmacodynamics Quiz 3</a></li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
   </div>
@@ -250,15 +272,12 @@
       });
     });
 
-    document.querySelectorAll(".tab-panel").forEach(panel => {
-      const subtabBtns = panel.querySelectorAll(".subtab-btn");
-      subtabBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          subtabBtns.forEach(b => b.classList.remove("active"));
-          panel.querySelectorAll(".subtab-panel").forEach(p => p.classList.remove("active"));
-          btn.classList.add("active");
-          document.getElementById(btn.dataset.subtab).classList.add("active");
-        });
+    document.querySelectorAll(".exam-section").forEach(section => {
+      const key = "examOpen:" + section.dataset.examid;
+      const saved = localStorage.getItem(key);
+      if (saved !== null) section.open = saved === "true";
+      section.addEventListener("toggle", () => {
+        localStorage.setItem(key, section.open);
       });
     });
   </script>
