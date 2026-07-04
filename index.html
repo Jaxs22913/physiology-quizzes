@@ -14,6 +14,16 @@
     .tab-btn.active { border-bottom-color: #2563eb; color: #2563eb; font-weight: bold; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+
+    .subtabs { display: flex; gap: 6px; border-bottom: 1px solid #eee; margin-bottom: 16px; }
+    .subtab-btn {
+      background: none; border: none; padding: 6px 12px; font-size: 14px;
+      cursor: pointer; border-bottom: 2px solid transparent; color: #777;
+    }
+    .subtab-btn.active { border-bottom-color: #16a34a; color: #16a34a; font-weight: bold; }
+    .subtab-panel { display: none; }
+    .subtab-panel.active { display: block; }
+
     ul { padding-left: 20px; }
     li { margin: 6px 0; }
     a { color: #2563eb; text-decoration: none; }
@@ -25,16 +35,21 @@
 
   <div class="tabs">
     <button class="tab-btn active" data-tab="physio">Physiology</button>
-    <button class="tab-btn" data-tab="anatomy">Anatomy</button>
+    <button class="tab-btn" data-tab="pharmacodynamics">Pharmacodynamics</button>
   </div>
 
   <div class="tab-panel active" id="physio" data-class="physio">
-    <ul>
-      <li><a href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
-    </ul>
+    <div class="subtabs">
+      <button class="subtab-btn active" data-subtab="physio-exam3">Exam 3</button>
+    </div>
+    <div class="subtab-panel active" id="physio-exam3">
+      <ul>
+        <li><a href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
+      </ul>
+    </div>
   </div>
 
-  <div class="tab-panel" id="anatomy" data-class="anatomy">
+  <div class="tab-panel" id="pharmacodynamics" data-class="pharmacodynamics">
     <ul>
       <li><em>No quizzes yet.</em></li>
     </ul>
@@ -47,6 +62,18 @@
         document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
         btn.classList.add("active");
         document.getElementById(btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    document.querySelectorAll(".tab-panel").forEach(panel => {
+      const subtabBtns = panel.querySelectorAll(".subtab-btn");
+      subtabBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          subtabBtns.forEach(b => b.classList.remove("active"));
+          panel.querySelectorAll(".subtab-panel").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById(btn.dataset.subtab).classList.add("active");
+        });
       });
     });
   </script>
