@@ -2,76 +2,241 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Class Quizzes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Class of 2028 Review</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='48' height='48' rx='12' fill='url(%23g)'/%3E%3Crect x='7' y='27' width='16' height='10' rx='2' fill='white' fill-opacity='0.92'/%3E%3Crect x='25' y='27' width='16' height='10' rx='2' fill='white' fill-opacity='0.92'/%3E%3Cline x1='24' y1='27' x2='24' y2='12' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M18 18 L24 12 L30 18' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
-    body { font-family: sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
-    h1 { margin-bottom: 20px; }
-    .tabs { display: flex; gap: 8px; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
-    .tab-btn {
-      background: none; border: none; padding: 10px 16px; font-size: 16px;
-      cursor: pointer; border-bottom: 3px solid transparent; color: #555;
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --accent2: #16a34a;
+      --accent2-soft: #f0fdf4;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
     }
-    .tab-btn.active { border-bottom-color: #2563eb; color: #2563eb; font-weight: bold; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115;
+        --card: #191c22;
+        --border: #2a2e37;
+        --ink: #e5e7eb;
+        --muted: #9aa1ac;
+        --accent: #60a5fa;
+        --accent-soft: #16213a;
+        --accent2: #4ade80;
+        --accent2-soft: #12251a;
+        --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0;
+      padding: 48px 20px;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .brand-mark {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      width: 52px;
+      height: 52px;
+      z-index: 10;
+    }
+    .brand-mark svg { width: 100%; height: 100%; display: block; }
+    .brand-mark .a-mark { stroke: var(--accent2); }
+    .brand-mark .p-mark { stroke: var(--accent); }
+
+    header { margin-bottom: 28px; text-align: center; }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    .subtabs { display: flex; gap: 6px; border-bottom: 1px solid #eee; margin-bottom: 16px; }
-    .subtab-btn {
-      background: none; border: none; padding: 6px 12px; font-size: 14px;
-      cursor: pointer; border-bottom: 2px solid transparent; color: #777;
+    .subtabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
     }
-    .subtab-btn.active { border-bottom-color: #16a34a; color: #16a34a; font-weight: bold; }
+    .subtab-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s ease;
+    }
+    .subtab-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+    .subtab-btn.active {
+      background: var(--accent2-soft);
+      border-color: var(--accent2);
+      color: var(--accent2);
+      font-weight: 700;
+    }
     .subtab-panel { display: none; }
     .subtab-panel.active { display: block; }
 
-    ul { padding-left: 20px; }
-    li { margin: 6px 0; }
-    a { color: #2563eb; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li { margin: 0; }
+    li + li { margin-top: 6px; }
 
-    .divider { display: flex; align-items: center; margin: 18px 0 10px; color: #999; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid #ddd; }
+    a.quiz-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+    a.quiz-link::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    a.quiz-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      transform: translateX(2px);
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      font-style: italic;
+      padding: 12px 14px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid var(--border); }
     .divider span { padding: 0 10px; }
   </style>
 </head>
 <body>
-  <h1>Class Quizzes</h1>
-
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="physio">Physiology</button>
-    <button class="tab-btn" data-tab="pharmacodynamics">Pharmacodynamics</button>
+  <div class="brand-mark">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path class="a-mark" d="M58,12 L30,88 M58,12 L86,88 M42,62 L74,62"/>
+      <path class="p-mark" d="M22,20 L22,88 M22,20 C60,18 60,42 22,50"/>
+    </svg>
   </div>
 
-  <div class="tab-panel active" id="physio" data-class="physio">
-    <div class="subtabs">
-      <button class="subtab-btn active" data-subtab="physio-exam3">Exam 3</button>
-    </div>
-    <div class="subtab-panel active" id="physio-exam3">
-      <ul>
-        <li><a href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
-        <li><a href="immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
-        <li><a href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
-        <li><a href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
-        <li><a href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
-      </ul>
-      <div class="divider"><span>Master Exams</span></div>
-      <ul>
-        <li><a href="physiology-master-exam.html">Physiology Master Exam</a></li>
-        <li><a href="physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
-      </ul>
-    </div>
-  </div>
+  <div class="page">
+    <header>
+      <h1>Class of 2028 Review</h1>
+      <p class="subtitle">Practice quizzes for PA school, organized by class and exam</p>
+    </header>
 
-  <div class="tab-panel" id="pharmacodynamics" data-class="pharmacodynamics">
-    <div class="subtabs">
-      <button class="subtab-btn active" data-subtab="pharm-exam2">Exam 2</button>
-    </div>
-    <div class="subtab-panel active" id="pharm-exam2">
-      <ul>
-        <li><a href="pharmacodynamics-quiz-1.html">Pharmacodynamics Quiz 1</a></li>
-        <li><a href="pharmacodynamics-quiz-2.html">Pharmacodynamics Quiz 2</a></li>
-        <li><a href="pharmacodynamics-quiz-3.html">Pharmacodynamics Quiz 3</a></li>
-      </ul>
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="physio">Physiology</button>
+        <button class="tab-btn" data-tab="pharmacodynamics">Pharmacodynamics</button>
+      </div>
+
+      <div class="tab-panel active" id="physio" data-class="physio">
+        <div class="subtabs">
+          <button class="subtab-btn active" data-subtab="physio-exam3">Exam 3</button>
+        </div>
+        <div class="subtab-panel active" id="physio-exam3">
+          <ul>
+            <li><a class="quiz-link" href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
+            <li><a class="quiz-link" href="immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
+            <li><a class="quiz-link" href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
+            <li><a class="quiz-link" href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
+            <li><a class="quiz-link" href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
+          </ul>
+          <div class="divider"><span>Master Exams</span></div>
+          <ul>
+            <li><a class="quiz-link" href="physiology-master-exam.html">Physiology Master Exam</a></li>
+            <li><a class="quiz-link" href="physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pharmacodynamics" data-class="pharmacodynamics">
+        <div class="subtabs">
+          <button class="subtab-btn active" data-subtab="pharm-exam2">Exam 2</button>
+        </div>
+        <div class="subtab-panel active" id="pharm-exam2">
+          <ul>
+            <li><a class="quiz-link" href="pharmacodynamics-quiz-1.html">Pharmacodynamics Quiz 1</a></li>
+            <li><a class="quiz-link" href="pharmacodynamics-quiz-2.html">Pharmacodynamics Quiz 2</a></li>
+            <li><a class="quiz-link" href="pharmacodynamics-quiz-3.html">Pharmacodynamics Quiz 3</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
