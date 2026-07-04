@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metabolism, Nutrition &amp; Thermoregulation — Quiz</title>
+<style>
+  :root{
+    --bg:#1e1206;
+    --panel:#fff;
+    --ink:#2a1c0e;
+    --muted:#6f5c46;
+    --line:#ece0d2;
+    --amber:#c2691a;
+    --amber-dk:#8a480f;
+    --amber-soft:#fbeede;
+    --gold:#d99a2c;
+    --green:#1f7a4d;
+    --green-soft:#e6f3ec;
+    --red:#b3261e;
+    --red-soft:#fbe9e8;
+    --shadow:0 10px 30px rgba(30,18,6,.20);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #5a3410 0%, rgba(90,52,16,0) 60%),
+      linear-gradient(160deg,#1e1206 0%,#2e1b09 100%);
+    color:var(--ink);
+    min-height:100vh;
+    padding:28px 16px 60px;
+    line-height:1.55;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  .card{
+    background:var(--panel);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:30px 30px 26px;
+    border:1px solid rgba(194,105,26,.08);
+  }
+  .eyebrow{
+    letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;
+    color:var(--amber);margin-bottom:10px;
+  }
+  h1{font-size:26px;line-height:1.2;margin:0 0 6px;color:var(--amber-dk);font-weight:800}
+  h2{font-size:20px;margin:0 0 14px;color:var(--amber-dk)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .obj{
+    background:var(--amber-soft);border-radius:12px;padding:16px 18px;margin:0 0 24px;
+    border:1px solid rgba(194,105,26,.14);
+  }
+  .obj p{margin:0 0 8px;font-weight:700;color:var(--amber-dk);font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .obj ul{margin:0;padding-left:20px;columns:2;column-gap:26px}
+  .obj li{margin:4px 0;font-size:14px;color:var(--ink);break-inside:avoid}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+  .chip{
+    background:#f8f2ea;border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px;font-size:13px;color:var(--muted);font-weight:600;
+  }
+  .chip b{color:var(--amber-dk)}
+  .instructions{font-size:14.5px;color:var(--muted);margin:0 0 26px}
+  .instructions ul{margin:8px 0 0;padding-left:20px}
+  .instructions li{margin:3px 0}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn{
+    background:var(--amber);color:#fff;font-weight:700;font-size:16px;
+    padding:14px 26px;border-radius:12px;transition:transform .05s ease,background .2s ease;
+    box-shadow:0 6px 16px rgba(194,105,26,.28);
+  }
+  .btn:hover{background:var(--amber-dk)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{
+    background:#fff;color:var(--amber-dk);border:1.5px solid var(--amber);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{background:var(--amber-soft)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btnrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .qcount{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.03em}
+  .scorepill{font-size:13px;font-weight:800;color:var(--amber-dk);background:var(--amber-soft);
+    padding:5px 12px;border-radius:999px;border:1px solid rgba(194,105,26,.18)}
+  .bar{height:8px;background:#efe6db;border-radius:999px;overflow:hidden;margin:0 0 22px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--gold));
+    width:0;transition:width .35s ease;border-radius:999px}
+
+  .qtag{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .question{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 20px;line-height:1.4}
+
+  .options{display:flex;flex-direction:column;gap:11px}
+  .opt{
+    display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:15.5px;color:var(--ink);transition:all .15s ease;
+  }
+  .opt:hover:not(:disabled){border-color:var(--amber);background:#fffbf6}
+  .opt .ltr{
+    flex:0 0 28px;height:28px;border-radius:8px;background:#f0e4d5;color:var(--amber-dk);
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .ltr{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .ltr{background:var(--red);color:#fff}
+  .opt.dim{opacity:.62}
+  .opt:disabled{cursor:default}
+
+  .explain{
+    margin-top:20px;border-radius:12px;padding:16px 18px;font-size:15px;display:none;
+    border:1px solid var(--line);background:#fbf7f1;
+  }
+  .explain.show{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:15px}
+  .verdict.ok{color:var(--green)}
+  .verdict.no{color:var(--red)}
+  .explain .body{color:#33261a}
+  .cite{margin-top:12px;font-size:12.5px;color:var(--muted);font-style:italic;
+    border-top:1px dashed var(--line);padding-top:10px}
+
+  .scorebig{font-size:56px;font-weight:800;color:var(--amber-dk);line-height:1;margin:6px 0 2px}
+  .pct{font-size:17px;color:var(--muted);font-weight:700;margin-bottom:18px}
+  .gradeline{font-size:16px;margin:0 0 22px;color:var(--ink)}
+  .review h3{font-size:15px;color:var(--amber-dk);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .missed{
+    border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fff;
+  }
+  .missed .mq{font-weight:700;margin-bottom:8px;font-size:15px}
+  .missed .row{font-size:14px;margin:3px 0}
+  .missed .yours{color:var(--red)}
+  .missed .right{color:var(--green);font-weight:600}
+  .missed .why{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .missed .mcite{color:var(--muted);font-size:12px;font-style:italic;margin-top:8px}
+  .allright{background:var(--green-soft);border:1px solid #bfe3ce;border-radius:12px;
+    padding:16px 18px;color:#175c3a;font-weight:600}
+  .foot{color:#8a9096;text-align:center;font-size:12.5px;margin-top:22px}
+  .hidden{display:none}
+  @media(max-width:520px){.obj ul{columns:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- START -->
+  <section id="start" class="card">
+    <div class="eyebrow">Physiology &middot; Unit 13</div>
+    <h1>Metabolism, Nutrition &amp; Thermoregulation</h1>
+    <p class="sub">A single conceptual quiz spanning all seven lecture decks (Guyton &amp; Hall, Chapters 68&ndash;74).</p>
+
+    <div class="obj">
+      <p>Chapters covered</p>
+      <ul>
+        <li>68 &middot; Carbohydrate metabolism &amp; ATP</li>
+        <li>69 &middot; Lipid metabolism</li>
+        <li>70 &middot; Protein metabolism</li>
+        <li>71 &middot; The liver</li>
+        <li>72 &middot; Diet, feeding &amp; vitamins</li>
+        <li>73 &middot; Energetics &amp; metabolic rate</li>
+        <li>74 &middot; Temperature &amp; fever</li>
+      </ul>
+    </div>
+
+    <div class="meta">
+      <span class="chip"><b>50</b> questions</span>
+      <span class="chip">7 chapters, one quiz</span>
+      <span class="chip">Instant feedback</span>
+      <span class="chip">Slide-cited</span>
+    </div>
+
+    <div class="instructions">
+      How it works:
+      <ul>
+        <li>Read each question and click one answer (A&ndash;D).</li>
+        <li>You'll see immediately whether you're right, with an explanation of every choice.</li>
+        <li>Each question is tagged by topic and cites its chapter and slide.</li>
+        <li>At the end you get your score, percentage, and a review of anything you missed.</li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="startQuiz()">Start quiz &rarr;</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="topbar">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="scorepill" id="scorepill">Score: 0</span>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+
+    <div class="qtag" id="qtag">Topic</div>
+    <div class="question" id="qtext">Question text</div>
+    <div class="options" id="options"></div>
+
+    <div class="explain" id="explain">
+      <div class="verdict" id="verdict"></div>
+      <div class="body" id="explainbody"></div>
+      <div class="cite" id="cite"></div>
+    </div>
+
+    <div class="btnrow">
+      <span class="qcount" id="hintline">Select an answer to continue</span>
+      <button class="btn" id="nextbtn" onclick="nextQuestion()" disabled>Next &rarr;</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card hidden">
+    <div class="eyebrow">Results</div>
+    <h2>Quiz complete</h2>
+    <div class="scorebig" id="finalscore">0 / 50</div>
+    <div class="pct" id="finalpct">0%</div>
+    <div class="gradeline" id="gradeline"></div>
+
+    <div class="review" id="review"></div>
+
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" onclick="restart()">&#8635; Restart quiz</button>
+    </div>
+    <div class="foot">Based solely on the Unit 13 lectures (Guyton &amp; Hall, Chapters 68&ndash;74). Not for clinical use.</div>
+  </section>
+
+</div>
+
+<script>
+/* ---------------- QUESTION BANK ---------------- */
+const DECK = "Metabolism, Nutrition & Thermoregulation";
+const questions = [
+ /* ===== Ch. 68 — Carbohydrate metabolism & ATP ===== */
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 4", q:"Glucose enters most cells of the body by...",
+  o:["Facilitated diffusion \u2014 a carrier is needed but energy is not","Primary active transport that directly uses ATP","Simple diffusion straight through the lipid bilayer","Receptor-mediated endocytosis"],
+  a:0, e:"Glucose crosses most cell membranes by facilitated diffusion: a carrier protein (GLUT) moves it down its concentration gradient without using ATP. It is not pumped by primary active transport, does not dissolve through the bilayer, and is not taken up by endocytosis."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 4", q:"Which statement about insulin and cellular glucose uptake is correct?",
+  o:["All cellular glucose uptake requires insulin","Most glucose uptake uses insulin-independent carriers (e.g., GLUT-1); GLUT-4 in muscle and fat is insulin-dependent","No glucose transporter responds to insulin at all","Insulin is required for glucose uptake only in the liver"],
+  a:1, e:"Most post-absorptive glucose uptake uses insulin-independent transporters like GLUT-1, while GLUT-4 in muscle and adipose is the insulin-dependent carrier. So not all uptake needs insulin, some transporters clearly respond to it, and the liver is not the special case."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 7", q:"Why does phosphorylating glucose to glucose-6-phosphate \u201ctrap\u201d it inside a cell?",
+  o:["It makes the glucose molecule much smaller","It binds the glucose to the cell's DNA","The charged phosphate group prevents it from crossing the membrane back out","It immediately converts the glucose into fat"],
+  a:2, e:"Adding a phosphate gives glucose-6-phosphate a charge that keeps it from recrossing the membrane, trapping it for use; tissues that export glucose need glucose-6-phosphatase to remove it. Phosphorylation does not shrink glucose, bind it to DNA, or turn it into fat."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 14", q:"The net product of glycolysis (per glucose) is...",
+  o:["2 lactate, 4 ATP, and 4 NADH","1 pyruvate, 2 ATP, and no NADH","2 acetyl-CoA and 6 ATP","2 pyruvate, 2 ATP, and 2 NADH"],
+  a:3, e:"Glycolysis nets 2 pyruvate, 2 ATP (4 produced minus 2 invested), and 2 NADH per glucose. Lactate forms only when NAD\u207a must be regenerated, acetyl-CoA is a later product, and the other counts are wrong."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 23", q:"The complete aerobic oxidation of one glucose molecule yields approximately how many ATP?",
+  o:["About 38 ATP","About 2 ATP","About 100 ATP","About 12 ATP"],
+  a:0, e:"Full aerobic oxidation of one glucose yields roughly 38 ATP (glycolysis, pyruvate\u2192acetyl-CoA, the TCA cycle, and oxidative phosphorylation). About 2 ATP is the anaerobic, glycolysis-only yield; 100 and 12 are incorrect."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 22", q:"In the electron transport chain, each NADH and each FADH\u2082 yield approximately...",
+  o:["1 ATP from each","3 ATP from each","3 ATP per NADH and 2 ATP per FADH\u2082","2 ATP per NADH and 3 ATP per FADH\u2082"],
+  a:2, e:"NADH delivers electrons entering high in the chain (~3 ATP), while FADH\u2082 enters lower (~2 ATP). They do not yield equal amounts, and the last option reverses the two."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 25", q:"During intense exercise, the main reason muscle converts pyruvate to lactate is to...",
+  o:["produce extra ATP directly from the lactate","regenerate NAD\u207a so glycolysis can continue producing ATP","store oxygen for later use","make new glucose from pyruvate in the muscle"],
+  a:1, e:"Converting pyruvate to lactate reoxidizes NADH to NAD\u207a, which glycolysis needs to keep running when oxygen or mitochondrial capacity is limiting. Lactate formation makes no extra ATP itself, stores no oxygen, and gluconeogenesis happens later in the liver, not the muscle."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 29", q:"The pentose phosphate (hexose monophosphate) shunt is important because it produces...",
+  o:["large amounts of ATP","lactate to send to the liver","ketone bodies for energy","NADPH and ribose-5-phosphate for biosynthesis and nucleic acids"],
+  a:3, e:"The pentose phosphate shunt generates NADPH (for reductive biosynthesis) and ribose-5-phosphate (for nucleic acids), not ATP. It does not make lactate or ketone bodies."},
+
+ {obj:"Carbohydrate metabolism & ATP", s:"Ch. 68, Slide 30", q:"Which condition favors gluconeogenesis?",
+  o:["A high glucagon-to-insulin ratio (as in fasting)","A high insulin-to-glucagon ratio","High blood glucose right after a meal","Low cortisol levels"],
+  a:0, e:"Gluconeogenesis (mainly hepatic) is favored by a high glucagon:insulin ratio, high mitochondrial NADH and acetyl-CoA, and high cortisol \u2014 the fasting state. A high insulin ratio, post-meal hyperglycemia, and low cortisol all suppress it."},
+
+ /* ===== Ch. 69 — Lipid metabolism ===== */
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 6", q:"Chylomicrons and VLDL differ in that...",
+  o:["both are made only in the liver","chylomicrons carry dietary fat from the intestine, while VLDL is made in the liver","chylomicrons are made in the liver and VLDL in the gut","neither particle carries triglyceride"],
+  a:1, e:"Chylomicrons are assembled in intestinal mucosa to carry absorbed dietary fat, while VLDL is synthesized in the liver (its triglyceride made largely from carbohydrate). The other options misplace their origins or deny that they carry triglyceride."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 13", q:"Lipoprotein lipase, attached to capillary endothelium, functions to...",
+  o:["synthesize triglycerides inside adipocytes","package cholesterol into HDL","hydrolyze triglycerides in chylomicrons and VLDL, releasing fatty acids to tissues","make ketone bodies in the liver"],
+  a:2, e:"Lipoprotein lipase hydrolyzes the triglycerides carried in chylomicrons and VLDL, freeing fatty acids for uptake by tissues (adipose, muscle, heart). It does not synthesize triglycerides, build HDL, or make ketones."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 17", q:"Beta-oxidation of fatty acids breaks them down into...",
+  o:["glucose molecules","amino acids","pyruvate directly","acetyl-CoA units that can enter the TCA cycle"],
+  a:3, e:"Beta-oxidation sequentially cleaves fatty acids into acetyl-CoA units that feed the TCA cycle (and ketone-body synthesis). It does not yield glucose, amino acids, or pyruvate directly."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 15", q:"Ketone bodies are produced by the liver mainly...",
+  o:["from glucose during a carbohydrate-rich meal","from fatty acids, to serve as an energy source for other tissues","to store excess dietary protein","only during the well-fed state"],
+  a:1, e:"The liver makes ketone bodies from fatty acid\u2013derived acetyl-CoA (especially when fat oxidation is high, as in fasting) and exports them as fuel for other tissues. They are not made from glucose in the fed state or used to store protein."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 2", q:"Which is a normal function of cholesterol?",
+  o:["Serving as a precursor for bile acids and steroid hormones","Acting as the body's main energy currency","Carrying oxygen in the blood","Functioning as a digestive enzyme"],
+  a:0, e:"Cholesterol is a membrane component and the precursor for bile acids and steroid hormones. ATP is the energy currency, hemoglobin carries oxygen, and cholesterol is not an enzyme."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 36", q:"How does increasing bile acid excretion (e.g., by fiber that traps bile salts) affect plasma cholesterol?",
+  o:["It raises plasma cholesterol","It has no effect on plasma cholesterol","It converts cholesterol directly into glucose","It lowers plasma cholesterol, because bile acids are made from cholesterol"],
+  a:3, e:"Excreting bile acids forces the liver to consume cholesterol to make more, lowering plasma cholesterol; fecal loss is the only route of cholesterol removal. So it does not raise cholesterol, have no effect, or make glucose."},
+
+ {obj:"Lipid metabolism", s:"Ch. 69, Slide 22", q:"Insulin promotes fat storage by...",
+  o:["stimulating hormone-sensitive lipase","blocking glucose uptake into cells","stimulating lipoprotein lipase and inhibiting hormone-sensitive lipase","promoting beta-oxidation of fat"],
+  a:2, e:"Insulin stores fat by activating lipoprotein lipase (loading fatty acids into adipocytes) and inhibiting hormone-sensitive lipase (blocking breakdown of stored triglyceride). It promotes glucose uptake and opposes fat mobilization and beta-oxidation."},
+
+ /* ===== Ch. 70 — Protein metabolism ===== */
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 7", q:"To synthesize a non-essential amino acid, a cell needs a carbon skeleton (\u03b1-keto acid), an amino group, and...",
+  o:["an aminotransferase enzyme (a vitamin B6 derivative)","intrinsic factor","bile salts","a fatty acid"],
+  a:0, e:"Making a non-essential amino acid requires a carbon skeleton (\u03b1-keto acid), an amino group (from glutamate/glutamine), and an aminotransferase, which is a vitamin B6\u2013derived enzyme. Intrinsic factor, bile salts, and fatty acids play no role in transamination."},
+
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 13", q:"Transamination is the process of...",
+  o:["removing a phosphate from glucose","transferring an amino group from one molecule (e.g., glutamate) to an \u03b1-keto acid","breaking a peptide bond by adding water","oxidizing fatty acids to acetyl-CoA"],
+  a:1, e:"Transamination moves an amino group from a donor (often glutamate) onto an \u03b1-keto acid, forming a new amino acid \u2014 the core reaction for making non-essential amino acids. Dephosphorylation, peptide-bond hydrolysis, and beta-oxidation are unrelated."},
+
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 16", q:"Oxidative deamination of an amino acid removes the amino group, generating...",
+  o:["glucose","a fatty acid","a ketone body","ammonia, which must be detoxified"],
+  a:3, e:"Deamination strips the amino group off an amino acid, releasing ammonia (which the liver converts to urea). It does not directly yield glucose, a fatty acid, or a ketone body \u2014 those may come from the remaining carbon skeleton."},
+
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 16", q:"The urea cycle, which occurs essentially only in the liver, serves to...",
+  o:["synthesize new proteins","produce ATP directly","convert toxic ammonia into urea for excretion","store nitrogen as glycogen"],
+  a:2, e:"The urea cycle (ornithine\u2013citrulline\u2013arginine) packages toxic ammonia into urea for renal excretion; excess ammonia is dangerous partly because it depletes \u03b1-ketoglutarate and stalls the TCA cycle. It does not build proteins, make ATP directly, or store nitrogen as glycogen."},
+
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 18", q:"Amino acids that are broken down to acetyl-CoA or acetoacetyl-CoA are called...",
+  o:["ketogenic, because they give rise to ketone bodies","glucogenic, because they form glucose","essential, because they cannot be made","non-essential, because they are synthesized"],
+  a:0, e:"Amino acids degraded to acetyl-CoA or acetoacetyl-CoA are ketogenic (they can form ketone bodies), whereas those forming glucose or TCA intermediates are glucogenic. 'Essential' vs 'non-essential' refers to whether the body can synthesize them \u2014 a different classification."},
+
+ {obj:"Protein metabolism", s:"Ch. 70, Slide 19", q:"Which hormone causes breakdown of tissue protein, providing amino acids for gluconeogenesis?",
+  o:["Insulin","Growth hormone","Testosterone","Cortisol (glucocorticoids)"],
+  a:3, e:"Cortisol promotes breakdown of extrahepatic tissue protein, raising plasma amino acids for gluconeogenesis. Insulin, growth hormone, and testosterone all promote protein synthesis instead."},
+
+ /* ===== Ch. 71 — The liver ===== */
+ {obj:"The liver", s:"Ch. 71, Slide 3", q:"Regarding the liver's blood supply...",
+  o:["It is supplied almost entirely by the hepatic artery","It receives about 30% of cardiac output, most of it from the portal vein","It receives less than 5% of cardiac output","It has no venous inflow"],
+  a:1, e:"About 30% of cardiac output flows through the liver, roughly 75% via the portal vein and 25% via the hepatic artery, at low pressure and resistance. It is not chiefly arterial, is far more than 5% of output, and has major portal venous inflow."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 5", q:"The liver acts as a blood reservoir, normally holding about...",
+  o:["50% of total blood volume","less than 1% of blood volume","10% of total blood volume (~450 mL), expandable in heart failure","no blood between meals"],
+  a:2, e:"The liver normally holds about 10% of blood volume (~450 mL) and can expand by up to a liter in heart failure or release blood during hemorrhage/exercise. The other figures are far off."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 7", q:"Kupffer cells in the liver sinusoids function to...",
+  o:["remove bacteria and particulate matter (about 99% of gut bacteria) from portal blood","synthesize bile salts","store vitamin B12","produce erythropoietin"],
+  a:0, e:"Kupffer cells are sinusoidal macrophages that clear ~99% of bacteria arriving from the gut via the portal blood. Bile-salt synthesis is a hepatocyte function, B12 storage is separate, and erythropoietin is chiefly renal."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 9", q:"The liver's \u201cglucose buffer\u201d function means it...",
+  o:["prevents any glucose from entering the blood","only stores glucose and never releases it","converts all absorbed glucose immediately to fat","stores glucose as glycogen after meals and releases glucose between meals"],
+  a:3, e:"As a glucose buffer, the liver stores glucose as glycogen after meals and releases glucose (via glycogenolysis, then gluconeogenesis) between meals, stabilizing blood glucose. The other options describe one-way or nonexistent handling."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 11", q:"The liver requires which vitamin to manufacture prothrombin and several clotting factors?",
+  o:["Vitamin C","Vitamin K","Vitamin B12","Vitamin A"],
+  a:1, e:"The liver needs vitamin K to make prothrombin and factors VII, IX, and X, so liver disease or vitamin K deficiency causes bleeding. Vitamins C, B12, and A serve other roles."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 14", q:"In hepatic bilirubin handling, which step is rate-limiting?",
+  o:["Uptake of free bilirubin into the hepatocyte","Conjugation with glucuronic acid","Excretion of conjugated bilirubin into bile","Binding of bilirubin to albumin in the blood"],
+  a:2, e:"Of the hepatic steps \u2014 uptake, conjugation with glucuronic acid, and excretion \u2014 excretion of conjugated bilirubin into bile is rate-limiting. Albumin binding happens in the blood before uptake, not within the hepatocyte."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 20", q:"The amphipathic nature of bile salts allows them to...",
+  o:["emulsify fats and carry lipids to the intestinal wall in micelles","chemically digest triglycerides into fatty acids","neutralize stomach acid","absorb water in the colon"],
+  a:0, e:"Being amphipathic, bile salts act as detergents that emulsify fat and ferry lipids to the mucosa in micelles. Chemical digestion of triglyceride is lipase's role, and bile salts neither neutralize acid nor absorb colonic water."},
+
+ {obj:"The liver", s:"Ch. 71, Slide 25", q:"In the enterohepatic circulation, about 95% of secreted bile salts are...",
+  o:["excreted in the feces","destroyed by pancreatic enzymes","converted to cholesterol in the gut","reabsorbed (mostly in the ileum) and returned to the liver for reuse"],
+  a:3, e:"About 95% of secreted bile salts are reabsorbed, chiefly in the ileum, and returned via portal blood to the liver; only the small fraction lost in feces is replaced by new synthesis. They are not mostly excreted, digested, or turned back into cholesterol in the gut."},
+
+ /* ===== Ch. 72 — Diet, feeding & vitamins ===== */
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 4", q:"Which macronutrient provides the most energy per gram?",
+  o:["Carbohydrate (~4 kcal/g)","Fat (~9 kcal/g)","Protein (~4 kcal/g)","All provide equal energy per gram"],
+  a:1, e:"Fat yields about 9 kcal/g, more than double carbohydrate or protein (~4 kcal/g each). They are not equal per gram."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 3", q:"The body's largest energy reserve is stored as...",
+  o:["triglyceride in adipose tissue","glycogen in the liver","glucose in the blood","protein in muscle"],
+  a:0, e:"Adipose triglyceride is by far the largest energy reserve (~120,000 kcal in a lean adult). Liver glycogen and blood glucose hold only small amounts, and although protein is abundant, little is used as an energy store."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 6", q:"A respiratory quotient (RQ) of about 1.0 indicates the body is burning mainly...",
+  o:["fat","protein","carbohydrate","a mix favoring fat"],
+  a:2, e:"An RQ (CO\u2082 produced \u00f7 O\u2082 consumed) near 1.0 indicates carbohydrate oxidation; pure fat gives ~0.7 and protein ~0.8, with a mixed diet averaging ~0.8."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 9", q:"Which hypothalamic region serves as the satiety center, whose destruction causes overeating?",
+  o:["The lateral nuclei","The ventromedial nuclei","The preoptic area","The posterior hypothalamus"],
+  a:1, e:"The ventromedial nuclei form the satiety center; their destruction causes hyperphagia and obesity. The lateral nuclei are the feeding center (lesions cause inanition), and the preoptic/posterior areas handle temperature."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 13", q:"Leptin, released from adipose tissue, acts on the hypothalamus to...",
+  o:["strongly stimulate hunger","raise blood glucose directly","slow the heart rate","reduce appetite and food intake"],
+  a:3, e:"Leptin signals the hypothalamus to suppress appetite and raise energy expenditure as fat stores grow. It does not stimulate hunger (that is ghrelin), raise glucose, or slow the heart."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 11", q:"Which hormone, released mainly from the stomach, stimulates feeding?",
+  o:["Ghrelin","Leptin","CCK","Peptide YY"],
+  a:0, e:"Ghrelin, released mainly from the stomach's oxyntic cells, stimulates feeding. Leptin, CCK, and peptide YY all inhibit feeding."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 17", q:"Which vitamins are stored in the body to a significant extent?",
+  o:["Water-soluble vitamins such as C and the B group","No vitamins are stored at all","Fat-soluble vitamins such as A and D","Only vitamin C is stored"],
+  a:2, e:"Fat-soluble vitamins (A, D, E, K) can be stored, notably A and D in the liver, whereas water-soluble vitamins (C and most Bs) are not stored significantly and must be supplied regularly."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 27", q:"Vitamin C (ascorbic acid) is essential for...",
+  o:["blood clotting factor synthesis","collagen formation and normal connective tissue","calcium absorption","visual pigment formation"],
+  a:1, e:"Vitamin C is required for collagen synthesis, so its deficiency (scurvy) causes connective-tissue breakdown and poor wound healing. Clotting-factor synthesis needs vitamin K, calcium handling needs vitamin D, and visual pigments need vitamin A."},
+
+ {obj:"Diet, feeding & vitamins", s:"Ch. 72, Slide 28", q:"Vitamin D is essential for...",
+  o:["collagen synthesis","oxygen transport","amino acid transamination","calcium and phosphate balance"],
+  a:3, e:"Vitamin D (activated via skin UV, then the liver and kidney) is essential for calcium and phosphate balance; deficiency causes rickets. Collagen needs vitamin C, oxygen transport needs hemoglobin, and transamination needs vitamin B6."},
+
+ /* ===== Ch. 73 — Energetics & metabolic rate ===== */
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 2", q:"Phosphocreatine in muscle functions as...",
+  o:["a rapid reserve to regenerate ATP during short bursts of activity","the body's main long-term energy store","a direct source of glucose","a heat-producing hormone"],
+  a:0, e:"Phosphocreatine acts as an immediate high-energy buffer, rephosphorylating ADP to ATP during brief, intense activity. It is not a long-term store, a glucose source, or a hormone."},
+
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 8", q:"Basal metabolic rate (BMR) is measured under which conditions?",
+  o:["Immediately after exercise","During digestion of a large meal","After a 12-hour fast, at rest, in a comfortable temperature, without excitement","In a cold environment while shivering"],
+  a:2, e:"BMR is measured under standardized resting conditions \u2014 a 12-hour fast, physical and mental rest, and a neutral temperature \u2014 so exercise, digestion, and shivering do not inflate it. The other conditions all raise metabolic rate."},
+
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 10", q:"Which nutrient produces the greatest thermic effect (rise in metabolic rate during digestion)?",
+  o:["Fat (~4%)","Protein (up to ~30%)","Carbohydrate (~4%)","All are equal"],
+  a:1, e:"Protein has by far the largest thermic effect of food, raising metabolic rate up to ~30%, versus about 4% for carbohydrate and fat."},
+
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 9", q:"Which factor increases the metabolic rate?",
+  o:["Sleep","Decreased muscle mass","A warm, resting state after fasting","Increased thyroid hormone"],
+  a:3, e:"Thyroid hormone \u2014 like exercise, greater lean mass, sympathetic activity, fever, and cold \u2014 raises metabolic rate. Sleep, less muscle, and a warm resting fasted state lower it."},
+
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 6", q:"The \u201coxygen debt\u201d repaid after strenuous exercise is used to...",
+  o:["convert lactate back to glucose and restore ATP, phosphocreatine, and oxygen stores","digest the next meal","produce more lactate","lower body temperature"],
+  a:0, e:"The oxygen debt is the extra O\u2082 consumed afterward to reconvert lactate to glucose, rebuild ATP and phosphocreatine, and reload hemoglobin/myoglobin and lung oxygen. It is not for digestion, making lactate, or cooling."},
+
+ {obj:"Energetics & metabolic rate", s:"Ch. 73, Slide 7", q:"Indirect calorimetry estimates metabolic rate by measuring...",
+  o:["body weight loss","urine volume","oxygen consumption","heart rate alone"],
+  a:2, e:"Indirect calorimetry estimates metabolic rate from oxygen consumption (~250 mL/min at rest), since about 95% of energy expenditure comes from reactions of oxygen with foods. Weight loss, urine volume, and heart rate alone are not used."},
+
+ /* ===== Ch. 74 — Temperature & fever ===== */
+ {obj:"Temperature & fever", s:"Ch. 74, Slide 2", q:"How do core and skin temperature differ?",
+  o:["Both vary widely with the environment","Core temperature stays nearly constant, while skin temperature varies with the environment","Skin temperature is the most tightly regulated value","Core temperature swings more than skin temperature"],
+  a:1, e:"Deep (core) temperature is held nearly constant (varying <1\u00b0F normally), whereas skin temperature rises and falls with the surroundings. The other options misstate which is regulated."},
+
+ {obj:"Temperature & fever", s:"Ch. 74, Slide 5", q:"The body's main temperature-control center is located in the...",
+  o:["cerebellum","medulla's respiratory center","spinal cord alone","hypothalamus (preoptic/anterior area)"],
+  a:3, e:"The hypothalamus, especially the preoptic/anterior area with its heat- and cold-sensitive neurons, is the body's thermostat. The cerebellum, medullary respiratory center, and spinal cord are not the control center."},
+
+ {obj:"Temperature & fever", s:"Ch. 74, Slide 6", q:"Which is a mechanism of heat LOSS from the body?",
+  o:["Evaporation of sweat","Shivering","Vasoconstriction of skin vessels","Piloerection"],
+  a:0, e:"Evaporation (of sweat and insensible water) loses heat, along with radiation and conduction/convection. Shivering and piloerection generate or conserve heat, and skin vasoconstriction reduces heat loss."},
+
+ {obj:"Temperature & fever", s:"Ch. 74, Slide 8", q:"Sweat glands are stimulated to secrete by...",
+  o:["parasympathetic fibers releasing norepinephrine","the somatic motor system","sympathetic cholinergic fibers releasing acetylcholine","circulating insulin"],
+  a:2, e:"Sweating is driven by the anterior hypothalamus via sympathetic fibers that are cholinergic \u2014 they release acetylcholine even though they travel in sympathetic nerves. It is not parasympathetic, somatic, or insulin-mediated."},
+
+ {obj:"Temperature & fever", s:"Ch. 74, Slide 14", q:"When the body is cold, which response increases heat production?",
+  o:["Cutaneous vasodilation","Sweating","Inhibition of the sympathetic nervous system","Shivering, which can raise heat production several-fold"],
+  a:3, e:"In the cold, shivering (plus vasoconstriction, sympathetic excitation, and thyroxine) raises heat production up to 4\u20135-fold. Vasodilation, sweating, and sympathetic inhibition all promote heat loss, not gain."}
+];
+
+/* ---------------- STATE + LOGIC ---------------- */
+const LETTERS = ["A","B","C","D"];
+let current = 0;
+let score = 0;
+let answered = false;
+let responses = [];
+
+const $ = id => document.getElementById(id);
+
+function startQuiz(){
+  current = 0; score = 0; responses = [];
+  $("start").classList.add("hidden");
+  $("results").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderQuestion(){
+  answered = false;
+  const item = questions[current];
+  $("qcount").textContent = `Question ${current+1} of ${questions.length}`;
+  $("scorepill").textContent = `Score: ${score}`;
+  $("barfill").style.width = `${(current/questions.length)*100}%`;
+  $("qtag").textContent = item.obj;
+  $("qtext").textContent = item.q;
+
+  const box = $("options");
+  box.innerHTML = "";
+  item.o.forEach((text,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+    b.onclick = ()=>selectAnswer(i);
+    box.appendChild(b);
+  });
+
+  $("explain").classList.remove("show");
+  $("nextbtn").disabled = true;
+  $("hintline").textContent = "Select an answer to continue";
+  $("nextbtn").textContent = (current === questions.length-1) ? "See results \u2192" : "Next \u2192";
+}
+
+function selectAnswer(choice){
+  if(answered) return;
+  answered = true;
+  const item = questions[current];
+  const correct = item.a;
+  const btns = $("options").querySelectorAll(".opt");
+
+  btns.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === correct) b.classList.add("correct");
+    else if(i === choice) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+
+  const isCorrect = (choice === correct);
+  if(isCorrect) score++;
+  responses.push({i:current, choice, correct, isCorrect});
+
+  const v = $("verdict");
+  if(isCorrect){
+    v.className = "verdict ok";
+    v.textContent = "\u2713 Correct";
+  } else {
+    v.className = "verdict no";
+    v.textContent = `\u2717 Incorrect \u2014 the answer is ${LETTERS[correct]}`;
+  }
+  $("explainbody").textContent = item.e;
+  $("cite").textContent = `Source: ${DECK} \u2014 ${item.s}`;
+  $("explain").classList.add("show");
+
+  $("scorepill").textContent = `Score: ${score}`;
+  $("nextbtn").disabled = false;
+  $("hintline").textContent = (current === questions.length-1) ? "Ready to finish" : "";
+}
+
+function nextQuestion(){
+  if(!answered) return;
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else {
+    showResults();
+  }
+}
+
+function showResults(){
+  $("quiz").classList.add("hidden");
+  $("results").classList.remove("hidden");
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+  $("finalscore").textContent = `${score} / ${total}`;
+  $("finalpct").textContent = `${pct}%`;
+
+  let msg;
+  if(pct>=90) msg = "Outstanding \u2014 you have a strong command of metabolism and energy physiology.";
+  else if(pct>=80) msg = "Solid work. A few concepts to tighten up before the exam.";
+  else if(pct>=70) msg = "Decent foundation \u2014 review the missed items below and re-test.";
+  else if(pct>=60) msg = "Getting there. Focus your review on the chapters you missed most.";
+  else msg = "Worth another pass through the material \u2014 use the review below, then restart.";
+  $("gradeline").textContent = msg;
+
+  const missed = responses.filter(r=>!r.isCorrect);
+  const review = $("review");
+  review.innerHTML = "";
+
+  if(missed.length === 0){
+    const d = document.createElement("div");
+    d.className = "allright";
+    d.textContent = "Perfect score \u2014 you didn't miss a single question across all seven chapters.";
+    review.appendChild(d);
+    return;
+  }
+
+  const h = document.createElement("h3");
+  h.textContent = `Review \u2014 ${missed.length} missed question${missed.length>1?"s":""}`;
+  review.appendChild(h);
+
+  missed.forEach(r=>{
+    const item = questions[r.i];
+    const wrap = document.createElement("div");
+    wrap.className = "missed";
+    wrap.innerHTML =
+      `<div class="mq">Q${r.i+1}. ${item.q}</div>`+
+      `<div class="row yours">Your answer: ${LETTERS[r.choice]}. ${item.o[r.choice]}</div>`+
+      `<div class="row right">Correct answer: ${LETTERS[r.correct]}. ${item.o[r.correct]}</div>`+
+      `<div class="why">${item.e}</div>`+
+      `<div class="mcite">${item.s}</div>`;
+    review.appendChild(wrap);
+  });
+}
+
+function restart(){ startQuiz(); }
+</script>
+</body>
+</html>
