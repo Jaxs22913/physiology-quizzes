@@ -331,12 +331,29 @@
       <title>AP Logo - Class of 2028 - Blue + White</title>
       <style>
         .mark-line { fill: none; stroke-linecap: butt; stroke-linejoin: miter; }
+        .a-draw {
+          stroke-dasharray: 100;
+          stroke-dashoffset: 100;
+          animation: a-draw-in 1.3s ease-out forwards;
+        }
+        @keyframes a-draw-in {
+          from { stroke-dashoffset: 100; }
+          to { stroke-dashoffset: 0; }
+        }
+        .p-fade {
+          opacity: 0;
+          animation: p-fade-in 1.3s ease-out forwards;
+        }
+        @keyframes p-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
         .class-text { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 2.8px; }
       </style>
       <g id="logo-mark">
-        <polyline class="mark-line" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
-        <line class="mark-line" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
-        <path class="mark-line" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" stroke="var(--accent)" stroke-width="7.4" />
+        <polyline class="mark-line a-draw" pathLength="100" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
+        <line class="mark-line a-draw" pathLength="100" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
+        <path class="mark-line p-fade" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" stroke="var(--accent)" stroke-width="7.4" />
       </g>
       <text x="200" y="193" text-anchor="middle" class="class-text" fill="var(--ink)">Class of 2028</text>
     </svg>
