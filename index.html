@@ -335,11 +335,12 @@
         .p-sweep {
           fill: none;
           stroke: #ffffff;
-          stroke-opacity: 0.65;
           stroke-linecap: round;
-          filter: blur(2px) drop-shadow(0 0 3px var(--accent));
           animation: p-sweep-move 3s linear infinite;
         }
+        .p-sweep-outer { stroke-opacity: 0.15; filter: blur(2px); }
+        .p-sweep-mid { stroke-opacity: 0.3; filter: blur(1px); }
+        .p-sweep-core { stroke-opacity: 0.55; }
         @keyframes p-sweep-move {
           0% { stroke-dashoffset: 0; }
           100% { stroke-dashoffset: -100; }
@@ -349,7 +350,9 @@
         <polyline class="mark-line" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
         <line class="mark-line" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
         <path class="mark-line" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" stroke="var(--accent)" stroke-width="7.4" />
-        <path class="p-sweep" pathLength="100" stroke-dasharray="9 91" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
+        <path class="p-sweep p-sweep-outer" pathLength="100" stroke-dasharray="10 90" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
+        <path class="p-sweep p-sweep-mid" pathLength="100" stroke-dasharray="6 94" stroke-width="7.4" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
+        <path class="p-sweep p-sweep-core" pathLength="100" stroke-dasharray="3 97" stroke-width="6.5" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" />
       </g>
       <text x="200" y="193" text-anchor="middle" class="class-text" fill="var(--ink)">Class of 2028</text>
     </svg>
