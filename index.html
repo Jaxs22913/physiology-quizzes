@@ -336,14 +336,24 @@
           fill: none;
           stroke: #ffffff;
           stroke-linecap: round;
-          animation: p-sweep-move 3s linear infinite;
+          animation-duration: 3s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
         }
-        .p-sweep-outer { stroke-opacity: 0.15; filter: blur(2px); }
-        .p-sweep-mid { stroke-opacity: 0.3; filter: blur(1px); }
-        .p-sweep-core { stroke-opacity: 0.55; }
-        @keyframes p-sweep-move {
+        .p-sweep-outer { stroke-opacity: 0.15; filter: blur(2px); animation-name: p-sweep-outer; }
+        .p-sweep-mid { stroke-opacity: 0.3; filter: blur(1px); animation-name: p-sweep-mid; }
+        .p-sweep-core { stroke-opacity: 0.6; animation-name: p-sweep-core; }
+        @keyframes p-sweep-core {
           0% { stroke-dashoffset: 0; }
           100% { stroke-dashoffset: -100; }
+        }
+        @keyframes p-sweep-mid {
+          0% { stroke-dashoffset: -1.5; }
+          100% { stroke-dashoffset: -101.5; }
+        }
+        @keyframes p-sweep-outer {
+          0% { stroke-dashoffset: -3.5; }
+          100% { stroke-dashoffset: -103.5; }
         }
       </style>
       <g id="logo-mark">
