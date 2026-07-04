@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacodynamics Comprehensive Quiz — Set 2</title>
+<style>
+  :root{
+    --ink:#12203b; --paper:#f4f6fb; --card:#ffffff; --line:#d9e0ee;
+    --accent:#1f6f6b; --accent-soft:#e4f1ef; --gold:#c07a2b;
+    --right:#1f7a4d; --right-soft:#e5f3ec; --wrong:#b23a3a; --wrong-soft:#f7e7e6;
+    --muted:#5d6b86;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",Calibri,system-ui,-apple-system,sans-serif;
+    line-height:1.55;padding:24px 16px;}
+  .wrap{max-width:760px;margin:0 auto;}
+  header.top{background:var(--ink);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:18px;}
+  header.top .kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9fc6c3;font-weight:700;}
+  header.top h1{margin:.28em 0 .15em;font-size:1.5rem;font-family:Cambria,Georgia,serif;}
+  header.top p{margin:0;color:#c7d2e6;font-size:.92rem;}
+  .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 16px;margin-bottom:16px;font-size:.9rem;}
+  .bar .prog{color:var(--muted);font-weight:600;}
+  .bar .score{color:var(--accent);font-weight:700;}
+  .track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .track > i{display:block;height:100%;background:var(--accent);width:0;transition:width .35s ease;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 26px 22px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .qnum{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .qtext{font-size:1.12rem;font-weight:600;margin:0 0 18px;}
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+    background:#fbfcfe;border:1.5px solid var(--line);border-radius:11px;
+    padding:13px 15px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:border-color .15s,background .15s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft);}
+  .opt:disabled{cursor:default;}
+  .opt .lab{font-weight:700;color:var(--accent);flex:0 0 auto;min-width:1.1em;}
+  .opt.correct{border-color:var(--right);background:var(--right-soft);}
+  .opt.correct .lab{color:var(--right);}
+  .opt.wrong{border-color:var(--wrong);background:var(--wrong-soft);}
+  .opt.wrong .lab{color:var(--wrong);}
+  .fb{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:none;}
+  .fb.show{display:block;}
+  .fb .verdict{font-weight:700;margin-bottom:10px;font-size:1rem;}
+  .fb .verdict.ok{color:var(--right);}
+  .fb .verdict.no{color:var(--wrong);}
+  .fb .line{font-size:.92rem;margin:6px 0;color:#31405c;}
+  .fb .line b{color:var(--ink);}
+  .cite{margin-top:14px;font-size:.78rem;color:var(--muted);font-style:italic;}
+  .nav{display:flex;justify-content:flex-end;margin-top:20px;}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:12px 26px;font-size:.98rem;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:background .15s;}
+  .btn:hover{background:#175451;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+  .btn.ghost:hover{background:var(--accent-soft);}
+  .hidden{display:none!important;}
+  /* results */
+  .result{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:30px 28px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .result h2{margin:0 0 4px;font-family:Cambria,Georgia,serif;font-size:1.5rem;}
+  .scorebig{font-size:3rem;font-weight:800;color:var(--accent);margin:10px 0 2px;font-family:Cambria,Georgia,serif;}
+  .scoresub{color:var(--muted);margin-bottom:22px;}
+  .review h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin:24px 0 10px;}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--wrong);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fdfbfb;}
+  .miss .mq{font-weight:600;margin-bottom:8px;font-size:.96rem;}
+  .miss .yours{color:var(--wrong);font-size:.9rem;margin:3px 0;}
+  .miss .right{color:var(--right);font-size:.9rem;margin:3px 0;}
+  .miss .why{color:#31405c;font-size:.88rem;margin-top:6px;}
+  .miss .mcite{font-size:.76rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  .allright{background:var(--right-soft);border:1px solid #bfe2cd;color:var(--right);
+    padding:14px 16px;border-radius:10px;font-weight:600;}
+  footer.legal{text-align:center;color:var(--muted);font-size:.76rem;margin-top:22px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">PAJ 5100 &middot; Pharmacodynamics</div>
+    <h1>Pharmacodynamics Comprehensive Quiz — Set 2</h1>
+    <p>30 questions across Pharmacokinetics &amp; Bioavailability I &amp; II and Introduction to Antimicrobials.</p>
+  </header>
+
+  <div id="quiz">
+    <div class="bar">
+      <span class="prog" id="prog">Question 1 of 30</span>
+      <span class="score" id="score">Score: 0</span>
+    </div>
+    <div class="track"><i id="fill"></i></div>
+    <div class="card" id="card"></div>
+    <div class="nav"><button class="btn hidden" id="next">Next question</button></div>
+  </div>
+
+  <div id="results" class="result hidden"></div>
+
+  <footer class="legal">Questions drawn only from the uploaded lecture decks. Section-divider and figure-only slides were excluded. Not medical advice.</footer>
+</div>
+
+<script>
+const QUESTIONS = [{"q":"Pharmacokinetics is best defined as:","choices":["The effect of the drug on the body","The effect of the body on the drug (ADME)","The study of drug-receptor binding affinity","The measurement of therapeutic index"],"answer":1,"src":"PK I & II, Slide 4","exp":{"0":"That describes pharmacodynamics.","1":"Correct. Pharmacokinetics is what the body does to the drug — absorption, distribution, metabolism, elimination (ADME).","2":"Receptor affinity is a pharmacodynamic concept.","3":"Therapeutic index is a safety measure, not the definition of PK."}},{"q":"Carrier-mediated (special carrier) transport differs from passive diffusion in that it:","choices":["Always follows the concentration gradient","Is governed by Fick's law","Can be saturated and may move drug against a gradient","Requires no cellular energy"],"answer":2,"src":"PK I & II, Slide 8, 20","exp":{"0":"Carriers may move solute against the gradient.","1":"They are NOT governed by Fick's law.","2":"Correct. Special carriers are capacity-limited (saturable), can move against a gradient, and require energy.","3":"They require energy, unlike passive diffusion."}},{"q":"When the pH of a solution equals a drug's pKa, the drug is:","choices":["50% protonated and 50% unprotonated","Fully un-ionized","Fully ionized","Precipitated out of solution"],"answer":0,"src":"PK I & II, Slide 14","exp":{"0":"Correct. At pH = pKa, the molecule is 50% protonated and 50% unprotonated by definition.","1":"Full un-ionization likewise requires pH away from pKa.","2":"Full ionization requires pH far from pKa depending on acid/base.","3":"pKa does not describe precipitation."}},{"q":"A weak base in an acidic environment will predominantly be:","choices":["Protonated, charged, and lipid-insoluble","Unprotonated, uncharged, and lipid-soluble","Neutral and freely diffusible","Converted to a weak acid"],"answer":0,"src":"PK I & II, Slide 18","exp":{"0":"Correct. A weak base in acid gains a proton to become BH+ — charged and lipid-insoluble (e.g., protonated morphine is less lipid-soluble).","1":"That describes a weak acid's behavior in acid.","2":"The protonated base is charged, not freely diffusible.","3":"A base does not become an acid; only its charge state changes."}},{"q":"Endocytosis is the appropriate absorption mechanism for a substance that is:","choices":["Small and lipophilic","Too large, lipid-insoluble, or impermeant","A weak acid at low pH","A gas exchanged in the lung"],"answer":1,"src":"PK I & II, Slide 23","exp":{"0":"Small lipophilic molecules cross by lipid diffusion.","1":"Correct. Endocytosis engulfs substances too large, lipid-insoluble, or impermeant (e.g., B12 with intrinsic factor, iron with transferrin).","2":"A weak acid at low pH can diffuse across lipid membranes.","3":"Gases cross by simple diffusion, not endocytosis."}},{"q":"A 70 kg man is given 100 mg of a drug with Vd = 0.6 L/kg IV. What is his estimated plasma concentration?","choices":["Approximately 2.4 mg/L","Approximately 1.4 mg/L","Approximately 0.6 mg/L","Approximately 6.0 mg/L"],"answer":0,"src":"PK I & II, Slide 31","exp":{"0":"Correct. Vd = 70 × 0.6 = 42 L; C0 = 100 mg ÷ 42 L ≈ 2.38 mg/L.","1":"1.4 mg/L does not fit the arithmetic.","2":"0.6 mg/L ignores the weight-based Vd calculation.","3":"6.0 mg/L overestimates the concentration."}},{"q":"A drug with a very HIGH volume of distribution is most likely:","choices":["Hydrophilic and confined to plasma","Lipophilic and distributed widely into tissue","Highly protein-bound in the vasculature","Restricted by dehydration"],"answer":1,"src":"PK I & II, Slide 28-29","exp":{"0":"Hydrophilic, plasma-confined drugs have low Vd.","1":"Correct. A high Vd usually indicates a lipophilic drug distributed extensively into tissues.","2":"Extensive protein binding keeps drug in plasma and lowers Vd.","3":"Dehydration decreases Vd."}},{"q":"Which enzyme is a principal PHASE I metabolizing enzyme?","choices":["UDP-glucuronosyltransferase","Sulfotransferase","Glutathione-S-transferase","Cytochrome P450"],"answer":3,"src":"PK I & II, Slide 38","exp":{"0":"Glucuronosyltransferase mediates phase II conjugation.","1":"Sulfotransferase is a phase II enzyme.","2":"Glutathione-S-transferase catalyzes phase II conjugation.","3":"Correct. Cytochrome P450 is a principal phase I enzyme (along with monoamine oxidase, esterases, etc.)."}},{"q":"Phase II metabolic reactions primarily:","choices":["Uncover polar groups by oxidation","Reduce nitro groups","Hydrolyze ester bonds","Add or alter a molecule to increase water solubility via conjugation"],"answer":3,"src":"PK I & II, Slide 39","exp":{"0":"Uncovering polar groups by oxidation is phase I.","1":"Reduction is a phase I reaction.","2":"Hydrolysis is a phase I reaction.","3":"Correct. Phase II adds/alters a moiety (glucuronidation, sulfation) to increase water solubility for excretion."}},{"q":"Grapefruit juice is described in the lecture as an agent that:","choices":["Inhibits drug metabolism","Induces hepatic metabolism","Increases renal filtration","Enhances first-pass clearance"],"answer":0,"src":"PK I & II, Slide 52","exp":{"0":"Correct. Grapefruit juice is listed as an inhibitor of drug metabolism (contrast with charcoal-broiled foods, which induce).","1":"Charcoal-broiled foods induce; grapefruit does not.","2":"It is not described as altering filtration.","3":"It inhibits rather than enhances metabolic clearance."}},{"q":"Which condition would MOST impair hepatic drug-metabolizing capacity?","choices":["Diabetic nephropathy","Acute renal failure","Renal artery stenosis","Alcoholic cirrhosis"],"answer":3,"src":"PK I & II, Slide 50-51","exp":{"0":"Diabetic nephropathy is a renal, not hepatic, metabolism factor.","1":"Acute renal failure affects elimination, not hepatic metabolism.","2":"Renal artery stenosis affects renal clearance.","3":"Correct. Alcoholic cirrhosis (a liver disease) impairs hepatic drug-metabolizing enzymes."}},{"q":"In aspirin (a weak acid) overdose, alkalinizing the urine with sodium bicarbonate enhances elimination by:","choices":["Increasing tubular reabsorption of aspirin","Ion trapping — keeping aspirin charged so it is not reabsorbed","Inhibiting hepatic metabolism of aspirin","Reducing glomerular filtration of the drug"],"answer":1,"src":"PK I & II, Slide 57","exp":{"0":"Alkalinization reduces, not increases, reabsorption of a weak acid.","1":"Correct. Raising urine pH increases the charged fraction of the weak acid, trapping it in the tubule (ion trapping) and preventing reabsorption.","2":"The mechanism is renal ion trapping, not hepatic.","3":"Filtration is not the mechanism; reabsorption is blocked."}},{"q":"For a first-order drug, the fraction eliminated per unit time is:","choices":["Constant regardless of concentration","A constant percentage, proportional to concentration","Fixed in absolute amount per hour","Zero until a threshold is reached"],"answer":1,"src":"PK I & II, Slide 63, 66","exp":{"0":"A constant fraction is correct, but the option's phrasing implies concentration-independence of amount, which is zero-order.","1":"Correct. First-order elimination removes a constant percentage (e.g., 15%/hr), so the absolute amount tracks concentration.","2":"A fixed absolute amount per hour is zero-order.","3":"There is no threshold; elimination occurs continuously."}},{"q":"The half-life equation t½ = (0.693 × Vd)/Cl predicts that decreasing clearance will:","choices":["Prolong the half-life","Shorten the half-life","Not change the half-life","Reduce the volume of distribution"],"answer":0,"src":"PK I & II, Slide 72-73","exp":{"0":"Correct. A smaller Cl increases half-life because clearance is in the denominator.","1":"Clearance is in the denominator, so lowering it lengthens t½.","2":"Clearance directly affects half-life here.","3":"Clearance and Vd are independent variables in this equation."}},{"q":"The maintenance dose can be calculated by rearranging Css = Dose/(Cl × interval) to:","choices":["Dose = Cl / (Css × interval)","Dose = Css / (Cl × interval)","Dose = Css × Cl × dosing interval","Dose = Css × Vd × Ke"],"answer":2,"src":"PK I & II, Slide 81","exp":{"0":"This places clearance in the wrong position.","1":"This inverts the relationship incorrectly.","2":"Correct. Rearranging gives Dose = Css × Cl × dosing interval.","3":"This mixes unrelated parameters."}},{"q":"Highly lipid-soluble drugs filtered at the glomerulus tend to be:","choices":["Rapidly reabsorbed back into the circulation","Rapidly and completely excreted","Trapped as charged species in the tubule","Actively secreted without reabsorption"],"answer":0,"src":"PK I & II, Slide 55","exp":{"0":"Correct. Lipid-soluble drugs are freely filtered but rapidly reabsorbed; charged molecules are not readily reabsorbed.","1":"Lipid-soluble drugs are reabsorbed, slowing excretion.","2":"Charged (not lipid-soluble) molecules are trapped.","3":"Reabsorption, not secretion without reabsorption, is the key point here."}},{"q":"Compared with a bactericidal agent, a bacteriostatic antibiotic:","choices":["Directly causes bacterial cell death","Has no post-antibiotic effect by definition","Always requires lower doses","Inhibits a vital growth pathway without directly killing the organism"],"answer":3,"src":"Antimicrobials, Slide 23","exp":{"0":"Direct killing describes bactericidal agents.","1":"Some bacteriostatic agents do exhibit a PAE, so this is false.","2":"Dosing is not the defining difference.","3":"Correct. Bacteriostatic agents (e.g., tetracyclines, sulfonamides) inhibit a vital growth pathway but do not directly kill."}},{"q":"Which antibiotic is BACTERICIDAL?","choices":["Erythromycin","Vancomycin","Tetracycline","Trimethoprim"],"answer":1,"src":"Antimicrobials, Slide 23","exp":{"0":"Erythromycin is listed as bacteriostatic.","1":"Correct. Vancomycin is bactericidal (along with penicillins, cephalosporins, aminoglycosides, fluoroquinolones, metronidazole).","2":"Tetracyclines are bacteriostatic.","3":"Trimethoprim is bacteriostatic."}},{"q":"For a time-dependent antibiotic, the pharmacodynamic parameter that best predicts efficacy is:","choices":["Peak concentration well above the MIC","The post-antibiotic effect duration","A single high concentration-dependent spike","The time that drug concentration remains above the MIC (40-70% of the interval)"],"answer":3,"src":"Antimicrobials, Slide 24","exp":{"0":"High peak matters for concentration-dependent agents.","1":"Time-dependent agents characteristically lack a meaningful PAE.","2":"A concentration spike favors concentration-dependent agents.","3":"Correct. Time-dependent killing is optimized when concentration stays above MIC for 40-70% of the dosing interval; continuous/frequent infusions are best."}},{"q":"As one advances from 1st to higher cephalosporin generations, the general trend is:","choices":["Increasing gram-negative activity with decreasing gram-positive activity","Increasing gram-positive and decreasing gram-negative activity","Loss of all bactericidal activity","Conversion to bacteriostatic mechanism"],"answer":0,"src":"Antimicrobials, Slide 39-40","exp":{"0":"Correct. Advancing generations gain gram-negative coverage while losing some gram-positive activity (4th gen recovers gram-positive without sacrificing gram-negative).","1":"The trend is the reverse for gram-positive.","2":"They remain bactericidal.","3":"Cephalosporins remain bactericidal, not bacteriostatic."}},{"q":"Vancomycin's mechanism of action is best described as:","choices":["A glycopeptide that blocks cell wall cross-linking","A beta-lactam that inactivates PBPs","A 30S ribosomal inhibitor","A DNA gyrase inhibitor"],"answer":0,"src":"Antimicrobials, Slide 43","exp":{"0":"Correct. Vancomycin is a glycopeptide that targets the cell wall by blocking cross-linking, making resistance more difficult to develop.","1":"Vancomycin is not a beta-lactam.","2":"Ribosomal inhibition describes protein synthesis inhibitors.","3":"DNA gyrase inhibition is the fluoroquinolone mechanism."}},{"q":"Oral vancomycin is specifically indicated for:","choices":["MRSA bacteremia","Gram-negative UTIs","Community-acquired pneumonia","Severe C. difficile colitis (not systemically absorbed)"],"answer":3,"src":"Antimicrobials, Slide 44","exp":{"0":"MRSA bacteremia requires IV vancomycin; oral is not absorbed.","1":"It has gram-positive-only coverage.","2":"Vancomycin covers gram-positives, not the typical CAP gram-negatives, and oral is not systemic.","3":"Correct. Oral vancomycin is limited to severe antibiotic-associated C. difficile colitis because it is not orally absorbed and acts locally in the gut."}},{"q":"Tetracyclines inhibit bacterial protein synthesis by:","choices":["Binding the 50S subunit to block translocation","Inactivating penicillin-binding proteins","Binding the 30S subunit and preventing tRNA attachment","Inhibiting DNA-dependent RNA polymerase"],"answer":2,"src":"Antimicrobials, Slide 48-49","exp":{"0":"50S translocation blockade describes macrolides/clindamycin.","1":"PBP inactivation is the beta-lactam mechanism.","2":"Correct. Tetracyclines bind the 30S subunit and prevent tRNA from binding the mRNA-ribosome complex.","3":"That describes a different class not emphasized here."}},{"q":"The most common mechanism of tetracycline resistance is:","choices":["Beta-lactamase production","An efflux pump that expels the drug","Altered penicillin-binding proteins","Ribosomal methylation of the 50S subunit"],"answer":1,"src":"Antimicrobials, Slide 49","exp":{"0":"Beta-lactamases act on beta-lactams, not tetracyclines.","1":"Correct. Tetracycline resistance occurs primarily via an efflux pump that expels drug from the cell.","2":"Altered PBPs affect beta-lactams.","3":"50S methylation is more associated with macrolide resistance."}},{"q":"Macrolides and clindamycin share which target?","choices":["The 30S ribosomal subunit","The bacterial cell wall","Bacterial DNA gyrase","The 50S ribosomal subunit (blocking translocation)"],"answer":3,"src":"Antimicrobials, Slide 52","exp":{"0":"30S is the target of aminoglycosides and tetracyclines.","1":"Cell wall is targeted by beta-lactams and vancomycin.","2":"DNA gyrase is the fluoroquinolone target.","3":"Correct. Macrolides and clindamycin inhibit translocation by binding the 50S subunit."}},{"q":"Fluoroquinolones such as levofloxacin exert bactericidal activity by:","choices":["Blocking cell wall cross-linking","Binding the 50S ribosomal subunit","Inhibiting DNA gyrase and topoisomerase","Disrupting folate synthesis"],"answer":2,"src":"Antimicrobials, Slide 59","exp":{"0":"Cross-linking blockade describes vancomycin.","1":"50S binding describes macrolides.","2":"Correct. Fluoroquinolones inhibit DNA gyrase and topoisomerase, halting DNA replication and transcription.","3":"Folate disruption describes sulfonamides/trimethoprim."}},{"q":"Which fluoroquinolone is preferred for community-acquired pneumonia?","choices":["Ciprofloxacin","Levofloxacin","Nalidixic acid","Moxifloxacin for UTI"],"answer":1,"src":"Antimicrobials, Slide 60-61","exp":{"0":"Ciprofloxacin is NOT preferred for CAP.","1":"Correct. Levofloxacin (with improved gram-positive and Pseudomonas coverage) is used for CAP; ciprofloxacin is not.","2":"Nalidixic acid is a 1st-generation agent, not used for CAP.","3":"Moxifloxacin is specifically noted as NOT for UTI."}},{"q":"Metronidazole's spectrum centers on:","choices":["Gram-positive aerobes only","Pseudomonas aeruginosa","Anaerobes (gram-positive and gram-negative) and parasites","Atypical respiratory pathogens"],"answer":2,"src":"Antimicrobials, Slide 63-64","exp":{"0":"Its strength is anaerobes, not aerobes.","1":"It does not target Pseudomonas.","2":"Correct. Metronidazole covers gram-positive and gram-negative anaerobes plus parasites, with indications like C. difficile and BV/trichomoniasis.","3":"Atypicals are covered by macrolides/tetracyclines, not metronidazole."}},{"q":"A disulfiram-like reaction with ethanol is a characteristic adverse effect of:","choices":["Cephalexin","Doxycycline","Metronidazole","Azithromycin"],"answer":2,"src":"Antimicrobials, Slide 65","exp":{"0":"Cephalexin is not the classic disulfiram-like agent here.","1":"Doxycycline is not associated with this reaction.","2":"Correct. Metronidazole causes a disulfiram-like reaction (flushing, nausea, vomiting, diaphoresis) with ethanol.","3":"Azithromycin is not associated with this reaction."}},{"q":"Which is a recognized general adverse effect of antibiotic use?","choices":["Universal QT prolongation across all classes","Permanent loss of renal filtration","Disruption of normal flora with C. difficile overgrowth","Irreversible ribosomal damage in humans"],"answer":2,"src":"Antimicrobials, Slide 66","exp":{"0":"QT prolongation is class-specific, not universal.","1":"Permanent loss of filtration is not a general antibiotic effect.","2":"Correct. Disruption of normal flora leading to C. diff overgrowth, GI disturbance, and yeast infections is a general adverse effect.","3":"Human ribosomes are generally not irreversibly damaged at therapeutic levels."}}];
+const LETTERS = ['A','B','C','D'];
+let idx = 0, score = 0, answered = false;
+const chosen = [];
+
+const card = document.getElementById('card');
+const nextBtn = document.getElementById('next');
+const prog = document.getElementById('prog');
+const scoreEl = document.getElementById('score');
+const fill = document.getElementById('fill');
+
+function render(){
+  answered = false;
+  const q = QUESTIONS[idx];
+  prog.textContent = 'Question ' + (idx+1) + ' of ' + QUESTIONS.length;
+  scoreEl.textContent = 'Score: ' + score;
+  fill.style.width = (idx / QUESTIONS.length * 100) + '%';
+  nextBtn.classList.add('hidden');
+
+  let opts = '';
+  q.choices.forEach((c,i)=>{
+    opts += '<button class="opt" data-i="'+i+'"><span class="lab">'+LETTERS[i]+'</span><span>'+c+'</span></button>';
+  });
+  card.innerHTML =
+    '<div class="qnum">Question '+(idx+1)+'</div>'+
+    '<p class="qtext">'+q.q+'</p>'+
+    '<div class="opts">'+opts+'</div>'+
+    '<div class="fb" id="fb"></div>';
+
+  card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
+}
+
+function choose(i){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  chosen[idx] = i;
+  const correct = q.answer;
+  const btns = card.querySelectorAll('.opt');
+  btns.forEach(b=>{
+    b.disabled = true;
+    const bi = parseInt(b.dataset.i);
+    if(bi === correct) b.classList.add('correct');
+    if(bi === i && i !== correct) b.classList.add('wrong');
+  });
+  if(i === correct) score++;
+  scoreEl.textContent = 'Score: ' + score;
+
+  const fb = document.getElementById('fb');
+  let lines = '';
+  q.choices.forEach((c,ci)=>{
+    const tag = ci===correct ? '<b>'+LETTERS[ci]+' (correct):</b> ' : '<b>'+LETTERS[ci]+':</b> ';
+    lines += '<div class="line">'+tag+ (q.exp[ci]||'') +'</div>';
+  });
+  fb.innerHTML =
+    '<div class="verdict '+(i===correct?'ok':'no')+'">'+(i===correct?'Correct.':'Not quite.')+'</div>'+
+    lines +
+    '<div class="cite">Source: '+q.src+'</div>';
+  fb.classList.add('show');
+
+  nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'See results' : 'Next question';
+  nextBtn.classList.remove('hidden');
+  fb.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+nextBtn.addEventListener('click',()=>{
+  if(idx === QUESTIONS.length-1){ showResults(); return; }
+  idx++; render();
+});
+
+function showResults(){
+  document.getElementById('quiz').classList.add('hidden');
+  const box = document.getElementById('results');
+  box.classList.remove('hidden');
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  let misses = '';
+  QUESTIONS.forEach((q,i)=>{
+    if(chosen[i] !== q.answer){
+      const yours = chosen[i]==null ? 'No answer' : LETTERS[chosen[i]]+'. '+q.choices[chosen[i]];
+      misses +=
+        '<div class="miss">'+
+          '<div class="mq">Q'+(i+1)+'. '+q.q+'</div>'+
+          '<div class="yours">Your answer: '+yours+'</div>'+
+          '<div class="right">Correct: '+LETTERS[q.answer]+'. '+q.choices[q.answer]+'</div>'+
+          '<div class="why">'+ (q.exp[q.answer]||'') +'</div>'+
+          '<div class="mcite">Source: '+q.src+'</div>'+
+        '</div>';
+    }
+  });
+  const reviewBlock = misses
+    ? '<div class="review"><h3>Review your missed questions</h3>'+misses+'</div>'
+    : '<div class="allright">Perfect score — every question correct.</div>';
+  box.innerHTML =
+    '<h2>Quiz complete</h2>'+
+    '<div class="scorebig">'+score+' / '+QUESTIONS.length+'</div>'+
+    '<div class="scoresub">'+pct+'% &middot; '+(QUESTIONS.length-score)+' missed</div>'+
+    reviewBlock+
+    '<div class="nav" style="justify-content:flex-start;margin-top:24px;">'+
+      '<button class="btn ghost" onclick="location.reload()">Restart quiz</button>'+
+    '</div>';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>

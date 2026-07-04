@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacodynamics Comprehensive Quiz — Set 1</title>
+<style>
+  :root{
+    --ink:#12203b; --paper:#f4f6fb; --card:#ffffff; --line:#d9e0ee;
+    --accent:#1f6f6b; --accent-soft:#e4f1ef; --gold:#c07a2b;
+    --right:#1f7a4d; --right-soft:#e5f3ec; --wrong:#b23a3a; --wrong-soft:#f7e7e6;
+    --muted:#5d6b86;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",Calibri,system-ui,-apple-system,sans-serif;
+    line-height:1.55;padding:24px 16px;}
+  .wrap{max-width:760px;margin:0 auto;}
+  header.top{background:var(--ink);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:18px;}
+  header.top .kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9fc6c3;font-weight:700;}
+  header.top h1{margin:.28em 0 .15em;font-size:1.5rem;font-family:Cambria,Georgia,serif;}
+  header.top p{margin:0;color:#c7d2e6;font-size:.92rem;}
+  .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 16px;margin-bottom:16px;font-size:.9rem;}
+  .bar .prog{color:var(--muted);font-weight:600;}
+  .bar .score{color:var(--accent);font-weight:700;}
+  .track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .track > i{display:block;height:100%;background:var(--accent);width:0;transition:width .35s ease;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 26px 22px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .qnum{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .qtext{font-size:1.12rem;font-weight:600;margin:0 0 18px;}
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+    background:#fbfcfe;border:1.5px solid var(--line);border-radius:11px;
+    padding:13px 15px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:border-color .15s,background .15s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft);}
+  .opt:disabled{cursor:default;}
+  .opt .lab{font-weight:700;color:var(--accent);flex:0 0 auto;min-width:1.1em;}
+  .opt.correct{border-color:var(--right);background:var(--right-soft);}
+  .opt.correct .lab{color:var(--right);}
+  .opt.wrong{border-color:var(--wrong);background:var(--wrong-soft);}
+  .opt.wrong .lab{color:var(--wrong);}
+  .fb{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:none;}
+  .fb.show{display:block;}
+  .fb .verdict{font-weight:700;margin-bottom:10px;font-size:1rem;}
+  .fb .verdict.ok{color:var(--right);}
+  .fb .verdict.no{color:var(--wrong);}
+  .fb .line{font-size:.92rem;margin:6px 0;color:#31405c;}
+  .fb .line b{color:var(--ink);}
+  .cite{margin-top:14px;font-size:.78rem;color:var(--muted);font-style:italic;}
+  .nav{display:flex;justify-content:flex-end;margin-top:20px;}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:12px 26px;font-size:.98rem;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:background .15s;}
+  .btn:hover{background:#175451;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+  .btn.ghost:hover{background:var(--accent-soft);}
+  .hidden{display:none!important;}
+  /* results */
+  .result{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:30px 28px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .result h2{margin:0 0 4px;font-family:Cambria,Georgia,serif;font-size:1.5rem;}
+  .scorebig{font-size:3rem;font-weight:800;color:var(--accent);margin:10px 0 2px;font-family:Cambria,Georgia,serif;}
+  .scoresub{color:var(--muted);margin-bottom:22px;}
+  .review h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin:24px 0 10px;}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--wrong);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fdfbfb;}
+  .miss .mq{font-weight:600;margin-bottom:8px;font-size:.96rem;}
+  .miss .yours{color:var(--wrong);font-size:.9rem;margin:3px 0;}
+  .miss .right{color:var(--right);font-size:.9rem;margin:3px 0;}
+  .miss .why{color:#31405c;font-size:.88rem;margin-top:6px;}
+  .miss .mcite{font-size:.76rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  .allright{background:var(--right-soft);border:1px solid #bfe2cd;color:var(--right);
+    padding:14px 16px;border-radius:10px;font-weight:600;}
+  footer.legal{text-align:center;color:var(--muted);font-size:.76rem;margin-top:22px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">PAJ 5100 &middot; Pharmacodynamics</div>
+    <h1>Pharmacodynamics Comprehensive Quiz — Set 1</h1>
+    <p>30 questions across Pharmacokinetics &amp; Bioavailability I &amp; II and Introduction to Antimicrobials.</p>
+  </header>
+
+  <div id="quiz">
+    <div class="bar">
+      <span class="prog" id="prog">Question 1 of 30</span>
+      <span class="score" id="score">Score: 0</span>
+    </div>
+    <div class="track"><i id="fill"></i></div>
+    <div class="card" id="card"></div>
+    <div class="nav"><button class="btn hidden" id="next">Next question</button></div>
+  </div>
+
+  <div id="results" class="result hidden"></div>
+
+  <footer class="legal">Questions drawn only from the uploaded lecture decks. Section-divider and figure-only slides were excluded. Not medical advice.</footer>
+</div>
+
+<script>
+const QUESTIONS = [{"q":"A drug moves across the endothelial lining of blood vessels through aqueous pores, down its concentration gradient. This process is best described by which principle?","choices":["Endocytosis of impermeant solutes","Carrier-mediated active transport","Fick's law of aqueous diffusion","Michaelis-Menten capacity-limited kinetics"],"answer":2,"src":"PK I & II, Slide 9-10","exp":{"0":"Endocytosis engulfs large or impermeant substances into vesicles; it is not passage through aqueous pores.","1":"Carrier-mediated transport can go against a gradient and is not governed by Fick's law.","2":"Correct. Aqueous diffusion through the endothelial pores between blood and extravascular space is governed by Fick's law, driven by the concentration gradient.","3":"Capacity-limited (saturable) kinetics describes carrier transport, not passive aqueous diffusion."}},{"q":"According to Fick's law, drug absorption is fastest across a membrane that is:","choices":["Large in surface area and thick","Large in surface area and thin","Small in surface area and thin","Small in surface area and thick"],"answer":1,"src":"PK I & II, Slide 11","exp":{"0":"Thickness is in the denominator, so a thick membrane slows flux even with large area.","1":"Correct. Flux rises with area and falls with thickness, so large area + thin membrane (e.g., lungs) maximizes absorption.","2":"Small area limits diffusion despite a thin membrane.","3":"Small area and thick membrane give the slowest absorption."}},{"q":"A weak acid drug is placed in an acidic environment. What is the consequence for its membrane permeability?","choices":["It becomes charged and water-soluble","It becomes deprotonated and lipid-insoluble","It becomes protonated, uncharged, and lipid-soluble","Its pKa shifts toward neutrality"],"answer":2,"src":"PK I & II, Slide 18","exp":{"0":"A weak acid in acid is protonated/uncharged, not charged.","1":"It is protonated, not deprotonated, in acid.","2":"Correct. In an acidic solution a weak acid is protonated (HA), uncharged, and therefore lipid-soluble — as with the protonated form of aspirin.","3":"pKa is a fixed constant of the drug; environment does not change it."}},{"q":"P-glycoprotein (MDR1) is best characterized as a transporter that:","choices":["Passively moves lipophilic drugs down a gradient","Governs Fick's-law diffusion in the gut","Only functions in renal tubular reabsorption","Actively effluxes substrates and can be inhibited by grapefruit juice"],"answer":3,"src":"PK I & II, Slide 21","exp":{"0":"P-gp is an active, energy-requiring carrier, not passive diffusion.","1":"Carrier transport is capacity-limited and not governed by Fick's law.","2":"It is found in brain, testes, and GI tract, not solely renal tubules.","3":"Correct. MDR1/P-gp is a special efflux carrier in brain, testes, and GI tract; inhibiting it (e.g., grapefruit juice with statins) alters absorption of other drugs."}},{"q":"Volume of distribution (Vd) is best defined as:","choices":["The literal fluid volume of the vascular compartment","The apparent volume needed to account for the measured plasma concentration","The volume of drug metabolized per hour","The plasma volume cleared of drug per minute"],"answer":1,"src":"PK I & II, Slide 27","exp":{"0":"Vd is a theoretical (apparent) number, not a real anatomical volume.","1":"Correct. Vd is the apparent volume a drug would occupy to produce the measured serum concentration; it reflects tissue distribution.","2":"That describes clearance/metabolic rate, not Vd.","3":"Volume cleared per unit time is clearance, not Vd."}},{"q":"A 50 mg dose of a lipophilic drug yields a plasma concentration of 0.5 mg/L. What is its Vd?","choices":["5 L","100 L","25 L","250 L"],"answer":1,"src":"PK I & II, Slide 29","exp":{"0":"5 L would result from a concentration of 10 mg/L (a hydrophilic drug).","1":"Correct. Vd = D/C = 50 mg ÷ 0.5 mg/L = 100 L, consistent with extensive tissue distribution of a lipophilic drug.","2":"25 L does not match the calculation.","3":"250 L overestimates; recheck the division."}},{"q":"Which change would be expected to DECREASE a drug's volume of distribution?","choices":["Extensive plasma protein binding","Renal failure with fluid retention","Liver failure altering body fluid","High lipophilicity"],"answer":0,"src":"PK I & II, Slide 32","exp":{"0":"Correct. High affinity for plasma proteins keeps more drug in plasma, reducing apparent Vd.","1":"Fluid retention in renal failure tends to increase Vd.","2":"Liver failure altering body fluids tends to increase Vd.","3":"Lipophilicity drives drug into tissue, increasing Vd."}},{"q":"The primary purpose of drug metabolism (biotransformation) is to:","choices":["Increase the drug's lipid solubility for storage","Always convert the drug into a more active form","Make the drug more polar so it can be renally excreted","Bind the drug to plasma proteins"],"answer":2,"src":"PK I & II, Slide 34","exp":{"0":"Metabolism increases polarity/water solubility, not lipid solubility.","1":"Reactions are usually deactivating; activation (prodrugs) is the exception.","2":"Correct. Metabolism generally makes substances more polar so they can be filtered by the glomerulus and excreted.","3":"Protein binding is a distribution phenomenon, not the purpose of metabolism."}},{"q":"Codeine converted to morphine is an example of:","choices":["A first-pass inactivation","A prodrug requiring metabolism for activity","A phase II conjugation product","Zero-order elimination"],"answer":1,"src":"PK I & II, Slide 35","exp":{"0":"First-pass reduces bioavailability; here metabolism creates the active drug.","1":"Correct. Codeine is a prodrug metabolized to active morphine, like enalapril→enalaprilat.","2":"This is a metabolic activation, not specifically a conjugation product.","3":"Zero-order kinetics is unrelated to prodrug activation."}},{"q":"Which is a defining feature of a phase I metabolic reaction?","choices":["Conjugation via glucuronidation","Sulfation to increase solubility","Direct renal filtration of the parent drug","Introducing or uncovering a polar functional group"],"answer":3,"src":"PK I & II, Slide 37","exp":{"0":"Glucuronidation is a phase II conjugation reaction.","1":"Sulfation is phase II.","2":"Filtration is elimination, not a metabolic reaction.","3":"Correct. Phase I (oxidation, reduction, hydrolysis) introduces or uncovers polar groups that provide sites for phase II."}},{"q":"In the cytochrome P450 designation CYP2D6, the '2' refers to the:","choices":["Individual enzyme with a unique sequence","Subfamily (>55% homology)","Number of substrates it metabolizes","Family (>40% homology)"],"answer":3,"src":"PK I & II, Slide 46","exp":{"0":"The final numeral (6) denotes the individual enzyme.","1":"The letter (D) denotes the subfamily.","2":"It has nothing to do with substrate count.","3":"Correct. The first numeral denotes the family, defined by >40% amino acid homology."}},{"q":"The first-pass effect refers to:","choices":["Rapid renal clearance on the first filtration","Saturation of plasma protein binding sites","Reduction of drug concentration by hepatic metabolism before reaching systemic circulation","The initial distribution phase after IV injection"],"answer":2,"src":"PK I & II, Slide 43","exp":{"0":"First-pass is a hepatic, not renal, phenomenon.","1":"Protein-binding saturation is unrelated.","2":"Correct. Drug absorbed from the intestine passes via the portal system to the liver, where metabolism reduces the amount reaching systemic circulation.","3":"Distribution phase is not the first-pass effect."}},{"q":"Weak acids are excreted faster in alkaline urine because:","choices":["A greater fraction becomes charged, reducing tubular reabsorption","Alkaline pH keeps them uncharged and reabsorbed","Alkaline urine increases their lipid solubility","Alkalinization inhibits glomerular filtration"],"answer":0,"src":"PK I & II, Slide 56","exp":{"0":"Correct. In alkaline urine a higher proportion of a weak acid is ionized/charged, so it is not reabsorbed and is excreted faster (basis for bicarbonate in aspirin overdose).","1":"The opposite: alkaline pH charges a weak acid, decreasing reabsorption.","2":"Charged drug is less lipid-soluble, not more.","3":"Filtration is not blocked; reabsorption is reduced."}},{"q":"Total body clearance is best represented by which relationship?","choices":["ClTotal = ClRenal + ClLiver + ClBiliary + ClOther","ClTotal = Vd × Ke only","ClTotal = Dose / half-life","ClTotal = C1 − C2 across the membrane"],"answer":0,"src":"PK I & II, Slide 58","exp":{"0":"Correct. Total clearance is the additive sum of clearance by each eliminating route.","1":"Ke = Cl/Vd relates clearance to elimination constant but is not the definition of total clearance.","2":"This is dimensionally incorrect for clearance.","3":"That expression relates to Fick's-law flux, not clearance."}},{"q":"Renal clearance is clinically estimated using creatinine clearance because creatinine is:","choices":["Actively secreted and heavily reabsorbed","Produced at a constant rate by muscle and cleared by excretion","Bound extensively to plasma proteins","Metabolized primarily by CYP3A4"],"answer":1,"src":"PK I & II, Slide 59","exp":{"0":"Creatinine is not heavily reabsorbed, which is why it estimates filtration.","1":"Correct. Creatinine is a muscle-metabolism product generated at a constant rate and cleared by excretion, making it a useful marker of renal function.","2":"It is not highly protein-bound.","3":"Creatinine is not a CYP substrate."}},{"q":"A drug eliminated by first-order kinetics has:","choices":["A constant amount removed per unit time","A constant percentage removed per unit time","Elimination independent of concentration","A fixed 20 mg/dL/hr elimination like ethanol"],"answer":1,"src":"PK I & II, Slide 63","exp":{"0":"Constant amount per time describes zero-order.","1":"Correct. First-order elimination removes a constant fraction/percentage per unit time and is proportional to concentration; most drugs follow this.","2":"Concentration-independence is a zero-order feature.","3":"Ethanol's fixed rate is the classic zero-order example."}},{"q":"Ethanol metabolism at roughly 20 mg/dL/hr regardless of blood level illustrates:","choices":["First-order kinetics","Flip-flop kinetics","Zero-order (capacity-limited) kinetics","Concentration-dependent clearance"],"answer":2,"src":"PK I & II, Slide 63","exp":{"0":"First-order would remove a constant fraction, not a constant amount.","1":"Flip-flop kinetics is not the concept illustrated here.","2":"Correct. A constant amount eliminated per time, independent of concentration, defines zero-order/capacity-limited kinetics — ethanol is the classic example.","3":"Zero-order clearance is concentration-independent, the opposite of this option."}},{"q":"The elimination rate constant Ke is related to clearance and volume of distribution by:","choices":["Ke = Cl / Vd","Ke = Vd / Cl","Ke = Cl × Vd","Ke = 0.693 × Cl"],"answer":0,"src":"PK I & II, Slide 68","exp":{"0":"Correct. Ke = Cl/Vd; it is the fraction of drug eliminated per unit time.","1":"Vd/Cl gives a time (related to half-life), not Ke.","2":"Multiplying Cl by Vd is dimensionally wrong for Ke.","3":"0.693 relates half-life to Ke, not clearance directly."}},{"q":"If a drug's plasma level falls from 20 mcg/mL to 10 mcg/mL over 4 hours, its half-life is:","choices":["2 hours","10 hours","8 hours","4 hours"],"answer":3,"src":"PK I & II, Slide 69","exp":{"0":"2 hours would require the level to halve in 2 hours.","1":"10 hours does not fit a single halving over 4 hours.","2":"8 hours would be two half-lives for this drop.","3":"Correct. The concentration halved (20→10) over exactly 4 hours, so t½ = 4 hours."}},{"q":"Given t½ = (0.693 × Vd)/Cl, a LARGER volume of distribution will:","choices":["Prolong the half-life","Shorten the half-life","Have no effect on half-life","Increase clearance proportionally"],"answer":0,"src":"PK I & II, Slide 72-73","exp":{"0":"Correct. A larger Vd increases the numerator, prolonging half-life.","1":"Vd is in the numerator, so increasing it lengthens t½.","2":"Vd directly affects t½ in this relationship.","3":"Vd does not change clearance in this equation."}},{"q":"Steady state is defined as the point at which:","choices":["The rate of drug administration equals the rate of elimination","Plasma concentration first becomes measurable","The loading dose has been fully absorbed","Clearance falls to zero"],"answer":0,"src":"PK I & II, Slide 74","exp":{"0":"Correct. At steady state, input rate equals elimination rate, so average plasma level plateaus.","1":"Measurable concentration occurs long before steady state.","2":"A loading dose speeds attainment but does not define steady state.","3":"Clearance continues at steady state; it does not fall to zero."}},{"q":"Approximately how many half-lives are required to reach steady state?","choices":["1-2 half-lives","It depends only on the loading dose","8-10 half-lives","4-5 half-lives"],"answer":3,"src":"PK I & II, Slide 75","exp":{"0":"1-2 half-lives reach only ~50-75% of steady state.","1":"A loading dose changes how fast levels rise but the time to steady state depends on half-life.","2":"8-10 exceeds what is typically cited.","3":"Correct. Roughly 4-5 half-lives are needed to approach steady state."}},{"q":"A loading dose is used primarily to:","choices":["Slow the approach to steady state","Rapidly achieve a desired (target) plasma concentration","Reduce total clearance","Prevent first-pass metabolism"],"answer":1,"src":"PK I & II, Slide 80","exp":{"0":"A loading dose speeds, not slows, attainment of target levels.","1":"Correct. Loading dose = Vd × target concentration; it promptly raises plasma level to the desired steady-state target.","2":"It does not alter clearance.","3":"It does not affect first-pass metabolism."}},{"q":"Using Css = Dose/(Cl × dosing interval), increasing the dosing interval while holding dose constant will:","choices":["Decrease average steady-state concentration","Increase average steady-state concentration","Leave Css unchanged","Increase clearance"],"answer":0,"src":"PK I & II, Slide 75, 81","exp":{"0":"Correct. A larger dosing interval in the denominator decreases average steady-state concentration.","1":"Interval is in the denominator, so a longer interval lowers Css.","2":"Css does change with interval.","3":"Interval does not alter clearance."}},{"q":"For a drug with 25% oral bioavailability, how much of a 160 mg dose reaches systemic circulation?","choices":["Approximately 4 mg","Approximately 40 mg","Approximately 120 mg","Approximately 160 mg"],"answer":1,"src":"PK I & II, Slide 88-89","exp":{"0":"4 mg would be ~2.5% bioavailability.","1":"Correct. 160 mg × 0.25 = 40 mg reaches systemic circulation (propranolol example).","2":"120 mg would be 75% bioavailability.","3":"160 mg assumes 100% bioavailability, ignoring first-pass loss."}},{"q":"Which fraction of a protein-bound drug is pharmacologically active?","choices":["The unbound (free) fraction","The bound fraction","Both equally","Only the metabolized fraction"],"answer":0,"src":"PK I & II, Slide 90","exp":{"0":"Correct. Only the unbound (free) fraction is pharmacologically active and available to act at the site of effect.","1":"Bound drug is sequestered and inactive.","2":"They are not equally active.","3":"Metabolism generally inactivates drug, not activates it."}},{"q":"Major classes of antimicrobials include cell wall inhibitors, protein synthesis inhibitors, and:","choices":["Carbonic anhydrase inhibitors","Beta-adrenergic blockers","Proton pump inhibitors","Inhibitors of nucleic acid function or synthesis"],"answer":3,"src":"Antimicrobials, Slide 27, 57","exp":{"0":"Carbonic anhydrase inhibitors are diuretics/glaucoma agents.","1":"Beta-blockers are cardiovascular, not antimicrobial.","2":"PPIs treat acid disorders.","3":"Correct. The nucleic acid inhibitor class (fluoroquinolones, metronidazole) is a major antimicrobial category alongside cell wall and protein synthesis inhibitors."}},{"q":"Beta-lactam antibiotics exert their bactericidal effect by:","choices":["Binding the 30S ribosomal subunit","Inhibiting DNA gyrase","Inactivating penicillin-binding proteins to block cell wall synthesis","Blocking folate synthesis"],"answer":2,"src":"Antimicrobials, Slide 33","exp":{"0":"30S binding describes aminoglycosides/tetracyclines.","1":"DNA gyrase inhibition is the fluoroquinolone mechanism.","2":"Correct. Beta-lactams inactivate PBPs, the enzymes that complete cell wall cross-linking.","3":"Folate inhibition describes sulfonamides/trimethoprim."}},{"q":"A concentration-dependent antibiotic with a prolonged post-antibiotic effect is best exemplified by:","choices":["Penicillin V","Vancomycin","A natural cephalosporin","A fluoroquinolone such as ciprofloxacin"],"answer":3,"src":"Antimicrobials, Slide 24, 59","exp":{"0":"Penicillin is time-dependent with no PAE.","1":"Vancomycin is time-dependent with only moderate PAE.","2":"Cephalosporins are time-dependent with no PAE.","3":"Correct. Fluoroquinolones show concentration-dependent killing with a prolonged post-antibiotic effect."}},{"q":"The minimum inhibitory concentration (MIC) is determined by antibiotic sensitivity testing such as the:","choices":["Gram stain","Coagulase test","E-test","Antibiogram color chart"],"answer":2,"src":"Antimicrobials, Slide 13","exp":{"0":"Gram staining classifies bacteria, not MIC.","1":"Coagulase testing differentiates staphylococci, not MIC.","2":"Correct. The E-test is used to determine the MIC of an antibiotic against an organism.","3":"An antibiogram summarizes susceptibility patterns but is not the MIC test itself."}}];
+const LETTERS = ['A','B','C','D'];
+let idx = 0, score = 0, answered = false;
+const chosen = [];
+
+const card = document.getElementById('card');
+const nextBtn = document.getElementById('next');
+const prog = document.getElementById('prog');
+const scoreEl = document.getElementById('score');
+const fill = document.getElementById('fill');
+
+function render(){
+  answered = false;
+  const q = QUESTIONS[idx];
+  prog.textContent = 'Question ' + (idx+1) + ' of ' + QUESTIONS.length;
+  scoreEl.textContent = 'Score: ' + score;
+  fill.style.width = (idx / QUESTIONS.length * 100) + '%';
+  nextBtn.classList.add('hidden');
+
+  let opts = '';
+  q.choices.forEach((c,i)=>{
+    opts += '<button class="opt" data-i="'+i+'"><span class="lab">'+LETTERS[i]+'</span><span>'+c+'</span></button>';
+  });
+  card.innerHTML =
+    '<div class="qnum">Question '+(idx+1)+'</div>'+
+    '<p class="qtext">'+q.q+'</p>'+
+    '<div class="opts">'+opts+'</div>'+
+    '<div class="fb" id="fb"></div>';
+
+  card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
+}
+
+function choose(i){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  chosen[idx] = i;
+  const correct = q.answer;
+  const btns = card.querySelectorAll('.opt');
+  btns.forEach(b=>{
+    b.disabled = true;
+    const bi = parseInt(b.dataset.i);
+    if(bi === correct) b.classList.add('correct');
+    if(bi === i && i !== correct) b.classList.add('wrong');
+  });
+  if(i === correct) score++;
+  scoreEl.textContent = 'Score: ' + score;
+
+  const fb = document.getElementById('fb');
+  let lines = '';
+  q.choices.forEach((c,ci)=>{
+    const tag = ci===correct ? '<b>'+LETTERS[ci]+' (correct):</b> ' : '<b>'+LETTERS[ci]+':</b> ';
+    lines += '<div class="line">'+tag+ (q.exp[ci]||'') +'</div>';
+  });
+  fb.innerHTML =
+    '<div class="verdict '+(i===correct?'ok':'no')+'">'+(i===correct?'Correct.':'Not quite.')+'</div>'+
+    lines +
+    '<div class="cite">Source: '+q.src+'</div>';
+  fb.classList.add('show');
+
+  nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'See results' : 'Next question';
+  nextBtn.classList.remove('hidden');
+  fb.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+nextBtn.addEventListener('click',()=>{
+  if(idx === QUESTIONS.length-1){ showResults(); return; }
+  idx++; render();
+});
+
+function showResults(){
+  document.getElementById('quiz').classList.add('hidden');
+  const box = document.getElementById('results');
+  box.classList.remove('hidden');
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  let misses = '';
+  QUESTIONS.forEach((q,i)=>{
+    if(chosen[i] !== q.answer){
+      const yours = chosen[i]==null ? 'No answer' : LETTERS[chosen[i]]+'. '+q.choices[chosen[i]];
+      misses +=
+        '<div class="miss">'+
+          '<div class="mq">Q'+(i+1)+'. '+q.q+'</div>'+
+          '<div class="yours">Your answer: '+yours+'</div>'+
+          '<div class="right">Correct: '+LETTERS[q.answer]+'. '+q.choices[q.answer]+'</div>'+
+          '<div class="why">'+ (q.exp[q.answer]||'') +'</div>'+
+          '<div class="mcite">Source: '+q.src+'</div>'+
+        '</div>';
+    }
+  });
+  const reviewBlock = misses
+    ? '<div class="review"><h3>Review your missed questions</h3>'+misses+'</div>'
+    : '<div class="allright">Perfect score — every question correct.</div>';
+  box.innerHTML =
+    '<h2>Quiz complete</h2>'+
+    '<div class="scorebig">'+score+' / '+QUESTIONS.length+'</div>'+
+    '<div class="scoresub">'+pct+'% &middot; '+(QUESTIONS.length-score)+' missed</div>'+
+    reviewBlock+
+    '<div class="nav" style="justify-content:flex-start;margin-top:24px;">'+
+      '<button class="btn ghost" onclick="location.reload()">Restart quiz</button>'+
+    '</div>';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>
