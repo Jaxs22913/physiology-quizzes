@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastrointestinal Physiology — Quiz</title>
+<style>
+  :root{
+    --bg:#0d1a10;
+    --panel:#fff;
+    --ink:#16261a;
+    --muted:#5a6f5f;
+    --line:#dbe7dc;
+    --leaf:#3f7d44;
+    --leaf-dk:#285229;
+    --leaf-soft:#e9f2e6;
+    --gold:#cf8a2c;
+    --green:#1f7a4d;
+    --green-soft:#e6f3ec;
+    --red:#b3261e;
+    --red-soft:#fbe9e8;
+    --shadow:0 10px 30px rgba(13,26,16,.20);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #1f4a26 0%, rgba(31,74,38,0) 60%),
+      linear-gradient(160deg,#0d1a10 0%,#122b17 100%);
+    color:var(--ink);
+    min-height:100vh;
+    padding:28px 16px 60px;
+    line-height:1.55;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  .card{
+    background:var(--panel);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:30px 30px 26px;
+    border:1px solid rgba(63,125,68,.08);
+  }
+  .eyebrow{
+    letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;
+    color:var(--leaf);margin-bottom:10px;
+  }
+  h1{font-size:27px;line-height:1.2;margin:0 0 6px;color:var(--leaf-dk);font-weight:800}
+  h2{font-size:20px;margin:0 0 14px;color:var(--leaf-dk)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .obj{
+    background:var(--leaf-soft);border-radius:12px;padding:16px 18px;margin:0 0 24px;
+    border:1px solid rgba(63,125,68,.14);
+  }
+  .obj p{margin:0 0 8px;font-weight:700;color:var(--leaf-dk);font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .obj ul{margin:0;padding-left:20px;columns:2;column-gap:26px}
+  .obj li{margin:4px 0;font-size:14px;color:var(--ink);break-inside:avoid}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+  .chip{
+    background:#f2f7f1;border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px;font-size:13px;color:var(--muted);font-weight:600;
+  }
+  .chip b{color:var(--leaf-dk)}
+  .instructions{font-size:14.5px;color:var(--muted);margin:0 0 26px}
+  .instructions ul{margin:8px 0 0;padding-left:20px}
+  .instructions li{margin:3px 0}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn{
+    background:var(--leaf);color:#fff;font-weight:700;font-size:16px;
+    padding:14px 26px;border-radius:12px;transition:transform .05s ease,background .2s ease;
+    box-shadow:0 6px 16px rgba(63,125,68,.28);
+  }
+  .btn:hover{background:var(--leaf-dk)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{
+    background:#fff;color:var(--leaf-dk);border:1.5px solid var(--leaf);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{background:var(--leaf-soft)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btnrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .qcount{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.03em}
+  .scorepill{font-size:13px;font-weight:800;color:var(--leaf-dk);background:var(--leaf-soft);
+    padding:5px 12px;border-radius:999px;border:1px solid rgba(63,125,68,.18)}
+  .bar{height:8px;background:#e7efe6;border-radius:999px;overflow:hidden;margin:0 0 22px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),var(--gold));
+    width:0;transition:width .35s ease;border-radius:999px}
+
+  .qtag{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .question{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 20px;line-height:1.4}
+
+  .options{display:flex;flex-direction:column;gap:11px}
+  .opt{
+    display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:15.5px;color:var(--ink);transition:all .15s ease;
+  }
+  .opt:hover:not(:disabled){border-color:var(--leaf);background:#f8fbf7}
+  .opt .ltr{
+    flex:0 0 28px;height:28px;border-radius:8px;background:#e5efe4;color:var(--leaf-dk);
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .ltr{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .ltr{background:var(--red);color:#fff}
+  .opt.dim{opacity:.62}
+  .opt:disabled{cursor:default}
+
+  .explain{
+    margin-top:20px;border-radius:12px;padding:16px 18px;font-size:15px;display:none;
+    border:1px solid var(--line);background:#f6faf5;
+  }
+  .explain.show{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:15px}
+  .verdict.ok{color:var(--green)}
+  .verdict.no{color:var(--red)}
+  .explain .body{color:#22331f}
+  .cite{margin-top:12px;font-size:12.5px;color:var(--muted);font-style:italic;
+    border-top:1px dashed var(--line);padding-top:10px}
+
+  .scorebig{font-size:56px;font-weight:800;color:var(--leaf-dk);line-height:1;margin:6px 0 2px}
+  .pct{font-size:17px;color:var(--muted);font-weight:700;margin-bottom:18px}
+  .gradeline{font-size:16px;margin:0 0 22px;color:var(--ink)}
+  .review h3{font-size:15px;color:var(--leaf-dk);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .missed{
+    border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fff;
+  }
+  .missed .mq{font-weight:700;margin-bottom:8px;font-size:15px}
+  .missed .row{font-size:14px;margin:3px 0}
+  .missed .yours{color:var(--red)}
+  .missed .right{color:var(--green);font-weight:600}
+  .missed .why{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .missed .mcite{color:var(--muted);font-size:12px;font-style:italic;margin-top:8px}
+  .allright{background:var(--green-soft);border:1px solid #bfe3ce;border-radius:12px;
+    padding:16px 18px;color:#175c3a;font-weight:600}
+  .foot{color:#8a9096;text-align:center;font-size:12.5px;margin-top:22px}
+  .hidden{display:none}
+  @media(max-width:520px){.obj ul{columns:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- START -->
+  <section id="start" class="card">
+    <div class="eyebrow">Physiology &middot; Unit 12</div>
+    <h1>Gastrointestinal Physiology</h1>
+    <p class="sub">A conceptual multiple-choice quiz built from your lecture deck (Guyton &amp; Hall, Chapters 63&ndash;66).</p>
+
+    <div class="obj">
+      <p>Instructional objectives covered</p>
+      <ul>
+        <li>GI motility</li>
+        <li>Gastric secretion</li>
+        <li>GI hormones</li>
+        <li>Digestive enzymes</li>
+        <li>Biliary system</li>
+        <li>Exocrine pancreas</li>
+        <li>Liver functions</li>
+        <li>Nutrient absorption</li>
+        <li>Defecation</li>
+      </ul>
+    </div>
+
+    <div class="meta">
+      <span class="chip"><b>50</b> questions</span>
+      <span class="chip">4 choices each</span>
+      <span class="chip">Instant feedback</span>
+      <span class="chip">Slide-cited</span>
+    </div>
+
+    <div class="instructions">
+      How it works:
+      <ul>
+        <li>Read each question and click one answer (A&ndash;D).</li>
+        <li>You'll see immediately whether you're right, with an explanation of every choice.</li>
+        <li>Each question cites the slide it came from.</li>
+        <li>At the end you get your score, percentage, and a review of anything you missed.</li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="startQuiz()">Start quiz &rarr;</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="topbar">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="scorepill" id="scorepill">Score: 0</span>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+
+    <div class="qtag" id="qtag">Objective</div>
+    <div class="question" id="qtext">Question text</div>
+    <div class="options" id="options"></div>
+
+    <div class="explain" id="explain">
+      <div class="verdict" id="verdict"></div>
+      <div class="body" id="explainbody"></div>
+      <div class="cite" id="cite"></div>
+    </div>
+
+    <div class="btnrow">
+      <span class="qcount" id="hintline">Select an answer to continue</span>
+      <button class="btn" id="nextbtn" onclick="nextQuestion()" disabled>Next &rarr;</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card hidden">
+    <div class="eyebrow">Results</div>
+    <h2>Quiz complete</h2>
+    <div class="scorebig" id="finalscore">0 / 50</div>
+    <div class="pct" id="finalpct">0%</div>
+    <div class="gradeline" id="gradeline"></div>
+
+    <div class="review" id="review"></div>
+
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" onclick="restart()">&#8635; Restart quiz</button>
+    </div>
+    <div class="foot">Based solely on the "Gastrointestinal Physiology" lecture (Guyton &amp; Hall, Ch. 63&ndash;66). Not for clinical use.</div>
+  </section>
+
+</div>
+
+<script>
+/* ---------------- QUESTION BANK ---------------- */
+const DECK = "GI Physiology";
+const questions = [
+ /* ===== GI motility ===== */
+ {obj:"GI motility", s:39, q:"Peristalsis (the propulsive movement of the gut) fundamentally requires...",
+  o:["The sympathetic nervous system to initiate the contraction","The sphincter of Oddi to open first","The myenteric (Auerbach's) plexus, and can occur without the autonomic nervous system","Complete removal of the enteric nervous system"],
+  a:2, e:"Peristalsis is coordinated by the enteric (myenteric) plexus and proceeds even without autonomic input, though the parasympathetics modulate it. It does not require the sympathetic system to start, the sphincter of Oddi, or removal of the ENS \u2014 destroying the ENS actually abolishes it."},
+
+ {obj:"GI motility", s:39, q:"According to the \u201claw of the gut,\u201d a bolus that distends the intestine causes...",
+  o:["Contraction on the orad (upstream) side and relaxation on the downstream (aboral) side","Relaxation on both sides at the same time","Contraction ahead of the bolus, pushing it backward","No coordinated response unless the sympathetic nerves fire"],
+  a:0, e:"Distension makes the segment behind the bolus contract while the segment ahead relaxes, propelling contents aborally. Simultaneous relaxation, contraction ahead of the bolus, or dependence on sympathetic input all misdescribe this reflex."},
+
+ {obj:"GI motility", s:39, q:"Segmentation contractions serve mainly to...",
+  o:["Rapidly propel chyme toward the colon","Mix chyme with digestive secretions rather than propel it","Keep the sphincters tonically closed","Trigger the defecation reflex"],
+  a:1, e:"Segmentation is a mixing movement that churns chyme with secretions and improves mucosal contact, with little net propulsion. Propulsion is peristalsis, tonic closure is a sphincter role, and the defecation reflex is a separate event."},
+
+ {obj:"GI motility", s:35, q:"In GI smooth muscle, what is the role of \u201cslow waves\u201d?",
+  o:["They directly cause every contraction by themselves","They are action potentials that always produce contraction","They inhibit all smooth-muscle activity","They are rhythmic membrane oscillations that set the timing; contraction occurs only when they reach threshold and trigger spike potentials"],
+  a:3, e:"Slow waves are subthreshold oscillations (the basic electrical rhythm); a contraction results only when a slow wave is driven to threshold and fires spike potentials. They do not by themselves cause every contraction, are not always action potentials, and are not purely inhibitory."},
+
+ {obj:"GI motility", s:36, q:"GI smooth muscle behaves as a functional syncytium because...",
+  o:["Each cell is individually innervated by its own motor neuron","Gap junctions electrically couple the cells, letting action potentials spread from cell to cell","The cells physically fuse into one giant multinucleated fiber","It has no electrical connections between cells"],
+  a:1, e:"Gap junctions provide low-resistance electrical connections, so a signal spreads through the muscle as a unit. The cells are not each individually innervated, do not truly fuse into one fiber, and are certainly electrically connected."},
+
+ {obj:"GI motility", s:25, q:"How does autonomic input generally affect GI activity?",
+  o:["Both divisions stimulate the gut equally","Parasympathetic inhibits and sympathetic stimulates","Parasympathetic input mainly stimulates, and sympathetic input mainly inhibits","Neither division affects gut motility"],
+  a:2, e:"Parasympathetic (vagal/pelvic, ACh) activity generally stimulates motility and secretion, while sympathetic (NE) activity generally inhibits. The other options reverse or deny these effects."},
+
+ {obj:"GI motility", s:55, q:"The migrating motor complex (MMC) functions to...",
+  o:["Sweep undigested residue toward the colon between meals, keeping upper-gut bacterial counts low","Mix chyme with enzymes right after a meal","Trigger mass movements in the colon","Neutralize gastric acid"],
+  a:0, e:"The MMC is the interdigestive \u201chousekeeping\u201d pattern that clears residue and bacteria from the upper gut between meals, mediated by motilin. It is not a postprandial mixing pattern, does not drive colonic mass movements, and has no role in neutralizing acid."},
+
+ /* ===== Gastric secretion ===== */
+ {obj:"Gastric secretion", s:79, q:"Which gastric cell secretes both hydrochloric acid and intrinsic factor?",
+  o:["Chief (peptic) cells","G-cells","Mucous neck cells","Parietal (oxyntic) cells"],
+  a:3, e:"Parietal (oxyntic) cells secrete both HCl and intrinsic factor. Chief cells make pepsinogen, G-cells make gastrin, and mucous neck cells make mucus."},
+
+ {obj:"Gastric secretion", s:79, q:"Pepsinogen is secreted primarily by which cells?",
+  o:["Chief (peptic) cells","Parietal cells","G-cells","ECL cells"],
+  a:0, e:"Chief (peptic) cells secrete pepsinogen. Parietal cells make acid and intrinsic factor, G-cells make gastrin, and ECL cells release histamine."},
+
+ {obj:"Gastric secretion", s:83, q:"How is inactive pepsinogen converted to active pepsin?",
+  o:["Bile salts activate it in the duodenum","Enterokinase cleaves it at the brush border","It is secreted already active","Gastric acid converts it to pepsin, which then activates more pepsinogen (autocatalysis)"],
+  a:3, e:"Acid converts pepsinogen to pepsin, and the pepsin formed activates still more pepsinogen \u2014 an autocatalytic loop. Bile salts and enterokinase act on other substances, and pepsinogen is secreted inactive."},
+
+ {obj:"Gastric secretion", s:87, q:"Why is intrinsic factor considered the only indispensable component of gastric juice?",
+  o:["It is required to activate pepsinogen","It neutralizes duodenal acid","It is required for vitamin B12 absorption in the ileum","It emulsifies dietary fat"],
+  a:2, e:"Intrinsic factor binds vitamin B12 so the complex can be absorbed in the ileum, and its loss causes B12 deficiency \u2014 which is why it is the one indispensable gastric secretion. It does not activate pepsinogen, neutralize acid, or emulsify fat."},
+
+ {obj:"Gastric secretion", s:82, q:"Which is a physiological function of gastric acid (HCl)?",
+  o:["Emulsifying fats for absorption","Converting pepsinogen to pepsin and providing a bacteriostatic environment","Directly absorbing amino acids","Neutralizing chyme entering the duodenum"],
+  a:1, e:"Gastric acid activates pepsinogen to pepsin, begins protein digestion, and limits ingested microbes (bacteriostatic). It does not emulsify fat, absorb amino acids, or neutralize duodenal chyme \u2014 that is bicarbonate's role."},
+
+ {obj:"Gastric secretion", s:91, q:"Gastrin and acetylcholine strongly stimulate acid secretion partly by triggering release of which paracrine agent from ECL cells?",
+  o:["Somatostatin","Secretin","Motilin","Histamine"],
+  a:3, e:"Gastrin and ACh stimulate ECL cells to release histamine, which powerfully drives parietal-cell acid secretion. Somatostatin and secretin inhibit acid, and motilin governs interdigestive motility."},
+
+ {obj:"Gastric secretion", s:94, q:"When the antral pH becomes very low, gastrin release is inhibited largely because acid...",
+  o:["Directly destroys the G-cells","Stimulates somatostatin release, which suppresses gastrin (negative feedback)","Converts gastrin into secretin","Increases histamine release"],
+  a:1, e:"A low antral pH stimulates somatostatin, which inhibits gastrin release \u2014 a negative-feedback brake on acid secretion. Acid does not destroy G-cells, convert gastrin to secretin, or raise histamine."},
+
+ /* ===== GI hormones ===== */
+ {obj:"GI hormones", s:12, q:"Besides stimulating gastric acid secretion, gastrin has what other notable action?",
+  o:["A trophic effect promoting growth of the oxyntic (gastric) mucosa","Emptying the gallbladder","Stimulating pancreatic enzyme secretion","Inhibiting all gastric secretion"],
+  a:0, e:"Beyond stimulating acid, gastrin is trophic to the oxyntic mucosa, promoting its growth. Gallbladder emptying and pancreatic enzyme secretion are CCK's actions, and gastrin stimulates rather than inhibits gastric secretion."},
+
+ {obj:"GI hormones", s:13, q:"Which luminal stimulus most strongly triggers CCK release from duodenal I-cells?",
+  o:["Intact triglycerides","Glucose alone","Fatty acids and monoglycerides (products of fat digestion), plus peptides and amino acids","Water"],
+  a:2, e:"CCK release is triggered by fat-digestion products (fatty acids, monoglycerides) and by peptides/amino acids \u2014 not by intact triglycerides, glucose alone, or water."},
+
+ {obj:"GI hormones", s:14, q:"A major action of CCK is to...",
+  o:["Contract the gallbladder and relax the sphincter of Oddi, delivering bile to the intestine","Stimulate gastric acid secretion","Relax the gallbladder so it stores more bile","Neutralize acid by directly secreting bicarbonate"],
+  a:0, e:"CCK contracts the gallbladder and relaxes the sphincter of Oddi, sending bile and pancreatic enzymes into the duodenum. It does not stimulate acid, promote bile storage, or directly secrete bicarbonate."},
+
+ {obj:"GI hormones", s:16, q:"Secretin is called \u201cnature's antacid\u201d because, in response to duodenal acid, it...",
+  o:["Directly buffers acid within the stomach","Stimulates more gastrin release","Stimulates pancreatic and biliary bicarbonate secretion and inhibits gastric acid","Increases gastric emptying of acid"],
+  a:2, e:"Secretin, released by duodenal acid, drives bicarbonate secretion from pancreas and bile ducts and inhibits gastric acid and gastrin. It does not buffer acid directly in the stomach, raise gastrin, or speed acid emptying."},
+
+ {obj:"GI hormones", s:17, q:"Glucose-dependent insulinotropic peptide (GIP) is notable because it...",
+  o:["Is the main stimulus for gallbladder contraction","Activates pancreatic proteolytic enzymes","Is released only during fasting","Stimulates insulin release in response to oral nutrients (an incretin effect)"],
+  a:3, e:"GIP is an incretin: oral nutrients trigger it to enhance insulin release (and it inhibits gastric acid). Gallbladder contraction is CCK's role, zymogen activation is enterokinase/trypsin, and GIP is released after eating, not during fasting."},
+
+ {obj:"GI hormones", s:18, q:"Which hormone is released cyclically during fasting to drive the migrating motor complexes?",
+  o:["Cholecystokinin","Motilin","Secretin","Gastrin"],
+  a:1, e:"Motilin is released cyclically during fasting and drives the migrating motor complexes. CCK, secretin, and gastrin are released in response to a meal and serve digestive rather than interdigestive roles."},
+
+ /* ===== Digestive enzymes ===== */
+ {obj:"Digestive enzymes", s:72, q:"Which enzyme in saliva begins the digestion of starch in the mouth?",
+  o:["Pepsin","Trypsin","\u03b1-amylase (ptyalin)","Lingual lipase"],
+  a:2, e:"Salivary \u03b1-amylase (ptyalin) starts starch digestion in the mouth. Pepsin digests protein in the stomach, trypsin is a pancreatic protease, and lingual lipase acts on fat, not starch."},
+
+ {obj:"Digestive enzymes", s:83, q:"Pepsin works best under what conditions, and what happens as pH rises?",
+  o:["It works best at alkaline pH and is inactivated by acid","It is optimally active at acidic pH (~1.8\u20133.5) and is inactivated as pH rises toward neutral","It is equally active across all pH values","It requires bile salts to function"],
+  a:1, e:"Pepsin is optimally active in the acidic stomach (pH ~1.8\u20133.5) and loses activity as pH climbs toward neutral (irreversibly above pH 7\u20138). It is not alkaline-optimal, pH-independent, or bile-dependent."},
+
+ {obj:"Digestive enzymes", s:123, q:"After pancreatic amylase acts, where is carbohydrate digestion completed?",
+  o:["In the stomach by pepsin","Inside the liver","In the colon by bacteria only","At the brush border, by membrane-bound disaccharidases"],
+  a:3, e:"Luminal amylase yields disaccharides and oligosaccharides, and final carbohydrate digestion is completed by brush-border disaccharidases (maltase, sucrase, lactase). It is not finished by gastric pepsin, in the liver, or solely by colonic bacteria."},
+
+ {obj:"Digestive enzymes", s:104, q:"Enterokinase (enteropeptidase) on the intestinal brush border is essential because it...",
+  o:["Activates trypsinogen to trypsin, which then activates the other pancreatic zymogens","Directly digests triglycerides","Neutralizes gastric acid","Absorbs amino acids"],
+  a:0, e:"Enterokinase converts trypsinogen to trypsin, which then activates chymotrypsinogen, procarboxypeptidase, and more trypsinogen. It does not digest fat, neutralize acid, or absorb amino acids."},
+
+ {obj:"Digestive enzymes", s:127, q:"The final steps of protein digestion (di- and tripeptides to amino acids) occur...",
+  o:["Only in the stomach lumen","At the brush border and within the cytoplasm of the mucosal cells","Only in the mouth","In the colon"],
+  a:1, e:"Protein digestion finishes at the brush border (oligopeptidases, dipeptidases) and in the enterocyte cytoplasm (di-/tripeptidases). It is not completed in the stomach, mouth, or colon."},
+
+ /* ===== Biliary system ===== */
+ {obj:"Biliary system", s:137, q:"What is the role of bile salts in fat digestion?",
+  o:["They emulsify large fat droplets into smaller ones, increasing the surface area for lipase","They chemically break triglycerides into fatty acids","They transport fat directly into the blood","They neutralize stomach acid"],
+  a:0, e:"Bile salts are emulsifiers: they disperse large fat globules into fine droplets, expanding the surface on which pancreatic lipase acts. The chemical breakdown of triglycerides is lipase's job, and bile salts neither carry fat into blood nor neutralize acid."},
+
+ {obj:"Biliary system", s:133, q:"How do the products of fat digestion (monoglycerides and fatty acids) reach the enterocyte surface for absorption?",
+  o:["Dissolved freely in water and diffusing on their own","Bound to intrinsic factor","Packaged into micelles with bile salts, which ferry them to the brush border","Inside chylomicrons formed in the lumen"],
+  a:2, e:"Because they are poorly water-soluble, monoglycerides and fatty acids are carried in micelles with bile salts to the enterocyte brush border. They do not simply diffuse, bind intrinsic factor, or ride in lumen-formed chylomicrons \u2014 chylomicrons form inside the enterocyte."},
+
+ {obj:"Biliary system", s:121, q:"Where are bile salts reabsorbed to be recycled back to the liver?",
+  o:["In the stomach","In the duodenum","In the colon","In the ileum"],
+  a:3, e:"Bile salts are actively reabsorbed in the ileum and returned to the liver (the enterohepatic circulation). They are not reclaimed in the stomach, duodenum, or colon."},
+
+ {obj:"Biliary system", s:15, q:"The delivery of stored bile into the small intestine after a fatty meal is triggered mainly by...",
+  o:["Secretin, which contracts the gallbladder","Gastrin, which relaxes the sphincter of Oddi","Motilin, during fasting","CCK, which contracts the gallbladder"],
+  a:3, e:"A fatty or protein-rich meal releases CCK, which contracts the gallbladder and relaxes the sphincter of Oddi to deliver bile. Secretin drives bicarbonate, gastrin governs acid, and motilin acts during fasting."},
+
+ {obj:"Biliary system", s:16, q:"In addition to acting on the pancreas, secretin stimulates the liver/biliary system to secrete...",
+  o:["Digestive enzymes","Intrinsic factor","Bicarbonate-rich fluid","Larger amounts of bile salts"],
+  a:2, e:"Secretin stimulates the liver and bile ducts (and pancreas) to add bicarbonate-rich fluid that helps neutralize acid. It does not stimulate enzyme, intrinsic-factor, or bile-salt output."},
+
+ /* ===== Exocrine pancreas ===== */
+ {obj:"Exocrine pancreas", s:99, q:"The exocrine pancreas serves two key roles as chyme enters the small intestine:",
+  o:["Absorbing nutrients and storing bile","Supplying digestive enzymes for all nutrient types and bicarbonate to neutralize acid chyme","Producing intrinsic factor and gastrin","Emulsifying fat and reabsorbing bile salts"],
+  a:1, e:"The exocrine pancreas secretes enzymes for carbohydrate, protein, and fat digestion plus bicarbonate to neutralize acidic chyme. It does not absorb nutrients or store bile, make intrinsic factor/gastrin, or emulsify fat (a bile-salt role)."},
+
+ {obj:"Exocrine pancreas", s:103, q:"Why are pancreatic proteolytic enzymes secreted as inactive precursors (zymogens)?",
+  o:["To prevent the pancreas from digesting itself","Because they are only active in the stomach","Because acid is required to synthesize them","To allow them to be absorbed before activation"],
+  a:0, e:"Proteolytic enzymes are stored and secreted as inactive zymogens (with a trypsin inhibitor present) so they cannot digest the pancreas that makes them. They are not stomach-specific, do not require acid for synthesis, and are not absorbed."},
+
+ {obj:"Exocrine pancreas", s:104, q:"Once formed, trypsin plays a central role in the intestine by...",
+  o:["Activating chymotrypsinogen, procarboxypeptidase, and more trypsinogen","Neutralizing acid chyme","Emulsifying fats","Absorbing peptides"],
+  a:0, e:"Trypsin is the master activator: it converts chymotrypsinogen, procarboxypeptidase, and additional trypsinogen to their active forms. Neutralizing acid is bicarbonate's role, emulsifying fat is bile's, and absorption is the mucosa's."},
+
+ {obj:"Exocrine pancreas", s:105, q:"Pancreatic acinar cells store a trypsin inhibitor in order to...",
+  o:["Speed up enzyme activation within the pancreas","Block any trypsin that forms prematurely inside the acinar cells and ducts","Neutralize bicarbonate","Activate chymotrypsin"],
+  a:1, e:"Trypsin inhibitor neutralizes small amounts of trypsin that activate prematurely within acini and ducts, preventing autodigestion; overwhelming it contributes to pancreatitis. It does not accelerate activation, neutralize bicarbonate, or activate chymotrypsin."},
+
+ {obj:"Exocrine pancreas", s:106, q:"Pancreatic bicarbonate secretion is important because it...",
+  o:["Activates trypsinogen directly","Emulsifies dietary fat","Stimulates gastric acid secretion","Neutralizes acidic chyme, creating the pH (~7\u20138) needed for pancreatic enzymes"],
+  a:3, e:"Pancreatic bicarbonate neutralizes acid entering the duodenum, establishing the near-neutral pH at which pancreatic enzymes work best. It does not activate trypsinogen (enterokinase does), emulsify fat (bile does), or stimulate gastric acid."},
+
+ {obj:"Exocrine pancreas", s:107, q:"Pancreatic enzyme secretion versus bicarbonate/fluid secretion are controlled mainly by:",
+  o:["Both entirely by gastrin","Enzyme output by acid; bicarbonate output by fat","Enzyme secretion by fat and protein (via CCK); bicarbonate/fluid secretion by acid (via secretin)","Both by intrinsic factor"],
+  a:2, e:"Pancreatic enzyme secretion tracks duodenal fat and protein (through CCK), while bicarbonate/fluid secretion tracks duodenal acid (through secretin). Gastrin and intrinsic factor are not the main controllers, and the acid/fat pairing is reversed in the other option."},
+
+ /* ===== Liver functions ===== */
+ {obj:"Liver functions", s:138, q:"After chylomicrons deliver most of their triglyceride to tissues, the remnants are...",
+  o:["Excreted in bile unchanged","Reabsorbed in the ileum","Taken up (cleared) by the liver","Converted back into bile salts in the gut"],
+  a:2, e:"After lipoprotein lipase strips triglyceride from chylomicrons in the tissues, the cholesterol-rich remnants are cleared by the liver. They are not excreted intact in bile, reabsorbed in the ileum, or turned into bile salts in the gut."},
+
+ {obj:"Liver functions", s:139, q:"Which lipoprotein returns excess cholesterol from the tissues back to the liver?",
+  o:["LDL","VLDL","Chylomicrons","HDL"],
+  a:3, e:"HDL performs reverse cholesterol transport, returning excess cholesterol from tissues to the liver. LDL delivers cholesterol to cells, VLDL carries liver-made triglyceride to tissues, and chylomicrons carry dietary fat from the gut."},
+
+ {obj:"Liver functions", s:113, q:"Bile, which is essential for fat emulsification, is produced by which organ?",
+  o:["The liver","The gallbladder","The pancreas","The duodenal mucosa"],
+  a:0, e:"The liver produces bile continuously; the gallbladder only stores and concentrates it between meals. The pancreas and duodenal mucosa secrete other digestive fluids, not bile."},
+
+ /* ===== Nutrient absorption ===== */
+ {obj:"Nutrient absorption", s:118, q:"The villi and microvilli of the small intestine are important because they...",
+  o:["Secrete the pancreatic enzymes","Vastly increase the surface area available for absorption","Neutralize gastric acid","Store bile salts"],
+  a:1, e:"Villi (~10-fold) and microvilli/brush border (~20-fold) hugely amplify the absorptive surface area of the small intestine. They do not secrete pancreatic enzymes, neutralize acid, or store bile salts."},
+
+ {obj:"Nutrient absorption", s:126, q:"Glucose and galactose are absorbed across the intestinal brush border by...",
+  o:["Simple diffusion down their concentration gradient","Facilitated diffusion that does not use sodium","Endocytosis","Secondary active transport coupled to sodium (SGLT-1)"],
+  a:3, e:"Glucose and galactose share the Na\u207a-coupled SGLT-1 carrier, using the sodium gradient (maintained by the Na\u207a\u2013K\u207a ATPase) for secondary active transport. They are not absorbed by simple diffusion, sodium-independent facilitated diffusion, or endocytosis."},
+
+ {obj:"Nutrient absorption", s:126, q:"How is fructose absorbed, in contrast to glucose?",
+  o:["By secondary active transport with sodium","By primary active transport using ATP directly","By facilitated diffusion (GLUT-5), needing no energy or sodium","By endocytosis"],
+  a:2, e:"Fructose crosses via GLUT-5 facilitated diffusion, moving down its gradient without energy or sodium coupling \u2014 unlike glucose and galactose. It is not actively transported or taken up by endocytosis."},
+
+ {obj:"Nutrient absorption", s:125, q:"The final products of carbohydrate digestion that are actually absorbed are...",
+  o:["Monosaccharides, mostly glucose","Disaccharides such as maltose and lactose","Short glucose polymers","Starch fragments"],
+  a:0, e:"Carbohydrates must be reduced to monosaccharides (about 80% glucose, plus fructose and galactose) before absorption. Disaccharides, oligosaccharides, and starch fragments must first be split at the brush border."},
+
+ {obj:"Nutrient absorption", s:129, q:"Which statement about protein absorption is correct?",
+  o:["Di- and tripeptides use a different carrier than free amino acids and are absorbed faster","Only free amino acids can be absorbed","Whole proteins are absorbed intact in adults","Peptides are absorbed only in the stomach"],
+  a:0, e:"Small di- and tripeptides are taken up by a separate carrier (and hydrolyzed inside the cell), and are actually absorbed faster than free amino acids. Whole proteins are not absorbed intact in adults, and peptide absorption occurs in the small intestine, not the stomach."},
+
+ {obj:"Nutrient absorption", s:135, q:"After fats are reassembled into triglycerides and packaged into chylomicrons, they enter the...",
+  o:["Portal blood directly","Bile ducts","Lymphatic system (lacteals), because chylomicrons are too large for blood capillaries","Gastric veins"],
+  a:2, e:"Chylomicrons are too large to enter blood capillaries, so they pass into the lacteals and travel via lymph to the thoracic duct before reaching the blood. They do not enter portal blood, bile ducts, or gastric veins directly."},
+
+ {obj:"Nutrient absorption", s:132, q:"Once inside the enterocyte, absorbed monoglycerides and fatty acids are...",
+  o:["Broken down further into glycerol and carbon dioxide","Reassembled into triglycerides and packaged into chylomicrons","Absorbed directly into the portal vein as free fat","Returned to the lumen"],
+  a:1, e:"Inside the enterocyte, absorbed monoglycerides and fatty acids are re-esterified into triglycerides and packaged (with apoproteins) into chylomicrons. They are not oxidized to CO\u2082 there, sent into portal blood as free fat, or returned to the lumen."},
+
+ {obj:"Nutrient absorption", s:121, q:"Vitamin B12 (bound to intrinsic factor) is absorbed at which site?",
+  o:["The stomach","The duodenum","The colon","The ileum"],
+  a:3, e:"The intrinsic-factor\u2013B12 complex is absorbed in the ileum (as are bile salts). The stomach and colon absorb little B12, and the duodenum mainly absorbs other nutrients, iron, and calcium."},
+
+ /* ===== Defecation ===== */
+ {obj:"Defecation", s:66, q:"The intrinsic defecation reflex is initiated when...",
+  o:["Feces enter and distend the rectum, triggering myenteric-plexus signals","The stomach empties completely","The internal anal sphincter contracts","Bile enters the colon"],
+  a:0, e:"Rectal distension by feces triggers the intrinsic (ENS-mediated) reflex, which contracts the colon/rectum and relaxes the internal anal sphincter. Gastric emptying, sphincter contraction, and bile entering the colon do not initiate it."},
+
+ {obj:"Defecation", s:66, q:"For defecation to occur, the internal anal sphincter relaxes and then...",
+  o:["The internal sphincter must contract again","The external anal sphincter must be voluntarily relaxed","The pyloric sphincter must open","Mass movements must stop"],
+  a:1, e:"The internal anal sphincter (smooth muscle) relaxes reflexively, but defecation proceeds only if the external anal sphincter (striated, voluntary) is consciously relaxed. Re-contracting the internal sphincter, opening the pylorus, or stopping mass movements would not allow it."},
+
+ {obj:"Defecation", s:67, q:"How does the spinal-cord (parasympathetic) defecation reflex relate to the intrinsic reflex?",
+  o:["It replaces the intrinsic reflex entirely","It is qualitatively different and unrelated","It inhibits defecation","It greatly intensifies the intrinsic reflex via pelvic-nerve parasympathetic fibers"],
+  a:3, e:"The spinal (parasympathetic, S2\u2013S4) reflex reinforces \u2014 not replaces \u2014 the intrinsic reflex, greatly strengthening colonic and rectal contractions through pelvic-nerve fibers. It is not qualitatively different, unrelated, or inhibitory."}
+];
+
+/* ---------------- STATE + LOGIC ---------------- */
+const LETTERS = ["A","B","C","D"];
+let current = 0;
+let score = 0;
+let answered = false;
+let responses = [];
+
+const $ = id => document.getElementById(id);
+
+function startQuiz(){
+  current = 0; score = 0; responses = [];
+  $("start").classList.add("hidden");
+  $("results").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderQuestion(){
+  answered = false;
+  const item = questions[current];
+  $("qcount").textContent = `Question ${current+1} of ${questions.length}`;
+  $("scorepill").textContent = `Score: ${score}`;
+  $("barfill").style.width = `${(current/questions.length)*100}%`;
+  $("qtag").textContent = item.obj;
+  $("qtext").textContent = item.q;
+
+  const box = $("options");
+  box.innerHTML = "";
+  item.o.forEach((text,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+    b.onclick = ()=>selectAnswer(i);
+    box.appendChild(b);
+  });
+
+  $("explain").classList.remove("show");
+  $("nextbtn").disabled = true;
+  $("hintline").textContent = "Select an answer to continue";
+  $("nextbtn").textContent = (current === questions.length-1) ? "See results \u2192" : "Next \u2192";
+}
+
+function selectAnswer(choice){
+  if(answered) return;
+  answered = true;
+  const item = questions[current];
+  const correct = item.a;
+  const btns = $("options").querySelectorAll(".opt");
+
+  btns.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === correct) b.classList.add("correct");
+    else if(i === choice) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+
+  const isCorrect = (choice === correct);
+  if(isCorrect) score++;
+  responses.push({i:current, choice, correct, isCorrect});
+
+  const v = $("verdict");
+  if(isCorrect){
+    v.className = "verdict ok";
+    v.textContent = "\u2713 Correct";
+  } else {
+    v.className = "verdict no";
+    v.textContent = `\u2717 Incorrect \u2014 the answer is ${LETTERS[correct]}`;
+  }
+  $("explainbody").textContent = item.e;
+  $("cite").textContent = `Source: ${DECK}, Slide ${item.s}`;
+  $("explain").classList.add("show");
+
+  $("scorepill").textContent = `Score: ${score}`;
+  $("nextbtn").disabled = false;
+  $("hintline").textContent = (current === questions.length-1) ? "Ready to finish" : "";
+}
+
+function nextQuestion(){
+  if(!answered) return;
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else {
+    showResults();
+  }
+}
+
+function showResults(){
+  $("quiz").classList.add("hidden");
+  $("results").classList.remove("hidden");
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+  $("finalscore").textContent = `${score} / ${total}`;
+  $("finalpct").textContent = `${pct}%`;
+
+  let msg;
+  if(pct>=90) msg = "Outstanding \u2014 you have a strong command of GI physiology.";
+  else if(pct>=80) msg = "Solid work. A few concepts to tighten up before the exam.";
+  else if(pct>=70) msg = "Decent foundation \u2014 review the missed items below and re-test.";
+  else if(pct>=60) msg = "Getting there. Focus your review on the objectives you missed most.";
+  else msg = "Worth another pass through the material \u2014 use the review below, then restart.";
+  $("gradeline").textContent = msg;
+
+  const missed = responses.filter(r=>!r.isCorrect);
+  const review = $("review");
+  review.innerHTML = "";
+
+  if(missed.length === 0){
+    const d = document.createElement("div");
+    d.className = "allright";
+    d.textContent = "Perfect score \u2014 you didn't miss a single question. Every objective covered.";
+    review.appendChild(d);
+    return;
+  }
+
+  const h = document.createElement("h3");
+  h.textContent = `Review \u2014 ${missed.length} missed question${missed.length>1?"s":""}`;
+  review.appendChild(h);
+
+  missed.forEach(r=>{
+    const item = questions[r.i];
+    const wrap = document.createElement("div");
+    wrap.className = "missed";
+    wrap.innerHTML =
+      `<div class="mq">Q${r.i+1}. ${item.q}</div>`+
+      `<div class="row yours">Your answer: ${LETTERS[r.choice]}. ${item.o[r.choice]}</div>`+
+      `<div class="row right">Correct answer: ${LETTERS[r.correct]}. ${item.o[r.correct]}</div>`+
+      `<div class="why">${item.e}</div>`+
+      `<div class="mcite">${DECK}, Slide ${item.s}</div>`;
+    review.appendChild(wrap);
+  });
+}
+
+function restart(){ startQuiz(); }
+</script>
+</body>
+</html>
