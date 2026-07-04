@@ -41,6 +41,32 @@
         --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
         --tab-border: rgba(96, 165, 250, 0.3);
       }
+      .edge-decor {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      }
+    }
+
+    .edge-decor {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 70px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%232563eb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 60px 120px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: -1;
+      display: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+    }
+    .edge-decor.left { left: 0; }
+    .edge-decor.right { right: 0; transform: scaleX(-1); }
+
+    @media (min-width: 1000px) {
+      .edge-decor { display: block; }
     }
 
     * { box-sizing: border-box; }
@@ -234,6 +260,9 @@
   </style>
 </head>
 <body>
+  <div class="edge-decor left"></div>
+  <div class="edge-decor right"></div>
+
   <div id="pull-refresh">
     <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
@@ -260,7 +289,7 @@
     <header>
       <h1>Class of 2028 Review</h1>
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
-      <p class="subtitle" style="text-decoration: underline;">-Read the question carefully, DON'T change ya answer-</p>
+      <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
 
     <div class="card">
