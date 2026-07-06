@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #0f766e; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upper GI Tract — Study Reference</title>
+<style>
+  :root{
+    --bg:#0b1615; --panel:#fff; --ink:#132321; --muted:#5b6f6c; --line:#dbe8e6;
+    --teal:#0f766e; --teal-dk:#0b5c56; --teal-soft:#e6f5f3;
+    --shadow:0 10px 30px rgba(11,22,21,.18);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background: radial-gradient(1200px 500px at 50% -10%, #123a36 0%, rgba(18,58,54,0) 60%), linear-gradient(160deg,#0b1615 0%,#0f2422 100%);
+    color:var(--ink); min-height:100vh; padding:28px 16px 60px; line-height:1.55;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .card{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:30px 30px 26px;border:1px solid rgba(15,118,110,.08)}
+  .eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:10px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 6px;color:var(--teal-dk);font-weight:800}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .diagram-wrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+  .diagram-wrap img{width:100%;height:auto;display:block}
+  .back-link{display:inline-block;margin-top:20px;color:var(--teal-dk);font-weight:700;font-size:14.5px;text-decoration:none}
+  .back-link:hover{text-decoration:underline}
+  .mistake-note{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px;font-style:italic}
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #14b8a6; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;flex-shrink:0;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="wrap">
+  <div class="card">
+    <div class="eyebrow">Anatomy Practicum &middot; GI &middot; Study</div>
+    <h1>Upper GI Tract &mdash; Study Reference</h1>
+    <p class="sub">Fully labeled reference image for review before the practicum.</p>
+    <div class="diagram-wrap">
+      <img src="gi-upper-gi-tract-study.jpg" alt="Upper GI Tract, fully labeled">
+    </div>
+    <a class="back-link" href="../index.html">&larr; Back to Class Quizzes</a>
+    <p class="mistake-note">&#9733; If you see any mistakes, please let me know! &#9733;</p>
+  </div>
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+</body>
+</html>

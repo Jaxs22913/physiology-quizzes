@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology Master Exam — Form B — Units 6, 7, 12 &amp; 13</title>
+<style>
+  :root{
+    --bg:#0c1020; --panel:#fff; --ink:#1a1f30; --muted:#5c6479; --line:#e0e2ec;
+    --indigo:#8a2f66; --indigo-dk:#5f1f47; --indigo-soft:#f7e8f0; --gold:#c98a3f;
+    --green:#1f7a4d; --green-soft:#e6f3ec; --red:#b3261e; --red-soft:#fbe9e8;
+    --shadow:0 10px 30px rgba(12,16,32,.22);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 500px at 50% -10%, #5a2247 0%, rgba(42,45,99,0) 60%),
+      linear-gradient(160deg,#160b14 0%,#2a1422 100%);
+    color:var(--ink);min-height:100vh;padding:28px 16px 60px;line-height:1.55;}
+  .wrap{max-width:760px;margin:0 auto}
+  .card{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:30px 30px 26px;border:1px solid rgba(138,47,102,.08)}
+  .eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:10px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 6px;color:var(--indigo-dk);font-weight:800}
+  h2{font-size:20px;margin:0 0 14px;color:var(--indigo-dk)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .obj{background:var(--indigo-soft);border-radius:12px;padding:16px 18px;margin:0 0 24px;border:1px solid rgba(138,47,102,.14)}
+  .obj p{margin:0 0 8px;font-weight:700;color:var(--indigo-dk);font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .obj ul{margin:0;padding-left:20px;columns:2;column-gap:26px}
+  .obj li{margin:4px 0;font-size:14px;color:var(--ink);break-inside:avoid}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+  .chip{background:#f7ecf2;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--muted);font-weight:600}
+  .chip b{color:var(--indigo-dk)}
+  .instructions{font-size:14.5px;color:var(--muted);margin:0 0 26px}
+  .instructions ul{margin:8px 0 0;padding-left:20px}.instructions li{margin:3px 0}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn{background:var(--indigo);color:#fff;font-weight:700;font-size:16px;padding:14px 26px;border-radius:12px;transition:transform .05s ease,background .2s ease;box-shadow:0 6px 16px rgba(138,47,102,.28)}
+  .btn:hover{background:var(--indigo-dk)}.btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--indigo-dk);border:1.5px solid var(--indigo);box-shadow:none}
+  .btn.ghost:hover{background:var(--indigo-soft)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btnrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .qcount{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.03em}
+  .scorepill{font-size:13px;font-weight:800;color:var(--indigo-dk);background:var(--indigo-soft);padding:5px 12px;border-radius:999px;border:1px solid rgba(138,47,102,.18)}
+  .bar{height:8px;background:#e8eaf2;border-radius:999px;overflow:hidden;margin:0 0 22px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .35s ease;border-radius:999px}
+  .qtag{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  .question{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 20px;line-height:1.4}
+  .options{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;font-size:15.5px;color:var(--ink);transition:all .15s ease}
+  .opt:hover:not(:disabled){border-color:var(--indigo);background:#fdf7fb}
+  .opt .ltr{flex:0 0 28px;height:28px;border-radius:8px;background:#efdce7;color:var(--indigo-dk);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}.opt.correct .ltr{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}.opt.wrong .ltr{background:var(--red);color:#fff}
+  .opt.dim{opacity:.62}.opt:disabled{cursor:default}
+  .explain{margin-top:20px;border-radius:12px;padding:16px 18px;font-size:15px;display:none;border:1px solid var(--line);background:#fbf5f9}
+  .explain.show{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:15px}.verdict.ok{color:var(--green)}.verdict.no{color:var(--red)}
+  .explain .body{color:#3a2233}
+  .cite{margin-top:12px;font-size:12.5px;color:var(--muted);font-style:italic;border-top:1px dashed var(--line);padding-top:10px}
+  .scorebig{font-size:56px;font-weight:800;color:var(--indigo-dk);line-height:1;margin:6px 0 2px}
+  .pct{font-size:17px;color:var(--muted);font-weight:700;margin-bottom:18px}
+  .gradeline{font-size:16px;margin:0 0 22px;color:var(--ink)}
+  .breakdown{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+  .bd{background:#f7ecf2;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--muted);font-weight:600}
+  .bd b{color:var(--indigo-dk)}
+  .review h3{font-size:15px;color:var(--indigo-dk);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .missed{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff}
+  .missed .mq{font-weight:700;margin-bottom:8px;font-size:15px}
+  .missed .row{font-size:14px;margin:3px 0}.missed .yours{color:var(--red)}.missed .right{color:var(--green);font-weight:600}
+  .missed .why{color:var(--muted);font-size:13.5px;margin-top:8px}.missed .mcite{color:var(--muted);font-size:12px;font-style:italic;margin-top:8px}
+  .allright{background:var(--green-soft);border:1px solid #bfe3ce;border-radius:12px;padding:16px 18px;color:#175c3a;font-weight:600}
+  .foot{color:#8a9096;text-align:center;font-size:12.5px;margin-top:22px}
+  .hidden{display:none}
+  @media(max-width:520px){.obj ul{columns:1}}
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;flex-shrink:0;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <section id="start" class="card">
+    <div class="eyebrow">Physiology &middot; Comprehensive &middot; Form B</div>
+    <h1>Physiology Master Exam &mdash; Form B</h1>
+    <p class="sub">A second, fresh 70-question set &mdash; different questions from Form A, no repeats. Topics mixed, exam-style.</p>
+    <div class="obj">
+      <p>Units &amp; chapters covered</p>
+      <ul>
+        <li>Hemostasis &amp; coagulation (Ch. 37)</li>
+        <li>Blood &amp; immunology (Ch. 34&ndash;35)</li>
+        <li>Pulmonary physiology (Ch. 38&ndash;42)</li>
+        <li>GI physiology (Ch. 63&ndash;66)</li>
+        <li>Metabolism &amp; nutrition (Ch. 68&ndash;72)</li>
+        <li>Energetics &amp; thermoregulation (Ch. 73&ndash;74)</li>
+      </ul>
+    </div>
+    <div class="meta">
+      <span class="chip"><b>70</b> questions</span>
+      <span class="chip">5 units, mixed</span>
+      <span class="chip">Instant feedback</span>
+      <span class="chip">Slide-cited</span>
+      <span class="chip">Per-unit scoring</span>
+    </div>
+    <div class="instructions">How it works:
+      <ul>
+        <li>Read each question and click one answer (A&ndash;D).</li>
+        <li>You'll see immediately whether you're right, with an explanation of every choice.</li>
+        <li>Each question shows its unit/topic and cites its source slide.</li>
+        <li>At the end you get your total score, a per-unit breakdown, and a review of anything you missed.</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="startQuiz()">Start exam &rarr;</button>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="topbar"><span class="qcount" id="qcount">Question 1 of 70</span><span class="scorepill" id="scorepill">Score: 0</span></div>
+    <div class="bar"><i id="barfill"></i></div>
+    <div class="qtag" id="qtag">Topic</div>
+    <div class="question" id="qtext">Question text</div>
+    <div class="options" id="options"></div>
+    <div class="explain" id="explain">
+      <div class="verdict" id="verdict"></div><div class="body" id="explainbody"></div><div class="cite" id="cite"></div>
+    </div>
+    <div class="btnrow"><span class="qcount" id="hintline">Select an answer to continue</span>
+      <button class="btn" id="nextbtn" onclick="nextQuestion()" disabled>Next &rarr;</button></div>
+  </section>
+
+  <section id="results" class="card hidden">
+    <div class="eyebrow">Results</div>
+    <h2>Exam complete</h2>
+    <div class="scorebig" id="finalscore">0 / 70</div>
+    <div class="pct" id="finalpct">0%</div>
+    <div class="gradeline" id="gradeline"></div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="review" id="review"></div>
+    <div class="btnrow" style="justify-content:center; gap:12px;"><button class="btn ghost" onclick="restart()">&#8635; Restart exam</button><a class="btn" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a></div>
+    <div class="foot">Compiled from the Unit 6, 7, 12 &amp; 13 lectures (Guyton &amp; Hall). Not for clinical use.</div>
+  </section>
+</div>
+<script>
+const questions = [{"unit":"GI","obj":"GI motility","q":"According to the “law of the gut,” a bolus that distends the intestine causes...","o":["Relaxation on both sides at the same time","Contraction on the orad (upstream) side and relaxation on the downstream (aboral) side","Contraction ahead of the bolus, pushing it backward","No coordinated response unless the sympathetic nerves fire"],"a":1,"e":"Distension makes the segment behind the bolus contract while the segment ahead relaxes, propelling contents aborally. Simultaneous relaxation, contraction ahead of the bolus, or dependence on sympathetic input all misdescribe this reflex.","cite":"GI Physiology, Slide 39"},{"unit":"Metabolism","obj":"Carbohydrate metabolism & ATP","q":"Which statement about insulin and cellular glucose uptake is correct?","o":["Most glucose uptake uses insulin-independent carriers (e.g., GLUT-1); GLUT-4 in muscle and fat is insulin-dependent","All cellular glucose uptake requires insulin","No glucose transporter responds to insulin at all","Insulin is required for glucose uptake only in the liver"],"a":0,"e":"Most post-absorptive glucose uptake uses insulin-independent transporters like GLUT-1, while GLUT-4 in muscle and adipose is the insulin-dependent carrier. So not all uptake needs insulin, some transporters clearly respond to it, and the liver is not the special case.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 68, Slide 4"},{"unit":"Hemostasis","obj":"Blood & its components","q":"Platelets have no nucleus. What is the direct consequence of this?","o":["They are unable to store calcium for clotting","They cannot adhere to exposed collagen","They cannot contract during clot retraction","They cannot reproduce"],"a":3,"e":"Without a nucleus, platelets cannot reproduce. (A) is wrong — platelets do store Ca²⁺. (B) is wrong — they adhere to collagen, aided by von Willebrand factor. (C) is wrong — they contract using actin, myosin, and thrombosthenin.","cite":"Hemostasis & Blood Coagulation, Slide 32"},{"unit":"Pulmonary","obj":"Respiratory muscles","q":"During quiet (resting) breathing, how is expiration accomplished?","o":["By active contraction of the diaphragm","Passively, through elastic recoil of the lungs and chest wall","By contraction of the abdominal muscles","By contraction of the external intercostals"],"a":1,"e":"In quiet breathing the inspiratory muscles simply relax and the stretched lung recoils, expelling air passively — no active expiratory effort is needed. Diaphragm and external-intercostal contraction produce inspiration, and the abdominals are recruited only for forced expiration.","cite":"Pulmonary Physiology I & II, Slide 18"},{"unit":"Immunology","obj":"Blood & its components","q":"Among the white blood cell types listed in the deck, which functions specifically to activate blood clotting?","o":["Neutrophils","Eosinophils","Platelets","Lymphocytes"],"a":2,"e":"Platelets (from megakaryocytes) are grouped with the WBCs here and function specifically to trigger blood clotting. Neutrophils and eosinophils are phagocytic/effector granulocytes, and lymphocytes serve the immune system — none of these initiate clotting.","cite":"Blood and Immunology, Slide 4"},{"unit":"GI","obj":"GI motility","q":"How does autonomic input generally affect GI activity?","o":["Parasympathetic input mainly stimulates, and sympathetic input mainly inhibits","Parasympathetic inhibits and sympathetic stimulates","Both divisions stimulate the gut equally","Neither division affects gut motility"],"a":0,"e":"Parasympathetic (vagal/pelvic, ACh) activity generally stimulates motility and secretion, while sympathetic (NE) activity generally inhibits. The other options reverse or deny these effects.","cite":"GI Physiology, Slide 25"},{"unit":"Metabolism","obj":"Carbohydrate metabolism & ATP","q":"The complete aerobic oxidation of one glucose molecule yields approximately how many ATP?","o":["About 2 ATP","About 38 ATP","About 100 ATP","About 12 ATP"],"a":1,"e":"Full aerobic oxidation of one glucose yields roughly 38 ATP (glycolysis, pyruvate→acetyl-CoA, the TCA cycle, and oxidative phosphorylation). About 2 ATP is the anaerobic, glycolysis-only yield; 100 and 12 are incorrect.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 68, Slide 23"},{"unit":"Hemostasis","obj":"Hematocrit & hemoglobin","q":"How many oxygen molecules can a single hemoglobin molecule carry, and why?","o":["Two — one for each beta chain","Sixteen — four for each of the four chains","Four — one for each iron atom","Eight — one for each globin chain"],"a":2,"e":"Each hemoglobin has four heme groups, each with one iron atom that binds one O₂ molecule — four O₂ molecules (eight oxygen atoms) per hemoglobin. (D) confuses the four chains with eight molecules; (A) and (B) miscount the heme/iron units.","cite":"Hemostasis & Blood Coagulation, Slide 21"},{"unit":"Pulmonary","obj":"Respiratory muscles","q":"How does forced expiration differ from quiet expiration?","o":["It requires surfactant to push air out","It relies solely on relaxation of the diaphragm","It makes pleural pressure more negative","It uses active muscle effort, and pleural pressure can become positive"],"a":3,"e":"Forced expiration recruits expiratory muscles (e.g., abdominals), which can drive intrapleural pressure positive to expel air rapidly. Passive relaxation and a more-negative pleural pressure describe quiet breathing and inspiration, and surfactant lowers surface tension rather than expelling air.","cite":"Pulmonary Physiology I & II, Slide 18"},{"unit":"Immunology","obj":"Blood & its components","q":"Compared with a neutrophil, an activated tissue macrophage can...","o":["Ingest only a single bacterium before dying","No longer perform phagocytosis at all","Phagocytize far more particles — up to about 100 bacteria","Only ingest viruses, never bacteria"],"a":2,"e":"Activated macrophages are highly effective phagocytes, able to engulf up to ~100 bacteria and even large particles like damaged red cells. The other options — ingesting only one bacterium, no longer phagocytizing, or ingesting only viruses — all understate or misstate their capacity.","cite":"Blood and Immunology, Slide 17"},{"unit":"GI","obj":"Gastric secretion","q":"Pepsinogen is secreted primarily by which cells?","o":["Chief (peptic) cells","Parietal cells","G-cells","ECL cells"],"a":0,"e":"Chief (peptic) cells secrete pepsinogen. Parietal cells make acid and intrinsic factor, G-cells make gastrin, and ECL cells release histamine.","cite":"GI Physiology, Slide 79"},{"unit":"Metabolism","obj":"Carbohydrate metabolism & ATP","q":"The pentose phosphate (hexose monophosphate) shunt is important because it produces...","o":["large amounts of ATP","NADPH and ribose-5-phosphate for biosynthesis and nucleic acids","ketone bodies for energy","lactate to send to the liver"],"a":1,"e":"The pentose phosphate shunt generates NADPH (for reductive biosynthesis) and ribose-5-phosphate (for nucleic acids), not ATP. It does not make lactate or ketone bodies.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 68, Slide 29"},{"unit":"Hemostasis","obj":"Hematocrit & hemoglobin","q":"A low plasma transferrin level (poor iron transport) tends to produce which result?","o":["Enlarged, macrocytic red cells","Iron overload deposited in tissues","Increased oxygen affinity of hemoglobin","Hypochromic red cells containing too little hemoglobin"],"a":3,"e":"With too little transferrin to deliver iron, red cells are made with less hemoglobin than normal — hypochromic anemia. (A) reflects B12/folate problems; (B) is the opposite of poor transport; (C) is unrelated.","cite":"Hemostasis & Blood Coagulation, Slide 25"},{"unit":"Pulmonary","obj":"Compliance & elasticity","q":"Something described as “highly elastic,” like lung tissue, will...","o":["Resist being stretched and tend to recoil to its original shape","Stretch easily and stay stretched","Have very high compliance","Lose its shape permanently after stretching"],"a":0,"e":"Elasticity is the tendency to return to the original shape after stretch, so a highly elastic structure resists deformation and recoils. Stretching easily or staying deformed describes low elasticity / high compliance — the opposite property.","cite":"Pulmonary Physiology I & II, Slide 19"},{"unit":"Immunology","obj":"Lymphatic–immune system","q":"What is the correct path of lymph through a lymph node?","o":["Efferent lymphatics → sinuses → afferent lymphatics","Blood capillaries → node → arterial blood","Afferent lymphatics → nodal sinuses → hilus → efferent lymphatics","Hilus → afferent lymphatics → venous blood"],"a":2,"e":"Lymph enters through afferent lymphatics, flows through the medullary sinuses, and exits at the hilus via efferent lymphatics toward venous blood. (A) reverses the flow, and (B) and (D) misroute it.","cite":"Blood and Immunology, Slide 22"},{"unit":"GI","obj":"Gastric secretion","q":"Gastrin and acetylcholine strongly stimulate acid secretion partly by triggering release of which paracrine agent from ECL cells?","o":["Somatostatin","Secretin","Motilin","Histamine"],"a":3,"e":"Gastrin and ACh stimulate ECL cells to release histamine, which powerfully drives parietal-cell acid secretion. Somatostatin and secretin inhibit acid, and motilin governs interdigestive motility.","cite":"GI Physiology, Slide 91"},{"unit":"Metabolism","obj":"Lipid metabolism","q":"Lipoprotein lipase, attached to capillary endothelium, functions to...","o":["synthesize triglycerides inside adipocytes","hydrolyze triglycerides in chylomicrons and VLDL, releasing fatty acids to tissues","package cholesterol into HDL","make ketone bodies in the liver"],"a":1,"e":"Lipoprotein lipase hydrolyzes the triglycerides carried in chylomicrons and VLDL, freeing fatty acids for uptake by tissues (adipose, muscle, heart). It does not synthesize triglycerides, build HDL, or make ketones.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 69, Slide 13"},{"unit":"Hemostasis","obj":"Hematopoiesis","q":"Hematopoiesis is driven by which two general classes of signals?","o":["Erythropoietin and thrombopoietin only","Oxygen and carbon dioxide gradients","Vitamin B12 and folate","Growth inducers and differentiation inducers"],"a":3,"e":"Hematopoiesis is driven by growth inducers (e.g., interleukin-3) and differentiation inducers. (A) names specific hormones, not the general categories; (B) and (C) are conditions/nutrients, not inducer classes.","cite":"Hemostasis & Blood Coagulation, Slide 9"},{"unit":"Pulmonary","obj":"Compliance & elasticity","q":"Because airflow varies with r⁴, a small decrease in airway radius will...","o":["Sharply increase resistance, since radius is raised to the fourth power","Decrease resistance","Only matter in the alveoli, not the airways","Barely change resistance"],"a":0,"e":"With resistance proportional to 1/r⁴, even slight narrowing greatly increases resistance to airflow. It does not decrease or barely change resistance, and the effect is greatest in the airways (the upper airways carry the major resistance), not the alveoli.","cite":"Pulmonary Physiology I & II, Slide 16"},{"unit":"Immunology","obj":"Lymphatic–immune system","q":"Compared with blood capillaries, lymph capillaries are...","o":["Much less permeable to particles","Impermeable to all proteins","Highly permeable, allowing particles to enter the lymph","Identical in permeability"],"a":2,"e":"Lymph capillaries are highly permeable relative to blood capillaries, so particles readily enter the lymph (where nodal macrophages can screen them). (A), (B), and (D) misstate this permeability.","cite":"Blood and Immunology, Slide 21"},{"unit":"GI","obj":"GI hormones","q":"Which luminal stimulus most strongly triggers CCK release from duodenal I-cells?","o":["Intact triglycerides","Glucose alone","Water","Fatty acids and monoglycerides (products of fat digestion), plus peptides and amino acids"],"a":3,"e":"CCK release is triggered by fat-digestion products (fatty acids, monoglycerides) and by peptides/amino acids — not by intact triglycerides, glucose alone, or water.","cite":"GI Physiology, Slide 13"},{"unit":"Metabolism","obj":"Lipid metabolism","q":"Ketone bodies are produced by the liver mainly...","o":["from glucose during a carbohydrate-rich meal","from fatty acids, to serve as an energy source for other tissues","to store excess dietary protein","only during the well-fed state"],"a":1,"e":"The liver makes ketone bodies from fatty acid–derived acetyl-CoA (especially when fat oxidation is high, as in fasting) and exports them as fuel for other tissues. They are not made from glucose in the fed state or used to store protein.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 69, Slide 15"},{"unit":"Hemostasis","obj":"Hematopoiesis","q":"Why are vitamin B12 and folate essential for red blood cell production?","o":["They form the heme ring of hemoglobin","They carry iron into the mitochondria","They are required for DNA synthesis during rapid cell proliferation","They directly stimulate erythropoietin release"],"a":2,"e":"Both vitamins are needed to make thymidine triphosphate and therefore DNA, which rapidly dividing red-cell precursors require. (A) is wrong — heme synthesis is a separate pathway; (B) describes transferrin's role; (D) is wrong — they don't trigger EPO.","cite":"Hemostasis & Blood Coagulation, Slide 17"},{"unit":"Pulmonary","obj":"Volumes & capacities","q":"Vital capacity is the sum of which volumes?","o":["Tidal volume + residual volume","Inspiratory reserve + residual volume","Expiratory reserve + residual volume","Inspiratory reserve + tidal volume + expiratory reserve"],"a":3,"e":"Vital capacity — the maximum air expired after a maximal inspiration — equals IRV + TV + ERV. Any combination that includes residual volume is wrong, because residual volume cannot be exhaled and is not part of vital capacity.","cite":"Pulmonary Physiology I & II, Slide 29"},{"unit":"Immunology","obj":"Immune functions","q":"What does opsonization accomplish?","o":["It marks a pathogen (with antibody and complement C3) for easier phagocytosis","It directly lyses the pathogen's membrane","It prevents antibodies from binding the pathogen","It neutralizes a toxin's active site"],"a":0,"e":"Opsonization tags a pathogen with antibody plus complement C3, attracting phagocytes and making ingestion far easier. (B) is complement-mediated lysis, (C) is the opposite of what happens, and (D) describes neutralization.","cite":"Blood and Immunology, Slide 15"},{"unit":"GI","obj":"GI hormones","q":"Glucose-dependent insulinotropic peptide (GIP) is notable because it...","o":["Is the main stimulus for gallbladder contraction","Activates pancreatic proteolytic enzymes","Stimulates insulin release in response to oral nutrients (an incretin effect)","Is released only during fasting"],"a":2,"e":"GIP is an incretin: oral nutrients trigger it to enhance insulin release (and it inhibits gastric acid). Gallbladder contraction is CCK's role, zymogen activation is enterokinase/trypsin, and GIP is released after eating, not during fasting.","cite":"GI Physiology, Slide 17"},{"unit":"Metabolism","obj":"Lipid metabolism","q":"How does increasing bile acid excretion (e.g., by fiber that traps bile salts) affect plasma cholesterol?","o":["It lowers plasma cholesterol, because bile acids are made from cholesterol","It has no effect on plasma cholesterol","It converts cholesterol directly into glucose","It raises plasma cholesterol"],"a":0,"e":"Excreting bile acids forces the liver to consume cholesterol to make more, lowering plasma cholesterol; fecal loss is the only route of cholesterol removal. So it does not raise cholesterol, have no effect, or make glucose.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 69, Slide 36"},{"unit":"Hemostasis","obj":"Coagulation mechanisms","q":"Which mechanism is most important for constricting large blood vessels after injury?","o":["Myogenic contraction from direct damage to the vessel wall","Thromboxane A2 released by platelets","Sympathetic nervous reflexes from pain fibers","Local autacoids from traumatized tissue"],"a":0,"e":"For large vessels, direct injury triggers myogenic contraction, the most important constriction mechanism. Thromboxane A2 (B) matters most for small vessels, while nervous reflexes (C) and autacoids (D) contribute but aren't dominant for large vessels.","cite":"Hemostasis & Blood Coagulation, Slide 30"},{"unit":"Pulmonary","obj":"Volumes & capacities","q":"Which lung value CANNOT be measured directly by simple spirometry?","o":["Tidal volume","Residual volume","Vital capacity","Inspiratory reserve volume"],"a":1,"e":"Spirometry measures only air that moves in and out, so it cannot capture residual volume (air that never leaves the lungs) — nor the capacities containing it (FRC, TLC). Tidal volume, inspiratory reserve, and vital capacity are all directly measurable.","cite":"Pulmonary Physiology I & II, Slide 31"},{"unit":"Immunology","obj":"Immune functions","q":"As a later line of defense, how does the bone marrow respond to a sustained infection?","o":["It shuts down white-cell production to conserve resources","It increases granulocyte and monocyte production many-fold","It releases mature lymphocytes within minutes","It converts red cells into white cells"],"a":1,"e":"The marrow can raise neutrophil and monocyte output 20–50-fold and sustain it for months, with the first new cells released in 3–4 days. (A) is the opposite, and (C) and (D) are physiologically wrong.","cite":"Blood and Immunology, Slide 31"},{"unit":"GI","obj":"Digestive enzymes","q":"Which enzyme in saliva begins the digestion of starch in the mouth?","o":["Pepsin","Trypsin","α-amylase (ptyalin)","Lingual lipase"],"a":2,"e":"Salivary α-amylase (ptyalin) starts starch digestion in the mouth. Pepsin digests protein in the stomach, trypsin is a pancreatic protease, and lingual lipase acts on fat, not starch.","cite":"GI Physiology, Slide 72"},{"unit":"Metabolism","obj":"Protein metabolism","q":"Transamination is the process of...","o":["removing a phosphate from glucose","oxidizing fatty acids to acetyl-CoA","breaking a peptide bond by adding water","transferring an amino group from one molecule (e.g., glutamate) to an α-keto acid"],"a":3,"e":"Transamination moves an amino group from a donor (often glutamate) onto an α-keto acid, forming a new amino acid — the core reaction for making non-essential amino acids. Dephosphorylation, peptide-bond hydrolysis, and beta-oxidation are unrelated.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 70, Slide 13"},{"unit":"Hemostasis","obj":"Coagulation mechanisms","q":"Which step is the rate-limiting step of blood coagulation?","o":["Conversion of fibrinogen to fibrin","Cross-linking of fibrin by factor XIII","Activation of plasminogen to plasmin","Formation of prothrombin activator"],"a":3,"e":"Forming prothrombin activator is the rate-limiting step; once formed, it rapidly converts prothrombin to thrombin. (A) and (B) occur downstream, and (C) is part of clot breakdown, not formation.","cite":"Hemostasis & Blood Coagulation, Slide 40"},{"unit":"Pulmonary","obj":"Gas exchange (lungs)","q":"According to Fick's law, gas diffusion increases when...","o":["The partial pressure gradient and surface area are larger","The surface area is smaller","The membrane is thicker","The solubility of the gas is lower"],"a":0,"e":"Fick's law makes diffusion proportional to the pressure gradient, surface area, and solubility, and inversely proportional to membrane thickness. So a bigger gradient and area speed diffusion, while a thicker membrane, smaller area, or lower solubility slow it.","cite":"Pulmonary Physiology I & II, Slide 62"},{"unit":"Immunology","obj":"Immune functions","q":"When an antibody covers the toxic site of a toxin so it can no longer act, this is called...","o":["Agglutination","Precipitation","Neutralization","Opsonization"],"a":2,"e":"Neutralization is the antibody covering the harmful sites of an antigen/toxin. Agglutination clumps particles, precipitation makes a soluble complex insoluble, and opsonization tags a pathogen for phagocytosis.","cite":"Blood and Immunology, Slide 52"},{"unit":"GI","obj":"Digestive enzymes","q":"The final steps of protein digestion (di- and tripeptides to amino acids) occur...","o":["Only in the stomach lumen","At the brush border and within the cytoplasm of the mucosal cells","Only in the mouth","In the colon"],"a":1,"e":"Protein digestion finishes at the brush border (oligopeptidases, dipeptidases) and in the enterocyte cytoplasm (di-/tripeptidases). It is not completed in the stomach, mouth, or colon.","cite":"GI Physiology, Slide 127"},{"unit":"Metabolism","obj":"Protein metabolism","q":"Amino acids that are broken down to acetyl-CoA or acetoacetyl-CoA are called...","o":["essential, because they cannot be made","glucogenic, because they form glucose","ketogenic, because they give rise to ketone bodies","non-essential, because they are synthesized"],"a":2,"e":"Amino acids degraded to acetyl-CoA or acetoacetyl-CoA are ketogenic (they can form ketone bodies), whereas those forming glucose or TCA intermediates are glucogenic. 'Essential' vs 'non-essential' refers to whether the body can synthesize them — a different classification.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 70, Slide 18"},{"unit":"Hemostasis","obj":"Coagulation mechanisms","q":"Clot retraction depends on which cells, acting through what mechanism?","o":["Platelets contracting via actin, myosin, and thrombosthenin","Red cells contracting by osmotic shrinkage","No cells — retraction is purely spontaneous","White cells engulfing and compacting fibrin"],"a":0,"e":"Platelets bound to fibrin contract using actin/myosin/thrombosthenin, tightening the clot; retraction will not occur without platelets. (B), (C), and (D) are incorrect — red cells, spontaneous action, and white cells do not drive retraction.","cite":"Hemostasis & Blood Coagulation, Slide 43"},{"unit":"Pulmonary","obj":"Gas exchange (lungs)","q":"How does increasing alveolar ventilation affect alveolar PCO₂?","o":["It raises alveolar PCO₂","It has no effect on alveolar PCO₂","It raises PCO₂ only during exercise","It lowers alveolar PCO₂"],"a":3,"e":"Greater alveolar ventilation washes out CO₂ faster than metabolism produces it, so alveolar (and arterial) PCO₂ falls. Ventilation and PCO₂ are inversely related, so raising PCO₂ or “no effect” is incorrect.","cite":"Pulmonary Physiology I & II, Slide 55"},{"unit":"Immunology","obj":"Immune functions","q":"Why are helper T-cells described as central to the immune response?","o":["They directly lyse infected cells with perforins","Their cytokines regulate B-cells, cytotoxic T-cells, and macrophages","They are the only cells that phagocytize bacteria","They form the antibodies of humoral immunity"],"a":1,"e":"Helper T-cells secrete cytokines/lymphokines that coordinate B-cells, cytotoxic T-cells, and macrophages — the immune system is nearly paralyzed without them. (A) is the cytotoxic T-cell's job, (C) is a phagocyte role, and (D) is the plasma cell's job.","cite":"Blood and Immunology, Slide 57"},{"unit":"GI","obj":"Biliary system","q":"How do the products of fat digestion (monoglycerides and fatty acids) reach the enterocyte surface for absorption?","o":["Packaged into micelles with bile salts, which ferry them to the brush border","Bound to intrinsic factor","Dissolved freely in water and diffusing on their own","Inside chylomicrons formed in the lumen"],"a":0,"e":"Because they are poorly water-soluble, monoglycerides and fatty acids are carried in micelles with bile salts to the enterocyte brush border. They do not simply diffuse, bind intrinsic factor, or ride in lumen-formed chylomicrons — chylomicrons form inside the enterocyte.","cite":"GI Physiology, Slide 133"},{"unit":"Metabolism","obj":"The liver","q":"The liver acts as a blood reservoir, normally holding about...","o":["50% of total blood volume","10% of total blood volume (~450 mL), expandable in heart failure","less than 1% of blood volume","no blood between meals"],"a":1,"e":"The liver normally holds about 10% of blood volume (~450 mL) and can expand by up to a liter in heart failure or release blood during hemorrhage/exercise. The other figures are far off.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 71, Slide 5"},{"unit":"Hemostasis","obj":"Coagulation mechanisms","q":"What triggers the intrinsic pathway of coagulation?","o":["Release of tissue factor from injured tissue","Thrombin cleaving fibrinogen","Contact of blood and factor XII with collagen or a wettable surface","Binding of von Willebrand factor to platelets"],"a":2,"e":"The intrinsic pathway starts when blood/factor XII contacts collagen or a wettable surface (e.g., glass), activating factor XII. (A) initiates the extrinsic pathway, (B) is a common-pathway step, and (D) relates to platelet adhesion.","cite":"Hemostasis & Blood Coagulation, Slide 46"},{"unit":"Pulmonary","obj":"Respiratory membrane","q":"Which sequence correctly lists layers a gas crosses in the respiratory membrane, from air to blood?","o":["Capillary endothelium → alveolar epithelium → surfactant","Interstitial space → surfactant → capillary endothelium","Alveolar epithelium → surfactant → red blood cell","Surfactant/fluid → alveolar epithelium → basement membranes → capillary endothelium"],"a":3,"e":"Moving from air to blood, a gas crosses the surfactant/fluid layer, the alveolar epithelium, the fused basement membranes and interstitium, and finally the capillary endothelium. The other sequences scramble this air-to-blood order.","cite":"Pulmonary Physiology I & II, Slide 60"},{"unit":"Immunology","obj":"Innate vs. acquired immunity","q":"A key contrast between acquired and innate immunity is that acquired immunity...","o":["Is present and fully active from birth","Does not develop until the body is attacked and can take weeks to months","Provides no protection against toxins","Cannot distinguish one antigen from another"],"a":1,"e":"Acquired immunity develops only after exposure, requiring weeks to months to mount a specific response. (A) describes innate defenses, and (C) and (D) contradict acquired immunity's specificity and potency.","cite":"Blood and Immunology, Slide 35"},{"unit":"GI","obj":"Exocrine pancreas","q":"Once formed, trypsin plays a central role in the intestine by...","o":["Emulsifying fats","Neutralizing acid chyme","Activating chymotrypsinogen, procarboxypeptidase, and more trypsinogen","Absorbing peptides"],"a":2,"e":"Trypsin is the master activator: it converts chymotrypsinogen, procarboxypeptidase, and additional trypsinogen to their active forms. Neutralizing acid is bicarbonate's role, emulsifying fat is bile's, and absorption is the mucosa's.","cite":"GI Physiology, Slide 104"},{"unit":"Metabolism","obj":"The liver","q":"The liver's “glucose buffer” function means it...","o":["stores glucose as glycogen after meals and releases glucose between meals","only stores glucose and never releases it","converts all absorbed glucose immediately to fat","prevents any glucose from entering the blood"],"a":0,"e":"As a glucose buffer, the liver stores glucose as glycogen after meals and releases glucose (via glycogenolysis, then gluconeogenesis) between meals, stabilizing blood glucose. The other options describe one-way or nonexistent handling.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 71, Slide 9"},{"unit":"Hemostasis","obj":"Coagulation mechanisms","q":"What is vitamin K's essential role in coagulation?","o":["It cross-links fibrin monomers into a stable clot","It converts plasminogen into plasmin","It directly activates platelets at the injury site","It is needed to carboxylate glutamic acid in prothrombin and factors VII, IX, and X"],"a":3,"e":"Vitamin K is required to carboxylate glutamic acid residues on prothrombin and factors VII, IX, X (and protein C), making them functional. (A) is factor XIII's role, (B) is tPA's role, and (C) is unrelated to vitamin K.","cite":"Hemostasis & Blood Coagulation, Slide 54"},{"unit":"Pulmonary","obj":"Respiratory control","q":"The central chemoreceptors are located in the brainstem and respond mainly to...","o":["Oxygen levels in arterial blood","CO₂ and H⁺","Blood pressure changes","Lung stretch"],"a":1,"e":"The central chemoreceptors sense CO₂ and H⁺ (via H⁺ generated in the CSF). Oxygen sensing is the job of the peripheral chemoreceptors, while blood pressure and lung stretch are detected by other receptors.","cite":"Pulmonary Physiology I & II, Slide 96"},{"unit":"Immunology","obj":"Innate vs. acquired immunity","q":"Where are future T-lymphocytes and B-lymphocytes 'preprocessed'?","o":["T-cells in the thymus; B-cells in the bone marrow (and fetal liver)","Both in the thymus","Both in the spleen","T-cells in the marrow; B-cells in the thymus"],"a":0,"e":"T-cells are preprocessed in the thymus, while B-cells are preprocessed in the fetal liver and then the bone marrow. (B), (C), and (D) misassign one or both lineages.","cite":"Blood and Immunology, Slide 40"},{"unit":"GI","obj":"Liver functions","q":"Which lipoprotein returns excess cholesterol from the tissues back to the liver?","o":["LDL","VLDL","HDL","Chylomicrons"],"a":2,"e":"HDL performs reverse cholesterol transport, returning excess cholesterol from tissues to the liver. LDL delivers cholesterol to cells, VLDL carries liver-made triglyceride to tissues, and chylomicrons carry dietary fat from the gut.","cite":"GI Physiology, Slide 139"},{"unit":"Metabolism","obj":"The liver","q":"The amphipathic nature of bile salts allows them to...","o":["absorb water in the colon","chemically digest triglycerides into fatty acids","neutralize stomach acid","emulsify fats and carry lipids to the intestinal wall in micelles"],"a":3,"e":"Being amphipathic, bile salts act as detergents that emulsify fat and ferry lipids to the mucosa in micelles. Chemical digestion of triglyceride is lipase's role, and bile salts neither neutralize acid nor absorb colonic water.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 71, Slide 20"},{"unit":"Pulmonary","obj":"Respiratory control","q":"Under normal resting conditions, the most important minute-to-minute stimulus driving ventilation is...","o":["Arterial PCO₂ (and the resulting H⁺)","A small fall in arterial PO₂","Blood glucose level","Body temperature"],"a":0,"e":"Minute-to-minute ventilation is governed most tightly by arterial PCO₂ and the H⁺ it generates. Modest drops in PO₂ have little effect until PO₂ falls substantially, and glucose and temperature are not the primary respiratory stimulus.","cite":"Pulmonary Physiology I & II, Slide 92"},{"unit":"Immunology","obj":"Innate vs. acquired immunity","q":"How does the body mainly avoid attacking its own tissues (immunologic tolerance)?","o":["Self-reactive T- and B-cell clones are induced to undergo apoptosis and are deleted","Self-antigens are permanently hidden from all immune cells","Antibodies against self are neutralized by complement","Helper T-cells ignore every antigen they meet"],"a":0,"e":"Tolerance is achieved largely by clonal deletion: clones that bind self-antigens with high affinity are driven into apoptosis (T-cells in the thymus, B-cells in the marrow). (B), (C), and (D) are not the primary mechanism.","cite":"Blood and Immunology, Slide 61"},{"unit":"GI","obj":"Nutrient absorption","q":"Glucose and galactose are absorbed across the intestinal brush border by...","o":["Simple diffusion down their concentration gradient","Secondary active transport coupled to sodium (SGLT-1)","Endocytosis","Facilitated diffusion that does not use sodium"],"a":1,"e":"Glucose and galactose share the Na⁺-coupled SGLT-1 carrier, using the sodium gradient (maintained by the Na⁺–K⁺ ATPase) for secondary active transport. They are not absorbed by simple diffusion, sodium-independent facilitated diffusion, or endocytosis.","cite":"GI Physiology, Slide 126"},{"unit":"Metabolism","obj":"Diet, feeding & vitamins","q":"The body's largest energy reserve is stored as...","o":["glucose in the blood","glycogen in the liver","triglyceride in adipose tissue","protein in muscle"],"a":2,"e":"Adipose triglyceride is by far the largest energy reserve (~120,000 kcal in a lean adult). Liver glycogen and blood glucose hold only small amounts, and although protein is abundant, little is used as an energy store.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 72, Slide 3"},{"unit":"Pulmonary","obj":"Oxygen transport","q":"Why does hemoglobin matter so much for oxygen transport?","o":["Hemoglobin dissolves oxygen directly into plasma","Hemoglobin only carries CO₂, not O₂","Dissolved oxygen carries most of the O₂ in blood","Dissolved O₂ alone (~0.3 ml/100 ml) is far too little; Hb raises capacity to ~20 ml/100 ml"],"a":3,"e":"Physically dissolved O₂ is tiny (~0.3 ml/100 ml); binding to hemoglobin lifts capacity to about 20 ml/100 ml, so Hb carries the vast majority of oxygen. It does not dissolve O₂ into plasma, and it carries O₂ as well as some CO₂.","cite":"Pulmonary Physiology I & II, Slide 77"},{"unit":"Immunology","obj":"Innate vs. acquired immunity","q":"Why is a second exposure to the same antigen met with a stronger, faster response?","o":["The first exposure eliminated all lymphocytes, so replacements react faster","Memory B- and T-cells from the first exposure persist and respond rapidly","Complement permanently coats the antigen after the first exposure","The antigen becomes weaker over time"],"a":1,"e":"Memory B- and T-cells generated during the first exposure remain and mount a rapid, amplified secondary response — the basis for booster immunizations. (A), (C), and (D) do not explain the secondary response.","cite":"Blood and Immunology, Slide 48"},{"unit":"GI","obj":"Nutrient absorption","q":"The final products of carbohydrate digestion that are actually absorbed are...","o":["Monosaccharides, mostly glucose","Disaccharides such as maltose and lactose","Short glucose polymers","Starch fragments"],"a":0,"e":"Carbohydrates must be reduced to monosaccharides (about 80% glucose, plus fructose and galactose) before absorption. Disaccharides, oligosaccharides, and starch fragments must first be split at the brush border.","cite":"GI Physiology, Slide 125"},{"unit":"Metabolism","obj":"Diet, feeding & vitamins","q":"Leptin, released from adipose tissue, acts on the hypothalamus to...","o":["strongly stimulate hunger","reduce appetite and food intake","slow the heart rate","raise blood glucose directly"],"a":1,"e":"Leptin signals the hypothalamus to suppress appetite and raise energy expenditure as fat stores grow. It does not stimulate hunger (that is ghrelin), raise glucose, or slow the heart.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 72, Slide 13"},{"unit":"Pulmonary","obj":"Oxygen transport","q":"Which change shifts the O₂-hemoglobin dissociation curve to the RIGHT, favoring O₂ unloading?","o":["Decreased temperature","Increased pH (alkalosis)","Increased CO₂ and H⁺ (lower pH)","Decreased 2,3-BPG"],"a":2,"e":"A right shift (lower O₂ affinity, better unloading) results from increased CO₂, increased H⁺/lower pH, higher temperature, and increased 2,3-BPG — the conditions of active tissue. Lower temperature, higher pH, and less 2,3-BPG shift the curve left.","cite":"Pulmonary Physiology I & II, Slide 81"},{"unit":"GI","obj":"Nutrient absorption","q":"Once inside the enterocyte, absorbed monoglycerides and fatty acids are...","o":["Broken down further into glycerol and carbon dioxide","Returned to the lumen","Absorbed directly into the portal vein as free fat","Reassembled into triglycerides and packaged into chylomicrons"],"a":3,"e":"Inside the enterocyte, absorbed monoglycerides and fatty acids are re-esterified into triglycerides and packaged (with apoproteins) into chylomicrons. They are not oxidized to CO₂ there, sent into portal blood as free fat, or returned to the lumen.","cite":"GI Physiology, Slide 132"},{"unit":"Metabolism","obj":"Diet, feeding & vitamins","q":"Vitamin C (ascorbic acid) is essential for...","o":["collagen formation and normal connective tissue","blood clotting factor synthesis","calcium absorption","visual pigment formation"],"a":0,"e":"Vitamin C is required for collagen synthesis, so its deficiency (scurvy) causes connective-tissue breakdown and poor wound healing. Clotting-factor synthesis needs vitamin K, calcium handling needs vitamin D, and visual pigments need vitamin A.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 72, Slide 27"},{"unit":"Pulmonary","obj":"CO₂ transport","q":"As bicarbonate leaves the red cell in exchange for chloride entering, this exchange is called the...","o":["Bohr shift","Chloride (Hamburger) shift","Sodium shift","Haldane shift"],"a":1,"e":"As bicarbonate leaves the red cell, chloride moves in to preserve electrical neutrality — the chloride (Hamburger) shift. The Bohr and Haldane effects describe how pH/O₂ change gas affinities, and there is no “sodium shift” here.","cite":"Pulmonary Physiology I & II, Slide 86"},{"unit":"GI","obj":"Defecation","q":"For defecation to occur, the internal anal sphincter relaxes and then...","o":["The internal sphincter must contract again","The pyloric sphincter must open","The external anal sphincter must be voluntarily relaxed","Mass movements must stop"],"a":2,"e":"The internal anal sphincter (smooth muscle) relaxes reflexively, but defecation proceeds only if the external anal sphincter (striated, voluntary) is consciously relaxed. Re-contracting the internal sphincter, opening the pylorus, or stopping mass movements would not allow it.","cite":"GI Physiology, Slide 66"},{"unit":"Metabolism","obj":"Energetics & metabolic rate","q":"Basal metabolic rate (BMR) is measured under which conditions?","o":["Immediately after exercise","During digestion of a large meal","In a cold environment while shivering","After a 12-hour fast, at rest, in a comfortable temperature, without excitement"],"a":3,"e":"BMR is measured under standardized resting conditions — a 12-hour fast, physical and mental rest, and a neutral temperature — so exercise, digestion, and shivering do not inflate it. The other conditions all raise metabolic rate.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 73, Slide 8"},{"unit":"Pulmonary","obj":"Respiration & pH","q":"If a person hyperventilates and “blows off” CO₂, blood pH will...","o":["Rise (become more alkaline)","Stay exactly the same","Change only if oxygen also falls","Fall (become more acidic)"],"a":0,"e":"Blowing off CO₂ shifts the CO₂ + H₂O ⇌ H⁺ + HCO₃⁻ equilibrium to the left, lowering H⁺ and raising pH (respiratory alkalosis). Losing CO₂ cannot acidify the blood or leave pH unchanged, and the effect does not depend on oxygen.","cite":"Pulmonary Physiology I & II, Slide 92"},{"unit":"Metabolism","obj":"Energetics & metabolic rate","q":"The “oxygen debt” repaid after strenuous exercise is used to...","o":["digest the next meal","convert lactate back to glucose and restore ATP, phosphocreatine, and oxygen stores","produce more lactate","lower body temperature"],"a":1,"e":"The oxygen debt is the extra O₂ consumed afterward to reconvert lactate to glucose, rebuild ATP and phosphocreatine, and reload hemoglobin/myoglobin and lung oxygen. It is not for digestion, making lactate, or cooling.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 73, Slide 6"},{"unit":"Metabolism","obj":"Temperature & fever","q":"How do core and skin temperature differ?","o":["Both vary widely with the environment","Skin temperature is the most tightly regulated value","Core temperature stays nearly constant, while skin temperature varies with the environment","Core temperature swings more than skin temperature"],"a":2,"e":"Deep (core) temperature is held nearly constant (varying <1°F normally), whereas skin temperature rises and falls with the surroundings. The other options misstate which is regulated.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 74, Slide 2"},{"unit":"Metabolism","obj":"Temperature & fever","q":"When the body is cold, which response increases heat production?","o":["Cutaneous vasodilation","Sweating","Inhibition of the sympathetic nervous system","Shivering, which can raise heat production several-fold"],"a":3,"e":"In the cold, shivering (plus vasoconstriction, sympathetic excitation, and thyroxine) raises heat production up to 4–5-fold. Vasodilation, sweating, and sympathetic inhibition all promote heat loss, not gain.","cite":"Metabolism, Nutrition & Thermoregulation — Ch. 74, Slide 14"}];
+
+const LETTERS=["A","B","C","D"];
+let current=0,score=0,answered=false,responses=[];
+const $=id=>document.getElementById(id);
+
+function startQuiz(){current=0;score=0;responses=[];$("start").classList.add("hidden");$("quiz-footer-logo").classList.remove("hidden");$("results").classList.add("hidden");$("quiz").classList.remove("hidden");renderQuestion();window.scrollTo({top:0,behavior:"smooth"});}
+function renderQuestion(){
+  answered=false;const item=questions[current];
+  $("qcount").textContent="Question "+(current+1)+" of "+questions.length;
+  $("scorepill").textContent="Score: "+score;
+  $("barfill").style.width=(current/questions.length*100)+"%";
+  $("qtag").textContent=item.unit+" \u00b7 "+item.obj;
+  $("qtext").textContent=item.q;
+  const box=$("options");box.innerHTML="";
+  item.o.forEach((text,i)=>{const b=document.createElement("button");b.className="opt";
+    b.innerHTML='<span class="ltr">'+LETTERS[i]+'</span><span>'+text+'</span>';
+    b.onclick=()=>selectAnswer(i);box.appendChild(b);});
+  $("explain").classList.remove("show");$("nextbtn").disabled=true;
+  $("hintline").textContent="Select an answer to continue";
+  $("nextbtn").textContent=(current===questions.length-1)?"See results \u2192":"Next \u2192";
+}
+function selectAnswer(choice){
+  if(answered)return;answered=true;const item=questions[current];const correct=item.a;
+  const btns=$("options").querySelectorAll(".opt");
+  btns.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add("correct");else if(i===choice)b.classList.add("wrong");else b.classList.add("dim");});
+  const ok=(choice===correct);if(ok)score++;
+  responses.push({i:current,choice,correct,isCorrect:ok,unit:item.unit});
+  const v=$("verdict");
+  if(ok){v.className="verdict ok";v.textContent="\u2713 Correct";}
+  else{v.className="verdict no";v.textContent="\u2717 Incorrect \u2014 the answer is "+LETTERS[correct];}
+  $("explainbody").textContent=item.e;$("cite").textContent="Source: "+item.cite;
+  $("explain").classList.add("show");$("scorepill").textContent="Score: "+score;
+  $("nextbtn").disabled=false;$("hintline").textContent=(current===questions.length-1)?"Ready to finish":"";
+}
+function nextQuestion(){if(!answered)return;if(current<questions.length-1){current++;renderQuestion();window.scrollTo({top:0,behavior:"smooth"});}else{showResults();}}
+function showResults(){
+  $("quiz").classList.add("hidden");$("results").classList.remove("hidden");
+  const total=questions.length,pct=Math.round(score/total*100);
+  $("finalscore").textContent=score+" / "+total;$("finalpct").textContent=pct+"%";
+  let msg;
+  if(pct>=90)msg="Outstanding \u2014 strong command across every unit.";
+  else if(pct>=80)msg="Solid work. A few areas to tighten up before the exam.";
+  else if(pct>=70)msg="Decent foundation \u2014 review the missed items below and re-test.";
+  else if(pct>=60)msg="Getting there. Focus on the units you scored lowest in.";
+  else msg="Worth another pass \u2014 use the per-unit breakdown and review below.";
+  $("gradeline").textContent=msg;
+  // per-unit breakdown
+  const tot={},cor={};
+  questions.forEach(q=>{tot[q.unit]=(tot[q.unit]||0)+1;});
+  responses.forEach(r=>{if(r.isCorrect)cor[r.unit]=(cor[r.unit]||0)+1;});
+  const bd=$("breakdown");bd.innerHTML="";
+  const order=["Hemostasis","Immunology","Pulmonary","GI","Metabolism"];
+  order.forEach(u=>{if(tot[u]){const c=cor[u]||0;const el=document.createElement("div");el.className="bd";el.innerHTML=u+": <b>"+c+"/"+tot[u]+"</b>";bd.appendChild(el);}});
+  const missed=responses.filter(r=>!r.isCorrect);const review=$("review");review.innerHTML="";
+  if(missed.length===0){const d=document.createElement("div");d.className="allright";d.textContent="Perfect score \u2014 you didn't miss a single question across all five units.";review.appendChild(d);return;}
+  const h=document.createElement("h3");h.textContent="Review \u2014 "+missed.length+" missed question"+(missed.length>1?"s":"");review.appendChild(h);
+  missed.forEach(r=>{const item=questions[r.i];const w=document.createElement("div");w.className="missed";
+    w.innerHTML='<div class="mq">Q'+(r.i+1)+". "+item.q+'</div>'+
+      '<div class="row yours">Your answer: '+LETTERS[r.choice]+". "+item.o[r.choice]+'</div>'+
+      '<div class="row right">Correct answer: '+LETTERS[r.correct]+". "+item.o[r.correct]+'</div>'+
+      '<div class="why">'+item.e+'</div>'+'<div class="mcite">'+item.cite+'</div>';
+    review.appendChild(w);});
+}
+function restart(){startQuiz();}
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+</body>
+</html>

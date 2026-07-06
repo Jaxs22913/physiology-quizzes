@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulmonary Physiology I &amp; II — Quiz</title>
+<style>
+  :root{
+    --bg:#061a26;
+    --panel:#fff;
+    --ink:#0f2530;
+    --muted:#4f6b76;
+    --line:#d6e6ee;
+    --sky:#0e73a8;
+    --sky-dk:#0a4f74;
+    --sky-soft:#e4f1f8;
+    --gold:#d98a2b;
+    --green:#1f7a4d;
+    --green-soft:#e6f3ec;
+    --red:#b3261e;
+    --red-soft:#fbe9e8;
+    --shadow:0 10px 30px rgba(6,26,38,.20);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #0d4c6e 0%, rgba(13,76,110,0) 60%),
+      linear-gradient(160deg,#061a26 0%,#092b3b 100%);
+    color:var(--ink);
+    min-height:100vh;
+    padding:28px 16px 60px;
+    line-height:1.55;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  .card{
+    background:var(--panel);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:30px 30px 26px;
+    border:1px solid rgba(14,115,168,.08);
+  }
+  .eyebrow{
+    letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;
+    color:var(--sky);margin-bottom:10px;
+  }
+  h1{font-size:27px;line-height:1.2;margin:0 0 6px;color:var(--sky-dk);font-weight:800}
+  h2{font-size:20px;margin:0 0 14px;color:var(--sky-dk)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .obj{
+    background:var(--sky-soft);border-radius:12px;padding:16px 18px;margin:0 0 24px;
+    border:1px solid rgba(14,115,168,.14);
+  }
+  .obj p{margin:0 0 8px;font-weight:700;color:var(--sky-dk);font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .obj ul{margin:0;padding-left:20px;columns:2;column-gap:26px}
+  .obj li{margin:4px 0;font-size:14px;color:var(--ink);break-inside:avoid}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+  .chip{
+    background:#f1f7fb;border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px;font-size:13px;color:var(--muted);font-weight:600;
+  }
+  .chip b{color:var(--sky-dk)}
+  .instructions{font-size:14.5px;color:var(--muted);margin:0 0 26px}
+  .instructions ul{margin:8px 0 0;padding-left:20px}
+  .instructions li{margin:3px 0}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn{
+    background:var(--sky);color:#fff;font-weight:700;font-size:16px;
+    padding:14px 26px;border-radius:12px;transition:transform .05s ease,background .2s ease;
+    box-shadow:0 6px 16px rgba(14,115,168,.28);
+  }
+  .btn:hover{background:var(--sky-dk)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{
+    background:#fff;color:var(--sky-dk);border:1.5px solid var(--sky);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{background:var(--sky-soft)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btnrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .qcount{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.03em}
+  .scorepill{font-size:13px;font-weight:800;color:var(--sky-dk);background:var(--sky-soft);
+    padding:5px 12px;border-radius:999px;border:1px solid rgba(14,115,168,.18)}
+  .bar{height:8px;background:#e5eef3;border-radius:999px;overflow:hidden;margin:0 0 22px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));
+    width:0;transition:width .35s ease;border-radius:999px}
+
+  .qtag{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .question{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 20px;line-height:1.4}
+
+  .options{display:flex;flex-direction:column;gap:11px}
+  .opt{
+    display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:15.5px;color:var(--ink);transition:all .15s ease;
+  }
+  .opt:hover:not(:disabled){border-color:var(--sky);background:#f7fbfd}
+  .opt .ltr{
+    flex:0 0 28px;height:28px;border-radius:8px;background:#e2eef5;color:var(--sky-dk);
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .ltr{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .ltr{background:var(--red);color:#fff}
+  .opt.dim{opacity:.62}
+  .opt:disabled{cursor:default}
+
+  .explain{
+    margin-top:20px;border-radius:12px;padding:16px 18px;font-size:15px;display:none;
+    border:1px solid var(--line);background:#f5fafc;
+  }
+  .explain.show{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:15px}
+  .verdict.ok{color:var(--green)}
+  .verdict.no{color:var(--red)}
+  .explain .body{color:#1f3841}
+  .cite{margin-top:12px;font-size:12.5px;color:var(--muted);font-style:italic;
+    border-top:1px dashed var(--line);padding-top:10px}
+
+  .scorebig{font-size:56px;font-weight:800;color:var(--sky-dk);line-height:1;margin:6px 0 2px}
+  .pct{font-size:17px;color:var(--muted);font-weight:700;margin-bottom:18px}
+  .gradeline{font-size:16px;margin:0 0 22px;color:var(--ink)}
+  .review h3{font-size:15px;color:var(--sky-dk);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .missed{
+    border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fff;
+  }
+  .missed .mq{font-weight:700;margin-bottom:8px;font-size:15px}
+  .missed .row{font-size:14px;margin:3px 0}
+  .missed .yours{color:var(--red)}
+  .missed .right{color:var(--green);font-weight:600}
+  .missed .why{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .missed .mcite{color:var(--muted);font-size:12px;font-style:italic;margin-top:8px}
+  .allright{background:var(--green-soft);border:1px solid #bfe3ce;border-radius:12px;
+    padding:16px 18px;color:#175c3a;font-weight:600}
+  .foot{color:#8a9096;text-align:center;font-size:12.5px;margin-top:22px}
+  .hidden{display:none}
+  @media(max-width:520px){.obj ul{columns:1}}
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;flex-shrink:0;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+
+  <!-- START -->
+  <section id="start" class="card">
+    <div class="eyebrow">Physiology &middot; Unit 7</div>
+    <h1>Pulmonary Physiology I &amp; II</h1>
+    <p class="sub">A conceptual multiple-choice quiz built from your lecture deck (Guyton &amp; Hall, Chapters 38&ndash;42).</p>
+
+    <div class="obj">
+      <p>Instructional objectives covered</p>
+      <ul>
+        <li>Respiratory muscles</li>
+        <li>Compliance &amp; elasticity</li>
+        <li>Lung volumes &amp; capacities</li>
+        <li>Surfactant</li>
+        <li>Gas exchange in the lungs</li>
+        <li>The respiratory membrane</li>
+        <li>Respiratory centers</li>
+        <li>Oxygen transport</li>
+        <li>Carbon dioxide transport</li>
+        <li>Respiration &amp; pH</li>
+        <li>Tissue-level gas exchange</li>
+      </ul>
+    </div>
+
+    <div class="meta">
+      <span class="chip"><b>50</b> questions</span>
+      <span class="chip">4 choices each</span>
+      <span class="chip">Instant feedback</span>
+      <span class="chip">Slide-cited</span>
+    </div>
+
+    <div class="instructions">
+      How it works:
+      <ul>
+        <li>Read each question and click one answer (A&ndash;D).</li>
+        <li>You'll see immediately whether you're right, with an explanation of every choice.</li>
+        <li>Each question cites the slide it came from.</li>
+        <li>At the end you get your score, percentage, and a review of anything you missed.</li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="startQuiz()">Start quiz &rarr;</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="topbar">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="scorepill" id="scorepill">Score: 0</span>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+
+    <div class="qtag" id="qtag">Objective</div>
+    <div class="question" id="qtext">Question text</div>
+    <div class="options" id="options"></div>
+
+    <div class="explain" id="explain">
+      <div class="verdict" id="verdict"></div>
+      <div class="body" id="explainbody"></div>
+      <div class="cite" id="cite"></div>
+    </div>
+
+    <div class="btnrow">
+      <span class="qcount" id="hintline">Select an answer to continue</span>
+      <button class="btn" id="nextbtn" onclick="nextQuestion()" disabled>Next &rarr;</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card hidden">
+    <div class="eyebrow">Results</div>
+    <h2>Quiz complete</h2>
+    <div class="scorebig" id="finalscore">0 / 50</div>
+    <div class="pct" id="finalpct">0%</div>
+    <div class="gradeline" id="gradeline"></div>
+
+    <div class="review" id="review"></div>
+
+    <div class="btnrow" style="justify-content:center; gap:12px;">
+      <button class="btn ghost" onclick="restart()">&#8635; Restart quiz</button>
+      <a class="btn" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+    <div class="foot">Based solely on the "Pulmonary Physiology I &amp; II" lecture (Guyton &amp; Hall, Ch. 38&ndash;42). Not for clinical use.</div>
+  </section>
+
+</div>
+
+<script>
+/* ---------------- QUESTION BANK ---------------- */
+const DECK = "Pulmonary Physiology I & II";
+const questions = [
+ /* ===== Respiratory muscles ===== */
+ {obj:"Respiratory muscles", s:18, q:"During quiet (resting) breathing, how is expiration accomplished?",
+  o:["By active contraction of the diaphragm","Passively, through elastic recoil of the lungs and chest wall","By contraction of the abdominal muscles","By contraction of the external intercostals"],
+  a:1, e:"In quiet breathing the inspiratory muscles simply relax and the stretched lung recoils, expelling air passively \u2014 no active expiratory effort is needed. Diaphragm and external-intercostal contraction produce inspiration, and the abdominals are recruited only for forced expiration."},
+
+ {obj:"Respiratory muscles", s:14, q:"What happens to pleural (intrapleural) pressure during inspiration?",
+  o:["It becomes positive","It stays constant throughout the breath","It becomes more negative (about \u20135 to \u20138 cm H\u2082O)","It rises toward zero"],
+  a:2, e:"As the chest expands, intrapleural pressure falls further below atmospheric (roughly \u20135 to \u20138 cm H\u2082O), pulling the lungs open. It does not turn positive or move toward zero during inspiration \u2014 those occur in expiration \u2014 and it clearly changes across the breath."},
+
+ {obj:"Respiratory muscles", s:18, q:"How does forced expiration differ from quiet expiration?",
+  o:["It uses active muscle effort, and pleural pressure can become positive","It relies solely on relaxation of the diaphragm","It makes pleural pressure more negative","It requires surfactant to push air out"],
+  a:0, e:"Forced expiration recruits expiratory muscles (e.g., abdominals), which can drive intrapleural pressure positive to expel air rapidly. Passive relaxation and a more-negative pleural pressure describe quiet breathing and inspiration, and surfactant lowers surface tension rather than expelling air."},
+
+ /* ===== Compliance & elasticity ===== */
+ {obj:"Compliance & elasticity", s:14, q:"Lung compliance is best defined as...",
+  o:["The pressure needed to overcome airway resistance","The tendency of the lung to recoil after stretch","The rate of airflow through the bronchioles","The change in lung volume per unit change in pressure (\u0394V/\u0394P)"],
+  a:3, e:"Compliance measures how much lung volume changes for a given change in pressure (\u0394V/\u0394P) \u2014 its distensibility. Recoil tendency is elasticity (the opposite idea), while airway resistance and airflow rate describe how easily air moves, not how easily the lung stretches."},
+
+ {obj:"Compliance & elasticity", s:19, q:"Something described as \u201chighly elastic,\u201d like lung tissue, will...",
+  o:["Stretch easily and stay stretched","Resist being stretched and tend to recoil to its original shape","Have very high compliance","Lose its shape permanently after stretching"],
+  a:1, e:"Elasticity is the tendency to return to the original shape after stretch, so a highly elastic structure resists deformation and recoils. Stretching easily or staying deformed describes low elasticity / high compliance \u2014 the opposite property."},
+
+ {obj:"Compliance & elasticity", s:19, q:"Which TWO factors are chiefly responsible for the lung's elastic recoil?",
+  o:["Airway resistance and dead space","Blood flow and lymphatic drainage","Elastic tissue (collagen/elastin) and alveolar surface tension","Surfactant and mucus production"],
+  a:2, e:"The lung's recoil comes from its elastic fibers (collagen and elastin) plus the surface tension of the alveolar lining fluid. Resistance, dead space, blood flow, and mucus are unrelated to recoil, and surfactant actually reduces the surface-tension component."},
+
+ {obj:"Compliance & elasticity", s:19, q:"How does surface tension at the air\u2013water interface affect the alveoli?",
+  o:["It draws alveolar walls together and favors collapse","It holds alveoli open by pushing their walls apart","It has no effect on alveolar stability","It increases lung compliance"],
+  a:0, e:"Surface tension pulls the water-lined alveolar walls inward, tending to collapse the alveolus and lowering compliance. It does not push walls apart or leave stability unaffected \u2014 counteracting it is exactly why surfactant is needed."},
+
+ {obj:"Compliance & elasticity", s:16, q:"Because airflow varies with r\u2074, a small decrease in airway radius will...",
+  o:["Barely change resistance","Decrease resistance","Only matter in the alveoli, not the airways","Sharply increase resistance, since radius is raised to the fourth power"],
+  a:3, e:"With resistance proportional to 1/r\u2074, even slight narrowing greatly increases resistance to airflow. It does not decrease or barely change resistance, and the effect is greatest in the airways (the upper airways carry the major resistance), not the alveoli."},
+
+ {obj:"Compliance & elasticity", s:16, q:"How does a decrease in lung volume affect airway resistance?",
+  o:["It increases resistance","It decreases resistance","It eliminates resistance","It has no effect on resistance"],
+  a:0, e:"As lung volume falls, the airways are less stretched open and narrow, so airway resistance rises. Resistance is never eliminated, and it clearly depends on lung volume, so \u201cno effect\u201d is incorrect."},
+
+ /* ===== Volumes & capacities ===== */
+ {obj:"Volumes & capacities", s:27, q:"What is the difference between a lung \u201cvolume\u201d and a lung \u201ccapacity\u201d?",
+  o:["A capacity is always smaller than a single volume","They are two words for the same thing","A capacity is the sum of two or more lung volumes","A volume can only be measured during exercise"],
+  a:2, e:"A lung capacity is defined as the sum of two or more lung volumes (e.g., vital capacity = IRV + TV + ERV). Capacities are therefore larger than individual volumes, are not synonymous with them, and are measured at rest."},
+
+ {obj:"Volumes & capacities", s:29, q:"Vital capacity is the sum of which volumes?",
+  o:["Tidal volume + residual volume","Inspiratory reserve + tidal volume + expiratory reserve","Expiratory reserve + residual volume","Inspiratory reserve + residual volume"],
+  a:1, e:"Vital capacity \u2014 the maximum air expired after a maximal inspiration \u2014 equals IRV + TV + ERV. Any combination that includes residual volume is wrong, because residual volume cannot be exhaled and is not part of vital capacity."},
+
+ {obj:"Volumes & capacities", s:30, q:"Functional residual capacity (FRC) represents the...",
+  o:["Maximum air inspired after a normal expiration","Maximum air expired after a maximal inspiration","Air moved in one normal breath","Air remaining in the lungs after a normal (resting) expiration"],
+  a:3, e:"FRC (= ERV + RV) is the volume left in the lungs after a normal, resting expiration. The maximum inspired after a normal expiration is inspiratory capacity, the maximum expired after maximal inspiration is vital capacity, and one normal breath is tidal volume."},
+
+ {obj:"Volumes & capacities", s:31, q:"Residual volume is the air that...",
+  o:["Enters the lungs during a normal breath","Can be forcibly inspired beyond a normal breath","Remains in the lungs even after a maximal expiration","Is exhaled during quiet breathing"],
+  a:2, e:"Residual volume is the air that cannot be exhaled \u2014 it remains even after a maximal expiration, keeping alveoli from collapsing. Normal-breath air is tidal volume, extra inspired air is inspiratory reserve, and quiet-breathing exhaled air is tidal volume."},
+
+ {obj:"Volumes & capacities", s:31, q:"Which lung value CANNOT be measured directly by simple spirometry?",
+  o:["Tidal volume","Inspiratory reserve volume","Vital capacity","Residual volume"],
+  a:3, e:"Spirometry measures only air that moves in and out, so it cannot capture residual volume (air that never leaves the lungs) \u2014 nor the capacities containing it (FRC, TLC). Tidal volume, inspiratory reserve, and vital capacity are all directly measurable."},
+
+ {obj:"Volumes & capacities", s:28, q:"Inspiratory capacity is the maximum air that can be inspired following...",
+  o:["A normal (resting) expiration","A maximal expiration","A maximal inspiration","A forced exhalation to residual volume"],
+  a:0, e:"Inspiratory capacity (= TV + IRV) is the most air inhaled starting from the end of a normal, resting expiration. Starting from a maximal expiration or residual volume would approach total lung capacity, and you cannot inhale further after a maximal inspiration."},
+
+ /* ===== Surfactant ===== */
+ {obj:"Surfactant", s:20, q:"What is the primary function of pulmonary surfactant?",
+  o:["To increase surface tension so alveoli stay small","To reduce alveolar surface tension and prevent collapse","To thicken the respiratory membrane for protection","To trap inhaled particles like mucus"],
+  a:1, e:"Surfactant lowers the surface tension of the alveolar lining fluid, preventing collapse and increasing compliance. It does not raise surface tension, thicken the membrane, or trap particles \u2014 those would impair breathing."},
+
+ {obj:"Surfactant", s:22, q:"By Laplace's law (P = 2T/r), at equal surface tension a SMALLER alveolus...",
+  o:["Requires a smaller pressure to keep from collapsing","Is inherently more stable than a large one","Requires a larger pressure to keep from collapsing","Has no collapse tendency at all"],
+  a:2, e:"With P = 2T/r, a smaller radius demands a higher pressure to stay open, so small alveoli are inherently less stable \u2014 which is why surfactant is essential. The other options reverse or ignore this radius relationship."},
+
+ {obj:"Surfactant", s:23, q:"Without surfactant, what would happen to a small alveolus connected to a larger one?",
+  o:["The small alveolus would tend to collapse and empty into the larger one","The large alveolus would empty into the small one","Both would remain perfectly stable","Surface tension would disappear"],
+  a:0, e:"Without surfactant, the higher collapse pressure of the small alveolus (Laplace) drives its air into the larger, lower-pressure alveolus \u2014 atelectasis. The reverse flow, perfect stability, and disappearance of surface tension are all incorrect."},
+
+ {obj:"Surfactant", s:23, q:"How does surfactant help stabilize alveoli of different sizes?",
+  o:["By increasing surface tension in large alveoli","By enlarging all alveoli equally","By blocking airflow to small alveoli","By reducing surface tension, which lessens the collapse tendency of small alveoli"],
+  a:3, e:"Surfactant lowers surface tension \u2014 most effectively in small alveoli \u2014 reducing their collapse tendency and equalizing stability across alveolar sizes. It does not raise tension, resize alveoli uniformly, or block airflow."},
+
+ /* ===== Gas exchange in the lungs ===== */
+ {obj:"Gas exchange (lungs)", s:51, q:"In what direction does a gas diffuse across the respiratory membrane?",
+  o:["From lower to higher partial pressure","Down its partial pressure gradient, from higher to lower","Always from blood to alveolus","Independent of any pressure gradient"],
+  a:1, e:"A gas diffuses passively from higher to lower partial pressure. It cannot move up a gradient without energy, and its direction depends on that gradient (O\u2082 into blood, CO\u2082 out) \u2014 so \u201calways blood to alveolus\u201d and \u201cindependent of gradient\u201d are wrong."},
+
+ {obj:"Gas exchange (lungs)", s:62, q:"According to Fick's law, gas diffusion increases when...",
+  o:["The membrane is thicker","The surface area is smaller","The partial pressure gradient and surface area are larger","The solubility of the gas is lower"],
+  a:2, e:"Fick's law makes diffusion proportional to the pressure gradient, surface area, and solubility, and inversely proportional to membrane thickness. So a bigger gradient and area speed diffusion, while a thicker membrane, smaller area, or lower solubility slow it."},
+
+ {obj:"Gas exchange (lungs)", s:61, q:"Although CO\u2082 and O\u2082 have similar molecular weights, CO\u2082 diffuses much faster mainly because...",
+  o:["CO\u2082 is about 20 times more soluble than O\u2082","CO\u2082 has a much larger partial pressure gradient","CO\u2082 is a much smaller molecule","O\u2082 cannot cross the membrane at all"],
+  a:0, e:"CO\u2082's roughly 20-fold greater solubility lets it diffuse much faster despite a smaller partial pressure gradient. Its gradient is actually smaller, its molecular weight is similar (not smaller), and O\u2082 obviously does cross the membrane."},
+
+ {obj:"Gas exchange (lungs)", s:55, q:"How does increasing alveolar ventilation affect alveolar PCO\u2082?",
+  o:["It raises alveolar PCO\u2082","It has no effect on alveolar PCO\u2082","It raises PCO\u2082 only during exercise","It lowers alveolar PCO\u2082"],
+  a:3, e:"Greater alveolar ventilation washes out CO\u2082 faster than metabolism produces it, so alveolar (and arterial) PCO\u2082 falls. Ventilation and PCO\u2082 are inversely related, so raising PCO\u2082 or \u201cno effect\u201d is incorrect."},
+
+ {obj:"Gas exchange (lungs)", s:52, q:"Alveolar air is replaced only slowly (a fraction with each breath). What is the physiological benefit?",
+  o:["It lets CO\u2082 accumulate to high levels","It keeps alveolar gas concentrations stable, preventing sudden swings","It speeds oxygen loss from the blood","It prevents any gas exchange from occurring"],
+  a:1, e:"Because only about one-seventh of alveolar air is exchanged per breath, alveolar O\u2082 and CO\u2082 stay relatively constant, buffering blood gases against breath-to-breath swings. It does not let CO\u2082 build up, speed O\u2082 loss, or halt exchange."},
+
+ /* ===== Respiratory membrane ===== */
+ {obj:"Respiratory membrane", s:60, q:"Why is the respiratory (alveolar) membrane extremely thin (~0.2 \u00b5m)?",
+  o:["To increase surface tension","To slow gas diffusion for regulation","To minimize diffusion distance and speed gas exchange","To store surfactant"],
+  a:2, e:"At ~0.2 \u00b5m thick, the membrane keeps the diffusion distance tiny, allowing rapid gas exchange (Fick's law favors short distances). It is not there to raise surface tension, slow diffusion, or store surfactant."},
+
+ {obj:"Respiratory membrane", s:57, q:"The lungs contain roughly 300 million alveoli. How does this aid gas exchange?",
+  o:["It provides an enormous surface area for diffusion","It reduces the total surface area","It increases the diffusion distance","It decreases compliance"],
+  a:0, e:"Hundreds of millions of alveoli create a vast total surface area, which \u2014 per Fick's law \u2014 greatly increases gas exchange. This increases (not reduces) surface area and does not lengthen the diffusion distance or lower compliance."},
+
+ {obj:"Respiratory membrane", s:60, q:"Which sequence correctly lists layers a gas crosses in the respiratory membrane, from air to blood?",
+  o:["Capillary endothelium \u2192 alveolar epithelium \u2192 surfactant","Interstitial space \u2192 surfactant \u2192 capillary endothelium","Alveolar epithelium \u2192 surfactant \u2192 red blood cell","Surfactant/fluid \u2192 alveolar epithelium \u2192 basement membranes \u2192 capillary endothelium"],
+  a:3, e:"Moving from air to blood, a gas crosses the surfactant/fluid layer, the alveolar epithelium, the fused basement membranes and interstitium, and finally the capillary endothelium. The other sequences scramble this air-to-blood order."},
+
+ {obj:"Respiratory membrane", s:62, q:"If the respiratory membrane becomes thickened, gas exchange is impaired because...",
+  o:["Surface area increases too much","The diffusion distance increases, slowing gas transfer","The partial pressure gradient reverses","The solubility of the gases changes"],
+  a:1, e:"A thicker membrane lengthens the path a gas must diffuse, and by Fick's law greater distance slows transfer (e.g., in edema or fibrosis). Thickening does not add useful surface area, reverse the gradient, or change gas solubility."},
+
+ /* ===== Respiratory control ===== */
+ {obj:"Respiratory control", s:88, q:"Respiratory regulation is organized as which three-part system?",
+  o:["Sensors, a central controller, and effector muscles","Arteries, veins, and capillaries","Alveoli, bronchioles, and pleura","Surfactant, mucus, and cilia"],
+  a:0, e:"Respiratory control is a feedback loop: sensors (chemoreceptors) gather data, the central controller (brainstem) integrates it, and effectors (respiratory muscles) act. The other trios list vascular, structural, or airway-lining parts, not the control loop."},
+
+ {obj:"Respiratory control", s:96, q:"The central chemoreceptors are located in the brainstem and respond mainly to...",
+  o:["Oxygen levels in arterial blood","Blood pressure changes","CO\u2082 and H\u207a","Lung stretch"],
+  a:2, e:"The central chemoreceptors sense CO\u2082 and H\u207a (via H\u207a generated in the CSF). Oxygen sensing is the job of the peripheral chemoreceptors, while blood pressure and lung stretch are detected by other receptors."},
+
+ {obj:"Respiratory control", s:97, q:"The peripheral chemoreceptors of the carotid and aortic bodies are especially important for sensing...",
+  o:["Lung compliance","Airway resistance","Pleural pressure","Low arterial oxygen (PO\u2082)"],
+  a:3, e:"The carotid and aortic bodies are the main sensors of low arterial PO\u2082 (they also respond to CO\u2082/H\u207a). Compliance, resistance, and pleural pressure are mechanical properties, not what these chemoreceptors detect."},
+
+ {obj:"Respiratory control", s:91, q:"Increased arterial PCO\u2082 stimulates the central chemoreceptors indirectly by...",
+  o:["Binding directly to oxygen sensors","Generating H\u207a after CO\u2082 crosses into the brain/CSF","Reducing blood flow to the medulla","Constricting the airways"],
+  a:1, e:"CO\u2082 crosses into the brain/CSF, forms carbonic acid, and releases H\u207a; the central chemoreceptors actually respond to that H\u207a. They are not oxygen sensors, and CO\u2082 does not drive breathing by cutting medullary blood flow or narrowing airways."},
+
+ {obj:"Respiratory control", s:92, q:"Under normal resting conditions, the most important minute-to-minute stimulus driving ventilation is...",
+  o:["Arterial PCO\u2082 (and the resulting H\u207a)","A small fall in arterial PO\u2082","Blood glucose level","Body temperature"],
+  a:0, e:"Minute-to-minute ventilation is governed most tightly by arterial PCO\u2082 and the H\u207a it generates. Modest drops in PO\u2082 have little effect until PO\u2082 falls substantially, and glucose and temperature are not the primary respiratory stimulus."},
+
+ {obj:"Respiratory control", s:99, q:"When arterial PO\u2082 falls substantially (PCO\u2082 held constant), ventilation...",
+  o:["Decreases","Stays exactly the same","Increases, driven by the peripheral chemoreceptors","Stops entirely"],
+  a:2, e:"A substantial fall in PO\u2082 stimulates the carotid and aortic bodies, increasing ventilation (the hypoxic drive). Ventilation does not fall, stay flat, or stop when oxygen drops."},
+
+ /* ===== Oxygen transport ===== */
+ {obj:"Oxygen transport", s:77, q:"About how much oxygen can each gram of hemoglobin bind?",
+  o:["0.3 ml O\u2082","20 ml O\u2082","100 ml O\u2082","1.34 ml O\u2082"],
+  a:3, e:"Each gram of hemoglobin binds about 1.34 ml of O\u2082. The 0.3 ml figure is dissolved O\u2082 per 100 ml of blood, and ~20 ml is the total O\u2082-carrying capacity per 100 ml \u2014 not the per-gram value."},
+
+ {obj:"Oxygen transport", s:77, q:"Why does hemoglobin matter so much for oxygen transport?",
+  o:["Hemoglobin dissolves oxygen directly into plasma","Dissolved O\u2082 alone (~0.3 ml/100 ml) is far too little; Hb raises capacity to ~20 ml/100 ml","Dissolved oxygen carries most of the O\u2082 in blood","Hemoglobin only carries CO\u2082, not O\u2082"],
+  a:1, e:"Physically dissolved O\u2082 is tiny (~0.3 ml/100 ml); binding to hemoglobin lifts capacity to about 20 ml/100 ml, so Hb carries the vast majority of oxygen. It does not dissolve O\u2082 into plasma, and it carries O\u2082 as well as some CO\u2082."},
+
+ {obj:"Oxygen transport", s:76, q:"\u201cPercent saturation\u201d of hemoglobin refers to...",
+  o:["The absolute amount of O\u2082 in ml per 100 ml blood","The driving pressure for O\u2082 diffusion","The fraction of hemoglobin binding sites occupied by O\u2082","The number of red cells per microliter"],
+  a:2, e:"Percent saturation is the proportion of hemoglobin binding sites carrying O\u2082 (a unitless fraction). The absolute amount is \u201ccontent,\u201d the driving pressure is partial pressure, and red-cell count is a separate measure."},
+
+ {obj:"Oxygen transport", s:80, q:"The flat upper plateau of the oxygen-hemoglobin dissociation curve means that...",
+  o:["Hemoglobin stays highly saturated across a wide range of higher PO\u2082 values","Small drops in PO\u2082 at high levels cause large drops in saturation","Hemoglobin cannot bind oxygen in the lungs","Saturation and PO\u2082 are unrelated"],
+  a:0, e:"On the flat plateau, hemoglobin stays nearly fully saturated even as PO\u2082 varies over a wide high range \u2014 protecting O\u2082 loading if alveolar PO\u2082 dips. That is the opposite of large saturation swings, and saturation clearly depends on PO\u2082."},
+
+ {obj:"Oxygen transport", s:81, q:"Which change shifts the O\u2082-hemoglobin dissociation curve to the RIGHT, favoring O\u2082 unloading?",
+  o:["Decreased temperature","Increased pH (alkalosis)","Decreased 2,3-BPG","Increased CO\u2082 and H\u207a (lower pH)"],
+  a:3, e:"A right shift (lower O\u2082 affinity, better unloading) results from increased CO\u2082, increased H\u207a/lower pH, higher temperature, and increased 2,3-BPG \u2014 the conditions of active tissue. Lower temperature, higher pH, and less 2,3-BPG shift the curve left."},
+
+ {obj:"Oxygen transport", s:82, q:"Carbon monoxide is dangerous to oxygen transport because it...",
+  o:["Increases the oxygen-carrying capacity of blood","Binds hemoglobin far more tightly than O\u2082, blocking O\u2082 binding","Cannot bind hemoglobin at all","Only affects dissolved oxygen"],
+  a:1, e:"Carbon monoxide binds hemoglobin with far greater affinity than oxygen, occupying binding sites and preventing O\u2082 transport. It reduces (not increases) usable capacity, definitely binds hemoglobin, and acts on hemoglobin rather than dissolved O\u2082."},
+
+ /* ===== CO2 transport ===== */
+ {obj:"CO\u2082 transport", s:86, q:"In what form is MOST CO\u2082 carried in the blood?",
+  o:["As dissolved CO\u2082","Bound to hemoglobin as carbaminohemoglobin","As bicarbonate (HCO\u2083\u207b)","As carbonic acid crystals"],
+  a:2, e:"About 70% of CO\u2082 travels as bicarbonate formed in red cells by carbonic anhydrase. Roughly 23% rides on hemoglobin as carbaminohemoglobin and ~7% is dissolved; CO\u2082 is not carried as solid carbonic-acid crystals."},
+
+ {obj:"CO\u2082 transport", s:86, q:"Which enzyme in red cells speeds the conversion of CO\u2082 and water to carbonic acid?",
+  o:["Carbonic anhydrase","Carboxypeptidase","Lactate dehydrogenase","ATP synthase"],
+  a:0, e:"Carbonic anhydrase in red cells rapidly converts CO\u2082 + H\u2082O to carbonic acid, which dissociates to H\u207a and bicarbonate. The other enzymes act on peptides, lactate, and ATP production respectively, not on CO\u2082 hydration."},
+
+ {obj:"CO\u2082 transport", s:86, q:"As bicarbonate leaves the red cell in exchange for chloride entering, this exchange is called the...",
+  o:["Bohr shift","Haldane shift","Sodium shift","Chloride (Hamburger) shift"],
+  a:3, e:"As bicarbonate leaves the red cell, chloride moves in to preserve electrical neutrality \u2014 the chloride (Hamburger) shift. The Bohr and Haldane effects describe how pH/O\u2082 change gas affinities, and there is no \u201csodium shift\u201d here."},
+
+ {obj:"CO\u2082 transport", s:86, q:"About 23% of CO\u2082 is transported...",
+  o:["Dissolved in plasma","Bound to hemoglobin (carbaminohemoglobin)","As free carbonic acid","Inside white blood cells"],
+  a:1, e:"Roughly 23% of CO\u2082 is carried bound to hemoglobin as carbaminohemoglobin. Only ~7% is dissolved, most is bicarbonate, and CO\u2082 is not stored as free carbonic acid or within white cells."},
+
+ {obj:"CO\u2082 transport", s:85, q:"The Haldane effect describes how...",
+  o:["Low pH increases O\u2082 unloading","CO\u2082 increases hemoglobin's O\u2082 affinity","Binding of O\u2082 to hemoglobin in the lungs promotes CO\u2082 release","Chloride enters the red cell at the tissues"],
+  a:2, e:"The Haldane effect: when hemoglobin binds O\u2082 in the lungs, it releases CO\u2082 more readily, aiding CO\u2082 elimination. Low pH increasing O\u2082 unloading is the Bohr effect, and the other options misstate CO\u2082's effect on O\u2082 affinity and the chloride shift."},
+
+ /* ===== Respiration & pH ===== */
+ {obj:"Respiration & pH", s:86, q:"How does rising blood CO\u2082 lower blood pH?",
+  o:["CO\u2082 combines with water to form carbonic acid, which releases H\u207a","CO\u2082 directly binds and removes bicarbonate","CO\u2082 destroys hemoglobin's buffering ability","CO\u2082 has no relationship to pH"],
+  a:0, e:"Dissolved CO\u2082 forms carbonic acid, which dissociates into H\u207a and bicarbonate, so rising CO\u2082 raises H\u207a and lowers pH. CO\u2082 does not remove bicarbonate directly or destroy hemoglobin buffering, and it is tightly linked to pH."},
+
+ {obj:"Respiration & pH", s:92, q:"If a person hyperventilates and \u201cblows off\u201d CO\u2082, blood pH will...",
+  o:["Fall (become more acidic)","Stay exactly the same","Change only if oxygen also falls","Rise (become more alkaline)"],
+  a:3, e:"Blowing off CO\u2082 shifts the CO\u2082 + H\u2082O \u21cc H\u207a + HCO\u2083\u207b equilibrium to the left, lowering H\u207a and raising pH (respiratory alkalosis). Losing CO\u2082 cannot acidify the blood or leave pH unchanged, and the effect does not depend on oxygen."},
+
+ {obj:"Respiration & pH", s:91, q:"The respiratory system helps regulate blood pH primarily by...",
+  o:["Producing bicarbonate in the alveoli","Adjusting how much CO\u2082 is exhaled","Filtering H\u207a out of the blood","Changing hemoglobin concentration"],
+  a:1, e:"By changing ventilation, the lungs control how much CO\u2082 is exhaled, shifting the carbonic-acid equilibrium and adjusting pH within minutes. The alveoli don't make bicarbonate or filter H\u207a (a renal function), and hemoglobin level isn't the mechanism."},
+
+ /* ===== Tissue gas exchange ===== */
+ {obj:"Tissue gas exchange", s:72, q:"Tissue PO\u2082 is determined by the balance between...",
+  o:["Surfactant production and surface tension","Alveolar ventilation and dead space","The rate of blood flow (O\u2082 delivery) and the rate of O\u2082 consumption","Pleural pressure and compliance"],
+  a:2, e:"Tissue PO\u2082 reflects the balance between O\u2082 delivered by blood flow and O\u2082 used by the cells \u2014 more flow raises it, more consumption lowers it. Surfactant, ventilation/dead space, and pleural mechanics govern the lung, not tissue PO\u2082."},
+
+ {obj:"Tissue gas exchange", s:80, q:"During exercise, more oxygen is released to active muscle largely because...",
+  o:["Tissue PO\u2082 falls and local acidity/CO\u2082 promote O\u2082 unloading","Hemoglobin loses its ability to bind oxygen","Blood flow to muscle stops","Surfactant increases O\u2082 release"],
+  a:0, e:"In exercising muscle, PO\u2082 drops and the higher CO\u2082/H\u207a and temperature right-shift the curve (Bohr effect), so hemoglobin releases far more O\u2082. Hemoglobin doesn't lose function, muscle blood flow rises rather than stops, and surfactant has no role in tissue O\u2082 release."}
+];
+
+/* ---------------- STATE + LOGIC ---------------- */
+const LETTERS = ["A","B","C","D"];
+let current = 0;
+let score = 0;
+let answered = false;
+let responses = [];
+
+const $ = id => document.getElementById(id);
+
+function startQuiz(){
+  current = 0; score = 0; responses = [];
+  $("start").classList.add("hidden");$("quiz-footer-logo").classList.remove("hidden");
+  $("results").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderQuestion(){
+  answered = false;
+  const item = questions[current];
+  $("qcount").textContent = `Question ${current+1} of ${questions.length}`;
+  $("scorepill").textContent = `Score: ${score}`;
+  $("barfill").style.width = `${(current/questions.length)*100}%`;
+  $("qtag").textContent = item.obj;
+  $("qtext").textContent = item.q;
+
+  const box = $("options");
+  box.innerHTML = "";
+  item.o.forEach((text,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+    b.onclick = ()=>selectAnswer(i);
+    box.appendChild(b);
+  });
+
+  $("explain").classList.remove("show");
+  $("nextbtn").disabled = true;
+  $("hintline").textContent = "Select an answer to continue";
+  $("nextbtn").textContent = (current === questions.length-1) ? "See results \u2192" : "Next \u2192";
+}
+
+function selectAnswer(choice){
+  if(answered) return;
+  answered = true;
+  const item = questions[current];
+  const correct = item.a;
+  const btns = $("options").querySelectorAll(".opt");
+
+  btns.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === correct) b.classList.add("correct");
+    else if(i === choice) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+
+  const isCorrect = (choice === correct);
+  if(isCorrect) score++;
+  responses.push({i:current, choice, correct, isCorrect});
+
+  const v = $("verdict");
+  if(isCorrect){
+    v.className = "verdict ok";
+    v.textContent = "\u2713 Correct";
+  } else {
+    v.className = "verdict no";
+    v.textContent = `\u2717 Incorrect \u2014 the answer is ${LETTERS[correct]}`;
+  }
+  $("explainbody").textContent = item.e;
+  $("cite").textContent = `Source: ${DECK}, Slide ${item.s}`;
+  $("explain").classList.add("show");
+
+  $("scorepill").textContent = `Score: ${score}`;
+  $("nextbtn").disabled = false;
+  $("hintline").textContent = (current === questions.length-1) ? "Ready to finish" : "";
+}
+
+function nextQuestion(){
+  if(!answered) return;
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else {
+    showResults();
+  }
+}
+
+function showResults(){
+  $("quiz").classList.add("hidden");
+  $("results").classList.remove("hidden");
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+  $("finalscore").textContent = `${score} / ${total}`;
+  $("finalpct").textContent = `${pct}%`;
+
+  let msg;
+  if(pct>=90) msg = "Outstanding \u2014 you have a strong command of pulmonary physiology.";
+  else if(pct>=80) msg = "Solid work. A few concepts to tighten up before the exam.";
+  else if(pct>=70) msg = "Decent foundation \u2014 review the missed items below and re-test.";
+  else if(pct>=60) msg = "Getting there. Focus your review on the objectives you missed most.";
+  else msg = "Worth another pass through the material \u2014 use the review below, then restart.";
+  $("gradeline").textContent = msg;
+
+  const missed = responses.filter(r=>!r.isCorrect);
+  const review = $("review");
+  review.innerHTML = "";
+
+  if(missed.length === 0){
+    const d = document.createElement("div");
+    d.className = "allright";
+    d.textContent = "Perfect score \u2014 you didn't miss a single question. Every objective covered.";
+    review.appendChild(d);
+    return;
+  }
+
+  const h = document.createElement("h3");
+  h.textContent = `Review \u2014 ${missed.length} missed question${missed.length>1?"s":""}`;
+  review.appendChild(h);
+
+  missed.forEach(r=>{
+    const item = questions[r.i];
+    const wrap = document.createElement("div");
+    wrap.className = "missed";
+    wrap.innerHTML =
+      `<div class="mq">Q${r.i+1}. ${item.q}</div>`+
+      `<div class="row yours">Your answer: ${LETTERS[r.choice]}. ${item.o[r.choice]}</div>`+
+      `<div class="row right">Correct answer: ${LETTERS[r.correct]}. ${item.o[r.correct]}</div>`+
+      `<div class="why">${item.e}</div>`+
+      `<div class="mcite">${DECK}, Slide ${item.s}</div>`;
+    review.appendChild(wrap);
+  });
+}
+
+function restart(){ startQuiz(); }
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+</body>
+</html>

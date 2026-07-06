@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Endocrine System
+  Source: "Endocrine_for_anatomy.pdf" (PAJ 5000 Anatomy, The Endocrine System, H. Rappa, MD)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine System — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#1c2a33;
+    --ink-soft:#4a5b66;
+    --paper:#f3efe6;
+    --paper-2:#fbf9f4;
+    --line:#d8cfbd;
+    --oxblood:#7c2130;
+    --oxblood-soft:#9c3a48;
+    --brass:#b8863b;
+    --teal:#2f6d70;
+    --teal-deep:#1f4f52;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(28,42,51,.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(184,134,59,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(47,109,112,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(124,33,48,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;justify-content:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.dim{opacity:.62;}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:flex-end;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">The Endocrine System</span></h1>
+    <p class="sub">Thyroid &middot; Parathyroid &middot; Pituitary &amp; Hypothalamus &middot; Pancreas &middot; Suprarenal (Adrenal)</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the gross and histological anatomy of the endocrine organs from the endocrine lecture. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Compare and contrast the organs of the endocrine system &mdash; thyroid, parathyroid, pituitary, pancreas, and adrenal glands.</span></li>
+      <li><span class="n">2</span><span>Describe the anatomical relationships of each endocrine organ to its surrounding structures.</span></li>
+      <li><span class="n">3</span><span>Identify the blood supply, venous and lymphatic drainage, innervation, and key histology of these glands.</span></li>
+    </ul>
+    <div class="start-row">
+      <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="score" id="score">Score: 0 / 0</span>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 50</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from <em>Endocrine_for_anatomy.pdf</em> &middot; PAJ 5000 Anatomy &middot; for study use.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 50 items, drawn only from the endocrine lecture.
+   Topics: overview, pituitary, thyroid, parathyroid, pancreas, adrenal
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    topic:"Endocrine Overview",
+    q:"According to the lecture, which structure functions as an endocrine organ, contains autonomic nervous system centers, AND exerts control over the suprarenal medulla?",
+    choices:["Hypothalamus","Pituitary gland","Pineal gland","Thymus gland"],
+    answer:0,
+    correct:"The hypothalamus fills all three roles: it acts as an endocrine organ (releasing ADH and oxytocin toward the pituitary), it contains autonomic nervous system centers, and it controls the suprarenal medulla.",
+    why:"The pituitary receives regulatory hormones rather than housing autonomic centers; the pineal gland secretes melatonin only; the thymus produces thymosins and atrophies in adulthood.",
+    src:"Overview — 'The Hypothalamus and Endocrine Regulation'"
+  },
+  {
+    topic:"Endocrine Overview",
+    q:"The lecture lists several 'other endocrine tissues' beyond the main organs. Which of the following is named among them?",
+    choices:["Spleen","Kidney","Liver","Gallbladder"],
+    answer:1,
+    correct:"The kidney is listed among other endocrine tissues (it produces erythropoietin and calcitriol per Figure 19.1).",
+    why:"The other listed tissues are the heart, adipose cells, and digestive tract. The spleen, liver, and gallbladder are not named as endocrine tissues in this lecture.",
+    src:"Overview — 'Other endocrine tissues'; Figure 19.1"
+  },
+  {
+    topic:"Endocrine Overview",
+    q:"In Figure 19.1, which hormone is identified as the secretion of the pineal gland?",
+    choices:["Calcitonin","Thymosins","Melatonin","Erythropoietin"],
+    answer:2,
+    correct:"The pineal gland is labeled with melatonin in Figure 19.1.",
+    why:"Thymosins belong to the thymus, calcitonin to the thyroid, and erythropoietin to the kidney.",
+    src:"Figure 19.1 — The Endocrine System"
+  },
+  {
+    topic:"Endocrine Overview",
+    q:"Per Figure 19.1, the heart is shown as an endocrine tissue producing which of the following?",
+    choices:["Leptin and resistin","Thyroxine and triiodothyronine","Insulin and glucagon","Atrial and brain natriuretic peptides"],
+    answer:3,
+    correct:"The heart is labeled as producing natriuretic peptides — atrial natriuretic peptide (ANP) and brain natriuretic peptide (BNP).",
+    why:"Leptin and resistin are from adipose tissue; insulin and glucagon from pancreatic islets; thyroxine and triiodothyronine from the thyroid.",
+    src:"Figure 19.1 — Heart"
+  },
+  {
+    topic:"Endocrine Overview",
+    q:"According to Figure 19.1, adipose tissue is depicted as secreting which pair of hormones?",
+    choices:["Leptin and resistin","Cortisol and aldosterone","Estrogens and progestins","EPO and calcitriol"],
+    answer:0,
+    correct:"Adipose tissue is labeled with leptin and resistin.",
+    why:"Cortisol/aldosterone are adrenal cortical hormones; estrogens/progestins are ovarian; EPO/calcitriol are renal.",
+    src:"Figure 19.1 — Adipose Tissue"
+  },
+  {
+    topic:"Endocrine Overview",
+    q:"In Figure 19.2, the hypothalamus controls the suprarenal medulla by which of the three listed mechanisms?",
+    choices:["Secreting regulatory hormones to the pars distalis","Controlling sympathetic output via preganglionic motor fibers","Producing ADH and oxytocin","Releasing melatonin into the portal system"],
+    answer:1,
+    correct:"Figure 19.2 shows mechanism 3: control of sympathetic output to the suprarenal medullae via preganglionic motor fibers, driving secretion of epinephrine and norepinephrine.",
+    why:"Regulatory hormones to the pars distalis (mechanism 1) and ADH/oxytocin production (mechanism 2) are the other two mechanisms; melatonin is not involved in this pathway.",
+    src:"Figure 19.2 — Hypothalamic Control over Endocrine Organs"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The pituitary gland sits within which bony fossa?",
+    choices:["Jugular fossa","Pterygopalatine fossa","Hypophyseal fossa of the sella turcica","Mandibular fossa"],
+    answer:2,
+    correct:"The pituitary (hypophysis) sits in the hypophyseal fossa of the sella turcica of the sphenoid bone.",
+    why:"The pterygopalatine, jugular, and mandibular fossae are unrelated locations not associated with the pituitary in this lecture.",
+    src:"'The Pituitary Gland' — location; 'Pituitary Gland (Hypophysis Cerebri)'"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The pituitary gland is attached to the hypothalamus by which structure?",
+    choices:["Diaphragma sellae","Dorsum sellae","Optic chiasma","Infundibulum"],
+    answer:3,
+    correct:"The infundibulum (pituitary stalk) attaches the pituitary to the hypothalamus, connecting the pars nervosa to the median eminence.",
+    why:"The diaphragma sellae is dura covering the gland; the optic chiasma lies above it; the dorsum sellae is a bony relation behind it.",
+    src:"'The Pituitary Gland'; Figure 19.3a"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The diaphragma sellae covering the pituitary is pierced centrally by the infundibulum and separates the gland from which structure?",
+    choices:["Optic chiasma","Cavernous sinus","Sphenoid air sinus","Dorsum sellae"],
+    answer:0,
+    correct:"The diaphragma sellae of dura mater is pierced centrally by the infundibulum and separates the gland from the optic chiasma.",
+    why:"The cavernous sinus lies on either side, the sphenoid air sinus lies inferiorly and in front, and the dorsum sellae lies behind — none is separated from the gland by the diaphragma sellae.",
+    src:"'Pituitary Gland (Hypophysis Cerebri)' — relations"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The pituitary gland is related on either side to which structure?",
+    choices:["Sphenoid air sinus","Cavernous sinus","Optic chiasma","Third ventricle"],
+    answer:1,
+    correct:"The gland is related on either side to the cavernous sinus.",
+    why:"The sphenoid air sinus is inferior and in front; the optic chiasma is above (separated by the diaphragma sellae); the third ventricle is a superior relation of the hypothalamus, not a lateral pituitary relation.",
+    src:"'Pituitary Gland (Hypophysis Cerebri)' — relations"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"Which subdivisions make up the anterior lobe (adenohypophysis) of the pituitary?",
+    choices:["Pars nervosa, infundibulum, median eminence","Pars nervosa, pars distalis, pars tuberalis","Pars distalis, pars tuberalis, pars intermedia","Pars intermedia, pars nervosa, infundibular stalk"],
+    answer:2,
+    correct:"The adenohypophysis consists of the pars distalis, pars tuberalis, and pars intermedia.",
+    why:"The pars nervosa, infundibular stalk, and median eminence belong to the posterior lobe (neurohypophysis) side, not the adenohypophysis.",
+    src:"'The pituitary gland consists of' — anterior lobe subdivisions"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The posterior lobe (neurohypophysis) consists of the pars nervosa, which is connected by the infundibulum to which part of the hypothalamus?",
+    choices:["Optic chiasm","Mammillary body","Paraventricular nucleus","Median eminence (tuber cinereum)"],
+    answer:3,
+    correct:"The pars nervosa connects via the infundibulum (pituitary stalk) to the median eminence (tuber cinereum) of the hypothalamus.",
+    why:"The optic chiasm and mammillary body are nearby landmarks, and the paraventricular nucleus is a cell group producing oxytocin — none is the connection point named for the stalk.",
+    src:"'The pituitary gland consists of' — posterior lobe"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"Within the hypophyseal portal system, regulatory hormones leave the hypothalamus and pass through portal vessels to which target?",
+    choices:["Adenohypophysis","Neurohypophysis","Suprarenal medulla","Pineal gland"],
+    answer:0,
+    correct:"Regulatory hormones travel through the fenestrated portal capillaries to the adenohypophysis (anterior pituitary).",
+    why:"The neurohypophysis receives axons (not portal-delivered regulatory hormones); the suprarenal medulla and pineal gland are not targets of this portal system.",
+    src:"'The Hypophyseal Portal System'; 'Note' slide"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The lecture's 'Note' slide contrasts the blood supply of the two pituitary lobes. Which statement is correct?",
+    choices:["Both lobes receive portal blood","The anterior pituitary receives portal blood; the posterior receives arterial blood","The anterior pituitary receives arterial blood; the posterior receives portal blood","Both lobes receive only arterial blood"],
+    answer:1,
+    correct:"The anterior pituitary receives portal blood, while the posterior pituitary receives arterial blood.",
+    why:"The relationship is reversed in the distractors; the lecture states each lobe's supply distinctly rather than making them the same.",
+    src:"'Note' — anterior vs posterior pituitary blood supply"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"Somatotropes of the adenohypophysis release which hormone?",
+    choices:["Prolactin (PRL)","Thyroid-stimulating hormone (TSH)","Growth hormone (GH)","Luteinizing hormone (LH)"],
+    answer:2,
+    correct:"Somatotropes release growth hormone (GH, also called somatotropin).",
+    why:"Prolactin is from lactotropes, TSH from thyrotropes, and LH from gonadotropes.",
+    src:"'The Adenohypophysis' — five cell types"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"In the pars distalis, the acidophils (about 10% of cells, reddish cytoplasm) secrete which hormones?",
+    choices:["TSH and ACTH","ADH and oxytocin","FSH and LH","Growth hormone and prolactin"],
+    answer:3,
+    correct:"Acidophils have reddish cytoplasm and secrete growth hormone (GH) and prolactin (lactogenic hormone).",
+    why:"TSH, ACTH, FSH, and LH are secreted by basophils; ADH and oxytocin are released from the posterior lobe, not the pars distalis chromophils.",
+    src:"'Pars distalis is formed of' — acidophils vs basophils"
+  },
+  {
+    topic:"Pituitary & Hypothalamus",
+    q:"The pars nervosa contains bundles of nerve fibers, pituicytes, and homogenous intercellular material that on fixation precipitates to form what?",
+    choices:["Herring's body","Colloid","Chromaffin granules","Zymogen granules"],
+    answer:0,
+    correct:"On fixation the homogenous intercellular substance of the pars nervosa precipitates to form Herring's bodies.",
+    why:"Colloid is found in thyroid follicles; chromaffin granules are in the adrenal medulla; zymogen granules are in pancreatic exocrine cells.",
+    src:"'Pars nervosa contains' — Herring's body"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The thyroid gland lies in the lower neck spanning which vertebral levels?",
+    choices:["C3 to C5","C5 to T1","T1 to T4","C1 to C3"],
+    answer:1,
+    correct:"The thyroid lies in the lower neck at the level of the 5th cervical (C5) to the 1st thoracic (T1) vertebrae.",
+    why:"The other ranges fall outside the C5–T1 span given in the lecture.",
+    src:"'THE THYROID GLAND' — vertebral levels"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The apex of each thyroid lobe reaches to which laryngeal landmark?",
+    choices:["Cricoid cartilage","Hyoid bone","Oblique line of the thyroid cartilage","4th or 5th tracheal ring"],
+    answer:2,
+    correct:"The apex is at the level of the oblique line of the thyroid cartilage of the larynx.",
+    why:"The base (not the apex) reaches the 4th or 5th tracheal ring; the cricoid cartilage and hyoid bone are other landmarks not given for the apex.",
+    src:"'THE THYROID GLAND' — apex and base"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The base of each thyroid lobe lies at the level of which structure?",
+    choices:["Oblique line of thyroid cartilage","2nd and 3rd tracheal rings","1st tracheal ring","4th or 5th tracheal ring"],
+    answer:3,
+    correct:"The base of each lobe is at the level of the 4th or 5th tracheal ring.",
+    why:"The oblique line marks the apex; the 2nd–3rd tracheal rings mark the isthmus; the 1st tracheal ring is not the level given for the base.",
+    src:"'THE THYROID GLAND' — apex and base"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The anterior border of the thyroid lobe is thin and related to which vessel?",
+    choices:["Anterior branch of the superior thyroid artery","Inferior thyroid artery","Thyroidea ima artery","Middle thyroid vein"],
+    answer:0,
+    correct:"The thin anterior border is related to the anterior branch of the superior thyroid artery and is continuous below with the upper border of the isthmus.",
+    why:"The inferior thyroid artery relates to the posterior border; the thyroidea ima supplies the isthmus as a variant; the middle thyroid vein is a drainage vessel, not the anterior border relation.",
+    src:"Thyroid borders — anterior border"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The rounded posterior border of the thyroid is related below to the inferior thyroid artery and is the border to which the ______ glands are usually related.",
+    choices:["Submandibular","Parathyroid","Thymus","Pineal"],
+    answer:1,
+    correct:"The parathyroid glands are usually related to the rounded posterior border of the thyroid.",
+    why:"The submandibular, thymus, and pineal glands are unrelated to the posterior thyroid border in this lecture.",
+    src:"Thyroid borders — posterior border"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The medial surface of the thyroid is related to the larynx, pharynx, and which nerve, as well as the trachea, esophagus, and recurrent laryngeal nerve?",
+    choices:["Vagus nerve","Phrenic nerve","External laryngeal nerve","Hypoglossal nerve"],
+    answer:2,
+    correct:"The medial surface is related to the larynx, pharynx, and external laryngeal nerve (and to the trachea, esophagus, and recurrent laryngeal nerve).",
+    why:"The vagus runs in the carotid sheath (a posterior relation); the phrenic and hypoglossal nerves are not listed as medial-surface relations of the thyroid.",
+    src:"'The medial surface is related to'"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The posterior surface of the thyroid is related to which structure overlapping the common carotid artery?",
+    choices:["Sternomastoid muscle","Pretracheal fascia","Platysma","Carotid sheath"],
+    answer:3,
+    correct:"The posterior surface is related to the carotid sheath, which overlaps the common carotid artery.",
+    why:"The pretracheal fascia encloses the gland (allowing it to move with swallowing), the platysma is a superficial lateral relation, and the sternomastoid is a lateral-surface muscle relation.",
+    src:"'The posterior surface is related to' — carotid sheath"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The thyroid gland moves up and down with deglutition because it is enclosed in which fascia, connected above to the thyroid cartilage?",
+    choices:["Pretracheal fascia","Prevertebral fascia","Carotid sheath","Superficial fascia"],
+    answer:0,
+    correct:"The gland lies within the pretracheal fascia, which is connected above to the thyroid cartilage — the reason it moves with swallowing.",
+    why:"The prevertebral fascia lies behind, the carotid sheath encloses the neurovascular bundle, and the superficial fascia contains the platysma.",
+    src:"Thyroid surfaces — pretracheal fascia / deglutition"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The thyroid isthmus lies opposite which tracheal rings?",
+    choices:["1st and 2nd","2nd and 3rd","4th and 5th","3rd and 4th"],
+    answer:1,
+    correct:"The isthmus lies opposite the 2nd and 3rd tracheal rings and is covered by the sternohyoid and sternothyroid muscles.",
+    why:"The base of the lobes sits at the 4th/5th rings; the 1st/2nd and 3rd/4th pairings are not the levels given for the isthmus.",
+    src:"'Thyroid isthmus'"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The superior thyroid artery arises from which vessel?",
+    choices:["Arch of the aorta","Thyrocervical trunk","External carotid artery","Internal carotid artery"],
+    answer:2,
+    correct:"The superior thyroid artery arises from the external carotid artery and descends with the external laryngeal nerve to the gland.",
+    why:"The inferior thyroid artery arises from the thyrocervical trunk; the thyroidea ima (a variant) arises from the aortic arch or brachiocephalic artery; the internal carotid gives no thyroid branch here.",
+    src:"'Blood supply of thyroid gland' — superior thyroid artery"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The inferior thyroid artery arises from the thyrocervical trunk and becomes related to which nerve at the posterior surface of the gland?",
+    choices:["External laryngeal nerve","Phrenic nerve","Vagus nerve","Recurrent laryngeal nerve"],
+    answer:3,
+    correct:"The inferior thyroid artery becomes related to the recurrent laryngeal nerve at the posterior surface of the gland.",
+    why:"The external laryngeal nerve accompanies the superior thyroid artery; the vagus and phrenic nerves are not the nerve paired with the inferior thyroid artery here.",
+    src:"'Blood supply of thyroid gland' — inferior thyroid artery"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The thyroidea ima artery, an uncommon variant supplying the isthmus, arises from the arch of the aorta or which other vessel?",
+    choices:["Brachiocephalic artery","Thyrocervical trunk","External carotid artery","Vertebral artery"],
+    answer:0,
+    correct:"The thyroidea ima artery arises from the arch of the aorta or the brachiocephalic artery.",
+    why:"The thyrocervical trunk gives the inferior thyroid artery, the external carotid gives the superior thyroid artery, and the vertebral artery is not a source of the thyroidea ima.",
+    src:"'Blood supply of thyroid gland' — thyroidea ima artery"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"Regarding venous drainage of the thyroid, the inferior thyroid vein ends in which vein?",
+    choices:["Internal jugular vein","Brachiocephalic vein","External jugular vein","Subclavian vein"],
+    answer:1,
+    correct:"The inferior thyroid vein ends in the brachiocephalic vein, whereas the superior and middle thyroid veins usually end in the internal jugular vein.",
+    why:"The internal jugular receives the superior and middle thyroid veins; the external jugular and subclavian veins are not the termination of the inferior thyroid vein in this lecture.",
+    src:"'Venous drainage' — thyroid veins"
+  },
+  {
+    topic:"Thyroid Gland",
+    q:"The parafollicular (C) cells of the thyroid sit near the follicular basement lamina, separated from the follicle lumen by follicular epithelium, and secrete which hormone?",
+    choices:["Thyroxine","Parathyroid hormone","Calcitonin","Thyroglobulin"],
+    answer:2,
+    correct:"Parafollicular (C) cells secrete calcitonin; they are larger and lighter-staining than follicular cells.",
+    why:"Thyroxine is made by follicular epithelium, parathyroid hormone by parathyroid chief cells, and thyroglobulin is the colloid protein — not a C-cell secretion.",
+    src:"'Para follicular or C cells' — calcitonin"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"The parathyroid glands are usually located in which position relative to the thyroid?",
+    choices:["Anterior surface of the thyroid","Superior to the hyoid bone","Within the isthmus only","Posterior aspect of the thyroid"],
+    answer:3,
+    correct:"The parathyroid glands lie on the posterior aspect of the thyroid, between its posterior borders and capsule; sometimes tissue is embedded within the thyroid.",
+    why:"They are not on the anterior surface, not confined to the isthmus, and not located above the hyoid bone.",
+    src:"'Parathyroid Glands (Post. view of thyroid)'; 'PARATHYROID GLANDS'"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"How many parathyroid glands are usually present, and how are they arranged?",
+    choices:["Four total, two on each side (one superior, one inferior)","Two total, one on each side","Six total, three on each side","Three total, all on the left"],
+    answer:0,
+    correct:"There are usually two on each side — one superior and one inferior — for four total.",
+    why:"The lecture specifies two per side with superior and inferior members, not two, six, or three total.",
+    src:"'PARATHYROID GLANDS' — number and arrangement"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"Which parathyroid glands are more constant in location, usually lying midway along the posterior thyroid borders?",
+    choices:["The inferior glands","The superior glands","The left-sided glands","The embedded glands"],
+    answer:1,
+    correct:"The superior parathyroid glands are more constant in location than the inferior and lie midway along the posterior thyroid borders.",
+    why:"The inferior glands are more variable; laterality (left vs right) and 'embedded' status are not the basis for the constancy described.",
+    src:"'PARATHYROID GLANDS' — superior vs inferior constancy"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"The inferior pair of parathyroid glands may be found in which of the following positions?",
+    choices:["Anterior to the sternohyoid muscle","Within the carotid sheath","Above or below the inferior thyroid arteries, or in the thyroid near its base","Deep to the trachea in the superior mediastinum only"],
+    answer:2,
+    correct:"The inferior pair may lie above or below the inferior thyroid arteries, or within the thyroid gland near its base.",
+    why:"The lecture does not place the inferior glands anterior to the sternohyoid, inside the carotid sheath, or restricted to the mediastinum.",
+    src:"'PARATHYROID GLANDS' — 'The inferior pair may be'"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"In parathyroid histology, which cells have slightly eosinophilic cytoplasm and produce parathyroid hormone (PTH)?",
+    choices:["Oxyphil cells","Follicular cells","Chromaffin cells","Principal (chief) cells"],
+    answer:3,
+    correct:"Principal (chief) cells have slightly eosinophilic cytoplasm and produce parathyroid hormone (PTH).",
+    why:"Oxyphil cells are larger and very eosinophilic with an unknown function (they may also secrete PTH); chromaffin cells are adrenal; follicular cells are thyroid.",
+    src:"'Histology of parathyroid glands' — principal (chief) cells"
+  },
+  {
+    topic:"Parathyroid Glands",
+    q:"The oxyphil cells of the parathyroid gland are described as:",
+    choices:["Larger and very eosinophilic cells of unknown function","Small cells with no granules","Simple cuboidal cells surrounding colloid","Lipid-droplet-laden cells in radial columns"],
+    answer:0,
+    correct:"Oxyphil cells are larger and very eosinophilic; their function is unknown, though they may also secrete PTH.",
+    why:"Small non-granular cells describe pituitary chromophobes; cuboidal cells around colloid are thyroid follicular cells; lipid-laden radial-column cells describe the adrenal zona fasciculata.",
+    src:"'Histology of parathyroid glands' — oxyphil cells"
+  },
+  {
+    topic:"Pancreas",
+    q:"The large rounded head of the pancreas fills the concavity of which structure?",
+    choices:["Spleen","Duodenum","Stomach","Transverse colon"],
+    answer:1,
+    correct:"The head of the pancreas fills the concavity of the duodenum, while the pointed tail extends toward the spleen.",
+    why:"The tail reaches the spleen (hilus), the stomach lies anterior to the body, and the transverse colon is an anterior relation — none is filled by the head.",
+    src:"'The Pancreas and Other Endocrine Tissues'; 'Head fills concavity of duodenum'"
+  },
+  {
+    topic:"Pancreas",
+    q:"The tail of the pancreas extends toward which organ?",
+    choices:["Liver","Left kidney","Spleen","Gallbladder"],
+    answer:2,
+    correct:"The pointed tail of the pancreas extends toward the spleen (reaching the hilus of the spleen).",
+    why:"The body crosses the left kidney and relates to it, but the tail specifically reaches the spleen; the liver and gallbladder are not the tail's target.",
+    src:"Pancreas gross anatomy — 'Tail reaches hilus of the spleen'"
+  },
+  {
+    topic:"Pancreas",
+    q:"The pancreas lies retroperitoneally at approximately which vertebral levels?",
+    choices:["T6–T8","T9–T10","L4–L5","T12/L1 to L3"],
+    answer:3,
+    correct:"The pancreas lies retroperitoneally at approximately T12/L1 to L3.",
+    why:"The other ranges fall above or below the T12/L1–L3 span the lecture gives.",
+    src:"Pancreas — 'Lies retroperitoneally at ~T-12/L-1 to L-3'"
+  },
+  {
+    topic:"Pancreas",
+    q:"Within a pancreatic islet, which endocrine cell type produces insulin?",
+    choices:["Beta (β) cells","Alpha (α) cells","Delta (δ) cells","F cells"],
+    answer:0,
+    correct:"Beta (β) cells produce insulin.",
+    why:"Alpha cells produce glucagon, delta cells produce somatostatin, and F cells produce pancreatic polypeptide.",
+    src:"Figure 19.10ab — endocrine cells of the pancreatic islet"
+  },
+  {
+    topic:"Pancreas",
+    q:"Per the islet cell labeling, which cells produce glucagon?",
+    choices:["Beta (β) cells","Alpha (α) cells","Delta (δ) cells","F cells"],
+    answer:1,
+    correct:"Alpha (α) cells produce glucagon.",
+    why:"Beta cells make insulin, delta cells make somatostatin, and F cells make pancreatic polypeptide.",
+    src:"Figure 19.10ab — α cells (glucagon)"
+  },
+  {
+    topic:"Pancreas",
+    q:"The main pancreatic duct (Duct of Wirsung) joins the common bile duct at which site?",
+    choices:["Minor duodenal papilla","Pylorus","Ampulla of Vater","Neck of the pancreas"],
+    answer:2,
+    correct:"The Duct of Wirsung joins the CBD at the Ampulla of Vater (about 3–4\" below the pylorus).",
+    why:"The minor papilla is where the accessory Duct of Santorini joins; the pylorus and neck of the pancreas are landmarks, not the junction site of the main duct with the CBD.",
+    src:"'Pancreatic Duct System' — Duct of Wirsung"
+  },
+  {
+    topic:"Pancreas",
+    q:"The accessory pancreatic duct (Duct of Santorini) drains into the duodenum at which site?",
+    choices:["Major duodenal papilla","Duodenojejunal flexure","Ampulla of Vater","Minor duodenal papilla"],
+    answer:3,
+    correct:"The Duct of Santorini joins the duodenum at the minor papilla and represents part of the duct from the dorsal pancreas.",
+    why:"The major papilla and ampulla of Vater are where the main duct and CBD terminate; the duodenojejunal flexure is unrelated to duct drainage.",
+    src:"'Duct of Santorini' — accessory pancreatic duct"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The suprarenal glands are located attached to which border of the kidneys?",
+    choices:["Superior border","Inferior border","Medial border only","Lateral border only"],
+    answer:0,
+    correct:"The suprarenal (adrenal) glands are attached to the superior border of the kidneys.",
+    why:"The inferior, medial-only, and lateral-only borders do not match the superior renal ends described in the lecture.",
+    src:"'The Suprarenal Glands' — location"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The suprarenal glands receive a highly vascular supply. Which of the following is one of the arteries named in the lecture?",
+    choices:["Splenic artery","Middle suprarenal artery from the descending aorta","Gastroduodenal artery","Superior thyroid artery"],
+    answer:1,
+    correct:"The middle suprarenal artery from the descending aorta supplies the gland, along with branches from the renal artery and the inferior phrenic artery.",
+    why:"The splenic and gastroduodenal arteries supply the pancreas/foregut, and the superior thyroid artery supplies the thyroid — none supplies the suprarenal gland here.",
+    src:"'The Suprarenal Glands' — arterial supply"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The three distinct zones of the suprarenal cortex, from outer to inner, are:",
+    choices:["Zona reticularis, fasciculata, glomerulosa","Zona fasciculata, glomerulosa, reticularis","Zona glomerulosa, fasciculata, reticularis","Medulla, cortex, capsule"],
+    answer:2,
+    correct:"From outer to inner the cortex is zona glomerulosa, zona fasciculata, and zona reticularis (deep to the capsule, superficial to the medulla).",
+    why:"The reversed order is incorrect, fasciculata is not outermost, and 'medulla/cortex/capsule' are gland layers rather than the three cortical zones.",
+    src:"'The Suprarenal Glands' — cortical zones; Figure (c/d)"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The zona glomerulosa of the adrenal cortex secretes which class of hormone?",
+    choices:["Catecholamines","Glucocorticoids (cortisol)","Androgens","Mineralocorticoids (aldosterone)"],
+    answer:3,
+    correct:"The zona glomerulosa secretes mineralocorticoids (aldosterone).",
+    why:"Glucocorticoids (cortisol) come from the zona fasciculata, androgens from the zona reticularis, and catecholamines from the medulla.",
+    src:"'HISTOLOGY OF ADRENAL GLANDS' — zona glomerulosa"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The zona fasciculata, composed of lipid-droplet-laden cells in radial columns, secretes which hormone?",
+    choices:["Glucocorticoids (cortisol)","Aldosterone","Androgens","Adrenaline"],
+    answer:0,
+    correct:"The zona fasciculata secretes glucocorticoids (cortisol).",
+    why:"Aldosterone is from the zona glomerulosa, androgens from the zona reticularis, and adrenaline from the medullary chromaffin cells.",
+    src:"'HISTOLOGY OF ADRENAL GLANDS' — zona fasciculata"
+  },
+  {
+    topic:"Suprarenal (Adrenal) Glands",
+    q:"The principal cells of the adrenal medulla, considered modified postganglionic sympathetic neurons lacking dendrites and axons, are called:",
+    choices:["Chief cells","Chromaffin cells","Pituicytes","Oxyphil cells"],
+    answer:1,
+    correct:"The chromaffin cells are the principal cells of the medulla; they secrete adrenaline and noradrenaline, and the medulla contains a large central vein.",
+    why:"Chief cells and oxyphil cells are parathyroid cells; pituicytes are found in the pars nervosa of the pituitary.",
+    src:"'ADRENAL MEDULLA' — chromaffin cells"
+  }
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+el('startBtn').addEventListener('click', () => {
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  state.i++;
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('retryBtn').addEventListener('click', () => {
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+function render(){
+  state.answered = false;
+  const item = QUESTIONS[state.i];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+
+  const box = el('choices');
+  box.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+}
+
+function select(idx){
+  if (state.answered) return;
+  state.answered = true;
+  const item = QUESTIONS[state.i];
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  else {
+    state.missed.push({ item, chosen: idx });
+  }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: Endocrine_for_anatomy.pdf — ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+}
+
+function finish(){
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the endocrine anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: Endocrine_for_anatomy.pdf — ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

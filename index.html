@@ -263,6 +263,33 @@
     .exam-section[open] summary::after { transform: rotate(180deg); }
     .exam-section .exam-content { padding: 14px 16px; }
 
+    .topic-section {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+      padding-top: 4px;
+    }
+    .topic-section summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 8px 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .topic-section summary::-webkit-details-marker { display: none; }
+    .topic-section summary::after {
+      content: "▾";
+      font-weight: 400;
+      transition: transform 0.15s ease;
+    }
+    .topic-section[open] summary::after { transform: rotate(180deg); }
+    .topic-section .exam-content { padding: 4px 4px 6px 14px; }
+
     ul { list-style: none; margin: 0; padding: 0; }
     li { margin: 0; }
     li + li { margin-top: 6px; }
@@ -386,18 +413,18 @@
           <div class="exam-content">
             <div class="divider"><span>Individual Topic Exam</span></div>
             <ul>
-              <li><a class="quiz-link" href="hemostasis-quiz.html">Hemostasis Quiz</a></li>
-              <li><a class="quiz-link" href="immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
-              <li><a class="quiz-link" href="pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
-              <li><a class="quiz-link" href="gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
-              <li><a class="quiz-link" href="metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/hemostasis-quiz.html">Hemostasis Quiz</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
             </ul>
             <div class="divider"><span>Master Exams</span></div>
             <ul>
-              <li><a class="quiz-link" href="physiology-master-exam.html">Physiology Master Exam</a></li>
-              <li><a class="quiz-link" href="physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
-              <li><a class="quiz-link" href="physiology-master-exam-version-3.html">Physiology Master Exam (Version 3)</a></li>
-              <li><a class="quiz-link" href="physiology-master-exam-version-4.html">Physiology Master Exam (Version 4)</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam.html">Physiology Master Exam</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-3.html">Physiology Master Exam (Version 3)</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-4.html">Physiology Master Exam (Version 4)</a></li>
             </ul>
           </div>
         </details>
@@ -416,34 +443,101 @@
           <div class="exam-content">
             <div class="divider"><span>Master Exams</span></div>
             <ul>
-              <li><a class="quiz-link" href="pharmacodynamics-master-exam.html">Pharmacodynamics Master Exam</a></li>
-              <li><a class="quiz-link" href="pharmacodynamics-master-exam-version-2.html">Pharmacodynamics Master Exam (Version 2)</a></li>
-              <li><a class="quiz-link" href="pharmacodynamics-master-exam-version-3.html">Pharmacodynamics Master Exam (Version 3)</a></li>
+              <li><a class="quiz-link" href="Pharmacodynamics%20Exam%202/pharmacodynamics-master-exam.html">Pharmacodynamics Master Exam</a></li>
+              <li><a class="quiz-link" href="Pharmacodynamics%20Exam%202/pharmacodynamics-master-exam-version-2.html">Pharmacodynamics Master Exam (Version 2)</a></li>
+              <li><a class="quiz-link" href="Pharmacodynamics%20Exam%202/pharmacodynamics-master-exam-version-3.html">Pharmacodynamics Master Exam (Version 3)</a></li>
             </ul>
           </div>
         </details>
       </div>
 
       <div class="tab-panel" id="anatomy" data-class="anatomy">
-        <p class="empty">No quizzes yet.</p>
-      </div>
-
-      <div class="tab-panel" id="anatomy-practicum" data-class="anatomy-practicum">
-        <details class="exam-section" data-examid="anatomy-practicum-test">
-          <summary><span>Test Exam (Proof of Concept)</span></summary>
+        <details class="exam-section" data-examid="anatomy-exam3">
+          <summary><span>Exam 3</span></summary>
           <div class="exam-content">
             <ul>
-              <li><a class="quiz-link" href="gi-portal-system-practicum.html">GI Portal System &mdash; Structure ID</a></li>
+              <li><a class="quiz-link" href="Anatomy%20Exam%203/endocrine-quiz.html">Endocrine System</a></li>
+              <li><a class="quiz-link" href="Anatomy%20Exam%203/gi-i-ii-quiz.html">Gastrointestinal Tract I &amp; II</a></li>
             </ul>
           </div>
         </details>
+      </div>
 
-        <details class="exam-section" data-examid="anatomy-practicum-study">
-          <summary><span>Study</span></summary>
+      <div class="tab-panel" id="anatomy-practicum" data-class="anatomy-practicum">
+        <details class="exam-section" data-examid="anatomy-practicum-exam2">
+          <summary><span>Practicum Exam 2</span></summary>
           <div class="exam-content">
-            <ul>
-              <li><a class="quiz-link" href="gi-portal-system-study.html">GI Portal System &mdash; Study Reference</a></li>
-            </ul>
+            <details class="topic-section" data-examid="anatomy-practicum-exam2-gi">
+              <summary><span>GI</span></summary>
+              <div class="exam-content">
+                <div class="divider"><span>Exams</span></div>
+                <ul>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-portal-system-quiz.html">Portal System</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-sagittal-abdominal-cavity-quiz.html">Sagittal View of Abdominal Cavity</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-gi-tract-quiz.html">Upper GI Tract</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-gallbladder-quiz.html">Pancreas and Gallbladder</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-quiz.html">Pancreas</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-anterior-abdominal-organs-quiz.html">Anterior Abdominal Organs</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-thoracoabdominal-overview-quiz.html">Thoracoabdominal Overview</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-parasagittal-section-quiz.html">Parasagittal Section</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-anterior-aspect-quiz.html">Stomach — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-mucosa-posterior-wall-quiz.html">Stomach Mucosa — Posterior Wall</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-outer-quiz.html">Stomach — Muscular Coat, Outer Layer</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-inner-quiz.html">Stomach — Muscular Coat, Inner Layer</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-cross-quiz.html">Stomach — Muscular Coat, Cross-Section</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-regions-pancreas-quiz.html">Upper Abdominal Regions — Pancreas, Duodenum, Spleen, Left Kidney</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-duodenum-posterior-quiz.html">Pancreas with Descending Part of Duodenum (Posterior Aspect)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-isolated-gallbladder-cystic-duct-quiz.html">Isolated Gallbladder and Cystic Duct</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-liver-anterior-aspect-quiz.html">Liver — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-liver-inferior-aspect-quiz.html">Liver — Inferior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-upper-abdominal-small-intestine-quiz.html">Vessels of Upper Abdominal Organs &amp; Small Intestine</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-superior-mesenteric-artery-vein-quiz.html">Superior Mesenteric Artery and Vein</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-retroperitoneal-organs-quiz.html">Vessels of the Retroperitoneal Organs</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-anterior-aspect-quiz.html">Abdominal Organs — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-anterior-aspect-2-quiz.html">Abdominal Organs — Anterior Aspect (II)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-colon-rectum-quiz.html">Vessels of Colon and Rectum (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-lower-abdominal-organs-quiz.html">Lower Abdominal Organs (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-mesenteries-quiz.html">Abdominal Organs with Mesenteries (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-quiz.html">Upper Abdominal Organs (Anterior Aspect)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-2-quiz.html">Upper Abdominal Organs (Anterior Aspect) II</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-3-quiz.html">Upper Abdominal Organs (Anterior Aspect) III</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-4-quiz.html">Upper Abdominal Organs (Anterior Aspect) IV</a></li>
+                </ul>
+                <div class="divider"><span>Study</span></div>
+                <ul>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-portal-system-study.html">Portal System</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-sagittal-abdominal-cavity-study.html">Sagittal View of Abdominal Cavity</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-gi-tract-study.html">Upper GI Tract</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-gallbladder-study.html">Pancreas and Gallbladder</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-study.html">Pancreas</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-anterior-abdominal-organs-study.html">Anterior Abdominal Organs</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-thoracoabdominal-overview-study.html">Thoracoabdominal Overview</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-parasagittal-section-study.html">Parasagittal Section</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-anterior-aspect-study.html">Stomach — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-mucosa-posterior-wall-study.html">Stomach Mucosa — Posterior Wall</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-outer-study.html">Stomach — Muscular Coat, Outer Layer</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-inner-study.html">Stomach — Muscular Coat, Inner Layer</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-stomach-muscular-coat-cross-study.html">Stomach — Muscular Coat, Cross-Section</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-regions-pancreas-study.html">Upper Abdominal Regions — Pancreas, Duodenum, Spleen, Left Kidney</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-pancreas-duodenum-posterior-study.html">Pancreas with Descending Part of Duodenum (Posterior Aspect)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-isolated-gallbladder-cystic-duct-study.html">Isolated Gallbladder and Cystic Duct</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-liver-anterior-aspect-study.html">Liver — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-liver-inferior-aspect-study.html">Liver — Inferior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-upper-abdominal-small-intestine-study.html">Vessels of Upper Abdominal Organs &amp; Small Intestine</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-superior-mesenteric-artery-vein-study.html">Superior Mesenteric Artery and Vein</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-retroperitoneal-organs-study.html">Vessels of the Retroperitoneal Organs</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-anterior-aspect-study.html">Abdominal Organs — Anterior Aspect</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-anterior-aspect-2-study.html">Abdominal Organs — Anterior Aspect (II)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-vessels-colon-rectum-study.html">Vessels of Colon and Rectum (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-lower-abdominal-organs-study.html">Lower Abdominal Organs (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-abdominal-organs-mesenteries-study.html">Abdominal Organs with Mesenteries (Artistic Rendering)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-study.html">Upper Abdominal Organs (Anterior Aspect)</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-2-study.html">Upper Abdominal Organs (Anterior Aspect) II</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-3-study.html">Upper Abdominal Organs (Anterior Aspect) III</a></li>
+                  <li><a class="quiz-link" href="Anatomy%20Practicum%20Exam%202/gi-upper-abdominal-organs-anterior-aspect-4-study.html">Upper Abdominal Organs (Anterior Aspect) IV</a></li>
+                </ul>
+              </div>
+            </details>
           </div>
         </details>
       </div>
@@ -460,7 +554,7 @@
       });
     });
 
-    document.querySelectorAll(".exam-section").forEach(section => {
+    document.querySelectorAll(".exam-section, .topic-section").forEach(section => {
       const key = "examOpen:" + section.dataset.examid;
       const saved = localStorage.getItem(key);
       if (saved !== null) section.open = saved === "true";
