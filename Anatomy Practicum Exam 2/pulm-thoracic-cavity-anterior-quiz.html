@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #0f766e; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thoracic Cavity (Anterior Aspect) — Anatomy Practicum</title>
+<style>
+  :root{
+    --bg:#0b1615; --panel:#fff; --ink:#132321; --muted:#5b6f6c; --line:#dbe8e6;
+    --teal:#0f766e; --teal-dk:#0b5c56; --teal-soft:#e6f5f3;
+    --shadow:0 10px 30px rgba(11,22,21,.18);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background: radial-gradient(1200px 500px at 50% -10%, #123a36 0%, rgba(18,58,54,0) 60%), linear-gradient(160deg,#0b1615 0%,#0f2422 100%);
+    color:var(--ink); min-height:100vh; padding:28px 16px 60px; line-height:1.55;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .card{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:30px 30px 26px;border:1px solid rgba(15,118,110,.08)}
+  .eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:10px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 6px;color:var(--teal-dk);font-weight:800}
+  h2{font-size:20px;margin:0 0 14px;color:var(--teal-dk)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .obj{background:var(--teal-soft);border-radius:12px;padding:16px 18px;margin:0 0 24px;border:1px solid rgba(15,118,110,.12)}
+  .obj p{margin:0 0 8px;font-weight:700;color:var(--teal-dk);font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .obj ul{margin:0;padding-left:20px}
+  .obj li{margin:4px 0;font-size:15px;color:var(--ink)}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+  .chip{background:#f2faf9;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--muted);font-weight:600}
+  .chip b{color:var(--teal-dk)}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn{background:var(--teal);color:#fff;font-weight:700;font-size:16px;padding:14px 26px;border-radius:12px;transition:transform .05s ease,background .2s ease;box-shadow:0 6px 16px rgba(15,118,110,.28)}
+  .btn:hover{background:var(--teal-dk)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--teal-dk);border:1.5px solid var(--teal);box-shadow:none}
+  .btn.ghost:hover{background:var(--teal-soft)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .qcount{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.03em}
+  .scorepill{font-size:13px;font-weight:800;color:var(--teal-dk);background:var(--teal-soft);padding:5px 12px;border-radius:999px;border:1px solid rgba(15,118,110,.15)}
+  .wordbank-row{display:flex;align-items:center;justify-content:flex-end;margin-bottom:12px}
+  .switch-label{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);font-weight:600;cursor:pointer;user-select:none}
+  .switch{position:relative;width:38px;height:22px;flex-shrink:0}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;inset:0;background:#d9dfde;border-radius:999px;transition:background .15s ease}
+  .slider::before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .15s ease;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .switch input:checked + .slider{background:var(--teal)}
+  .switch input:checked + .slider::before{transform:translateX(16px)}
+  .wordbank{display:flex;flex-wrap:wrap;gap:8px;background:var(--teal-soft);border:1px solid rgba(15,118,110,.15);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+  .wordbank .term{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--ink);font-weight:600}
+  .diagram-wrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:18px;background:#fff}
+  .diagram-wrap svg{width:100%;height:auto;display:block}
+  .diagram-wrap img{width:100%;height:auto;display:block}
+  .instruction{font-size:14.5px;color:var(--muted);font-weight:600;text-align:center;margin:0 0 16px}
+  #highlight-arrow{animation:arrow-bounce 0.9s ease-in-out infinite}
+  @keyframes arrow-bounce{0%,100%{transform:translateX(0)}50%{transform:translateX(-14px)}}
+  .reveal-text{font-size:26px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .answer-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .answer-row input{flex:1;min-width:200px;font-family:inherit;font-size:16px;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;color:var(--ink)}
+  .answer-row input:focus{outline:none;border-color:var(--teal)}
+  .answer-row input:disabled{background:#f7f7f7;color:var(--muted)}
+  .feedback{border-radius:12px;padding:14px 16px;font-size:15px;margin-bottom:14px;border:1px solid var(--line);background:#f9fafb}
+  .verdict{font-weight:800;font-size:15px}
+  .verdict.ok{color:var(--green,#16a34a)}
+  .verdict.no{color:#dc2626}
+  .verdict.skip{color:#2563eb}
+  .override-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:14px;color:var(--ink)}
+  .override-row span{font-weight:600}
+  .scorebig{font-size:56px;font-weight:800;color:var(--teal-dk);line-height:1;margin:6px 0 2px}
+  .pct{font-size:17px;color:var(--muted);font-weight:700;margin-bottom:18px}
+  .review h3{font-size:15px;color:var(--teal-dk);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .missed{border:1px solid var(--line);border-left:4px solid #dc2626;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff}
+  .missed .mq{font-weight:700;margin-bottom:8px;font-size:15px}
+  .missed .row{font-size:14px;margin:3px 0}
+  .missed .yours{color:#dc2626}
+  .missed .right{color:#16a34a;font-weight:600}
+  .allright{background:#e6f3ec;border:1px solid #bfe3ce;border-radius:12px;padding:16px 18px;color:#175c3a;font-weight:600}
+  .result-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .mistake-note{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px;font-style:italic}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #14b8a6; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;flex-shrink:0;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <section id="start" class="card">
+    <div class="eyebrow">Anatomy Practicum &middot; Practicum Exam 2 &middot; Pulmonary</div>
+    <h1>Thoracic Cavity (Anterior Aspect)</h1>
+    <p class="sub">Identify each numbered structure on the dissection image by typing its name.</p>
+    <div class="obj">
+      <p>How it works</p>
+      <ul>
+        <li>One structure at a time &mdash; a big arrow points at the target from the side.</li>
+        <li>Type the structure's name and check your answer.</li>
+        <li>Grading is strict (case-insensitive, trimmed) &mdash; but if you're marked wrong and you're confident you actually had it right, you can override it.</li>
+        <li>Toggle the word bank on if you want a list of terms to reference.</li>
+        <li>At the end you'll see your score and a review of anything missed.</li>
+      </ul>
+    </div>
+    <div class="meta">
+      <span class="chip"><b>7</b> structures</span>
+      <span class="chip">Type-in answers</span>
+      <span class="chip">Word bank toggle</span>
+      <span class="chip">Override option</span>
+    </div>
+    <button class="btn" onclick="startQuiz()">Start practicum &rarr;</button>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="topbar">
+      <span class="qcount" id="progress">Structure 1 of 7</span>
+      <span class="scorepill" id="scorepill">Score: 0</span>
+    </div>
+    <div class="wordbank-row">
+      <label class="switch-label">
+        <span class="switch"><input type="checkbox" id="wordbank-toggle" onchange="toggleWordBank()"><span class="slider"></span></span>
+        Show word bank
+      </label>
+    </div>
+    <div id="wordbank" class="wordbank hidden"></div>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 2880 1620" xmlns="http://www.w3.org/2000/svg">
+        <image href="pulm-thoracic-cavity-anterior-quiz.jpg" x="0" y="0" width="2880" height="1620"/>
+        <g id="highlight" transform="translate(0,0)" opacity="0">
+          <g id="highlight-arrow">
+            <line x1="-130" y1="0" x2="-32" y2="0" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
+            <polygon points="-40,-26 -40,26 0,0" fill="#f59e0b"/>
+          </g>
+        </g>
+        <text id="reveal-1" x="2313" y="278" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-2" x="2307" y="626" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-3" x="2325" y="713" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-4" x="2318" y="814" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-5" x="2298" y="944" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-6" x="2310" y="1199" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-7" x="2324" y="1414" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+      </svg>
+    </div>
+    <p class="instruction">Name the structure of the number the arrow is point to.</p>
+    <div class="answer-row">
+      <input type="text" id="answer-input" placeholder="Type the structure name..." autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button class="btn" id="check-btn" onclick="checkAnswer()">Check</button>
+      <button class="btn ghost" id="skip-btn" onclick="skipQuestion()">Skip</button>
+    </div>
+    <div class="feedback hidden" id="feedback"></div>
+    <div class="override-row hidden" id="override-row">
+      <span>Think you actually had it right?</span>
+      <button class="btn ghost" onclick="overrideCorrect()">I got this right</button>
+      <button class="btn ghost" onclick="keepWrong()">No, continue</button>
+    </div>
+    <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
+  </section>
+
+  <section id="results" class="card hidden">
+    <h2>Practicum complete</h2>
+    <div class="scorebig" id="scorebig">0 / 7</div>
+    <div class="pct" id="pct">0%</div>
+    <div id="review"></div>
+    <div class="result-actions">
+      <button class="btn ghost" onclick="restart()">&#8635; Restart</button>
+      <a class="btn" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <p class="mistake-note">&#9733; If you see any mistakes, please let me know! &#9733;</p>
+</div>
+
+<script>
+const ITEMS = [{"num": 1, "answer": "Trachea", "cx": 1240, "cy": 276, "side": "right"}, {"num": 2, "answer": "Ascending Aorta", "cx": 1540, "cy": 600, "side": "right"}, {"num": 3, "answer": "Upper Lobe of Left Lung", "cx": 1710, "cy": 680, "side": "right"}, {"num": 4, "answer": "Right Coronary Artery", "cx": 1540, "cy": 796, "side": "right"}, {"num": 5, "answer": "Right Ventricle of the Heart", "cx": 1650, "cy": 924, "side": "right"}, {"num": 6, "answer": "Costal Margin", "cx": 1710, "cy": 1184, "side": "right"}, {"num": 7, "answer": "Liver", "cx": 1600, "cy": 1400, "side": "right"}];
+const $ = id => document.getElementById(id);
+let current = 0, score = 0, results = [], pendingWrong = null, quizOrder = ITEMS;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function buildWordBank(){
+  const shuffled = shuffle(ITEMS.map(i=>i.answer));
+  $("wordbank").innerHTML = shuffled.map(t=>`<span class="term">${t}</span>`).join('');
+}
+buildWordBank();
+function toggleWordBank(){ $("wordbank").classList.toggle("hidden", !$("wordbank-toggle").checked); }
+function normalize(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function startQuiz(){
+  current = 0; score = 0; results = [];
+  quizOrder = shuffle(ITEMS);
+  $("start").classList.add("hidden");
+  $("results").classList.add("hidden");
+  $("quiz-footer-logo").classList.remove("hidden");
+  $("quiz").classList.remove("hidden");
+  renderCurrent();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderCurrent(){
+  const item = quizOrder[current];
+  $("progress").textContent = `Structure ${current+1} of ${quizOrder.length}`;
+  $("scorepill").textContent = `Score: ${score}`;
+  const marker = $("highlight");
+  const flip = item.side === 'right' ? -1 : 1;
+  marker.setAttribute('transform', `translate(${item.cx},${item.cy}) scale(${flip},1)`);
+  marker.setAttribute('opacity', '1');
+  const input = $("answer-input");
+  input.value = ""; input.disabled = false;
+  $("check-btn").classList.remove("hidden");
+  $("skip-btn").classList.remove("hidden");
+  $("override-row").classList.add("hidden");
+  $("next-btn").classList.add("hidden");
+  $("feedback").classList.add("hidden");
+  input.focus();
+}
+
+function checkAnswer(){
+  const item = quizOrder[current];
+  const given = $("answer-input").value;
+  const correct = normalize(given) === normalize(item.answer);
+  $("answer-input").disabled = true;
+  $("check-btn").classList.add("hidden");
+  $("skip-btn").classList.add("hidden");
+  const fb = $("feedback");
+  fb.classList.remove("hidden");
+  if(correct){
+    fb.innerHTML = `<div class="verdict ok">Correct!</div>`;
+    revealAnswer(item, 'correct');
+    score++;
+    results.push({num:item.num, answer:item.answer, given, status:'correct'});
+    $("scorepill").textContent = `Score: ${score}`;
+    $("next-btn").classList.remove("hidden");
+  } else {
+    fb.innerHTML = `<div class="verdict no">Not quite &mdash; correct answer: <b>${item.answer}</b></div>`;
+    pendingWrong = {item, given};
+    $("override-row").classList.remove("hidden");
+  }
+}
+function overrideCorrect(){
+  const {item, given} = pendingWrong;
+  revealAnswer(item, 'overridden');
+  score++;
+  results.push({num:item.num, answer:item.answer, given, status:'overridden'});
+  $("scorepill").textContent = `Score: ${score}`;
+  $("override-row").classList.add("hidden");
+  $("next-btn").classList.remove("hidden");
+}
+function keepWrong(){
+  const {item, given} = pendingWrong;
+  revealAnswer(item, 'wrong');
+  results.push({num:item.num, answer:item.answer, given, status:'wrong'});
+  $("override-row").classList.add("hidden");
+  $("next-btn").classList.remove("hidden");
+}
+function skipQuestion(){
+  const item = quizOrder[current];
+  $("answer-input").disabled = true;
+  $("check-btn").classList.add("hidden");
+  $("skip-btn").classList.add("hidden");
+  const fb = $("feedback");
+  fb.classList.remove("hidden");
+  fb.innerHTML = `<div class="verdict skip">Skipped &mdash; answer: <b>${item.answer}</b></div>`;
+  revealAnswer(item, 'skipped');
+  results.push({num:item.num, answer:item.answer, given:null, status:'skipped'});
+  $("next-btn").classList.remove("hidden");
+}
+function revealAnswer(item, status){
+  const el = $("reveal-"+item.num);
+  el.textContent = item.answer;
+  el.setAttribute('visibility','visible');
+  el.setAttribute('fill', status==='wrong' ? '#dc2626' : status==='skipped' ? '#2563eb' : '#16a34a');
+}
+function nextQuestion(){
+  current++;
+  $("highlight").setAttribute('opacity','0');
+  if(current >= quizOrder.length){ finishQuiz(); } else { renderCurrent(); }
+}
+function finishQuiz(){
+  $("quiz").classList.add("hidden");
+  $("results").classList.remove("hidden");
+  const total = quizOrder.length;
+  $("scorebig").textContent = `${score} / ${total}`;
+  $("pct").textContent = `${Math.round(100*score/total)}%`;
+  const wrong = results.filter(r=>r.status==='wrong' || r.status==='skipped');
+  const reviewEl = $("review");
+  if(wrong.length===0){
+    reviewEl.innerHTML = `<div class="allright">Nice work &mdash; every structure ended correct or self-corrected!</div>`;
+  } else {
+    reviewEl.innerHTML = '<h3>Review</h3>' + wrong.map(r=>`
+      <div class="missed">
+        <div class="mq">Structure #${r.num}</div>
+        ${r.status==='skipped' ? '' : `<div class="row yours">Your answer: ${r.given ? r.given : '(blank)'}</div>`}
+        <div class="row right">Correct: ${r.answer}</div>
+      </div>
+    `).join('');
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function restart(){
+  document.querySelectorAll('[id^="reveal-"]').forEach(el=>{ el.setAttribute('visibility','hidden'); el.textContent=''; });
+  buildWordBank();
+  $("wordbank-toggle").checked = false;
+  $("wordbank").classList.add("hidden");
+  startQuiz();
+}
+$("answer-input").addEventListener("keydown", (e) => {
+  if(e.key === "Enter" && !$("check-btn").classList.contains("hidden")){ checkAnswer(); }
+});
+
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+</body>
+</html>
