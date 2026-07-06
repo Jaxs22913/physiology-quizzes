@@ -447,7 +447,7 @@ function revealAnswer(item, status){
   const el = $("reveal-"+item.num);
   el.textContent = item.answer;
   el.setAttribute('visibility','visible');
-  el.setAttribute('fill', status==='correct' ? '#16a34a' : status==='overridden' ? '#b45309' : '#dc2626');
+  el.setAttribute('fill', status==='wrong' ? '#dc2626' : '#16a34a');
 }
 
 function nextQuestion(){
