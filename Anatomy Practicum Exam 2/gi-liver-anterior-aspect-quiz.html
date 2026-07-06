@@ -150,13 +150,22 @@
       <span class="chip">Word bank toggle</span>
       <span class="chip">Override option</span>
     </div>
-    <button class="btn" onclick="startQuiz()">Start practicum &rarr;</button>
+    <div id="resume-banner" class="obj hidden" style="background:#fdf1e2;border-color:rgba(180,83,9,.2)">
+      <p style="color:#9a5b0a">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn ghost" onclick="startQuiz()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button class="btn" id="start-btn" onclick="startQuiz()">Start practicum &rarr;</button>
   </section>
 
   <section id="quiz" class="card hidden">
     <div class="topbar">
       <span class="qcount" id="progress">Structure 1 of 13</span>
       <span class="scorepill" id="scorepill">Score: 0</span>
+      <button class="btn ghost" style="padding:6px 12px;font-size:12px" onclick="if(confirm('Restart this quiz from the beginning?')) startQuiz();">&#8635; Restart</button>
     </div>
     <div class="wordbank-row">
       <label class="switch-label">
@@ -166,8 +175,8 @@
     </div>
     <div id="wordbank" class="wordbank hidden"></div>
     <div class="diagram-wrap">
-      <svg viewBox="0 0 2880 1620" xmlns="http://www.w3.org/2000/svg">
-        <image href="gi-liver-anterior-aspect-quiz.jpg" x="0" y="0" width="2880" height="1620"/>
+      <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+        <image href="gi-liver-anterior-aspect-quiz.jpg" x="0" y="0" width="300" height="60"/>
         <g id="highlight" transform="translate(0,0)" opacity="0">
           <g id="highlight-arrow">
             <line x1="-130" y1="0" x2="-32" y2="0" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
@@ -212,7 +221,7 @@
     <div id="review"></div>
     <div class="result-actions">
       <button class="btn ghost" onclick="restart()">&#8635; Restart</button>
-      <a class="btn" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+      <a class="btn" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
     </div>
   </section>
 
@@ -237,7 +246,19 @@ buildWordBank();
 function toggleWordBank(){ $("wordbank").classList.toggle("hidden", !$("wordbank-toggle").checked); }
 function normalize(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
 
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  localStorage.setItem(PKEY, JSON.stringify({order:quizOrder.map(it=>it.num), current, score, results}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){
+  try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; }
+}
+function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+
 function startQuiz(){
+  clearProgress();
+  $("resume-banner").classList.add("hidden");
   current = 0; score = 0; results = [];
   quizOrder = shuffle(ITEMS);
   $("start").classList.add("hidden");
@@ -247,6 +268,26 @@ function startQuiz(){
   renderCurrent();
   window.scrollTo({top:0,behavior:"smooth"});
 }
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  quizOrder = saved.order.map(num => ITEMS.find(it=>it.num===num));
+  current = saved.current; score = saved.score; results = saved.results;
+  $("start").classList.add("hidden");
+  $("results").classList.add("hidden");
+  $("quiz-footer-logo").classList.remove("hidden");
+  $("quiz").classList.remove("hidden");
+  renderCurrent();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved || !saved.order || !saved.order.length) return;
+  $("resume-text").textContent = `Structure ${saved.current+1} of ${saved.order.length} — Score: ${saved.score}`;
+  $("resume-banner").classList.remove("hidden");
+})();
 
 function renderCurrent(){
   const item = quizOrder[current];
@@ -264,6 +305,7 @@ function renderCurrent(){
   $("next-btn").classList.add("hidden");
   $("feedback").classList.add("hidden");
   input.focus();
+  saveProgress();
 }
 
 function checkAnswer(){
@@ -282,6 +324,7 @@ function checkAnswer(){
     results.push({num:item.num, answer:item.answer, given, status:'correct'});
     $("scorepill").textContent = `Score: ${score}`;
     $("next-btn").classList.remove("hidden");
+    saveProgress();
   } else {
     fb.innerHTML = `<div class="verdict no">Not quite &mdash; correct answer: <b>${item.answer}</b></div>`;
     pendingWrong = {item, given};
@@ -296,6 +339,7 @@ function overrideCorrect(){
   $("scorepill").textContent = `Score: ${score}`;
   $("override-row").classList.add("hidden");
   $("next-btn").classList.remove("hidden");
+  saveProgress();
 }
 function keepWrong(){
   const {item, given} = pendingWrong;
@@ -303,6 +347,7 @@ function keepWrong(){
   results.push({num:item.num, answer:item.answer, given, status:'wrong'});
   $("override-row").classList.add("hidden");
   $("next-btn").classList.remove("hidden");
+  saveProgress();
 }
 function skipQuestion(){
   const item = quizOrder[current];
@@ -315,19 +360,16 @@ function skipQuestion(){
   revealAnswer(item, 'skipped');
   results.push({num:item.num, answer:item.answer, given:null, status:'skipped'});
   $("next-btn").classList.remove("hidden");
+  saveProgress();
 }
 function revealAnswer(item, status){
-  const el = $("reveal-"+item.num);
   const fill = status==='wrong' ? '#dc2626' : status==='skipped' ? '#2563eb' : '#16a34a';
+  const el = $("reveal-"+item.num);
   el.textContent = item.answer;
   el.setAttribute('visibility','visible');
   el.setAttribute('fill', fill);
-  const el2 = document.getElementById("reveal-"+item.num+"b");
-  if(el2){
-    el2.textContent = item.answer;
-    el2.setAttribute('visibility','visible');
-    el2.setAttribute('fill', fill);
-  }
+  const elb = document.getElementById("reveal-"+item.num+"b");
+  if(elb){ elb.textContent = item.answer; elb.setAttribute('visibility','visible'); elb.setAttribute('fill', fill); }
 }
 function nextQuestion(){
   current++;
@@ -335,9 +377,11 @@ function nextQuestion(){
   if(current >= quizOrder.length){ finishQuiz(); } else { renderCurrent(); }
 }
 function finishQuiz(){
+  clearProgress();
+  const total = quizOrder.length;
+  markCompleted(score, total);
   $("quiz").classList.add("hidden");
   $("results").classList.remove("hidden");
-  const total = quizOrder.length;
   $("scorebig").textContent = `${score} / ${total}`;
   $("pct").textContent = `${Math.round(100*score/total)}%`;
   const wrong = results.filter(r=>r.status==='wrong' || r.status==='skipped');

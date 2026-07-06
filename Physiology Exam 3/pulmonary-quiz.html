@@ -253,7 +253,15 @@
       </ul>
     </div>
 
-    <button class="btn" onclick="startQuiz()">Start quiz &rarr;</button>
+        <div id="resume-banner" class="obj hidden" style="background:#fdf1e2;border-color:rgba(180,83,9,.2)">
+      <p style="color:#9a5b0a">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn ghost" onclick="startQuiz()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button class="btn" id="start-btn" onclick="startQuiz()">Start quiz &rarr;</button>
   </section>
 
   <!-- QUIZ -->
@@ -261,6 +269,7 @@
     <div class="topbar">
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="scorepill" id="scorepill">Score: 0</span>
+      <button class="btn ghost" style="padding:6px 12px;font-size:12px" onclick="if(confirm('Restart this quiz from the beginning?')) startQuiz();">&#8635; Restart</button>
     </div>
     <div class="bar"><i id="barfill"></i></div>
 
@@ -524,7 +533,29 @@ let responses = [];
 
 const $ = id => document.getElementById(id);
 
-function startQuiz(){
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({current, score, responses})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  current = saved.current; score = saved.score; responses = saved.responses;
+  $("start").classList.add("hidden"); $("quiz-footer-logo").classList.remove("hidden");
+  $("results").classList.add("hidden"); $("quiz").classList.remove("hidden");
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById("resume-text").textContent = "Question "+(saved.current+1)+" of "+questions.length+" — Score: "+saved.score;
+  document.getElementById("resume-banner").classList.remove("hidden");
+})();
+
+function startQuiz(){clearProgress();document.getElementById("resume-banner").classList.add("hidden");
   current = 0; score = 0; responses = [];
   $("start").classList.add("hidden");$("quiz-footer-logo").classList.remove("hidden");
   $("results").classList.add("hidden");
@@ -596,15 +627,14 @@ function selectAnswer(choice){
 function nextQuestion(){
   if(!answered) return;
   if(current < questions.length-1){
-    current++;
-    renderQuestion();
+    current++;saveProgress();renderQuestion();
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     showResults();
   }
 }
 
-function showResults(){
+function showResults(){clearProgress();markCompleted(score, questions.length);
   $("quiz").classList.add("hidden");
   $("results").classList.remove("hidden");
   const total = questions.length;

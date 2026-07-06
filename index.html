@@ -320,6 +320,17 @@
       border-color: var(--accent);
       transform: translateX(2px);
     }
+    .score-badge {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      padding: 3px 10px;
+    }
 
     .empty {
       color: var(--muted);
@@ -648,7 +659,31 @@
         document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
         btn.classList.add("active");
         document.getElementById(btn.dataset.tab).classList.add("active");
+        localStorage.setItem("activeTab", btn.dataset.tab);
       });
+    });
+    (function restoreActiveTab(){
+      const saved = localStorage.getItem("activeTab");
+      if (!saved) return;
+      const btn = document.querySelector(`.tab-btn[data-tab="${saved}"]`);
+      if (!btn) return;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(saved).classList.add("active");
+    })();
+
+    document.querySelectorAll("a.quiz-link").forEach(a => {
+      try {
+        const pathname = new URL(a.getAttribute("href"), location.href).pathname;
+        const raw = localStorage.getItem("qc:" + pathname);
+        if (!raw) return;
+        const { score, total } = JSON.parse(raw);
+        const badge = document.createElement("span");
+        badge.className = "score-badge";
+        badge.textContent = `${score} / ${total}`;
+        a.appendChild(badge);
+      } catch (e) {}
     });
 
     document.querySelectorAll(".exam-section, .topic-section").forEach(section => {

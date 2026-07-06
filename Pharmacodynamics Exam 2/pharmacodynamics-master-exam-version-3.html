@@ -156,7 +156,7 @@
   <div id="quiz">
     <div class="bar">
       <span class="prog" id="prog">Question 1 of 30</span>
-      <span class="score" id="score">Score: 0</span>
+      <span class="score" id="score">Score: 0</span><button class="btn ghost" style="padding:6px 12px;font-size:12px;margin-left:10px" onclick="if(confirm('Restart this quiz from the beginning?')){ clearProgress(); location.reload(); }">&#8635; Restart</button>
     </div>
     <div class="track"><i id="fill"></i></div>
     <div class="card" id="card"></div>
@@ -179,6 +179,19 @@ const nextBtn = document.getElementById('next');
 const prog = document.getElementById('prog');
 const scoreEl = document.getElementById('score');
 const fill = document.getElementById('fill');
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+(function restoreProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  idx = saved.idx; score = saved.score;
+  saved.chosen.forEach((v,i)=>{ if(v!=null) chosen[i]=v; });
+})();
 
 function render(){
   answered = false;
@@ -236,10 +249,10 @@ function choose(i){
 
 nextBtn.addEventListener('click',()=>{
   if(idx === QUESTIONS.length-1){ showResults(); return; }
-  idx++; render();
+  idx++; saveProgress(); render();
 });
 
-function showResults(){
+function showResults(){clearProgress();markCompleted(score, QUESTIONS.length);
   document.getElementById('quiz').classList.add('hidden');
   const box = document.getElementById('results');
   box.classList.remove('hidden');
