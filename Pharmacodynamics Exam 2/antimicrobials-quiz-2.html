@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antimicrobials Quiz — Set 2</title>
+<style>
+  :root{
+    --ink:#12203b; --paper:#f4f6fb; --card:#ffffff; --line:#d9e0ee;
+    --accent:#1f6f6b; --accent-soft:#e4f1ef; --gold:#c07a2b;
+    --right:#1f7a4d; --right-soft:#e5f3ec; --wrong:#b23a3a; --wrong-soft:#f7e7e6;
+    --muted:#5d6b86;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",Calibri,system-ui,-apple-system,sans-serif;
+    line-height:1.55;padding:24px 16px;}
+  .wrap{max-width:760px;margin:0 auto;}
+  header.top{background:var(--ink);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:18px;}
+  header.top .kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9fc6c3;font-weight:700;}
+  header.top h1{margin:.28em 0 .15em;font-size:1.5rem;font-family:Cambria,Georgia,serif;}
+  header.top p{margin:0;color:#c7d2e6;font-size:.92rem;}
+  .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 16px;margin-bottom:16px;font-size:.9rem;}
+  .bar .prog{color:var(--muted);font-weight:600;}
+  .bar .score{color:var(--accent);font-weight:700;}
+  .track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .track > i{display:block;height:100%;background:var(--accent);width:0;transition:width .35s ease;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 26px 22px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .qnum{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .qtext{font-size:1.12rem;font-weight:600;margin:0 0 18px;}
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+    background:#fbfcfe;border:1.5px solid var(--line);border-radius:11px;
+    padding:13px 15px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:border-color .15s,background .15s;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft);}
+  .opt:disabled{cursor:default;}
+  .opt .lab{font-weight:700;color:var(--accent);flex:0 0 auto;min-width:1.1em;}
+  .opt.correct{border-color:var(--right);background:var(--right-soft);}
+  .opt.correct .lab{color:var(--right);}
+  .opt.wrong{border-color:var(--wrong);background:var(--wrong-soft);}
+  .opt.wrong .lab{color:var(--wrong);}
+  .fb{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:none;}
+  .fb.show{display:block;}
+  .fb .verdict{font-weight:700;margin-bottom:10px;font-size:1rem;}
+  .fb .verdict.ok{color:var(--right);}
+  .fb .verdict.no{color:var(--wrong);}
+  .fb .line{font-size:.92rem;margin:6px 0;color:#31405c;}
+  .fb .line b{color:var(--ink);}
+  .cite{margin-top:14px;font-size:.78rem;color:var(--muted);font-style:italic;}
+  .nav{display:flex;justify-content:flex-end;margin-top:20px;}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:12px 26px;font-size:.98rem;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:background .15s;}
+  .btn:hover{background:#175451;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+  .btn.ghost:hover{background:var(--accent-soft);}
+  .hidden{display:none!important;}
+  /* results */
+  .result{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:30px 28px;box-shadow:0 6px 22px rgba(18,32,59,.05);}
+  .result h2{margin:0 0 4px;font-family:Cambria,Georgia,serif;font-size:1.5rem;}
+  .scorebig{font-size:3rem;font-weight:800;color:var(--accent);margin:10px 0 2px;font-family:Cambria,Georgia,serif;}
+  .scoresub{color:var(--muted);margin-bottom:22px;}
+  .review h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin:24px 0 10px;}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--wrong);border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;background:#fdfbfb;}
+  .miss .mq{font-weight:600;margin-bottom:8px;font-size:.96rem;}
+  .miss .yours{color:var(--wrong);font-size:.9rem;margin:3px 0;}
+  .miss .right{color:var(--right);font-size:.9rem;margin:3px 0;}
+  .miss .why{color:#31405c;font-size:.88rem;margin-top:6px;}
+  .miss .mcite{font-size:.76rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  .allright{background:var(--right-soft);border:1px solid #bfe2cd;color:var(--right);
+    padding:14px 16px;border-radius:10px;font-weight:600;}
+  footer.legal{text-align:center;color:var(--muted);font-size:.76rem;margin-top:22px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">PAJ 5100 &middot; Pharmacodynamics</div>
+    <h1>Antimicrobials Quiz — Set 2</h1>
+    <p>30 questions on drug classes, mechanisms, spectrum, unique adverse effects, specific indications, and bactericidal vs. bacteriostatic. Source: Introduction to Antimicrobials (Deck 7).</p>
+  </header>
+
+  <div id="quiz">
+    <div class="bar">
+      <span class="prog" id="prog">Question 1 of 30</span>
+      <span class="score" id="score">Score: 0</span>
+      <button class="btn ghost" id="midRestart" style="padding:6px 14px;font-size:.8rem;">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="fill"></i></div>
+    <div class="card" id="card"></div>
+    <div class="nav"><button class="btn hidden" id="next">Next question</button></div>
+  </div>
+
+  <div id="results" class="result hidden"></div>
+
+  <footer class="legal">Questions drawn only from Deck 7 (Introduction to Antimicrobials). Adverse-effect content was read directly from the slide graphics. Not medical advice.</footer>
+</div>
+
+<script>
+const QUESTIONS = [{"q":"Imipenem, meropenem, and ertapenem belong to which beta-lactam class?","choices":["Anti-staphylococcal penicillins","Monobactams","Cephalosporins","Carbapenems"],"answer":3,"src":"Slide 31","exp":{"0":"Anti-staph penicillins are dicloxacillin, nafcillin, oxacillin.","1":"The monobactam is aztreonam.","2":"Cephalosporins include cefazolin, cefepime, etc.","3":"Correct. These are the carbapenems."}},{"q":"Which agent is bactericidal AND exhibits concentration-dependent killing?","choices":["Tetracycline","Erythromycin","Levofloxacin","Clarithromycin"],"answer":2,"src":"Slide 59","exp":{"0":"Tetracyclines are bacteriostatic and time-dependent.","1":"Erythromycin is bacteriostatic.","2":"Correct. Fluoroquinolones like levofloxacin are bactericidal with concentration-dependent killing.","3":"Clarithromycin is a bacteriostatic macrolide."}},{"q":"The natural penicillin spectrum notably includes which spirochete?","choices":["Pseudomonas aeruginosa","Treponema pallidum (syphilis)","Bacteroides fragilis","Mycoplasma pneumoniae"],"answer":1,"src":"Slide 35","exp":{"0":"Pseudomonas requires anti-pseudomonal agents.","1":"Correct. Penicillin V covers Treponema pallidum (syphilis).","2":"Bacteroides is an anaerobe outside natural penicillin's core spectrum.","3":"Mycoplasma is an atypical covered by macrolides/tetracyclines."}},{"q":"Photosensitivity plus deposition in developing teeth and bone are hallmark adverse effects of:","choices":["Fluoroquinolones","Vancomycin","Tetracyclines","Cephalosporins"],"answer":2,"src":"Slide 51","exp":{"0":"Fluoroquinolones are noted for tendon and cartilage effects.","1":"Vancomycin's hallmark is red man syndrome and nephro/ototoxicity.","2":"Correct. Tetracyclines cause photosensitivity and deposit in teeth/bone (avoid in children/pregnancy).","3":"Cephalosporins are chiefly linked to hypersensitivity."}},{"q":"Which class targets the bacterial cell wall but is NOT a beta-lactam?","choices":["Macrolides","Tetracyclines","Fluoroquinolones","Glycopeptides (vancomycin)"],"answer":3,"src":"Slide 43","exp":{"0":"Macrolides are protein synthesis inhibitors.","1":"Tetracyclines inhibit protein synthesis.","2":"Fluoroquinolones inhibit DNA gyrase.","3":"Correct. Vancomycin is a glycopeptide that targets the cell wall without being a beta-lactam."}},{"q":"Clindamycin is described as:","choices":["Bacteriostatic","Bactericidal","Bacteriostatic only at high dose","Neither cidal nor static"],"answer":1,"src":"Slide 52","exp":{"0":"Clindamycin is bactericidal, unlike the macrolides which are primarily static.","1":"Correct. Clindamycin is bactericidal (macrolides are bacteriostatic, may be cidal at high doses).","2":"It is bactericidal at usual dosing.","3":"It clearly kills susceptible organisms."}},{"q":"Which cephalosporin generation has the MOST gram-positive and LEAST gram-negative coverage?","choices":["1st generation (cephalexin)","3rd generation (cefdinir)","4th generation (cefepime)","5th generation (ceftaroline)"],"answer":0,"src":"Slide 40","exp":{"0":"Correct. 1st generation (cephalexin) has the most gram-positive, least gram-negative coverage.","1":"3rd generation shifts toward gram-negative.","2":"4th generation maximizes both.","3":"5th generation (ceftaroline) has expanded activity, not the 1st-gen profile."}},{"q":"Which agent is preferred for Clostridium difficile when given orally, alongside oral vancomycin?","choices":["Metronidazole","Ciprofloxacin","Amoxicillin","Doxycycline"],"answer":0,"src":"Slide 64","exp":{"0":"Correct. Oral metronidazole is indicated for C. difficile.","1":"Ciprofloxacin is not a C. diff therapy.","2":"Amoxicillin does not treat C. diff.","3":"Doxycycline is not indicated for C. diff."}},{"q":"The mechanism of vancomycin is to:","choices":["Inactivate penicillin-binding proteins","Block cell wall cross-linking (glycopeptide)","Bind the 50S ribosomal subunit","Inhibit DNA gyrase"],"answer":1,"src":"Slide 43","exp":{"0":"PBP inactivation is the beta-lactam mechanism.","1":"Correct. Vancomycin blocks cell wall cross-linking as a glycopeptide.","2":"50S binding describes macrolides/clindamycin.","3":"DNA gyrase inhibition describes fluoroquinolones."}},{"q":"Which fluoroquinolone is specifically noted as NOT appropriate for UTI due to resistance concerns?","choices":["Ciprofloxacin","Levofloxacin","Moxifloxacin","Ofloxacin"],"answer":2,"src":"Slide 60","exp":{"0":"Ciprofloxacin is used for UTIs (with resistance awareness).","1":"Levofloxacin can be used for UTI.","2":"Correct. Moxifloxacin is specifically noted as NOT for UTI.","3":"Ofloxacin is not the agent singled out as excluded for UTI."}},{"q":"Amoxicillin differs from penicillin V primarily by having:","choices":["MRSA coverage","Anaerobic coverage of Bacteroides","Anti-pseudomonal activity","More effective coverage against gram-negative bacilli"],"answer":3,"src":"Slide 36","exp":{"0":"MRSA coverage is not a feature of amoxicillin.","1":"Bacteroides coverage comes from adding a beta-lactamase inhibitor.","2":"Anti-pseudomonal activity belongs to piperacillin/ticarcillin.","3":"Correct. Amoxicillin shares penicillin V coverage but is more effective against gram-negative bacilli and widely used in respiratory infections."}},{"q":"Doxycycline is a recommended therapy for which STI-related or atypical scenario?","choices":["Pseudomonal pneumonia","Atypical pneumonia and STIs","C. difficile colitis","Bacterial vaginosis"],"answer":1,"src":"Slide 50","exp":{"0":"Pseudomonal pneumonia requires anti-pseudomonal agents.","1":"Correct. Doxycycline is indicated for atypical pneumonia and STIs (as well as acne, RMSF, Lyme).","2":"C. diff is treated with oral vancomycin or metronidazole.","3":"BV is treated with metronidazole."}},{"q":"Fluoroquinolones are classified as:","choices":["Bactericidal, concentration-dependent, with prolonged PAE","Bacteriostatic, time-dependent","Bactericidal, time-dependent, no PAE","Bacteriostatic with moderate PAE"],"answer":0,"src":"Slide 59","exp":{"0":"Correct. Fluoroquinolones are bactericidal with concentration-dependent killing and a prolonged PAE.","1":"They are bactericidal, not static.","2":"Their killing is concentration-dependent, not time-dependent.","3":"They are cidal, not static."}},{"q":"Which beta-lactam class is represented by dicloxacillin, nafcillin, and oxacillin?","choices":["Penicillins with beta-lactamase inhibitors","Natural penicillins","Anti-pseudomonal penicillins","Anti-staphylococcal penicillins"],"answer":3,"src":"Slide 30","exp":{"0":"Beta-lactamase inhibitor combinations include Augmentin and Unasyn.","1":"Natural penicillins are penicillin V and G.","2":"Anti-pseudomonal penicillins are piperacillin and ticarcillin.","3":"Correct. These are the anti-staphylococcal penicillins."}},{"q":"Erythromycin is clinically useful because its coverage is similar to penicillin, making it an option for patients who:","choices":["Have C. difficile","Have renal failure","Are pregnant","Have a penicillin allergy"],"answer":3,"src":"Slide 54","exp":{"0":"C. diff is treated with oral vancomycin or metronidazole.","1":"Renal failure is not the reason it substitutes for penicillin.","2":"Pregnancy is not the stated rationale.","3":"Correct. Erythromycin's coverage resembles penicillin G/V and may be used in penicillin-allergic patients."}},{"q":"Nephrotoxicity and ototoxicity are adverse effects associated with:","choices":["Amoxicillin","Vancomycin","Metronidazole","Clindamycin"],"answer":1,"src":"Slide 45","exp":{"0":"Amoxicillin is chiefly linked to hypersensitivity.","1":"Correct. Vancomycin is associated with nephrotoxicity and ototoxicity in addition to red man syndrome.","2":"Metronidazole's hallmark is the disulfiram-like reaction and metallic taste.","3":"Clindamycin is chiefly linked to C. difficile colitis."}},{"q":"Which class provides broad-spectrum coverage of both gram-positive and gram-negative organisms and is bacteriostatic?","choices":["Tetracyclines","Natural penicillins","Glycopeptides","Monobactams"],"answer":0,"src":"Slide 49","exp":{"0":"Correct. Tetracyclines are broad-spectrum (gram-positive and gram-negative) and bacteriostatic.","1":"Natural penicillins are bactericidal and narrower.","2":"Glycopeptides (vancomycin) are gram-positive only and bactericidal.","3":"Monobactams (aztreonam) are bactericidal and gram-negative focused."}},{"q":"Levofloxacin differs from ciprofloxacin by offering:","choices":["Loss of atypical coverage","Anaerobic coverage","Improved gram-positive coverage plus Pseudomonas, useful in CAP","MRSA coverage"],"answer":2,"src":"Slide 61","exp":{"0":"It retains atypical coverage.","1":"Anaerobic coverage is not its distinguishing feature.","2":"Correct. Levofloxacin adds improved gram-positive activity and Pseudomonas coverage, making it useful for CAP.","3":"MRSA coverage is not the described distinction."}},{"q":"Which agent's oral formulation is NOT systemically absorbed, which is why it works locally for gut infection?","choices":["Vancomycin","Levofloxacin","Doxycycline","Cephalexin"],"answer":0,"src":"Slide 44","exp":{"0":"Correct. Oral vancomycin is not absorbed, acting locally in the gut for C. difficile colitis.","1":"Levofloxacin is well absorbed orally.","2":"Doxycycline is orally absorbed.","3":"Cephalexin is orally absorbed."}},{"q":"Metronidazole is indicated for which set of infections?","choices":["C. difficile, intra-abdominal, and vaginal infections (BV, trichomoniasis)","Community-acquired pneumonia and sinusitis","MRSA skin infections","Streptococcal pharyngitis"],"answer":0,"src":"Slide 64","exp":{"0":"Correct. Metronidazole treats C. difficile, intra-abdominal infections, and vaginal infections including BV and trichomoniasis.","1":"CAP/sinusitis are treated by other classes.","2":"MRSA skin infections are treated by agents like vancomycin.","3":"Strep pharyngitis is treated with penicillins."}},{"q":"The 5th-generation cephalosporin listed is:","choices":["Cefepime (Maxipime)","Ceftaroline (Teflaro)","Ceftriaxone (Rocephin)","Cefazolin (Ancef)"],"answer":1,"src":"Slide 40","exp":{"0":"Cefepime is 4th generation.","1":"Correct. Ceftaroline (Teflaro) is the listed 5th-generation cephalosporin.","2":"Ceftriaxone is 3rd generation.","3":"Cefazolin is 1st generation."}},{"q":"Clindamycin's indications include all of the following EXCEPT:","choices":["Gram-negative aerobic UTI","Osteomyelitis","Intra-abdominal infection","Skin/soft tissue infection"],"answer":0,"src":"Slide 55","exp":{"0":"Correct. It has no gram-negative aerobic coverage, so a gram-negative aerobic UTI is not an indication.","1":"It is used for osteomyelitis.","2":"It is used for intra-abdominal infection.","3":"Clindamycin is used for skin/soft tissue infection."}},{"q":"Penicillins with beta-lactamase inhibitors (e.g., Augmentin, Unasyn) are indicated for:","choices":["Atypical pneumonia only","Skin/soft tissue, diabetic foot ulcers, bites, and intra-abdominal infections","Trichomoniasis","MRSA bacteremia"],"answer":1,"src":"Slide 42","exp":{"0":"Atypical pneumonia is covered by macrolides/tetracyclines.","1":"Correct. These combinations are used for skin/soft tissue, diabetic foot ulcers, bites, and intra-abdominal infections.","2":"Trichomoniasis is treated with metronidazole.","3":"MRSA bacteremia is treated with vancomycin."}},{"q":"Which class is bactericidal and uses time-dependent killing with no post-antibiotic effect?","choices":["Metronidazole","Fluoroquinolones","Tetracyclines","Cephalosporins"],"answer":3,"src":"Slide 40","exp":{"0":"Metronidazole is concentration-dependent with prolonged PAE.","1":"Fluoroquinolones are concentration-dependent with prolonged PAE.","2":"Tetracyclines are bacteriostatic.","3":"Correct. Cephalosporins are bactericidal, time-dependent, with no PAE."}},{"q":"Cefepime is which generation of cephalosporin?","choices":["1st","2nd","3rd","4th"],"answer":3,"src":"Slide 31, 40","exp":{"0":"1st generation is cefazolin/cephalexin.","1":"2nd generation is cefuroxime.","2":"3rd generation is cefdinir/ceftriaxone.","3":"Correct. Cefepime is a 4th-generation cephalosporin."}},{"q":"Metronidazole's mechanism is to:","choices":["Bind the 30S ribosomal subunit","Inactivate penicillin-binding proteins","Bind bacterial and parasitic proteins and DNA, inhibiting nucleic acid synthesis","Block cell wall cross-linking"],"answer":2,"src":"Slide 63","exp":{"0":"30S binding describes aminoglycosides/tetracyclines.","1":"PBP inactivation describes beta-lactams.","2":"Correct. Metronidazole binds bacterial/parasitic proteins and DNA to inhibit nucleic acid synthesis and also has anti-protozoal/anti-parasitic effect.","3":"Cross-linking blockade describes vancomycin."}},{"q":"Which agent is used for MRSA and multidrug-resistant organisms among the tetracyclines?","choices":["Aztreonam","Cefazolin","Doxycycline","Penicillin V"],"answer":2,"src":"Slide 50","exp":{"0":"Aztreonam is a monobactam for gram-negatives.","1":"Cefazolin is a 1st-generation cephalosporin.","2":"Correct. Doxycycline is listed for MRSA and multidrug-resistant organisms.","3":"Penicillin V does not cover MRSA."}},{"q":"A metallic taste and nausea/vomiting with abdominal cramps are adverse effects noted for:","choices":["Cephalexin","Vancomycin","Metronidazole","Levofloxacin"],"answer":2,"src":"Slide 65","exp":{"0":"Cephalexin is chiefly linked to hypersensitivity.","1":"Vancomycin's hallmark is red man syndrome and nephro/ototoxicity.","2":"Correct. Metronidazole causes metallic taste, nausea, vomiting, and abdominal cramps.","3":"Levofloxacin is linked to tendon and QT effects."}},{"q":"Which class is used for community-acquired pneumonia due to atypicals like Legionella and Mycoplasma?","choices":["Anti-staphylococcal penicillins","Macrolides","Monobactams","Glycopeptides"],"answer":1,"src":"Slide 54","exp":{"0":"Anti-staph penicillins target staphylococci.","1":"Correct. Macrolides (e.g., clarithromycin, azithromycin) cover atypicals relevant to respiratory infections.","2":"Monobactams target gram-negatives.","3":"Glycopeptides cover gram-positives only."}},{"q":"Azithromycin, compared with other macrolides, is:","choices":["Far more active against respiratory infections due to H. influenzae and M. catarrhalis","More active against staphylococci","The preferred drug for Pseudomonas","Bactericidal against all gram-negatives"],"answer":0,"src":"Slide 54","exp":{"0":"Correct. Azithromycin is far more active against respiratory infections due to H. influenzae and M. catarrhalis.","1":"It is actually LESS active against streptococci and staphylococci.","2":"It is not a Pseudomonas agent.","3":"Macrolides are primarily bacteriostatic, not broadly bactericidal."}}];
+const LETTERS = ['A','B','C','D'];
+let idx = 0, score = 0, answered = false;
+const chosen = [];
+
+const card = document.getElementById('card');
+const nextBtn = document.getElementById('next');
+const prog = document.getElementById('prog');
+const scoreEl = document.getElementById('score');
+const fill = document.getElementById('fill');
+
+function render(){
+  answered = false;
+  const q = QUESTIONS[idx];
+  prog.textContent = 'Question ' + (idx+1) + ' of ' + QUESTIONS.length;
+  scoreEl.textContent = 'Score: ' + score;
+  fill.style.width = (idx / QUESTIONS.length * 100) + '%';
+  nextBtn.classList.add('hidden');
+
+  let opts = '';
+  q.choices.forEach((c,i)=>{
+    opts += '<button class="opt" data-i="'+i+'"><span class="lab">'+LETTERS[i]+'</span><span>'+c+'</span></button>';
+  });
+  card.innerHTML =
+    '<div class="qnum">Question '+(idx+1)+'</div>'+
+    '<p class="qtext">'+q.q+'</p>'+
+    '<div class="opts">'+opts+'</div>'+
+    '<div class="fb" id="fb"></div>';
+
+  card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
+}
+
+function choose(i){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  chosen[idx] = i;
+  const correct = q.answer;
+  const btns = card.querySelectorAll('.opt');
+  btns.forEach(b=>{
+    b.disabled = true;
+    const bi = parseInt(b.dataset.i);
+    if(bi === correct) b.classList.add('correct');
+    if(bi === i && i !== correct) b.classList.add('wrong');
+  });
+  if(i === correct) score++;
+  scoreEl.textContent = 'Score: ' + score;
+
+  const fb = document.getElementById('fb');
+  let lines = '';
+  q.choices.forEach((c,ci)=>{
+    const tag = ci===correct ? '<b>'+LETTERS[ci]+' (correct):</b> ' : '<b>'+LETTERS[ci]+':</b> ';
+    lines += '<div class="line">'+tag+ (q.exp[ci]||'') +'</div>';
+  });
+  fb.innerHTML =
+    '<div class="verdict '+(i===correct?'ok':'no')+'">'+(i===correct?'Correct.':'Not quite.')+'</div>'+
+    lines +
+    '<div class="cite">Source: '+q.src+'</div>';
+  fb.classList.add('show');
+
+  nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'See results' : 'Next question';
+  nextBtn.classList.remove('hidden');
+  fb.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+nextBtn.addEventListener('click',()=>{
+  if(idx === QUESTIONS.length-1){ showResults(); return; }
+  idx++; saveProgress(); render();
+});
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(s, total){ localStorage.setItem(CKEY, JSON.stringify({score:s, total})); }
+function saveReview(){
+  try{
+    const c = document.getElementById('results').cloneNode(true);
+    c.querySelectorAll('button, a.btn').forEach(n=>n.remove());
+    const cur = JSON.parse(localStorage.getItem(CKEY) || '{}');
+    localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur, {reviewHTML: c.innerHTML})));
+  }catch(e){}
+}
+document.getElementById('midRestart').addEventListener('click', ()=>{
+  if(!confirm('Restart this quiz from the beginning?')) return;
+  clearProgress();
+  idx = 0; score = 0; chosen.length = 0;
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+(function resumeIfSaved(){
+  const saved = loadProgress();
+  if(!saved) return;
+  idx = saved.idx; score = saved.score;
+  saved.chosen.forEach((c,i)=>{ if(c!=null) chosen[i]=c; });
+})();
+
+function showResults(){
+  clearProgress();
+  markCompleted(score, QUESTIONS.length);
+  document.getElementById('quiz').classList.add('hidden');
+  const box = document.getElementById('results');
+  box.classList.remove('hidden');
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  let misses = '';
+  QUESTIONS.forEach((q,i)=>{
+    if(chosen[i] !== q.answer){
+      const yours = chosen[i]==null ? 'No answer' : LETTERS[chosen[i]]+'. '+q.choices[chosen[i]];
+      misses +=
+        '<div class="miss">'+
+          '<div class="mq">Q'+(i+1)+'. '+q.q+'</div>'+
+          '<div class="yours">Your answer: '+yours+'</div>'+
+          '<div class="right">Correct: '+LETTERS[q.answer]+'. '+q.choices[q.answer]+'</div>'+
+          '<div class="why">'+ (q.exp[q.answer]||'') +'</div>'+
+          '<div class="mcite">Source: '+q.src+'</div>'+
+        '</div>';
+    }
+  });
+  const reviewBlock = misses
+    ? '<div class="review"><h3>Review your missed questions</h3>'+misses+'</div>'
+    : '<div class="allright">Perfect score — every question correct.</div>';
+  box.innerHTML =
+    '<h2>Quiz complete</h2>'+
+    '<div class="scorebig">'+score+' / '+QUESTIONS.length+'</div>'+
+    '<div class="scoresub">'+pct+'% &middot; '+(QUESTIONS.length-score)+' missed</div>'+
+    reviewBlock+
+    '<div class="nav" style="justify-content:flex-start;margin-top:24px;gap:12px;">'+
+      '<button class="btn ghost" onclick="location.reload()">Restart quiz</button>'+
+      '<a class="btn ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>'+
+    '</div>';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+render();
+</script>
+</body>
+</html>
