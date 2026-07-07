@@ -190,14 +190,14 @@
         <text id="reveal-2" x="313" y="547" text-anchor="end" class="reveal-text" visibility="hidden"></text>
         <text id="reveal-3" x="306" y="1106" text-anchor="end" class="reveal-text" visibility="hidden"></text>
         <text id="reveal-4" x="297" y="1172" text-anchor="end" class="reveal-text" visibility="hidden"></text>
-        <text id="reveal-5" x="274" y="1267" text-anchor="end" class="reveal-text" visibility="hidden"></text>
-        <text id="reveal-6" x="289" y="1362" text-anchor="end" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-5" x="273" y="1186" text-anchor="end" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-6" x="318" y="1290" text-anchor="end" class="reveal-text" visibility="hidden"></text>
         <text id="reveal-7" x="309" y="1531" text-anchor="end" class="reveal-text" visibility="hidden"></text>
         <text id="reveal-8" x="2341" y="544" text-anchor="start" class="reveal-text" visibility="hidden"></text>
-        <text id="reveal-9" x="2687" y="667" text-anchor="start" class="reveal-text" visibility="hidden"></text>
-        <text id="reveal-10" x="2704" y="906" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-9" x="2638" y="619" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-10" x="2648" y="822" text-anchor="start" class="reveal-text" visibility="hidden"></text>
         <text id="reveal-11" x="2724" y="1213" text-anchor="start" class="reveal-text" visibility="hidden"></text>
-        <text id="reveal-107" x="2704" y="1601" text-anchor="start" class="reveal-text" visibility="hidden"></text>
+        <text id="reveal-107" x="2641" y="1517" text-anchor="start" class="reveal-text" visibility="hidden"></text>
       </svg>
     </div>
     <p class="instruction">Name the structure of the number the arrow is point to.</p>
@@ -230,7 +230,7 @@
 </div>
 
 <script>
-const ITEMS = [{"num": 1, "answer": "Apex of Lung", "cx": 320, "cy": 312, "side": "left"}, {"num": 2, "answer": "Upper Lobe of Right Lung", "cx": 313, "cy": 547, "side": "left"}, {"num": 3, "answer": "Horizontal Fissure", "cx": 322, "cy": 1095, "side": "left"}, {"num": 4, "answer": "Oblique Fissure", "cx": 320, "cy": 1164, "side": "left"}, {"num": 5, "answer": "Middle Lobe of Right Lung", "cx": 321, "cy": 1298, "side": "left"}, {"num": 6, "answer": "Lower Lobe of Right Lung", "cx": 289, "cy": 1362, "side": "left"}, {"num": 7, "answer": "Inferior Border of Right Lung", "cx": 324, "cy": 1507, "side": "left"}, {"num": 8, "answer": "Upper Lobe of Left Lung", "cx": 2332, "cy": 536, "side": "right"}, {"num": 9, "answer": "Impressions of Ribs", "cx": 2687, "cy": 667, "side": "right"}, {"num": 10, "answer": "Oblique Fissure of Left Lung", "cx": 2704, "cy": 906, "side": "right"}, {"num": 11, "answer": "Lower Lobe of Left Lung", "cx": 2724, "cy": 1213, "side": "right"}, {"num": 107, "answer": "Inferior Border of Left Lung", "cx": 2704, "cy": 1601, "side": "right"}];
+const ITEMS = [{"num": 1, "answer": "Apex of Lung", "cx": 320, "cy": 312, "side": "left"}, {"num": 2, "answer": "Upper Lobe of Right Lung", "cx": 313, "cy": 547, "side": "left"}, {"num": 3, "answer": "Horizontal Fissure", "cx": 322, "cy": 1095, "side": "left"}, {"num": 4, "answer": "Oblique Fissure", "cx": 320, "cy": 1164, "side": "left"}, {"num": 5, "answer": "Middle Lobe of Right Lung", "cx": 320, "cy": 1217, "side": "left"}, {"num": 6, "answer": "Lower Lobe of Right Lung", "cx": 318, "cy": 1290, "side": "left"}, {"num": 7, "answer": "Inferior Border of Right Lung", "cx": 324, "cy": 1507, "side": "left"}, {"num": 8, "answer": "Upper Lobe of Left Lung", "cx": 2332, "cy": 536, "side": "right"}, {"num": 9, "answer": "Impressions of Ribs", "cx": 2638, "cy": 619, "side": "right"}, {"num": 10, "answer": "Oblique Fissure of Left Lung", "cx": 2648, "cy": 822, "side": "right"}, {"num": 11, "answer": "Lower Lobe of Left Lung", "cx": 2724, "cy": 1213, "side": "right"}, {"num": 107, "answer": "Inferior Border of Left Lung", "cx": 2641, "cy": 1517, "side": "right"}];
 const $ = id => document.getElementById(id);
 let current = 0, score = 0, results = [], pendingWrong = null, quizOrder = ITEMS;
 
