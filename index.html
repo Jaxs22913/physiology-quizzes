@@ -904,14 +904,18 @@
           const raw = localStorage.getItem("qc:" + pathname);
           if (!raw) return;
           const saved = JSON.parse(raw);
-          if (!saved.reviewHTML) return;
           const badge = a.querySelector(".score-badge");
           if (!badge) return;
           badge.title = "Click to view your review";
           badge.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            openReview(a.dataset.quizLabel || a.textContent.trim(), saved.reviewHTML);
+            const label = a.dataset.quizLabel || a.textContent.trim();
+            if (saved.reviewHTML) {
+              openReview(label, saved.reviewHTML);
+            } else {
+              openReview(label, '<p style="color:var(--muted)">No saved review from this attempt yet &mdash; finish this quiz once more to enable this.</p>');
+            }
           });
         } catch (e) {}
       });
