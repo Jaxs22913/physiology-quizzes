@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Female Reproductive System
+  Source: "Female_Reproductive_Tract_for_lecure.pptx" (PAJ 5000 Anatomy, The Female Reproduction System, H. Rappa, MD)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Female Reproductive System — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#1c2a33;
+    --ink-soft:#4a5b66;
+    --paper:#f3efe6;
+    --paper-2:#fbf9f4;
+    --line:#d8cfbd;
+    --oxblood:#7c2130;
+    --oxblood-soft:#9c3a48;
+    --brass:#b8863b;
+    --teal:#2f6d70;
+    --teal-deep:#1f4f52;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(28,42,51,.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(184,134,59,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(47,109,112,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  .intro h2{font-size:22px;margin:0 0 8px;color:var(--teal-deep);}
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{list-style:none;padding:0;margin:16px 0 6px;display:grid;gap:8px;}
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{font-weight:700;color:var(--oxblood);font-size:12px;min-width:20px;font-variant-numeric:tabular-nums;}
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--oxblood);color:#fdf6ee;box-shadow:0 6px 16px rgba(124,33,48,.28);}
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;justify-content:center;}
+
+  .status{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{font-size:13px;font-weight:700;color:var(--teal-deep);background:var(--paper);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-variant-numeric:tabular-nums;}
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{font-family:"Helvetica Neue",Arial,sans-serif;display:inline-block;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;font-weight:700;color:var(--teal);margin-bottom:12px;}
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;text-align:left;width:100%;
+    background:var(--paper-2);border:1.5px solid var(--line);border-radius:10px;
+    padding:14px 16px;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{font-weight:700;color:var(--oxblood);min-width:22px;font-size:14px;border-right:1px solid var(--line);padding-right:11px;}
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.dim{opacity:.62;}
+
+  .feedback{margin-top:20px;border-radius:10px;padding:16px 18px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);display:none;}
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{margin-top:10px;font-size:12px;color:var(--ink-soft);font-style:italic;border-top:1px dashed var(--line);padding-top:9px;}
+  .nav-row{margin-top:22px;display:flex;justify-content:flex-end;}
+
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;}
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);margin:34px 0 12px;text-align:left;}
+  .bd-row{display:flex;align-items:center;gap:12px;margin:0 0 9px;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{border:1px solid var(--line);border-left:3px solid var(--wrong);border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);}
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;}
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;}
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--correct);background:var(--correct-bg);border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;}
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{text-align:center;margin-top:40px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">The Female Reproductive System</span></h1>
+    <p class="sub">Embryology &middot; Perineum &middot; Pelvic floor &middot; Ligaments &middot; Ovaries &middot; Uterus &middot; Uterine tubes &middot; Vagina &middot; External genitalia &middot; Breast</p>
+  </header>
+
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the gross and histological anatomy of the female reproductive system from the lecture. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Recall the embryologic development of the female reproductive organs and describe the perineum and its triangles.</span></li>
+      <li><span class="n">2</span><span>Compare the ligaments / peritoneal folds and identify the pelvic floor muscles.</span></li>
+      <li><span class="n">3</span><span>Describe each organ (ovary, uterus, uterine tubes, vagina, external genitalia, breast), its relationships, and cell types.</span></li>
+      <li><span class="n">4</span><span>Identify the blood supply, venous/lymphatic drainage, and innervation of the pelvic organs.</span></li>
+    </ul>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    </div>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 50</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from <em>Female_Reproductive_Tract_for_lecure.pptx</em> &middot; PAJ 5000 Anatomy &middot; for study use.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 50 items, drawn only from the Female Reproductive lecture.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    topic:"Embryology",
+    q:"The internal female reproductive organs develop primarily from which paired embryonic ducts?",
+    choices:["Müllerian (paramesonephric) ducts","Mesonephric (Wolffian) ducts","Pronephric ducts","Metanephric ducts"],
+    answer:0,
+    correct:"The Müllerian (paramesonephric) ducts develop into the major internal female reproductive organs in the absence of anti-Müllerian hormone (AMH).",
+    why:"The mesonephric (Wolffian) ducts form male structures; pronephric and metanephric ducts relate to kidney development, not the female tract.",
+    src:"Slide 16 — Müllerian ducts (paramesonephric ducts)"
+  },
+  {
+    topic:"Embryology",
+    q:"The Müllerian ducts develop into the female organs in the absence of which hormone?",
+    choices:["Follicle-stimulating hormone (FSH)","Anti-Müllerian hormone (AMH)","Progesterone","Estrogen"],
+    answer:1,
+    correct:"In the absence of anti-Müllerian hormone (AMH), the Müllerian ducts develop into the female reproductive organs; AMH causes their regression in males.",
+    why:"FSH, progesterone, and estrogen are not the hormone whose absence permits Müllerian development in this lecture.",
+    src:"Slide 16–17 — regression in males occurs via AMH"
+  },
+  {
+    topic:"Embryology",
+    q:"The fused caudal portions of the Müllerian ducts (the uterovaginal primordium) give rise to which structures?",
+    choices:["The fallopian (uterine) tubes","The ovaries","The uterus, cervix, and upper vagina","The labia majora"],
+    answer:2,
+    correct:"The fused caudal portions form the uterus, cervix, and the upper portion of the vagina.",
+    why:"The unfused cranial portions become the fallopian tubes; the ovaries arise separately (from gonadal ridge), and the labia majora are external genitalia.",
+    src:"Slide 16 — fused caudal portions → uterus and cervix; upper vagina"
+  },
+  {
+    topic:"Embryology",
+    q:"The unfused cranial portions of the Müllerian ducts differentiate into which structures?",
+    choices:["Uterus and cervix","Clitoris","Lower vagina","Fallopian (uterine) tubes"],
+    answer:3,
+    correct:"The unfused cranial portions become the fallopian (uterine) tubes.",
+    why:"The uterus and cervix come from the fused caudal portions; the lower vagina develops from the urogenital sinus, and the clitoris is external genitalia.",
+    src:"Slide 16 — unfused cranial portions → Fallopian tubes"
+  },
+  {
+    topic:"Embryology",
+    q:"According to the lecture, the lower portion of the vagina develops from which structure?",
+    choices:["The urogenital sinus","The fused Müllerian ducts","The mesonephric ducts","The coelomic epithelium"],
+    answer:0,
+    correct:"The lower vagina develops from the urogenital sinus, while the upper portion develops from the fused Müllerian ducts.",
+    why:"The fused Müllerian ducts form the upper vagina; the mesonephric ducts are male-associated; the coelomic epithelium is where the Müllerian ducts originate, not the lower vagina.",
+    src:"Slide 16 — lower vagina develops from the urogenital sinus"
+  },
+  {
+    topic:"Perineum",
+    q:"The perineum is a diamond-shaped area circumscribed anteriorly by which structure?",
+    choices:["Coccyx","Pubic symphysis","Ischial tuberosities","Sacrum"],
+    answer:1,
+    correct:"The perineum is circumscribed anteriorly by the pubic symphysis (laterally by the ischial tuberosities and posteriorly by the coccyx).",
+    why:"The coccyx is the posterior boundary and the ischial tuberosities are the lateral boundaries; the sacrum is not a listed boundary.",
+    src:"Slide 5 — Perineum boundaries"
+  },
+  {
+    topic:"Perineum",
+    q:"The perineum is divided into two triangles by an imaginary horizontal line extending between which landmarks?",
+    choices:["The pubic tubercles","The anterior superior iliac spines","The ischial tuberosities","The greater trochanters"],
+    answer:2,
+    correct:"An imaginary horizontal line between the ischial tuberosities of the ossa coxae divides the perineum into anterior and posterior triangles.",
+    why:"The pubic tubercles, ASIS, and greater trochanters are not the landmarks used to divide the perineum.",
+    src:"Slide 5 — line between the ischial tuberosities"
+  },
+  {
+    topic:"Perineum",
+    q:"The anterior triangle of the perineum is also called the urogenital triangle. In females it contains which openings?",
+    choices:["The anus","The internal and external os","The base of the penis and scrotum","The urethral and vaginal orifices"],
+    answer:3,
+    correct:"The anterior (urogenital) triangle contains the urethral and vaginal orifices in females.",
+    why:"The anus lies in the posterior (anal) triangle; the penis base and scrotum are the male anterior-triangle contents; the internal/external os are cervical openings.",
+    src:"Slide 5 — Anterior (urogenital) triangle"
+  },
+  {
+    topic:"Perineum",
+    q:"The posterior triangle of the perineum, containing the anus in both sexes, is also called the:",
+    choices:["Anal triangle","Urogenital triangle","Femoral triangle","Cystic triangle"],
+    answer:0,
+    correct:"The posterior triangle is the anal triangle, the location of the anus in both sexes.",
+    why:"The urogenital triangle is the anterior triangle; the femoral and cystic triangles are unrelated regions elsewhere in the body.",
+    src:"Slide 5 — Posterior (anal) triangle"
+  },
+  {
+    topic:"Pelvic Floor",
+    q:"The pelvic diaphragm is formed by which muscles?",
+    choices:["Bulbospongiosus and ischiocavernosus muscles","Levator ani and coccygeus muscles","Rectus abdominis and pyramidalis muscles","Piriformis and obturator internus muscles"],
+    answer:1,
+    correct:"The pelvic diaphragm is formed by the levator ani and coccygeus muscles.",
+    why:"Bulbospongiosus/ischiocavernosus are superficial perineal muscles; rectus abdominis/pyramidalis are anterior abdominal wall; piriformis/obturator internus are lateral pelvic wall muscles.",
+    src:"Slide 9 — Pelvic Diaphragm: levator ani and coccygeus"
+  },
+  {
+    topic:"Pelvic Floor",
+    q:"The levator ani muscle is made up of which three parts?",
+    choices:["Internal, external, and mid sphincters","Superficial, middle, deep transverse perineal","Puborectalis, pubococcygeus, iliococcygeus","Ischiocavernosus, bulbospongiosus, coccygeus"],
+    answer:2,
+    correct:"The levator ani is made up of the puborectalis, pubococcygeus, and iliococcygeus.",
+    why:"The other groupings mix in perineal muscles, sphincters, or the coccygeus, none of which are the three parts of the levator ani.",
+    src:"Slide 9 — Levator ani: puborectalis, pubococcygeus, iliococcygeus"
+  },
+  {
+    topic:"Pelvic Floor",
+    q:"Which of the following is a function of the pelvic diaphragm described in the lecture?",
+    choices:["Produces female gametes","Serves as the birth canal","Secretes reproductive hormones","Supports pelvic organs and seals the inferior opening of the bony pelvis"],
+    answer:3,
+    correct:"The pelvic diaphragm supports the pelvic organs, seals the inferior opening of the bony pelvis, and lifts to help release feces during defecation.",
+    why:"Gamete/hormone production are ovarian functions, and the birth canal is the vagina — none of these is a role of the pelvic diaphragm.",
+    src:"Slide 9 — Pelvic Diaphragm functions"
+  },
+  {
+    topic:"Pelvic Floor",
+    q:"Which muscle related to the vagina is described as part of the levator ani?",
+    choices:["Pubovaginalis muscle","Bulbospongiosus muscle","External urethral sphincter","Urethrovaginal sphincter"],
+    answer:0,
+    correct:"The pubovaginalis muscle is described as part of the levator ani.",
+    why:"The bulbospongiosus, external urethral sphincter, and urethrovaginal sphincter are also listed as vagina-related muscles but are not part of the levator ani.",
+    src:"Slide 62 — Muscles Related to the Vagina"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The broad ligament is best described as which of the following?",
+    choices:["A double fold of peritoneum attaching the ovary to the pelvic wall","A fold of peritoneum that drapes over the uterus","A cord extending through the inguinal canal","A thickening of subserous fascia and smooth muscle"],
+    answer:1,
+    correct:"The broad ligament is a fold of peritoneum that drapes over the uterus (and helps hold the ovaries and uterine tubes).",
+    why:"The mesovarium attaches the ovary, the round ligament passes through the inguinal canal, and the cardinal/uterosacral ligaments are fascial thickenings.",
+    src:"Slide 14 — Broad ligament: peritoneum, drapes over the uterus"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The mesovarium is a double fold of peritoneum that attaches the ovary to which structure?",
+    choices:["The pelvic wall","The uterus","The broad ligament","The labia majora"],
+    answer:2,
+    correct:"The mesovarium is a double fold of peritoneum attaching the ovaries to the broad ligament.",
+    why:"The suspensory ligament attaches the ovary to the pelvic wall, the ovarian ligament attaches it to the uterus, and the round ligament ends in the labia majora.",
+    src:"Slide 14 — Mesovarium attaches ovaries to broad ligament"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The ovarian ligament connects the ovary to which structure?",
+    choices:["The pelvic wall","The labia majora","The broad ligament","The uterus"],
+    answer:3,
+    correct:"The ovarian ligament runs from the ovary to the uterus (attaching to the superior margin of the uterus).",
+    why:"The suspensory ligament attaches to the pelvic wall, the mesovarium to the broad ligament, and the round ligament to the labia majora.",
+    src:"Slide 14, 18 — Ovarian ligament: ovary to uterus"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The suspensory ligament of the ovary extends from the ovary/mesovarium to which structure?",
+    choices:["The pelvic (body) wall","The uterus","The cervix","The labia minora"],
+    answer:0,
+    correct:"The suspensory ligament extends from the ovary (mesovarium) to the pelvic/body wall and transmits the ovarian vessels.",
+    why:"The ovarian ligament runs to the uterus; the cervix and labia minora are not the suspensory ligament's attachment.",
+    src:"Slide 14, 18 — Suspensory ligament: ovary to pelvic wall / body wall"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The round ligament of the uterus extends from the uterus through the inguinal canal to which structure?",
+    choices:["The pelvic wall","The labia majora","The sacrum","The ovary"],
+    answer:1,
+    correct:"The round ligament extends from the uterus through the inguinal canal to the labia majora, helping maintain the anteverted position.",
+    why:"The pelvic wall is the suspensory ligament's target, the sacrum is the uterosacral ligament's, and the ovary is connected by the ovarian ligament.",
+    src:"Slide 18, 36 — Round ligament to labia majora"
+  },
+  {
+    topic:"Ligaments & Peritoneal Folds",
+    q:"The uterosacral ligaments extend from the inferior uterus to which structure?",
+    choices:["The labia majora","The pubic symphysis","The sacrum","The lateral pelvic wall at the cervix"],
+    answer:2,
+    correct:"The uterosacral ligaments extend from the inferior uterus to the sacrum.",
+    why:"The round ligament reaches the labia majora, the transverse cervical (cardinal) ligaments reach the lateral pelvic wall at the cervix, and none attaches to the pubic symphysis.",
+    src:"Slide 36 — Uterosacral ligaments: inferior uterus to sacrum"
+  },
+  {
+    topic:"Ovary",
+    q:"What are the primary sex organs (gonads) of the female?",
+    choices:["The uterine tubes","The mammary glands","The uterus","The ovaries"],
+    answer:3,
+    correct:"The ovaries are the primary sex organs of the female; the uterine tubes, uterus, vagina, clitoris, and mammary glands are accessory sex organs.",
+    why:"The uterine tubes, uterus, and mammary glands are all listed as accessory sex organs, not the primary organs.",
+    src:"Slide 12 — Primary sex organs are the ovaries"
+  },
+  {
+    topic:"Ovary",
+    q:"The ovary lies posterior to which peritoneal structure?",
+    choices:["The broad ligament (mesovarium)","The round ligament","The rectum","The urinary bladder"],
+    answer:0,
+    correct:"The ovary lies posterior to the broad ligament (mesovarium) and is anchored by the suspensory and ovarian ligaments.",
+    why:"The round ligament runs anteriorly to the labia majora; the rectum and bladder are not the structure the ovary lies posterior to here.",
+    src:"Slide 24 — Ovary posterior to broad ligament (mesovarium)"
+  },
+  {
+    topic:"Ovary",
+    q:"The ovary receives its arterial blood supply from which vessel?",
+    choices:["The uterine artery","The ovarian artery","The internal iliac artery","The vaginal artery"],
+    answer:1,
+    correct:"The ovary's blood supply is via the ovarian artery, which arises from the abdominal aorta and enters through the suspensory ligament.",
+    why:"The uterine artery (from the internal iliac) supplies the uterus, and the vaginal artery supplies the vagina; the internal iliac is a source vessel but not the direct ovarian supply named.",
+    src:"Slide 24, 27 — Blood supply via ovarian artery"
+  },
+  {
+    topic:"Ovary",
+    q:"The venous drainage of the right ovary is to the inferior vena cava, while the left ovarian vein drains into which vessel?",
+    choices:["The left internal iliac vein","The portal vein","The left renal vein","The azygos vein"],
+    answer:2,
+    correct:"The right ovarian vein drains to the inferior vena cava and the left drains into the left renal vein.",
+    why:"The portal vein drains the GI tract; the internal iliac and azygos veins are not the drainage route stated for the left ovarian vein.",
+    src:"Slide 24 — Venous drainage to IVC (right) and left renal vein"
+  },
+  {
+    topic:"Ovary",
+    q:"The lymphatics of the ovary follow the ovarian blood vessels to ascend to which nodes?",
+    choices:["Superficial inguinal nodes","Axillary nodes","Internal iliac nodes","Lumbar (para-aortic) lymph nodes"],
+    answer:3,
+    correct:"Ovarian lymphatics follow the ovarian vessels to ascend to the lumbar lymph nodes.",
+    why:"Superficial inguinal nodes drain the vulva/lower vagina, internal iliac nodes drain pelvic organs, and axillary nodes drain the breast — none is the ovarian pathway.",
+    src:"Slide 27 — Lymphatics ascend to the lumbar lymph nodes"
+  },
+  {
+    topic:"Innervation",
+    q:"Afferent (sensory) fibers from the ovary enter the spinal cord through which nerve levels?",
+    choices:["T10 and T11","L1 and L2","S2, S3, and S4","T6 and T7"],
+    answer:0,
+    correct:"Afferent fibers from the ovary enter the spinal cord through the T10 and T11 nerves.",
+    why:"L1–L2, S2–S4, and T6–T7 are not the levels given for ovarian afferents in the lecture.",
+    src:"Slide 27 — Afferent fibers enter spinal cord through T10 and T11"
+  },
+  {
+    topic:"Uterus",
+    q:"The uterus is located between which two organs?",
+    choices:["The ovaries and the vagina","The urinary bladder and the rectum","The sacrum and the pubic symphysis","The ureters and the colon"],
+    answer:1,
+    correct:"The uterus lies between the urinary bladder (anteriorly) and the rectum (posteriorly).",
+    why:"The other pairings do not describe the uterus's immediate anterior/posterior relations as stated in the lecture.",
+    src:"Slide 32 — located between the urinary bladder and rectum"
+  },
+  {
+    topic:"Uterus",
+    q:"The normal position of the uterus is described as anteverted and anteflexed. Anteversion occurs at which junction?",
+    choices:["The internal os","The junction of cervix and body","The junction of cervix and vagina","The fundus"],
+    answer:2,
+    correct:"The uterus is anteverted at the junction of the cervix and vagina (and anteflexed at the cervix and body).",
+    why:"The junction of cervix and body is where anteflexion occurs; the internal os and fundus are not the described sites of anteversion.",
+    src:"Slide 31 — Anteverted at junction of cervix and vagina"
+  },
+  {
+    topic:"Uterus",
+    q:"Which is the rounded region of the uterus, superior and anterior to the entrance of the uterine tubes?",
+    choices:["Body","Cervix","Isthmus","Fundus"],
+    answer:3,
+    correct:"The fundus is the rounded portion superior and anterior to the uterine tube entrance.",
+    why:"The body is the main portion with a triangular cavity, the isthmus is the constricted region above the cervix, and the cervix joins the vagina.",
+    src:"Slide 34 — Fundus"
+  },
+  {
+    topic:"Uterus",
+    q:"The constricted region of the uterus between the body and the cervix is the:",
+    choices:["Isthmus","Fundus","Internal os","External os"],
+    answer:0,
+    correct:"The isthmus is the constricted region between the body and the cervix.",
+    why:"The fundus is the superior rounded portion; the internal os opens to the isthmus and the external os opens to the vagina — these are openings, not the constricted region.",
+    src:"Slide 34 — Isthmus"
+  },
+  {
+    topic:"Uterus",
+    q:"In the cervix, the opening to the vagina is called the:",
+    choices:["Internal os","External os","Fornix","Isthmus"],
+    answer:1,
+    correct:"The external os is the cervical opening to the vagina; the internal os opens to the isthmus.",
+    why:"The internal os opens to the isthmus, the fornix is the vaginal recess around the cervix, and the isthmus is a uterine region, not an opening.",
+    src:"Slide 34 — external os: opening to vagina"
+  },
+  {
+    topic:"Uterus",
+    q:"The three concentric tunics of the uterine wall, from outer to inner, are:",
+    choices:["Endometrium, myometrium, perimetrium","Myometrium, perimetrium, endometrium","Perimetrium, myometrium, endometrium","Serosa, submucosa, mucosa"],
+    answer:2,
+    correct:"From outer to inner the uterine wall is the perimetrium, myometrium, and endometrium.",
+    why:"The reversed order is incorrect; the perimetrium (a serosa) is outermost and the endometrium lines the cavity. 'Serosa/submucosa/mucosa' is the general gut scheme, not the uterine tunics.",
+    src:"Slide 35, 39 — Uterine layers"
+  },
+  {
+    topic:"Uterus",
+    q:"Which uterine tunic is the thick middle layer of smooth muscle that becomes distended during pregnancy?",
+    choices:["Perimetrium","Adventitia","Endometrium","Myometrium"],
+    answer:3,
+    correct:"The myometrium is the thick middle tunic of smooth muscle (three intertwining layers) that enlarges during pregnancy.",
+    why:"The perimetrium is the outer serosa, the endometrium is the hormone-sensitive inner lining, and the uterus has no adventitia as its middle layer.",
+    src:"Slide 35, 39 — Myometrium: smooth muscle"
+  },
+  {
+    topic:"Uterine Tubes",
+    q:"In which region of the uterine tube does fertilization of the secondary oocyte usually occur (the long, wide portion)?",
+    choices:["Ampulla","Infundibulum","Isthmus","Intramural (interstitial) portion"],
+    answer:0,
+    correct:"The ampulla is the long, wide portion of the uterine tube and the usual site of fertilization.",
+    why:"The infundibulum is the flared distal end with fimbriae, the isthmus is the narrow portion near the uterus, and the intramural portion passes through the uterine wall.",
+    src:"Slide 45, 51 — Ampulla: long, wide portion"
+  },
+  {
+    topic:"Uterine Tubes",
+    q:"The finger-like projections at the distal end of the uterine tube are the:",
+    choices:["Villi","Fimbriae","Fornices","Cilia"],
+    answer:1,
+    correct:"The fimbriae are the finger-like projections at the distal (infundibular) end of the uterine tube.",
+    why:"Villi are intestinal projections, fornices are vaginal recesses, and cilia are microscopic hair-like structures lining the tube — not the finger-like projections.",
+    src:"Slide 51 — Fimbriae: finger-like projections at distal end"
+  },
+  {
+    topic:"Uterine Tubes",
+    q:"The mucosa of the uterine tube is lined by which epithelium?",
+    choices:["Nonkeratinized stratified squamous epithelium","Simple cuboidal epithelium","Simple ciliated columnar epithelium","Transitional epithelium"],
+    answer:2,
+    correct:"The uterine tube is lined by ciliated (and non-ciliated) simple columnar epithelium; ciliary movement helps move the ovum toward the uterus.",
+    why:"Stratified squamous epithelium lines the vagina, transitional epithelium lines the bladder, and simple cuboidal is not the tube's lining.",
+    src:"Slide 45, 53 — simple ciliated columnar epithelium"
+  },
+  {
+    topic:"Uterine Tubes",
+    q:"Which statement about the relationship of the uterine tube to the ovary is correct?",
+    choices:["The tube is physically fused to the ovary","The tube is continuous with the ovarian cortex","The tube attaches to the ovary via the round ligament","The tube does not physically attach to the ovary"],
+    answer:3,
+    correct:"The uterine (fallopian) tube receives the ovulated oocyte and attaches to the uterus, but does not physically attach to the ovary.",
+    why:"The tube is not fused or continuous with the ovary, and the round ligament connects the uterus to the labia majora, not the tube to the ovary.",
+    src:"Slide 49–50 — Does not physically attach to the ovary"
+  },
+  {
+    topic:"Uterine Tubes",
+    q:"The uterine tube is supported by and located within which structure?",
+    choices:["The broad ligament","The round ligament","The uterosacral ligament","The suspensory ligament of the ovary"],
+    answer:0,
+    correct:"The uterine tube lies within and is supported by the broad ligament.",
+    why:"The round ligament runs to the labia majora, the uterosacral ligament anchors the uterus to the sacrum, and the suspensory ligament supports the ovary.",
+    src:"Slide 47, 49 — Within broad ligament / supported by the broad ligament"
+  },
+  {
+    topic:"Innervation",
+    q:"According to the lecture, the nerve supply to the uterine tube is derived from which plexi?",
+    choices:["The ovarian and uterine plexi","The pelvic splanchnic plexus only","The hypogastric and sacral plexi","The pampiniform plexus"],
+    answer:0,
+    correct:"The uterine tube receives its nerve supply from the ovarian and uterine plexi (its blood supply is via the ovarian and uterine arteries).",
+    why:"The pampiniform plexus is a venous network (ovarian venous drainage), not a nerve plexus; the pelvic splanchnic and hypogastric/sacral plexi are not the specific supply named for the tube in this lecture.",
+    src:"Slide 48 — Uterine Tube: Nerve supply from ovarian and uterine plexi"
+  },
+  {
+    topic:"Vagina",
+    q:"What is the positional relationship of the vagina to the urethra and rectum?",
+    choices:["Anterior to the urethra and posterior to the rectum","Lateral to both","Posterior to the urethra and anterior to the rectum","Superior to both"],
+    answer:2,
+    correct:"The vagina lies posterior to the urethra and anterior to the rectum.",
+    why:"The reversed and lateral/superior relationships are inconsistent with the stated anatomy.",
+    src:"Slide 57 — Posterior to urethra, anterior to rectum"
+  },
+  {
+    topic:"Vagina",
+    q:"The recess or pocket surrounding the uterine cervix where it projects into the vagina is called the:",
+    choices:["Infundibulum","Vestibule","Hymen","Fornix"],
+    answer:3,
+    correct:"The fornix is the pocket surrounding the uterine cervix (the junction with the cervix of the uterus).",
+    why:"The vestibule is the region between the labia minora, the hymen is a mucous membrane over the vaginal entry, and the infundibulum is part of the uterine tube.",
+    src:"Slide 59, 60 — Fornix: junction/pocket around cervix"
+  },
+  {
+    topic:"Vagina",
+    q:"The wall of the vagina consists of three tunics. What is its outer tunic?",
+    choices:["Adventitia","Serosa","Perimetrium","Peritoneum"],
+    answer:0,
+    correct:"The vaginal wall consists of an inner mucosa, a middle muscularis, and an outer adventitia.",
+    why:"The vagina's outer layer is adventitia, not a serosa/peritoneum; perimetrium is the outer layer of the uterus.",
+    src:"Slide 56 — inner mucosa, middle muscularis, outer adventitia"
+  },
+  {
+    topic:"External Genitalia",
+    q:"The external sex organs of the female are collectively called the:",
+    choices:["Perineum","Vulva (pudendum)","Vestibule","Fornix"],
+    answer:1,
+    correct:"The external genitalia are collectively called the vulva (also called the pudendum).",
+    why:"The perineum is the diamond-shaped region, the vestibule is the space between the labia minora, and the fornix is a vaginal recess.",
+    src:"Slide 66, 72 — external genitalia collectively called the vulva"
+  },
+  {
+    topic:"External Genitalia",
+    q:"The labia majora are homologous to which male structure?",
+    choices:["The penis","The bulbourethral gland","The scrotum","The vas deferens"],
+    answer:2,
+    correct:"The labia majora are homologous to the scrotum.",
+    why:"The clitoris is homologous to the penis, the greater vestibular gland to the bulbourethral gland, and the uterine tubes to the vas deferens.",
+    src:"Slide 69, 73 — Labia majora homologous to scrotum"
+  },
+  {
+    topic:"External Genitalia",
+    q:"The vestibule is the space enclosed by the labia that contains the openings of which structures?",
+    choices:["The ureters and bladder","The anus and rectum","The cervix and fornix","The urethra, vagina, and vestibular glands"],
+    answer:3,
+    correct:"The vestibule contains the openings of the urethra, the vagina, and the vestibular glands.",
+    why:"The anus/rectum lie in the anal triangle, the cervix/fornix are internal, and the ureters/bladder are part of the urinary tract, not the vestibule.",
+    src:"Slide 70 — Vestibule contains openings: urethra, vagina, vestibular glands"
+  },
+  {
+    topic:"External Genitalia",
+    q:"The greater vestibular gland is homologous to which male gland and performs what function?",
+    choices:["The bulbourethral gland; secretes mucus","The prostate; secretes enzymes","The seminal vesicle; stores sperm","The parotid gland; secretes saliva"],
+    answer:0,
+    correct:"The greater vestibular gland is homologous to the bulbourethral gland and secretes mucus, drained by a duct into the vestibule.",
+    why:"It is not homologous to the prostate or seminal vesicle, and the parotid is a salivary gland unrelated to the reproductive tract.",
+    src:"Slide 78 — Greater Vestibular Gland homologous to bulbourethral gland, secretes mucus"
+  },
+  {
+    topic:"Breast",
+    q:"The breast lies between which ribs?",
+    choices:["The 4th and 8th ribs","The 2nd and 6th ribs","The 1st and 4th ribs","The 6th and 10th ribs"],
+    answer:1,
+    correct:"The breast lies between the 2nd and 6th ribs, between the sternal edge and the midaxillary line.",
+    why:"The other rib ranges do not match the 2nd–6th rib span given in the lecture.",
+    src:"Slide 79 — Lies between the 2nd and 6th rib"
+  },
+  {
+    topic:"Breast",
+    q:"The breast is described as lying two-thirds superficial to which muscle?",
+    choices:["Serratus anterior","Latissimus dorsi","Pectoral muscle","External oblique"],
+    answer:2,
+    correct:"About two-thirds of the breast lies superficial to the pectoral muscle, and one-third superficial to the serratus anterior.",
+    why:"The serratus anterior underlies the remaining one-third; the latissimus dorsi and external oblique are not described as the breast's bed.",
+    src:"Slide 79 — 2/3 superficial to pectoral muscle"
+  },
+  {
+    topic:"Breast",
+    q:"The suspensory ligament of the breast that connects the skin to the breast fascia is also known as:",
+    choices:["The cardinal ligament","The round ligament","The broad ligament","Cooper's ligament"],
+    answer:3,
+    correct:"The suspensory ligament of the breast is Cooper's ligament, which connects the skin to the breast fascia.",
+    why:"The round, broad, and cardinal ligaments are pelvic/uterine ligaments, not breast structures.",
+    src:"Slide 81 — suspensory ligament (Cooper's ligament)"
+  },
+  {
+    topic:"Breast",
+    q:"Lymphatic drainage of the breast is primarily directed toward which region?",
+    choices:["The axilla","The inguinal nodes","The popliteal nodes","The lumbar nodes"],
+    answer:0,
+    correct:"Breast lymphatic drainage is primarily toward the axilla (and also to the collateral side).",
+    why:"The inguinal, popliteal, and lumbar nodes drain other regions (lower limb, pelvis/gonads), not the primary drainage of the breast.",
+    src:"Slide 87 — Lymphatics: drainage towards axilla"
+  },
+  {
+    topic:"Breast",
+    q:"The medial quadrant of the breast receives its blood supply in part from perforating branches of which artery?",
+    choices:["The lateral thoracic artery","The internal thoracic artery","The thoracoacromial artery","The subscapular artery"],
+    answer:1,
+    correct:"The medial quadrant is supplied by perforating branches (2, 3, 4) from the internal thoracic artery and by anterior intercostal branches.",
+    why:"The lateral thoracic and thoracoacromial (pectoral) branches supply the lateral quadrants; the subscapular artery is not listed as a breast supply.",
+    src:"Slide 85 — Medial quadrant: perforating branches from internal thoracic artery"
+  }
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen}))}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden");
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  state.answered = false;
+  const item = QUESTIONS[state.i];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+
+  const box = el('choices');
+  box.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    box.appendChild(b);
+  });
+
+  el('feedback').classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+}
+
+function select(idx){
+  if (state.answered) return;
+  state.answered = true;
+  const item = QUESTIONS[state.i];
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  else { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: Female_Reproductive_Tract_for_lecure.pptx — ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+}
+
+function finish(){clearProgress();markCompleted(state.score, QUESTIONS.length);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of female reproductive anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  const missedByTopic = {};
+  state.missed.forEach(m => { missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1; });
+  Object.keys(topics).forEach(t => { topics[t].correct = topics[t].total - (missedByTopic[t]||0); });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: Female_Reproductive_Tract_for_lecure.pptx — ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+</script>
+</body>
+</html>
