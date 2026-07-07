@@ -249,6 +249,7 @@ function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify(
 function startQuiz(){
   clearProgress();
   $("resume-banner").classList.add("hidden");
+  document.querySelectorAll('[id^="reveal-"]').forEach(el=>{ el.setAttribute('visibility','hidden'); el.textContent=''; });
   current = 0; score = 0; results = [];
   quizOrder = shuffle(ITEMS);
   $("start").classList.add("hidden");
