@@ -263,6 +263,7 @@ function loadProgress(){
   try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; }
 }
 function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 
 function startQuiz(){
   clearProgress();
@@ -406,6 +407,7 @@ function finishQuiz(){
       </div>
     `).join('');
   }
+  saveReview();
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function restart(){

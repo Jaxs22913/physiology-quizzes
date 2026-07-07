@@ -531,6 +531,7 @@ function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({current, sco
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
@@ -651,6 +652,7 @@ function showResults(){clearProgress();markCompleted(score, questions.length);
     d.className = "allright";
     d.textContent = "Perfect score \u2014 you didn't miss a single question across all seven chapters.";
     review.appendChild(d);
+    saveReview();
     return;
   }
 
@@ -670,6 +672,7 @@ function showResults(){clearProgress();markCompleted(score, questions.length);
       `<div class="mcite">${item.s}</div>`;
     review.appendChild(wrap);
   });
+  saveReview();
 }
 
 function restart(){ startQuiz(); }

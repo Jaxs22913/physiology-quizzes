@@ -330,7 +330,105 @@
       border: 1px solid var(--accent);
       border-radius: 999px;
       padding: 3px 10px;
+      cursor: pointer;
     }
+    .score-badge:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .review-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 2000;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+      overflow-y: auto;
+    }
+    .review-modal-overlay.open { display: flex; }
+    .review-modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      max-width: 640px;
+      width: 100%;
+      padding: 26px 24px 28px;
+      position: relative;
+      color: var(--ink);
+    }
+    .review-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      border: none;
+      background: var(--border);
+      color: var(--ink);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .review-modal-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--accent);
+      margin: 0 26px 14px 0;
+    }
+    .review-modal-content { font-size: 14px; }
+    .review-modal-content h2, .review-modal-content h3 {
+      color: var(--ink); margin: 16px 0 10px; font-size: 15px;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+    .review-modal-content .scorebig, .review-modal-content .bigscore {
+      font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; margin: 0 0 2px;
+    }
+    .review-modal-content .pct { font-size: 15px; color: var(--muted); font-weight: 700; margin: 0 0 14px; }
+    .review-modal-content .gradeline, .review-modal-content .verdict-line {
+      font-size: 14px; margin: 0 0 16px; color: var(--ink);
+    }
+    .review-modal-content .missed,
+    .review-modal-content .missed-item,
+    .review-modal-content .miss {
+      border: 1px solid var(--border); border-left: 4px solid #dc2626; border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 10px; background: var(--bg);
+    }
+    .review-modal-content .mq { font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+    .review-modal-content .row, .review-modal-content .ma { font-size: 13px; margin: 3px 0; }
+    .review-modal-content .yours,
+    .review-modal-content .row.yours,
+    .review-modal-content .ma.yours { color: #dc2626; }
+    .review-modal-content .right,
+    .review-modal-content .row.right,
+    .review-modal-content .ma.right { color: #16a34a; font-weight: 600; }
+    .review-modal-content .why, .review-modal-content .mexp {
+      color: var(--muted); font-size: 12.5px; margin-top: 6px;
+    }
+    .review-modal-content .mcite, .review-modal-content .msrc {
+      color: var(--muted); font-size: 11.5px; font-style: italic; margin-top: 6px;
+    }
+    .review-modal-content .allright, .review-modal-content .perfect {
+      background: var(--accent2-soft); border: 1px solid var(--accent2);
+      border-radius: 12px; padding: 14px 16px; color: var(--accent2); font-weight: 600;
+    }
+    .review-modal-content .bd-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+    .review-modal-content .bd-name { font-size: 12.5px; color: var(--ink); flex: 0 0 40%; }
+    .review-modal-content .bd-bar { flex: 1; height: 8px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .review-modal-content .bd-bar > i { display: block; height: 100%; background: var(--accent); }
+    .review-modal-content .bd-frac { font-size: 11.5px; color: var(--muted); flex: 0 0 50px; text-align: right; }
+    .review-modal-content .bd {
+      display: inline-block; background: var(--accent-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 6px 10px; font-size: 12px; color: var(--muted);
+      font-weight: 600; margin: 3px 4px 3px 0;
+    }
+    .review-modal-content .breakdown { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
 
     .empty {
       color: var(--muted);
@@ -714,6 +812,7 @@
         const raw = localStorage.getItem("qc:" + pathname);
         if (!raw) return;
         const { score, total } = JSON.parse(raw);
+        a.dataset.quizLabel = a.textContent.trim();
         const badge = document.createElement("span");
         badge.className = "score-badge";
         badge.textContent = `${score} / ${total}`;
@@ -771,6 +870,48 @@
           indicator.style.height = "0px";
           path.style.strokeDashoffset = pathLength;
         }
+      });
+    })();
+  </script>
+
+  <div class="review-modal-overlay" id="review-modal-overlay">
+    <div class="review-modal">
+      <button class="review-modal-close" id="review-modal-close" aria-label="Close">&times;</button>
+      <p class="review-modal-title" id="review-modal-title">Review</p>
+      <div class="review-modal-content" id="review-modal-content"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const overlay = document.getElementById("review-modal-overlay");
+      const content = document.getElementById("review-modal-content");
+      const title = document.getElementById("review-modal-title");
+      function openReview(quizName, reviewHTML) {
+        title.textContent = quizName;
+        content.innerHTML = reviewHTML;
+        overlay.classList.add("open");
+      }
+      function closeReview() { overlay.classList.remove("open"); }
+      document.getElementById("review-modal-close").addEventListener("click", closeReview);
+      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeReview(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeReview(); });
+
+      document.querySelectorAll("a.quiz-link").forEach(a => {
+        try {
+          const pathname = new URL(a.getAttribute("href"), location.href).pathname;
+          const raw = localStorage.getItem("qc:" + pathname);
+          if (!raw) return;
+          const saved = JSON.parse(raw);
+          if (!saved.reviewHTML) return;
+          const badge = a.querySelector(".score-badge");
+          if (!badge) return;
+          badge.title = "Click to view your review";
+          badge.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openReview(a.dataset.quizLabel || a.textContent.trim(), saved.reviewHTML);
+          });
+        } catch (e) {}
       });
     })();
   </script>

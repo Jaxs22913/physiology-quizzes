@@ -225,6 +225,7 @@ function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({current, sco
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
@@ -290,7 +291,7 @@ function showResults(){clearProgress();markCompleted(score, questions.length);
   const order=["Hemostasis","Immunology","Pulmonary","GI","Metabolism"];
   order.forEach(u=>{if(tot[u]){const c=cor[u]||0;const el=document.createElement("div");el.className="bd";el.innerHTML=u+": <b>"+c+"/"+tot[u]+"</b>";bd.appendChild(el);}});
   const missed=responses.filter(r=>!r.isCorrect);const review=$("review");review.innerHTML="";
-  if(missed.length===0){const d=document.createElement("div");d.className="allright";d.textContent="Perfect score \u2014 you didn't miss a single question across all five units.";review.appendChild(d);return;}
+  if(missed.length===0){const d=document.createElement("div");d.className="allright";d.textContent="Perfect score \u2014 you didn't miss a single question across all five units.";review.appendChild(d);saveReview();return;}
   const h=document.createElement("h3");h.textContent="Review \u2014 "+missed.length+" missed question"+(missed.length>1?"s":"");review.appendChild(h);
   missed.forEach(r=>{const item=questions[r.i];const w=document.createElement("div");w.className="missed";
     w.innerHTML='<div class="mq">Q'+(r.i+1)+". "+item.q+'</div>'+
@@ -298,6 +299,7 @@ function showResults(){clearProgress();markCompleted(score, questions.length);
       '<div class="row right">Correct answer: '+LETTERS[r.correct]+". "+item.o[r.correct]+'</div>'+
       '<div class="why">'+item.e+'</div>'+'<div class="mcite">'+item.cite+'</div>';
     review.appendChild(w);});
+  saveReview();
 }
 function restart(){startQuiz();}
 </script>
