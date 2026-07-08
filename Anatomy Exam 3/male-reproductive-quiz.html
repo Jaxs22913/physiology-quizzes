@@ -769,7 +769,7 @@ el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavi
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen}))}));
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen}))}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }

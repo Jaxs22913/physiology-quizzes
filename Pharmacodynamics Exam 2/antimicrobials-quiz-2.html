@@ -206,7 +206,7 @@ prevBtn.addEventListener('click',()=>{
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen}));
+  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen, total: QUESTIONS.length}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
