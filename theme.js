@@ -21,7 +21,7 @@
     btn.setAttribute("aria-label", "Toggle dark mode");
     btn.title = "Toggle dark mode";
     btn.style.cssText =
-      "position:fixed;top:14px;right:14px;z-index:600;width:38px;height:38px;" +
+      "position:fixed;top:14px;right:84px;z-index:600;width:38px;height:38px;" +
       "border-radius:50%;display:flex;align-items:center;justify-content:center;" +
       "cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);padding:0;";
     paintIcon(btn, currentTheme());
