@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hemostasis — Quiz 2 (30 Questions)</title>
+<style>
+  :root{
+    --navy:#7f1d1d; --indigo:#b91c1c; --gold:#f87171; --ice:#fdecec;
+    --ink:#20233a; --muted:#5b6178; --line:#dfe3f0;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <header>
+    <h1>Hemostasis — Quiz 2</h1>
+    <div class="sub">Blood &amp; coagulation · Class of 2028 review</div>
+    <span class="pill">30 questions &middot; Hemostasis (Ch 37)</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It draws on the instructional objectives below.</p>
+    <div class="chips"><span class="chip">a — Blood &amp; its components</span><span class="chip">b — Hematocrit &amp; hemoglobin</span><span class="chip">c — Hematopoiesis, stimulus &amp; function</span><span class="chip">d — Molecular mechanisms of coagulation</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 30</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Albumin, the most abundant plasma protein, is important because it...", "opts": [["forms the fibrin meshwork that seals a damaged vessel as it is usually described here", "Incorrect. Fibrin comes from fibrinogen via thrombin; albumin's roles are oncotic pressure and transport."], ["carries oxygen from the lungs to the peripheral tissues", "Incorrect. Oxygen transport is the job of hemoglobin in red cells; albumin transports other substances and maintains oncotic pressure."], ["generates most of the plasma colloid osmotic pressure and transports many substances", "Correct. Albumin is the chief contributor to plasma colloid (oncotic) osmotic pressure, keeping fluid within the vasculature, and it serves as a carrier for hormones, fatty acids, drugs, and other poorly soluble substances. Low albumin therefore causes edema."], ["acts as an antibody that neutralizes invading microbes", "Incorrect. Antibodies are immunoglobulins; albumin is a transport and osmotic protein, not an antibody."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 3-5"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Blood serves three broad roles — transport, regulation, and protection. Which pairing correctly matches a component to one of these roles?", "opts": [["Platelets transport dietary nutrients, while the red cells are what defend against infection", "Incorrect. Platelets function in hemostasis, not nutrient transport, and infection defense is the job of white cells, not red cells."], ["White cells regulate body temperature, while plasma proteins carry oxygen", "Incorrect on both counts: white cells provide defense, temperature regulation involves blood flow distribution more than white cells, and oxygen is carried by hemoglobin in red cells, not plasma proteins."], ["Plasma dissolves most oxygen for transport, while the red cells are what actually clot the blood", "Incorrect. Only a trivial amount of oxygen is dissolved in plasma, and clotting involves platelets and plasma proteins rather than red cells."], ["Red cells carry out transport of oxygen, while platelets and clotting proteins provide protection", "Correct. Red cells (via hemoglobin) exemplify the transport role by carrying oxygen, while platelets and plasma clotting proteins serve the protective role by sealing damaged vessels; each component maps to a distinct one of blood's broad functions."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 3-6"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Plasma differs from serum in that plasma still contains...", "opts": [["the clotting proteins such as fibrinogen that serum has lost", "Correct. Plasma is the fluid obtained when clotting is prevented, so it retains fibrinogen and the other clotting factors; serum is the fluid left after blood has clotted, meaning those clotting proteins have been consumed and removed. That is the defining difference between the two."], ["antibodies that are absent from serum as it typically occurs here", "Incorrect. Antibodies are present in both plasma and serum; only the clotting proteins distinguish them."], ["dissolved oxygen that serum cannot hold", "Incorrect. Both fluids can hold small amounts of dissolved gas; the distinction is the presence of clotting factors."], ["far more red blood cells than serum does", "Incorrect. Both plasma and serum are cell-free fluids; the difference between them is the clotting proteins, not red cells."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 3-5"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "When a blood sample is centrifuged, the thin 'buffy coat' between the packed red cells and the plasma consists of...", "opts": [["white blood cells and platelets", "Correct. Centrifuged blood separates into dense red cells at the bottom, plasma on top, and a thin intermediate buffy coat containing the white blood cells and platelets, which are intermediate in density between red cells and plasma."], ["clotting factors that have precipitated out", "Incorrect. Clotting factors stay in the plasma; the buffy coat holds white cells and platelets."], ["concentrated plasma proteins only", "Incorrect. Plasma proteins remain dissolved in the plasma layer; the buffy coat is the cellular layer of white cells and platelets."], ["immature red blood cells released early", "Incorrect. The buffy coat is composed of white cells and platelets, not immature red cells."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 3-6"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Which best describes a functional distinction between plasma proteins and the formed elements of blood?", "opts": [["Plasma proteins buffer carbon dioxide, while the formed elements dissolve dietary lipids", "Incorrect on both counts: CO2 is buffered largely as bicarbonate generated in red cells, and dietary lipids are handled by the GI tract and lymph, not dissolved by blood cells."], ["Plasma proteins carry oxygen, while the formed elements maintain colloid osmotic pressure", "Reversed. Oxygen is carried by hemoglobin inside red cells (a formed element), and colloid osmotic pressure is generated by dissolved plasma proteins, not by cells."], ["Plasma proteins clot the blood on their own, while the formed elements neutralize all invading toxins", "Only partly and imprecisely true: clotting proteins are plasma proteins, but toxin neutralization is done by antibodies (also plasma proteins), not by the formed elements as a class. This mixes the categories."], ["Plasma proteins such as albumin generate colloid osmotic pressure, while red cells transport oxygen", "Correct. Albumin and the other plasma proteins are too large to cross the capillary wall freely, so they hold water in the vasculature and create colloid (oncotic) osmotic pressure; the formed element responsible for oxygen carriage is the red cell, via hemoglobin. The two therefore serve genuinely different roles."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 3-6"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Each gram of hemoglobin binds about 1.34 mL of O2. Why does anemia lower oxygen delivery even when arterial PO2 is normal?", "opts": [["Less hemoglobin is available to bind oxygen, so the oxygen content per volume of blood falls", "Correct. Oxygen content depends on how much hemoglobin is present, not just on PO2. With fewer grams of hemoglobin, each unit of blood carries fewer milliliters of O2 even though PO2 (and therefore saturation) is normal, so delivery drops."], ["Fewer red cells increase plasma viscosity, which physically traps the oxygen under these conditions", "Incorrect. Fewer red cells actually lower viscosity, and oxygen is not trapped by viscosity; the deficit is reduced carrying capacity."], ["Anemia saturates the remaining hemoglobin so tightly that it cannot release oxygen", "Incorrect. The remaining hemoglobin still loads and unloads normally; the problem is that there is simply less of it, not that it holds oxygen too tightly."], ["Low hemoglobin somehow raises arterial PO2 but then blocks oxygen from leaving the plasma", "Incorrect. Anemia does not raise PO2, and oxygen delivery is limited by carrying capacity, not by a block on plasma oxygen release."]], "c": 0, "cite": "Hemostasis & Coagulation, slide 21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Each hemoglobin molecule can transport four O2 molecules. Which structural feature accounts for this?", "opts": [["Four carbonic anhydrase sites that each convert one O2 for transport", "Carbonic anhydrase handles CO2 chemistry and is not part of oxygen binding."], ["Four globin chains that each dissolve one O2 into the red-cell cytoplasm", "Oxygen is bound at heme iron, not dissolved by the globin chains themselves."], ["Four disulfide bonds that each trap a single dissolved oxygen molecule", "Disulfide bonds stabilize protein structure; they do not bind oxygen."], ["Four heme groups, each with one iron atom that reversibly binds one O2", "Correct: adult hemoglobin has four globin chains, each with a heme/iron that reversibly binds one O2, so four O2 per molecule."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Anemia is fundamentally a state in which...", "opts": [["the blood's oxygen-carrying capacity is reduced below normal", "Correct. Anemia means a deficiency of functional hemoglobin (from too few red cells or too little hemoglobin per cell), which lowers the amount of oxygen the blood can carry and deliver to tissues, regardless of the specific cause."], ["the white blood cell count falls below the normal range", "Incorrect. A low white cell count is leukopenia; anemia concerns red cells and hemoglobin."], ["arterial oxygen partial pressure is always markedly low", "Incorrect. In anemia the arterial PO2 can be normal; the deficit is in hemoglobin content, not partial pressure."], ["the blood carries too much oxygen for the tissues to use", "Incorrect. Anemia reduces oxygen-carrying capacity; it is not a state of oxygen excess."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 20-21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "A hematocrit of 42% tells you which of the following about a whole-blood sample?", "opts": [["Red cells occupy about 42% of whole-blood volume, the remainder being plasma", "Correct: hematocrit is the packed cell (mostly RBC) volume as a percent of whole blood, normally ~40-45%."], ["Plasma proteins account for close to 42% of the blood's osmotic pressure", "Hematocrit measures packed cell volume, not the contribution of proteins to osmotic pressure."], ["About 42% of circulating hemoglobin is currently saturated with oxygen", "Oxygen saturation is a different quantity; hematocrit says nothing about how loaded hemoglobin is."], ["Hemoglobin makes up roughly 42% of the mass of each individual red cell", "Hemoglobin concentration inside packed cells is about 34 g/dL, a separate measure from hematocrit."]], "c": 0, "cite": "Hemostasis & Coagulation, slide 6"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "In polycythemia the oxygen-carrying capacity rises, yet the condition can impair circulation because...", "opts": [["the plasma volume expands and dilutes the hemoglobin", "Incorrect. Polycythemia raises the proportion of cells, not a diluting plasma expansion."], ["the kidneys stop producing erythropoietin entirely", "Incorrect. Changes in erythropoietin are a response to oxygen status, not the mechanism by which high hematocrit impairs flow."], ["the extra red cells cannot bind any oxygen at all as it typically occurs here", "Incorrect. The additional red cells do carry oxygen; the problem is the viscosity that accompanies them."], ["the accompanying rise in blood viscosity increases resistance to flow", "Correct. Although more red cells raise oxygen-carrying capacity, the higher hematocrit sharply increases blood viscosity; the thicker blood resists flow and raises the load on the heart, which can offset or outweigh the benefit of extra oxygen capacity."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 6"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Erythropoietin secretion is governed by a negative feedback loop in which...", "opts": [["the liver senses red cell count and sets erythropoietin directly", "Incorrect. The kidneys are the main sensor, responding to oxygen delivery rather than directly counting red cells."], ["erythropoietin rises steadily regardless of oxygen levels under most normal conditions", "Incorrect. Erythropoietin is regulated by oxygen delivery through negative feedback, not fixed independent of it."], ["high tissue oxygen raises erythropoietin to make more red cells", "Incorrect. It is low, not high, tissue oxygen that raises erythropoietin; high oxygen lowers it."], ["low tissue oxygen raises erythropoietin, and restored oxygen delivery lowers it", "Correct. When tissue oxygen delivery falls, the kidneys secrete more erythropoietin, stimulating red cell production; as the added red cells restore oxygen delivery, the stimulus subsides and erythropoietin falls, closing the loop and keeping red cell mass appropriate."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 14-17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "All blood cell lines ultimately arise from...", "opts": [["endothelial cells lining the marrow sinusoids", "Incorrect. Sinusoidal endothelium supports the marrow environment but is not the source of blood cells."], ["pluripotent hematopoietic stem cells in the bone marrow", "Correct. Every blood cell lineage — red cells, all white cells, and platelets — derives from pluripotent hematopoietic stem cells in the marrow, which give rise to committed progenitors under the influence of specific growth factors."], ["mature lymphocytes that dedifferentiate in the spleen", "Incorrect. Mature lymphocytes do not dedifferentiate into other lineages; all lines come from marrow stem cells."], ["circulating monocytes that divide within the blood", "Incorrect. Monocytes are one differentiated product of hematopoiesis, not the origin of all blood cells."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 14-16"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "When senescent red cells are broken down, most of their iron is...", "opts": [["converted into bilirubin so it can be stored in the liver", "Incorrect. It is the heme (not the iron) that becomes bilirubin; the iron itself is split off and recycled."], ["excreted unchanged in the bile as the body's main iron-removal route", "Incorrect. Iron is largely conserved and recycled; the body has no major regulated excretory route for iron, and it is not simply dumped in bile."], ["recycled by macrophages and returned to the marrow for new hemoglobin", "Correct. Macrophages of the reticuloendothelial system phagocytize old red cells, salvage the iron, and return it (via transferrin) to the marrow, so the body reuses iron efficiently rather than relying on daily intake."], ["lost through the kidneys and must be fully replaced by diet each day", "Incorrect. Very little iron is lost daily, and most is recycled, so dietary needs are modest rather than replacing the whole pool."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 14-17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Adequate red cell production depends on vitamin B12, whose absorption in turn requires...", "opts": [["erythropoietin that is produced mainly by the kidneys", "Incorrect. Erythropoietin stimulates marrow output but plays no role in intestinal B12 absorption."], ["intrinsic factor secreted by the gastric parietal cells", "Correct. Vitamin B12 must bind intrinsic factor, made by gastric parietal cells, to be absorbed in the terminal ileum; loss of intrinsic factor (as in atrophic gastritis) causes B12 deficiency and the impaired red-cell maturation of pernicious anemia."], ["pancreatic amylase acting in the duodenum", "Incorrect. Amylase digests starch; B12 absorption depends on intrinsic factor and an intact ileum."], ["bile salts released from the gallbladder under these conditions", "Incorrect. Bile salts are needed for fat and fat-soluble vitamin absorption, not for B12 uptake, which needs intrinsic factor."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 17; GI B12 slides"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Chronic hypoxia raises red-cell production largely through which mechanism?", "opts": [["Stabilized HIF-1 drives kidney erythropoietin output, boosting marrow erythropoiesis", "Correct: hypoxia stabilizes HIF-1, which increases renal erythropoietin, stimulating marrow production of red cells."], ["Direct hypoxic stimulation of the marrow stem cells acting independently of any hormone", "The marrow response is hormonally driven by erythropoietin, not a direct hypoxic effect on stem cells."], ["Increased hepatic transferrin release that accelerates hemoglobin assembly", "Transferrin delivers iron but is not the oxygen-sensing signal that raises red-cell mass."], ["Sympathetic signaling to the spleen that releases stored mature red cells", "The chronic response is new production via erythropoietin, not release of a splenic reserve."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 14-16"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Formation of the platelet plug follows the sequence of...", "opts": [["aggregation first, then adhesion, and finally activation under these conditions", "Incorrect. Adhesion to the wall comes first; activation and aggregation follow, so this order is scrambled."], ["adhesion to the injured wall, activation, then aggregation into a plug", "Correct. Platelets first adhere to exposed collagen at the injury (aided by von Willebrand factor), then become activated and release mediators such as ADP and thromboxane A2, which recruit and cause more platelets to aggregate, building the primary hemostatic plug."], ["conversion of fibrinogen to fibrin before any platelets act", "Incorrect. Fibrin formation is the coagulation cascade (secondary hemostasis); the platelet plug forms first by adhesion, activation, and aggregation."], ["dissolution of the vessel wall to release clotting factors", "Incorrect. The vessel wall is not dissolved; platelets adhere to the exposed subendothelium and build a plug."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 30-34"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "The immediate vascular spasm after a vessel is cut is produced by a combination of...", "opts": [["local myogenic contraction, nervous reflexes, and platelet-released factors", "Correct. Vascular spasm arises from several sources: direct myogenic contraction of the injured vessel, local and nervous reflexes triggered by pain and injury, and vasoconstrictor substances (like thromboxane A2 and serotonin) released by platelets; more severe trauma produces stronger spasm."], ["a rise in blood pressure that forces the vessel closed", "Incorrect. Spasm is an active contraction from myogenic, neural, and platelet factors, not a passive effect of blood pressure."], ["erythropoietin acting on the vessel wall during this particular process in the tissues", "Incorrect. Erythropoietin regulates red cell production and has no role in vascular spasm."], ["the fibrin meshwork physically squeezing the vessel shut", "Incorrect. Fibrin stabilizes the clot later; the immediate spasm results from vessel contraction and released vasoconstrictors."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 34-37"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "During the platelet response to injury, dense-granule contents such as serotonin contribute by...", "opts": [["dissolving the forming clot to keep the vessel open", "Incorrect. Serotonin release promotes vasoconstriction and hemostasis; clot dissolution is plasmin's separate role."], ["converting fibrinogen into fibrin at the wound", "Incorrect. Fibrin formation is driven by thrombin; serotonin from platelets contributes vasoconstriction."], ["promoting vasoconstriction that reinforces the initial vascular spasm", "Correct. Activated platelets release serotonin and thromboxane A2 from their granules; these promote vasoconstriction, reinforcing the vascular spasm that reduces blood flow through the injured vessel while the plug and clot form."], ["carrying oxygen to the injured tissue under most conditions in the body", "Incorrect. Oxygen transport is a red-cell function; platelet serotonin promotes vasoconstriction."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 30-37"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "On healthy, intact endothelium, what normally limits inappropriate clot formation?", "opts": [["Rapid platelet turnover that clears activated factors before they can act", "Platelet turnover does not explain the anticoagulant surface of normal endothelium."], ["Continuous low-level plasmin release that digests any fibrin as it forms", "Plasmin dissolves established clots later; it is not the main preventive on intact endothelium."], ["High local calcium that keeps the clotting factors in their inactive states", "Calcium actually promotes coagulation reactions, so this is backwards."], ["A smooth glycocalyx plus thrombomodulin that diverts thrombin toward protein C", "Correct: the smooth glycocalyx repels platelets/factors, and thrombomodulin binds thrombin to activate protein C, which inactivates factors Va and VIIIa."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "When platelets contact exposed collagen, they become activated and...", "opts": [["absorb calcium so it cannot participate in the clotting cascade during this particular process", "Incorrect. Calcium is required for coagulation; platelets do not sequester it to block clotting."], ["release plasmin that immediately begins dissolving the clot as it forms", "Incorrect. Plasmin dissolves clots during fibrinolysis, which occurs later; activated platelets promote clot formation, not breakdown."], ["secrete erythropoietin that stimulates the marrow to replace them", "Incorrect. Platelets do not secrete erythropoietin; they release aggregation-promoting mediators."], ["release ADP and thromboxane A2 that recruit and activate additional platelets", "Correct. Activated platelets undergo the release reaction, secreting ADP and thromboxane A2; these recruit and activate more platelets, creating positive feedback that builds the platelet plug at the injury site."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 34"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Antithrombin III limits clotting by...", "opts": [["supplying vitamin K for new factor synthesis", "Incorrect. Vitamin K is a hepatic cofactor for making certain factors; antithrombin instead inactivates factors."], ["inactivating thrombin and other activated clotting factors", "Correct. Antithrombin III is a natural anticoagulant that binds and neutralizes thrombin and several other activated serine-protease factors, restraining the cascade and helping confine clot formation to the site of injury (its action is greatly accelerated by heparin)."], ["stimulating the platelets to aggregate together much faster", "Incorrect. Antithrombin is anticoagulant; it does not promote platelet aggregation."], ["cross-linking fibrin to strengthen the clot", "Incorrect. Cross-linking is factor XIII's role; antithrombin opposes clotting rather than strengthening it."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Once fibrin strands form, factor XIII strengthens the clot by...", "opts": [["activating platelets to release more thromboxane", "Incorrect. Platelet activation and thromboxane release are earlier events; factor XIII stabilizes the fibrin network."], ["dissolving excess fibrin to limit the clot's size", "Incorrect. Dissolving fibrin is fibrinolysis by plasmin; factor XIII reinforces rather than dissolves the clot."], ["cross-linking adjacent fibrin strands into a stable meshwork", "Correct. Activated fibrin-stabilizing factor (factor XIII) forms covalent cross-links between fibrin strands, converting the initially loose fibrin into a strong, stable three-dimensional meshwork that resists breakdown."], ["converting still more fibrinogen into new fibrin strands", "Incorrect. That conversion is thrombin's job; factor XIII cross-links fibrin that already exists."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 40-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Von Willebrand factor contributes to primary hemostasis mainly by...", "opts": [["cleaving fibrinogen into the fibrin strands that anchor the platelet mass", "Fibrinogen is cleaved by thrombin, not by von Willebrand factor."], ["bridging platelets to exposed collagen so they adhere at the injury site", "Correct: von Willebrand factor binds platelets to exposed subendothelial collagen, promoting adhesion of the plug."], ["converting prothrombin to thrombin on the surface of activated platelets", "That conversion is performed by prothrombin activator, not by von Willebrand factor."], ["triggering vascular smooth muscle spasm to narrow the damaged vessel", "Vasoconstriction is driven by myogenic, neural, and thromboxane mechanisms, not by von Willebrand factor."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 34"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Vitamin K is required for the liver to make functional prothrombin and factors VII, IX, and X because it...", "opts": [["cleaves the inactive factor precursors into their active protease forms", "Activation cleavage is done by upstream proteases in the cascade, not by vitamin K."], ["enables carboxylation of glutamate residues needed for calcium binding", "Correct: vitamin K is the cofactor for carboxylating glutamate residues, allowing these factors to bind calcium and function."], ["supplies the phospholipid surface where these clotting factors are assembled", "Phospholipid surfaces come from platelets and tissues, not from vitamin K."], ["transports the finished factors from hepatocytes into the circulating plasma", "Vitamin K is a synthesis cofactor, not a transport molecule."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 54"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "After a clot forms, clot retraction occurs as platelets...", "opts": [["release erythropoietin to replace lost red cells", "Incorrect. Platelets do not secrete erythropoietin; in retraction they contract to tighten the clot."], ["convert fibrin back into soluble fibrinogen during this particular process", "Incorrect. Retraction consolidates the fibrin clot; it does not reverse fibrin to fibrinogen."], ["contract and pull the fibrin strands together, drawing wound edges closer", "Correct. Platelets trapped in the clot contract, pulling on the fibrin meshwork; this retracts the clot, squeezes out serum, and draws the edges of the damaged vessel closer together, aiding healing."], ["dissolve the fibrin to reopen the vessel immediately", "Incorrect. Dissolving fibrin is fibrinolysis by plasmin; clot retraction instead tightens the clot."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 40-43"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "A very low platelet count tends to cause bleeding because platelets are needed to...", "opts": [["carry the oxygen required for wound healing during this particular process", "Incorrect. Oxygen transport is a red-cell function; platelets are essential for hemostasis, not oxygen delivery."], ["form the initial plug and support the reactions of the clotting cascade", "Correct. Platelets form the primary hemostatic plug at sites of injury and provide the phospholipid surface on which clotting reactions assemble; when their number is too low, both plug formation and clot generation are impaired, producing a bleeding tendency."], ["dissolve clots so blood can keep flowing freely", "Incorrect. Platelets promote clot formation; low platelets impair clotting, and clot dissolution is a separate plasmin function."], ["produce the antibodies that fight wound infection", "Incorrect. Antibodies come from plasma cells; the bleeding from low platelets reflects impaired clot formation."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 30-34"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Heparin acts as an anticoagulant chiefly by...", "opts": [["supplying the vitamin K needed to make clotting factors", "Incorrect. Vitamin K supports factor synthesis; heparin works by boosting antithrombin, not by providing vitamin K."], ["directly cross-linking fibrin to trap the clotting factors", "Incorrect. Cross-linking fibrin would promote clotting; heparin instead potentiates antithrombin to inhibit clotting."], ["greatly enhancing the activity of antithrombin against thrombin", "Correct. Heparin binds antithrombin III and dramatically accelerates its ability to inactivate thrombin and other activated clotting factors; this potentiation is why heparin rapidly reduces clotting, and it is normally released in small amounts by mast cells and basophils."], ["stimulating platelets to form a stronger plug during this process", "Incorrect. Heparin is anticoagulant; it does not strengthen platelet plugs but enhances antithrombin activity."]], "c": 2, "cite": "Hemostasis & Coagulation, slide 48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "To keep a donated blood sample from clotting during storage, an agent is added that removes or binds calcium; this works because calcium is...", "opts": [["the trigger that begins the intrinsic pathway", "Incorrect. The intrinsic pathway is triggered by contact with charged surfaces; calcium is a cofactor throughout the cascade, and removing it prevents clotting."], ["the enzyme that directly cleaves fibrinogen into fibrin", "Incorrect. Fibrinogen is cleaved by thrombin; calcium is a required cofactor, so removing it halts the cascade."], ["required at several steps of the clotting cascade", "Correct. Calcium ions (factor IV) are needed for multiple reactions of the coagulation cascade, so binding or removing calcium (for example, with citrate) prevents the cascade from proceeding and keeps stored blood from clotting."], ["needed only to dissolve clots after they form", "Incorrect. Calcium is required to form clots, so removing it prevents clotting; clot dissolution is a separate plasmin process."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 40-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Fibrinolysis is triggered when plasminogen activators such as tPA...", "opts": [["convert plasminogen trapped in the clot into active plasmin", "Correct. Tissue plasminogen activator (tPA) and similar activators convert clot-bound plasminogen into plasmin, the enzyme that digests fibrin; this gradually dissolves the clot once the vessel has healed and restores normal flow."], ["stimulate platelets to build a larger clot during this process", "Incorrect. Plasminogen activators initiate clot dissolution, not further clot growth."], ["convert plasmin back into inactive plasminogen", "Incorrect. The activators produce plasmin from plasminogen, not the reverse."], ["cross-link fibrin strands to strengthen the clot", "Incorrect. Cross-linking is factor XIII's role; plasminogen activators promote clot breakdown."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 40-48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Platelets and healthy endothelium exert opposing influences on clotting because platelets release thromboxane A2 while intact endothelium releases...", "opts": [["additional thromboxane A2 to reinforce aggregation", "Incorrect. Healthy endothelium opposes clotting by releasing prostacyclin, not more thromboxane A2."], ["prostacyclin, which inhibits platelet aggregation and dilates the vessel", "Correct. Thromboxane A2 from activated platelets promotes aggregation and vasoconstriction, whereas intact endothelium releases prostacyclin, which inhibits platelet aggregation and dilates the vessel; the balance keeps clotting localized to injury sites."], ["fibrinogen to accelerate clot formation on its surface", "Incorrect. Intact endothelium is antithrombotic; it releases prostacyclin rather than promoting clotting with fibrinogen."], ["erythropoietin to stimulate red cell production during this particular process", "Incorrect. Erythropoietin governs red cell production and is unrelated to the platelet–endothelium clotting balance."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 30-34, 48"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(answers[idx]!==null){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  if(answers[idx]!==null) return;
+  const q = QUESTIONS[order[idx]];
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

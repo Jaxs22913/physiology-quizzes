@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metabolism, Nutrition &amp; Thermoregulation — Quiz 2 (30 Questions)</title>
+<style>
+  :root{
+    --navy:#92400e; --indigo:#d97706; --gold:#fcd34d; --ice:#fdf3e2;
+    --ink:#20233a; --muted:#5b6178; --line:#dfe3f0;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <header>
+    <h1>Metabolism, Nutrition &amp; Thermoregulation — Quiz 2</h1>
+    <div class="sub">Chapters 68–74 · Class of 2028 review</div>
+    <span class="pill">30 questions &middot; Ch 68–74</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It draws on the instructional objectives below.</p>
+    <div class="chips"><span class="chip">a — Body energy balance</span><span class="chip">a — Functions of the liver</span><span class="chip">b — Body temperature control</span><span class="chip">b — Production/transport/conversion of glucose</span><span class="chip">c — Metabolic rate</span><span class="chip">c — Production/transport/conversion of lipids</span><span class="chip">d — Production/transport/conversion of protein</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 30</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Metabolism & Liver", "io": "a — Functions of the liver", "q": "The liver protects the body from many ingested and internally produced chemicals by...", "opts": [["converting toxins into oxygen for the tissues to use", "Incorrect. Detoxification alters chemicals for excretion; it does not generate oxygen."], ["metabolizing drugs and toxins into forms that can be excreted", "Correct. Hepatocytes carry out biotransformation, chemically modifying drugs, hormones, and toxins (often making them more water-soluble) so they can be excreted in bile or urine; this detoxifying role is a central hepatic function."], ["secreting toxins unchanged directly into the bloodstream", "Incorrect. The point of hepatic metabolism is to modify substances for removal, not to release them unchanged."], ["storing all toxins permanently within its own cells in this scenario", "Incorrect. The liver transforms toxins for excretion rather than warehousing them indefinitely."]], "c": 1, "cite": "Ch 71 Liver, slides 8-10"}, {"topic": "Metabolism & Liver", "io": "a — Functions of the liver", "q": "Failure of the liver to clear ammonia is dangerous because ammonia...", "opts": [["is the main metabolic fuel used by the beating cardiac muscle", "Incorrect. Cardiac muscle uses fatty acids, glucose, and lactate for fuel, not ammonia."], ["is required in large amounts for red cell production", "Incorrect. Ammonia is a waste product, not a substrate for red-cell production."], ["is harmless and simply excreted unchanged by the lungs", "Incorrect. Ammonia is toxic and is converted to urea by the liver for renal excretion, not exhaled unchanged."], ["is toxic to the nervous system and can impair brain function", "Correct. Ammonia produced by amino-acid deamination and gut bacteria is neurotoxic; the liver normally converts it to urea for excretion. When hepatic function fails, ammonia accumulates and can cause hepatic encephalopathy — confusion, altered consciousness, and impaired brain function."]], "c": 3, "cite": "Ch 71 Liver, slide 10; Ch 70, slide 16"}, {"topic": "Metabolism & Liver", "io": "a — Functions of the liver", "q": "The liver serves as a major storage site for...", "opts": [["oxygen bound to hemoglobin for release during exercise", "Incorrect. Oxygen is carried by red cells, not stored by the liver; the liver stores nutrients, not oxygen."], ["digestive enzymes awaiting release into the duodenum", "Incorrect. Digestive enzymes are stored and secreted by the pancreas and salivary glands, not stored by the liver."], ["glycogen, iron, and several fat-soluble vitamins", "Correct. The liver stores glycogen (a glucose reserve), iron (as ferritin), and fat-soluble vitamins such as A and D, acting as a central metabolic warehouse the body can draw on between meals."], ["mature lymphocytes ready to fight infection", "Incorrect. Lymphocytes reside in lymphoid tissues; the liver's Kupffer cells are macrophages, not a lymphocyte store."]], "c": 2, "cite": "Ch 71 Liver, slides 2, 8"}, {"topic": "Metabolism & Liver", "io": "a — Functions of the liver", "q": "A hallmark synthetic function of the liver is production of...", "opts": [["plasma proteins such as albumin and most clotting factors", "Correct. The liver synthesizes the majority of plasma proteins, including albumin (the main determinant of colloid osmotic pressure) and most coagulation factors, which is why liver disease produces both edema and bleeding tendencies."], ["digestive amylase secreted into the small intestine", "Incorrect. Amylase is a pancreatic (and salivary) enzyme, not a hepatic secretion."], ["erythropoietin that stimulates red cell production", "Incorrect. Erythropoietin is produced mainly by the kidneys; the liver contributes only a minor amount."], ["insulin and glucagon that closely regulate blood glucose", "Incorrect. Insulin and glucagon are pancreatic hormones; the liver responds to them but does not make them."]], "c": 0, "cite": "Ch 71 Liver, slides 2, 11"}, {"topic": "Metabolism & Liver", "io": "b — Production/transport/conversion of glucose", "q": "The brain relies heavily on a steady glucose supply because it...", "opts": [["normally uses glucose as its main fuel and stores very little of its own", "Correct. Under normal conditions the brain depends on a continuous supply of blood glucose as its primary fuel and holds almost no energy reserve of its own, which is why hypoglycemia rapidly impairs brain function (though ketones can partly substitute during prolonged fasting)."], ["stores large amounts of glycogen for its own use during this process in the tissues", "Incorrect. The brain stores very little fuel and depends on the blood glucose supply."], ["produces its own glucose independently of the blood", "Incorrect. The brain does not perform meaningful gluconeogenesis; it draws glucose from the blood."], ["can only use fatty acids delivered from adipose tissue", "Incorrect. Long-chain fatty acids do not readily cross into the brain; the brain relies mainly on glucose (and ketones during fasting)."]], "c": 0, "cite": "Ch 68, slides 25-27; Ch 73, slide 12"}, {"topic": "Metabolism & Liver", "io": "b — Production/transport/conversion of glucose", "q": "Epinephrine and glucagon raise blood glucose partly through phosphorylation, which...", "opts": [["inactivates phosphorylase so stored glycogen is protected from breakdown", "Phosphorylation activates phosphorylase, promoting breakdown, not protection."], ["activates glycogen phosphorylase while inactivating glycogen synthase", "Correct: phosphorylation activates phosphorylase (breakdown) and inactivates synthase (storage), favoring glycogenolysis."], ["activates both glycogen phosphorylase and glycogen synthase together", "The two enzymes are reciprocally regulated, not activated together."], ["activates glycogen synthase to build glycogen from incoming glucose", "Phosphorylation inhibits synthase; these hormones mobilize rather than store glucose."]], "c": 1, "cite": "Ch 68, slides 11-12"}, {"topic": "Metabolism & Liver", "io": "b — Production/transport/conversion of glucose", "q": "Phosphorylating glucose to glucose-6-phosphate as it enters a cell serves to...", "opts": [["trap glucose inside the cell by preventing it from diffusing back out", "Correct. Adding a charged phosphate group keeps glucose from crossing the membrane back out, effectively trapping it inside so it is committed to intracellular metabolism (glycolysis, glycogen synthesis, or the pentose pathway)."], ["release energy that the cell immediately uses for contraction", "Incorrect. This step actually consumes ATP; energy release comes later in glycolysis and oxidative metabolism."], ["signal the pancreas to stop secreting insulin into the bloodstream right away", "Incorrect. Intracellular phosphorylation of glucose is not a pancreatic signaling event."], ["convert glucose into fat for long-term storage", "Incorrect. Phosphorylation traps glucose; conversion to fat is a separate downstream pathway."]], "c": 0, "cite": "Ch 68, slides 6-7"}, {"topic": "Metabolism & Liver", "io": "b — Production/transport/conversion of glucose", "q": "Between meals, the liver keeps blood glucose from falling by...", "opts": [["absorbing glucose taken from resting muscle in order to store it centrally", "Incorrect. Muscle glycogen is used locally; the liver raises blood glucose by releasing its own stores, not by taking glucose from muscle."], ["converting glucose into glycogen for storage", "Incorrect. Glycogen synthesis stores glucose after meals; between meals the liver does the reverse to raise blood glucose."], ["breaking down stored glycogen and releasing glucose (glycogenolysis)", "Correct. In the postabsorptive state the liver depolymerizes its glycogen (glycogenolysis) and, as that store runs low, makes new glucose (gluconeogenesis), releasing glucose into the blood to prevent hypoglycemia. This is its glucose-buffer function."], ["halting all glucose release to conserve it", "Incorrect. Halting release would drop blood glucose; the liver actively releases glucose between meals."]], "c": 2, "cite": "Ch 71 Liver, slide 9"}, {"topic": "Metabolism & Liver", "io": "c — Production/transport/conversion of lipids", "q": "Chylomicrons and VLDL both carry triglyceride, but they differ in that...", "opts": [["chylomicrons are made in the liver, while VLDL comes from the intestine under these conditions", "Incorrect. This is reversed: chylomicrons are intestinal and VLDL is hepatic."], ["both particles are made only within adipose tissue purely for local fat storage", "Incorrect. Neither is made in adipose tissue; chylomicrons are intestinal and VLDL is hepatic."], ["chylomicrons carry cholesterol back to the liver, while VLDL carries dietary fat", "Incorrect. Returning cholesterol to the liver is HDL's role; chylomicrons carry dietary fat and VLDL carries liver-made triglyceride."], ["chylomicrons carry dietary fat from the gut, while VLDL carries fat made by the liver", "Correct. Chylomicrons are assembled in the intestine to transport exogenous (dietary) fat, whereas VLDL is made by the liver to export endogenous triglyceride (much of it synthesized from carbohydrate); both deliver fatty acids to tissues via lipoprotein lipase."]], "c": 3, "cite": "Ch 69, slide 6; GI Physiology, slide 139"}, {"topic": "Metabolism & Liver", "io": "c — Production/transport/conversion of lipids", "q": "Very-low-density lipoprotein (VLDL) is produced by the liver mainly to...", "opts": [["deliver dissolved oxygen to the working tissues during periods of heavy exercise", "Incorrect. Oxygen delivery is a red-cell function; VLDL transports lipids."], ["export triglycerides, largely made from carbohydrate, to peripheral tissues", "Correct. The liver packages triglycerides (much of it synthesized from excess carbohydrate) into VLDL and exports them to peripheral tissues, where lipoprotein lipase releases fatty acids for use or storage."], ["return excess cholesterol from tissues back to the liver", "Incorrect. Returning cholesterol to the liver (reverse transport) is the role of HDL, not VLDL."], ["carry dietary fat absorbed directly from the intestine", "Incorrect. Dietary fat from the gut is carried by chylomicrons; VLDL carries endogenous (liver-made) triglyceride."]], "c": 1, "cite": "Ch 69, slide 6"}, {"topic": "Metabolism & Liver", "io": "c — Production/transport/conversion of lipids", "q": "During prolonged fasting, the liver produces ketone bodies because...", "opts": [["high fatty-acid oxidation generates acetyl-CoA in excess of TCA cycle capacity", "Correct: heavy beta-oxidation floods the liver with acetyl-CoA beyond what the citric acid cycle can handle, so it is diverted to ketones."], ["rising insulin stimulates the liver to store its excess fat as ketone bodies", "Insulin is low in fasting and would suppress ketogenesis."], ["abundant circulating glucose drives the conversion of pyruvate directly into ketones", "Fasting features low glucose; ketogenesis comes from fat oxidation, not glucose."], ["amino acids are unavailable, forcing protein to be turned into ketones", "Ketones arise from fatty-acid-derived acetyl-CoA, not from a lack of amino acids."]], "c": 0, "cite": "Ch 69, slides 15-19"}, {"topic": "Metabolism & Liver", "io": "d — Production/transport/conversion of protein", "q": "Cortisol influences protein metabolism by...", "opts": [["stimulating net protein synthesis in all tissues", "Incorrect. Cortisol is catabolic for protein in most peripheral tissues, not anabolic."], ["preventing any amino acids at all from entering the blood during stress or fasting states", "Incorrect. Cortisol raises plasma amino acids by promoting tissue protein breakdown."], ["blocking the liver from making any new glucose during stress or fasting states", "Incorrect. Cortisol actually supports gluconeogenesis rather than blocking hepatic glucose production."], ["promoting breakdown of tissue protein to supply amino acids for gluconeogenesis", "Correct. Cortisol (a glucocorticoid) drives catabolism of extrahepatic tissue protein, raising plasma amino acids that the liver uses for gluconeogenesis; this helps maintain blood glucose during stress and fasting."]], "c": 3, "cite": "Ch 70, slide 19; Ch 68, slide 30"}, {"topic": "Metabolism & Liver", "io": "d — Production/transport/conversion of protein", "q": "Before an amino acid's carbon skeleton can be used for energy, its amino group is removed by...", "opts": [["the electron transport chain during ATP synthesis under these conditions", "Incorrect. The electron transport chain makes ATP; the amino group is removed earlier by deamination/transamination."], ["deamination or transamination, freeing the skeleton for metabolism", "Correct. Removing the amino group by deamination (releasing ammonia) or transamination (transferring it to a keto acid) frees the carbon skeleton to enter energy pathways as a glucogenic or ketogenic intermediate, while the nitrogen is routed to urea."], ["glycolysis, which strips the nitrogen as it makes ATP", "Incorrect. Glycolysis metabolizes glucose; amino-group removal is done by deamination or transamination."], ["beta-oxidation, which removes nitrogen two atoms at a time", "Incorrect. Beta-oxidation processes fatty acids; it does not remove amino groups from amino acids."]], "c": 1, "cite": "Ch 70, slides 14-17"}, {"topic": "Metabolism & Liver", "io": "d — Production/transport/conversion of protein", "q": "Amino acids that are degraded to acetyl-CoA or acetoacetyl-CoA are termed ketogenic because they...", "opts": [["can be converted into glucose through gluconeogenesis", "Incorrect. That describes glucogenic amino acids, which enter as pyruvate or TCA intermediates; ketogenic ones cannot form net glucose."], ["release ammonia that is directly excreted by the lungs", "Incorrect. Ammonia from amino-acid breakdown is converted to urea in the liver and excreted by the kidneys, not exhaled."], ["give rise to ketone bodies rather than to new glucose", "Correct. Ketogenic amino acids feed into acetyl-CoA or acetoacetyl-CoA, which can form ketone bodies but cannot be used to make net glucose (since acetyl-CoA cannot be converted back to pyruvate for gluconeogenesis)."], ["are used only to build new proteins, never for fuel", "Incorrect. Ketogenic amino acids are catabolized for energy or ketone production, not reserved solely for protein synthesis."]], "c": 2, "cite": "Ch 70, slide 18"}, {"topic": "Metabolism & Liver", "io": "d — Production/transport/conversion of protein", "q": "Which statement about amino-acid metabolism is correct?", "opts": [["Transamination permanently destroys the carbon skeleton of the amino acid", "Transamination transfers the amino group and preserves usable carbon skeletons."], ["Transamination builds nonessential amino acids; deamination frees ammonia for urea", "Correct: transamination (needing vitamin B6) forms nonessential amino acids, while deamination liberates ammonia that becomes urea."], ["Both reactions occur only in muscle tissue and never take place within the liver", "The liver is the principal site of deamination and urea formation."], ["Deamination adds an amino group onto a carbon skeleton, a step needing vitamin B6", "Deamination removes an amino group; adding one is transamination."]], "c": 1, "cite": "Ch 70, slides 7-16"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "a — Body energy balance", "q": "Leptin and ghrelin have opposing effects on appetite because...", "opts": [["leptin drives hunger during fasting, while ghrelin signals satiety after meals", "The roles are reversed: leptin signals satiety and ghrelin drives hunger."], ["both are released from adipose tissue but act on different brain regions", "Ghrelin is released mainly from the stomach, not from fat."], ["leptin from the stomach stimulates appetite, while ghrelin suppresses it", "This reverses both sources and both actions."], ["leptin from fat reduces appetite, while ghrelin from the stomach stimulates it", "Correct: leptin from adipose tissue signals satiety and reduces intake, while ghrelin from the stomach stimulates hunger."]], "c": 3, "cite": "Ch 72, slides 11-14"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "a — Body energy balance", "q": "During early starvation, before fat stores are heavily used, the body first relies on...", "opts": [["stored glycogen, which is exhausted within roughly a day", "Correct. The body first draws on liver (and muscle) glycogen for glucose, but these stores are small and are largely depleted within about 24 hours; the body then shifts increasingly to fat oxidation and, later, ketone production and protein breakdown."], ["ketone bodies, which are the very first fuel mobilized", "Incorrect. Ketone production rises later, as fat oxidation predominates; glycogen is the first reserve used."], ["body protein, which is broken down before any glycogen", "Incorrect. Protein is spared early; glycogen is used first, then fat, with major protein loss only later."], ["dietary intake, which continues to supply energy", "Incorrect. In starvation there is no intake; the body mobilizes internal stores, starting with glycogen."]], "c": 0, "cite": "Ch 72, slides 17-19"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "a — Body energy balance", "q": "Ghrelin, secreted largely by the stomach, influences feeding by...", "opts": [["digesting fats directly within the small intestine", "Incorrect. Ghrelin is a signaling hormone that stimulates appetite, not a digestive enzyme."], ["suppressing hunger over the long term as fat stores grow", "Incorrect. Long-term appetite suppression tied to fat stores is leptin's role; ghrelin stimulates hunger short-term."], ["stimulating hunger and rising before meals to prompt eating", "Correct. Ghrelin is often called the 'hunger hormone': its levels rise before meals and fall after eating, and it acts on the hypothalamus to stimulate appetite, in contrast to satiety signals like leptin and CCK that reduce intake."], ["ending each meal by signaling fullness to the brain", "Incorrect. Meal termination is promoted by satiety signals such as CCK; ghrelin instead initiates hunger."]], "c": 2, "cite": "Ch 72, slides 11-14"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "a — Body energy balance", "q": "Per gram, the energy yields of the macronutrients are approximately...", "opts": [["9 kcal for carbohydrate, 9 for protein, and 4 for fat", "Incorrect. Fat, not carbohydrate, is the energy-dense one at about 9 kcal/g; carbohydrate and protein are about 4 kcal/g."], ["4 kcal for carbohydrate, 4 for protein, and 9 for fat", "Correct. Carbohydrate and protein each provide about 4 kcal per gram, while fat provides about 9 kcal per gram; fat's much higher energy density is why it is the body's most compact form of energy storage."], ["4 kcal for fat, with carbohydrate and protein at 9 kcal", "Incorrect. This reverses the values: fat is about 9 kcal/g, and carbohydrate and protein about 4 kcal/g."], ["equal energy from all three, at about 4 kcal per gram", "Incorrect. Fat provides roughly twice the energy per gram of carbohydrate or protein, so they are not equal."]], "c": 1, "cite": "Ch 72, slides 4-5"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "a — Body energy balance", "q": "Gram for gram, fat provides more than twice the energy of carbohydrate or protein because it...", "opts": [["requires no oxygen to release its stored chemical energy", "Fat oxidation does require oxygen; its high energy is intrinsic to its structure."], ["is absorbed far more completely from the gut than either carbohydrate or protein", "Energy density comes from the molecule's chemistry, not from better absorption."], ["yields about 9 kcal/g versus roughly 4 kcal/g for carbohydrate and protein", "Correct: fat provides ~9 kcal/g, over double the ~4 kcal/g of carbohydrate or protein."], ["is stored together with large amounts of water that add to its measured energy", "Fat is stored with little water; that actually makes it an efficient store, unrelated to kcal/g."]], "c": 2, "cite": "Ch 72, slide 4"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "c — Metabolic rate", "q": "Thyroid hormone influences metabolic rate by...", "opts": [["lowering metabolic rate to conserve energy during fasting", "Incorrect. Thyroid hormone raises metabolic rate; it does not lower it as an energy-conserving signal."], ["raising the resting metabolic rate of most body tissues", "Correct. Thyroid hormone increases the metabolic activity of nearly all tissues, raising basal metabolic rate and heat production; this is why thyroid status is a major determinant of BMR."], ["acting only on skeletal muscle during exercise", "Incorrect. Its effect is widespread across tissues, not limited to exercising muscle."], ["having no measurable effect on basal metabolism", "Incorrect. Thyroid hormone is one of the strongest hormonal influences on basal metabolism."]], "c": 1, "cite": "Ch 73, slide 9"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "c — Metabolic rate", "q": "Basal metabolic rate represents...", "opts": [["the minimal energy needed to sustain the body while at rest and fasting", "Correct: basal metabolic rate is the minimal energy to maintain the body at rest, measured fasting and thermoneutral."], ["the energy used only for digesting and absorbing a meal", "That is the thermic effect of food, a separate component."], ["total daily energy output including all physical activity", "Total daily expenditure includes activity; basal rate excludes it."], ["the peak energy expenditure that is achievable during heavy physical exercise", "That is maximal, not basal, expenditure."]], "c": 0, "cite": "Ch 73, slides 8, 10"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "c — Metabolic rate", "q": "The thermic effect of food refers to...", "opts": [["the heat lost through sweating during a meal", "Incorrect. Sweating-related heat loss is unrelated to the thermic effect of food."], ["the surplus calories that are stored away as fat after overeating", "Incorrect. Storage of surplus energy is a separate concept from the metabolic cost of processing food."], ["the energy used only during physical activity", "Incorrect. Activity energy is a distinct component; the thermic effect concerns processing food."], ["the extra energy expended to digest, absorb, and process a meal", "Correct. The thermic effect of food is the rise in energy expenditure required to digest, absorb, and metabolize nutrients; it is modest for carbohydrate and fat but substantial for protein (which can raise metabolic rate up to about 30%)."]], "c": 3, "cite": "Ch 73, slide 10"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "c — Metabolic rate", "q": "A respiratory quotient near 1.0 shortly after a carbohydrate meal reflects that...", "opts": [["protein breakdown dominates the fuel mix, fixing the ratio at exactly 0.8", "Protein oxidation gives ~0.8; an RQ near 1.0 indicates carbohydrate."], ["carbohydrate oxidation produces CO2 and consumes O2 in roughly equal amounts", "Correct: burning carbohydrate gives an RQ near 1.0 because CO2 produced and O2 consumed are about equal."], ["fat is the main fuel, releasing little CO2 relative to the O2 used", "Fat oxidation gives an RQ near 0.7, not 1.0."], ["no gas exchange is occurring at all because metabolism has temporarily paused", "An RQ of 1.0 reflects active carbohydrate metabolism, not absent gas exchange."]], "c": 1, "cite": "Ch 72, slides 5-6"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "c — Metabolic rate", "q": "When a fever finally 'breaks,' the person often flushes and sweats because the hypothalamic set point has...", "opts": [["returned to normal, so the now-high body temperature is shed by sweating and vasodilation", "Correct. When pyrogen levels fall, the set point drops back to normal; the body temperature is now above the set point, so the hypothalamus activates heat-loss responses — vasodilation and sweating — to bring temperature down, producing the flush and sweat of the crisis."], ["risen further, causing the body to generate even more heat", "Incorrect. A further rise would cause chills and shivering, not the sweating seen when a fever breaks."], ["been abolished, leaving temperature completely unregulated", "Incorrect. The set point returns to normal rather than disappearing; regulation resumes at the normal level."], ["dropped far below normal, triggering intense shivering during this particular process in the tissues", "Incorrect. The set point returns to normal, and the response is heat loss (sweating), not shivering."]], "c": 0, "cite": "Ch 74, slides 18-20"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "b — Body temperature control", "q": "Sweating cools the body only when...", "opts": [["it is reabsorbed back into the sweat glands during this particular process", "Incorrect. Cooling depends on evaporation from the skin, not reabsorption of sweat."], ["the surrounding air is already fully saturated with water", "Incorrect. Saturated (very humid) air prevents evaporation and reduces cooling, the opposite of what helps."], ["it remains as liquid droplets on the skin surface", "Incorrect. Liquid sweat that does not evaporate provides little cooling."], ["the sweat actually evaporates, absorbing heat from the skin", "Correct. Cooling comes from the evaporation of sweat, which absorbs heat (the latent heat of vaporization) from the skin; sweat that merely drips off without evaporating removes little heat, which is why humid conditions blunt sweat's cooling effect."]], "c": 3, "cite": "Ch 74, slides 6-9"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "b — Body temperature control", "q": "Shivering raises body temperature by...", "opts": [["producing heat through rapid, involuntary muscle contractions", "Correct. Shivering is driven by the hypothalamic motor center for shivering; rapid involuntary muscle contractions generate substantial metabolic heat (potentially several-fold above resting), warming the body in the cold."], ["increasing evaporative water loss from the airways and skin", "Incorrect. Evaporation loses heat; it does not raise body temperature."], ["lowering the hypothalamic set point toward the cold", "Incorrect. The set point is not lowered by cold; the body works to defend it, partly through shivering."], ["shunting warm blood from the core to the skin surface", "Incorrect. That would lose heat; cold responses shunt blood away from the skin, not toward it."]], "c": 0, "cite": "Ch 74, slide 15"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "b — Body temperature control", "q": "To conserve heat in the cold, sympathetic signals cause skin blood vessels to...", "opts": [["increase sweating to trap a warm surface layer", "Incorrect. Sweating cools the body and is suppressed in the cold; it does not trap warmth."], ["leak plasma into tissues to insulate the body", "Incorrect. Plasma leakage is not a thermoregulatory mechanism; vasoconstriction is the relevant response."], ["constrict, reducing heat transfer from the core to the surface", "Correct. Sympathetic activation produces cutaneous vasoconstriction, cutting blood flow to the skin so that less core heat is carried to the surface where it could be lost; the skin radiator is effectively turned down."], ["dilate widely, bringing much more warm blood to the skin surface", "Incorrect. Dilation increases heat loss and is a heat-dissipating (warm-environment) response, not a cold one."]], "c": 2, "cite": "Ch 74, slides 11-14"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "b — Body temperature control", "q": "The hypothalamus acts as the body's thermostat, with the responses to cold coordinated so that the body...", "opts": [["raises its set point to induce a protective fever", "Incorrect. Cold exposure activates heat-gaining responses to defend the normal set point, not to create a fever."], ["loses heat through vasodilation and sweating during this process in the tissues", "Incorrect. Vasodilation and sweating dissipate heat and are responses to warmth, not cold."], ["conserves and generates heat through vasoconstriction and shivering", "Correct. When cold is sensed, the hypothalamus triggers heat-conserving and heat-generating responses: cutaneous vasoconstriction to reduce loss and shivering (plus increased metabolism) to produce heat, defending core temperature."], ["stops all metabolic heat production to save energy", "Incorrect. Cold responses increase heat production (e.g., shivering), rather than halting it."]], "c": 2, "cite": "Ch 74, slides 4, 11-15"}, {"topic": "Nutrition, Energetics & Thermoregulation", "io": "b — Body temperature control", "q": "Sweat reaching the skin surface is normally hypotonic to plasma because...", "opts": [["potassium fully replaces sodium before the sweat reaches the surface", "Potassium is concentrated but does not replace all sodium; hypotonicity is from Na+/Cl- reabsorption."], ["aldosterone actively adds salt to the sweat as it forms", "Aldosterone promotes salt reabsorption, making sweat more dilute, not saltier."], ["the sweat glands secrete pure water that lacks any electrolytes", "Primary sweat contains electrolytes; the duct then reabsorbs some, making it hypotonic."], ["sodium and chloride are reabsorbed from the duct, especially at low flow", "Correct: as primary secretion moves through the duct, Na+ and Cl- are reabsorbed, leaving hypotonic sweat, most markedly at low flow rates."]], "c": 3, "cite": "Ch 74, slide 8"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(answers[idx]!==null){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  if(answers[idx]!==null) return;
+  const q = QUESTIONS[order[idx]];
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
