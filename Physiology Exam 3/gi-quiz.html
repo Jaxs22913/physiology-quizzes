@@ -284,6 +284,7 @@
     </div>
 
     <div class="btnrow">
+      <button class="btn ghost" id="prevbtn" onclick="prevQuestion()" disabled>&larr; Back</button>
       <span class="qcount" id="hintline">Select an answer to continue</span>
       <button class="btn" id="nextbtn" onclick="nextQuestion()" disabled>Next &rarr;</button>
     </div>
@@ -563,16 +564,48 @@ function startQuiz(){clearProgress();document.getElementById("resume-banner").cl
 }
 
 function renderQuestion(){
-  answered = false;
   const item = questions[current];
   $("qcount").textContent = `Question ${current+1} of ${questions.length}`;
   $("scorepill").textContent = `Score: ${score}`;
   $("barfill").style.width = `${(current/questions.length)*100}%`;
   $("qtag").textContent = item.obj;
   $("qtext").textContent = item.q;
+  $("prevbtn").disabled = (current === 0);
 
   const box = $("options");
   box.innerHTML = "";
+
+  const prior = responses.find(r=>r.i===current);
+  if(prior){
+    answered = true;
+    item.o.forEach((text,i)=>{
+      const b = document.createElement("button");
+      b.className = "opt";
+      if(i === prior.correct) b.classList.add("correct");
+      else if(i === prior.choice) b.classList.add("wrong");
+      else b.classList.add("dim");
+      b.disabled = true;
+      b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+      box.appendChild(b);
+    });
+    const v = $("verdict");
+    if(prior.isCorrect){
+      v.className = "verdict ok";
+      v.textContent = "\u2713 Correct";
+    } else {
+      v.className = "verdict no";
+      v.textContent = `\u2717 Incorrect \u2014 the answer is ${LETTERS[prior.correct]}`;
+    }
+    $("explainbody").textContent = item.e;
+    $("cite").textContent = `Source: ${DECK}, Slide ${item.s}`;
+    $("explain").classList.add("show");
+    $("nextbtn").disabled = false;
+    $("hintline").textContent = (current === questions.length-1) ? "Ready to finish" : "";
+    $("nextbtn").textContent = (current === questions.length-1) ? "See results \u2192" : "Next \u2192";
+    return;
+  }
+
+  answered = false;
   item.o.forEach((text,i)=>{
     const b = document.createElement("button");
     b.className = "opt";
@@ -604,6 +637,7 @@ function selectAnswer(choice){
   const isCorrect = (choice === correct);
   if(isCorrect) score++;
   responses.push({i:current, choice, correct, isCorrect});
+  saveProgress();
 
   const v = $("verdict");
   if(isCorrect){
@@ -630,6 +664,12 @@ function nextQuestion(){
   } else {
     showResults();
   }
+}
+
+function prevQuestion(){
+  if(current === 0) return;
+  current--;saveProgress();renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function showResults(){clearProgress();markCompleted(score, questions.length);

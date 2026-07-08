@@ -106,6 +106,7 @@
     letter-spacing:.02em;
   }
   .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
   .btn-primary{background:var(--oxblood);color:#fdf6ee;box-shadow:0 6px 16px rgba(124,33,48,.28);}
   .btn-primary:hover{background:var(--oxblood-soft);}
   .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
@@ -146,7 +147,7 @@
   .feedback p{margin:0 0 9px;color:var(--ink);}
   .feedback .why{color:var(--ink-soft);font-size:13.5px;}
   .feedback .src{margin-top:10px;font-size:12px;color:var(--ink-soft);font-style:italic;border-top:1px dashed var(--line);padding-top:9px;}
-  .nav-row{margin-top:22px;display:flex;justify-content:flex-end;}
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
 
   .results{text-align:center;}
   .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
@@ -236,6 +237,7 @@
     </div>
 
     <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
       <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
     </div>
   </section>
@@ -744,6 +746,12 @@ el('nextBtn').addEventListener('click', () => {
   else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
 });
 
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
 el('retryBtn').addEventListener('click', () => {
   clearProgress();
   state.i = 0; state.score = 0; state.answered = false; state.missed = [];
@@ -791,19 +799,52 @@ el("midRestartBtn").addEventListener("click", () => {
 })();
 
 function render(){
-  state.answered = false;
   const item = QUESTIONS[state.i];
   const total = QUESTIONS.length;
 
   el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
   el('bar').style.width = `${(state.i/total)*100}%`;
   el('topicTag').textContent = item.topic;
   el('qtext').textContent = item.q;
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
 
+  const letters = ['A','B','C','D'];
   const box = el('choices');
   box.innerHTML = '';
-  const letters = ['A','B','C','D'];
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === state.i);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: Female_Reproductive_Tract_for_lecure.pptx — ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
   item.choices.forEach((c, idx) => {
     const b = document.createElement('button');
     b.className = 'choice';
@@ -814,8 +855,8 @@ function render(){
 
   el('feedback').classList.remove('show');
   el('nextBtn').classList.add('hidden');
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
 }
+function answeredCount(){ return state.score + state.missed.length; }
 
 function select(idx){
   if (state.answered) return;
@@ -847,6 +888,7 @@ function select(idx){
 
   el('feedback').classList.add('show');
   el('nextBtn').classList.remove('hidden');
+  saveProgress();
 }
 
 function finish(){clearProgress();markCompleted(state.score, QUESTIONS.length);

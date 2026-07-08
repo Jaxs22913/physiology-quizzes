@@ -94,13 +94,14 @@
   .fb .line{font-size:.92rem;margin:6px 0;color:#31405c;}
   .fb .line b{color:var(--ink);}
   .cite{margin-top:14px;font-size:.78rem;color:var(--muted);font-style:italic;}
-  .nav{display:flex;justify-content:flex-end;margin-top:20px;}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
   .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;
     padding:12px 26px;font-size:.98rem;font-weight:600;cursor:pointer;
     font-family:inherit;transition:background .15s;}
   .btn:hover{background:#175451;}
   .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
   .btn.ghost:hover{background:var(--accent-soft);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
   .hidden{display:none!important;}
   /* results */
   .result{background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -162,7 +163,7 @@
     </div>
     <div class="track"><i id="fill"></i></div>
     <div class="card" id="card"></div>
-    <div class="nav"><button class="btn hidden" id="next">Next question</button></div>
+    <div class="nav"><button class="btn ghost" id="prevBtn" disabled>&larr; Back</button><button class="btn hidden" id="next">Next question</button></div>
   </div>
 
   <div id="results" class="result hidden"></div>
@@ -178,6 +179,7 @@ const chosen = [];
 
 const card = document.getElementById('card');
 const nextBtn = document.getElementById('next');
+const prevBtn = document.getElementById('prevBtn');
 const prog = document.getElementById('prog');
 const scoreEl = document.getElementById('score');
 const fill = document.getElementById('fill');
@@ -197,12 +199,11 @@ function saveReview(){ try{ const c=document.getElementById('results').cloneNode
 })();
 
 function render(){
-  answered = false;
   const q = QUESTIONS[idx];
   prog.textContent = 'Question ' + (idx+1) + ' of ' + QUESTIONS.length;
   scoreEl.textContent = 'Score: ' + score;
   fill.style.width = (idx / QUESTIONS.length * 100) + '%';
-  nextBtn.classList.add('hidden');
+  prevBtn.disabled = (idx === 0);
 
   let opts = '';
   q.choices.forEach((c,i)=>{
@@ -214,14 +215,21 @@ function render(){
     '<div class="opts">'+opts+'</div>'+
     '<div class="fb" id="fb"></div>';
 
-  card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
+  nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'See results' : 'Next question';
+
+  if(chosen[idx] !== undefined){
+    answered = true;
+    showFeedback(chosen[idx]);
+    nextBtn.classList.remove('hidden');
+  } else {
+    answered = false;
+    nextBtn.classList.add('hidden');
+    card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
+  }
 }
 
-function choose(i){
-  if(answered) return;
-  answered = true;
+function showFeedback(i){
   const q = QUESTIONS[idx];
-  chosen[idx] = i;
   const correct = q.answer;
   const btns = card.querySelectorAll('.opt');
   btns.forEach(b=>{
@@ -230,8 +238,6 @@ function choose(i){
     if(bi === correct) b.classList.add('correct');
     if(bi === i && i !== correct) b.classList.add('wrong');
   });
-  if(i === correct) score++;
-  scoreEl.textContent = 'Score: ' + score;
 
   const fb = document.getElementById('fb');
   let lines = '';
@@ -244,15 +250,32 @@ function choose(i){
     lines +
     '<div class="cite">Source: '+q.src+'</div>';
   fb.classList.add('show');
+}
 
-  nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'See results' : 'Next question';
+function choose(i){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  chosen[idx] = i;
+  const correct = q.answer;
+  if(i === correct) score++;
+  scoreEl.textContent = 'Score: ' + score;
+
+  showFeedback(i);
+
   nextBtn.classList.remove('hidden');
-  fb.scrollIntoView({behavior:'smooth', block:'nearest'});
+  document.getElementById('fb').scrollIntoView({behavior:'smooth', block:'nearest'});
+  saveProgress();
 }
 
 nextBtn.addEventListener('click',()=>{
   if(idx === QUESTIONS.length-1){ showResults(); return; }
   idx++; saveProgress(); render();
+});
+
+prevBtn.addEventListener('click',()=>{
+  if(idx === 0) return;
+  idx--; saveProgress(); render();
 });
 
 function showResults(){clearProgress();markCompleted(score, QUESTIONS.length);
