@@ -1360,6 +1360,7 @@
 
     <button type="button" id="request-open" class="request-link">Have a feature idea or want a new exam added? Request it &rarr;</button>
     <button type="button" id="archived-open" class="request-link">Looking for old/superseded quizzes? View Archived &rarr;</button>
+    <button type="button" id="tour-open" class="request-link">Need a guide? Take the tour &rarr;</button>
   </div>
 
   <div class="review-modal-overlay" id="request-modal-overlay">
@@ -1954,6 +1955,38 @@
         setTimeout(() => maybeShowBanner("ios"), 2500);
       }
     })();
+  </script>
+
+  <script>
+    function buildHomeTourSteps() {
+      var steps = [
+        { selector: "#site-search", title: "Search everything", text: "Search every quiz on the site by name from right here." },
+        { selector: "#week-widget", title: "This week", text: "See this week's exams and practicums at a glance — it automatically moves to next week every Friday at 5pm." }
+      ];
+      var continueWidget = document.getElementById("continue-widget");
+      if (continueWidget && !continueWidget.classList.contains("hidden")) {
+        steps.push({ selector: "#continue-widget", title: "Continue where you left off", text: "Quizzes you've started but haven't finished show up here." });
+      }
+      steps.push({ selector: ".tabs", title: "Switch classes", text: "Jump between Physiology, Pharmacodynamics, Anatomy, and Anatomy Practicum here." });
+      steps.push({ selector: null, title: "One more thing", text: "Open any quiz to find a shuffle toggle, a pause/resume timer, and a keyboard-shortcuts button too. Good luck studying!" });
+      return steps;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("tour-open").addEventListener("click", function () {
+        if (window.SiteTour) window.SiteTour.run(buildHomeTourSteps(), "tourSeen:home");
+      });
+
+      function tryStartTour(attemptsLeft) {
+        if (!window.SiteTour) return;
+        if (document.querySelector(".install-banner.show") && attemptsLeft > 0) {
+          setTimeout(function () { tryStartTour(attemptsLeft - 1); }, 1500);
+          return;
+        }
+        window.SiteTour.start(buildHomeTourSteps(), "tourSeen:home");
+      }
+      setTimeout(function () { tryStartTour(3); }, 3200);
+    });
   </script>
 </body>
 </html>

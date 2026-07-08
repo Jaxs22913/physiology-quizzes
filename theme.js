@@ -1,4 +1,119 @@
 (function () {
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+
+  function validate(steps) {
+    return steps.filter(function (s) { return !s.selector || document.querySelector(s.selector); });
+  }
+
+  function start(steps, storageKey) {
+    if (localStorage.getItem(storageKey)) return;
+    var validSteps = validate(steps);
+    if (!validSteps.length) return;
+    showPrompt(validSteps, storageKey);
+  }
+
+  function run(steps, storageKey) {
+    var validSteps = validate(steps);
+    if (!validSteps.length) return;
+    runSteps(validSteps, storageKey);
+  }
+
+  function showPrompt(steps, storageKey) {
+    var overlay = el("div", "tour-overlay open");
+    var card = el("div", "tour-prompt");
+    card.appendChild(el("p", "tour-prompt-title", "Want a quick tour?"));
+    card.appendChild(el("p", "tour-prompt-text", "Takes about 30 seconds — shows you where the useful stuff lives."));
+    var actions = el("div", "tour-prompt-actions");
+    var skipBtn = el("button", "tour-btn", "Skip");
+    skipBtn.type = "button";
+    var goBtn = el("button", "tour-btn primary", "Take the tour");
+    goBtn.type = "button";
+    actions.appendChild(skipBtn);
+    actions.appendChild(goBtn);
+    card.appendChild(actions);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+
+    skipBtn.addEventListener("click", function () {
+      localStorage.setItem(storageKey, "1");
+      overlay.remove();
+    });
+    goBtn.addEventListener("click", function () {
+      overlay.remove();
+      runSteps(steps, storageKey);
+    });
+  }
+
+  function runSteps(steps, storageKey) {
+    var i = 0;
+    var spotlight = el("div", "tour-spotlight");
+    var tooltip = el("div", "tour-tooltip");
+    document.body.appendChild(spotlight);
+    document.body.appendChild(tooltip);
+
+    function finish() {
+      localStorage.setItem(storageKey, "1");
+      spotlight.remove();
+      tooltip.remove();
+      window.removeEventListener("resize", place);
+    }
+
+    function place() {
+      var step = steps[i];
+      var target = step.selector ? document.querySelector(step.selector) : null;
+      if (target) {
+        target.scrollIntoView({ block: "center" });
+        var r = target.getBoundingClientRect();
+        var pad = 8;
+        spotlight.style.display = "block";
+        spotlight.style.top = (r.top - pad) + "px";
+        spotlight.style.left = (r.left - pad) + "px";
+        spotlight.style.width = (r.width + pad * 2) + "px";
+        spotlight.style.height = (r.height + pad * 2) + "px";
+
+        var tipTop = r.bottom + 16;
+        if (tipTop + 170 > window.innerHeight) tipTop = Math.max(16, r.top - 170);
+        tooltip.style.top = tipTop + "px";
+        tooltip.style.left = Math.min(Math.max(16, r.left), window.innerWidth - 316) + "px";
+      } else {
+        spotlight.style.display = "none";
+        tooltip.style.top = "50%";
+        tooltip.style.left = "50%";
+      }
+
+      tooltip.innerHTML =
+        '<p class="tour-tooltip-step">Step ' + (i + 1) + ' of ' + steps.length + '</p>' +
+        '<p class="tour-tooltip-title">' + step.title + '</p>' +
+        '<p class="tour-tooltip-text">' + step.text + '</p>' +
+        '<div class="tour-tooltip-actions">' +
+          '<button type="button" class="tour-btn" id="tour-skip">Skip tour</button>' +
+          '<span style="flex:1"></span>' +
+          (i > 0 ? '<button type="button" class="tour-btn" id="tour-back">Back</button>' : '') +
+          '<button type="button" class="tour-btn primary" id="tour-next">' + (i === steps.length - 1 ? "Done" : "Next") + '</button>' +
+        '</div>';
+
+      document.getElementById("tour-skip").addEventListener("click", finish);
+      var backBtn = document.getElementById("tour-back");
+      if (backBtn) backBtn.addEventListener("click", function () { i--; place(); });
+      document.getElementById("tour-next").addEventListener("click", function () {
+        if (i === steps.length - 1) { finish(); return; }
+        i++; place();
+      });
+    }
+
+    window.addEventListener("resize", place);
+    place();
+  }
+
+  window.SiteTour = { start: start, run: run };
+})();
+
+(function () {
   var SUN = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
   var MOON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
   var REFRESH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
@@ -31,6 +146,19 @@
     ["Previous question", "←"],
     ["Show this help", "?"],
     ["Close this help", "Esc"]
+  ];
+
+  var QUIZ_TOUR_STEPS = [
+    {
+      selector: "#shuffle-toggle",
+      title: "Shuffle question order",
+      text: "Turn this on before you start to answer questions in a random order each attempt — handy once you've mostly memorized the fixed order."
+    },
+    {
+      selector: "#shortcuts-btn",
+      title: "Keyboard shortcuts",
+      text: "Click here — or press ? anytime — to see the shortcuts for picking, advancing and going back. Once you start, a live timer shows up next to it too, and it pauses automatically whenever you close the page."
+    }
   ];
 
   function initShortcutsHelp() {
@@ -72,6 +200,12 @@
       panel.appendChild(rowEl);
     });
 
+    var guideLink = document.createElement("button");
+    guideLink.type = "button";
+    guideLink.className = "shortcuts-guide-link";
+    guideLink.textContent = "Need a guide? Take the tour →";
+    panel.appendChild(guideLink);
+
     overlay.appendChild(panel);
     document.body.appendChild(overlay);
 
@@ -81,6 +215,12 @@
       if (overlay.classList.contains("open")) close(); else open();
     }
 
+    guideLink.addEventListener("click", function () {
+      close();
+      if (window.SiteTour && document.getElementById("shuffle-toggle")) {
+        window.SiteTour.run(QUIZ_TOUR_STEPS, "tourSeen:quiz");
+      }
+    });
     closeBtn.addEventListener("click", close);
     overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
     document.addEventListener("keydown", function (e) {
@@ -127,6 +267,12 @@
       shortcutsBtn.innerHTML = KEYBOARD;
       shortcutsBtn.addEventListener("click", shortcutsHelp.open);
       group.insertBefore(shortcutsBtn, refreshBtn);
+
+      if (document.getElementById("shuffle-toggle")) {
+        setTimeout(function () {
+          window.SiteTour.start(QUIZ_TOUR_STEPS, "tourSeen:quiz");
+        }, 700);
+      }
     }
 
     if (window.matchMedia) {
