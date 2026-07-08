@@ -1,0 +1,76 @@
+/* Site-wide light/dark toggle overrides.
+   index.html already ships real CSS-variable light/dark palettes gated by
+   prefers-color-scheme; these attribute-selector rules mirror them so the
+   toggle can force either mode regardless of OS setting (higher specificity
+   than the plain `:root{}` inside the media query, so no !important needed).
+   Every other page (quiz/study/practicum templates) has its own one-off
+   :root palette with no dark variant, so dark mode there is done generically
+   by inverting the shared `.wrap` content container and re-inverting real
+   photographic imagery so it isn't rendered as a photo negative. */
+
+#theme-toggle-btn {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+}
+:root[data-theme="dark"] #theme-toggle-btn {
+  background: #191c22;
+  color: #e5e7eb;
+  border: 1px solid #2a2e37;
+}
+
+/* index.html's own token system. Scoped to body.homepage (not a blanket
+   :root override) because ~150 quiz/study/practicum pages each define their
+   own :root custom properties reusing the SAME names (--ink, --muted, --bg,
+   --shadow) with different values -- a blanket override here would win by
+   specificity over every one of those pages' own declarations and corrupt
+   their light-mode color logic before the invert filter below even runs. */
+:root[data-theme="dark"] body.homepage {
+  --bg: #0f1115;
+  --card: #191c22;
+  --border: #2a2e37;
+  --ink: #e5e7eb;
+  --muted: #9aa1ac;
+  --accent: #60a5fa;
+  --accent-soft: #16213a;
+  --accent2: #4ade80;
+  --accent2-soft: #12251a;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  --tab-border: rgba(96, 165, 250, 0.3);
+}
+:root[data-theme="light"] body.homepage {
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent2: #16a34a;
+  --accent2-soft: #f0fdf4;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+  --tab-border: rgba(37, 99, 235, 0.25);
+}
+:root[data-theme="dark"] body.homepage .edge-decor {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] body.homepage .bottom-decor {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60'%3E%3Cpath d='M0,30 L120,30 L135,8 L150,52 L165,30 L300,30' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Generic quiz/study/practicum templates: invert the content wrapper only
+   (never `html`/`body`), so position:fixed siblings like the footer logo,
+   pull-to-refresh indicator, and JS-appended toast/update-banner elements
+   (all direct children of <body>, outside .wrap) keep the viewport as their
+   containing block instead of inheriting a filtered one. */
+:root[data-theme="dark"] body > .wrap {
+  filter: invert(1) hue-rotate(180deg);
+}
+:root[data-theme="dark"] body > .wrap .diagram-wrap,
+:root[data-theme="dark"] body > .wrap img,
+:root[data-theme="dark"] body > .wrap video {
+  filter: invert(1) hue-rotate(180deg);
+}
+:root[data-theme="dark"] body {
+  background: #0b0d12;
+}
