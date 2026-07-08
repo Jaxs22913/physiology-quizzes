@@ -150,16 +150,17 @@
     .page {
       max-width: 640px;
       margin: 0 auto;
+      position: relative;
     }
 
-    .layout { display: flex; flex-direction: column; gap: 18px; }
-    .main-col { min-width: 0; }
-
-    @media (min-width: 860px) {
-      .page { max-width: 900px; }
-      .layout { flex-direction: row; align-items: flex-start; }
-      .continue-widget { flex: 0 0 260px; }
-      .main-col { flex: 1; min-width: 0; }
+    @media (min-width: 1180px) {
+      .continue-widget {
+        position: absolute;
+        top: 0;
+        right: calc(100% + 24px);
+        width: 260px;
+        margin: 0;
+      }
     }
 
     .brand-mark {
@@ -279,6 +280,17 @@
     .ci-meta { font-size: 12.5px; color: var(--muted); }
     .ci-bar { height: 5px; background: var(--bg); border-radius: 99px; overflow: hidden; margin-top: 8px; }
     .ci-bar > i { display: block; height: 100%; background: var(--accent); }
+
+    @media (max-width: 640px) {
+      .continue-widget { margin: 12px 0; }
+      .continue-title { font-size: 10.5px; margin-bottom: 6px; }
+      .continue-list { gap: 5px; }
+      .continue-item { padding: 7px 10px; border-radius: 9px; }
+      .ci-top { gap: 1px; }
+      .ci-title { font-size: 12.5px; }
+      .ci-meta { font-size: 10.5px; }
+      .ci-bar { height: 3px; margin-top: 5px; }
+    }
 
     .card {
       background: var(--card);
@@ -607,13 +619,11 @@
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
 
-    <div class="layout">
-      <div id="continue-widget" class="continue-widget hidden">
-        <h2 class="continue-title">Continue where you left off</h2>
-        <div id="continue-list" class="continue-list"></div>
-      </div>
+    <div id="continue-widget" class="continue-widget hidden">
+      <h2 class="continue-title">Continue where you left off</h2>
+      <div id="continue-list" class="continue-list"></div>
+    </div>
 
-      <div class="main-col">
     <div class="search-wrap">
       <input type="text" id="site-search" class="site-search-input" placeholder="Search all quizzes…" autocomplete="off" spellcheck="false">
       <div id="search-results" class="search-results hidden"></div>
@@ -1113,8 +1123,6 @@
       </div>
       </div>
     </div>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -1205,6 +1213,16 @@
         list.appendChild(item);
       });
       widget.classList.remove("hidden");
+
+      function alignWidgetToCard() {
+        const page = document.querySelector(".page");
+        const card = document.querySelector(".card");
+        if (!page || !card) return;
+        const top = card.getBoundingClientRect().top - page.getBoundingClientRect().top;
+        widget.style.top = top + "px";
+      }
+      alignWidgetToCard();
+      window.addEventListener("resize", alignWidgetToCard);
     })();
 
     document.querySelectorAll(".exam-section, .topic-section").forEach(section => {
