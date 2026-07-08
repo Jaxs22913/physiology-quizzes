@@ -108,6 +108,21 @@
   background: #0b0d12;
 }
 
+/* Larger-text setting: every page's font sizes are hardcoded px, not
+   rem, so a root font-size bump would do nothing -- CSS `zoom` scales
+   the whole rendered subtree (a real reflow, not a visual transform),
+   which works regardless of what units a given page happens to use.
+   Applied to the same top-level containers as the dark-mode invert
+   above (body > .wrap for quiz/study/practicum pages, .page for the
+   homepage) so position:fixed siblings (corner buttons, modals, the
+   pull-to-refresh indicator) are never affected. */
+:root[data-text-size="large"] body > .wrap {
+  zoom: 1.15;
+}
+:root[data-text-size="large"] body.homepage .page {
+  zoom: 1.15;
+}
+
 /* Keyboard-shortcuts help overlay, injected by theme.js only on pages that
    have a #timerpill element (i.e. non-practicum quiz pages, which are the
    only ones with the 1-4/Enter/Arrow keydown handler this documents). */
