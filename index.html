@@ -160,21 +160,47 @@
       position: relative;
     }
 
-    @media (min-width: 1180px) {
-      .continue-widget {
-        position: absolute;
-        top: 0;
-        right: calc(100% + 24px);
-        width: 260px;
+    .mobile-widgets-row { display: contents; }
+
+    /* Only .page becomes a flex container (so `order` works) below the mobile
+       breakpoint -- outside it, .page stays plain block layout like always,
+       so every direct child (including ones added later, e.g. #request-open)
+       keeps its normal document-order position with zero risk of silently
+       jumping elsewhere. Every current direct child of .page is explicitly
+       ordered here; a future new direct child needs an explicit order added
+       too, or it defaults to 0 and floats above the header. */
+    @media (max-width: 640px) {
+      .page {
+        display: flex;
+        flex-direction: column;
+      }
+      .page > header { order: 10; }
+      .mobile-widgets-row {
+        display: flex;
+        order: 20;
+        gap: 8px;
+        margin: 14px 0;
+        align-items: flex-start;
+      }
+      .page > .search-wrap { order: 30; }
+      .page > #semester-card { order: 40; }
+      .page > #request-open { order: 50; }
+
+      .mobile-widgets-row #week-widget,
+      .mobile-widgets-row #continue-widget {
+        flex: 1 1 0;
+        min-width: 0;
         margin: 0;
       }
-      .week-widget {
-        position: absolute;
-        top: 0;
-        left: calc(100% + 24px);
-        width: 260px;
-        margin: 0;
-      }
+      .mobile-widgets-row .week-widget-top { flex-wrap: wrap; }
+      .mobile-widgets-row .week-title { font-size: 10px; }
+      .mobile-widgets-row .week-range { font-size: 10px; }
+      .mobile-widgets-row .week-list { gap: 5px; }
+      .mobile-widgets-row .week-item { padding: 6px 8px; gap: 6px; border-radius: 8px; }
+      .mobile-widgets-row .week-day { width: 30px; font-size: 9px; padding: 3px 0; border-radius: 6px; }
+      .mobile-widgets-row .week-item-title { font-size: 11px; line-height: 1.3; }
+      .mobile-widgets-row .week-empty { font-size: 11px; }
+      .mobile-widgets-row #continue-widget.hidden { display: none; }
     }
 
     .brand-mark {
@@ -305,6 +331,27 @@
     .week-empty { font-size: 14px; color: var(--muted); padding: 4px 2px; }
 
     .continue-widget { margin: 18px 0; }
+
+    /* Must come after both base `margin: 18px 0` rules above so it wins the
+       cascade at this breakpoint (media queries don't add specificity --
+       plain source order decides ties, and these two selectors are
+       otherwise equally specific). */
+    @media (min-width: 1180px) {
+      .continue-widget {
+        position: absolute;
+        top: 0;
+        right: calc(100% + 24px);
+        width: 260px;
+        margin: 0;
+      }
+      .week-widget {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 24px);
+        width: 260px;
+        margin: 0;
+      }
+    }
     .continue-widget.hidden { display: none; }
     .continue-title {
       font-size: 13px;
@@ -711,20 +758,22 @@
       <div id="search-results" class="search-results hidden"></div>
     </div>
 
-    <div id="week-widget" class="card week-widget">
-      <div class="week-widget-top">
-        <h2 class="week-title">This week: exams &amp; practicums</h2>
-        <span class="week-range" id="week-range"></span>
+    <div class="mobile-widgets-row">
+      <div id="week-widget" class="card week-widget">
+        <div class="week-widget-top">
+          <h2 class="week-title">This week: exams &amp; practicums</h2>
+          <span class="week-range" id="week-range"></span>
+        </div>
+        <div id="week-list" class="week-list"></div>
       </div>
-      <div id="week-list" class="week-list"></div>
+
+      <div id="continue-widget" class="continue-widget hidden">
+        <h2 class="continue-title">Continue where you left off</h2>
+        <div id="continue-list" class="continue-list"></div>
+      </div>
     </div>
 
-    <div id="continue-widget" class="continue-widget hidden">
-      <h2 class="continue-title">Continue where you left off</h2>
-      <div id="continue-list" class="continue-list"></div>
-    </div>
-
-    <div class="card">
+    <div id="semester-card" class="card">
       <div class="semester" data-semester="summer-1-2026">
       <h2 class="semester-header">Summer Semester 1 - 2026</h2>
       <div class="tabs">
@@ -1337,7 +1386,7 @@
       // hardcoded, so it stays correct if the header/subtitle text ever changes length.
       function alignSidebars() {
         const page = document.querySelector(".page");
-        const card = document.querySelector(".page > .card");
+        const card = document.getElementById("semester-card");
         if (!page || !card) return;
         const offset = Math.round(card.getBoundingClientRect().top - page.getBoundingClientRect().top);
         const weekEl = document.getElementById("week-widget");
