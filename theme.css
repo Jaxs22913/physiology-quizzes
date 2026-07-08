@@ -107,3 +107,85 @@
 :root[data-theme="dark"] body {
   background: #0b0d12;
 }
+
+/* Keyboard-shortcuts help overlay, injected by theme.js only on pages that
+   have a #timerpill element (i.e. non-practicum quiz pages, which are the
+   only ones with the 1-4/Enter/Arrow keydown handler this documents). */
+.shortcuts-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.shortcuts-overlay.open { display: flex; }
+.shortcuts-panel {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+  max-width: 360px;
+  width: 100%;
+  padding: 22px 22px 20px;
+  position: relative;
+}
+:root[data-theme="dark"] .shortcuts-panel {
+  background: #191c22;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.shortcuts-panel h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.shortcuts-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: #e5e7eb;
+  color: #1f2937;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 15px;
+}
+:root[data-theme="dark"] .shortcuts-close {
+  background: #2a2e37;
+  color: #e5e7eb;
+}
+.shortcuts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid #f3f4f6;
+}
+:root[data-theme="dark"] .shortcuts-row { border-bottom-color: #22262e; }
+.shortcuts-row:last-child { border-bottom: none; }
+.shortcuts-keys kbd {
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  font: 700 11.5px/1.4 ui-monospace, monospace;
+  color: #374151;
+  margin-left: 3px;
+}
+:root[data-theme="dark"] .shortcuts-keys kbd {
+  background: #22262e;
+  border-color: #2a2e37;
+  color: #d1d5db;
+}
