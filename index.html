@@ -1330,6 +1330,23 @@
 
       document.getElementById("week-range").textContent = fmt(weekDates[0]) + " – " + fmt(weekDates[4]);
 
+      // Keep both floating sidebars (this one and #continue-widget) level with the
+      // top of the semester card rather than the top of the page -- measured, not
+      // hardcoded, so it stays correct if the header/subtitle text ever changes length.
+      function alignSidebars() {
+        const page = document.querySelector(".page");
+        const card = document.querySelector(".page > .card");
+        if (!page || !card) return;
+        const offset = Math.round(card.getBoundingClientRect().top - page.getBoundingClientRect().top);
+        const weekEl = document.getElementById("week-widget");
+        const continueEl = document.getElementById("continue-widget");
+        if (weekEl) weekEl.style.top = offset + "px";
+        if (continueEl) continueEl.style.top = offset + "px";
+      }
+      alignSidebars();
+      window.addEventListener("resize", alignSidebars);
+      window.addEventListener("load", alignSidebars);
+
       const items = EXAM_EVENTS.filter(e => weekKeys.includes(e.date))
         .sort((a, b) => a.date.localeCompare(b.date));
 
