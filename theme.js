@@ -262,7 +262,9 @@
     return { row: row, input: input };
   }
 
-  function initSettingsPanel(themeBtn) {
+  function initSettingsPanel() {
+    if (!document.getElementById("shuffle-toggle")) return null;
+
     var overlay = document.createElement("div");
     overlay.className = "settings-overlay";
     overlay.id = "settings-overlay";
@@ -282,28 +284,17 @@
     panel.appendChild(closeBtn);
     panel.appendChild(heading);
 
-    var darkToggle = makeToggleRow("Dark mode", currentTheme() === "dark", function (checked) {
-      setTheme(checked ? "dark" : "light", themeBtn);
-    });
-    panel.appendChild(darkToggle.row);
-
-    var isQuizPage = !!document.getElementById("shuffle-toggle");
-    if (isQuizPage) {
-      var shuffleToggle = makeToggleRow(
-        "Shuffle questions by default",
-        localStorage.getItem("defaultShuffle") === "1",
-        function (checked) { localStorage.setItem("defaultShuffle", checked ? "1" : "0"); }
-      );
-      panel.appendChild(shuffleToggle.row);
-    }
+    var shuffleToggle = makeToggleRow(
+      "Shuffle questions by default",
+      localStorage.getItem("defaultShuffle") === "1",
+      function (checked) { localStorage.setItem("defaultShuffle", checked ? "1" : "0"); }
+    );
+    panel.appendChild(shuffleToggle.row);
 
     overlay.appendChild(panel);
     document.body.appendChild(overlay);
 
-    function open() {
-      darkToggle.input.checked = currentTheme() === "dark";
-      overlay.classList.add("open");
-    }
+    function open() { overlay.classList.add("open"); }
     function close() { overlay.classList.remove("open"); }
 
     closeBtn.addEventListener("click", close);
@@ -335,12 +326,14 @@
       setTheme(currentTheme() === "dark" ? "light" : "dark", themeBtn);
     });
 
-    var settingsHelp = initSettingsPanel(themeBtn);
-    var settingsBtn = makeCornerBtn("settings-btn", "Settings");
-    settingsBtn.innerHTML = GEAR;
-    settingsBtn.addEventListener("click", settingsHelp.open);
+    var settingsHelp = initSettingsPanel();
+    if (settingsHelp) {
+      var settingsBtn = makeCornerBtn("settings-btn", "Settings");
+      settingsBtn.innerHTML = GEAR;
+      settingsBtn.addEventListener("click", settingsHelp.open);
+      group.appendChild(settingsBtn);
+    }
 
-    group.appendChild(settingsBtn);
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
     document.body.appendChild(group);
