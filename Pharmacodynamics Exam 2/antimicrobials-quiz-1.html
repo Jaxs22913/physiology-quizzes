@@ -102,7 +102,12 @@
   <div id="quiz">
     <div class="bar">
       <span class="prog" id="prog">Question 1 of 30</span>
+      <span class="prog" id="timerpill">00:00</span>
       <span class="score" id="score">Score: 0</span>
+      <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);cursor:pointer;margin-left:8px">
+        <input type="checkbox" id="shuffle-toggle" style="width:14px;height:14px">
+        Shuffle
+      </label>
       <button class="btn ghost" id="midRestart" style="padding:6px 14px;font-size:.8rem;">&#8635; Restart</button>
     </div>
     <div class="track"><i id="fill"></i></div>
@@ -121,6 +126,28 @@ const QUESTIONS = [{"q":"To which class does aztreonam belong?","choices":["Exte
 const LETTERS = ['A','B','C','D'];
 let idx = 0, score = 0, answered = false;
 const chosen = [];
+let order = QUESTIONS.map((_,i)=>i);
+const SHUFKEY = "qshuf:"+location.pathname;
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=Date.now(), timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
 
 const card = document.getElementById('card');
 const nextBtn = document.getElementById('next');
@@ -130,7 +157,7 @@ const scoreEl = document.getElementById('score');
 const fill = document.getElementById('fill');
 
 function render(){
-  const q = QUESTIONS[idx];
+  const q = QUESTIONS[order[idx]];
   prog.textContent = 'Question ' + (idx+1) + ' of ' + QUESTIONS.length;
   scoreEl.textContent = 'Score: ' + score;
   fill.style.width = (idx / QUESTIONS.length * 100) + '%';
@@ -160,7 +187,7 @@ function render(){
 }
 
 function showFeedback(i){
-  const q = QUESTIONS[idx];
+  const q = QUESTIONS[order[idx]];
   const correct = q.answer;
   const btns = card.querySelectorAll('.opt');
   btns.forEach(b=>{
@@ -186,7 +213,7 @@ function showFeedback(i){
 function choose(i){
   if(answered) return;
   answered = true;
-  const q = QUESTIONS[idx];
+  const q = QUESTIONS[order[idx]];
   chosen[idx] = i;
   const correct = q.answer;
   if(i === correct) score++;
@@ -211,11 +238,11 @@ prevBtn.addEventListener('click',()=>{
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen, total: QUESTIONS.length}));
+  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen, total: QUESTIONS.length, order, timerMs: currentElapsedMs()}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
-function markCompleted(s, total){ localStorage.setItem(CKEY, JSON.stringify({score:s, total})); }
+function markCompleted(s, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score:s, total, timeMs})); }
 function saveReview(){
   try{
     const c = document.getElementById('results').cloneNode(true);
@@ -228,29 +255,45 @@ document.getElementById('midRestart').addEventListener('click', ()=>{
   if(!confirm('Restart this quiz from the beginning?')) return;
   clearProgress();
   idx = 0; score = 0; chosen.length = 0;
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  timerAccumMs = 0; timerStartedAt = Date.now(); startTimerInterval();
   document.getElementById('results').classList.add('hidden');
   document.getElementById('quiz').classList.remove('hidden');
   render();
   window.scrollTo({top:0,behavior:'smooth'});
 });
 (function resumeIfSaved(){
+  document.getElementById('shuffle-toggle').checked = localStorage.getItem(SHUFKEY) === '1';
+  document.getElementById('shuffle-toggle').addEventListener('change', function(){
+    localStorage.setItem(SHUFKEY, this.checked ? '1' : '0');
+  });
   const saved = loadProgress();
-  if(!saved) return;
-  idx = saved.idx; score = saved.score;
-  saved.chosen.forEach((c,i)=>{ if(c!=null) chosen[i]=c; });
+  if(saved){
+    idx = saved.idx; score = saved.score;
+    saved.chosen.forEach((c,i)=>{ if(c!=null) chosen[i]=c; });
+    order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+    timerAccumMs = saved.timerMs || 0;
+  } else if(localStorage.getItem(SHUFKEY) === '1'){
+    shuffleArray(order);
+  }
+  timerStartedAt = Date.now();
 })();
 
 function showResults(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
   clearProgress();
-  markCompleted(score, QUESTIONS.length);
+  markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').classList.add('hidden');
   const box = document.getElementById('results');
   box.classList.remove('hidden');
   const pct = Math.round(score / QUESTIONS.length * 100);
   let misses = '';
-  QUESTIONS.forEach((q,i)=>{
-    if(chosen[i] !== q.answer){
-      const yours = chosen[i]==null ? 'No answer' : LETTERS[chosen[i]]+'. '+q.choices[chosen[i]];
+  chosen.forEach((chosenVal, i)=>{
+    const q = QUESTIONS[order[i]];
+    if(chosenVal !== q.answer){
+      const yours = chosenVal==null ? 'No answer' : LETTERS[chosenVal]+'. '+q.choices[chosenVal];
       misses +=
         '<div class="miss">'+
           '<div class="mq">Q'+(i+1)+'. '+q.q+'</div>'+
@@ -268,6 +311,7 @@ function showResults(){
     '<h2>Quiz complete</h2>'+
     '<div class="scorebig">'+score+' / '+QUESTIONS.length+'</div>'+
     '<div class="scoresub">'+pct+'% &middot; '+(QUESTIONS.length-score)+' missed</div>'+
+    '<div class="scoresub">Time: '+fmtTime(finalMs)+'</div>'+
     reviewBlock+
     '<div class="nav" style="justify-content:flex-start;margin-top:24px;gap:12px;">'+
       '<button class="btn ghost" onclick="location.reload()">Restart quiz</button>'+
@@ -285,7 +329,7 @@ document.addEventListener("keydown", (e)=>{
   if(!answered){
     const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
     const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[idx].choices.length){
+    if(i !== undefined && i < QUESTIONS[order[idx]].choices.length){
       e.preventDefault();
       choose(i);
     }
@@ -295,6 +339,7 @@ document.addEventListener("keydown", (e)=>{
 });
 
 render();
+startTimerInterval();
 </script>
   <script>
     if ("serviceWorker" in navigator) {

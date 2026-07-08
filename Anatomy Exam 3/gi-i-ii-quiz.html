@@ -209,6 +209,10 @@
       <li><span class="n">3</span><span>Identify the anatomy of the liver, gallbladder, pancreas, and spleen and their relationships with other organs.</span></li>
       <li><span class="n">4</span><span>Describe the abdominal aorta, portal system, IVC, and lymphatic drainage that supply the GI tract.</span></li>
     </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
     <div class="start-row">
           <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
       <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
@@ -225,6 +229,7 @@
   <section id="quiz" class="card hidden">
     <div class="status">
       <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="score" id="timerpill">00:00</span>
       <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
     </div>
     <div class="track"><i id="bar"></i></div>
@@ -250,6 +255,7 @@
     <h2>Exam complete</h2>
     <div class="bigscore" id="finalScore">0 / 50</div>
     <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
     <div class="verdict-line" id="finalVerdict"></div>
 
     <div class="bd-title">Breakdown by topic</div>
@@ -734,11 +740,36 @@ const QUESTIONS = [
    ENGINE
    ============================================================ */
 const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){ const e=document.getElementById('timerpill'); if(e) e.textContent=fmtTime(currentElapsedMs()); }
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+
 const el = id => document.getElementById(id);
 const intro = el('intro'), quiz = el('quiz'), results = el('results');
 
 el('startBtn').addEventListener('click', () => {
   clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   intro.classList.add('hidden');
   quiz.classList.remove('hidden');
   render();
@@ -760,6 +791,9 @@ el('prevBtn').addEventListener('click', () => {
 el('retryBtn').addEventListener('click', () => {
   clearProgress();
   state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   results.classList.add('hidden');
   quiz.classList.remove('hidden');
   render();
@@ -770,17 +804,19 @@ el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavi
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen}))}));
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs()}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
-function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
   state.i = saved.i; state.score = saved.score;
   state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   el("resume-banner").classList.add("hidden");
   intro.classList.add("hidden");
   quiz.classList.remove("hidden");
@@ -793,6 +829,9 @@ el("midRestartBtn").addEventListener("click", () => {
   if(!confirm("Restart this quiz from the beginning?")) return;
   clearProgress();
   state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   render();
   window.scrollTo({top:0,behavior:"smooth"});
 });
@@ -804,7 +843,7 @@ el("midRestartBtn").addEventListener("click", () => {
 })();
 
 function render(){
-  const item = QUESTIONS[state.i];
+  const item = QUESTIONS[order[state.i]];
   const total = QUESTIONS.length;
 
   el('qcount').textContent = `Question ${state.i+1} of ${total}`;
@@ -818,7 +857,7 @@ function render(){
   const box = el('choices');
   box.innerHTML = '';
 
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === state.i);
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
 
   if (state.i < answeredCount()){
     state.answered = true;
@@ -866,7 +905,7 @@ function answeredCount(){ return state.score + state.missed.length; }
 function select(idx){
   if (state.answered) return;
   state.answered = true;
-  const item = QUESTIONS[state.i];
+  const item = QUESTIONS[order[state.i]];
   const buttons = el('choices').querySelectorAll('.choice');
   const letters = ['A','B','C','D'];
 
@@ -896,7 +935,10 @@ function select(idx){
   saveProgress();
 }
 
-function finish(){clearProgress();markCompleted(state.score, QUESTIONS.length);
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
   quiz.classList.add('hidden');
   results.classList.remove('hidden');
   el('bar').style.width = '100%';
@@ -905,6 +947,7 @@ function finish(){clearProgress();markCompleted(state.score, QUESTIONS.length);
   const pct = Math.round((state.score/total)*100);
   el('finalScore').textContent = `${state.score} / ${total}`;
   el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
 
   let msg;
   if (pct >= 90) msg = 'Excellent — you have strong command of GI anatomy.';
@@ -973,7 +1016,7 @@ document.addEventListener("keydown", (e)=>{
   if(!state.answered){
     const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
     const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[state.i].choices.length){
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
       e.preventDefault();
       select(i);
     }

@@ -195,6 +195,10 @@
         <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
       </div>
     </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
     <button class="btn btn-primary" onclick="startExam()">Start the exam &rarr;</button>
   </div>
 
@@ -204,6 +208,7 @@
       <div class="topbar">
         <span id="counter">Question 1 of 70</span>
         <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
       </div>
       <div class="qmeta">
@@ -237,11 +242,31 @@ const QUESTIONS = [{"topic": "Blood & Hemostasis", "io": "a — Blood & its comp
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
 
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function startTimerInterval(){ stopTimerInterval(); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers})); }
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
-function markCompleted(score, total){ localStorage.setItem(CKEY, JSON.stringify({score, total})); }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
 
@@ -250,7 +275,9 @@ function startExam(){
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
   order = QUESTIONS.map((_,i)=>i);          // fixed order (already balanced/interleaved by unit)
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('start').style.display='none';
   document.getElementById('results').style.display='none';
   document.getElementById('quiz').style.display='block';
@@ -261,8 +288,9 @@ function startExam(){
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  order = QUESTIONS.map((_,i)=>i);
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
   idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
   document.getElementById('start').style.display='none';
@@ -360,15 +388,22 @@ function nextQ(){
 }
 
 function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
   clearProgress();
-  markCompleted(score, QUESTIONS.length);
+  markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').style.display='none';
   const pct=Math.round(100*score/QUESTIONS.length);
-  // per-topic tally
+  // per-topic tally (iterate by position and map through order[], since answers[]
+  // is indexed by position in the possibly-shuffled sequence, not original QUESTIONS index)
   const tstat={};
-  QUESTIONS.forEach((q,i)=>{
+  QUESTIONS.forEach(q=>{
     const t=q.topic; if(!tstat[t]) tstat[t]={c:0,n:0};
-    tstat[t].n++; if(answers[i]===q.c) tstat[t].c++;
+    tstat[t].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) tstat[q.topic].c++;
   });
   let brows='';
   Object.keys(tstat).forEach(t=>{
@@ -379,9 +414,10 @@ function showResults(){
   });
   // missed review
   let missed='';
-  QUESTIONS.forEach((q,i)=>{
-    if(answers[i]!==q.c){
-      const you = answers[i]===null?'\u2014 (skipped)':LTR[answers[i]]+'. '+q.opts[answers[i]][0];
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
       missed+=`<div class="mitem">
         <div class="mq">Q${i+1}. ${q.q}</div>
         <div class="ma you"><b>Your answer:</b> ${you}</div>
@@ -402,6 +438,7 @@ function showResults(){
       <div class="tally">
         <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
         <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions across 7 units</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
       </div>
     </div>
     <div class="breakdown"><h3>Performance by unit</h3>${brows}</div>
