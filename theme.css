@@ -123,6 +123,29 @@
   zoom: 1.15;
 }
 
+/* High-contrast setting: same top-level-container trick again, but
+   `filter` (unlike `zoom`) isn't additive across separate rules -- two
+   rules that both set `filter` on the same element don't combine, the
+   later/more-specific one just wins outright. Dark mode already uses
+   `filter` for its invert trick on quiz/study/practicum pages, so a
+   plain `[data-contrast="high"] .wrap { filter: contrast(...) }` rule
+   would silently replace (not add to) the dark-mode invert when both
+   are on. The compound `[data-theme="dark"][data-contrast="high"]`
+   selector below has higher specificity than either alone and spells
+   out the combined filter value explicitly, so both settings apply
+   together correctly regardless of source order. The homepage doesn't
+   need this composing -- its dark mode is real CSS-variable colors,
+   not a filter, so contrast there is always independent. */
+:root[data-contrast="high"] body > .wrap {
+  filter: contrast(1.35);
+}
+:root[data-theme="dark"][data-contrast="high"] body > .wrap {
+  filter: invert(1) hue-rotate(180deg) contrast(1.35);
+}
+:root[data-contrast="high"] body.homepage .page {
+  filter: contrast(1.3);
+}
+
 /* Keyboard-shortcuts help overlay, injected by theme.js only on pages that
    have a #timerpill element (i.e. non-practicum quiz pages, which are the
    only ones with the 1-4/Enter/Arrow keydown handler this documents). */

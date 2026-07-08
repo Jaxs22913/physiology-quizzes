@@ -135,6 +135,10 @@
     document.documentElement.setAttribute("data-text-size", large ? "large" : "normal");
     localStorage.setItem("textSize", large ? "large" : "normal");
   }
+  function setContrast(high) {
+    document.documentElement.setAttribute("data-contrast", high ? "high" : "normal");
+    localStorage.setItem("contrast", high ? "high" : "normal");
+  }
   function makeCornerBtn(id, label) {
     var btn = document.createElement("button");
     btn.type = "button";
@@ -293,6 +297,13 @@
     );
     panel.appendChild(textSizeToggle.row);
 
+    var contrastToggle = makeToggleRow(
+      "High contrast",
+      localStorage.getItem("contrast") === "high",
+      function (checked) { setContrast(checked); }
+    );
+    panel.appendChild(contrastToggle.row);
+
     if (document.getElementById("shuffle-toggle")) {
       var shuffleToggle = makeToggleRow(
         "Shuffle questions by default",
@@ -316,6 +327,7 @@
 
   function init() {
     document.documentElement.setAttribute("data-text-size", localStorage.getItem("textSize") === "large" ? "large" : "normal");
+    document.documentElement.setAttribute("data-contrast", localStorage.getItem("contrast") === "high" ? "high" : "normal");
 
     var group = document.createElement("div");
     group.id = "corner-actions";
