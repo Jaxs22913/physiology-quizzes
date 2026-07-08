@@ -184,7 +184,10 @@
       }
       .page > .search-wrap { order: 30; }
       .page > #semester-card { order: 40; }
-      .page > #request-open { order: 50; }
+      .page > #request-open,
+      .page > #archived-open,
+      .page > #tour-open,
+      .page > #whatsnew-open { order: 50; }
 
       .mobile-widgets-row #week-widget,
       .mobile-widgets-row #continue-widget {
@@ -772,6 +775,20 @@
       font-size: 15px;
       line-height: 1;
       padding: 2px;
+    }
+
+    .new-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      background: var(--accent2-soft);
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -1361,6 +1378,7 @@
     <button type="button" id="request-open" class="request-link">Have a feature idea or want a new exam added? Request it &rarr;</button>
     <button type="button" id="archived-open" class="request-link">Looking for old/superseded quizzes? View Archived &rarr;</button>
     <button type="button" id="tour-open" class="request-link">Need a guide? Take the tour &rarr;</button>
+    <button type="button" id="whatsnew-open" class="request-link">See what's new on the site &rarr;</button>
   </div>
 
   <div class="review-modal-overlay" id="request-modal-overlay">
@@ -1398,6 +1416,33 @@
           <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
           <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-3.html">Physiology Master Exam (Version 3)</a></li>
           <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-4.html">Physiology Master Exam (Version 4)</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-modal-overlay" id="whatsnew-modal-overlay">
+    <div class="review-modal">
+      <button class="review-modal-close" id="whatsnew-modal-close" aria-label="Close">&times;</button>
+      <p class="review-modal-title">What's new</p>
+      <div class="review-modal-content">
+        <div class="divider"><span>July 8</span></div>
+        <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>Guided site tour &mdash; a first-time walkthrough of search, This Week, and quiz features. Replay it anytime with "Need a guide?" at the bottom of the page.</li>
+          <li>Install this site as an app, right from your home screen.</li>
+          <li>Keyboard shortcuts help &mdash; press <kbd>?</kbd> on any quiz to see them.</li>
+          <li>Archived tab for old/superseded quiz versions, so the main lists stay current.</li>
+          <li>15 new &amp; updated Physiology Exam 3 quizzes: 5 new Master Exam versions, plus 2 new versions each of Hemostasis, Blood &amp; Immunology, GI, Metabolism, and Pulmonary.</li>
+          <li>Shuffle question order + a pause/resume timer, added to every quiz.</li>
+          <li>"This Week" widget on the homepage &mdash; upcoming exams &amp; practicums at a glance, auto-advances every Friday at 5pm.</li>
+          <li>Dark/light mode toggle + refresh button.</li>
+        </ul>
+        <div class="divider"><span>Earlier</span></div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>Back button + full keyboard navigation (1-4, Enter, arrows) on every quiz.</li>
+          <li>Progress tracking, resume, and mistake review on every quiz.</li>
+          <li>"Continue where you left off" widget on the homepage.</li>
+          <li>Offline mode, so previously-visited pages still work without signal.</li>
         </ul>
       </div>
     </div>
@@ -1815,11 +1860,62 @@
 
   <script>
     (function () {
+      // Curated, not auto-generated from every recent commit -- only quizzes
+      // meant to be highlighted to visitors as freshly added get an entry.
+      // Update this list (and the "What's New" panel below) whenever new
+      // quiz content ships. NEW_BADGE_DAYS controls how long a badge lasts.
+      var NEW_QUIZZES = {
+        "Physiology%20Exam%203/physiology-master-exam-version-5.html": "2026-07-08",
+        "Physiology%20Exam%203/physiology-master-exam-version-6.html": "2026-07-08",
+        "Physiology%20Exam%203/physiology-master-exam-version-7.html": "2026-07-08",
+        "Physiology%20Exam%203/physiology-master-exam-version-8.html": "2026-07-08",
+        "Physiology%20Exam%203/physiology-master-exam-version-9.html": "2026-07-08",
+        "Physiology%20Exam%203/hemostasis-quiz-version-2.html": "2026-07-08",
+        "Physiology%20Exam%203/hemostasis-quiz-version-3.html": "2026-07-08",
+        "Physiology%20Exam%203/immunology-quiz-version-2.html": "2026-07-08",
+        "Physiology%20Exam%203/immunology-quiz-version-3.html": "2026-07-08",
+        "Physiology%20Exam%203/gi-quiz-version-2.html": "2026-07-08",
+        "Physiology%20Exam%203/gi-quiz-version-3.html": "2026-07-08",
+        "Physiology%20Exam%203/metabolism-quiz-version-2.html": "2026-07-08",
+        "Physiology%20Exam%203/metabolism-quiz-version-3.html": "2026-07-08",
+        "Physiology%20Exam%203/pulmonary-quiz-version-2.html": "2026-07-08",
+        "Physiology%20Exam%203/pulmonary-quiz-version-3.html": "2026-07-08"
+      };
+      var NEW_BADGE_DAYS = 14;
+      var now = Date.now();
+
+      document.querySelectorAll("a.quiz-link").forEach((a) => {
+        const added = NEW_QUIZZES[a.getAttribute("href")];
+        if (!added) return;
+        const addedMs = new Date(added + "T00:00:00").getTime();
+        if ((now - addedMs) / 86400000 > NEW_BADGE_DAYS) return;
+        const badge = document.createElement("span");
+        badge.className = "new-badge";
+        badge.textContent = "NEW";
+        a.appendChild(badge);
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
       const overlay = document.getElementById("archived-modal-overlay");
       function openModal() { overlay.classList.add("open"); }
       function closeModal() { overlay.classList.remove("open"); }
       document.getElementById("archived-open").addEventListener("click", openModal);
       document.getElementById("archived-modal-close").addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && overlay.classList.contains("open")) closeModal(); });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById("whatsnew-modal-overlay");
+      function openModal() { overlay.classList.add("open"); }
+      function closeModal() { overlay.classList.remove("open"); }
+      document.getElementById("whatsnew-open").addEventListener("click", openModal);
+      document.getElementById("whatsnew-modal-close").addEventListener("click", closeModal);
       overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
       document.addEventListener("keydown", (e) => { if (e.key === "Escape" && overlay.classList.contains("open")) closeModal(); });
     })();

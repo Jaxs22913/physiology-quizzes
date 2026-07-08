@@ -118,6 +118,7 @@
   var MOON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
   var REFRESH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
   var KEYBOARD = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 13h8"/></svg>';
+  var GEAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
 
   function currentTheme() {
     return document.documentElement.getAttribute("data-theme") || "light";
@@ -234,6 +235,83 @@
     return { open: open };
   }
 
+  function makeToggleRow(label, checked, onChange) {
+    var row = document.createElement("div");
+    row.className = "settings-row";
+
+    var span = document.createElement("span");
+    span.textContent = label;
+
+    var switchLabel = document.createElement("label");
+    switchLabel.className = "settings-switch";
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = checked;
+    var track = document.createElement("span");
+    track.className = "track";
+    var thumb = document.createElement("span");
+    thumb.className = "thumb";
+    switchLabel.appendChild(input);
+    switchLabel.appendChild(track);
+    switchLabel.appendChild(thumb);
+
+    input.addEventListener("change", function () { onChange(input.checked); });
+
+    row.appendChild(span);
+    row.appendChild(switchLabel);
+    return { row: row, input: input };
+  }
+
+  function initSettingsPanel(themeBtn) {
+    var overlay = document.createElement("div");
+    overlay.className = "settings-overlay";
+    overlay.id = "settings-overlay";
+
+    var panel = document.createElement("div");
+    panel.className = "settings-panel";
+
+    var closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "shortcuts-close";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.innerHTML = "&times;";
+
+    var heading = document.createElement("h3");
+    heading.textContent = "Settings";
+
+    panel.appendChild(closeBtn);
+    panel.appendChild(heading);
+
+    var darkToggle = makeToggleRow("Dark mode", currentTheme() === "dark", function (checked) {
+      setTheme(checked ? "dark" : "light", themeBtn);
+    });
+    panel.appendChild(darkToggle.row);
+
+    var isQuizPage = !!document.getElementById("shuffle-toggle");
+    if (isQuizPage) {
+      var shuffleToggle = makeToggleRow(
+        "Shuffle questions by default",
+        localStorage.getItem("defaultShuffle") === "1",
+        function (checked) { localStorage.setItem("defaultShuffle", checked ? "1" : "0"); }
+      );
+      panel.appendChild(shuffleToggle.row);
+    }
+
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    function open() {
+      darkToggle.input.checked = currentTheme() === "dark";
+      overlay.classList.add("open");
+    }
+    function close() { overlay.classList.remove("open"); }
+
+    closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+
+    return { open: open };
+  }
+
   function init() {
     var group = document.createElement("div");
     group.id = "corner-actions";
@@ -257,6 +335,12 @@
       setTheme(currentTheme() === "dark" ? "light" : "dark", themeBtn);
     });
 
+    var settingsHelp = initSettingsPanel(themeBtn);
+    var settingsBtn = makeCornerBtn("settings-btn", "Settings");
+    settingsBtn.innerHTML = GEAR;
+    settingsBtn.addEventListener("click", settingsHelp.open);
+
+    group.appendChild(settingsBtn);
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
     document.body.appendChild(group);
@@ -268,7 +352,15 @@
       shortcutsBtn.addEventListener("click", shortcutsHelp.open);
       group.insertBefore(shortcutsBtn, refreshBtn);
 
-      if (document.getElementById("shuffle-toggle")) {
+      var shuffleCb = document.getElementById("shuffle-toggle");
+      if (shuffleCb) {
+        if (localStorage.getItem("defaultShuffle") === "1") {
+          var resumeBanner = document.getElementById("resume-banner");
+          var hasProgress = resumeBanner
+            ? resumeBanner.style.display === "block"
+            : localStorage.getItem("qshuf:" + location.pathname) !== null;
+          if (!hasProgress) shuffleCb.checked = true;
+        }
         setTimeout(function () {
           window.SiteTour.start(QUIZ_TOUR_STEPS, "tourSeen:quiz");
         }, 700);
