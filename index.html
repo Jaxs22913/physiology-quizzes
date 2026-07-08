@@ -152,6 +152,16 @@
       margin: 0 auto;
     }
 
+    .layout { display: flex; flex-direction: column; gap: 18px; }
+    .main-col { min-width: 0; }
+
+    @media (min-width: 860px) {
+      .page { max-width: 900px; }
+      .layout { flex-direction: row; align-items: flex-start; }
+      .continue-widget { flex: 0 0 260px; }
+      .main-col { flex: 1; min-width: 0; }
+    }
+
     .brand-mark {
       width: 380px;
       max-width: 85%;
@@ -264,9 +274,9 @@
       color: var(--ink);
     }
     .continue-item:hover { border-color: var(--accent); }
-    .ci-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .ci-top { display: flex; flex-direction: column; gap: 3px; }
     .ci-title { font-size: 14.5px; font-weight: 600; }
-    .ci-meta { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+    .ci-meta { font-size: 12.5px; color: var(--muted); }
     .ci-bar { height: 5px; background: var(--bg); border-radius: 99px; overflow: hidden; margin-top: 8px; }
     .ci-bar > i { display: block; height: 100%; background: var(--accent); }
 
@@ -597,11 +607,13 @@
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
 
-    <div id="continue-widget" class="continue-widget hidden">
-      <h2 class="continue-title">Continue where you left off</h2>
-      <div id="continue-list" class="continue-list"></div>
-    </div>
+    <div class="layout">
+      <div id="continue-widget" class="continue-widget hidden">
+        <h2 class="continue-title">Continue where you left off</h2>
+        <div id="continue-list" class="continue-list"></div>
+      </div>
 
+      <div class="main-col">
     <div class="search-wrap">
       <input type="text" id="site-search" class="site-search-input" placeholder="Search all quizzes…" autocomplete="off" spellcheck="false">
       <div id="search-results" class="search-results hidden"></div>
@@ -1101,6 +1113,8 @@
       </div>
       </div>
     </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1161,7 +1175,7 @@
         } catch (e) {}
       });
       if (entries.length === 0) return;
-      entries.slice(0, 8).forEach(entry => {
+      entries.slice(0, 5).forEach(entry => {
         const item = document.createElement("a");
         item.className = "continue-item";
         item.href = entry.href;
