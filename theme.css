@@ -9,14 +9,31 @@
    photographic imagery so it isn't rendered as a photo negative. */
 
 #theme-toggle-btn {
+  right: 14px;
   background: #ffffff;
   color: #1f2937;
   border: 1px solid #e5e7eb;
+}
+#install-app-btn {
+  left: 14px;
 }
 :root[data-theme="dark"] #theme-toggle-btn {
   background: #191c22;
   color: #e5e7eb;
   border: 1px solid #2a2e37;
+}
+
+/* index.html's edge-decor zigzag strips are 70px wide and only render at
+   min-width:1000px (see index.html's own @media rule for .edge-decor).
+   Push the two corner buttons in past that band at the same breakpoint --
+   quiz/study/practicum pages have no edge-decor at any width (their header
+   cards sit close to the viewport edge, especially on mobile, so shifting
+   them there would overlap page content instead of clearing anything), and
+   below 1000px on the homepage the decor itself is hidden, so 14px is
+   correct there too. */
+@media (min-width: 1000px) {
+  body.homepage #theme-toggle-btn { right: 84px; }
+  body.homepage #install-app-btn { left: 84px; }
 }
 
 /* index.html's own token system. Scoped to body.homepage (not a blanket
