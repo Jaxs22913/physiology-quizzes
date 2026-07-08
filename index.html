@@ -806,7 +806,6 @@
         <button class="tab-btn" data-tab="pharmacodynamics">Pharmacodynamics</button>
         <button class="tab-btn" data-tab="anatomy">Anatomy</button>
         <button class="tab-btn" data-tab="anatomy-practicum">Anatomy Practicum</button>
-        <button class="tab-btn" data-tab="archived">Archived</button>
       </div>
       <p class="ai-disclaimer">Quizzes/Exams made by AI, use at you're own risk. Check info if unsure.</p>
 
@@ -1298,32 +1297,11 @@
         </details>
       </div>
 
-      <div class="tab-panel" id="archived" data-class="archived">
-        <details class="exam-section" data-examid="archived-physio">
-          <summary><span>Physiology</span></summary>
-          <div class="exam-content">
-            <div class="divider"><span>Individual Topic Exam</span></div>
-            <ul>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/hemostasis-quiz.html">Hemostasis Quiz</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
-            </ul>
-            <div class="divider"><span>Master Exams</span></div>
-            <ul>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam.html">Physiology Master Exam</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-3.html">Physiology Master Exam (Version 3)</a></li>
-              <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-4.html">Physiology Master Exam (Version 4)</a></li>
-            </ul>
-          </div>
-        </details>
-      </div>
       </div>
     </div>
 
     <button type="button" id="request-open" class="request-link">Have a feature idea or want a new exam added? Request it &rarr;</button>
+    <button type="button" id="archived-open" class="request-link">Looking for old/superseded quizzes? View Archived &rarr;</button>
   </div>
 
   <div class="review-modal-overlay" id="request-modal-overlay">
@@ -1337,6 +1315,31 @@
           <button type="button" id="request-cancel" class="request-btn">Cancel</button>
           <button type="button" id="request-send" class="request-btn primary">Send request</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-modal-overlay" id="archived-modal-overlay">
+    <div class="review-modal">
+      <button class="review-modal-close" id="archived-modal-close" aria-label="Close">&times;</button>
+      <p class="review-modal-title">Archived quizzes</p>
+      <div class="review-modal-content">
+        <p style="margin:0 0 12px;color:var(--muted);font-size:13.5px;">Superseded versions, kept around for extra practice.</p>
+        <div class="divider"><span>Physiology &mdash; Individual Topic Exam</span></div>
+        <ul>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/hemostasis-quiz.html">Hemostasis Quiz</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/immunology-quiz.html">Blood &amp; Immunology Quiz</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/pulmonary-quiz.html">Pulmonary Physiology Quiz</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/gi-quiz.html">Gastrointestinal Physiology Quiz</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/metabolism-quiz.html">Metabolism, Nutrition &amp; Thermoregulation Quiz</a></li>
+        </ul>
+        <div class="divider"><span>Physiology &mdash; Master Exams</span></div>
+        <ul>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam.html">Physiology Master Exam</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-2.html">Physiology Master Exam (Version 2)</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-3.html">Physiology Master Exam (Version 3)</a></li>
+          <li><a class="quiz-link" href="Physiology%20Exam%203/physiology-master-exam-version-4.html">Physiology Master Exam (Version 4)</a></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1748,6 +1751,18 @@
         closeModal();
         showToast("Opening your email app… hit send there to submit your request.");
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById("archived-modal-overlay");
+      function openModal() { overlay.classList.add("open"); }
+      function closeModal() { overlay.classList.remove("open"); }
+      document.getElementById("archived-open").addEventListener("click", openModal);
+      document.getElementById("archived-modal-close").addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && overlay.classList.contains("open")) closeModal(); });
     })();
   </script>
   <script>
