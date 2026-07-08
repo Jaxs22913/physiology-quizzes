@@ -718,6 +718,23 @@ function showResults(){clearProgress();markCompleted(score, questions.length);
 }
 
 function restart(){ startQuiz(); }
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if($("quiz").classList.contains("hidden")) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); prevQuestion(); return; }
+  if(!answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < questions[current].o.length){
+      e.preventDefault();
+      selectAnswer(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); nextQuestion(); }
+  }
+});
 </script>
 <script>
 (function () {

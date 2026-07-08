@@ -197,6 +197,51 @@
     .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
     .subtitle + .subtitle { margin-top: 4px; }
 
+    .search-wrap { position: relative; margin: 18px 0; }
+    .site-search-input {
+      width: 100%;
+      font: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+    }
+    .site-search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 6px;
+    }
+    .search-results.hidden { display: none; }
+    .search-result {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .search-result:hover, .search-result.active-result {
+      background: var(--accent-soft);
+    }
+    .search-result .sr-title { font-size: 14.5px; font-weight: 600; }
+    .search-result .sr-path { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .search-no-results { padding: 14px 12px; font-size: 14px; color: var(--muted); text-align: center; }
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -523,6 +568,11 @@
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
+
+    <div class="search-wrap">
+      <input type="text" id="site-search" class="site-search-input" placeholder="Search all quizzes…" autocomplete="off" spellcheck="false">
+      <div id="search-results" class="search-results hidden"></div>
+    </div>
 
     <div class="card">
       <div class="semester" data-semester="summer-1-2026">
@@ -1064,6 +1114,91 @@
         localStorage.setItem(key, section.open);
       });
     });
+
+    (function () {
+      const input = document.getElementById("site-search");
+      const resultsBox = document.getElementById("search-results");
+      const tabLabels = {};
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        tabLabels[btn.dataset.tab] = btn.textContent.trim();
+      });
+
+      function breadcrumbFor(a) {
+        const parts = [];
+        let d = a.closest("details");
+        while (d) {
+          const label = d.querySelector(":scope > summary > span");
+          if (label) parts.unshift(label.textContent.trim());
+          d = d.parentElement ? d.parentElement.closest("details") : null;
+        }
+        const panel = a.closest(".tab-panel");
+        const tabLabel = panel ? (tabLabels[panel.dataset.class] || "") : "";
+        const href = a.getAttribute("href") || "";
+        const kind = /-study\.html(?:$|[?#])/i.test(href) ? "Study" : "Quiz";
+        return [tabLabel, ...parts].filter(Boolean).join(" › ") + " · " + kind;
+      }
+
+      function runSearch(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) {
+          resultsBox.classList.add("hidden");
+          resultsBox.innerHTML = "";
+          return;
+        }
+        const links = Array.from(document.querySelectorAll("a.quiz-link"));
+        const matches = links.filter(a => {
+          const label = (a.dataset.quizLabel || a.textContent).trim().toLowerCase();
+          return label.includes(q);
+        }).slice(0, 40);
+
+        resultsBox.innerHTML = "";
+        if (matches.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "search-no-results";
+          empty.textContent = "No quizzes match “" + query.trim() + "”";
+          resultsBox.appendChild(empty);
+        } else {
+          matches.forEach((a, i) => {
+            const label = (a.dataset.quizLabel || a.textContent).trim();
+            const r = document.createElement("a");
+            r.className = "search-result";
+            r.href = a.getAttribute("href");
+            if (i === 0) r.classList.add("active-result");
+            const title = document.createElement("div");
+            title.className = "sr-title";
+            title.textContent = label;
+            const path = document.createElement("div");
+            path.className = "sr-path";
+            path.textContent = breadcrumbFor(a);
+            r.appendChild(title);
+            r.appendChild(path);
+            resultsBox.appendChild(r);
+          });
+        }
+        resultsBox.classList.remove("hidden");
+      }
+
+      input.addEventListener("input", () => runSearch(input.value));
+      input.addEventListener("focus", () => { if (input.value.trim()) runSearch(input.value); });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          input.value = "";
+          resultsBox.classList.add("hidden");
+          resultsBox.innerHTML = "";
+          input.blur();
+        } else if (e.key === "Enter") {
+          const first = resultsBox.querySelector(".search-result");
+          if (first) { e.preventDefault(); location.href = first.getAttribute("href"); }
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-wrap")) {
+          resultsBox.classList.add("hidden");
+        }
+      });
+    })();
 
     (function () {
       const indicator = document.getElementById("pull-refresh");
