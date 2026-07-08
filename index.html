@@ -715,6 +715,64 @@
     }
     .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid var(--border); }
     .divider span { padding: 0 10px; }
+
+    .install-banner {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      z-index: 3000;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transform: translateY(140%);
+      transition: transform .25s ease;
+    }
+    .install-banner.show { transform: translateY(0); }
+    .install-banner-icon {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .install-banner-body { flex: 1; min-width: 0; }
+    .install-banner-title { font-size: 13.5px; font-weight: 700; color: var(--ink); margin: 0 0 3px; }
+    .install-banner-text { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.4; }
+    .install-banner-actions { display: flex; gap: 8px; margin-top: 10px; }
+    .install-banner-btn {
+      font: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .install-banner-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .install-banner-close {
+      flex: 0 0 auto;
+      border: none;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+      padding: 2px;
+    }
   </style>
 </head>
 <body class="homepage">
@@ -1807,16 +1865,21 @@
       function isStandalone() {
         return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
       }
+      function isIOS() {
+        return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+      }
       if (isStandalone()) btn.style.display = "none";
 
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPrompt = e;
+        setTimeout(() => maybeShowBanner("android"), 1200);
       });
 
       window.addEventListener("appinstalled", () => {
         deferredPrompt = null;
         btn.style.display = "none";
+        dismissBanner();
         showToast("Installed! Find it on your home screen.");
       });
 
@@ -1833,6 +1896,63 @@
         }
         showToast('To install: open your browser menu and choose "Add to Home Screen" or "Install App".', 4500);
       });
+
+      const installIconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>';
+      let banner = null;
+
+      function hideBanner() {
+        if (banner) banner.classList.remove("show");
+      }
+      function dismissBanner() {
+        localStorage.setItem("installBannerDismissed", "1");
+        hideBanner();
+      }
+      function maybeShowBanner(platform) {
+        if (isStandalone() || localStorage.getItem("installBannerDismissed") || banner) return;
+        banner = document.createElement("div");
+        banner.className = "install-banner";
+        banner.innerHTML = platform === "ios"
+          ? '<div class="install-banner-icon">' + installIconSvg + '</div>' +
+            '<div class="install-banner-body">' +
+              '<p class="install-banner-title">Install this site as an app</p>' +
+              '<p class="install-banner-text">Tap the Share icon, then &ldquo;Add to Home Screen&rdquo;, for quick offline access to your quizzes.</p>' +
+              '<div class="install-banner-actions"><button type="button" class="install-banner-btn primary" id="install-banner-ok">Got it</button></div>' +
+            '</div>' +
+            '<button type="button" class="install-banner-close" id="install-banner-close" aria-label="Dismiss">&times;</button>'
+          : '<div class="install-banner-icon">' + installIconSvg + '</div>' +
+            '<div class="install-banner-body">' +
+              '<p class="install-banner-title">Install this site as an app</p>' +
+              '<p class="install-banner-text">Get quick, offline access to your quizzes right from your home screen.</p>' +
+              '<div class="install-banner-actions">' +
+                '<button type="button" class="install-banner-btn primary" id="install-banner-install">Install</button>' +
+                '<button type="button" class="install-banner-btn" id="install-banner-ok">Not now</button>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="install-banner-close" id="install-banner-close" aria-label="Dismiss">&times;</button>';
+        document.body.appendChild(banner);
+        setTimeout(() => banner.classList.add("show"), 50);
+
+        banner.querySelector("#install-banner-close").addEventListener("click", dismissBanner);
+        const okBtn = banner.querySelector("#install-banner-ok");
+        if (okBtn) okBtn.addEventListener("click", dismissBanner);
+        const installBtn = banner.querySelector("#install-banner-install");
+        if (installBtn) {
+          installBtn.addEventListener("click", async () => {
+            dismissBanner();
+            if (deferredPrompt) {
+              try {
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
+              } catch (err) {}
+            }
+          });
+        }
+      }
+
+      if (isIOS() && !isStandalone()) {
+        setTimeout(() => maybeShowBanner("ios"), 2500);
+      }
     })();
   </script>
 </body>
