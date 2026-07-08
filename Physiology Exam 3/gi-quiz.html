@@ -304,6 +304,7 @@
       <button class="btn ghost" onclick="restart()">&#8635; Restart quiz</button>
     </div>
     <div class="foot">Based solely on the "Gastrointestinal Physiology" lecture (Guyton &amp; Hall, Ch. 63&ndash;66). Not for clinical use.</div>
+    <p style="color:#8a9096;text-align:center;font-size:12.5px;margin-top:10px;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> ★</p>
   </section>
 
 </div>
@@ -784,5 +785,10 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
 </body>
 </html>
