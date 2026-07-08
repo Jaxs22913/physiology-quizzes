@@ -139,6 +139,14 @@
     document.documentElement.setAttribute("data-contrast", high ? "high" : "normal");
     localStorage.setItem("contrast", high ? "high" : "normal");
   }
+  function initHaptics() {
+    if (!("vibrate" in navigator)) return;
+    document.addEventListener("click", function (e) {
+      if (localStorage.getItem("haptics") !== "1") return;
+      var el = e.target.closest && e.target.closest(".opt, .choice");
+      if (el) navigator.vibrate(15);
+    });
+  }
   function makeCornerBtn(id, label) {
     var btn = document.createElement("button");
     btn.type = "button";
@@ -311,6 +319,15 @@
         function (checked) { localStorage.setItem("defaultShuffle", checked ? "1" : "0"); }
       );
       panel.appendChild(shuffleToggle.row);
+
+      if ("vibrate" in navigator) {
+        var hapticsToggle = makeToggleRow(
+          "Haptic feedback",
+          localStorage.getItem("haptics") === "1",
+          function (checked) { localStorage.setItem("haptics", checked ? "1" : "0"); }
+        );
+        panel.appendChild(hapticsToggle.row);
+      }
     }
 
     overlay.appendChild(panel);
@@ -367,6 +384,8 @@
       shortcutsBtn.innerHTML = KEYBOARD;
       shortcutsBtn.addEventListener("click", shortcutsHelp.open);
       group.insertBefore(shortcutsBtn, refreshBtn);
+
+      initHaptics();
 
       var shuffleCb = document.getElementById("shuffle-toggle");
       if (shuffleCb) {
