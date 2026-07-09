@@ -356,6 +356,8 @@
       padding: 5px 0;
     }
     .week-item-title { font-size: 14px; color: var(--ink); }
+    .week-item.done { opacity: .55; }
+    .week-item.done .week-item-title { text-decoration: line-through; }
     .week-empty { font-size: 14px; color: var(--muted); padding: 4px 2px; }
 
     .continue-widget { margin: 18px 0; }
@@ -1565,9 +1567,10 @@
         empty.textContent = "Nothing scheduled this week.";
         listEl.appendChild(empty);
       } else {
+        const todayKey = ymd(new Date());
         items.forEach(e => {
           const row = document.createElement("div");
-          row.className = "week-item";
+          row.className = "week-item" + (e.date <= todayKey ? " done" : "");
           const dayIdx = weekKeys.indexOf(e.date);
           const day = document.createElement("span");
           day.className = "week-day";
