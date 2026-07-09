@@ -743,3 +743,82 @@
     init();
   }
 })();
+
+// "Test yourself" quiz popup, generic/reusable across any page. Question
+// data (title + 5ish {q, choices, correct, explain} objects) is supplied
+// by the calling page -- this only owns the modal mechanics: render,
+// instant per-question grading, running score, Esc/backdrop-click/X close.
+window.openTestYourself = (function () {
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  return function openTestYourself(title, questions) {
+    var overlay = el("div", "tq-overlay open");
+    var panel = el("div", "tq-panel");
+
+    var closeBtn = el("button", "tq-close", "×");
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close");
+
+    var heading = el("p", "tq-title", title);
+    var scoreEl = el("p", "tq-score");
+    var score = 0;
+    function updateScore() { scoreEl.textContent = "Score: " + score + " / " + questions.length; }
+    updateScore();
+
+    panel.appendChild(closeBtn);
+    panel.appendChild(heading);
+    panel.appendChild(scoreEl);
+
+    questions.forEach(function (q, qi) {
+      var qDiv = el("div", "tq-q");
+      qDiv.appendChild(el("p", "tq-qtext", (qi + 1) + ". " + q.q));
+      var optsWrap = el("div", "tq-opts");
+      var explainEl = el("p", "tq-explain hidden", q.explain || "");
+      var answered = false;
+
+      q.choices.forEach(function (choice, ci) {
+        var btn = el("button", "tq-opt", choice);
+        btn.type = "button";
+        btn.addEventListener("click", function () {
+          if (answered) return;
+          answered = true;
+          if (ci === q.correct) {
+            btn.classList.add("tq-correct");
+            score++;
+          } else {
+            btn.classList.add("tq-wrong");
+            optsWrap.children[q.correct].classList.add("tq-correct");
+          }
+          Array.prototype.forEach.call(optsWrap.children, function (b) { b.disabled = true; });
+          explainEl.classList.remove("hidden");
+          updateScore();
+        });
+        optsWrap.appendChild(btn);
+      });
+
+      qDiv.appendChild(optsWrap);
+      qDiv.appendChild(explainEl);
+      panel.appendChild(qDiv);
+    });
+
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    function close() {
+      overlay.remove();
+      document.removeEventListener("keydown", onKey);
+    }
+    function onKey(e) {
+      if (e.key === "Escape") close();
+    }
+
+    closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+    document.addEventListener("keydown", onKey);
+  };
+})();

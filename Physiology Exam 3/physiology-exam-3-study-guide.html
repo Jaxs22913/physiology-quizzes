@@ -498,6 +498,7 @@
         <tr><td>Coagulation</td><td>Spasm → platelet plug → cascade. Extrinsic + intrinsic → factor X → thrombin → fibrin (XIII cross-links). Ca²⁺ &amp; vitamin K required; antithrombin restrains.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Blood &amp; Hemostasis', TEST_YOURSELF.s1)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 2 ============================ -->
@@ -698,6 +699,7 @@
         <tr><td>Innate vs. acquired + allergy</td><td>Innate = fast/general; acquired = specific/remembered (2nd response bigger). Allergy = IgE-coated mast cells releasing histamine on re-exposure.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Blood &amp; Immunology', TEST_YOURSELF.s2)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 3 ============================ -->
@@ -944,6 +946,7 @@
         <tr><td>Defecation</td><td>Gastrocolic reflex → mass movement. Internal sphincter (involuntary) relaxes; external sphincter (voluntary) allows delay.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — GI Physiology', TEST_YOURSELF.s3)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 4 ============================ -->
@@ -1085,6 +1088,7 @@
         <tr><td>Protein</td><td>Amino-acid pool; deamination/transamination frees the skeleton; urea cycle disposes nitrogen. Last-resort fuel. GH anabolic, cortisol catabolic.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Metabolism &amp; the Liver', TEST_YOURSELF.s4)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 5 ============================ -->
@@ -1220,6 +1224,7 @@
         <tr><td>Metabolic rate</td><td>BMR = largest slice (measured rested/fasting). + activity + thermic effect of food. ↑ thyroid, sympathetic, body size; ↓ with age. RQ: 1.0 carb, 0.7 fat.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Nutrition, Energetics &amp; Thermoregulation', TEST_YOURSELF.s5)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 6 ============================ -->
@@ -1389,6 +1394,7 @@
         <tr><td>Gas exchange / membrane</td><td>Diffusion down partial-pressure gradients; O₂ in, CO₂ out; complete with safety margin. Fast because area is huge and membrane thin; CO₂ crosses easily (soluble).</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Respiration I', TEST_YOURSELF.s6)">Test yourself! &rarr;</button>
   </section>
 
   <!-- ============================ SYSTEM 7 ============================ -->
@@ -1529,6 +1535,7 @@
         <tr><td>Tissue exchange</td><td>Low tissue PO₂ → O₂ diffuses out; high tissue PCO₂ → CO₂ diffuses in; right-shifted curve boosts unloading in active tissue.</td></tr>
       </table>
     </div>
+    <button type="button" class="test-yourself-btn" onclick="window.openTestYourself('Test yourself — Respiration II', TEST_YOURSELF.s7)">Test yourself! &rarr;</button>
   </section>
 
   <footer>
@@ -1597,6 +1604,61 @@
       });
       window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
     }
+  </script>
+  <script>
+    // High-yield "Test yourself" question sets, one per system, fed to
+    // window.openTestYourself (theme.js) by each system's button.
+    var TEST_YOURSELF = {
+      s1: [
+        { q: "Hematocrit measures:", choices: ["The amount of oxygen-carrying protein", "The percentage of blood volume made of red cells", "Total white cell count", "Plasma protein level"], correct: 1, explain: "Hematocrit is the % of blood volume that is red cells (~40–45%); hemoglobin is the carrier protein packed inside them — different things." },
+        { q: "Erythropoietin (EPO), which stimulates red cell production, is released by the:", choices: ["Liver", "Spleen", "Kidney", "Bone marrow"], correct: 2, explain: "The kidney senses low oxygen delivery and releases EPO, which drives the marrow to make more red cells — a classic negative-feedback loop." },
+        { q: "Both the extrinsic and intrinsic coagulation pathways converge on which factor?", choices: ["Factor VII", "Factor X", "Fibrinogen", "Thrombin"], correct: 1, explain: "Tissue factor (extrinsic) or collagen contact (intrinsic) both feed into factor X, which runs down the same spine to thrombin and fibrin." },
+        { q: "Vitamin K is required by the liver to:", choices: ["Store iron", "Build several clotting factors", "Make red blood cells", "Produce EPO"], correct: 1, explain: "The liver needs vitamin K to synthesize multiple coagulation factors — a key reason liver disease or vitamin K deficiency can impair clotting." },
+        { q: "Blood's three broad functions are transport, protection, and:", choices: ["Digestion", "Regulation", "Excretion", "Contraction"], correct: 1, explain: "Transport (O2, nutrients, waste), regulation (pH, temperature), and protection (immunity, clotting) are blood's three jobs." }
+      ],
+      s2: [
+        { q: "Which white cell is the “first responder” that phagocytizes bacteria and forms pus when it dies?", choices: ["Eosinophil", "Neutrophil", "Basophil", "Lymphocyte"], correct: 1, explain: "Neutrophils are the most numerous white cells and the first to swarm and eat bacteria at a site of infection." },
+        { q: "Lymph nodes function as checkpoints where:", choices: ["Red cells are filtered", "Antigens are trapped and shown to lymphocytes", "Bile is stored", "Platelets are made"], correct: 1, explain: "As lymph drains through a node, macrophages and dendritic cells trap antigens and present them to lymphocytes — surveillance built into the drainage system." },
+        { q: "Cytotoxic T-cells function to:", choices: ["Produce antibodies", "Kill virus-infected cells directly", "Trigger allergic reactions", "Filter lymph"], correct: 1, explain: "Cytotoxic T-cells directly kill infected cells, distinct from B-cells/plasma cells, which make antibodies instead." },
+        { q: "On a second exposure to the same antigen, the immune response is typically:", choices: ["Slower and smaller", "Faster and larger, due to memory", "Identical to the first", "Absent"], correct: 1, explain: "Immune memory from the first exposure means the second response is faster and bigger — the whole logic behind vaccination." },
+        { q: "In allergy, first exposure to an allergen leads the body to produce:", choices: ["IgG only", "IgE, which coats mast cells", "Complement proteins", "Erythropoietin"], correct: 1, explain: "IgE primes mast cells; on re-exposure, the allergen cross-links that IgE and triggers histamine release — allergy is acquired immunity misfiring." }
+      ],
+      s3: [
+        { q: "Which hormone is released when the duodenum senses fat/protein, triggering bile release and pancreatic enzyme secretion?", choices: ["Gastrin", "Secretin", "CCK", "Insulin"], correct: 2, explain: "CCK responds to fat/protein in the duodenum: it contracts the gallbladder and releases pancreatic enzymes, and slows gastric emptying." },
+        { q: "Digestive enzymes like pepsin and trypsin are secreted as:", choices: ["Active enzymes immediately", "Inactive zymogens, activated later", "Hormones", "Bile salts"], correct: 1, explain: "Enzymes are released as inactive zymogens and switched on only in the gut lumen — protecting the pancreas from digesting itself." },
+        { q: "Bile salts aid fat digestion by:", choices: ["Breaking chemical bonds in fat", "Emulsifying fat into smaller droplets", "Converting fat to protein", "Neutralizing stomach acid"], correct: 1, explain: "Bile salts are amphipathic and emulsify large fat globules into many small droplets, multiplying the surface area lipase can act on." },
+        { q: "Because portal blood reaches the liver first, the liver:", choices: ["Never processes toxins", "Gets first exposure to absorbed nutrients and toxins", "Only processes fat", "Bypasses metabolism entirely"], correct: 1, explain: "The portal vein routes gut blood through the liver before it reaches the rest of the body — first-pass metabolism." },
+        { q: "The external anal sphincter, unlike the internal sphincter, is:", choices: ["Smooth muscle, involuntary", "Skeletal muscle, under voluntary control", "Absent in humans", "Purely reflexive"], correct: 1, explain: "The internal sphincter relaxes reflexively on rectal stretch; the external sphincter is skeletal muscle you control, allowing voluntary delay." }
+      ],
+      s4: [
+        { q: "The vast majority of ATP from glucose is produced during:", choices: ["Glycolysis", "Oxidative phosphorylation", "Glycogen storage", "The urea cycle"], correct: 1, explain: "Glycolysis nets only 2 ATP without oxygen; oxidative phosphorylation, using oxygen, produces the overwhelming majority of ATP." },
+        { q: "Which hormone raises blood glucose by breaking down glycogen?", choices: ["Insulin", "Glucagon", "Aldosterone", "ADH"], correct: 1, explain: "Glucagon opposes insulin, raising blood glucose between meals by breaking down liver glycogen and promoting gluconeogenesis." },
+        { q: "Which lipoprotein returns excess cholesterol to the liver?", choices: ["LDL", "HDL", "Chylomicrons", "VLDL"], correct: 1, explain: "HDL is the return route — LDL = Leaves (to tissues), HDL = Heads home (to the liver)." },
+        { q: "Before an amino acid can be burned for energy, its nitrogen must first be removed via:", choices: ["Beta-oxidation", "Deamination or transamination", "Glycolysis", "Gluconeogenesis"], correct: 1, explain: "Nitrogen has to come off first; the leftover carbon skeleton then feeds energy pathways." },
+        { q: "The toxic nitrogen removed from amino acids is converted by the liver into:", choices: ["Ammonia, unchanged", "Urea", "Glucose", "Ketones"], correct: 1, explain: "The liver's urea cycle converts toxic ammonia into urea, which the kidneys then excrete." }
+      ],
+      s5: [
+        { q: "Which macronutrient provides the most calories per gram?", choices: ["Carbohydrate", "Protein", "Fat", "All are equal"], correct: 2, explain: "Fat provides about 9 kcal/g, roughly double carbohydrate or protein's ~4 kcal/g — why fat is the body's densest energy reserve." },
+        { q: "During starvation, which fuel is used up first?", choices: ["Fat", "Glycogen", "Protein", "Ketones"], correct: 1, explain: "Starvation order: glycogen first (gone within about a day), then increasingly fat, with body protein spared until late." },
+        { q: "In response to cold, the body:", choices: ["Vasodilates and sweats", "Vasoconstricts and shivers", "Increases sweating", "Decreases metabolic rate"], correct: 1, explain: "Cold triggers heat-conserving and heat-making responses: skin vasoconstriction and shivering." },
+        { q: "Fever occurs because:", choices: ["The thermostat is broken", "The hypothalamic set point is reset higher", "Temperature regulation stops entirely", "Sweating increases uncontrollably"], correct: 1, explain: "Fever isn't broken control — pyrogens push the hypothalamic set point up, so the body chills and shivers until it reaches the new target." },
+        { q: "Which typically makes up the largest portion of daily energy expenditure?", choices: ["Physical activity", "Basal metabolic rate", "Thermic effect of food", "Digestion alone"], correct: 1, explain: "BMR — the cost of just staying alive at rest — is usually the single biggest slice of a day's energy use." }
+      ],
+      s6: [
+        { q: "The diaphragm, which drives quiet breathing, is innervated by the:", choices: ["Vagus nerve", "Phrenic nerve", "Sciatic nerve", "Facial nerve"], correct: 1, explain: "The phrenic nerve, arising from the neck, drives the diaphragm — the main muscle of quiet breathing." },
+        { q: "The lungs stay inflated primarily due to:", choices: ["Positive intrapleural pressure", "Negative intrapleural pressure", "Surfactant alone", "Rib cage rigidity"], correct: 1, explain: "The pleural space is held at a slight vacuum, which opposes the lung's natural elastic recoil and keeps it open." },
+        { q: "The volume that can never be exhaled, even with maximal effort, is the:", choices: ["Tidal volume", "Expiratory reserve volume", "Residual volume", "Vital capacity"], correct: 2, explain: "Residual volume always stays behind — which is also why spirometry (which only measures moved air) can't capture it directly." },
+        { q: "Surfactant's main function is to:", choices: ["Increase surface tension", "Lower surface tension, especially in small alveoli", "Produce mucus", "Filter incoming air"], correct: 1, explain: "Surfactant lowers surface tension most where it matters most — small alveoli — keeping them from collapsing into larger ones." },
+        { q: "Gases cross the respiratory membrane by:", choices: ["Active transport", "Diffusion down partial-pressure gradients", "Facilitated transport with a carrier", "Osmosis"], correct: 1, explain: "No pump needed — O2 and CO2 each simply diffuse down their own pressure gradient across a huge, paper-thin membrane." }
+      ],
+      s7: [
+        { q: "The strongest everyday driver of ventilation is:", choices: ["Falling oxygen", "Rising CO2, sensed as H+", "Blood pressure", "Body temperature"], correct: 1, explain: "Central chemoreceptors sense CO2-driven H+ and are the main everyday driver of breathing; falling O2 is mostly an emergency backup." },
+        { q: "A “right shift” of the oxygen-hemoglobin curve (e.g. during exercise) causes hemoglobin to:", choices: ["Hold oxygen more tightly", "Release more oxygen to tissues", "Stop binding oxygen", "Bind more CO2 instead"], correct: 1, explain: "Heat, acid, and CO2 from hard-working tissue shift the curve right, loosening hemoglobin's grip so more O2 unloads exactly where it's needed." },
+        { q: "The majority (~70%) of CO2 in blood is transported as:", choices: ["Dissolved CO2", "Bicarbonate", "Carbamino compounds on hemoglobin", "Carbonic acid directly"], correct: 1, explain: "Most CO2 travels as bicarbonate, via carbonic anhydrase inside red cells — the same chemistry that links breathing to acid-base balance." },
+        { q: "Hyperventilation (blowing off CO2) tends to cause:", choices: ["Acidosis", "Alkalosis, higher pH", "No change in pH", "Hyperkalemia"], correct: 1, explain: "CO2 is an acid in disguise; blowing it off pulls the bicarbonate equation left, dropping H+ and raising pH." },
+        { q: "Compared to the kidneys, the lungs' effect on blood pH is:", choices: ["Slower but more thorough", "Fast but limited", "Nonexistent", "Only relevant during exercise"], correct: 1, explain: "The lungs adjust pH within minutes but only so far; the kidneys handle bicarbonate more slowly, over hours to days, but more thoroughly." }
+      ]
+    };
   </script>
 </body>
 </html>

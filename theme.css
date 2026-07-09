@@ -528,3 +528,104 @@
 :root[data-theme="dark"] .tts-active {
   background: rgba(255, 213, 79, .22) !important;
 }
+
+/* "Test yourself" popup quiz (window.openTestYourself in theme.js). Button
+   uses var(--acc, ...) so it auto-themes per-section on pages that define
+   that variable (the physiology field guide's per-system accent colors),
+   falling back to the site blue anywhere it isn't defined. */
+.test-yourself-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 20px 0 4px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--acc, #2563eb);
+  color: #fff;
+  font: 700 13.5px ui-sans-serif, system-ui, -apple-system, sans-serif;
+  cursor: pointer;
+}
+.test-yourself-btn:hover { filter: brightness(0.92); }
+
+.tq-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: 3000;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+.tq-overlay.open { display: flex; }
+.tq-panel {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 16px;
+  max-width: 560px;
+  width: 100%;
+  padding: 26px 24px 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+}
+:root[data-theme="dark"] .tq-panel {
+  background: #191c22;
+  color: #e5e7eb;
+}
+.tq-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #e5e7eb;
+  color: #1f2937;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+}
+:root[data-theme="dark"] .tq-close {
+  background: #2a2e37;
+  color: #e5e7eb;
+}
+.tq-title { font-size: 16px; font-weight: 800; margin: 0 26px 4px 0; }
+.tq-score { font-size: 13px; font-weight: 700; color: #6b7280; margin: 0 0 18px; }
+:root[data-theme="dark"] .tq-score { color: #9aa1ac; }
+.tq-q {
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+:root[data-theme="dark"] .tq-q { border-bottom-color: #2a2e37; }
+.tq-q:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.tq-qtext { font-size: 14.5px; font-weight: 700; margin: 0 0 10px; }
+.tq-opts { display: flex; flex-direction: column; gap: 6px; }
+.tq-opt {
+  text-align: left;
+  font: inherit;
+  font-size: 13.5px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+  cursor: pointer;
+}
+:root[data-theme="dark"] .tq-opt {
+  background: #22262e;
+  border-color: #2a2e37;
+  color: #e5e7eb;
+}
+.tq-opt:hover:not(:disabled) { border-color: #2563eb; }
+.tq-opt:disabled { cursor: default; opacity: .8; }
+.tq-opt.tq-correct { background: #dcfce7; border-color: #16a34a; color: #14532d; opacity: 1; }
+:root[data-theme="dark"] .tq-opt.tq-correct { background: #12251a; border-color: #4ade80; color: #4ade80; }
+.tq-opt.tq-wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; opacity: 1; }
+:root[data-theme="dark"] .tq-opt.tq-wrong { background: #2a1414; border-color: #f87171; color: #f87171; }
+.tq-explain { font-size: 12.5px; color: #6b7280; margin: 10px 0 0; font-style: italic; }
+:root[data-theme="dark"] .tq-explain { color: #9aa1ac; }
+.tq-explain.hidden { display: none; }
