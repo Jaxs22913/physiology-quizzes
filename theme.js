@@ -10,16 +10,28 @@
     return steps.filter(function (s) { return !s.selector || document.querySelector(s.selector); });
   }
 
+  // Neither the "want a tour?" prompt nor the running spotlight/tooltip
+  // blocks clicks to the rest of the page, so two tours can otherwise be
+  // triggered back to back (e.g. the page-load quiz tour is still up when
+  // Exam Mode's own tour fires moments later) and stack visually on top of
+  // each other. One flag, shared across every start()/run() call site,
+  // keeps only one tour on screen at a time -- a second call while one is
+  // already showing is just a no-op rather than a second overlay.
+  var active = false;
+
   function start(steps, storageKey) {
-    if (localStorage.getItem(storageKey)) return;
+    if (active || localStorage.getItem(storageKey)) return;
     var validSteps = validate(steps);
     if (!validSteps.length) return;
+    active = true;
     showPrompt(validSteps, storageKey);
   }
 
   function run(steps, storageKey) {
+    if (active) return;
     var validSteps = validate(steps);
     if (!validSteps.length) return;
+    active = true;
     runSteps(validSteps, storageKey);
   }
 
@@ -42,6 +54,7 @@
     skipBtn.addEventListener("click", function () {
       localStorage.setItem(storageKey, "1");
       overlay.remove();
+      active = false;
     });
     goBtn.addEventListener("click", function () {
       overlay.remove();
@@ -61,6 +74,7 @@
       spotlight.remove();
       tooltip.remove();
       window.removeEventListener("resize", place);
+      active = false;
     }
 
     function place() {
@@ -177,6 +191,28 @@
       text: "Click here — or press ? anytime — to see the shortcuts for picking, advancing and going back. Once you start, a live timer shows up next to it too, and it pauses automatically whenever you close the page."
     }
   ];
+
+  // Shown once, the first time a quiz page actually enters Exam Mode (not
+  // at page load like QUIZ_TOUR_STEPS above -- #flagbtn/#navbtn are hidden
+  // until then, and a tour step pointing at a hidden element looks broken).
+  // Each quiz's own applyExamModeUI() calls window.startExamModeTour()
+  // when examMode is true; this is the one shared place the step content
+  // and its own "seen" flag live, instead of duplicating both per file.
+  var EXAM_MODE_TOUR_STEPS = [
+    {
+      selector: "#flagbtn",
+      title: "Flag questions",
+      text: "Mark any question to come back to later — flagged questions are highlighted in the question grid."
+    },
+    {
+      selector: "#navbtn",
+      title: "Jump between questions",
+      text: "See every question at a glance, jump to any of them in any order, and submit your exam from here once you're done."
+    }
+  ];
+  window.startExamModeTour = function () {
+    if (window.SiteTour) window.SiteTour.start(EXAM_MODE_TOUR_STEPS, "tourSeen:exammode");
+  };
 
   function initShortcutsHelp() {
     if (!document.getElementById("timerpill")) return null;

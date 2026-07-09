@@ -212,7 +212,7 @@
         <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
         <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
+        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       </div>
       <div class="qmeta">
         <span class="tag tag-topic" id="qtopic"></span>
@@ -281,6 +281,7 @@ function applyExamModeUI(){
   document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
   document.getElementById('navbtn').classList.toggle('hidden', !examMode);
   document.getElementById('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
 }
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
@@ -349,6 +350,7 @@ function renderQ(){
   if(examMode){
     document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
     document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
     const wrap=document.getElementById('opts'); wrap.innerHTML='';
     q.opts.forEach((o,i)=>{
       const b=document.createElement('button');

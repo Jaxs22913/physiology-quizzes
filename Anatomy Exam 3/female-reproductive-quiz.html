@@ -240,7 +240,7 @@
     <div class="status">
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="score" id="timerpill">00:00</span>
-      <span class="score" id="score">Score: 0 / 0</span><button type="button" class="examctl-btn hidden" id="flagbtn">&#9873; Flag</button><button type="button" class="examctl-btn hidden" id="navbtn">&#9638; Jump</button><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+      <span class="score" id="score">Score: 0 / 0</span><button type="button" class="examctl-btn hidden" id="flagbtn">&#9873; Flag</button><button type="button" class="examctl-btn hidden" id="navbtn">&#9776; Questions<span id="navbadge"></span></button><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
     </div>
     <div class="track"><i id="bar"></i></div>
 
@@ -793,6 +793,7 @@ function applyExamModeUI(){
   el('flagbtn').classList.toggle('hidden', !examMode);
   el('navbtn').classList.toggle('hidden', !examMode);
   el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
 }
 
 el('flagbtn').addEventListener('click', toggleFlag);
@@ -928,6 +929,7 @@ function render(){
     el('nextBtn').classList.remove('hidden');
     el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
     el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " \u00b7 " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
     return;
   }
 

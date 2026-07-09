@@ -285,7 +285,7 @@
       <span class="scorepill" id="timerpill">00:00</span>
       <span class="scorepill" id="scorepill">Score: 0</span>
       <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
+      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       <button class="btn ghost" style="padding:6px 12px;font-size:12px" onclick="if(confirm('Restart this quiz from the beginning?')) startQuiz();">&#8635; Restart</button>
     </div>
     <div class="bar"><i id="barfill"></i></div>
@@ -596,6 +596,7 @@ function applyExamModeUI(){
   $("flagbtn").classList.toggle("hidden", !examMode);
   $("navbtn").classList.toggle("hidden", !examMode);
   $("timerpill").classList.add("examctl-timer");
+  if (examMode) window.startExamModeTour();
 }
 
 function resumeQuiz(){
@@ -653,6 +654,7 @@ function renderQuestion(){
   if(examMode){
     $("flagbtn").classList.toggle("flagged", flagged.has(current));
     $("flagbtn").innerHTML = flagged.has(current) ? "&#9873; Flagged" : "&#9873; Flag";
+    document.getElementById("navbadge").textContent = (questions.length-responses.length) > 0 ? " \u00b7 " + (questions.length-responses.length) + " left" : "";
     item.o.forEach((text,i)=>{
       const b = document.createElement("button");
       b.className = "opt";

@@ -119,7 +119,7 @@
         Hard time limit (1 minute per question)
       </label>
       <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
+      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       <button class="btn ghost" id="midRestart" style="padding:6px 14px;font-size:.8rem;">&#8635; Restart</button>
     </div>
     <div class="track"><i id="fill"></i></div>
@@ -204,6 +204,7 @@ function render(){
   if(examMode){
     flagBtn.classList.toggle('flagged', flagged.has(idx));
     flagBtn.innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = ((function(){var u=0;for(var i=0;i<QUESTIONS.length;i++){if(chosen[i]===undefined)u++;}return u;})()) > 0 ? " \u00b7 " + ((function(){var u=0;for(var i=0;i<QUESTIONS.length;i++){if(chosen[i]===undefined)u++;}return u;})()) + " left" : "";
     card.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(parseInt(b.dataset.i))));
     nextBtn.textContent = (idx === QUESTIONS.length-1) ? 'Submit exam \u2192' : 'Next question';
     nextBtn.classList.remove('hidden');
@@ -331,6 +332,7 @@ function applyExamModeUI(){
   flagBtn.classList.toggle('hidden', !examMode);
   navBtn.classList.toggle('hidden', !examMode);
   timerEl.classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
 }
 document.getElementById('midRestart').addEventListener('click', ()=>{
   if(!confirm('Restart this quiz from the beginning?')) return;
