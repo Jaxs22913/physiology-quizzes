@@ -1595,9 +1595,13 @@
         if (weekEl) weekEl.style.top = offset + "px";
         if (continueEl) continueEl.style.top = offset + "px";
         const guidesFloatBtn = document.getElementById("guides-btn-floating");
-        if (guidesFloatBtn) {
-          const btnHeight = guidesFloatBtn.getBoundingClientRect().height / zoom;
-          guidesFloatBtn.style.top = Math.round(offset - btnHeight - 12) + "px";
+        const searchInput = document.getElementById("site-search");
+        const searchWrap = document.querySelector(".search-wrap");
+        if (guidesFloatBtn && searchInput && searchWrap) {
+          const searchHeight = searchInput.getBoundingClientRect().height / zoom;
+          const gap = (card.getBoundingClientRect().top - searchWrap.getBoundingClientRect().bottom) / zoom;
+          guidesFloatBtn.style.height = Math.round(searchHeight) + "px";
+          guidesFloatBtn.style.top = Math.round(offset - searchHeight - gap) + "px";
         }
       }
       alignSidebars();
