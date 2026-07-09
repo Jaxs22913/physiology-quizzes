@@ -427,6 +427,8 @@
   var PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
   var PAUSE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
   var STOP = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14"/></svg>';
+  var PREV = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L9 12z"/></svg>';
+  var NEXT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="17" y="5" width="3" height="14"/><path d="M4 5v14l11-7z"/></svg>';
   var UNIT_SELECTOR = "p, li, .cap, td, .io";
   var RATES = [1, 1.25, 1.5, 1.75, 2];
 
@@ -445,11 +447,23 @@
     bar.className = "tts-bar";
     bar.id = "tts-bar";
 
+    var prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "tts-btn";
+    prevBtn.setAttribute("aria-label", "Previous paragraph");
+    prevBtn.innerHTML = PREV;
+
     var playBtn = document.createElement("button");
     playBtn.type = "button";
     playBtn.className = "tts-btn";
     playBtn.setAttribute("aria-label", "Read aloud");
     playBtn.innerHTML = PLAY;
+
+    var nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "tts-btn";
+    nextBtn.setAttribute("aria-label", "Next paragraph");
+    nextBtn.innerHTML = NEXT;
 
     var stopBtn = document.createElement("button");
     stopBtn.type = "button";
@@ -467,7 +481,9 @@
     voiceSelect.className = "tts-voice";
     voiceSelect.setAttribute("aria-label", "Voice");
 
+    bar.appendChild(prevBtn);
     bar.appendChild(playBtn);
+    bar.appendChild(nextBtn);
     bar.appendChild(stopBtn);
     bar.appendChild(rateBtn);
     bar.appendChild(voiceSelect);
@@ -527,6 +543,29 @@
         .filter(function (el) { return el.textContent.trim().length > 0; });
     }
 
+    // Click any paragraph/list item/etc. to start reading from exactly
+    // there. Guarded so a click that's actually the tail end of a text
+    // selection (drag to highlight, then mouseup fires a click too)
+    // doesn't hijack it into "jump to here" instead.
+    function wireClickToJump() {
+      queue.forEach(function (el, idx) {
+        el.classList.add("tts-clickable");
+        el.addEventListener("click", function () {
+          if (!window.matchMedia("(min-width: 900px)").matches) return;
+          if (window.getSelection().toString().length > 0) return;
+          jumpTo(idx);
+        });
+      });
+    }
+
+    function jumpTo(index) {
+      if (index < 0 || index >= queue.length) return;
+      playing = true;
+      paintPlayBtn();
+      speechSynthesis.cancel();
+      speakIndex(index);
+    }
+
     function clearHighlight() {
       var prev = wrap.querySelector(".tts-active");
       if (prev) prev.classList.remove("tts-active");
@@ -580,6 +619,12 @@
       if (playing) pause(); else play();
     });
     stopBtn.addEventListener("click", stop);
+    prevBtn.addEventListener("click", function () {
+      jumpTo(Math.max((currentIndex < 0 ? 0 : currentIndex) - 1, 0));
+    });
+    nextBtn.addEventListener("click", function () {
+      jumpTo(Math.min((currentIndex < 0 ? -1 : currentIndex) + 1, queue.length - 1));
+    });
     rateBtn.addEventListener("click", function () {
       rateIdx = (rateIdx + 1) % RATES.length;
       rateBtn.textContent = RATES[rateIdx] + "x";
@@ -587,6 +632,9 @@
     });
 
     window.addEventListener("pagehide", function () { speechSynthesis.cancel(); });
+
+    buildQueue();
+    wireClickToJump();
   }
 
   if (document.readyState === "loading") {

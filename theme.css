@@ -449,6 +449,12 @@
 }
 @media (min-width: 900px) {
   .tts-bar { display: flex; }
+  /* Click-to-jump is only wired up in JS above this same breakpoint (see
+     theme.js), so only hint it's clickable here too -- showing a pointer
+     cursor with no way to actually control playback would be misleading
+     below the breakpoint where the control bar itself is hidden. */
+  .tts-clickable { cursor: pointer; }
+  .tts-clickable:hover { outline: 2px dashed rgba(37, 99, 235, .4); outline-offset: 2px; border-radius: 4px; }
 }
 .tts-btn {
   width: 38px;
