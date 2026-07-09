@@ -384,11 +384,12 @@
     .week-empty { font-size: 14px; color: var(--muted); padding: 4px 2px; }
 
     .continue-widget { margin: 18px 0; }
+    .guides-btn-floating { display: none; }
 
-    /* Must come after both base `margin: 18px 0` rules above so it wins the
-       cascade at this breakpoint (media queries don't add specificity --
-       plain source order decides ties, and these two selectors are
-       otherwise equally specific). */
+    /* Must come after both base `margin: 18px 0`/`display: none` rules above
+       so it wins the cascade at this breakpoint (media queries don't add
+       specificity -- plain source order decides ties, and these selectors
+       are otherwise equally specific). */
     @media (min-width: 1180px) {
       .continue-widget {
         position: absolute;
@@ -404,6 +405,14 @@
         width: 260px;
         margin: 0;
       }
+      .guides-btn-floating {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        left: calc(100% + 24px);
+        width: 260px;
+      }
+      .search-wrap .guides-btn { display: none; }
     }
     .continue-widget.hidden { display: none; }
     .continue-title {
@@ -883,6 +892,8 @@
       <a href="guides.html" class="guides-btn">Guides &amp; Study Aids</a>
       <div id="search-results" class="search-results hidden"></div>
     </div>
+
+    <a href="guides.html" class="guides-btn guides-btn-floating" id="guides-btn-floating">Guides &amp; Study Aids</a>
 
     <div class="mobile-widgets-row">
       <div id="week-widget" class="card week-widget">
@@ -1583,6 +1594,11 @@
         const continueEl = document.getElementById("continue-widget");
         if (weekEl) weekEl.style.top = offset + "px";
         if (continueEl) continueEl.style.top = offset + "px";
+        const guidesFloatBtn = document.getElementById("guides-btn-floating");
+        if (guidesFloatBtn) {
+          const btnHeight = guidesFloatBtn.getBoundingClientRect().height / zoom;
+          guidesFloatBtn.style.top = Math.round(offset - btnHeight - 12) + "px";
+        }
       }
       alignSidebars();
       window.addEventListener("resize", alignSidebars);
