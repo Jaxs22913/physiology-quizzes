@@ -429,7 +429,10 @@
   var STOP = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14"/></svg>';
   var PREV = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L9 12z"/></svg>';
   var NEXT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="17" y="5" width="3" height="14"/><path d="M4 5v14l11-7z"/></svg>';
-  var UNIT_SELECTOR = "p, li, .cap, td, .io";
+  // .cap/.io are the Physiology guide's caption/objective classes; .figcap/
+  // .callout are the Anatomy guide's equivalents (same idea, different
+  // names -- each guide's own markup picks whichever it already uses).
+  var UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io";
   var RATES = [1, 1.25, 1.5, 1.75, 2];
 
   // Notation that reads fine on screen (arrows, chemistry sub/superscripts,
