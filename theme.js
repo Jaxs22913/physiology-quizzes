@@ -330,6 +330,25 @@
       }
     }
 
+    // Exam Mode: no per-question feedback until a real submit, free
+    // navigation, flagging, a question-jump grid. Opt-in per quiz page via
+    // #exam-mode-toggle existing at all (same gating pattern as shuffle).
+    if (document.getElementById("exam-mode-toggle")) {
+      var examModeToggle = makeToggleRow(
+        "Exam Mode by default",
+        localStorage.getItem("examModeDefault") === "1",
+        function (checked) { localStorage.setItem("examModeDefault", checked ? "1" : "0"); }
+      );
+      panel.appendChild(examModeToggle.row);
+
+      var hardCutoffToggle = makeToggleRow(
+        "Hard time limit by default (1 min/question)",
+        localStorage.getItem("hardCutoffDefault") === "1",
+        function (checked) { localStorage.setItem("hardCutoffDefault", checked ? "1" : "0"); }
+      );
+      panel.appendChild(hardCutoffToggle.row);
+    }
+
     overlay.appendChild(panel);
     document.body.appendChild(overlay);
 
@@ -399,6 +418,15 @@
         setTimeout(function () {
           window.SiteTour.start(QUIZ_TOUR_STEPS, "tourSeen:quiz");
         }, 700);
+      }
+
+      var examModeCb = document.getElementById("exam-mode-toggle");
+      if (examModeCb && localStorage.getItem("examModeDefault") === "1") {
+        examModeCb.checked = true;
+      }
+      var hardCutoffCb = document.getElementById("hard-cutoff-toggle");
+      if (hardCutoffCb && localStorage.getItem("hardCutoffDefault") === "1") {
+        hardCutoffCb.checked = true;
       }
     }
 
@@ -850,5 +878,91 @@ window.openTestYourself = (function () {
     closeBtn.addEventListener("click", close);
     overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
     document.addEventListener("keydown", onKey);
+  };
+})();
+
+// Exam Mode's question-jump grid, shared across every quiz page rather than
+// reimplemented per file (see feedback_exam_mode memory) -- a page supplies
+// per-question state via getStatus(i) and jump/submit callbacks, this just
+// renders the grid and wires clicks. Generic engine, page-specific data,
+// same split as openTestYourself/SiteTour above.
+window.openQuestionNav = (function () {
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  return function openQuestionNav(opts) {
+    var overlay = el("div", "qnav-overlay open");
+    var panel = el("div", "qnav-panel");
+
+    var closeBtn = el("button", "tq-close", "×");
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close");
+
+    var heading = el("p", "tq-title", "Jump to question");
+    var summary = el("p", "qnav-summary");
+
+    panel.appendChild(closeBtn);
+    panel.appendChild(heading);
+    panel.appendChild(summary);
+
+    var legend = el("div", "qnav-legend");
+    legend.appendChild(el("span", "qnav-legend-item", "■ Answered"));
+    legend.appendChild(el("span", "qnav-legend-item unanswered", "□ Unanswered"));
+    legend.appendChild(el("span", "qnav-legend-item flagged", "⚑ Flagged"));
+    panel.appendChild(legend);
+
+    var grid = el("div", "qnav-grid");
+    var buttons = [];
+    for (var i = 0; i < opts.total; i++) {
+      var b = el("button", "qnav-item", String(i + 1));
+      b.type = "button";
+      (function (idx) {
+        b.addEventListener("click", function () { close(); opts.onJump(idx); });
+      })(i);
+      buttons.push(b);
+      grid.appendChild(b);
+    }
+    panel.appendChild(grid);
+
+    function paint() {
+      var unanswered = 0, flagged = 0;
+      for (var i = 0; i < opts.total; i++) {
+        var st = opts.getStatus(i) || {};
+        var cls = "qnav-item";
+        if (i === opts.current) cls += " current";
+        cls += st.answered ? " answered" : " unanswered";
+        if (st.flagged) { cls += " flagged"; flagged++; }
+        if (!st.answered) unanswered++;
+        buttons[i].className = cls;
+      }
+      summary.textContent = unanswered + " unanswered, " + flagged + " flagged";
+    }
+    paint();
+
+    var submitBtn = el("button", "btn qnav-submit", "Submit exam →");
+    submitBtn.type = "button";
+    submitBtn.addEventListener("click", function () { close(); opts.onSubmit(); });
+    panel.appendChild(submitBtn);
+
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    function close() {
+      overlay.remove();
+      document.removeEventListener("keydown", onKey);
+    }
+    function onKey(e) {
+      if (e.key === "Escape") close();
+    }
+
+    closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+    document.addEventListener("keydown", onKey);
+
+    return { close: close };
   };
 })();

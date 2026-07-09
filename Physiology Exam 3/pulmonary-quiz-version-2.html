@@ -48,6 +48,7 @@
     --card:#ffffff; --page:#f4f6fc;
   }
   *{box-sizing:border-box}
+  .hidden{display:none}
   body{margin:0;background:var(--page);color:var(--ink);
     font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
   .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
@@ -90,6 +91,8 @@
     color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
     justify-content:center;border:1px solid var(--line)}
   .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
   .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
   .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
   .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
@@ -177,9 +180,17 @@
         <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
       </div>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
     </label>
     <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
   </div>
@@ -191,6 +202,8 @@
         <div class="bar"><span id="barfill"></span></div>
         <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
+        <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
       </div>
       <div class="qmeta">
         <span class="tag tag-topic" id="qtopic"></span>
@@ -222,6 +235,7 @@
 const QUESTIONS = [{"topic": "Respiration I", "io": "a — Muscles of respiration", "q": "During heavy exercise, forced expiration becomes active and is driven largely by...", "opts": [["the release of surfactant that forces air out under these conditions", "Incorrect. Surfactant lowers surface tension; it does not drive expiration, which uses expiratory muscles."], ["contraction of the diaphragm to push air outward", "Incorrect. Diaphragm contraction produces inspiration; forced expiration uses abdominal and internal intercostal muscles."], ["contraction of the abdominal and internal intercostal muscles", "Correct. Whereas quiet expiration is passive, forced expiration recruits the abdominal muscles (which push the diaphragm upward) and the internal intercostals (which pull the ribs down), actively decreasing thoracic volume to expel air rapidly during exertion."], ["relaxation of the diaphragm alone, as in quiet breathing", "Incorrect. Passive recoil suffices for quiet breathing, but forced expiration additionally requires active abdominal and internal intercostal contraction."]], "c": 2, "cite": "Pulmonary I & II, slides 12-14"}, {"topic": "Respiration I", "io": "a — Muscles of respiration", "q": "External respiration and internal respiration refer, respectively, to gas exchange...", "opts": [["only within the airways, and only within the bloodstream", "Incorrect. Both terms describe gas exchange across membranes (lung and tissue), not events confined to airways or blood."], ["between alveoli and blood, and between blood and the body's tissues", "Correct. External respiration is the exchange of oxygen and carbon dioxide between the alveoli and the pulmonary blood, while internal respiration is the exchange between the systemic blood and the metabolizing tissues; both rely on diffusion down partial-pressure gradients."], ["between the nose and the trachea, and within the alveoli", "Incorrect. External and internal respiration refer to alveolar-capillary and tissue-capillary exchange, not to conducting airway locations."], ["between blood and tissues, and between alveoli and blood as a general rule", "Incorrect. This reverses the terms: external is alveoli-to-blood, and internal is blood-to-tissue."]], "c": 1, "cite": "Pulmonary I & II, slides 3-6, 71-74"}, {"topic": "Respiration I", "io": "a — Muscles of respiration", "q": "The principal muscle responsible for quiet inspiration is the...", "opts": [["diaphragm, whose contraction increases the vertical dimension of the thorax", "Correct. During quiet breathing the diaphragm does most of the work; its contraction flattens the dome and lengthens the thoracic cavity, lowering intrapleural and alveolar pressure so air flows in."], ["sternocleidomastoid muscle, which is said to be the primary driver at rest", "Incorrect. The sternocleidomastoid is an accessory muscle used in forced breathing, not the primary muscle at rest."], ["internal intercostal group, which actively pulls the ribs downward", "Incorrect. Internal intercostals assist forced expiration by pulling ribs down; they are not the main muscle of quiet inspiration."], ["abdominal wall, which pushes the diaphragm upward to draw in air", "Incorrect. Abdominal contraction aids forced expiration by pushing the diaphragm up, the opposite of inspiration."]], "c": 0, "cite": "Pulmonary I & II, slides 12-14"}, {"topic": "Respiration I", "io": "b — Compliance & elasticity", "q": "If air enters the pleural space and abolishes the negative pressure, the lung tends to...", "opts": [["recoil and collapse because nothing opposes its elastic pull", "Correct. The lung's inherent elastic recoil pulls it inward; the negative pleural pressure normally counteracts this. If air enters the pleural space (pneumothorax) and abolishes that negative pressure, the recoil is unopposed and the lung collapses."], ["remain unchanged since pleural pressure is irrelevant", "Incorrect. Pleural pressure is essential for keeping the lung inflated, so its loss is not irrelevant."], ["stiffen noticeably and become nearly impossible to compress", "Incorrect. Losing pleural negativity leads to collapse, not stiffening."], ["expand further because recoil is now unopposed", "Incorrect. Unopposed recoil collapses the lung; it does not expand it."]], "c": 0, "cite": "Pulmonary I & II, slides 19, 50"}, {"topic": "Respiration I", "io": "b — Compliance & elasticity", "q": "Surface tension at the air-water interface lining the alveoli tends to...", "opts": [["increase lung compliance by making expansion easier", "Surface tension reduces compliance; surfactant is what eases expansion."], ["draw the alveolar walls together and favor collapse", "Correct: surface tension pulls the liquid-lined walls inward, favoring alveolar collapse unless surfactant opposes it."], ["have no measurable effect on alveolar stability at any size", "Surface tension strongly affects stability, especially in small alveoli."], ["hold the alveoli open by pushing their walls apart", "Surface tension pulls walls together; it does not push them apart."]], "c": 1, "cite": "Pulmonary I & II, slides 19-20"}, {"topic": "Respiration I", "io": "b — Compliance & elasticity", "q": "By the law of Laplace, without surfactant a small alveolus would tend to...", "opts": [["collapse and empty into a connected larger alveolus", "Correct. Laplace's law says that for a given surface tension, smaller alveoli generate higher collapsing pressure; without surfactant, a small alveolus would empty into a larger connected one. Surfactant lowers tension more in small alveoli, stabilizing them."], ["become completely rigid and unable to change size", "Incorrect. The issue is instability and collapse, not rigidity."], ["expand indefinitely at the expense of larger alveoli", "Incorrect. The small alveolus tends to collapse, not expand; it would empty into the larger one."], ["generate less collapsing pressure than a large alveolus", "Incorrect. Smaller radius means greater collapsing pressure by Laplace's law, not less."]], "c": 0, "cite": "Pulmonary I & II, slides 22-24"}, {"topic": "Respiration I", "io": "d — Function of surfactant", "q": "Pulmonary surfactant is produced by...", "opts": [["type I alveolar cells, forming the main gas-exchange surface", "Incorrect. Type I cells form the thin gas-exchange surface but do not make surfactant; that is the type II cell's job."], ["goblet cells lining the large conducting airways under these conditions", "Incorrect. Goblet cells secrete mucus in the airways, not surfactant in the alveoli."], ["type II alveolar cells and lowers surface tension in the alveoli", "Correct. Type II alveolar (pneumocyte) cells secrete surfactant, a phospholipid-rich material that lowers alveolar surface tension, stabilizes alveoli of different sizes, and reduces the work of breathing."], ["alveolar macrophages that also clear inhaled debris", "Incorrect. Macrophages clear debris and microbes but do not secrete surfactant."]], "c": 2, "cite": "Pulmonary I & II, slides 22-23"}, {"topic": "Respiration I", "io": "d — Function of surfactant", "q": "Surfactant is chiefly composed of...", "opts": [["phospholipid, which interposes between water molecules to reduce surface tension", "Correct. Surfactant is largely phospholipid (notably dipalmitoylphosphatidylcholine); its molecules insert among the water molecules lining the alveoli, weakening their cohesive attraction and thereby lowering surface tension."], ["cartilage, which stiffens the alveolar wall for support", "Incorrect. Cartilage supports large airways; surfactant is a phospholipid film, not structural cartilage."], ["hemoglobin, which binds oxygen within the alveolus under most conditions in the body", "Incorrect. Hemoglobin is inside red cells; surfactant is a phospholipid secreted onto the alveolar surface."], ["mucus, which traps inhaled particles in the alveoli", "Incorrect. Mucus lines conducting airways to trap particles; surfactant is a phospholipid that lowers surface tension."]], "c": 0, "cite": "Pulmonary I & II, slides 22-23"}, {"topic": "Respiration I", "io": "c — Lung capacities & volumes", "q": "Alveolar ventilation is always less than total minute ventilation because...", "opts": [["the alveoli are able to exchange gas only during the expiratory phase", "Incorrect. Gas exchange proceeds continuously; the reduction is due to dead space, not a timing restriction."], ["part of each breath fills conducting airways that do no gas exchange", "Correct. Each tidal breath must first fill the anatomic dead space (~150 mL of conducting airway), and that air never reaches the alveoli for exchange, so the ventilation available for gas exchange (alveolar ventilation) is less than the total minute ventilation."], ["oxygen is consumed before air can reach the alveoli", "Incorrect. Oxygen is not consumed in the airways before reaching alveoli; the shortfall is dead-space air."], ["dead-space air is the only air that reaches the blood", "Incorrect and reversed: dead-space air is exactly the air that does not reach the blood."]], "c": 1, "cite": "Pulmonary I & II, slides 32-35"}, {"topic": "Respiration I", "io": "c — Lung capacities & volumes", "q": "Residual volume cannot be measured by ordinary spirometry because it is the air that...", "opts": [["is exhaled with every ordinary quiet breath during this process", "Incorrect. That is tidal volume, which spirometry measures directly."], ["moves through the conducting airways each minute", "Incorrect. That relates to ventilation, not to the residual volume that spirometry misses."], ["can be forcibly inhaled beyond a normal breath", "Incorrect. That is inspiratory reserve volume, measurable by spirometry."], ["remains in the lungs and can never be voluntarily exhaled", "Correct. Residual volume is the air left in the lungs even after a maximal expiration; since it can never be exhaled, spirometry (which measures moved air) cannot capture it, and indirect methods such as gas dilution are required."]], "c": 3, "cite": "Pulmonary I & II, slides 30-31"}, {"topic": "Respiration I", "io": "c — Lung capacities & volumes", "q": "Alveolar ventilation is a better measure of effective breathing than minute ventilation because it...", "opts": [["accounts for dead space, reflecting only air that reaches the alveoli", "Correct. Alveolar ventilation subtracts the dead-space volume (air in conducting airways that never reaches alveoli) from each breath, so it reflects only the air available for gas exchange; this is why slow, deep breathing can be more effective than rapid, shallow breathing at the same minute ventilation."], ["ignores the tidal volume entirely in its calculation as a general rule", "Incorrect. Alveolar ventilation is based on tidal volume minus dead space times rate; it does not ignore tidal volume."], ["measures only the residual volume left after expiration", "Incorrect. Alveolar ventilation concerns the fresh air reaching alveoli per minute, not residual volume."], ["counts all air moved, including that filling the airways", "Incorrect. Counting all air (including dead space) is minute ventilation; alveolar ventilation excludes dead space."]], "c": 0, "cite": "Pulmonary I & II, slides 32-35"}, {"topic": "Respiration I", "io": "e — Gas exchange in the lungs", "q": "Oxygen moves from alveolar air into pulmonary capillary blood because...", "opts": [["the blood actively pumps oxygen out of the alveolus as it is usually described here", "Incorrect. Oxygen crosses by passive diffusion down a partial-pressure gradient, not by active pumping."], ["carbon dioxide drags oxygen along with it into the blood", "Incorrect. Each gas diffuses independently down its own gradient; CO2 does not drag oxygen inward."], ["alveolar oxygen partial pressure is higher than that in the arriving blood", "Correct. Gas exchange is driven by partial-pressure gradients: alveolar PO2 (~100 mmHg) exceeds the PO2 of the venous blood entering the pulmonary capillaries (~40 mmHg), so oxygen diffuses down its gradient into the blood until equilibration."], ["alveolar oxygen pressure is lower than that in the blood", "Incorrect. If alveolar PO2 were lower, oxygen would leave the blood; in fact alveolar PO2 is higher, so oxygen enters the blood."]], "c": 2, "cite": "Pulmonary I & II, slides 61-66"}, {"topic": "Respiration I", "io": "e — Gas exchange in the lungs", "q": "In the upright lung, ventilation and perfusion are not perfectly matched; at the apex compared with the base there is...", "opts": [["exactly equal ventilation and perfusion throughout as a general rule", "Incorrect. V/Q varies regionally in the upright lung; it is not uniform from apex to base."], ["no ventilation and no perfusion reaching that region", "Incorrect. The apex is both ventilated and perfused, just with a higher V/Q ratio than the base."], ["relatively more perfusion than ventilation than the base", "Incorrect. The apex has relatively less perfusion; it is the base that has proportionally more perfusion."], ["relatively more ventilation than perfusion (a higher V/Q ratio)", "Correct. Gravity makes both ventilation and perfusion greater at the base, but perfusion increases more steeply, so the apex has a relatively higher ventilation-to-perfusion ratio, while the base has a relatively lower one. This regional variation is normal in the upright lung."]], "c": 3, "cite": "Pulmonary I & II, slides 64-66"}, {"topic": "Respiration I", "io": "f — Respiratory membrane", "q": "The respiratory membrane is well suited to gas exchange because it is...", "opts": [["covered by thick mucus that traps the diffusing gases", "Incorrect. Mucus lines conducting airways; the alveolar membrane is thin and largely free of thick mucus for efficient exchange."], ["extremely thin, so gases have only a very short distance to diffuse", "Correct. The respiratory membrane is only about 0.2 to 0.6 micrometers thick, giving oxygen and carbon dioxide a very short diffusion path; combined with its enormous surface area, this thinness makes gas exchange rapid and efficient."], ["quite thick, which slows diffusion but filters the air", "Incorrect. A thick membrane would slow diffusion; the respiratory membrane is thin precisely to speed exchange."], ["lined with cartilage that supports rapid exchange in the body's tissues", "Incorrect. Cartilage supports large airways, not the thin alveolar exchange surface."]], "c": 1, "cite": "Pulmonary I & II, slides 57-60"}, {"topic": "Respiration I", "io": "f — Respiratory membrane", "q": "The anatomic dead space refers to...", "opts": [["the alveoli that receive air but no blood flow", "Incorrect. That describes alveolar (physiologic) dead space from a ventilation-perfusion mismatch, not anatomic dead space."], ["the total volume of air moved in one minute", "Incorrect. That is minute ventilation; dead space is the non-exchanging airway volume."], ["the residual air that can never be exhaled during this process", "Incorrect. That is residual volume; dead space refers to airways that do no gas exchange."], ["the volume of conducting airways where no gas exchange occurs", "Correct. Anatomic dead space is the air filling the conducting zone — nose, trachea, and bronchi — which has no alveoli and therefore participates in no gas exchange; only the air reaching the alveoli contributes to gas exchange."]], "c": 3, "cite": "Pulmonary I & II, slides 32-35"}, {"topic": "Respiration II", "io": "a — Respiratory centers", "q": "The peripheral chemoreceptors' oxygen response becomes an important drive to breathe mainly when...", "opts": [["blood pressure rises at the carotid sinus", "Incorrect. Pressure changes are sensed by baroreceptors, not the oxygen-sensing chemoreceptors."], ["carbon dioxide is the only gas that has changed", "Incorrect. CO2 changes are sensed mainly by central chemoreceptors; the peripheral oxygen response is about low PO2."], ["arterial oxygen falls to notably low levels", "Correct. The carotid and aortic bodies respond to low arterial PO2, but this hypoxic drive becomes significant only when PO2 falls well below normal (roughly under 60 mmHg); under normal conditions, CO2 is the dominant stimulus and oxygen contributes little."], ["arterial oxygen is completely normal", "Incorrect. At normal oxygen levels the hypoxic drive is minimal; it matters when oxygen falls markedly."]], "c": 2, "cite": "Pulmonary I & II, slides 95, 99"}, {"topic": "Respiration II", "io": "a — Respiratory centers", "q": "The carotid and aortic bodies are especially important for detecting...", "opts": [["a rise in brain interstitial carbon dioxide concentration", "Brain CO2 is chiefly sensed by central chemoreceptors."], ["a fall in the arterial partial pressure of oxygen", "Correct: peripheral chemoreceptors in the carotid and aortic bodies are the main sensors of low arterial oxygen."], ["the pH of the cerebrospinal fluid around the medulla", "CSF pH is the domain of central chemoreceptors."], ["stretch of the airway smooth muscle during inspiration", "Airway stretch is detected by pulmonary stretch receptors, not chemoreceptors."]], "c": 1, "cite": "Pulmonary I & II, slides 95, 97"}, {"topic": "Respiration II", "io": "a — Respiratory centers", "q": "The Hering-Breuer inflation reflex helps protect the lungs by...", "opts": [["inhibiting further inspiration when stretch receptors sense large inflation", "Correct. Stretch receptors in the airway walls, when strongly stimulated by large lung inflation, send signals that inhibit the inspiratory center; this reflex helps prevent overinflation of the lungs, mainly during deep breathing."], ["forcing a deeper breath whenever the lungs are stretched", "Incorrect. The reflex limits further inspiration on large inflation; it does not force deeper breaths."], ["contracting the diaphragm independently of the brainstem", "Incorrect. The reflex modulates the central inspiratory drive; it does not bypass the brainstem to contract the diaphragm directly."], ["sensing arterial oxygen and driving ventilation during this particular process", "Incorrect. Oxygen sensing is done by peripheral chemoreceptors; the Hering-Breuer reflex responds to lung stretch."]], "c": 0, "cite": "Pulmonary I & II, slides 89-90"}, {"topic": "Respiration II", "io": "b — Oxygen transport", "q": "The Bohr effect describes how increased CO2 and H+ in active tissue...", "opts": [["convert oxygen into bicarbonate for transport in the body under most conditions", "Incorrect. Bicarbonate is a CO2 transport form; the Bohr effect concerns oxygen affinity, not oxygen conversion."], ["prevent hemoglobin from binding any oxygen in the lungs", "Incorrect. The Bohr effect facilitates unloading at tissues but does not block loading in the lungs."], ["shift the curve leftward, making hemoglobin hold oxygen tightly", "Incorrect. A leftward shift (higher affinity) is the opposite of the Bohr effect and would impair unloading at tissues."], ["shift the curve rightward, helping hemoglobin release more oxygen", "Correct. The Bohr effect is the rightward shift of the oxygen-hemoglobin curve caused by higher CO2, higher H+ (lower pH), and higher temperature in metabolically active tissue; the reduced affinity promotes oxygen unloading exactly where it is needed."]], "c": 3, "cite": "Pulmonary I & II, slide 81"}, {"topic": "Respiration II", "io": "b — Oxygen transport", "q": "The reason hemoglobin is essential for oxygen transport is that, without it,...", "opts": [["carbon dioxide would be unable to leave the tissues", "Incorrect. Hemoglobin's essential role here concerns oxygen transport; CO2 removal has its own mechanisms."], ["the small amount of oxygen dissolved in plasma could not meet tissue demands", "Correct. Oxygen is poorly soluble, so plasma alone carries only a tiny fraction of the body's needs; hemoglobin increases the blood's oxygen-carrying capacity many-fold by binding oxygen, which is why anemia (low hemoglobin) so seriously reduces oxygen delivery."], ["oxygen could not diffuse across the respiratory membrane", "Incorrect. Oxygen still diffuses across the membrane; the problem without hemoglobin is inadequate carrying capacity in the blood."], ["the lungs would be unable to ventilate at all during this process in the tissues", "Incorrect. Ventilation does not depend on hemoglobin; hemoglobin is needed to carry oxygen in the blood."]], "c": 1, "cite": "Pulmonary I & II, slides 76-77"}, {"topic": "Respiration II", "io": "b — Oxygen transport", "q": "The P50 of the oxygen-hemoglobin curve is the partial pressure at which hemoglobin is...", "opts": [["binding carbon dioxide rather than oxygen as it typically occurs here", "Incorrect. P50 concerns oxygen saturation of hemoglobin, not carbon dioxide binding."], ["fully saturated with the maximum amount of oxygen", "Incorrect. P50 marks 50% saturation, not full saturation."], ["50% saturated, serving as a measure of its affinity for oxygen", "Correct. P50 is the PO2 at which hemoglobin is half saturated; a higher P50 means lower affinity (the curve is shifted right, favoring unloading), and a lower P50 means higher affinity (left shift), so P50 is a convenient index of oxygen affinity."], ["completely stripped of all of its bound oxygen", "Incorrect. P50 is the half-saturation point, not the point of zero saturation."]], "c": 2, "cite": "Pulmonary I & II, slides 78-81"}, {"topic": "Respiration II", "io": "e — Gas exchange at the tissue level", "q": "During exercise, working muscle extracts more oxygen from each unit of blood because...", "opts": [["low tissue PO2 and a rightward curve shift favor greater unloading", "Correct. Exercising muscle has a very low PO2 and generates heat, CO2, and acid that shift the oxygen-hemoglobin curve rightward; together these steepen the gradient and lower hemoglobin's affinity, so much more oxygen is unloaded per unit of blood than at rest."], ["hemoglobin's affinity for oxygen rises in active tissue", "Incorrect. Affinity falls (rightward shift) in active tissue, which promotes unloading; a rise would hinder it."], ["oxygen is actively pumped back out into the blood from the muscle", "Incorrect. Oxygen diffuses from blood into muscle down its gradient; it is not pumped back into blood."], ["blood flow to the muscle stops during contraction under these conditions", "Incorrect. Blood flow to exercising muscle increases greatly; it does not stop."]], "c": 0, "cite": "Pulmonary I & II, slides 80-81"}, {"topic": "Respiration II", "io": "e — Gas exchange at the tissue level", "q": "A rightward shift of the oxygen-hemoglobin dissociation curve in exercising muscle...", "opts": [["occurs only in the lungs to speed the loading of oxygen", "The rightward shift favors unloading at tissues, not loading in lungs."], ["prevents any oxygen from being released to the surrounding tissues", "It does the opposite, improving oxygen delivery to tissues."], ["increases hemoglobin's oxygen affinity so it holds oxygen more tightly", "A rightward shift decreases affinity; increased affinity is a leftward shift."], ["promotes oxygen unloading where tissue CO2, acid, and temperature are high", "Correct: a rightward shift lowers affinity, enhancing oxygen release in active tissues with high CO2, low pH, and heat."]], "c": 3, "cite": "Pulmonary I & II, slide 81"}, {"topic": "Respiration II", "io": "e — Gas exchange at the tissue level", "q": "Factors such as increased temperature, CO2, and acidity in metabolically active tissue tend to...", "opts": [["increase hemoglobin's affinity so it retains its oxygen", "Incorrect. They decrease affinity (rightward shift), the opposite of retaining oxygen."], ["block hemoglobin from picking up any oxygen at all in the lungs", "Incorrect. In the lungs, conditions favor loading; these tissue-level factors govern unloading, not blocking uptake."], ["reduce oxygen unloading, sparing oxygen for later use", "Incorrect. They increase unloading, not reduce it; the point is to deliver more oxygen to active tissue."], ["promote oxygen unloading from hemoglobin where it is most needed", "Correct. These conditions mark actively metabolizing tissue and shift the oxygen-hemoglobin curve rightward, lowering affinity so hemoglobin releases more oxygen precisely at the tissues that are working hardest."]], "c": 3, "cite": "Pulmonary I & II, slides 80-81"}, {"topic": "Respiration II", "io": "c — Carbon dioxide transport", "q": "Carbon dioxide is transported in blood in three forms; the largest fraction travels as...", "opts": [["dissolved CO2 gas in the plasma", "Incorrect. Only a small fraction (~7%) travels dissolved; bicarbonate is the dominant form."], ["carbaminohemoglobin bound to globin", "Incorrect. Carbamino compounds carry roughly a quarter of CO2, less than bicarbonate."], ["bicarbonate ions dissolved in the plasma", "Correct. The majority of CO2 (about 70%) is carried as bicarbonate formed after carbonic anhydrase hydrates CO2 in red cells; smaller fractions travel bound to hemoglobin (carbamino, ~23%) or dissolved as free CO2 (~7%)."], ["carbonic acid contained within the red blood cells", "Incorrect. Carbonic acid is a transient intermediate that dissociates to bicarbonate; it is not the main transport form."]], "c": 2, "cite": "Pulmonary I & II, slides 83-86"}, {"topic": "Respiration II", "io": "c — Carbon dioxide transport", "q": "Carbonic anhydrase speeds CO2 transport because it...", "opts": [["rapidly converts CO2 and water into carbonic acid inside red cells", "Correct. Carbonic anhydrase in red cells greatly accelerates the hydration of CO2 to carbonic acid, which then dissociates to bicarbonate and H+; this lets the blood carry the large majority of its CO2 as bicarbonate and is central to CO2 transport and acid-base handling."], ["binds the CO2 molecule directly onto the heme iron of hemoglobin", "Incorrect. Carbonic anhydrase catalyzes CO2 hydration; it does not bind CO2 to heme (oxygen binds there)."], ["pumps bicarbonate out of the plasma into the lungs", "Incorrect. Bicarbonate is not pumped into the lungs; in the lungs the reactions reverse to release CO2."], ["destroys excess CO2 before it can be transported during this particular process", "Incorrect. Carbonic anhydrase converts CO2 for transport; it does not destroy it."]], "c": 0, "cite": "Pulmonary I & II, slides 83-87"}, {"topic": "Respiration II", "io": "c — Carbon dioxide transport", "q": "A portion of CO2 is carried bound to hemoglobin as carbaminohemoglobin; this binding occurs at...", "opts": [["the plasma proteins outside the red cell", "Incorrect. Carbaminohemoglobin refers to CO2 bound to hemoglobin inside the red cell, not to plasma proteins."], ["the globin portion, not the heme iron where oxygen binds", "Correct. Carbamino CO2 attaches to amino groups on the globin chains of hemoglobin, a different site from the heme iron that binds oxygen; this is why hemoglobin can carry oxygen and some CO2 simultaneously."], ["the same heme iron site used by oxygen", "Incorrect. CO2 binds globin (as carbamino), whereas oxygen binds heme iron; they use different sites."], ["the carbonic anhydrase enzyme molecule itself within the cell", "Incorrect. Carbonic anhydrase catalyzes CO2 hydration; carbamino CO2 is bound to the globin chains of hemoglobin."]], "c": 1, "cite": "Pulmonary I & II, slides 83-86"}, {"topic": "Respiration II", "io": "d — Respiratory influence on pH", "q": "The bicarbonate buffer system links respiration to acid-base balance because...", "opts": [["the buffer works only in the kidney and not in the blood under most conditions in the body", "Incorrect. The bicarbonate system operates in the blood and links to respiration through CO2, with renal support."], ["hemoglobin converts bicarbonate into oxygen for transport", "Incorrect. Hemoglobin carries oxygen; it does not convert bicarbonate into oxygen."], ["bicarbonate is exhaled directly by the lungs to remove acid", "Incorrect. The lungs remove CO2, not bicarbonate; bicarbonate is regulated by the kidneys."], ["CO2 combines with water to form carbonic acid, which dissociates to H+ and bicarbonate", "Correct. CO2 + H2O reversibly forms carbonic acid, which dissociates into H+ and bicarbonate. Because the lungs control CO2, changing ventilation shifts this equilibrium and thus blood pH — the mechanistic link between breathing and acid-base status."]], "c": 3, "cite": "Pulmonary I & II, slides 91-92, 100"}, {"topic": "Respiration II", "io": "d — Respiratory influence on pH", "q": "Acidosis and alkalosis are defined by blood pH such that acidosis is a...", "opts": [["shift toward a higher-than-normal pH (fewer hydrogen ions)", "Incorrect. That describes alkalosis; acidosis is a shift toward lower pH with more hydrogen ions."], ["shift toward a lower-than-normal pH (more hydrogen ions)", "Correct. Acidosis refers to a process lowering blood pH below the normal range (an increase in hydrogen ion concentration), while alkalosis refers to a process raising pH above normal; each can arise from respiratory (CO2) or metabolic causes."], ["state in which blood pH cannot change at all", "Incorrect. Acidosis specifically involves a decrease in pH; pH is not fixed."], ["condition affecting only oxygen levels, not pH", "Incorrect. Acidosis is defined by a fall in pH (rise in H+), which is precisely a pH change."]], "c": 1, "cite": "Pulmonary I & II, slides 91-92, 100"}, {"topic": "Respiration II", "io": "d — Respiratory influence on pH", "q": "A disturbance is called a respiratory (rather than metabolic) acid-base problem when it originates from...", "opts": [["an accumulation of lactic acid during exercise", "Incorrect. Lactic acid accumulation is a metabolic acidosis; respiratory disturbances involve CO2."], ["the loss of stomach acid through vomiting", "Incorrect. Loss of gastric acid causes a metabolic alkalosis; respiratory disturbances are CO2-driven."], ["a change in CO2 caused by altered ventilation", "Correct. Respiratory acid-base disturbances arise from changes in CO2 due to hypo- or hyperventilation (CO2 retention lowers pH; excess CO2 removal raises it), whereas metabolic disturbances arise from changes in bicarbonate or fixed acids independent of CO2."], ["a change in bicarbonate produced by the kidneys", "Incorrect. Bicarbonate changes define metabolic disturbances; respiratory ones stem from CO2 changes."]], "c": 2, "cite": "Pulmonary I & II, slides 91-92, 100"}];
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -239,13 +253,29 @@ function fmtTime(ms){
   const pad=n=>String(n).padStart(2,"0");
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
-function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('navbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+}
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -257,7 +287,12 @@ function startExam(){
   document.getElementById('resultsfoot').style.display='none';
   order = QUESTIONS.map((_,i)=>i);
   if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false;
+  applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('start').style.display='none';
   document.getElementById('results').style.display='none';
@@ -272,6 +307,9 @@ function resumeQuiz(){
   order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
   idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  applyExamModeUI();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
   document.getElementById('start').style.display='none';
@@ -298,6 +336,25 @@ function renderQ(){
   document.getElementById('qio').textContent = 'Objective '+q.io;
   document.getElementById('qtext').textContent = q.q;
   document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
   const wrap=document.getElementById('opts'); wrap.innerHTML='';
   q.opts.forEach((o,i)=>{
     const b=document.createElement('button');
@@ -316,8 +373,14 @@ function renderQ(){
 }
 
 function choose(sel){
-  if(answers[idx]!==null) return;
   const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
   answers[idx]=sel;
   if(sel===q.c) score++;
   saveProgress();
@@ -361,13 +424,61 @@ function prevQ(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
 function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
   if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
   else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
 }
 function showResults(){
   stopTimerInterval();
   const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
   clearProgress();
   markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').style.display='none';
@@ -402,7 +513,7 @@ function showResults(){
     }
   });
   const missCount=QUESTIONS.length-score;
-  const missBlock = missCount===0
+  const missBlock = examMode ? examReviewHTML() : missCount===0
     ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
     : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
   const r=document.getElementById('results');
@@ -433,6 +544,14 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('quiz').style.display==='none') return;
   const k=e.key;
   if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
   if(answers[idx]===null){
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
     const i=map[k.toLowerCase()];

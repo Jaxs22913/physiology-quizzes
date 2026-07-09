@@ -48,6 +48,7 @@
     --card:#ffffff; --page:#f4f6fc;
   }
   *{box-sizing:border-box}
+  .hidden{display:none}
   body{margin:0;background:var(--page);color:var(--ink);
     font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
   .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
@@ -90,6 +91,8 @@
     color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
     justify-content:center;border:1px solid var(--line)}
   .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
   .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
   .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
   .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
@@ -177,9 +180,17 @@
         <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
       </div>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
     </label>
     <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
   </div>
@@ -191,6 +202,8 @@
         <div class="bar"><span id="barfill"></span></div>
         <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
+        <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
       </div>
       <div class="qmeta">
         <span class="tag tag-topic" id="qtopic"></span>
@@ -222,6 +235,7 @@
 const QUESTIONS = [{"topic": "GI Physiology", "io": "a — Motility", "q": "Slow waves in gastrointestinal smooth muscle determine the...", "opts": [["the rate of gastric acid secretion coming from the stomach's parietal cells during a meal", "Incorrect. Slow waves govern smooth-muscle contraction rhythm, not parietal-cell acid secretion."], ["maximum frequency and timing of contractions, though not every wave triggers one", "Correct. Slow waves are rhythmic oscillations in membrane potential set by the interstitial cells of Cajal; they set when contractions can occur, but an actual contraction happens only if the wave reaches threshold with spike potentials, so they pace but do not force every contraction."], ["rate at which the exocrine pancreas releases its digestive enzymes into the gut", "Incorrect. Pancreatic enzyme release is controlled by hormones (CCK) and vagal input, not by GI slow waves."], ["absolute strength of every contraction regardless of neural input", "Incorrect. Contraction strength is modulated by neural and hormonal input riding on the slow waves; slow waves set timing, not fixed force."]], "c": 1, "cite": "GI Physiology, slides 35-39"}, {"topic": "GI Physiology", "io": "a — Motility", "q": "The enteric nervous system is notable because it...", "opts": [["can coordinate motility and secretion largely on its own, independent of the CNS", "Correct. The enteric nervous system, with its myenteric and submucosal plexuses, contains enough neurons to integrate reflexes and control motility and secretion by itself; the autonomic nervous system modulates it, but the gut can function even without central input."], ["operates solely through circulating hormones in the blood rather than through any neurons", "Incorrect. The ENS is a neural network; hormones contribute to GI regulation but are separate from the ENS neurons."], ["controls only the secretion of gastric acid and nothing else along the gut wall", "Incorrect. The ENS governs motility, secretion, and local blood flow throughout the gut, not just gastric acid."], ["requires constant input from the brain to function at all", "Incorrect. The ENS is often called a 'second brain' precisely because it can operate independently of the CNS."]], "c": 0, "cite": "GI Physiology, slides 24-33"}, {"topic": "GI Physiology", "io": "a — Motility", "q": "As a meal enters the stomach, receptive relaxation allows it to...", "opts": [["secrete bile to begin the early emulsification of dietary fat", "Incorrect. Bile comes from the liver/gallbladder into the duodenum; the stomach does not secrete bile."], ["immediately propel all contents into the duodenum at once", "Incorrect. Rapid emptying would overwhelm the duodenum; receptive relaxation does the opposite, letting the stomach hold the meal."], ["accommodate a large volume with little rise in internal pressure", "Correct. A vagovagal reflex relaxes the orad stomach (mediated by NO and VIP) so it can expand to hold a meal without a large pressure increase, storing food for gradual processing and controlled emptying."], ["absorb most nutrients before they reach the small intestine", "Incorrect. Little nutrient absorption occurs in the stomach; most occurs in the small intestine."]], "c": 2, "cite": "GI Physiology, slides 44, 46"}, {"topic": "GI Physiology", "io": "a — Motility", "q": "The peristaltic reflex ('law of the gut') moves contents aborally by...", "opts": [["contracting the entire intestine at once to squeeze contents forward", "Peristalsis is a coordinated wave, not a simultaneous whole-gut contraction."], ["relying on sympathetic input to drive rhythmic forward propulsion", "Peristalsis requires the myenteric plexus and is stimulated by parasympathetics, not driven by sympathetics."], ["contracting the segment behind the bolus while relaxing the segment ahead", "Correct: distension causes contraction orad (behind) with receptive relaxation downstream, propelling contents forward."], ["alternating haustral pouches that slowly knead contents toward the anus", "Haustral activity is mixing in the colon, not the peristaltic reflex described here."]], "c": 2, "cite": "GI Physiology, slide 39"}, {"topic": "GI Physiology", "io": "a — Gastric hormones", "q": "When acidic, fatty chyme enters the duodenum, hormonal signals act to...", "opts": [["stop all pancreatic secretion until the stomach empties in most cases", "Incorrect. Duodenal acid and fat actually stimulate pancreatic secretion (via secretin and CCK), not halt it."], ["accelerate gastric emptying to clear the stomach quickly", "Incorrect. Fat and acid in the duodenum slow emptying to protect the intestine, rather than speeding it."], ["trigger immediate defecation of the intestinal contents", "Incorrect. These duodenal signals regulate gastric emptying and secretion, not immediate defecation."], ["slow gastric emptying so the small intestine is not overwhelmed", "Correct. Fat and acid in the duodenum trigger enterogastric signals (including CCK and secretin) that slow gastric emptying; this ensures the duodenum has time to neutralize acid and digest fat before receiving more chyme."]], "c": 3, "cite": "GI Physiology, slides 13-15, 46"}, {"topic": "GI Physiology", "io": "a — Gastric hormones", "q": "Cholecystokinin, released in response to fat and protein in the duodenum, acts to...", "opts": [["stimulate parietal cells to secrete their maximal load of acid", "Incorrect. Acid secretion is driven mainly by gastrin, histamine, and ACh; CCK actually helps slow gastric emptying."], ["contract the gallbladder and stimulate pancreatic enzyme secretion", "Correct. CCK from duodenal I-cells is the principal signal that contracts the gallbladder (and relaxes the sphincter of Oddi) while strongly stimulating pancreatic enzyme release, delivering bile and enzymes to digest fat and protein."], ["trigger mass movements that empty the distal colon in the body under most conditions", "Incorrect. Mass movements are a colonic phenomenon tied to the gastrocolic reflex, not a direct CCK action."], ["relax the gallbladder while inhibiting all pancreatic secretion", "Incorrect. This is the reverse of CCK's action; CCK contracts the gallbladder and stimulates pancreatic enzymes."]], "c": 1, "cite": "GI Physiology, slides 13-15"}, {"topic": "GI Physiology", "io": "a — Gastric hormones", "q": "When acidic chyme enters the duodenum, the hormone secretin is released and acts to...", "opts": [["speed gastric emptying so more chyme enters quickly", "Incorrect. Secretin and related signals slow emptying to allow neutralization; secretin's key action is stimulating bicarbonate."], ["stimulate the pancreas to secrete bicarbonate that neutralizes the acid", "Correct. Secretin, released from duodenal cells in response to acid, signals the pancreas (and liver) to secrete a bicarbonate-rich fluid; this neutralizes the acidic chyme, protecting the intestinal lining and creating the alkaline pH that pancreatic enzymes require."], ["increase gastric acid secretion to aid digestion", "Incorrect. Secretin reduces gastric acid and promotes bicarbonate secretion to neutralize acid, not to increase it."], ["contract the gallbladder to release bile as it is usually described here", "Incorrect. Gallbladder contraction is driven by CCK; secretin stimulates bicarbonate secretion."]], "c": 1, "cite": "GI Physiology, slides 13-15, 100-105"}, {"topic": "GI Physiology", "io": "a — Gastric secretion", "q": "Late in a meal, as gastric contents become very acidic, acid secretion declines because...", "opts": [["low pH triggers somatostatin, which suppresses gastrin release", "Correct: falling pH stimulates somatostatin and directly inhibits gastrin, providing negative feedback that reduces acid output."], ["secretin from the stomach directly stimulates further gastrin output", "Secretin inhibits gastrin and acid; it does not stimulate them."], ["histamine is depleted faster than ECL cells can regenerate it", "The feedback is through somatostatin and gastrin suppression, not histamine exhaustion."], ["parietal cells run out of the carbonic anhydrase needed to make acid", "Parietal cells are not depleted of enzyme; the decline is a regulated feedback."]], "c": 0, "cite": "GI Physiology, slides 90, 94-95"}, {"topic": "GI Physiology", "io": "a — Gastric secretion", "q": "The gastric phase of secretion, which occurs once food reaches the stomach, is triggered mainly by...", "opts": [["the sight and smell of food before it is eaten", "Incorrect. Sight and smell drive the earlier cephalic phase; the gastric phase begins once food is actually in the stomach."], ["acidic chyme arriving in the duodenum as it is usually described here", "Incorrect. Chyme in the duodenum governs the intestinal phase; the gastric phase is triggered by gastric distension and protein."], ["distension of the stomach wall and the presence of protein products", "Correct. When food enters the stomach, distension of the wall and peptides from partially digested protein stimulate local reflexes, vagovagal reflexes, and gastrin release, driving a large portion of the acid and enzyme secretion during the meal."], ["a fall in blood glucose between meals", "Incorrect. The gastric phase is a response to food in the stomach, not to blood glucose levels."]], "c": 2, "cite": "GI Physiology, slides 92-96"}, {"topic": "GI Physiology", "io": "d — Exocrine pancreas", "q": "The pancreatic bicarbonate response to a meal is driven mainly by...", "opts": [["gastrin, released as protein stretches the stomach wall", "Incorrect. Gastrin chiefly drives gastric acid secretion; the bicarbonate response is a secretin effect."], ["insulin, released as blood glucose rises after eating", "Incorrect. Insulin is an endocrine hormone regulating glucose; it does not drive exocrine bicarbonate secretion."], ["motilin, released cyclically during the fasting state", "Incorrect. Motilin drives interdigestive migrating motor complexes during fasting, not the postprandial bicarbonate response."], ["secretin, released when acidic chyme lowers the duodenal pH", "Correct. When acidic chyme enters the duodenum and pH falls below about 4.5, S-cells release secretin, which stimulates the pancreatic ducts to secrete a bicarbonate-rich fluid that neutralizes the acid and protects the mucosa."]], "c": 3, "cite": "GI Physiology, slides 106-109"}, {"topic": "GI Physiology", "io": "d — Exocrine pancreas", "q": "The pancreas avoids digesting itself largely because...", "opts": [["enzymes are secreted so slowly that ongoing tissue repair always manages to keep pace", "Enzymes are secreted in excess; safety comes from the inactive zymogen form."], ["pancreatic tissue simply lacks any receptors for its own digestive enzymes entirely", "Self-protection comes from zymogen storage, not from missing receptors."], ["proteases are stored and secreted as inactive zymogens activated only in the gut", "Correct: enzymes like trypsinogen are stored inactive (with a trypsin inhibitor) and activated only in the intestine."], ["bicarbonate keeps the acinar pH too high for any enzyme to function", "Bicarbonate neutralizes duodenal acid; it is not what prevents autodigestion."]], "c": 2, "cite": "GI Physiology, slides 103-105"}, {"topic": "GI Physiology", "io": "d — Exocrine pancreas", "q": "Pancreatic proteases such as trypsin are secreted as inactive precursors that are then activated...", "opts": [["in the intestinal lumen, so the pancreas is not digested by its own enzymes", "Correct. Proteases are released as zymogens (e.g., trypsinogen) and activated only after reaching the small intestine — enterokinase converts trypsinogen to trypsin, which then activates the others. This delay protects the pancreas from self-digestion."], ["only after the food has entered the large intestine as it typically occurs here", "Incorrect. Activation occurs in the small intestine (duodenum), where protein digestion takes place, not the colon."], ["by stomach acid before they reach the small intestine", "Incorrect. Trypsinogen is activated by enterokinase in the duodenum, not by gastric acid."], ["within the pancreatic cells immediately after synthesis", "Incorrect. Activating them inside the pancreas would cause self-digestion; they are activated in the intestinal lumen."]], "c": 0, "cite": "GI Physiology, slides 101-105"}, {"topic": "GI Physiology", "io": "b — Digestive enzymes", "q": "Saliva aids the earliest stage of digestion by...", "opts": [["lubricating food and beginning starch breakdown with salivary amylase", "Correct. Saliva moistens and lubricates food to ease swallowing, dissolves substances for taste, begins carbohydrate digestion with salivary amylase, and contains lysozyme with mild antibacterial action — launching digestion in the mouth."], ["neutralizing stomach acid before food is swallowed", "Incorrect. Saliva's roles include lubrication and starch digestion; it does not pre-neutralize gastric acid."], ["emulsifying dietary fat into small droplets during this process in the tissues", "Incorrect. Fat emulsification is done by bile salts in the small intestine, not by saliva."], ["completing the digestion of protein into amino acids", "Incorrect. Protein digestion begins in the stomach and finishes in the intestine; saliva mainly lubricates and starts starch digestion."]], "c": 0, "cite": "GI Physiology, slides 76-81"}, {"topic": "GI Physiology", "io": "b — Digestive enzymes", "q": "Within the gastric glands, the division of labor is such that...", "opts": [["both cell types secrete only mucus to protect the lining during this particular process", "Incorrect. Mucus comes from mucous cells; chief and parietal cells secrete pepsinogen and acid/intrinsic factor respectively."], ["parietal cells secrete pepsinogen while chief cells secrete acid", "Incorrect. This reverses their roles: chief cells make pepsinogen and parietal cells make acid (and intrinsic factor)."], ["chief cells secrete bile and parietal cells secrete enzymes", "Incorrect. Bile is a liver product; chief cells secrete pepsinogen and parietal cells acid and intrinsic factor."], ["chief cells secrete pepsinogen while parietal cells secrete acid and intrinsic factor", "Correct. Chief cells release pepsinogen (activated to pepsin by acid), while parietal cells secrete hydrochloric acid (which also activates pepsinogen and kills microbes) and intrinsic factor needed for vitamin B12 absorption. Each cell type has a distinct secretory role."]], "c": 3, "cite": "GI Physiology, slides 82-90"}, {"topic": "GI Physiology", "io": "b — Digestive enzymes", "q": "Enterokinase (enteropeptidase) on the intestinal brush border initiates protein digestion by...", "opts": [["emulsifying protein aggregates so that pepsin can reach them", "Emulsification applies to fats via bile salts, not to protein via enterokinase."], ["converting trypsinogen to trypsin, which then activates the other proteases", "Correct: enterokinase converts trypsinogen to trypsin, which autocatalytically activates chymotrypsinogen and procarboxypeptidase."], ["activating pancreatic amylase so that it can begin breaking down starch", "Amylase acts on carbohydrate and does not require enterokinase activation."], ["cleaving dietary protein directly into individual absorbable free amino acids", "Enterokinase activates a protease rather than cleaving dietary protein itself."]], "c": 1, "cite": "GI Physiology, slide 104"}, {"topic": "GI Physiology", "io": "b — Digestive enzymes", "q": "Pepsin works best in the stomach because it...", "opts": [["digests dietary carbohydrates rather than protein in the stomach", "Incorrect. Pepsin is a protease acting on protein, not carbohydrate."], ["requires the alkaline environment created by bile", "Incorrect. Pepsin needs acid; it is inactivated at the alkaline pH created by bile and pancreatic bicarbonate."], ["functions only after being neutralized in the duodenum", "Incorrect. Neutralization in the duodenum inactivates pepsin; it works in the acidic stomach."], ["is a protease with an acidic optimal pH provided by gastric HCl", "Correct. Pepsin is a protein-digesting enzyme with an acidic pH optimum (roughly 1.8–3.5); gastric HCl both activates pepsinogen to pepsin and provides the low pH environment in which pepsin is most active, so it functions well in the stomach and is inactivated in the alkaline duodenum."]], "c": 3, "cite": "GI Physiology, slides 82-85"}, {"topic": "GI Physiology", "io": "c — Biliary system", "q": "Bile salts emulsify fat effectively because each molecule...", "opts": [["is entirely water-soluble and dissolves the fat outright", "Incorrect. A fully water-soluble molecule could not interact with lipid; the key is that bile salts are amphipathic."], ["has both a water-soluble and a fat-soluble end (it is amphipathic)", "Correct. Bile salts are amphipathic: one part associates with water and the other with lipid. This lets them coat fat droplets and break them into many tiny droplets, greatly increasing the surface area available for lipase to act on."], ["binds oxygen to help oxidize the fat for energy in the body's tissues", "Incorrect. Bile salts emulsify fat for digestion; they do not carry oxygen or oxidize fat."], ["chemically digests the triglyceride into fatty acids itself", "Incorrect. Digestion of triglyceride is done by lipase; bile salts emulsify to assist that enzyme."]], "c": 1, "cite": "GI Physiology, slides 130-133"}, {"topic": "GI Physiology", "io": "c — Biliary system", "q": "Bile salts aid fat absorption because their amphipathic structure lets them...", "opts": [["emulsify fat and ferry lipid digestion products to the mucosa as micelles", "Correct: being amphipathic, bile salts emulsify fat and form micelles that carry monoglycerides and fatty acids to the mucosa."], ["actively pump fatty acids across the enterocyte membrane using ATP", "Fatty acids diffuse in from micelles; bile salts do not actively pump them."], ["convert dietary cholesterol into water-soluble bile pigments for excretion", "Bile pigments derive from heme, not from bile salts acting on cholesterol."], ["chemically hydrolyze triglycerides into fatty acids and glycerol", "Hydrolysis is done by pancreatic lipase; bile salts do not cleave triglyceride bonds."]], "c": 0, "cite": "GI Physiology, slide 20"}, {"topic": "GI Physiology", "io": "c — Biliary system", "q": "Enterohepatic circulation conserves bile salts by...", "opts": [["converting them into cholesterol for storage in the gallbladder", "Incorrect. Bile salts are made from cholesterol, not the reverse, and they are recycled rather than converted back."], ["excreting nearly all of them in the feces after a single use", "Incorrect. Only a small percentage is lost in feces; the great majority is recycled."], ["secreting them into the urine for later reabsorption by the kidney", "Incorrect. Bile salts are recovered through the ileum and portal blood, not the urinary tract."], ["reabsorbing most of them in the ileum and returning them to the liver", "Correct. About 95% of secreted bile salts are actively reabsorbed in the terminal ileum, enter the portal blood, and are taken back up by hepatocytes for re-secretion, so the same pool is reused several times per meal and only a small fraction is lost in feces."]], "c": 3, "cite": "GI Physiology (bile), Ch 71 Liver, slide 25"}, {"topic": "GI Physiology", "io": "f — Lipid absorption", "q": "After fatty acids are reassembled into triglycerides inside the enterocyte, they...", "opts": [["bind intrinsic factor and are carried to the ileum for their later active uptake", "Intrinsic factor is for vitamin B12 absorption, not for triglyceride transport."], ["are packaged into chylomicrons that enter lymph rather than blood capillaries", "Correct: triglycerides are packaged into chylomicrons, which are too large for capillaries and enter lacteals/lymph, reaching blood via the thoracic duct."], ["diffuse directly into portal blood for immediate transport to the liver", "Absorbed lipids enter lymph as chylomicrons first, not portal blood directly."], ["are stored in the brush border until bile salts release them to plasma", "Reassembled triglycerides are exported as chylomicrons, not stored at the brush border."]], "c": 1, "cite": "GI Physiology, slides 135-137"}, {"topic": "GI Physiology", "io": "g — Defecation", "q": "The gastrocolic reflex helps explain why...", "opts": [["eating a meal often stimulates the urge to defecate", "Correct. The gastrocolic reflex links stomach filling to increased colonic motility: distension of the stomach triggers mass movements in the colon that propel contents toward the rectum, which is why a meal frequently prompts the urge to defecate."], ["the stomach empties immediately when the colon fills", "Incorrect. The reflex runs from stomach filling to colonic motility, not from colon filling to gastric emptying."], ["bile is released the moment food enters the mouth", "Incorrect. Bile release with fat is a CCK effect in the duodenum, unrelated to the gastrocolic reflex."], ["nutrients are absorbed faster in the large intestine", "Incorrect. The colon mainly absorbs water; the gastrocolic reflex concerns motility, not accelerated nutrient absorption."]], "c": 0, "cite": "GI Physiology, slides 59-66"}, {"topic": "GI Physiology", "io": "g — Defecation", "q": "Bacteria residing in the colon contribute usefully to the host by...", "opts": [["digesting and absorbing dietary fat for the body under most normal conditions", "Incorrect. Fat digestion and absorption occur in the small intestine; colonic bacteria synthesize vitamins and ferment residue."], ["producing hydrochloric acid to sterilize the stool", "Incorrect. Colonic bacteria do not make gastric-type acid; they ferment residue and synthesize vitamins such as vitamin K."], ["synthesizing certain vitamins, including vitamin K, that can be absorbed", "Correct. The large intestine's resident bacteria ferment undigested material and synthesize several vitamins — notably vitamin K and some B vitamins — a portion of which the colon absorbs, supplementing the dietary supply."], ["secreting insulin to regulate the body's glucose", "Incorrect. Insulin is a pancreatic hormone; colonic bacteria contribute by synthesizing vitamins like vitamin K."]], "c": 2, "cite": "GI Physiology, slides 59-66"}, {"topic": "GI Physiology", "io": "g — Defecation", "q": "The colon's pouch-like haustra are formed and their contractions serve to...", "opts": [["secrete digestive enzymes to finish breaking down food", "Incorrect. The colon secretes mucus, not digestive enzymes; haustration mixes contents for water absorption."], ["absorb the bulk of dietary fat and protein", "Incorrect. Fat and protein are absorbed in the small intestine; the colon (via haustra) mainly absorbs water and electrolytes."], ["mix and slowly move contents while water is absorbed", "Correct. The haustra are sacculations produced by the colon's muscle arrangement; their slow, segmenting contractions (haustration) knead the contents and expose them to the mucosa for water and electrolyte absorption, gradually moving material along toward the rectum."], ["rapidly propel contents straight to the rectum", "Incorrect. Haustral contractions are slow and mixing; rapid propulsion is the role of mass movements, not haustration."]], "c": 2, "cite": "GI Physiology, slides 59-66"}, {"topic": "GI Physiology", "io": "e — Functions of the liver", "q": "The liver prepares bilirubin for excretion by...", "opts": [["binding it tightly to intrinsic factor for its absorption in the ileum", "Incorrect. Intrinsic factor is for vitamin B12 absorption and has nothing to do with bilirubin."], ["conjugating it with glucuronic acid to make it water-soluble for bile", "Correct. Hepatocytes conjugate lipid-soluble (unconjugated) bilirubin with glucuronic acid, converting it to a water-soluble (conjugated) form that can be excreted into bile; impaired conjugation or excretion causes jaundice."], ["converting it into a bile salt that emulsifies dietary fat", "Incorrect. Bile salts are made from cholesterol; bilirubin is a waste pigment, not an emulsifier."], ["oxidizing it into iron that is then returned to the bone marrow", "Incorrect. Iron is salvaged separately from heme; bilirubin is the pigment derived from heme and is not turned back into iron."]], "c": 1, "cite": "Ch 71 Liver, slides 13-16"}, {"topic": "GI Physiology", "io": "e — Functions of the liver", "q": "During fasting, the liver helps maintain blood glucose by gluconeogenesis, which is the...", "opts": [["absorption of glucose directly from the digested food", "Incorrect. Absorption occurs in the intestine; gluconeogenesis is hepatic synthesis of new glucose."], ["breakdown of stored glycogen into glucose molecules during this process in the tissues", "Incorrect. That is glycogenolysis; gluconeogenesis makes glucose from noncarbohydrate precursors."], ["conversion of glucose into fat for long-term storage", "Incorrect. That is lipogenesis; gluconeogenesis produces glucose rather than storing it as fat."], ["synthesis of new glucose from noncarbohydrate sources such as amino acids and lactate", "Correct. Gluconeogenesis is the liver's production of glucose from noncarbohydrate precursors — amino acids (from protein), lactate, and glycerol — sustaining blood glucose once glycogen stores are exhausted during fasting, which is vital for glucose-dependent tissues like the brain."]], "c": 3, "cite": "Ch 71 Liver, slide 9; Ch 68, slides 25-27"}, {"topic": "GI Physiology", "io": "f — Absorption", "q": "The small intestine's absorptive surface is vastly increased by...", "opts": [["thick muscular walls that grind the food finely under most normal conditions", "Incorrect. Grinding is mechanical and mainly gastric; absorptive area comes from mucosal folds, villi, and microvilli."], ["a single large chamber that holds food for a long time", "Incorrect. A single smooth chamber would have little surface area; the intestine's folding provides the vast area."], ["circular folds, villi, and microvilli that multiply the surface area", "Correct. Three levels of folding — the circular folds of the wall, the finger-like villi, and the microvilli of the brush border — together increase the absorptive surface area enormously, maximizing contact between nutrients and the absorptive cells."], ["a smooth, flat lining that speeds the passage of food", "Incorrect. A smooth lining would reduce surface area; absorption is enhanced by folds, villi, and microvilli."]], "c": 2, "cite": "GI Physiology, slides 120-122, 140"}, {"topic": "GI Physiology", "io": "f — Absorption", "q": "Adequate absorption of the fat-soluble vitamins A, D, E, and K depends on...", "opts": [["an acidic intestinal pH created by gastric secretions", "Incorrect. Their absorption depends on bile-salt micelles and fat handling, not on an acidic intestinal pH."], ["the presence of bile salts to incorporate them into micelles", "Correct. Fat-soluble vitamins are absorbed along with dietary fat; bile salts are needed to form the micelles that ferry them to the enterocyte surface. Impaired bile flow therefore reduces uptake of these vitamins."], ["a specialized active pump unique to each vitamin in this scenario", "Incorrect. Fat-soluble vitamins are absorbed with dietary fat via micelles, not by individual dedicated pumps."], ["conversion into water-soluble forms before uptake", "Incorrect. They remain fat-soluble and are absorbed with lipids through micelles rather than being converted."]], "c": 1, "cite": "GI Physiology, slides 132-133, 144"}, {"topic": "GI Physiology", "io": "f — Absorption", "q": "Micelles improve fat absorption by...", "opts": [["ferrying poorly soluble fatty acids and monoglycerides to the enterocyte surface", "Correct. Bile-salt micelles solubilize the products of fat digestion (fatty acids, monoglycerides, cholesterol) and shuttle them across the unstirred water layer to the brush border, where they are released to diffuse into the enterocyte."], ["actively transporting whole fat droplets across the cell membrane", "Incorrect. Whole droplets are not transported; micelles deliver individual lipid molecules that then diffuse into the cell."], ["chemically converting the triglycerides into small water-soluble sugars for uptake", "Incorrect. Micelles do not perform digestion or turn fat into sugar; enzymatic hydrolysis is done by lipase."], ["carrying absorbed fat directly into the portal blood as chylomicrons", "Incorrect. Chylomicrons form inside the enterocyte and enter lymph, not portal blood; micelles operate in the lumen, not the blood."]], "c": 0, "cite": "GI Physiology, slides 132-133"}, {"topic": "GI Physiology", "io": "f — Absorption", "q": "Glucose absorption against its gradient is powered indirectly by...", "opts": [["the sodium gradient maintained by the basolateral Na+/K+ ATPase", "Correct. Glucose enters the enterocyte on the SGLT1 cotransporter, riding the inward sodium gradient; that gradient is set up by the basolateral Na+/K+ ATPase, so glucose uptake is secondary active transport ultimately powered by ATP used to pump sodium."], ["the concentration gradient of fructose in the lumen", "Incorrect. Fructose uses a separate facilitated transporter (GLUT5); it does not power glucose uptake."], ["bile-salt micelles physically pulling the glucose into the cell", "Incorrect. Bile salts aid fat absorption, not glucose transport."], ["direct hydrolysis of ATP by the glucose carrier itself", "Incorrect. SGLT1 does not hydrolyze ATP directly; it uses the sodium gradient (secondary active transport)."]], "c": 0, "cite": "GI Physiology, slide 126"}, {"topic": "GI Physiology", "io": "f — Absorption", "q": "Water is absorbed across the intestinal wall mainly by...", "opts": [["active transport pumps that move water directly against gradients", "Incorrect. There are no direct water pumps; water moves passively by osmosis following solute transport."], ["binding to bile salts that carry it into the enterocyte", "Incorrect. Bile salts aid fat absorption; water absorption follows solutes osmotically."], ["digestion of water molecules by brush-border enzymes during this process", "Incorrect. Water is not digested; it is absorbed by osmosis."], ["osmosis, following the absorption of solutes such as sodium and glucose", "Correct. Water absorption is passive: as sodium, glucose, amino acids, and other solutes are absorbed, they raise the osmotic pull on the blood side, and water follows by osmosis. This is why efficient solute uptake drives water uptake."]], "c": 3, "cite": "GI Physiology, slides 140-143"}];
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -239,13 +253,29 @@ function fmtTime(ms){
   const pad=n=>String(n).padStart(2,"0");
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
-function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('navbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+}
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -257,7 +287,12 @@ function startExam(){
   document.getElementById('resultsfoot').style.display='none';
   order = QUESTIONS.map((_,i)=>i);
   if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false;
+  applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('start').style.display='none';
   document.getElementById('results').style.display='none';
@@ -272,6 +307,9 @@ function resumeQuiz(){
   order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
   idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  applyExamModeUI();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
   document.getElementById('start').style.display='none';
@@ -298,6 +336,25 @@ function renderQ(){
   document.getElementById('qio').textContent = 'Objective '+q.io;
   document.getElementById('qtext').textContent = q.q;
   document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
   const wrap=document.getElementById('opts'); wrap.innerHTML='';
   q.opts.forEach((o,i)=>{
     const b=document.createElement('button');
@@ -316,8 +373,14 @@ function renderQ(){
 }
 
 function choose(sel){
-  if(answers[idx]!==null) return;
   const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
   answers[idx]=sel;
   if(sel===q.c) score++;
   saveProgress();
@@ -361,13 +424,61 @@ function prevQ(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
 function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
   if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
   else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
 }
 function showResults(){
   stopTimerInterval();
   const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
   clearProgress();
   markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').style.display='none';
@@ -402,7 +513,7 @@ function showResults(){
     }
   });
   const missCount=QUESTIONS.length-score;
-  const missBlock = missCount===0
+  const missBlock = examMode ? examReviewHTML() : missCount===0
     ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
     : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
   const r=document.getElementById('results');
@@ -433,6 +544,14 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('quiz').style.display==='none') return;
   const k=e.key;
   if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
   if(answers[idx]===null){
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
     const i=map[k.toLowerCase()];

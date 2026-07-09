@@ -48,6 +48,7 @@
     --card:#ffffff; --page:#f4f6fc;
   }
   *{box-sizing:border-box}
+  .hidden{display:none}
   body{margin:0;background:var(--page);color:var(--ink);
     font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
   .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
@@ -90,6 +91,8 @@
     color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
     justify-content:center;border:1px solid var(--line)}
   .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
   .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
   .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
   .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
@@ -177,9 +180,17 @@
         <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
       </div>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
     </label>
     <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
   </div>
@@ -191,6 +202,8 @@
         <div class="bar"><span id="barfill"></span></div>
         <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
+        <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9638; Jump</button>
       </div>
       <div class="qmeta">
         <span class="tag tag-topic" id="qtopic"></span>
@@ -222,6 +235,7 @@
 const QUESTIONS = [{"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Red blood cells contain abundant carbonic anhydrase. How does this enzyme support the blood's role in gas transport?", "opts": [["It loads oxygen onto the heme groups so that each red cell carries more O2 per pass", "Oxygen binding is a property of heme iron, not carbonic anhydrase, which acts on carbon dioxide."], ["It speeds hydration of CO2 to carbonic acid, letting most CO2 travel as bicarbonate", "Correct: carbonic anhydrase catalyzes CO2 + H2O to H2CO3, so most CO2 is carried as HCO3-, the major extracellular buffer."], ["It buffers lactic acid from the red cell's own anaerobic glucose metabolism", "Buffering here refers to bicarbonate generation for CO2 transport, not disposal of the cell's lactate."], ["It binds free iron and keeps hemoglobin locked in its oxygen-carrying ferrous state", "Iron handling and the ferrous state are maintained by other red-cell enzymes, not carbonic anhydrase."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 3"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "The biconcave disc shape of the red blood cell chiefly benefits its function by...", "opts": [["maximizing surface area for gas exchange and allowing deformation through narrow capillaries", "Correct. The biconcave geometry gives a high surface-area-to-volume ratio (short diffusion distances for O2 and CO2) and lets the cell fold to squeeze through capillaries narrower than its own diameter, both of which optimize gas transport."], ["increasing its internal volume so that it can store a large amount of extra dissolved oxygen", "Incorrect. Almost all oxygen is bound to hemoglobin rather than dissolved, so internal volume for dissolved gas is not the point; the shape is about surface area and flexibility."], ["providing rigidity so the cell resists rupture in high-pressure arteries", "The opposite of the benefit: red cells need to be deformable, not rigid, and the biconcave shape aids flexibility rather than stiffness."], ["creating a nucleus-rich center that supports rapid ongoing cell division", "Incorrect. Mature mammalian red cells have no nucleus at all; the central depression is thin cytoplasm, not a nucleus, and these cells do not divide."]], "c": 0, "cite": "Hemostasis & Coagulation, slide 6"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Blood makes up roughly what fraction of total body weight, and what is its largest component by volume?", "opts": [["about 25% of body weight, with red cells being the largest fraction", "Incorrect. Blood is far less than a quarter of body weight (about 7–8%), and plasma, not red cells, is the largest fraction by volume."], ["about 40% of body weight, split evenly between cells and plasma", "Incorrect. Blood is only about 7–8% of body weight, and the split favors plasma over cells."], ["about 7–8% of body weight, with plasma being the largest fraction by volume", "Correct. Blood accounts for roughly 7–8% of body weight (about 5 liters in an adult), and plasma — mostly water with dissolved proteins, electrolytes, and nutrients — makes up a little over half of blood volume, the single largest component."], ["under 1% of body weight, made up almost entirely of platelets in this scenario", "Incorrect. Blood is about 7–8% of body weight, and platelets are only a tiny fraction of it; plasma predominates."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 3-6"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "A reticulocyte count is useful clinically because reticulocytes are...", "opts": [["platelets that have just been released from megakaryocytes", "Incorrect. Newly released platelets are not reticulocytes; reticulocytes are immature red blood cells."], ["old red cells about to be removed by the spleen as it typically occurs here", "Incorrect. Reticulocytes are young, newly made red cells; senescent cells are what the spleen removes."], ["a type of white cell that increases during infection", "Incorrect. Reticulocytes are immature red cells, not white cells."], ["immature red cells whose number reflects the marrow's production rate", "Correct. Reticulocytes are newly released, not-yet-mature red cells; a rising count signals that the marrow is actively producing red cells (for example, in response to blood loss), while a low count suggests impaired production."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 14-17"}, {"topic": "Blood & Hemostasis", "io": "a — Blood & its components", "q": "Platelets (thrombocytes) are best described as...", "opts": [["mature nucleated cells that divide within the bloodstream", "Incorrect. Platelets lack a nucleus and do not divide; they are fragments of megakaryocytes."], ["a specialized type of white blood cell that fights infection", "Incorrect. Platelets are hemostatic fragments, not leukocytes, and do not fight infection."], ["cell fragments pinched off from large megakaryocytes in the marrow", "Correct. Platelets are not whole cells but membrane-bound fragments shed from megakaryocytes in the bone marrow; despite lacking a nucleus, they carry granules and machinery essential for hemostasis."], ["oxygen-carrying cells closely related to red blood cells in most cases", "Incorrect. Oxygen carriage is the red cell's role; platelets function in clotting, not gas transport."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 6, 30-33"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Each hemoglobin molecule can carry up to four oxygen molecules because it contains...", "opts": [["four globin chains but only a single oxygen-binding site", "Incorrect. Each of the four chains has its own heme and iron, giving four oxygen-binding sites, not one."], ["four heme groups, each with an iron atom that binds one oxygen", "Correct. Hemoglobin is a tetramer with four polypeptide (globin) chains, each holding a heme group with a central iron (Fe2+) atom; each iron can reversibly bind one oxygen molecule, so one hemoglobin carries up to four."], ["a single large heme unit that binds all four oxygens at once", "Incorrect. Hemoglobin has four separate heme groups, each binding one oxygen, not one heme for all four."], ["four copies of the iron-free protein globin without any heme", "Incorrect. Oxygen binds the iron in heme; globin without heme could not bind oxygen."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 20-21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "The sigmoid (S-shaped) oxygen-hemoglobin curve reflects that...", "opts": [["binding of one oxygen molecule increases hemoglobin's affinity for the next", "Correct. Hemoglobin binds oxygen cooperatively: attachment of one O2 changes the molecule's conformation and raises its affinity for subsequent O2, producing the characteristic S-shaped curve that favors loading in the lungs and unloading at tissues."], ["oxygen binding is entirely independent at each of the four sites", "Incorrect. If binding were independent the curve would be hyperbolic; the sigmoid shape arises precisely because the sites interact cooperatively."], ["each hemoglobin molecule can bind only a single oxygen at any given time", "Incorrect. Each hemoglobin binds up to four oxygen molecules, and that multiplicity underlies the cooperative curve."], ["hemoglobin binds oxygen and carbon dioxide at the identical site", "Incorrect. Oxygen binds heme iron, whereas CO2 binds the globin chains; they use different sites, and this does not explain the sigmoid shape."]], "c": 0, "cite": "Hemostasis & Coagulation, slide 21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Hemoglobin concentration is normally reported around 15 g/dL. This value reflects...", "opts": [["the number of white cells circulating per microliter", "Incorrect. That is the white cell count, unrelated to hemoglobin concentration."], ["the fraction of hemoglobin currently bound to oxygen", "Incorrect. That is oxygen saturation, which is independent of the total amount of hemoglobin present."], ["the amount of oxygen-binding protein per volume of blood", "Correct. Hemoglobin concentration measures how much oxygen-carrying protein is present per unit volume of blood; since each gram binds about 1.34 mL of O2, this value largely determines the blood's oxygen-carrying capacity."], ["the percentage of blood volume made up of red cells", "Incorrect. That is the hematocrit, a related but separate measure of packed cell volume."]], "c": 2, "cite": "Hemostasis & Coagulation, slide 21"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "A markedly elevated hematocrit (as in polycythemia) tends to...", "opts": [["reduce oxygen-carrying capacity by crowding out the plasma proteins", "Incorrect. More red cells actually increase oxygen-carrying capacity; the trade-off is higher viscosity, not lost capacity."], ["raise blood viscosity, increasing the resistance the heart must pump against", "Correct. Viscosity rises steeply as hematocrit climbs; thicker blood increases vascular resistance, so the heart must generate more pressure to maintain flow. This is why very high hematocrits strain the circulation."], ["have no effect on flow because viscosity depends only on the plasma", "Incorrect. Hematocrit is the dominant determinant of whole-blood viscosity, so it strongly affects flow."], ["lower blood viscosity markedly, easing the overall workload placed on the heart", "Incorrect and backwards: more packed cells raise viscosity, not lower it."]], "c": 1, "cite": "Hemostasis & Coagulation, slide 6"}, {"topic": "Blood & Hemostasis", "io": "b — Hematocrit & hemoglobin", "q": "Each gram of hemoglobin can bind a fixed amount of oxygen, which is why hemoglobin concentration largely determines...", "opts": [["the oxygen-carrying capacity of the blood", "Correct. Because each gram of hemoglobin binds about 1.34 mL of oxygen when fully saturated, the total hemoglobin concentration sets the blood's oxygen-carrying capacity; this is why anemia, with low hemoglobin, reduces oxygen delivery even when the lungs work normally."], ["the number of white cells available to fight infection", "Incorrect. White cell defense is independent of hemoglobin, which determines oxygen-carrying capacity."], ["the speed at which blood clots after an injury", "Incorrect. Clotting speed depends on platelets and clotting factors; hemoglobin concentration sets oxygen-carrying capacity."], ["the plasma colloid osmotic pressure of the blood", "Incorrect. Colloid osmotic pressure is set mainly by plasma albumin; hemoglobin concentration governs oxygen carriage."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 20-21"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Iron absorbed from the diet is carried in the blood bound to...", "opts": [["bile salts, which shuttle it back to the liver in the body's tissues", "Incorrect. Bile salts function in fat digestion; plasma iron transport is by transferrin."], ["hemoglobin, which ferries it through the plasma", "Incorrect. Hemoglobin is inside red cells and carries oxygen; plasma iron is carried by transferrin."], ["albumin, the general carrier for all trace metals", "Incorrect. Iron has a specific carrier, transferrin, rather than being transported on albumin."], ["transferrin, which delivers it to the marrow and storage sites", "Correct. Absorbed iron is transported in plasma bound to transferrin, which delivers it to the bone marrow for hemoglobin synthesis and to the liver and other tissues for storage as ferritin; free iron is toxic, so it is kept protein-bound."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "The normal circulating lifespan of a red blood cell is about...", "opts": [["several years, being among the longest-lived cells", "Incorrect. Red cells last about four months, not years."], ["120 days, after which macrophages remove the aged cell", "Correct. Red cells survive roughly 120 days; lacking a nucleus and organelles, they cannot repair themselves and become fragile, so macrophages (mainly in the spleen and liver) phagocytize the senescent cells and recycle their components."], ["30 days, limited by the loss of their mitochondria", "Incorrect. The typical lifespan is about 120 days; while mature red cells lack mitochondria, that does not cap their life at 30 days."], ["a few hours, similar to the lifespan of a neutrophil", "Incorrect. Neutrophils are short-lived, but red cells persist for months, not hours."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 14-17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Most of the erythropoietin that drives red cell production is released from the...", "opts": [["bone marrow, whenever iron stores in the body run low", "Incorrect. The marrow is the target of EPO (where red cells are made), not the main source, and low iron does not itself release EPO."], ["liver, in direct response to a rising red blood cell count", "Incorrect. The liver makes only a small amount, and the trigger is low oxygen delivery, not a high red-cell count."], ["kidneys, in response to reduced oxygen delivery to renal tissue", "Correct. The kidneys are the principal source of erythropoietin; specialized cells sense reduced oxygen delivery and secrete EPO, which stimulates marrow erythropoiesis to restore oxygen-carrying capacity."], ["spleen, as it continually breaks down senescent red blood cells", "Incorrect. The spleen destroys old red cells and recycles iron but is not the major source of erythropoietin."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 14-16"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Deficiency of vitamin B12 or folate produces abnormally large red cells because these vitamins are required for...", "opts": [["DNA synthesis, so nuclear maturation lags while the cytoplasm keeps growing", "Correct: without B12/folate, thymidine and thus DNA cannot be made, so the cell grows without dividing, forming large macrocytes."], ["hemoglobin assembly, so cells swell to hold the excess unbound globin", "The defect is in DNA synthesis and division, not in hemoglobin assembly."], ["iron incorporation, so cells enlarge to compensate for low oxygen content", "These vitamins are not needed for iron loading; the enlargement comes from impaired division."], ["membrane repair, so cells round up and expand as they lose deformability", "Membrane maintenance is not the role of B12/folate in erythropoiesis."]], "c": 0, "cite": "Hemostasis & Coagulation, slide 17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "When an old red blood cell is broken down, the heme portion is processed so that...", "opts": [["the iron is discarded in the urine and the heme exhaled as a general rule", "Incorrect. Iron is carefully recycled, not discarded; the heme's remnant becomes bilirubin excreted in bile."], ["it is converted directly into new hemoglobin without change", "Incorrect. Iron is recycled toward new hemoglobin, but the porphyrin portion becomes bilirubin rather than being reused unchanged."], ["its iron is recycled while the rest becomes bilirubin excreted in bile", "Correct. As senescent red cells are destroyed, the globin is recycled to amino acids and the heme iron is salvaged for reuse, while the remaining porphyrin ring is converted to bilirubin, which the liver conjugates and excretes in bile."], ["the entire heme molecule is stored intact for later reuse", "Incorrect. Heme is not stored whole; its iron is recycled and the remainder becomes bilirubin for excretion."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 14-17"}, {"topic": "Blood & Hemostasis", "io": "c — Hematopoiesis, stimulus & function", "q": "Vitamin B12 and folate are needed for red cell production chiefly because they...", "opts": [["stimulate the kidney to release more erythropoietin under most normal conditions", "Incorrect. Erythropoietin release responds to oxygen delivery; B12 and folate work at the level of cell division."], ["form the globin chains that make up the hemoglobin molecule", "Incorrect. Globin is protein synthesized from amino acids; B12 and folate are needed for DNA synthesis, not for building globin directly."], ["provide the iron atom that sits at the center of each heme", "Incorrect. Iron supplies the heme center; B12 and folate act in DNA synthesis, a separate requirement."], ["support DNA synthesis required for the rapid division of precursor cells", "Correct. Erythropoiesis involves rapid cell division, which demands DNA synthesis; B12 and folate are cofactors for that process. Their deficiency impairs nuclear maturation, producing large, poorly functional cells (megaloblastic anemia)."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 17"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Vitamin K is essential for coagulation because it...", "opts": [["binds calcium so it cannot participate in the cascade", "Incorrect. Calcium is required for clotting, and vitamin K supports factor synthesis rather than sequestering calcium."], ["directly dissolves clots once a wound has healed during this particular process in the tissues", "Incorrect. Clot dissolution is plasmin's role; vitamin K supports factor synthesis, not fibrinolysis."], ["is required by the liver to synthesize several clotting factors, including prothrombin", "Correct. Vitamin K is a cofactor the liver uses to produce functional prothrombin and factors VII, IX, and X; without it, these factors are made in an inactive form, and clotting is impaired — the basis of warfarin's action."], ["is the enzyme that converts fibrinogen into fibrin", "Incorrect. Thrombin converts fibrinogen to fibrin; vitamin K is a cofactor for making certain factors in the liver."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 46-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Days after a clot forms, it is dissolved when plasminogen is converted to...", "opts": [["plasmin, which digests the fibrin meshwork of the clot", "Correct. Plasminogen incorporated into the clot is activated to plasmin, a protease that breaks down fibrin (fibrinolysis), clearing the clot once the vessel has healed."], ["fibrinogen, which is redeposited to enlarge the clot", "Incorrect. Fibrinogen is the precursor of fibrin and would build the clot, not dissolve it."], ["thrombin, which reinforces the fibrin meshwork further", "Incorrect. Thrombin promotes clotting; it is not the product that dissolves the clot."], ["prothrombin activator, which restarts the clotting cascade", "Incorrect. Prothrombin activator drives clot formation, the opposite of dissolving it."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 40-48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Thrombin does more than convert fibrinogen to fibrin; it also...", "opts": [["carries oxygen to the healing tissue under most conditions in the body", "Incorrect. Thrombin is a clotting enzyme; oxygen transport is unrelated to its function."], ["feeds back to accelerate earlier steps, amplifying its own generation", "Correct. Thrombin exerts positive feedback on the cascade — activating factors and platelets that promote further prothrombin activator formation — so that once enough thrombin appears, the reaction accelerates explosively to seal the wound quickly."], ["blocks all further clotting to prevent an excessive clot", "Incorrect. Thrombin amplifies clotting through positive feedback; restraint comes from separate anticoagulants like antithrombin."], ["immediately dissolves the clot it has just created", "Incorrect. Thrombin builds the clot; dissolution is plasmin's role, not a thrombin action."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 40-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Which event is considered the rate-limiting step of blood coagulation?", "opts": [["Cleavage of fibrinogen by thrombin into circulating fibrin monomers", "This is downstream of thrombin generation and is not the bottleneck."], ["Aggregation of platelets into the initial soft plug that forms over the wounded vessel", "Platelet plug formation is primary hemostasis, separate from the rate-limiting coagulation step."], ["Cross-linking of fibrin strands by activated fibrin-stabilizing factor", "Cross-linking strengthens the clot but occurs after the limiting step."], ["Formation of prothrombin activator, which then converts prothrombin to thrombin", "Correct: generating prothrombin activator is the rate-limiting step; it converts prothrombin to thrombin in the presence of calcium."]], "c": 3, "cite": "Hemostasis & Coagulation, slide 40"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Thrombin is central to coagulation because it...", "opts": [["acts only on platelets and has no effect on plasma clotting proteins", "Incorrect. Thrombin acts on plasma proteins (notably fibrinogen and several factors) as well as on platelets."], ["converts fibrinogen to fibrin and also activates factors that accelerate its own formation", "Correct. Thrombin cleaves fibrinogen into fibrin and additionally activates factors (and platelets) upstream, creating positive feedback that accelerates further thrombin generation and rapidly amplifies the clot."], ["binds circulating vitamin K directly so that new clotting factors can then be manufactured", "Incorrect. Vitamin K is a hepatic cofactor for synthesizing several factors; thrombin does not bind it."], ["directly digests fibrin strands to keep the growing clot from spreading", "Incorrect. Digesting fibrin is the job of plasmin during fibrinolysis; thrombin builds fibrin rather than destroying it."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 40-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Immediately after a vessel is cut, the first hemostatic response is...", "opts": [["conversion of prothrombin to thrombin throughout the plasma", "Incorrect. Thrombin generation is part of the coagulation cascade that follows the initial vascular and platelet responses."], ["fibrin cross-linking that seals the wound within seconds", "Incorrect. Fibrin formation is the final phase of coagulation and takes longer; it is not the immediate first response."], ["release of erythropoietin to replace the lost red cells", "Incorrect. Erythropoietin governs long-term red-cell replacement over days, not the immediate response to injury."], ["vascular spasm that constricts the vessel and limits blood loss", "Correct. The earliest response is immediate vascular spasm (myogenic, neural, and local factors), which narrows the vessel and reduces blood loss even before the platelet plug and coagulation cascade take over."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 34-40"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Place the phases of hemostasis in their correct order.", "opts": [["Vascular spasm, then platelet plug, then coagulation and clot formation", "Correct. Hemostasis proceeds as immediate vascular spasm, followed by formation of the platelet plug (primary hemostasis), and then the coagulation cascade producing a fibrin clot (secondary hemostasis), which is later remodeled and dissolved."], ["Clot retraction, then platelet plug, then vascular spasm", "Incorrect. Clot retraction occurs after a clot has formed, so it cannot come first."], ["Coagulation first, then vascular spasm, and finally the platelet plug", "Incorrect. Vascular spasm and the platelet plug precede the coagulation cascade, not the reverse."], ["Platelet plug, then fibrinolysis, then vascular spasm during this particular process", "Incorrect. Fibrinolysis is the final clean-up phase, and vascular spasm is the first response, so this order is scrambled."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 34-48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "The intrinsic and extrinsic pathways converge at a common pathway that begins with the activation of...", "opts": [["fibrinogen, which is the first factor of the cascade", "Incorrect. Fibrinogen is the final substrate cleaved by thrombin, not the start of the common pathway."], ["tissue factor, which is unique to the intrinsic pathway", "Incorrect. Tissue factor triggers the extrinsic pathway; the common pathway begins with factor X activation."], ["plasminogen, which initiates clot formation", "Incorrect. Plasminogen belongs to the clot-dissolving system, not the common coagulation pathway."], ["factor X, leading to prothrombin activator formation", "Correct. Both initiating pathways lead to activation of factor X; activated factor X (with factor V, calcium, and phospholipid) forms prothrombin activator, which converts prothrombin to thrombin. This shared final sequence is the common pathway."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 44-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "The extrinsic pathway of coagulation is triggered when...", "opts": [["tissue factor from damaged cells outside the vessel contacts the blood", "Correct. The extrinsic (tissue factor) pathway begins when trauma exposes blood to tissue factor released by damaged extravascular cells; this rapidly activates the cascade toward prothrombin activator, and it is the faster of the two initiating pathways."], ["platelets release erythropoietin at the site of injury", "Incorrect. Platelets release aggregation mediators, not erythropoietin, and the extrinsic trigger is tissue factor."], ["plasmin begins to break down an existing fibrin clot during this process", "Incorrect. Plasmin dissolves clots (fibrinolysis); it does not initiate the extrinsic coagulation pathway."], ["blood contacts negatively charged collagen within the vessel", "Incorrect. Contact with subendothelial collagen initiates the intrinsic pathway, not the extrinsic one."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 44-46"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Calcium ions are required at multiple steps of coagulation because they...", "opts": [["dissolve the clot completely once the healing process is fully complete", "Incorrect. Clot dissolution is performed by plasmin during fibrinolysis, not by calcium."], ["are needed for clotting factors to assemble on phospholipid surfaces", "Correct. Calcium (factor IV) bridges vitamin K-dependent clotting factors to the negatively charged phospholipid surfaces of platelets, allowing the reaction complexes to assemble; without calcium, the cascade cannot proceed, which is why calcium chelation prevents clotting in a blood tube."], ["directly cleave fibrinogen into fibrin strands", "Incorrect. Fibrinogen is cleaved by thrombin, an enzyme, not by calcium ions."], ["are the enzyme that converts prothrombin to thrombin", "Incorrect. That conversion is carried out by prothrombin activator; calcium is a required cofactor, not the enzyme itself."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 40-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Intact, undamaged endothelium helps prevent unwanted clotting by...", "opts": [["actively cross-linking any fibrin that forms nearby during this process in the tissues", "Incorrect. Cross-linking fibrin builds clots; intact endothelium instead prevents clot initiation."], ["absorbing all calcium out of the surrounding plasma", "Incorrect. Endothelium does not strip plasma calcium; it prevents clotting by its smooth, charged, antithrombotic surface."], ["continuously releasing thrombin into the passing blood", "Incorrect. Releasing thrombin would promote clotting; intact endothelium is antithrombotic, not prothrombotic."], ["presenting a smooth, negatively charged surface that repels platelets and factors", "Correct. Healthy endothelium is smooth and carries a negative surface charge that repels platelets and clotting factors, and it secretes antithrombotic substances; this keeps blood fluid until injury exposes the underlying tissue and triggers hemostasis."]], "c": 3, "cite": "Hemostasis & Coagulation, slides 34, 48"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "The intrinsic pathway of coagulation is initiated when blood contacts...", "opts": [["erythropoietin that is secreted by the injured kidney into the blood", "Incorrect. Erythropoietin governs red cell production and has no role in initiating coagulation."], ["bile salts entering the bloodstream from the gut", "Incorrect. Bile salts are not coagulation triggers; the intrinsic pathway responds to contact with charged surfaces."], ["a negatively charged surface such as exposed subendothelial collagen", "Correct. The intrinsic (contact) pathway is triggered when blood is exposed to negatively charged surfaces like subendothelial collagen, which activates factor XII and begins the cascade using components already present in the blood."], ["tissue factor released from damaged extravascular cells", "Incorrect. Tissue factor triggers the extrinsic pathway, not the intrinsic one."]], "c": 2, "cite": "Hemostasis & Coagulation, slides 44-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "The extrinsic pathway is triggered when tissue factor is exposed. The extrinsic and intrinsic pathways then converge by...", "opts": [["releasing thromboxane A2 to recruit additional nearby platelets", "Thromboxane recruits platelets but is not the point where the two cascades merge."], ["activating factor X, which assembles prothrombin activator", "Correct: both pathways activate factor X, forming prothrombin activator in the common pathway."], ["activating factor XII on contact with subendothelial collagen", "Factor XII activation initiates the intrinsic pathway; it is not the convergence point."], ["cleaving fibrinogen directly without first forming thrombin", "Fibrinogen cleavage requires thrombin, which forms after the pathways converge."]], "c": 1, "cite": "Hemostasis & Coagulation, slides 44-47"}, {"topic": "Blood & Hemostasis", "io": "d — Molecular mechanisms of coagulation", "q": "Von Willebrand factor contributes to hemostasis mainly by...", "opts": [["helping platelets adhere to the exposed vessel wall at the injury site", "Correct. Von Willebrand factor bridges platelet surface receptors to exposed subendothelial collagen, anchoring platelets at the site of injury; it also stabilizes factor VIII in the circulation, so its deficiency causes a bleeding tendency."], ["dissolving the fibrin meshwork after the wound heals", "Incorrect. Fibrin dissolution is plasmin's role; von Willebrand factor promotes platelet adhesion."], ["stimulating the marrow to produce more platelets under most normal conditions", "Incorrect. Platelet production is driven by thrombopoietin; von Willebrand factor acts at the site of injury."], ["converting prothrombin directly into active thrombin", "Incorrect. That conversion is done by prothrombin activator; von Willebrand factor mediates platelet adhesion."]], "c": 0, "cite": "Hemostasis & Coagulation, slides 33-34"}];
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -239,13 +253,29 @@ function fmtTime(ms){
   const pad=n=>String(n).padStart(2,"0");
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
-function updateTimerDisplay(){ const el=document.getElementById('timerpill'); if(el) el.textContent=fmtTime(currentElapsedMs()); }
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('navbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+}
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs()})); }
+function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -257,7 +287,12 @@ function startExam(){
   document.getElementById('resultsfoot').style.display='none';
   order = QUESTIONS.map((_,i)=>i);
   if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false;
+  applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('start').style.display='none';
   document.getElementById('results').style.display='none';
@@ -272,6 +307,9 @@ function resumeQuiz(){
   order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
   idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  applyExamModeUI();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
   document.getElementById('start').style.display='none';
@@ -298,6 +336,25 @@ function renderQ(){
   document.getElementById('qio').textContent = 'Objective '+q.io;
   document.getElementById('qtext').textContent = q.q;
   document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
   const wrap=document.getElementById('opts'); wrap.innerHTML='';
   q.opts.forEach((o,i)=>{
     const b=document.createElement('button');
@@ -316,8 +373,14 @@ function renderQ(){
 }
 
 function choose(sel){
-  if(answers[idx]!==null) return;
   const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
   answers[idx]=sel;
   if(sel===q.c) score++;
   saveProgress();
@@ -361,13 +424,61 @@ function prevQ(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
 function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
   if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
   else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
 }
 function showResults(){
   stopTimerInterval();
   const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
   clearProgress();
   markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').style.display='none';
@@ -402,7 +513,7 @@ function showResults(){
     }
   });
   const missCount=QUESTIONS.length-score;
-  const missBlock = missCount===0
+  const missBlock = examMode ? examReviewHTML() : missCount===0
     ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
     : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
   const r=document.getElementById('results');
@@ -433,6 +544,14 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('quiz').style.display==='none') return;
   const k=e.key;
   if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
   if(answers[idx]===null){
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
     const i=map[k.toLowerCase()];
