@@ -276,9 +276,10 @@
     .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
     .subtitle + .subtitle { margin-top: 4px; }
 
-    .search-wrap { position: relative; margin: 18px 0; }
+    .search-wrap { position: relative; margin: 18px 0; display: flex; gap: 10px; }
     .site-search-input {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
       font: inherit;
       font-size: 15px;
       color: var(--ink);
@@ -291,6 +292,28 @@
     .site-search-input:focus {
       outline: none;
       border-color: var(--accent);
+    }
+    .guides-btn {
+      flex: none;
+      display: flex;
+      align-items: center;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .guides-btn:hover { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 640px) {
+      .search-wrap { flex-wrap: wrap; }
+      .site-search-input { flex: 1 1 100%; }
+      .guides-btn { flex: 1 1 100%; justify-content: center; }
     }
     .search-results {
       position: absolute;
@@ -857,6 +880,7 @@
 
     <div class="search-wrap">
       <input type="text" id="site-search" class="site-search-input" placeholder="Search all quizzes…" autocomplete="off" spellcheck="false">
+      <a href="guides.html" class="guides-btn">Guides &amp; Study Aids</a>
       <div id="search-results" class="search-results hidden"></div>
     </div>
 
