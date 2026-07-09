@@ -487,6 +487,21 @@
 }
 .tts-rate:hover { background: #e5e7eb; }
 :root[data-theme="dark"] .tts-rate:hover { background: #2a2e37; }
+.tts-voice {
+  font: 600 12px ui-sans-serif, system-ui;
+  max-width: 150px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+:root[data-theme="dark"] .tts-voice {
+  background: #22262e;
+  color: #e5e7eb;
+}
 .tts-active {
   background: rgba(255, 213, 79, .35) !important;
   border-radius: 6px;

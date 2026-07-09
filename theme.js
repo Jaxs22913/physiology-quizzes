@@ -438,6 +438,8 @@
     var currentIndex = -1;
     var playing = false;
     var rateIdx = 0;
+    var voices = [];
+    var selectedVoice = null;
 
     var bar = document.createElement("div");
     bar.className = "tts-bar";
@@ -461,10 +463,64 @@
     rateBtn.textContent = RATES[rateIdx] + "x";
     rateBtn.setAttribute("aria-label", "Reading speed");
 
+    var voiceSelect = document.createElement("select");
+    voiceSelect.className = "tts-voice";
+    voiceSelect.setAttribute("aria-label", "Voice");
+
     bar.appendChild(playBtn);
     bar.appendChild(stopBtn);
     bar.appendChild(rateBtn);
+    bar.appendChild(voiceSelect);
     document.body.appendChild(bar);
+
+    // Voice quality/gender is almost entirely down to which installed voice
+    // is picked -- rate/pitch tweaks don't fix a robotic-sounding voice.
+    // Try known better-sounding (and, per a user request, male) system/
+    // browser voices first; user's own pick (persisted) always wins.
+    var PREFERRED_VOICES = ["Alex", "Daniel", "Google UK English Male", "Google US English", "Samantha"];
+
+    function pickDefaultVoice() {
+      var saved = localStorage.getItem("ttsVoiceName");
+      if (saved) {
+        var match = voices.filter(function (v) { return v.name === saved; })[0];
+        if (match) return match;
+      }
+      for (var i = 0; i < PREFERRED_VOICES.length; i++) {
+        var m = voices.filter(function (v) { return v.name === PREFERRED_VOICES[i]; })[0];
+        if (m) return m;
+      }
+      return voices[0] || null;
+    }
+
+    function populateVoiceSelect() {
+      voiceSelect.innerHTML = "";
+      voices.forEach(function (v) {
+        var opt = document.createElement("option");
+        opt.value = v.name;
+        opt.textContent = v.name + (v.lang ? " (" + v.lang + ")" : "");
+        voiceSelect.appendChild(opt);
+      });
+      selectedVoice = pickDefaultVoice();
+      if (selectedVoice) voiceSelect.value = selectedVoice.name;
+    }
+
+    function loadVoices() {
+      var all = speechSynthesis.getVoices();
+      voices = all.filter(function (v) { return v.lang.indexOf("en") === 0; });
+      if (voices.length === 0) voices = all;
+      if (voices.length > 0) populateVoiceSelect();
+    }
+
+    loadVoices();
+    if ("onvoiceschanged" in speechSynthesis) {
+      speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    }
+
+    voiceSelect.addEventListener("change", function () {
+      selectedVoice = voices.filter(function (v) { return v.name === voiceSelect.value; })[0] || null;
+      if (selectedVoice) localStorage.setItem("ttsVoiceName", selectedVoice.name);
+      if (playing) { speechSynthesis.cancel(); speakIndex(currentIndex); }
+    });
 
     function buildQueue() {
       queue = Array.prototype.slice.call(wrap.querySelectorAll(UNIT_SELECTOR))
@@ -491,6 +547,7 @@
       el.scrollIntoView({ behavior: "smooth", block: "center" });
       var utter = new SpeechSynthesisUtterance(el.textContent.trim());
       utter.rate = RATES[rateIdx];
+      if (selectedVoice) utter.voice = selectedVoice;
       utter.onend = function () { if (playing) speakIndex(i + 1); };
       utter.onerror = function () { if (playing) speakIndex(i + 1); };
       speechSynthesis.speak(utter);
