@@ -418,3 +418,123 @@
     init();
   }
 })();
+
+// Read-aloud, desktop-only for now. Opt-in per page: add data-readable to
+// the page's .wrap div. Only built for guide-style reference pages, not
+// quizzes -- gated on that explicit marker rather than absence-of-quiz
+// signals, so it never silently turns on for a page it wasn't meant for.
+(function () {
+  var PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  var PAUSE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+  var STOP = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14"/></svg>';
+  var UNIT_SELECTOR = "p, li, .cap, td, .io";
+  var RATES = [1, 1.25, 1.5, 1.75, 2];
+
+  function init() {
+    var wrap = document.querySelector(".wrap[data-readable]");
+    if (!wrap || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") return;
+
+    var queue = [];
+    var currentIndex = -1;
+    var playing = false;
+    var rateIdx = 0;
+
+    var bar = document.createElement("div");
+    bar.className = "tts-bar";
+    bar.id = "tts-bar";
+
+    var playBtn = document.createElement("button");
+    playBtn.type = "button";
+    playBtn.className = "tts-btn";
+    playBtn.setAttribute("aria-label", "Read aloud");
+    playBtn.innerHTML = PLAY;
+
+    var stopBtn = document.createElement("button");
+    stopBtn.type = "button";
+    stopBtn.className = "tts-btn";
+    stopBtn.setAttribute("aria-label", "Stop reading");
+    stopBtn.innerHTML = STOP;
+
+    var rateBtn = document.createElement("button");
+    rateBtn.type = "button";
+    rateBtn.className = "tts-rate";
+    rateBtn.textContent = RATES[rateIdx] + "x";
+    rateBtn.setAttribute("aria-label", "Reading speed");
+
+    bar.appendChild(playBtn);
+    bar.appendChild(stopBtn);
+    bar.appendChild(rateBtn);
+    document.body.appendChild(bar);
+
+    function buildQueue() {
+      queue = Array.prototype.slice.call(wrap.querySelectorAll(UNIT_SELECTOR))
+        .filter(function (el) { return el.textContent.trim().length > 0; });
+    }
+
+    function clearHighlight() {
+      var prev = wrap.querySelector(".tts-active");
+      if (prev) prev.classList.remove("tts-active");
+    }
+
+    function paintPlayBtn() {
+      playBtn.innerHTML = playing ? PAUSE : PLAY;
+      playBtn.setAttribute("aria-label", playing ? "Pause reading" : "Read aloud");
+    }
+
+    function speakIndex(i) {
+      if (!playing) return;
+      if (i < 0 || i >= queue.length) { stop(); return; }
+      currentIndex = i;
+      clearHighlight();
+      var el = queue[i];
+      el.classList.add("tts-active");
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      var utter = new SpeechSynthesisUtterance(el.textContent.trim());
+      utter.rate = RATES[rateIdx];
+      utter.onend = function () { if (playing) speakIndex(i + 1); };
+      utter.onerror = function () { if (playing) speakIndex(i + 1); };
+      speechSynthesis.speak(utter);
+    }
+
+    function play() {
+      if (queue.length === 0) buildQueue();
+      if (queue.length === 0) return;
+      playing = true;
+      paintPlayBtn();
+      speechSynthesis.cancel();
+      speakIndex(Math.max(currentIndex, 0));
+    }
+
+    function pause() {
+      playing = false;
+      speechSynthesis.cancel();
+      paintPlayBtn();
+    }
+
+    function stop() {
+      playing = false;
+      speechSynthesis.cancel();
+      clearHighlight();
+      currentIndex = -1;
+      paintPlayBtn();
+    }
+
+    playBtn.addEventListener("click", function () {
+      if (playing) pause(); else play();
+    });
+    stopBtn.addEventListener("click", stop);
+    rateBtn.addEventListener("click", function () {
+      rateIdx = (rateIdx + 1) % RATES.length;
+      rateBtn.textContent = RATES[rateIdx] + "x";
+      if (playing) { speechSynthesis.cancel(); speakIndex(currentIndex); }
+    });
+
+    window.addEventListener("pagehide", function () { speechSynthesis.cancel(); });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

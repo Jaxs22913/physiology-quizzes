@@ -426,3 +426,78 @@
 }
 .tour-btn.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
 :root[data-theme="dark"] .tour-btn.primary { background: #60a5fa; border-color: #60a5fa; color: #0f1115; }
+
+/* Read-aloud control bar, desktop-only (see the "just for desktop" note
+   next to its JS in theme.js -- mobile support is a possible future add). */
+.tts-bar {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 600;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  padding: 6px;
+}
+:root[data-theme="dark"] .tts-bar {
+  background: #191c22;
+  border-color: #2a2e37;
+}
+@media (min-width: 900px) {
+  .tts-bar { display: flex; }
+}
+.tts-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+:root[data-theme="dark"] .tts-btn {
+  background: #22262e;
+  color: #e5e7eb;
+}
+.tts-btn:hover { background: #e5e7eb; }
+:root[data-theme="dark"] .tts-btn:hover { background: #2a2e37; }
+.tts-rate {
+  font: 700 12px ui-sans-serif, system-ui;
+  padding: 0 12px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+:root[data-theme="dark"] .tts-rate {
+  background: #22262e;
+  color: #e5e7eb;
+}
+.tts-rate:hover { background: #e5e7eb; }
+:root[data-theme="dark"] .tts-rate:hover { background: #2a2e37; }
+.tts-active {
+  background: rgba(255, 213, 79, .35) !important;
+  border-radius: 6px;
+  transition: background .2s ease;
+  /* Padding + matching negative margin expands the visible highlight beyond
+     tightly-set text (e.g. TOC card descriptions with no padding of their
+     own) without shifting surrounding layout -- margin is a no-op on <td>,
+     which is fine, it already has cell padding to work with. */
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+:root[data-theme="dark"] .tts-active {
+  background: rgba(255, 213, 79, .22) !important;
+}
