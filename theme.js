@@ -675,7 +675,6 @@
       queue.forEach(function (el, idx) {
         el.classList.add("tts-clickable");
         el.addEventListener("click", function () {
-          if (!window.matchMedia("(min-width: 900px)").matches) return;
           if (window.getSelection().toString().length > 0) return;
           jumpTo(idx);
         });

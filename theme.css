@@ -427,10 +427,12 @@
 .tour-btn.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
 :root[data-theme="dark"] .tour-btn.primary { background: #60a5fa; border-color: #60a5fa; color: #0f1115; }
 
-/* Read-aloud control bar, desktop-only (see the "just for desktop" note
-   next to its JS in theme.js -- mobile support is a possible future add). */
+/* Read-aloud control bar. Originally desktop-only while audio was live
+   speechSynthesis; now that guides ship pre-rendered audio files, it works
+   everywhere -- mobile just gets a smaller/lower-profile bar (see the
+   max-width:640px override below) since screen space is tighter. */
 .tts-bar {
-  display: none;
+  display: flex;
   position: fixed;
   bottom: 20px;
   left: 20px;
@@ -452,14 +454,19 @@
   align-items: center;
   gap: 6px;
 }
+.tts-clickable { cursor: pointer; }
 @media (min-width: 900px) {
-  .tts-bar { display: flex; }
-  /* Click-to-jump is only wired up in JS above this same breakpoint (see
-     theme.js), so only hint it's clickable here too -- showing a pointer
-     cursor with no way to actually control playback would be misleading
-     below the breakpoint where the control bar itself is hidden. */
-  .tts-clickable { cursor: pointer; }
   .tts-clickable:hover { outline: 2px dashed rgba(37, 99, 235, .4); outline-offset: 2px; border-radius: 4px; }
+}
+@media (max-width: 640px) {
+  /* Smaller footprint, and lifted well clear of the fixed footer-mark
+     logo -- on a narrow screen the logo's centered mark sits close
+     enough to the bottom-left corner that a bottom:12px bar would
+     otherwise cover it (only cosmetic on wide desktop screens, where
+     the mark is centered far to the right of the bar). */
+  .tts-bar { bottom: 84px; left: 12px; border-radius: 16px; padding: 5px; gap: 5px; }
+  .tts-btn { width: 34px; height: 34px; }
+  .tts-rate, .tts-gender { height: 34px; font-size: 11px; padding: 0 9px; }
 }
 .tts-btn {
   width: 38px;
