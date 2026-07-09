@@ -534,10 +534,12 @@
    that variable (the physiology field guide's per-system accent colors),
    falling back to the site blue anywhere it isn't defined. */
 .test-yourself-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  margin: 20px 0 4px;
+  width: fit-content;
+  margin: 20px auto 4px;
   padding: 11px 20px;
   border-radius: 999px;
   border: none;
