@@ -432,6 +432,53 @@
   var UNIT_SELECTOR = "p, li, .cap, td, .io";
   var RATES = [1, 1.25, 1.5, 1.75, 2];
 
+  // Notation that reads fine on screen (arrows, chemistry sub/superscripts,
+  // em dashes) often reads as silence, a mumble, or a literal symbol name
+  // when spoken -- voice choice alone can't fix that. Applied in order:
+  // whole-term chemistry/physiology substitutions first (most specific),
+  // then generic symbols, then a last-resort cleanup for any sub/superscript
+  // characters neither list caught.
+  var TERM_REPLACEMENTS = [
+    ["H₂CO₃", "carbonic acid"],
+    ["HCO₃⁻", "bicarbonate"],
+    ["Ca²⁺", "calcium"],
+    ["Na⁺", "sodium"],
+    ["K⁺", "potassium"],
+    ["H₂O", "water"],
+    ["CO₂", "carbon dioxide"],
+    ["O₂", "oxygen"],
+    ["H⁺", "hydrogen ion"],
+    ["B₁₂", "B twelve"]
+  ];
+  var SYMBOL_REPLACEMENTS = [
+    ["⇌", " in equilibrium with "],
+    ["↔", " and "],
+    ["→", " leads to "],
+    ["←", " comes from "],
+    ["↑", " increases "],
+    ["↓", " decreases "],
+    ["—", ", "],
+    ["–", " to "],
+    ["·", ", "],
+    ["•", ", "],
+    ["≈", " approximately "],
+    ["°", " degrees "],
+    ["÷", " divided by "],
+    ["vs.", "versus"]
+  ];
+  var LEFTOVER_CLEANUP = [
+    ["₁", "1"], ["₂", "2"], ["₃", "3"],
+    ["²", "2"], ["⁺", " plus"], ["⁻", " minus"]
+  ];
+
+  function speakableText(raw) {
+    var t = raw;
+    TERM_REPLACEMENTS.forEach(function (pair) { t = t.split(pair[0]).join(pair[1]); });
+    SYMBOL_REPLACEMENTS.forEach(function (pair) { t = t.split(pair[0]).join(pair[1]); });
+    LEFTOVER_CLEANUP.forEach(function (pair) { t = t.split(pair[0]).join(pair[1]); });
+    return t.replace(/\s+/g, " ").trim();
+  }
+
   function init() {
     var wrap = document.querySelector(".wrap[data-readable]");
     if (!wrap || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") return;
@@ -481,12 +528,20 @@
     voiceSelect.className = "tts-voice";
     voiceSelect.setAttribute("aria-label", "Voice");
 
-    bar.appendChild(prevBtn);
-    bar.appendChild(playBtn);
-    bar.appendChild(nextBtn);
-    bar.appendChild(stopBtn);
-    bar.appendChild(rateBtn);
-    bar.appendChild(voiceSelect);
+    var playbackRow = document.createElement("div");
+    playbackRow.className = "tts-bar-row";
+    playbackRow.appendChild(prevBtn);
+    playbackRow.appendChild(playBtn);
+    playbackRow.appendChild(nextBtn);
+    playbackRow.appendChild(stopBtn);
+
+    var settingsRow = document.createElement("div");
+    settingsRow.className = "tts-bar-row";
+    settingsRow.appendChild(rateBtn);
+    settingsRow.appendChild(voiceSelect);
+
+    bar.appendChild(playbackRow);
+    bar.appendChild(settingsRow);
     document.body.appendChild(bar);
 
     // Voice quality/gender is almost entirely down to which installed voice
@@ -584,7 +639,7 @@
       var el = queue[i];
       el.classList.add("tts-active");
       el.scrollIntoView({ behavior: "smooth", block: "center" });
-      var utter = new SpeechSynthesisUtterance(el.textContent.trim());
+      var utter = new SpeechSynthesisUtterance(speakableText(el.textContent.trim()));
       utter.rate = RATES[rateIdx];
       if (selectedVoice) utter.voice = selectedVoice;
       utter.onend = function () { if (playing) speakIndex(i + 1); };

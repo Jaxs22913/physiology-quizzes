@@ -435,17 +435,22 @@
   bottom: 20px;
   left: 20px;
   z-index: 600;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 999px;
+  border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
   padding: 6px;
 }
 :root[data-theme="dark"] .tts-bar {
   background: #191c22;
   border-color: #2a2e37;
+}
+.tts-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 @media (min-width: 900px) {
   .tts-bar { display: flex; }
@@ -495,7 +500,8 @@
 :root[data-theme="dark"] .tts-rate:hover { background: #2a2e37; }
 .tts-voice {
   font: 600 12px ui-sans-serif, system-ui;
-  max-width: 150px;
+  max-width: 120px;
+  flex: 1;
   height: 38px;
   padding: 0 10px;
   border-radius: 999px;
