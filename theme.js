@@ -489,6 +489,14 @@
     var rateIdx = 0;
     var voices = [];
     var selectedVoice = null;
+    var currentAudio = null;
+    // Pre-rendered audio (see feedback_guides_page memory: say -v Ava +
+    // afconvert, generated once per guide) sounds far better than any
+    // browser voice, when available. Mapped purely by queue index --
+    // "NNN.m4a" for reading unit N -- so re-running that pipeline after
+    // editing a guide's content is required to keep them aligned; there's
+    // no in-page marker tying a specific paragraph to a specific file.
+    var audioDir = wrap.dataset.audioDir || null;
 
     var bar = document.createElement("div");
     bar.className = "tts-bar";
@@ -538,7 +546,10 @@
     var settingsRow = document.createElement("div");
     settingsRow.className = "tts-bar-row";
     settingsRow.appendChild(rateBtn);
-    settingsRow.appendChild(voiceSelect);
+    // Pre-rendered audio has a fixed voice baked into the files -- a voice
+    // picker that does nothing would be misleading, so it's only shown for
+    // pages falling back to live browser synthesis.
+    if (!audioDir) settingsRow.appendChild(voiceSelect);
 
     bar.appendChild(playbackRow);
     bar.appendChild(settingsRow);
@@ -590,7 +601,7 @@
     voiceSelect.addEventListener("change", function () {
       selectedVoice = voices.filter(function (v) { return v.name === voiceSelect.value; })[0] || null;
       if (selectedVoice) localStorage.setItem("ttsVoiceName", selectedVoice.name);
-      if (playing) { speechSynthesis.cancel(); speakIndex(currentIndex); }
+      if (playing) { cancelPlayback(); speakIndex(currentIndex); }
     });
 
     function buildQueue() {
@@ -617,7 +628,7 @@
       if (index < 0 || index >= queue.length) return;
       playing = true;
       paintPlayBtn();
-      speechSynthesis.cancel();
+      cancelPlayback();
       speakIndex(index);
     }
 
@@ -631,14 +642,17 @@
       playBtn.setAttribute("aria-label", playing ? "Pause reading" : "Read aloud");
     }
 
-    function speakIndex(i) {
-      if (!playing) return;
-      if (i < 0 || i >= queue.length) { stop(); return; }
-      currentIndex = i;
-      clearHighlight();
-      var el = queue[i];
-      el.classList.add("tts-active");
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    function cancelPlayback() {
+      speechSynthesis.cancel();
+      if (currentAudio) {
+        currentAudio.onended = null;
+        currentAudio.onerror = null;
+        currentAudio.pause();
+        currentAudio = null;
+      }
+    }
+
+    function speakLive(i, el) {
       var utter = new SpeechSynthesisUtterance(speakableText(el.textContent.trim()));
       utter.rate = RATES[rateIdx];
       if (selectedVoice) utter.voice = selectedVoice;
@@ -647,24 +661,49 @@
       speechSynthesis.speak(utter);
     }
 
+    function speakIndex(i) {
+      if (!playing) return;
+      if (i < 0 || i >= queue.length) { stop(); return; }
+      currentIndex = i;
+      clearHighlight();
+      var el = queue[i];
+      el.classList.add("tts-active");
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      if (audioDir) {
+        var num = String(i + 1).padStart(3, "0");
+        var audio = new Audio(audioDir + "/" + num + ".m4a");
+        audio.playbackRate = RATES[rateIdx];
+        currentAudio = audio;
+        audio.onended = function () { if (playing) speakIndex(i + 1); };
+        // Missing/failed pre-rendered file for this unit (e.g. a guide only
+        // partly through the audio pipeline) -- fall back to live synthesis
+        // for just this one paragraph rather than breaking the whole read.
+        audio.onerror = function () { speakLive(i, el); };
+        audio.play().catch(function () { speakLive(i, el); });
+      } else {
+        speakLive(i, el);
+      }
+    }
+
     function play() {
       if (queue.length === 0) buildQueue();
       if (queue.length === 0) return;
       playing = true;
       paintPlayBtn();
-      speechSynthesis.cancel();
+      cancelPlayback();
       speakIndex(Math.max(currentIndex, 0));
     }
 
     function pause() {
       playing = false;
-      speechSynthesis.cancel();
+      cancelPlayback();
       paintPlayBtn();
     }
 
     function stop() {
       playing = false;
-      speechSynthesis.cancel();
+      cancelPlayback();
       clearHighlight();
       currentIndex = -1;
       paintPlayBtn();
@@ -683,13 +722,19 @@
     rateBtn.addEventListener("click", function () {
       rateIdx = (rateIdx + 1) % RATES.length;
       rateBtn.textContent = RATES[rateIdx] + "x";
-      if (playing) { speechSynthesis.cancel(); speakIndex(currentIndex); }
+      if (playing) { cancelPlayback(); speakIndex(currentIndex); }
     });
 
-    window.addEventListener("pagehide", function () { speechSynthesis.cancel(); });
+    window.addEventListener("pagehide", cancelPlayback);
 
     buildQueue();
     wireClickToJump();
+
+    // Tooling hook for the pre-rendered-audio generation pipeline (see
+    // feedback_guides_page memory) -- lets a one-off script extract the
+    // exact same queue/normalized text a live page would speak, so
+    // pre-rendered audio matches word-for-word. Not used by the page itself.
+    window.__ttsDebug = { queue: queue, speakableText: speakableText };
   }
 
   if (document.readyState === "loading") {
