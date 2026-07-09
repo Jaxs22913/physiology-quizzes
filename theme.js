@@ -539,6 +539,31 @@
     voiceSelect.className = "tts-voice";
     voiceSelect.setAttribute("aria-label", "Voice");
 
+    // Pre-rendered guides ship two full audio tracks (edge-tts neural
+    // voices "Andrew" and "Ava", one male/female pair per guide, under
+    // <audioDir>/male/ and <audioDir>/female/) -- a toggle picks between
+    // them instead of the live-synthesis voice dropdown, which has no
+    // meaning once audio is pre-rendered.
+    var GENDERS = ["female", "male"];
+    var GENDER_LABELS = { female: "♀ Ava", male: "♂ Andrew" };
+    var gender = localStorage.getItem("ttsGender") || "female";
+    if (GENDERS.indexOf(gender) === -1) gender = "female";
+
+    var genderBtn = document.createElement("button");
+    genderBtn.type = "button";
+    genderBtn.className = "tts-rate tts-gender";
+    genderBtn.setAttribute("aria-label", "Reading voice");
+
+    function paintGenderBtn() { genderBtn.textContent = GENDER_LABELS[gender]; }
+    paintGenderBtn();
+
+    genderBtn.addEventListener("click", function () {
+      gender = gender === "female" ? "male" : "female";
+      localStorage.setItem("ttsGender", gender);
+      paintGenderBtn();
+      if (playing) { cancelPlayback(); speakIndex(currentIndex); }
+    });
+
     var playbackRow = document.createElement("div");
     playbackRow.className = "tts-bar-row";
     playbackRow.appendChild(prevBtn);
@@ -549,10 +574,12 @@
     var settingsRow = document.createElement("div");
     settingsRow.className = "tts-bar-row";
     settingsRow.appendChild(rateBtn);
-    // Pre-rendered audio has a fixed voice baked into the files -- a voice
-    // picker that does nothing would be misleading, so it's only shown for
-    // pages falling back to live browser synthesis.
-    if (!audioDir) settingsRow.appendChild(voiceSelect);
+    // Pre-rendered audio has a fixed voice baked into each file -- the live
+    // browser-voice dropdown only makes sense as a fallback for pages
+    // without pre-rendered audio; pages that do have it get the male/female
+    // toggle instead.
+    if (audioDir) settingsRow.appendChild(genderBtn);
+    else settingsRow.appendChild(voiceSelect);
 
     bar.appendChild(playbackRow);
     bar.appendChild(settingsRow);
@@ -675,7 +702,7 @@
 
       if (audioDir) {
         var num = String(i + 1).padStart(3, "0");
-        var audio = new Audio(audioDir + "/" + num + ".m4a");
+        var audio = new Audio(audioDir + "/" + gender + "/" + num + ".mp3");
         audio.playbackRate = RATES[rateIdx];
         currentAudio = audio;
         audio.onended = function () { if (playing) speakIndex(i + 1); };

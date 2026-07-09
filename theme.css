@@ -498,6 +498,7 @@
 }
 .tts-rate:hover { background: #e5e7eb; }
 :root[data-theme="dark"] .tts-rate:hover { background: #2a2e37; }
+.tts-gender { white-space: nowrap; }
 .tts-voice {
   font: 600 12px ui-sans-serif, system-ui;
   max-width: 120px;
