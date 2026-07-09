@@ -1547,7 +1547,14 @@
         const page = document.querySelector(".page");
         const card = document.getElementById("semester-card");
         if (!page || !card) return;
-        const offset = Math.round(card.getBoundingClientRect().top - page.getBoundingClientRect().top);
+        // getBoundingClientRect() returns real (already-zoomed) viewport pixels,
+        // but week-widget/continue-widget are descendants of .page -- when the
+        // "Larger text" setting applies zoom to .page, any top:Npx set on them
+        // gets re-scaled by that same zoom at render time. Divide out the
+        // current zoom factor so the assigned value lands in the right spot
+        // instead of being pushed down by an extra ~15%.
+        const zoom = parseFloat(getComputedStyle(page).zoom) || 1;
+        const offset = Math.round((card.getBoundingClientRect().top - page.getBoundingClientRect().top) / zoom);
         const weekEl = document.getElementById("week-widget");
         const continueEl = document.getElementById("continue-widget");
         if (weekEl) weekEl.style.top = offset + "px";
