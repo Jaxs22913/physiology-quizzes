@@ -885,6 +885,179 @@
   }
 })();
 
+// Guide text highlighting (added 2026-07-10). Select text anywhere inside a
+// guide's .wrap[data-readable] and a small color-swatch toolbar appears;
+// picking a color wraps the selection in <mark class="user-hl-COLOR">,
+// clicking an existing highlight removes it. Persisted per-guide to
+// localStorage, keyed by a stable index into the same "reading unit"
+// elements the read-aloud engine above already walks (a separate constant
+// here, not shared, since it lives in a different IIFE/closure -- if a
+// future guide's caption/callout markup needs new classes in the read-aloud
+// engine's UNIT_SELECTOR, add them here too so highlighting covers the same
+// elements). Runs independently of read-aloud/speechSynthesis support (that
+// module bails out entirely without it; highlighting shouldn't) -- gated on
+// .guide-back-bar (present on every guide, read-aloud or not) rather than
+// .wrap[data-readable], since that attribute is opt-in per guide (the
+// Hormones reference guide deliberately doesn't have it, being a table
+// guide with nothing to narrate) and highlighting has no such prerequisite.
+(function () {
+  if (!document.querySelector(".guide-back-bar")) return;
+  var wrap = document.querySelector(".wrap");
+  if (!wrap) return;
+
+  var HL_UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io";
+  var HL_KEY = "guideHl:" + location.pathname;
+  var COLORS = ["yellow", "green", "pink", "blue"];
+
+  var units = Array.prototype.slice.call(wrap.querySelectorAll(HL_UNIT_SELECTOR));
+  units.forEach(function (u, i) { u.setAttribute("data-hl-idx", i); });
+
+  // Character offset of (node, offset) relative to the full plain text of
+  // `unit`. A Range boundary point isn't always (textNode, charIndex) --
+  // triple-click-to-select-a-paragraph and selections starting/ending
+  // exactly at an element edge (e.g. right before an <em>) instead give
+  // (elementNode, childIndex). Manually walking text nodes and comparing
+  // node identity misses that second case entirely (silently returns the
+  // unit's full length instead of the intended position -- confirmed via a
+  // real selectNodeContents()-based test producing a zero-width "highlight"
+  // at the very end of the text instead of spanning it). Building a
+  // measuring range from the unit's start to this exact boundary point and
+  // reading its resolved .toString().length sidesteps the whole problem --
+  // Range already knows how to turn either representation into text
+  // correctly, so this function doesn't need its own case-handling for it.
+  function textOffset(unit, node, offset) {
+    var measuring = document.createRange();
+    measuring.setStart(unit, 0);
+    measuring.setEnd(node, offset);
+    return measuring.toString().length;
+  }
+
+  // Inverse of textOffset: build a Range for [start, end) plain-text
+  // offsets within `unit`. Returns null if the offsets no longer fit inside
+  // the unit's current text (e.g. the guide's own content was edited since
+  // this highlight was saved) -- callers must skip gracefully, not throw.
+  function rangeFromOffsets(unit, start, end) {
+    var walker = document.createTreeWalker(unit, NodeFilter.SHOW_TEXT, null);
+    var total = 0, n, range = document.createRange();
+    var startSet = false, endSet = false;
+    while ((n = walker.nextNode())) {
+      var len = n.textContent.length;
+      if (!startSet && total + len >= start) { range.setStart(n, start - total); startSet = true; }
+      if (!endSet && total + len >= end) { range.setEnd(n, end - total); endSet = true; break; }
+      total += len;
+    }
+    return (startSet && endSet) ? range : null;
+  }
+
+  function findUnit(node) {
+    var el = node.nodeType === 3 ? node.parentElement : node;
+    while (el && el !== wrap) {
+      if (el.hasAttribute && el.hasAttribute("data-hl-idx")) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function loadHighlights() {
+    try { return JSON.parse(localStorage.getItem(HL_KEY)) || []; } catch (e) { return []; }
+  }
+  function saveHighlights(list) { localStorage.setItem(HL_KEY, JSON.stringify(list)); }
+
+  function removeHighlight(mark, idx, start, end) {
+    var parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+    saveHighlights(loadHighlights().filter(function (h) {
+      return !(h.idx === idx && h.start === start && h.end === end);
+    }));
+  }
+
+  function applyHighlight(unit, start, end, color, persist) {
+    var range = rangeFromOffsets(unit, start, end);
+    if (!range) return;
+    var mark = document.createElement("mark");
+    mark.className = "user-hl user-hl-" + color;
+    mark.title = "Click to remove highlight";
+    var idx = Number(unit.getAttribute("data-hl-idx"));
+    try {
+      var content = range.extractContents();
+      mark.appendChild(content);
+      range.insertNode(mark);
+    } catch (e) { return; }
+    mark.addEventListener("click", function (e) {
+      e.stopPropagation(); // don't also trigger the unit's click-to-jump handler
+      removeHighlight(mark, idx, start, end);
+    });
+    if (persist) {
+      var list = loadHighlights();
+      list.push({ idx: idx, start: start, end: end, color: color });
+      saveHighlights(list);
+    }
+  }
+
+  // Restore saved highlights. Grouped by unit and applied in descending
+  // start-offset order within each unit, so applying an earlier highlight
+  // never shifts the DOM structure a later-in-list (but earlier-in-text)
+  // one still needs to walk to compute its own range.
+  var byUnit = {};
+  loadHighlights().forEach(function (h) { (byUnit[h.idx] = byUnit[h.idx] || []).push(h); });
+  Object.keys(byUnit).forEach(function (idxStr) {
+    var unit = units[Number(idxStr)];
+    if (!unit) return; // guide content changed since this was saved -- skip, don't crash
+    byUnit[idxStr]
+      .slice()
+      .sort(function (a, b) { return b.start - a.start; })
+      .forEach(function (h) { applyHighlight(unit, h.start, h.end, h.color, false); });
+  });
+
+  var toolbar = null;
+  function hideToolbar() { if (toolbar) { toolbar.remove(); toolbar = null; } }
+  function showToolbar(range, unit) {
+    hideToolbar();
+    var rect = range.getBoundingClientRect();
+    toolbar = document.createElement("div");
+    toolbar.className = "hl-toolbar";
+    toolbar.style.top = (rect.top + window.scrollY - 40) + "px";
+    toolbar.style.left = Math.max(8, rect.left + window.scrollX) + "px";
+    COLORS.forEach(function (color) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "hl-swatch hl-swatch-" + color;
+      b.setAttribute("aria-label", "Highlight " + color);
+      b.addEventListener("mousedown", function (e) {
+        e.preventDefault(); // keep the text selection alive through this click
+        var start = textOffset(unit, range.startContainer, range.startOffset);
+        var end = textOffset(unit, range.endContainer, range.endOffset);
+        applyHighlight(unit, start, end, color, true);
+        window.getSelection().removeAllRanges();
+        hideToolbar();
+      });
+      toolbar.appendChild(b);
+    });
+    document.body.appendChild(toolbar);
+  }
+
+  document.addEventListener("mouseup", function (e) {
+    if (toolbar && toolbar.contains(e.target)) return;
+    var sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) { hideToolbar(); return; }
+    var range = sel.getRangeAt(0);
+    if (!wrap.contains(range.commonAncestorContainer)) { hideToolbar(); return; }
+    var startUnit = findUnit(range.startContainer);
+    var endUnit = findUnit(range.endContainer);
+    if (!startUnit || startUnit !== endUnit) { hideToolbar(); return; } // cross-unit selection: unsupported, no-op
+    var commonEl = range.commonAncestorContainer.nodeType === 3
+      ? range.commonAncestorContainer.parentElement
+      : range.commonAncestorContainer;
+    if (commonEl.closest && commonEl.closest("mark.user-hl")) { hideToolbar(); return; } // avoid nested highlights
+    showToolbar(range, startUnit);
+  });
+  document.addEventListener("mousedown", function (e) {
+    if (toolbar && !toolbar.contains(e.target)) hideToolbar();
+  });
+})();
+
 // "Test yourself" quiz popup, generic/reusable across any page. Question
 // data (title + 5ish {q, choices, correct, explain} objects) is supplied
 // by the calling page -- this only owns the modal mechanics: render,
@@ -1047,5 +1220,46 @@ window.openQuestionNav = (function () {
     document.addEventListener("keydown", onKey);
 
     return { close: close };
+  };
+})();
+
+// Shared toast (added 2026-07-10) -- generalizes the page-local
+// showToast() index.html already had (mailto/install-prompt confirmations)
+// so any page, quiz or otherwise, can call window.showToast() the same way.
+window.showToast = function (message, duration) {
+  duration = duration || 3000;
+  var toast = document.getElementById("site-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "site-toast";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  requestAnimationFrame(function () { toast.style.opacity = "1"; });
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(function () { toast.style.opacity = "0"; }, duration);
+};
+
+// In-quiz answer-streak feedback (added 2026-07-10). Each MCQ quiz family
+// calls window.trackAnswerStreak(correct) as one line inside its own
+// choose()-equivalent function, in the normal (non-Exam-Mode) branch only --
+// showing "3 in a row!" mid-answer would contradict Exam Mode's whole
+// no-feedback-until-submit premise, so callers gate this behind `!examMode`
+// themselves rather than this function trying to detect that itself (exam
+// mode's own variable name/scope differs slightly family to family).
+// Deliberately in-memory only (module-level counter, not localStorage) --
+// this is a light in-the-moment nudge for the current sitting, not a stat
+// to persist or show elsewhere.
+(function () {
+  var streak = 0;
+  var THRESHOLDS = [3, 5, 10, 15, 20, 25];
+  window.trackAnswerStreak = function (correct) {
+    if (!correct) { streak = 0; return; }
+    streak++;
+    if (THRESHOLDS.indexOf(streak) !== -1) {
+      window.showToast(streak + " in a row! 🔥");
+    } else if (streak > THRESHOLDS[THRESHOLDS.length - 1] && streak % 10 === 0) {
+      window.showToast(streak + " in a row! 🔥");
+    }
   };
 })();

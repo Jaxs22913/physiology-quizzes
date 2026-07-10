@@ -854,3 +854,72 @@
 }
 .examtoolbar .examctl-btn-submit:hover { filter: brightness(1.08); }
 @media (max-width: 480px) { .examtoolbar { justify-content: stretch; } .examtoolbar > button { flex: 1; } }
+
+/* Guide text highlighting (added 2026-07-10). mark.user-hl-* colors are
+   deliberately NOT given a :root[data-theme="dark"] override -- they live
+   inside body > .wrap, which already gets a blanket
+   filter:invert(1) hue-rotate(180deg) for dark mode (see that rule above).
+   Adding an explicit dark variant here would double up against that filter
+   and likely land on a muddier color than just letting the same invert
+   trick every other guide/quiz color already relies on handle it. The
+   floating .hl-toolbar itself is NOT inside .wrap (appended to body), so it
+   does need to look reasonable in both themes on its own -- kept as one
+   dark, low-contrast-neutral pill that reads fine over either page theme
+   rather than defining two variants. */
+mark.user-hl {
+  background: transparent;
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+mark.user-hl-yellow { background: rgba(253, 224, 71, .55); }
+mark.user-hl-green  { background: rgba(134, 239, 172, .55); }
+mark.user-hl-pink   { background: rgba(249, 168, 212, .55); }
+mark.user-hl-blue   { background: rgba(147, 197, 253, .55); }
+
+.hl-toolbar {
+  position: absolute;
+  z-index: 3000;
+  display: flex;
+  gap: 6px;
+  background: #1f2937;
+  padding: 6px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+}
+.hl-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .55);
+  cursor: pointer;
+  padding: 0;
+}
+.hl-swatch:hover { border-color: #fff; }
+.hl-swatch-yellow { background: #fde047; }
+.hl-swatch-green  { background: #86efac; }
+.hl-swatch-pink   { background: #f9a8d4; }
+.hl-swatch-blue   { background: #93c5fd; }
+
+/* Answer-streak toast (added 2026-07-10) -- reuses the same visual recipe
+   index.html's own page-local showToast() already used, now shared via
+   theme.js so any quiz page can call window.showToast() too. */
+#site-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  z-index: 5000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
+  opacity: 0;
+  transition: opacity .2s ease;
+  max-width: 80vw;
+  text-align: center;
+  pointer-events: none;
+}
