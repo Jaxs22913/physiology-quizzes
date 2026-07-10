@@ -902,6 +902,63 @@ mark.user-hl-blue   { background: rgba(147, 197, 253, .55); }
 .hl-swatch-pink   { background: #f9a8d4; }
 .hl-swatch-blue   { background: #93c5fd; }
 
+/* Note indicator on an annotated highlight (added 2026-07-11) -- a
+   ::after pseudo-element, deliberately not a real inserted DOM node (see
+   the JS comment on setMarkNote): a real node would become part of the
+   mark's textContent and permanently corrupt both the highlighted text
+   itself and every future textOffset() computation inside that unit. */
+mark.user-hl.has-note::after {
+  content: "📝";
+  font-size: 10px;
+  vertical-align: super;
+  margin-left: 1px;
+  line-height: 0;
+}
+
+/* Note popover -- same "dark, theme-agnostic pill" treatment as
+   .hl-toolbar and for the same reason (appended to body, outside .wrap,
+   so it doesn't get the generic dark-mode invert every guide's own
+   content does and needs to look right on its own in both themes). */
+.hl-note-popover {
+  position: absolute;
+  z-index: 3000;
+  width: 240px;
+  background: #1f2937;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+}
+.hl-note-textarea {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  box-sizing: border-box;
+  font: 13px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #e5e7eb;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.hl-note-textarea::placeholder { color: #6b7280; }
+.hl-note-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+.hl-note-btn {
+  font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.hl-note-remove { background: #374151; color: #fca5a5; }
+.hl-note-remove:hover { background: #4b5563; }
+.hl-note-save { background: #2563eb; color: #fff; }
+.hl-note-save:hover { background: #1d4ed8; }
+
 /* Answer-streak toast (added 2026-07-10) -- reuses the same visual recipe
    index.html's own page-local showToast() already used, now shared via
    theme.js so any quiz page can call window.showToast() too. */

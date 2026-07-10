@@ -973,27 +973,50 @@
     }));
   }
 
-  function applyHighlight(unit, start, end, color, persist) {
+  function updateHighlightNote(idx, start, end, note) {
+    var list = loadHighlights();
+    list.forEach(function (h) {
+      if (h.idx === idx && h.start === start && h.end === end) h.note = note;
+    });
+    saveHighlights(list);
+  }
+
+  // note indicator is CSS-only (mark.has-note::after, see theme.css) rather
+  // than an inserted child node -- an inserted node would become part of
+  // the mark's textContent, which would then get re-extracted into the
+  // highlight itself on any future edit and permanently bake the indicator
+  // glyph into the "highlighted text," plus it'd shift every future
+  // textOffset() computation inside this unit. Setting a class + native
+  // title tooltip touches neither.
+  function applyHighlight(unit, start, end, color, persist, note) {
+    note = note || "";
     var range = rangeFromOffsets(unit, start, end);
-    if (!range) return;
+    if (!range) return null;
     var mark = document.createElement("mark");
     mark.className = "user-hl user-hl-" + color;
-    mark.title = "Click to remove highlight";
     var idx = Number(unit.getAttribute("data-hl-idx"));
     try {
       var content = range.extractContents();
       mark.appendChild(content);
       range.insertNode(mark);
-    } catch (e) { return; }
+    } catch (e) { return null; }
+    setMarkNote(mark, note);
     mark.addEventListener("click", function (e) {
       e.stopPropagation(); // don't also trigger the unit's click-to-jump handler
-      removeHighlight(mark, idx, start, end);
+      openNotePopover(mark, idx, start, end);
     });
     if (persist) {
       var list = loadHighlights();
-      list.push({ idx: idx, start: start, end: end, color: color });
+      list.push({ idx: idx, start: start, end: end, color: color, note: note });
       saveHighlights(list);
     }
+    return mark;
+  }
+
+  function setMarkNote(mark, note) {
+    mark.dataset.note = note;
+    mark.classList.toggle("has-note", !!note);
+    mark.title = note ? note : "Click to add a note or remove this highlight";
   }
 
   // Restore saved highlights. Grouped by unit and applied in descending
@@ -1008,8 +1031,55 @@
     byUnit[idxStr]
       .slice()
       .sort(function (a, b) { return b.start - a.start; })
-      .forEach(function (h) { applyHighlight(unit, h.start, h.end, h.color, false); });
+      .forEach(function (h) { applyHighlight(unit, h.start, h.end, h.color, false, h.note); });
   });
+
+  var notePopover = null;
+  function hideNotePopover() { if (notePopover) { notePopover.remove(); notePopover = null; } }
+  function openNotePopover(mark, idx, start, end) {
+    hideToolbar();
+    hideNotePopover();
+    var rect = mark.getBoundingClientRect();
+    notePopover = document.createElement("div");
+    notePopover.className = "hl-note-popover";
+    notePopover.style.top = (rect.bottom + window.scrollY + 6) + "px";
+    notePopover.style.left = Math.max(8, rect.left + window.scrollX) + "px";
+
+    var textarea = document.createElement("textarea");
+    textarea.className = "hl-note-textarea";
+    textarea.placeholder = "Add a note about this passage…";
+    textarea.value = mark.dataset.note || "";
+    notePopover.appendChild(textarea);
+
+    var row = document.createElement("div");
+    row.className = "hl-note-row";
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "hl-note-btn hl-note-remove";
+    removeBtn.textContent = "Remove highlight";
+    removeBtn.addEventListener("click", function () {
+      removeHighlight(mark, idx, start, end);
+      hideNotePopover();
+    });
+
+    var saveBtn = document.createElement("button");
+    saveBtn.type = "button";
+    saveBtn.className = "hl-note-btn hl-note-save";
+    saveBtn.textContent = "Save note";
+    saveBtn.addEventListener("click", function () {
+      var note = textarea.value.trim();
+      setMarkNote(mark, note);
+      updateHighlightNote(idx, start, end, note);
+      hideNotePopover();
+    });
+
+    row.appendChild(removeBtn);
+    row.appendChild(saveBtn);
+    notePopover.appendChild(row);
+    document.body.appendChild(notePopover);
+    textarea.focus();
+  }
 
   var toolbar = null;
   function hideToolbar() { if (toolbar) { toolbar.remove(); toolbar = null; } }
@@ -1027,11 +1097,24 @@
       b.setAttribute("aria-label", "Highlight " + color);
       b.addEventListener("mousedown", function (e) {
         e.preventDefault(); // keep the text selection alive through this click
+        // Also stop this mousedown from reaching the document-level listener
+        // below -- that listener closes notePopover on any outside click,
+        // and without this it would fire (bubbled from this very click)
+        // immediately after openNotePopover() runs a few lines down,
+        // destroying the popover in the same gesture that created it.
+        e.stopPropagation();
         var start = textOffset(unit, range.startContainer, range.startOffset);
         var end = textOffset(unit, range.endContainer, range.endOffset);
-        applyHighlight(unit, start, end, color, true);
+        var idx = Number(unit.getAttribute("data-hl-idx"));
+        var mark = applyHighlight(unit, start, end, color, true);
         window.getSelection().removeAllRanges();
         hideToolbar();
+        // Prompt for an optional note right away -- annotating is meant to
+        // feel like one continuous motion with highlighting, not a separate
+        // step you have to remember to come back for. Clicking away (the
+        // existing document-level mousedown handler below) leaves the
+        // highlight in place with no note, same as always.
+        if (mark) openNotePopover(mark, idx, start, end);
       });
       toolbar.appendChild(b);
     });
@@ -1055,6 +1138,10 @@
   });
   document.addEventListener("mousedown", function (e) {
     if (toolbar && !toolbar.contains(e.target)) hideToolbar();
+    if (notePopover && !notePopover.contains(e.target)) hideNotePopover();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { hideToolbar(); hideNotePopover(); }
   });
 })();
 
