@@ -19,6 +19,36 @@
 #install-app-btn {
   left: 14px;
 }
+/* "Back to previous page" corner button -- top-left, mirroring
+   #corner-actions' top-right placement. Only ever present on non-homepage
+   pages (see theme.js), so it never actually competes with
+   #install-app-btn (index.html-only) for the same spot, but it's still its
+   own flex container so a future left-side button could join it without
+   fighting over a single fixed id, same pattern as #corner-actions.
+   Unlike #corner-actions, this is hidden until the page has been scrolled
+   a little (see theme.js's scroll listener) -- checked across a sample of
+   page types (quiz/guide/practicum templates) and every one puts its own
+   title/eyebrow text within ~20-30px of the top-left corner with zero
+   clearance reserved for a left-side element (nothing has ever lived there
+   before), so an always-visible button here would sit on top of that text
+   at any viewport narrower than that page's own max-width. Revealing it
+   only once real content has scrolled past that zone sidesteps the
+   collision on all ~179 pages without touching any of their own CSS. */
+#corner-actions-left {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 600;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease;
+}
+#corner-actions-left.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 .corner-btn {
   width: 38px;
   height: 38px;

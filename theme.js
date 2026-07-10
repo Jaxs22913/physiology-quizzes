@@ -133,6 +133,7 @@
   var REFRESH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
   var KEYBOARD = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 13h8"/></svg>';
   var GEAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+  var ARROW_LEFT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
 
   function currentTheme() {
     return document.documentElement.getAttribute("data-theme") || "light";
@@ -432,6 +433,36 @@
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
     document.body.appendChild(group);
+
+    // "Back to previous page" -- fixed top-left, mirroring #corner-actions'
+    // top-right placement. Only on non-homepage pages (index.html has its
+    // own top-left #install-app-btn, and doesn't need this anyway), and only
+    // when document.referrer shows the visitor actually arrived via an
+    // in-site link -- a same-origin check, not just any referrer -- so the
+    // button doesn't sit there uselessly for someone who opened this page
+    // directly (typed URL, bookmark, new tab) with no real "previous page"
+    // on this site to go back to.
+    if (!document.body.classList.contains("homepage") &&
+        document.referrer && document.referrer.indexOf(location.origin) === 0) {
+      var leftGroup = document.createElement("div");
+      leftGroup.id = "corner-actions-left";
+      var prevBtn = makeCornerBtn("prevpage-btn", "Back to previous page");
+      prevBtn.innerHTML = ARROW_LEFT;
+      prevBtn.addEventListener("click", function () { history.back(); });
+      leftGroup.appendChild(prevBtn);
+      document.body.appendChild(leftGroup);
+
+      // Revealed only after a small scroll -- see the CSS comment on
+      // #corner-actions-left for why: every page type puts its own title
+      // text right at the top-left with no reserved clearance, so showing
+      // this unconditionally from page load would sit on top of it.
+      var revealAt = 80;
+      var setVisible = function () {
+        leftGroup.classList.toggle("visible", window.scrollY > revealAt);
+      };
+      setVisible();
+      window.addEventListener("scroll", setVisible, { passive: true });
+    }
 
     var shortcutsHelp = initShortcutsHelp();
     if (shortcutsHelp) {
