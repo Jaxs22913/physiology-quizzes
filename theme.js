@@ -1073,6 +1073,39 @@
   }
 })();
 
+// Cloud sync bootstrap (added 2026-07-10). Dynamically injects the Firebase
+// SDK + firebase-config.js + cloud-sync.js, in that order, on every page --
+// same zero-per-page-HTML-edit rollout as the calculator widget, since this
+// is the one file every page already loads. All the actual auth/sync logic
+// lives in cloud-sync.js, kept out of this already-large file. The relative
+// path prefix ("../" on subfolder pages, "" at the repo root) is derived
+// from this same script's own <script src> rather than hardcoded, so it
+// resolves correctly regardless of page depth or hosting subpath.
+(function () {
+  var thisScript = document.querySelector('script[src$="theme.js"]');
+  var base = thisScript ? thisScript.getAttribute("src").replace(/theme\.js$/, "") : "";
+  var FIREBASE_VERSION = "10.14.1";
+  var CDN = "https://www.gstatic.com/firebasejs/" + FIREBASE_VERSION + "/";
+
+  function loadScript(src, onload) {
+    var s = document.createElement("script");
+    s.src = src;
+    if (onload) s.onload = onload;
+    s.onerror = function () { /* offline / blocked -- site stays fully local-only, no error surfaced */ };
+    document.head.appendChild(s);
+  }
+
+  loadScript(CDN + "firebase-app-compat.js", function () {
+    loadScript(CDN + "firebase-auth-compat.js", function () {
+      loadScript(CDN + "firebase-firestore-compat.js", function () {
+        loadScript(base + "firebase-config.js", function () {
+          loadScript(base + "cloud-sync.js");
+        });
+      });
+    });
+  });
+})();
+
 // Guide text highlighting (added 2026-07-10). Select text anywhere inside a
 // guide's .wrap[data-readable] and a small color-swatch toolbar appears;
 // picking a color wraps the selection in <mark class="user-hl-COLOR">,
