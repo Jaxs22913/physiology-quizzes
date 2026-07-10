@@ -365,6 +365,7 @@ function choose(i){
   chosen[idx] = i;
   const correct = q.answer;
   if(i === correct) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(i === correct);
   scoreEl.textContent = 'Score: ' + score;
 
   showFeedback(i);

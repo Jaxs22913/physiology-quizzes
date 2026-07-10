@@ -381,6 +381,7 @@ function selectAnswer(choice){
   const btns=$("options").querySelectorAll(".opt");
   btns.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add("correct");else if(i===choice)b.classList.add("wrong");else b.classList.add("dim");});
   const ok=(choice===correct);if(ok)score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(ok);
   responses.push({i:current,choice,correct,isCorrect:ok,unit:item.unit});
   saveProgress();
   const v=$("verdict");

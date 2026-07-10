@@ -734,6 +734,7 @@ function selectAnswer(choice){
 
   const isCorrect = (choice === correct);
   if(isCorrect) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(isCorrect);
   responses.push({i:current, choice, correct, isCorrect});
   saveProgress();
 

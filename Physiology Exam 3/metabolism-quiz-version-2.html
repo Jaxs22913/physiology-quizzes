@@ -388,6 +388,7 @@ function choose(sel){
   if(answers[idx]!==null) return;
   answers[idx]=sel;
   if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
   revealAnswer(sel, true);
 }

@@ -1086,6 +1086,7 @@ function select(idx){
 
   const right = idx === item.answer;
   if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
   else {
     state.missed.push({ item, chosen: idx });
   }

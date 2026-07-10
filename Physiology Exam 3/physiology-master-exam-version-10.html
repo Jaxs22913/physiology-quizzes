@@ -413,6 +413,7 @@ function choose(i){
     else if(k===i) el.classList.add('wrong');
   });
   const ok=(i===q.correct); if(ok) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(ok);
   const fb=document.getElementById('fb');
   fb.textContent = ok?'Correct':'Not quite';
   fb.className='fb '+(ok?'ok':'no');
