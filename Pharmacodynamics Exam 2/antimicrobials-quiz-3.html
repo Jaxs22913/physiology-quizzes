@@ -58,6 +58,15 @@
   .opt.correct .lab{color:var(--right);}
   .opt.wrong{border-color:var(--wrong);background:var(--wrong-soft);}
   .opt.wrong .lab{color:var(--wrong);}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .opt.crossed .cross-toggle{background:var(--wrong-soft);border-color:var(--wrong);color:var(--wrong)}
+  .opt:disabled .cross-toggle{display:none}
   .fb{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:none;}
   .fb.show{display:block;}
   .fb .verdict{font-weight:700;margin-bottom:10px;font-size:1rem;}
@@ -106,6 +115,7 @@
     <div class="bar">
       <span class="prog" id="prog">Question 1 of 30</span>
       <span class="prog" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
       <span class="score" id="score">Score: 0</span>
       <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);cursor:pointer;margin-left:8px">
         <input type="checkbox" id="shuffle-toggle" style="width:14px;height:14px">
@@ -146,6 +156,14 @@ let order = QUESTIONS.map((_,i)=>i);
 const SHUFKEY = "qshuf:"+location.pathname, EXAMKEY = "qexam:"+location.pathname, CUTOFFKEY = "qcut:"+location.pathname;
 let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
 let flagged = new Set();
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -176,6 +194,11 @@ function updateTimerDisplay(){
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
 
 const card = document.getElementById('card');
 const nextBtn = document.getElementById('next');
@@ -198,13 +221,17 @@ function render(){
   let opts = '';
   q.choices.forEach((c,i)=>{
     const sel = (examMode && chosen[idx] === i) ? ' selected-exam' : '';
-    opts += '<button class="opt'+sel+'" data-i="'+i+'"><span class="lab">'+LETTERS[i]+'</span><span>'+c+'</span></button>';
+    const crossedCls = isCrossed(idx,i) ? ' crossed' : '';
+    opts += '<button class="opt'+sel+crossedCls+'" data-i="'+i+'"><span class="lab">'+LETTERS[i]+'</span><span class="optlabel">'+c+'</span><span class="cross-toggle" data-x="'+i+'" title="Cross out this choice">&#10005;</span></button>';
   });
   card.innerHTML =
     '<div class="qnum">Question '+(idx+1)+'</div>'+
     '<p class="qtext">'+q.q+'</p>'+
     '<div class="opts">'+opts+'</div>'+
     '<div class="fb" id="fb"></div>';
+  card.querySelectorAll('.cross-toggle').forEach(x=>{
+    x.addEventListener('click', (e)=>{ e.stopPropagation(); toggleCross(idx, parseInt(x.dataset.x)); render(); });
+  });
 
   if(examMode){
     flagBtn.classList.toggle('flagged', flagged.has(idx));
@@ -320,7 +347,8 @@ function submitExam(auto){
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen, total: QUESTIONS.length, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)}));
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({idx, score, chosen, total: QUESTIONS.length, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
@@ -348,7 +376,7 @@ document.getElementById('midRestart').addEventListener('click', ()=>{
   examMode = document.getElementById('exam-mode-toggle').checked;
   hardCutoff = examMode && document.getElementById('hard-cutoff-toggle').checked;
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); autoSubmitTriggered = false;
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
   applyExamModeUI();
   timerAccumMs = 0; timerStartedAt = Date.now(); startTimerInterval();
   document.getElementById('results').classList.add('hidden');
@@ -377,6 +405,7 @@ document.getElementById('midRestart').addEventListener('click', ()=>{
     timerAccumMs = saved.timerMs || 0;
     examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
     flagged = new Set(saved.flagged || []);
+    crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   } else {
     if(localStorage.getItem(SHUFKEY) === '1'){
       shuffleArray(order);
@@ -384,6 +413,7 @@ document.getElementById('midRestart').addEventListener('click', ()=>{
     examMode = document.getElementById('exam-mode-toggle').checked;
     hardCutoff = examMode && document.getElementById('hard-cutoff-toggle').checked;
     cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+    crossedOut = {};
   }
   timerStartedAt = Date.now();
   applyExamModeUI();

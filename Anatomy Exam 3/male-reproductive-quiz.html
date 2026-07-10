@@ -144,6 +144,14 @@
   .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
   .choice.selected-exam .key{color:var(--teal);}
   .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
 
   .feedback{margin-top:20px;border-radius:10px;padding:16px 18px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);display:none;}
   .feedback.show{display:block;animation:rise .28s ease;}
@@ -244,6 +252,7 @@
     <div class="status">
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
       <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
     </div>
     <div class="track"><i id="bar"></i></div>
@@ -764,6 +773,27 @@ let order = QUESTIONS.map((_,i)=>i);
 let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
 let flagged = new Set();
 let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -794,6 +824,11 @@ function updateTimerDisplay(){
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
 
 const el = id => document.getElementById(id);
 const intro = el('intro'), quiz = el('quiz'), results = el('results');
@@ -808,6 +843,7 @@ function applyExamModeUI(){
 el('flagbtn').addEventListener('click', toggleFlag);
 el('navbtn').addEventListener('click', openNav);
 el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
 
 el('startBtn').addEventListener('click', () => {
   clearProgress();
@@ -816,7 +852,7 @@ el('startBtn').addEventListener('click', () => {
   examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
   hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {}; crossedOut = {};
   applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   intro.classList.add('hidden');
@@ -850,7 +886,7 @@ el('retryBtn').addEventListener('click', () => {
   examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
   hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
   applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   results.classList.add('hidden');
@@ -863,7 +899,8 @@ el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavi
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses}));
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
 }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
@@ -878,6 +915,7 @@ function resumeQuiz(){
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
   flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
   el("resume-banner").classList.add("hidden");
   intro.classList.add("hidden");
@@ -896,7 +934,7 @@ el("midRestartBtn").addEventListener("click", () => {
   examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
   hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
   applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   render();
@@ -931,8 +969,9 @@ function render(){
       const b = document.createElement('button');
       b.className = 'choice';
       if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
       b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
       box.appendChild(b);
     });
     el('feedback').classList.remove('show');
@@ -978,8 +1017,9 @@ function render(){
   item.choices.forEach((c, idx) => {
     const b = document.createElement('button');
     b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
     b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
     box.appendChild(b);
   });
 

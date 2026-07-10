@@ -99,6 +99,12 @@
   .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
   .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
   .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
   .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
   .expl.show{display:block}
   .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
@@ -211,6 +217,7 @@
         <span id="counter">Question 1 of 70</span>
         <div class="bar"><span id="barfill"></span></div>
         <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
         <span class="score" id="scoretxt">Score 0</span>
       </div>
       <div id="examtoolbar" class="examtoolbar hidden">
@@ -249,6 +256,23 @@ const QUESTIONS = [{"topic": "Blood & Hemostasis", "io": "a — Blood & its comp
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
 let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
 
 function shuffleArray(arr){
   for(let i=arr.length-1;i>0;i--){
@@ -279,6 +303,11 @@ function updateTimerDisplay(){
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
 function applyExamModeUI(){
   document.getElementById('scoretxt').classList.toggle('hidden', examMode);
@@ -288,7 +317,7 @@ function applyExamModeUI(){
 }
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -304,7 +333,7 @@ function startExam(){
   hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
-  flagged = new Set(); autoSubmitTriggered = false;
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
   applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('start').style.display='none';
@@ -322,6 +351,7 @@ function resumeQuiz(){
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
   flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
@@ -359,8 +389,9 @@ function renderQ(){
       const b=document.createElement('button');
       b.className='opt'; b.setAttribute('data-i',i);
       if(answers[idx]===i) b.classList.add('selected-exam');
-      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
       b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
       wrap.appendChild(b);
     });
     document.getElementById('expl').classList.remove('show');
@@ -370,15 +401,17 @@ function renderQ(){
   }
 
   const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
   q.opts.forEach((o,i)=>{
     const b=document.createElement('button');
     b.className='opt'; b.setAttribute('data-i',i);
-    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span>${o[0]}</span>`;
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
     b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
     wrap.appendChild(b);
   });
   document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
-  if(answers[idx]!==null){
+  if(isAnswered){
     revealAnswer(answers[idx], false);
   } else {
     document.getElementById('expl').classList.remove('show');
@@ -413,6 +446,7 @@ function revealAnswer(sel, scroll){
     else if(i===sel) el.classList.add('wrong');
     else el.classList.add('dim');
     el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
   });
   const v=document.getElementById('verdict');
   if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
