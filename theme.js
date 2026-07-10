@@ -134,6 +134,7 @@
   var KEYBOARD = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 13h8"/></svg>';
   var GEAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
   var ARROW_LEFT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+  var CALC = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8" y2="11.01"/><line x1="12" y1="11" x2="12" y2="11.01"/><line x1="16" y1="11" x2="16" y2="11.01"/><line x1="8" y1="15" x2="8" y2="15.01"/><line x1="12" y1="15" x2="12" y2="15.01"/><line x1="16" y1="15" x2="16" y2="15.01"/><line x1="8" y1="19" x2="8" y2="19.01"/><line x1="12" y1="19" x2="12" y2="19.01"/><line x1="16" y1="19" x2="16" y2="19.01"/></svg>';
 
   function currentTheme() {
     return document.documentElement.getAttribute("data-theme") || "light";
@@ -161,6 +162,12 @@
       var el = e.target.closest && e.target.closest(".opt, .choice");
       if (el) navigator.vibrate(15);
     });
+  }
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
   }
   function makeCornerBtn(id, label) {
     var btn = document.createElement("button");
@@ -414,6 +421,181 @@
     return { open: open };
   }
 
+  // Basic four-function calculator, available on every page (quiz or
+  // practicum, timed or not) since students may want it regardless of
+  // whether a given quiz happens to involve calculations. Deliberately a
+  // small non-blocking floating panel near the corner button rather than a
+  // full-screen overlay like Settings/Shortcuts -- it needs to stay usable
+  // side-by-side with the question, not cover it.
+  //
+  // To extend to a scientific mode later: add entries to CALC_BINARY_OPS
+  // (two-argument, applied via chooseOp/equals the same way +/-/x/div
+  // already are) or CALC_UNARY_OPS (one-argument, applied immediately to
+  // the current display value -- wire a button the same way the digit/op
+  // buttons below are wired, calling applyUnary(CALC_UNARY_OPS[key])) and
+  // add the corresponding <button> to .calc-grid. No other changes needed.
+  function initCalculator() {
+    var CALC_BINARY_OPS = {
+      "+": function (a, b) { return a + b; },
+      "−": function (a, b) { return a - b; },
+      "×": function (a, b) { return a * b; },
+      "÷": function (a, b) { return b === 0 ? NaN : a / b; }
+    };
+    var CALC_UNARY_OPS = {
+      // Reserved for a future scientific mode, e.g.:
+      // "√": function (x) { return Math.sqrt(x); },
+    };
+
+    var overlay = el("div", "calc-overlay");
+    var panel = el("div", "calc-panel");
+
+    var header = el("div", "calc-header");
+    var title = el("span", null, "Calculator");
+    var closeBtn = el("button", "calc-close", "&times;");
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close calculator");
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    // Draggable by its header, like a lightweight floating window. Moves the
+    // fixed-positioned overlay itself (not the panel inside it) by switching
+    // from the default top/right CSS anchor to explicit left/top px once a
+    // drag starts; clamped to stay fully on-screen. Position persists across
+    // close/reopen for free since overlay is only hidden (display:none via
+    // the .open class toggle), never removed/recreated.
+    (function makeDraggable() {
+      var dragging = false, startX, startY, startLeft, startTop;
+      header.addEventListener("pointerdown", function (e) {
+        if (e.target.closest(".calc-close")) return;
+        dragging = true;
+        var r = overlay.getBoundingClientRect();
+        startLeft = r.left; startTop = r.top;
+        startX = e.clientX; startY = e.clientY;
+        overlay.style.left = startLeft + "px";
+        overlay.style.top = startTop + "px";
+        overlay.style.right = "auto";
+        header.setPointerCapture(e.pointerId);
+      });
+      header.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+        var newLeft = startLeft + (e.clientX - startX);
+        var newTop = startTop + (e.clientY - startY);
+        newLeft = Math.max(4, Math.min(window.innerWidth - overlay.offsetWidth - 4, newLeft));
+        newTop = Math.max(4, Math.min(window.innerHeight - overlay.offsetHeight - 4, newTop));
+        overlay.style.left = newLeft + "px";
+        overlay.style.top = newTop + "px";
+      });
+      header.addEventListener("pointerup", function () { dragging = false; });
+      header.addEventListener("pointercancel", function () { dragging = false; });
+    })();
+
+    var display = el("div", "calc-display", "0");
+    display.id = "calc-display";
+
+    var grid = el("div", "calc-grid");
+    var ROWS = [
+      [{ t: "C", action: "clear", cls: "calc-fn" }, { t: "⌫", action: "back", cls: "calc-fn" }, { t: "÷", op: "÷", cls: "calc-op" }, { t: "×", op: "×", cls: "calc-op" }],
+      [{ t: "7", d: "7" }, { t: "8", d: "8" }, { t: "9", d: "9" }, { t: "−", op: "−", cls: "calc-op" }],
+      [{ t: "4", d: "4" }, { t: "5", d: "5" }, { t: "6", d: "6" }, { t: "+", op: "+", cls: "calc-op" }],
+      [{ t: "1", d: "1" }, { t: "2", d: "2" }, { t: "3", d: "3" }, { t: "=", action: "equals", cls: "calc-eq", rowspan: 2 }],
+      [{ t: "0", d: "0", cls: "calc-zero", colspan: 2 }, { t: ".", d: "." }]
+    ];
+    ROWS.forEach(function (row) {
+      row.forEach(function (spec) {
+        var btn = el("button", "calc-btn" + (spec.cls ? " " + spec.cls : ""), spec.t);
+        btn.type = "button";
+        if (spec.d != null) btn.dataset.digit = spec.d;
+        if (spec.op) btn.dataset.op = spec.op;
+        if (spec.action) btn.dataset.action = spec.action;
+        if (spec.colspan) btn.style.gridColumn = "span " + spec.colspan;
+        if (spec.rowspan) btn.style.gridRow = "span " + spec.rowspan;
+        grid.appendChild(btn);
+      });
+    });
+
+    panel.appendChild(header);
+    panel.appendChild(display);
+    panel.appendChild(grid);
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    var current = "0", pending = null, pendingOp = null, justEvaluated = false;
+
+    function render() { display.textContent = current; }
+
+    function formatResult(n) {
+      if (!isFinite(n)) return "Error";
+      var rounded = Math.round(n * 1e10) / 1e10;
+      return String(rounded);
+    }
+    function inputDigit(d) {
+      if (justEvaluated) { current = "0"; justEvaluated = false; }
+      if (d === ".") {
+        if (current.indexOf(".") !== -1) return;
+        current += ".";
+      } else if (current === "0") {
+        current = d;
+      } else {
+        current += d;
+      }
+      render();
+    }
+    function clearAll() {
+      current = "0"; pending = null; pendingOp = null; justEvaluated = false;
+      render();
+    }
+    function backspace() {
+      if (justEvaluated) { clearAll(); return; }
+      current = current.length > 1 ? current.slice(0, -1) : "0";
+      render();
+    }
+    function chooseOp(op) {
+      if (pendingOp != null && !justEvaluated) equals();
+      pending = parseFloat(current);
+      pendingOp = op;
+      justEvaluated = false;
+      current = "0";
+    }
+    function equals() {
+      if (pendingOp == null || pending == null) return;
+      var result = CALC_BINARY_OPS[pendingOp](pending, parseFloat(current));
+      current = formatResult(result);
+      pending = null; pendingOp = null; justEvaluated = true;
+      render();
+    }
+    function applyUnary(fn) {
+      current = formatResult(fn(parseFloat(current)));
+      justEvaluated = true;
+      render();
+    }
+
+    grid.addEventListener("click", function (e) {
+      var btn = e.target.closest(".calc-btn");
+      if (!btn) return;
+      if (btn.dataset.digit != null) inputDigit(btn.dataset.digit);
+      else if (btn.dataset.op) chooseOp(btn.dataset.op);
+      else if (btn.dataset.action === "clear") clearAll();
+      else if (btn.dataset.action === "back") backspace();
+      else if (btn.dataset.action === "equals") equals();
+    });
+
+    function isOpen() { return overlay.classList.contains("open"); }
+    function toggle() { overlay.classList.toggle("open"); }
+    function close() { overlay.classList.remove("open"); }
+
+    closeBtn.addEventListener("click", close);
+    document.addEventListener("click", function (e) {
+      if (!isOpen()) return;
+      if (panel.contains(e.target) || e.target.closest("#calc-btn")) return;
+      close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen()) close();
+    });
+
+    return { toggle: toggle };
+  }
+
   function init() {
     document.documentElement.setAttribute("data-text-size", localStorage.getItem("textSize") === "large" ? "large" : "normal");
     document.documentElement.setAttribute("data-contrast", localStorage.getItem("contrast") === "high" ? "high" : "normal");
@@ -445,6 +627,12 @@
     settingsBtn.innerHTML = GEAR;
     settingsBtn.addEventListener("click", settingsHelp.open);
     group.appendChild(settingsBtn);
+
+    var calcHelp = initCalculator();
+    var calcBtn = makeCornerBtn("calc-btn", "Calculator");
+    calcBtn.innerHTML = CALC;
+    calcBtn.addEventListener("click", calcHelp.toggle);
+    group.appendChild(calcBtn);
 
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
@@ -1350,3 +1538,39 @@ window.showToast = function (message, duration) {
     }
   };
 })();
+
+// Pause/Resume for timed quizzes (added 2026-07-10), same "generic engine,
+// page supplies data" split as openQuestionNav/openTestYourself above. This
+// only renders the full-screen "Paused" overlay and calls opts.onResume when
+// the user clicks Resume -- it deliberately does NOT touch any timer state
+// itself, since every quiz family's timerAccumMs/timerStartedAt/
+// startTimerInterval/stopTimerInterval/saveProgress are page-local globals
+// with no shared engine to hook into (see feedback_exam_mode memory). Each
+// quiz's own pauseQuiz() is expected to freeze its timer (mirroring the same
+// accumulate-on-pause pattern already used for tab-close/resume) and call
+// saveProgress() itself, then call window.openPauseOverlay({onResume:...}),
+// with onResume restarting the timer the same way resumeQuiz() already does.
+window.openPauseOverlay = function (opts) {
+  var overlay = document.createElement("div");
+  overlay.className = "pause-overlay open";
+
+  var card = document.createElement("div");
+  card.className = "pause-card";
+  card.innerHTML =
+    '<p class="pause-title">Paused</p>' +
+    '<p class="pause-text">Your progress and timer are frozen. Take your time — click Resume when you’re ready to continue.</p>';
+
+  var resumeBtn = document.createElement("button");
+  resumeBtn.type = "button";
+  resumeBtn.className = "pause-resume-btn";
+  resumeBtn.textContent = "Resume →";
+  card.appendChild(resumeBtn);
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  resumeBtn.addEventListener("click", function () {
+    overlay.remove();
+    if (opts && opts.onResume) opts.onResume();
+  });
+};

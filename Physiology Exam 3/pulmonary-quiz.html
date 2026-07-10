@@ -156,6 +156,15 @@
   .opt.wrong .ltr{background:var(--red);color:#fff}
   .opt.dim{opacity:.62}
   .opt:disabled{cursor:default}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--red);color:var(--red)}
+  .opt.crossed .cross-toggle{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+
 
   .explain{
     margin-top:20px;border-radius:12px;padding:16px 18px;font-size:15px;display:none;
@@ -288,6 +297,7 @@
     <div class="topbar">
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="scorepill" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
       <span class="scorepill" id="scorepill">Score: 0</span>
       <button class="btn ghost" style="padding:6px 12px;font-size:12px" onclick="if(confirm('Restart this quiz from the beginning?')) startQuiz();">&#8635; Restart</button>
     </div>
@@ -564,6 +574,23 @@ let hardCutoff = false;
 let cutoffMs = 0;
 let flagged = new Set();
 let autoSubmitTriggered = false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(current,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(current,i); renderQuestion(); };
+  b.appendChild(x);
+}
 
 const $ = id => document.getElementById(id);
 
@@ -596,9 +623,14 @@ function updateTimerDisplay(){
 }
 function startTimerInterval(){ stopTimerInterval(); timerInterval = setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ localStorage.setItem(PKEY, JSON.stringify({current, score, responses, total: questions.length, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({current, score, responses, total: questions.length, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -618,6 +650,7 @@ function resumeQuiz(){
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
   flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
   $("start").classList.add("hidden"); $("quiz-footer-logo").classList.remove("hidden");
   $("results").classList.add("hidden"); $("quiz").classList.remove("hidden");
@@ -638,7 +671,7 @@ function startQuiz(){clearProgress();document.getElementById("resume-banner").cl
   examMode = !!($("exam-mode-toggle") && $("exam-mode-toggle").checked);
   hardCutoff = examMode && !!($("hard-cutoff-toggle") && $("hard-cutoff-toggle").checked);
   cutoffMs = hardCutoff ? questions.length*60000 : 0;
-  flagged = new Set(); autoSubmitTriggered = false;
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
   applyExamModeUI();
   timerAccumMs = 0; timerStartedAt = Date.now(); startTimerInterval();
   $("start").classList.add("hidden");$("quiz-footer-logo").classList.remove("hidden");
@@ -670,8 +703,9 @@ function renderQuestion(){
       const b = document.createElement("button");
       b.className = "opt";
       if(prior && i === prior.choice) b.classList.add("selected-exam");
-      b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+      b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span class="optlabel">${text}</span>`;
       b.onclick = ()=>selectAnswer(i);
+      addCrossToggle(b,i);
       box.appendChild(b);
     });
     $("explain").classList.remove("show");
@@ -714,8 +748,9 @@ function renderQuestion(){
   item.o.forEach((text,i)=>{
     const b = document.createElement("button");
     b.className = "opt";
-    b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span>${text}</span>`;
+    b.innerHTML = `<span class="ltr">${LETTERS[i]}</span><span class="optlabel">${text}</span>`;
     b.onclick = ()=>selectAnswer(i);
+    addCrossToggle(b,i);
     box.appendChild(b);
   });
 

@@ -132,6 +132,7 @@
 @media (min-width: 1000px) {
   body.homepage #corner-actions { right: 84px; }
   body.homepage #install-app-btn { left: 84px; }
+  body.homepage .calc-overlay { right: 84px; }
 }
 
 /* index.html's own token system. Scoped to body.homepage (not a blanket
@@ -413,6 +414,124 @@
 .settings-switch input:checked ~ .track { background: #2563eb; }
 :root[data-theme="dark"] .settings-switch input:checked ~ .track { background: #60a5fa; }
 .settings-switch input:checked ~ .thumb { transform: translateX(16px); }
+
+/* Calculator: a small floating panel near the corner button, not a
+   full-screen overlay like Settings/Shortcuts above -- it needs to stay
+   usable side-by-side with the question rather than blocking it, so no
+   inset:0 backdrop and no click-catching outside the panel itself (theme.js
+   closes it via a plain document click/Escape listener instead). Same
+   hardcoded-colors-plus-dark-override pattern as the rest of this file's
+   body-direct-child injected elements, for the same reason (the dark-mode
+   invert filter only targets body > .wrap, not these). */
+.calc-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 14px;
+  z-index: 2000;
+}
+.calc-overlay.open { display: block; }
+.calc-panel {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+  width: 220px;
+  padding: 12px;
+}
+:root[data-theme="dark"] .calc-panel {
+  background: #191c22;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  cursor: move;
+  touch-action: none;
+  user-select: none;
+}
+.calc-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  padding: 0 2px;
+}
+.calc-display {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 10px;
+  margin-bottom: 8px;
+  text-align: right;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+:root[data-theme="dark"] .calc-display {
+  background: #0f1115;
+  border-color: #2a2e37;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.calc-btn {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.calc-btn:active { transform: scale(0.96); }
+:root[data-theme="dark"] .calc-btn {
+  background: #20242c;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.calc-btn.calc-op {
+  background: #eff6ff;
+  color: #2563eb;
+}
+:root[data-theme="dark"] .calc-btn.calc-op {
+  background: #16213a;
+  color: #60a5fa;
+}
+.calc-btn.calc-eq {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+:root[data-theme="dark"] .calc-btn.calc-eq {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+.calc-btn.calc-fn {
+  background: #fef2f2;
+  color: #dc2626;
+}
+:root[data-theme="dark"] .calc-btn.calc-fn {
+  background: #2a1414;
+  color: #f87171;
+}
+
+@media (max-width: 480px) {
+  .calc-overlay { left: 12px; right: 12px; }
+  .calc-panel { width: auto; }
+}
 
 /* First-visit guided tour, shared engine (window.SiteTour) used both by
    theme.js itself (quiz-page steps) and index.html's own inline script
@@ -802,6 +921,60 @@
 :root[data-theme="dark"] .examctl-btn.flagged { background: #3a2c0a; border-color: #f59e0b; color: #fbbf24; }
 .examctl-timer.danger { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; }
 :root[data-theme="dark"] .examctl-timer.danger { background: #2a1414 !important; border-color: #f87171 !important; color: #f87171 !important; }
+
+/* Pause/Resume (added 2026-07-10): the in-topbar Pause button reuses the
+   .examctl-btn pill recipe (same visual family as Flag/Questions); the
+   full-screen "paused" state reuses the .settings-overlay/.tq-overlay
+   inset:0-backdrop-plus-centered-card recipe, since it needs to genuinely
+   block the question (not a small floating panel like the calculator). */
+.pause-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pause-overlay.open { display: flex; }
+.pause-card {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
+  max-width: 360px;
+  width: 100%;
+  padding: 28px 26px;
+  text-align: center;
+}
+:root[data-theme="dark"] .pause-card {
+  background: #191c22;
+  color: #e5e7eb;
+}
+.pause-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+.pause-text {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+:root[data-theme="dark"] .pause-text { color: #9aa1ac; }
+.pause-resume-btn {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 26px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+:root[data-theme="dark"] .pause-resume-btn { background: #3b82f6; }
 
 /* Exam Mode toolbar (added 2026-07-10): a single row -- Flag, Questions, Submit --
    that appears directly under the progress bar in the exact same spot on every
