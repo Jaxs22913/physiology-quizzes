@@ -109,6 +109,13 @@
     padding-top:8px;border-top:1px dashed #d7dae6}
   .opt.reveal .exp{display:block}
   .opt.correct .exp{color:#14683a}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer;background:#fff;
+  }
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
 
   .foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
   .fb{font:700 14px/1 ui-sans-serif}
@@ -208,6 +215,7 @@
       <div class="prog"><i id="progbar"></i></div>
       <div class="count" id="count"></div>
       <span class="timerpill examctl-timer" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseExam()">&#10074;&#10074; Pause</button>
       <button class="restart-mini" onclick="restartExam()">Restart</button>
     </div>
     <div id="examtoolbar" class="examtoolbar hidden">
@@ -239,6 +247,14 @@ const UNIT_ORDER = ["Blood & Hemostasis","Blood & Immunology","GI Physiology",
   "Metabolism & the Liver","Nutrition, Energetics & Thermoregulation","Respiration I","Respiration II"];
 let order=[], cur=0, answered=[], chosen=[], score=0;
 let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(pos,ci){ return !!(crossedOut[pos] && crossedOut[pos].has(ci)); }
+function toggleCross(pos,ci){
+  if(!crossedOut[pos]) crossedOut[pos] = new Set();
+  const s = crossedOut[pos];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
@@ -264,13 +280,19 @@ function updateTimerDisplay(){
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
 function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseExam(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
 function showFooterLogo(){ const el=document.getElementById('quiz-footer-logo'); if(el) el.style.display='flex'; }
 
 // ---- progress persistence ----
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
 function saveProgress(){
-  try{ localStorage.setItem(PKEY, JSON.stringify({cur, score, answered, chosen, order, timerMs: currentElapsedMs(),
-    examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged)})); }catch(e){}
+  try{ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+    localStorage.setItem(PKEY, JSON.stringify({cur, score, answered, chosen, order, timerMs: currentElapsedMs(),
+    examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }catch(e){}
 }
 function clearProgress(){ try{ localStorage.removeItem(PKEY); }catch(e){} }
 function loadProgress(){ try{ return JSON.parse(localStorage.getItem(PKEY)); }catch(e){ return null; } }
@@ -297,7 +319,7 @@ function startExam(){
   hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? Q.length*60000 : 0;
   cur=0; score=0; answered=Q.map(()=>false); chosen=Q.map(()=>-1);
-  flagged=new Set(); autoSubmitTriggered=false;
+  flagged=new Set(); autoSubmitTriggered=false; crossedOut={};
   applyExamModeUI();
   timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
   document.getElementById('intro').style.display='none';
@@ -317,6 +339,7 @@ function resumeExam(){
   timerAccumMs = saved.timerMs||0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs||0;
   flagged = new Set(saved.flagged||[]); autoSubmitTriggered=false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
   document.getElementById('resume-banner').style.display='none';
   document.getElementById('resultsfoot').style.display='none';
@@ -348,11 +371,21 @@ function render(){
   const prev=document.getElementById('prevbtn'); if(prev) prev.disabled=(cur===0);
   const box=document.getElementById('opts'); box.innerHTML='';
   const letters=['A','B','C','D'];
+  const locked = !examMode && answered[qi];
   q.options.forEach((o,i)=>{
     const el=document.createElement('button');
     el.className='opt'; el.type='button';
-    el.innerHTML=`<span class="kx">${letters[i]}</span><span class="ot">${o.t}<span class="exp">${o.e}</span></span>`;
+    el.innerHTML=`<span class="kx">${letters[i]}</span><span class="ot optlabel">${o.t}<span class="exp">${o.e}</span></span>`;
     el.onclick=()=>choose(i);
+    if(!locked){
+      if(isCrossed(cur,i)) el.classList.add('crossed');
+      const x=document.createElement('span');
+      x.className='cross-toggle';
+      x.title='Cross out this choice';
+      x.innerHTML='&#10005;';
+      x.onclick=(e)=>{ e.stopPropagation(); toggleCross(cur,i); render(); };
+      el.appendChild(x);
+    }
     box.appendChild(el);
   });
 
