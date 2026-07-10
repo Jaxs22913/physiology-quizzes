@@ -45,6 +45,17 @@
     return db.collection("users").doc(currentUser.uid).collection("kv").doc(encodeURIComponent(key));
   }
 
+  var writeErrorShown = false;
+  function reportWriteError(err) {
+    console.warn("Cloud sync write failed:", err);
+    if (writeErrorShown) return;
+    writeErrorShown = true;
+    var msg = (err && err.code === "permission-denied")
+      ? "Cloud sync can't save your data (Firestore security rules aren't published yet)."
+      : "Cloud sync couldn't save your data (" + ((err && err.code) || "unknown error") + ").";
+    if (window.showToast) window.showToast(msg, 7000);
+  }
+
   function pushKey(key) {
     if (!currentUser) return;
     lastPushed[key] = Date.now();
@@ -52,9 +63,9 @@
     var ts = Date.now();
     touchMeta(key, ts);
     if (val === null) {
-      docRef(key).delete().catch(function () {});
+      docRef(key).delete().catch(reportWriteError);
     } else {
-      docRef(key).set({ value: val, updatedAt: ts }).catch(function () {});
+      docRef(key).set({ value: val, updatedAt: ts }).catch(reportWriteError);
     }
   }
 
@@ -181,9 +192,7 @@
           sessionStorage.setItem(RELOAD_GUARD_KEY, "1");
           location.reload();
         }
-      }).catch(function (err) {
-        console.warn("Cloud sync hydrate failed:", err && err.message);
-      });
+      }).catch(reportWriteError);
     }
   });
 
