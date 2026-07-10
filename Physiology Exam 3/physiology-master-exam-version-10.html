@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology Comprehensive Master Exam — Class of 2028</title>
+<style>
+  :root{--ink:#161a24;--body:#2c3242;--muted:#6b7280;--line:#e5e7ef;--paper:#f6f7fb;
+    --card:#fff;--acc:#4f46e5;--acc2:#4338ca;--good:#16a34a;--goodbg:#eafaf0;
+    --bad:#dc2626;--badbg:#fdecec;--shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 80px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+
+  /* intro */
+  .intro{padding:40px 34px;text-align:center}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+  .intro h1{font:800 clamp(28px,5vw,40px)/1.1 ui-sans-serif;color:var(--ink);margin:14px 0 6px;letter-spacing:-.02em}
+  .intro p{color:var(--body);max-width:52ch;margin:12px auto}
+  .stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-width:96px}
+  .stat b{display:block;font:800 22px/1 ui-sans-serif;color:var(--ink)}
+  .stat span{font-size:12.5px;color:var(--muted)}
+  .units{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 6px}
+  .chip{font:600 12px/1 ui-sans-serif;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--body);background:var(--paper)}
+  .btn{appearance:none;border:0;cursor:pointer;font:700 15px/1 ui-sans-serif;border-radius:12px;
+    padding:15px 26px;background:var(--acc);color:#fff;transition:transform .1s,background .15s}
+  .btn:hover{background:var(--acc2);transform:translateY(-1px)}
+  .btn.sec{background:#eceef6;color:var(--ink)}
+  .btn.sec:hover{background:#e2e5f0}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+  /* quiz header */
+  .qhead{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .prog{flex:1;height:8px;background:#e7e9f2;border-radius:99px;overflow:hidden}
+  .prog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),#7c74f0);transition:width .3s}
+  .count{font:600 13px/1 ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .timerpill{font:600 13px/1 ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .restart-mini{appearance:none;border:0;cursor:pointer;font:600 12px/1 ui-sans-serif;border-radius:8px;
+    padding:8px 12px;background:#eceef6;color:var(--ink)}
+  .restart-mini:hover{background:#e2e5f0}
+  #resume-banner{background:#eef0fe;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0;text-align:left}
+  #resume-banner p.rk{margin:0 0 4px;font-weight:700;color:var(--acc);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  #resume-banner p.rt{margin:0 0 12px;font-size:14.5px;color:var(--ink)}
+  .shuffle-row{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);justify-content:center;margin:16px 0 0;cursor:pointer}
+
+  .qcard{padding:26px 28px}
+  .badge{display:inline-flex;gap:8px;align-items:center;font:700 11px/1 ui-sans-serif;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--acc);background:#eef0fe;border-radius:8px;padding:6px 10px;margin-bottom:14px}
+  .badge .io{color:var(--muted);font-weight:600;letter-spacing:.02em;text-transform:none}
+  .stem{font:600 19px/1.45 ui-sans-serif;color:var(--ink);margin:0 0 20px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;font:inherit;color:var(--body);
+    transition:border-color .12s,background .12s}
+  .opt:hover:not(.locked){border-color:#c3c7e8;background:#fafbff}
+  .opt .kx{flex:none;width:26px;height:26px;border-radius:7px;background:#eef0f7;color:var(--muted);
+    font:700 13px/26px ui-sans-serif;text-align:center}
+  .opt .ot{flex:1;padding-top:2px}
+  .opt.locked{cursor:default}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .kx{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .kx{background:var(--bad);color:#fff}
+  .opt .exp{display:none;margin-top:8px;font:400 13.5px/1.5 ui-sans-serif;color:#4b5162;
+    padding-top:8px;border-top:1px dashed #d7dae6}
+  .opt.reveal .exp{display:block}
+  .opt.correct .exp{color:#14683a}
+
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .fb{font:700 14px/1 ui-sans-serif}
+  .fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+
+  /* results */
+  .res{padding:34px 30px}
+  .score{text-align:center;margin-bottom:8px}
+  .score .big{font:800 54px/1 ui-sans-serif;color:var(--ink)}
+  .score .pct{font:700 18px/1 ui-sans-serif;color:var(--acc);margin-top:6px}
+  .score .msg{color:var(--muted);margin-top:10px}
+  h2.sec{font:700 12px/1 ui-sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    margin:28px 0 12px;border-top:1px solid var(--line);padding-top:20px}
+  .unitblock{margin-bottom:16px}
+  .unitrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .unitrow b{font:700 15px/1.2 ui-sans-serif;color:var(--ink)}
+  .unitrow span{font:600 13px ui-sans-serif;color:var(--muted)}
+  .iorow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:6px 0}
+  .iorow .lbl{font-size:13.5px;color:var(--body)}
+  .iorow .lbl .co{color:var(--muted);font-weight:600;margin-right:6px}
+  .bar{grid-column:1/-1;height:6px;background:#edeef4;border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--acc)}
+  .iorow .frac{font:600 13px ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:10px;padding:13px 15px;margin:10px 0;background:#fff}
+  .miss .q{font:600 14.5px/1.4 ui-sans-serif;color:var(--ink);margin-bottom:6px}
+  .miss .co{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .miss .line{font-size:13.5px;margin-top:5px}
+  .miss .you{color:var(--bad)} .miss .corr{color:var(--good)}
+  .miss .ex{font-size:13px;color:#4b5162;margin-top:6px}
+  .rescta{display:flex;gap:12px;justify-content:center;margin-top:26px}
+  @media (max-width:560px){.qcard,.res,.intro{padding:22px 18px}.stem{font-size:17.5px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <div class="kicker">Physiology · Class of 2028</div>
+    <h1>Comprehensive Master Exam</h1>
+    <p>Seventy questions spanning all seven systems, each tied to a stated instructional objective.
+       You'll get an explanation for every option as you go, and a full breakdown by objective at the end.</p>
+    <div class="stats">
+      <div class="stat"><b>70</b><span>questions</span></div>
+      <div class="stat"><b>7</b><span>systems</span></div>
+      <div class="stat"><b>33</b><span>objectives</span></div>
+    </div>
+    <div class="units">
+      <span class="chip">Blood &amp; Hemostasis</span><span class="chip">Immunology</span>
+      <span class="chip">GI</span><span class="chip">Metabolism &amp; Liver</span>
+      <span class="chip">Nutrition &amp; Thermo</span><span class="chip">Respiration I</span>
+      <span class="chip">Respiration II</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted)">Conceptual physiology only · answer order is randomized · your results stay in this browser.</p>
+    <div id="resume-banner" style="display:none">
+      <p class="rk">Progress saved</p>
+      <p class="rt" id="resume-text"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <button class="btn" onclick="resumeExam()">Resume →</button>
+        <button class="btn sec" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label class="shuffle-row">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <div style="margin-top:18px"><button class="btn" onclick="startExam()">Start the exam →</button></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" style="display:none">
+    <div class="qhead">
+      <button class="restart-mini" id="prevbtn" onclick="prevQ()" disabled>← Back</button>
+      <div class="prog"><i id="progbar"></i></div>
+      <div class="count" id="count"></div>
+      <span class="timerpill" id="timerpill">00:00</span>
+      <button class="restart-mini" onclick="restartExam()">Restart</button>
+    </div>
+    <div class="card qcard">
+      <div class="badge"><span id="bUnit"></span><span class="io" id="bIO"></span></div>
+      <p class="stem" id="stem"></p>
+      <div class="opts" id="opts"></div>
+      <div class="foot">
+        <span class="fb" id="fb"></span>
+        <button class="btn" id="next" onclick="nextQ()" disabled>Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card res" style="display:none"></section>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> ★</p>
+  </div>
+</div>
+
+<script>
+const Q = [{"n": 1, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Function of blood & its components", "stem": "Which best explains why plasma proteins such as albumin are essential to fluid balance?", "options": [{"t": "They generate colloid osmotic pressure that pulls fluid back into capillaries", "e": "Albumin is the main plasma protein creating oncotic pressure, opposing filtration and holding fluid in vessels."}, {"t": "They carry the bulk of oxygen to the tissues", "e": "Oxygen transport is done by hemoglobin inside red cells, not plasma proteins."}, {"t": "They directly trigger the vascular spasm that stops bleeding as a general rule", "e": "Vascular spasm is a vessel-wall response, not a plasma-protein action."}, {"t": "They set the freezing point of blood to regulate temperature", "e": "Plasma proteins don't regulate temperature this way; their role here is oncotic pressure."}], "correct": 0}, {"n": 2, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Function of blood & its components", "stem": "How do serum and plasma differ?", "options": [{"t": "Serum contains red cells while plasma does not", "e": "Neither serum nor plasma contains red cells; both are the fluid fraction."}, {"t": "Plasma lacks electrolytes that serum keeps", "e": "Both contain electrolytes; the real difference is clotting proteins."}, {"t": "Serum is the cellular portion and plasma the liquid in this setting", "e": "The cellular-versus-liquid split is cells versus plasma; serum is liquid minus clotting factors."}, {"t": "Serum is plasma after the clotting proteins have been used up", "e": "Serum is what remains once clotting occurs, so it lacks fibrinogen and other consumed clotting factors."}], "correct": 3}, {"n": 3, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Function of blood & its components", "stem": "Which pairing correctly matches a blood component to its main job?", "options": [{"t": "Platelets — sealing a plug at sites of vessel injury", "e": "Platelets adhere and aggregate to seal breaks in vessel walls."}, {"t": "Red cells — presenting antigens to lymphocytes", "e": "Antigen presentation is a macrophage/dendritic role, not a red-cell one."}, {"t": "Albumin — converting fibrinogen into fibrin", "e": "Thrombin performs that conversion; albumin's role is oncotic pressure and transport."}, {"t": "Neutrophils — carrying most of the body's oxygen here", "e": "Oxygen transport is hemoglobin's job inside red cells."}], "correct": 0}, {"n": 4, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1b", "ioName": "Hematocrit & hemoglobin", "stem": "Two patients share the same hematocrit, yet one has much lower blood hemoglobin. What best explains this?", "options": [{"t": "That patient must have extra plasma proteins", "e": "Plasma proteins don't set the hemoglobin content of red cells."}, {"t": "That patient has a much higher white-cell count in the healthy body", "e": "White cells contribute negligibly to hematocrit or hemoglobin."}, {"t": "Each of that patient's red cells holds less hemoglobin than normal", "e": "Hematocrit reflects cell volume; if cells are underfilled with hemoglobin, the two values diverge."}, {"t": "It is impossible; the two always move together", "e": "They usually track but can diverge when cells are underfilled with hemoglobin."}], "correct": 2}, {"n": 5, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1b", "ioName": "Hematocrit & hemoglobin", "stem": "Why does hemoglobin's oxygen binding follow an S-shaped curve rather than a straight line?", "options": [{"t": "Each hemoglobin can carry only a single oxygen molecule in this setting", "e": "Each hemoglobin carries up to four O₂, and cooperativity shapes the curve."}, {"t": "Oxygen simply dissolves in plasma in direct proportion", "e": "Dissolved plasma oxygen is linear; the curve describes cooperative hemoglobin binding."}, {"t": "Iron is permanently released each time oxygen binds", "e": "Iron is retained and binds oxygen reversibly; it isn't released on binding."}, {"t": "Binding is cooperative — each oxygen bound makes the next easier", "e": "Cooperativity among the four heme sites produces the sigmoid shape."}], "correct": 3}, {"n": 6, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1c", "ioName": "Hematopoiesis: stimulus & function", "stem": "Erythropoietin secretion rises in response to which stimulus?", "options": [{"t": "A rise in blood calcium concentration", "e": "Calcium is not the erythropoietin stimulus; oxygen delivery is."}, {"t": "Reduced oxygen delivery sensed by the kidney", "e": "Low tissue oxygen detected by the kidney drives erythropoietin and more red-cell production."}, {"t": "An increase in plasma fibrinogen", "e": "Clotting proteins do not regulate erythropoietin."}, {"t": "A fall in the circulating white-cell count here", "e": "Erythropoietin responds to oxygen, not to leukocyte numbers."}], "correct": 1}, {"n": 7, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1c", "ioName": "Hematopoiesis: stimulus & function", "stem": "Chronic vitamin B₁₂ deficiency produces anemia with abnormally large red cells. Why large rather than small?", "options": [{"t": "B₁₂ deficiency floods the marrow with excess iron", "e": "Iron status is separate; B₁₂ affects DNA and division, producing large cells."}, {"t": "B₁₂ is needed for DNA synthesis, so precursors keep growing but divide poorly", "e": "Impaired DNA replication delays cell division, yielding fewer but larger cells."}, {"t": "Lack of B₁₂ drives erythropoietin to oversized levels under normal conditions", "e": "The size change reflects defective division, not an erythropoietin surge."}, {"t": "B₁₂ deficiency makes hemoglobin crystallize and swell", "e": "It is a division defect, not hemoglobin crystallization."}], "correct": 1}, {"n": 8, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1d", "ioName": "Molecular mechanisms of coagulation", "stem": "Tissue injury exposes tissue factor to blood. Which pathway does this start, and how fast?", "options": [{"t": "The extrinsic pathway, which acts within seconds", "e": "Tissue factor triggers the fast extrinsic route to clotting."}, {"t": "The intrinsic pathway, over many minutes", "e": "The intrinsic pathway is contact-activated and slower; tissue factor is extrinsic."}, {"t": "Fibrinolysis, dissolving any clot at once", "e": "That is clot breakdown, the opposite of initiating a clot."}, {"t": "The common pathway, bypassing factor X entirely here", "e": "The common pathway runs through factor X, not around it."}], "correct": 0}, {"n": 9, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1d", "ioName": "Molecular mechanisms of coagulation", "stem": "Warfarin blocks vitamin K recycling. Why does this impair clotting?", "options": [{"t": "Several clotting factors need vitamin K for the liver to build working versions", "e": "Vitamin K–dependent factors can't be properly synthesized, weakening the cascade."}, {"t": "Vitamin K is the enzyme that converts fibrinogen to fibrin in the healthy body", "e": "Thrombin performs that step; vitamin K is needed to make several factors."}, {"t": "Vitamin K physically forms the platelet plug", "e": "Platelets form the plug; vitamin K supports factor synthesis."}, {"t": "Vitamin K is the calcium source clotting requires", "e": "Calcium is a separate cofactor; vitamin K enables factor synthesis."}], "correct": 0}, {"n": 10, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1d", "ioName": "Molecular mechanisms of coagulation", "stem": "What is thrombin's central role in coagulation?", "options": [{"t": "It permanently prevents any clot from forming under normal conditions", "e": "That is anticoagulant activity; thrombin promotes clotting."}, {"t": "It carries oxygen within the forming clot", "e": "Oxygen transport is unrelated to thrombin."}, {"t": "It converts fibrinogen to fibrin and drives more of its own formation", "e": "Thrombin is the hinge enzyme, making fibrin and feeding back to generate more thrombin."}, {"t": "It dissolves fibrin once bleeding has stopped", "e": "Plasmin dissolves fibrin; thrombin builds it."}], "correct": 2}, {"n": 11, "unit": 2, "unitName": "Blood & Immunology", "io": "2a", "ioName": "Function of blood components (WBCs)", "stem": "Which white cell is usually the first and most numerous responder to a bacterial infection?", "options": [{"t": "Eosinophil", "e": "Eosinophils specialize in parasites and allergy, not first-line bacterial defense."}, {"t": "Basophil", "e": "Basophils release histamine; they aren't the main phagocytic responders."}, {"t": "Lymphocyte", "e": "Lymphocytes drive slower, specific immunity rather than the immediate response."}, {"t": "Neutrophil", "e": "Neutrophils arrive first in large numbers and phagocytize bacteria."}], "correct": 3}, {"n": 12, "unit": 2, "unitName": "Blood & Immunology", "io": "2a", "ioName": "Function of blood components (WBCs)", "stem": "How does a macrophage bridge innate and adaptive immunity?", "options": [{"t": "It secretes antibodies after becoming a plasma cell in this setting", "e": "Plasma cells derived from B-cells secrete antibodies, not macrophages."}, {"t": "It carries oxygen to the inflamed tissue", "e": "That is a red-cell function, unrelated to antigen presentation."}, {"t": "It weaves the fibrin mesh of a blood clot", "e": "Clot formation is hemostasis, not a macrophage role."}, {"t": "It engulfs invaders and then presents their antigens to lymphocytes", "e": "Antigen presentation links innate ingestion to activation of adaptive immunity."}], "correct": 3}, {"n": 13, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Lymphatic–immune interaction", "stem": "A limb's lymphatic drainage becomes blocked. What is the immediate result, and why?", "options": [{"t": "Dehydration, because lymph is the body's main water store as a general rule", "e": "Lymph isn't a water store; a blockage causes local fluid buildup."}, {"t": "Swelling, because leaked capillary fluid can no longer return to the blood", "e": "Lymphatics normally reclaim interstitial fluid, so a blockage backs it up as edema."}, {"t": "Immediate clotting of the limb's veins", "e": "Lymphatic blockage causes edema, not venous clotting."}, {"t": "Loss of all red cells from the region", "e": "Red cells travel in blood vessels and aren't lost this way."}], "correct": 1}, {"n": 14, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Lymphatic–immune interaction", "stem": "Why are lymph nodes placed along the lymphatic vessels?", "options": [{"t": "To pump lymph back to the heart with cardiac muscle in this setting", "e": "Nodes filter; they contain no cardiac pumping muscle."}, {"t": "To manufacture red blood cells in adults", "e": "Adult red-cell production occurs in marrow, not lymph nodes."}, {"t": "To store bile between meals", "e": "Bile storage is the gallbladder's role, unrelated to nodes."}, {"t": "So antigens carried in lymph are filtered and shown to lymphocytes", "e": "Nodes act as checkpoints where immune cells sample the drainage."}], "correct": 3}, {"n": 15, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Functions of the immune system", "stem": "Which statement describes opsonization by complement?", "options": [{"t": "Directly synthesizing antibodies against the microbe in this setting", "e": "Antibodies come from plasma cells; complement tags and lyses."}, {"t": "Coating a microbe so phagocytes recognize and engulf it more readily", "e": "Opsonization tags a target to make phagocytosis more efficient."}, {"t": "Raising the hypothalamic temperature set point", "e": "That is fever from pyrogens, not opsonization."}, {"t": "Storing a memory of the pathogen for decades", "e": "Memory is a lymphocyte function, not complement opsonization."}], "correct": 1}, {"n": 16, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Functions of the immune system", "stem": "Antibodies generally do not kill pathogens directly. What do they mainly do?", "options": [{"t": "Punch pores in every microbe on direct contact as a general rule", "e": "Membrane lysis is complement's job, not the antibody alone."}, {"t": "Neutralize, clump, and flag targets for phagocytes and complement", "e": "Antibodies tag and immobilize; the killing is done by other effectors."}, {"t": "Replace red cells lost during the infection", "e": "That is erythropoiesis, unrelated to antibody action."}, {"t": "Digest microbes with their own enzymes", "e": "Antibodies lack digestive enzymes; phagocytes do the digesting."}], "correct": 1}, {"n": 17, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Functions of the immune system", "stem": "Which cell directly kills the body's own virus-infected cells?", "options": [{"t": "Antibody-secreting plasma cell", "e": "Plasma cells secrete antibodies; they don't directly kill infected cells."}, {"t": "Oxygen-carrying red blood cell", "e": "Red cells carry oxygen and have no cytotoxic role."}, {"t": "Clot-forming platelet fragment", "e": "Platelets are for clotting, not killing infected cells."}, {"t": "Cytotoxic T lymphocyte", "e": "Cytotoxic T-cells recognize and destroy infected host cells."}], "correct": 3}, {"n": 18, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Innate vs. acquired immunity (+allergy)", "stem": "What is the key advantage of acquired immunity over innate immunity on repeat exposure?", "options": [{"t": "Memory makes the second response faster and larger", "e": "Immunological memory accelerates and amplifies later responses."}, {"t": "It reacts within seconds without any prior exposure", "e": "That describes immediate innate defense; acquired immunity takes time initially."}, {"t": "It treats every pathogen in exactly the same way", "e": "Acquired immunity is specific, unlike generic innate defense."}, {"t": "It functions with no lymphocytes involved", "e": "Acquired immunity depends on lymphocytes."}], "correct": 0}, {"n": 19, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Innate vs. acquired immunity (+allergy)", "stem": "A vaccine's second dose produces far more antibody than the first. Why?", "options": [{"t": "The first dose erases all specificity, so the second starts fresh in this setting", "e": "The first exposure creates memory rather than resetting the system."}, {"t": "Antibodies absorbed from food replace the response", "e": "Diet doesn't supply antigen-specific antibodies."}, {"t": "Innate barriers strengthen permanently after one dose", "e": "The boosted response is adaptive memory, not an innate barrier change."}, {"t": "Memory cells from the first dose allow a rapid, high-magnitude response", "e": "Earlier clonal expansion leaves primed memory cells for a bigger secondary response."}], "correct": 3}, {"n": 20, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Innate vs. acquired immunity (+allergy)", "stem": "In allergy, why does a second exposure to the allergen cause immediate symptoms?", "options": [{"t": "The allergen directly dissolves cell membranes on contact", "e": "Symptoms come from mast-cell histamine, not direct membrane dissolution."}, {"t": "IgE from the first exposure coats mast cells, which degranulate when the allergen returns", "e": "Pre-formed IgE primes mast cells for rapid histamine release."}, {"t": "The first exposure made cytotoxic T-cells that lyse the allergen during normal physiology", "e": "Allergy is IgE and mast-cell mediated, not cytotoxic-T mediated."}, {"t": "Complement forms a clot around the allergen", "e": "Clotting is unrelated; allergy is histamine-driven."}], "correct": 1}, {"n": 21, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI motility, gastric secretion & hormones", "stem": "Which contraction pattern moves intestinal contents forward, versus mixing them?", "options": [{"t": "Segmentation propels forward while peristalsis mixes as part of the process", "e": "This reverses the roles; peristalsis propels and segmentation mixes."}, {"t": "Both patterns only mix and never propel", "e": "Peristalsis does propel contents onward."}, {"t": "Both patterns only propel and never mix", "e": "Segmentation's role is mixing, not propulsion."}, {"t": "Peristalsis propels contents forward while segmentation mixes them in place", "e": "Peristalsis is propulsive; segmentation is local mixing."}], "correct": 3}, {"n": 22, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI motility, gastric secretion & hormones", "stem": "Acidic chyme entering the duodenum stimulates which hormone, with what effect?", "options": [{"t": "Secretin, which increases the stomach's acid output in this setting", "e": "Secretin reduces the acid load via bicarbonate; it doesn't raise acid."}, {"t": "Gastrin, which triggers pancreatic bicarbonate", "e": "Bicarbonate is secretin's effect; gastrin raises acid and motility."}, {"t": "Secretin, which prompts the pancreas to release bicarbonate", "e": "Secretin responds to acid and triggers bicarbonate to neutralize it."}, {"t": "Cholecystokinin, which is released mainly by acid", "e": "Cholecystokinin responds to fat and protein, not chiefly acid."}], "correct": 2}, {"n": 23, "unit": 3, "unitName": "GI Physiology", "io": "3b", "ioName": "Digestive enzymes", "stem": "Why is pepsin active in the stomach but not in the mouth?", "options": [{"t": "Pepsin requires the acidic environment the stomach provides", "e": "Pepsin needs a low pH to work, and saliva's pH is too high."}, {"t": "Pepsin works only in the alkaline duodenum", "e": "Pepsin is a gastric, acid-requiring enzyme, not alkaline-optimized."}, {"t": "The mouth secretes pepsin but supplies no substrate in this setting", "e": "The mouth doesn't secrete pepsin; the stomach does, needing acid."}, {"t": "Saliva chemically destroys all protein enzymes", "e": "The key factor is pepsin's pH requirement, not saliva destroying it."}], "correct": 0}, {"n": 24, "unit": 3, "unitName": "GI Physiology", "io": "3c", "ioName": "The biliary system", "stem": "What makes bile salts effective at handling dietary fat?", "options": [{"t": "They chemically digest fat into glycerol by themselves as part of the process", "e": "Bile emulsifies; lipase performs the chemical digestion."}, {"t": "They neutralize stomach acid in place of bicarbonate", "e": "Acid neutralization is bicarbonate's role, not bile's main action."}, {"t": "They convert dietary fat directly into glucose", "e": "Fat is not converted into glucose by bile."}, {"t": "They are amphipathic, emulsifying large fat globules into many small droplets", "e": "Water-liking and fat-liking ends let bile salts break fat into droplets for lipase."}], "correct": 3}, {"n": 25, "unit": 3, "unitName": "GI Physiology", "io": "3d", "ioName": "Exocrine pancreas", "stem": "Which correctly describes the exocrine pancreas's two outputs and their triggers?", "options": [{"t": "Bicarbonate on cholecystokinin's signal and enzymes on secretin's as a general rule", "e": "This reverses them; secretin drives bicarbonate and cholecystokinin drives enzymes."}, {"t": "Bicarbonate on secretin's signal and digestive enzymes on cholecystokinin's signal", "e": "Secretin drives bicarbonate release; cholecystokinin drives enzyme release."}, {"t": "Insulin and glucagon delivered into the duodenum", "e": "Those are endocrine hormones into blood, not exocrine duodenal outputs."}, {"t": "Bile and intrinsic factor", "e": "Bile is from the liver and intrinsic factor is gastric, not pancreatic exocrine outputs."}], "correct": 1}, {"n": 26, "unit": 3, "unitName": "GI Physiology", "io": "3e", "ioName": "Functions of the liver", "stem": "Why does the liver get 'first pass' at nutrients absorbed from the gut?", "options": [{"t": "The liver sits inside the wall of the stomach", "e": "First-pass processing is due to portal blood flow, not location in the stomach."}, {"t": "Gut venous blood drains through the portal vein into the liver before reaching the body", "e": "Portal circulation routes absorbed material through the liver first."}, {"t": "Nutrients are absorbed straight into the liver's bile ducts when the system is at rest in this setting", "e": "Nutrients enter portal blood, not bile ducts."}, {"t": "The liver receives all its blood from the pulmonary artery", "e": "First pass comes via the portal vein, not the pulmonary artery."}], "correct": 1}, {"n": 27, "unit": 3, "unitName": "GI Physiology", "io": "3e", "ioName": "Functions of the liver", "stem": "Which is a liver function in handling nitrogen waste?", "options": [{"t": "Converting urea back into usable protein", "e": "The liver disposes of nitrogen as urea; it doesn't rebuild protein from urea."}, {"t": "Storing ammonia in bile for later use", "e": "Ammonia is detoxified into urea, not stored in bile."}, {"t": "Converting toxic ammonia into urea for excretion", "e": "The liver's urea cycle detoxifies ammonia from amino-acid breakdown."}, {"t": "Excreting ammonia unchanged through the skin here", "e": "Nitrogen leaves as urea via the kidneys, not unchanged through skin."}], "correct": 2}, {"n": 28, "unit": 3, "unitName": "GI Physiology", "io": "3f", "ioName": "Protein, carb & lipid absorption", "stem": "Glucose and amino acids are absorbed mainly by which mechanism, and where do they go first?", "options": [{"t": "Packaging into chylomicrons that enter the lymph", "e": "That is the fat route; sugars and amino acids use blood, not lymph."}, {"t": "Simple diffusion straight into lymphatic lacteals in this setting", "e": "Sugars and amino acids are sodium-coupled into blood, not lymph."}, {"t": "Active transport into bile for recycling", "e": "They enter portal blood, not bile."}, {"t": "Sodium-coupled transport, then into portal blood toward the liver", "e": "The sodium gradient drives uptake, and these water-soluble nutrients take the portal route."}], "correct": 3}, {"n": 29, "unit": 3, "unitName": "GI Physiology", "io": "3f", "ioName": "Protein, carb & lipid absorption", "stem": "Why do absorbed fats enter the lymph before the blood?", "options": [{"t": "Fats are water-soluble and dissolve straight into plasma in this setting", "e": "Fats are not water-soluble; they need chylomicron packaging and the lymph route."}, {"t": "Blood capillaries actively reject all lipids", "e": "The reason is particle size and packaging, not active rejection."}, {"t": "They are repackaged into chylomicrons too large for blood capillaries", "e": "Chylomicrons enter lymphatic lacteals before later joining the bloodstream."}, {"t": "Lymph digests the fat that blood cannot", "e": "Digestion happens in the gut; lymph simply transports chylomicrons."}], "correct": 2}, {"n": 30, "unit": 3, "unitName": "GI Physiology", "io": "3g", "ioName": "Defecation", "stem": "What allows voluntary control over the otherwise reflexive process of defecation?", "options": [{"t": "The internal anal sphincter is skeletal and voluntary in this setting", "e": "The internal sphincter is smooth muscle and involuntary."}, {"t": "The rectum contains no stretch receptors at all", "e": "Rectal stretch triggers the reflex; the external sphincter provides the override."}, {"t": "Mass movements are entirely under conscious command", "e": "Mass movements are reflexive; voluntary control lies at the external sphincter."}, {"t": "The external anal sphincter is skeletal muscle under conscious control", "e": "Voluntary skeletal control of the external sphincter allows defecation to be delayed."}], "correct": 3}, {"n": 31, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4a", "ioName": "Liver functions (review)", "stem": "Which liver function keeps blood glucose steady between meals?", "options": [{"t": "Breaking down stored glycogen and making new glucose to release", "e": "The liver mobilizes glycogen and performs gluconeogenesis to sustain blood glucose."}, {"t": "Storing dietary glucose permanently as bile in the healthy body", "e": "Glucose is stored as glycogen, not as bile."}, {"t": "Converting glucose into urea for excretion", "e": "Urea is a nitrogen-waste product, not a glucose fate."}, {"t": "Absorbing glucose directly from the airways", "e": "Glucose arrives from the gut via portal blood, not the airways."}], "correct": 0}, {"n": 32, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4a", "ioName": "Liver functions (review)", "stem": "A patient with liver failure has low albumin and easy bleeding. Which liver role explains both?", "options": [{"t": "The liver stores albumin and clotting factors made by the kidney in this setting", "e": "The liver synthesizes them; they are not made by the kidney."}, {"t": "The liver makes the red cells that carry albumin", "e": "Albumin is a synthesized plasma protein, unrelated to red-cell production."}, {"t": "The liver absorbs whole albumin directly from food", "e": "Albumin is built by the liver, not absorbed intact from food."}, {"t": "The liver synthesizes plasma proteins, including albumin and clotting factors", "e": "Failing protein synthesis lowers albumin and clotting factors together."}], "correct": 3}, {"n": 33, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4b", "ioName": "Production/transport/conversion of glucose", "stem": "How much ATP does glycolysis yield, and does it need oxygen?", "options": [{"t": "The majority of the cell's ATP, using oxygen in this setting", "e": "Most ATP comes later from oxidative phosphorylation, not glycolysis."}, {"t": "No ATP at all; it only consumes energy", "e": "Glycolysis produces a small net gain of ATP."}, {"t": "A small net of two ATP, and it does not require oxygen", "e": "Glycolysis nets two ATP and proceeds without oxygen."}, {"t": "Two ATP, but only when oxygen is present", "e": "Glycolysis proceeds even without oxygen."}], "correct": 2}, {"n": 34, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4b", "ioName": "Production/transport/conversion of glucose", "stem": "Where is most ATP from glucose produced, and what does it require?", "options": [{"t": "Oxidative phosphorylation, which requires oxygen", "e": "The electron-transport stage makes most of the ATP and depends on oxygen."}, {"t": "Glycolysis, which requires oxygen", "e": "Glycolysis is anaerobic and yields only a little ATP."}, {"t": "The citric acid cycle alone, without any oxygen", "e": "Most ATP comes from oxidative phosphorylation, and the overall process needs oxygen."}, {"t": "Directly during glucose absorption in the gut", "e": "ATP is generated in cellular metabolism, not during absorption."}], "correct": 0}, {"n": 35, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4b", "ioName": "Production/transport/conversion of glucose", "stem": "Why is maintaining blood glucose critical even during a fast?", "options": [{"t": "The brain depends almost entirely on glucose for fuel", "e": "Neurons rely on glucose, so the body actively defends blood glucose."}, {"t": "Muscle can use no fuel other than glucose", "e": "Muscle can burn fat and other fuels; the brain is the glucose-critical tissue."}, {"t": "Glucose is the only molecule that carries oxygen here", "e": "Oxygen is carried by hemoglobin, not glucose."}, {"t": "Red cells store glucose for the whole body", "e": "The liver buffers glucose; red cells don't store it for the body."}], "correct": 0}, {"n": 36, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4c", "ioName": "Production/transport/conversion of lipids", "stem": "During prolonged fasting, the liver turns surplus acetyl-CoA into which alternative fuel?", "options": [{"t": "Additional red blood cells", "e": "That is erythropoiesis, unrelated to acetyl-CoA."}, {"t": "Bile salts for fat digestion in this setting", "e": "Bile salts aren't produced from surplus acetyl-CoA as a fasting fuel."}, {"t": "Ketone bodies, which the brain can use", "e": "Ketones spare glucose and fuel the brain during fasting."}, {"t": "Urea for the kidneys", "e": "Urea handles nitrogen; ketones are the fasting fuel here."}], "correct": 2}, {"n": 37, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4c", "ioName": "Production/transport/conversion of lipids", "stem": "Which lipoprotein returns excess cholesterol from tissues back to the liver?", "options": [{"t": "LDL", "e": "LDL delivers cholesterol to tissues, the opposite direction."}, {"t": "HDL", "e": "HDL carries out reverse cholesterol transport toward the liver."}, {"t": "Chylomicrons", "e": "Chylomicrons carry dietary fat from the gut outward."}, {"t": "VLDL", "e": "VLDL carries liver-made fat outward, not back to the liver."}], "correct": 1}, {"n": 38, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4c", "ioName": "Production/transport/conversion of lipids", "stem": "Why must triglycerides travel inside lipoproteins in the blood?", "options": [{"t": "They are too small to move without a carrier", "e": "The issue is water-insolubility, not small size."}, {"t": "Plasma enzymes would instantly turn them into glucose in this setting", "e": "Fat isn't converted to glucose in plasma; the issue is solubility."}, {"t": "They are not water-soluble and cannot dissolve in plasma alone", "e": "Lipoproteins ferry insoluble fat through watery blood."}, {"t": "Lipoproteins are needed to freeze them for transport", "e": "Transport isn't about freezing; it's about solubility."}], "correct": 2}, {"n": 39, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4d", "ioName": "Production/transport/conversion of protein", "stem": "To burn an amino acid for energy, what happens first, and what becomes of its nitrogen?", "options": [{"t": "Its nitrogen is removed, then converted to urea for excretion", "e": "Nitrogen removal frees the carbon skeleton, and the liver turns the nitrogen into urea."}, {"t": "Its carbon skeleton is excreted while nitrogen is burned here", "e": "The carbon skeleton is burned; the nitrogen is excreted as urea."}, {"t": "It is stored intact as glycogen", "e": "Amino acids aren't stored as glycogen; nitrogen must be removed to burn them."}, {"t": "It is converted directly into bile", "e": "Amino acids are not converted into bile."}], "correct": 0}, {"n": 40, "unit": 4, "unitName": "Metabolism & the Liver", "io": "4d", "ioName": "Production/transport/conversion of protein", "stem": "Growth hormone and cortisol have opposite effects on body protein. Which is correct?", "options": [{"t": "Growth hormone breaks down protein while cortisol builds it", "e": "This reverses them; growth hormone builds and cortisol breaks down."}, {"t": "Both hormones only build protein", "e": "Cortisol is catabolic, not anabolic, here."}, {"t": "Growth hormone builds protein while cortisol breaks it down", "e": "Growth hormone is anabolic and cortisol is catabolic for protein."}, {"t": "Both hormones only break down protein", "e": "Growth hormone is anabolic, not catabolic."}], "correct": 2}, {"n": 41, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5a", "ioName": "Body energy balance", "stem": "Why is fat the body's largest energy reserve compared with glycogen?", "options": [{"t": "It provides fewer calories per gram but more volume in this setting", "e": "Fat is more energy-dense per gram, not fewer calories."}, {"t": "It stores more energy per gram and is kept nearly water-free", "e": "About nine kilocalories per gram and minimal stored water make fat highly energy-dense."}, {"t": "Glycogen holds no water and is denser than fat", "e": "Glycogen is stored with water and is less energy-dense than fat."}, {"t": "Fat is the body's only usable fuel", "e": "The body also uses carbohydrate and protein; fat is simply the largest store."}], "correct": 1}, {"n": 42, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5a", "ioName": "Body energy balance", "stem": "In early starvation, which fuel store is depleted first?", "options": [{"t": "Body fat, before glycogen", "e": "Fat is used more heavily after glycogen is drawn down."}, {"t": "Structural muscle protein, before any fat", "e": "Protein is largely spared until late in starvation."}, {"t": "Glycogen", "e": "Glycogen is the small, quick-access store the body draws down first."}, {"t": "Dietary fiber reserves", "e": "Fiber is not an energy reserve; glycogen goes first."}], "correct": 2}, {"n": 43, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5a", "ioName": "Body energy balance", "stem": "Which hormone signals fullness and reflects the body's fat stores?", "options": [{"t": "Ghrelin", "e": "Ghrelin signals hunger, the opposite role."}, {"t": "Secretin", "e": "Secretin is a GI hormone for bicarbonate, not satiety."}, {"t": "Erythropoietin", "e": "Erythropoietin regulates red cells, not appetite."}, {"t": "Leptin", "e": "Leptin rises with fat stores and promotes a sense of fullness."}], "correct": 3}, {"n": 44, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5b", "ioName": "Body temperature control", "stem": "What is the hypothalamus's role in temperature regulation?", "options": [{"t": "It acts as a thermostat, comparing body temperature to a set point and triggering responses", "e": "The hypothalamus defends a set-point temperature by initiating heat gain or loss."}, {"t": "It only measures temperature but cannot trigger responses when the system is at rest in this setting", "e": "It both senses temperature and initiates the responses."}, {"t": "It sets body temperature by controlling bile flow", "e": "Bile flow is unrelated to thermoregulation."}, {"t": "It cools the body only by speeding the heart", "e": "It uses vasodilation and sweating, not merely heart rate."}], "correct": 0}, {"n": 45, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5b", "ioName": "Body temperature control", "stem": "When the body is too hot, which response promotes heat loss?", "options": [{"t": "Shivering together with vasoconstriction", "e": "Those generate and conserve heat and are used when cold."}, {"t": "Piloerection to trap a layer of air", "e": "That conserves heat and is a cold-weather response."}, {"t": "Reduced blood flow to the skin surface", "e": "Heat loss requires increased skin blood flow, not reduced."}, {"t": "Skin vasodilation together with sweating", "e": "Dilating skin vessels and evaporating sweat shed heat."}], "correct": 3}, {"n": 46, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5b", "ioName": "Body temperature control", "stem": "Sweating cools the body only under what condition?", "options": [{"t": "When the sweat actually evaporates", "e": "Evaporation is the cooling step; sweat that merely drips off does not cool."}, {"t": "Whenever sweat is produced, regardless of evaporation", "e": "Cooling requires evaporation, not mere production of sweat."}, {"t": "Only when the sweat is reabsorbed by the skin", "e": "Cooling comes from evaporation, not reabsorption."}, {"t": "Only in a cold environment", "e": "Evaporative cooling is a heat-loss mechanism used when the body is hot."}], "correct": 0}, {"n": 47, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5b", "ioName": "Body temperature control", "stem": "During a fever, why do chills and shivering occur while temperature is rising?", "options": [{"t": "The set point falls, so the body overheats", "e": "A falling set point causes flushing and sweating, not chills on the way up."}, {"t": "Pyrogens raise the set point, so the body feels cold until it reaches the new target", "e": "A higher set point makes current temperature feel too low, driving heat generation."}, {"t": "The hypothalamus stops working entirely", "e": "Fever is a regulated set-point change, not a loss of control."}, {"t": "Sweating increases in order to raise temperature when the system is at rest in this setting", "e": "Sweating loses heat; the rise is driven by heat generation toward a higher set point."}], "correct": 1}, {"n": 48, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5c", "ioName": "Metabolic rate", "stem": "Basal metabolic rate is measured at rest, fasting, in comfortable temperature. Why those conditions?", "options": [{"t": "To push the measured rate as high as possible", "e": "The goal is a true baseline, not an inflated maximum."}, {"t": "Because metabolism stops unless the person is fasting when the system is at rest", "e": "Metabolism continues; the conditions simply standardize the measurement."}, {"t": "To measure only the energy used by digestion", "e": "Digestion's cost is deliberately excluded from basal metabolic rate."}, {"t": "To exclude activity and digestion so only the baseline resting cost is captured", "e": "Controlling those variables isolates true basal energy expenditure."}], "correct": 3}, {"n": 49, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5c", "ioName": "Metabolic rate", "stem": "Which factor raises metabolic rate?", "options": [{"t": "Advancing age with loss of muscle", "e": "Aging tends to lower the metabolic rate."}, {"t": "Deep sleep", "e": "Rest and sleep lower the metabolic rate."}, {"t": "Falling sympathetic nervous activity", "e": "Lower sympathetic tone reduces the rate; higher tone raises it."}, {"t": "Increased thyroid hormone", "e": "Thyroid hormone increases the metabolic rate."}], "correct": 3}, {"n": 50, "unit": 5, "unitName": "Nutrition, Energetics & Thermoregulation", "io": "5c", "ioName": "Metabolic rate", "stem": "A respiratory quotient near 0.7 indicates the body is mainly burning which fuel?", "options": [{"t": "Carbohydrate", "e": "Carbohydrate gives a respiratory quotient near 1.0."}, {"t": "Fat", "e": "Fat oxidation yields a respiratory quotient around 0.7."}, {"t": "Pure protein only", "e": "Protein's quotient is intermediate near 0.8; a value of 0.7 points to fat."}, {"t": "No fuel is being burned at all", "e": "A quotient of 0.7 reflects active fat oxidation."}], "correct": 1}, {"n": 51, "unit": 6, "unitName": "Respiration I", "io": "6a", "ioName": "Muscles of respiration", "stem": "Which muscle does most of the work of quiet inspiration, and what nerve drives it?", "options": [{"t": "The abdominal muscles, driven by the vagus", "e": "Abdominals aid forced expiration; the diaphragm drives quiet inspiration."}, {"t": "The diaphragm, driven by the phrenic nerve", "e": "The diaphragm is the primary muscle of quiet inspiration, supplied by the phrenic nerve."}, {"t": "The internal intercostals, driven by the phrenic nerve", "e": "Internal intercostals assist forced expiration, not quiet inspiration."}, {"t": "The diaphragm, driven by the optic nerve", "e": "The diaphragm is right, but its nerve is the phrenic, not the optic."}], "correct": 1}, {"n": 52, "unit": 6, "unitName": "Respiration I", "io": "6a", "ioName": "Muscles of respiration", "stem": "By what principle does contracting the diaphragm draw air into the lungs?", "options": [{"t": "Contraction pushes air out by raising the pressure", "e": "Inspiration lowers pressure to draw air in, not out."}, {"t": "The lungs actively pump air the way the heart pumps blood in this setting", "e": "Airflow is passive, driven by pressure differences, not lung pumping."}, {"t": "Enlarging the chest lowers internal pressure, so air flows inward", "e": "Increasing volume drops pressure below outside air, and air flows in."}, {"t": "Warm air simply rises into the lungs on its own", "e": "Airflow depends on pressure gradients, not on air temperature."}], "correct": 2}, {"n": 53, "unit": 6, "unitName": "Respiration I", "io": "6b", "ioName": "Compliance & elasticity", "stem": "Why do the lungs stay inflated rather than collapsing from their own elastic recoil?", "options": [{"t": "A slightly negative intrapleural pressure holds them open", "e": "The pleural vacuum counteracts the lung's inward elastic recoil."}, {"t": "The lungs contain rigid cartilage that blocks collapse", "e": "Alveoli aren't rigid; negative pleural pressure keeps them open."}, {"t": "Positive pressure from the stomach props them up", "e": "It is negative pleural pressure, not gastric pressure, that holds them open."}, {"t": "Surfactant makes the lungs completely non-elastic", "e": "The lungs remain elastic; pleural pressure prevents collapse."}], "correct": 0}, {"n": 54, "unit": 6, "unitName": "Respiration I", "io": "6c", "ioName": "Lung volumes & capacities", "stem": "Which lung volume cannot be measured by ordinary spirometry, and why?", "options": [{"t": "Tidal volume, because it is too small to detect", "e": "Tidal volume is readily measured by spirometry."}, {"t": "Inspiratory reserve, because it enters too fast", "e": "Inspiratory reserve is measurable; residual volume is the one that isn't."}, {"t": "Residual volume, because it never leaves the lungs", "e": "Spirometry measures moved air, and residual air is never exhaled."}, {"t": "Expiratory reserve, because it mixes with tidal air", "e": "Expiratory reserve can be measured; residual volume cannot."}], "correct": 2}, {"n": 55, "unit": 6, "unitName": "Respiration I", "io": "6c", "ioName": "Lung volumes & capacities", "stem": "What does vital capacity represent?", "options": [{"t": "Every bit of air the lungs hold, including residual when the system is at rest in this setting", "e": "That is total lung capacity; vital capacity excludes residual volume."}, {"t": "The most air a person can move — tidal plus inspiratory and expiratory reserves", "e": "Vital capacity is all the movable air, excluding the residual volume."}, {"t": "Only the air in one normal quiet breath", "e": "That is tidal volume; vital capacity is much larger."}, {"t": "The air that can never be exhaled", "e": "That is residual volume, the opposite of vital capacity."}], "correct": 1}, {"n": 56, "unit": 6, "unitName": "Respiration I", "io": "6d", "ioName": "Surfactant", "stem": "How does surfactant make breathing easier?", "options": [{"t": "It raises surface tension to hold the alveoli open when the system is at rest in this setting", "e": "Surfactant lowers tension; higher tension would promote collapse."}, {"t": "It thickens the respiratory membrane for strength", "e": "Surfactant reduces surface tension, not membrane thickness."}, {"t": "It lowers surface tension, raising compliance and keeping small alveoli from collapsing", "e": "Reducing surface tension stabilizes alveoli and eases inflation."}, {"t": "It carries oxygen straight into the blood", "e": "Gas transport is separate; surfactant addresses surface tension."}], "correct": 2}, {"n": 57, "unit": 6, "unitName": "Respiration I", "io": "6e", "ioName": "Gas exchange in the lungs", "stem": "At the lung, in what directions do oxygen and carbon dioxide move, and what drives it?", "options": [{"t": "Oxygen into the blood and carbon dioxide out, each down its partial-pressure gradient", "e": "Gases diffuse passively along their own pressure gradients."}, {"t": "Both oxygen and carbon dioxide move into the blood", "e": "Carbon dioxide moves out of the blood at the lung, not in."}, {"t": "Movement requires active pumping by alveolar cells", "e": "Exchange is passive diffusion, not active pumping."}, {"t": "Oxygen out and carbon dioxide in, against the gradients when the system is at rest in this setting", "e": "At the lung oxygen enters blood and carbon dioxide leaves, following gradients."}], "correct": 0}, {"n": 58, "unit": 6, "unitName": "Respiration I", "io": "6e", "ioName": "Gas exchange in the lungs", "stem": "Why does blood leaving the lung stay nearly fully oxygenated even if alveolar oxygen dips a little?", "options": [{"t": "The blood bypasses the alveoli entirely", "e": "Blood does exchange at the alveoli; a safety margin ensures full loading."}, {"t": "Exchange is fast and finishes with a safety margin before blood exits the capillary", "e": "A reserve in transit time keeps loading complete despite minor dips in alveolar oxygen."}, {"t": "Oxygen is pumped in by muscular capillaries", "e": "Loading is by diffusion with a time reserve, not muscular pumping."}, {"t": "Hemoglobin releases oxygen at the lung to stay balanced when the system is at rest", "e": "Hemoglobin loads oxygen at the lung and unloads it at the tissues."}], "correct": 1}, {"n": 59, "unit": 6, "unitName": "Respiration I", "io": "6f", "ioName": "The respiratory membrane", "stem": "Which features of the respiratory membrane make gas exchange rapid?", "options": [{"t": "A thick barrier with a small surface area", "e": "That would slow diffusion; the membrane is thin with a large area."}, {"t": "A muscular wall that squeezes gases across", "e": "Exchange is passive diffusion, not a muscular action."}, {"t": "A very thin barrier and a very large total surface area", "e": "Thinness and large surface area both speed diffusion."}, {"t": "An impermeable lining that blocks gas movement in this setting", "e": "The membrane is highly permeable to respiratory gases."}], "correct": 2}, {"n": 60, "unit": 6, "unitName": "Respiration I", "io": "6f", "ioName": "The respiratory membrane", "stem": "Fluid buildup in the lungs slows gas exchange mainly because it does what?", "options": [{"t": "Increases the partial-pressure gradient for oxygen in this setting", "e": "Fluid thickens the barrier; it does not raise the gradient."}, {"t": "Makes the membrane more permeable to gases", "e": "Fluid impairs rather than improves diffusion."}, {"t": "Thickens the diffusion barrier that the gases must cross", "e": "A thicker membrane slows diffusion of the gases."}, {"t": "Shrinks the alveolar surface tension to zero", "e": "The problem is a thicker barrier, not surface tension."}], "correct": 2}, {"n": 61, "unit": 7, "unitName": "Respiration II", "io": "7a", "ioName": "Respiratory centers of the brain", "stem": "Which brain region generates the basic breathing rhythm?", "options": [{"t": "The medulla", "e": "The medulla sets the fundamental respiratory rhythm."}, {"t": "The cerebellum", "e": "The cerebellum coordinates movement, not the breathing rhythm."}, {"t": "The pituitary", "e": "The pituitary is an endocrine gland, not a respiratory center."}, {"t": "The thalamus", "e": "The thalamus relays sensation; the medulla drives breathing."}], "correct": 0}, {"n": 62, "unit": 7, "unitName": "Respiration II", "io": "7a", "ioName": "Respiratory centers of the brain", "stem": "What is the strongest minute-to-minute driver of ventilation, sensed centrally?", "options": [{"t": "Falling oxygen, sensed centrally as the main driver in this setting", "e": "Low oxygen is a backup sensed peripherally; carbon dioxide is the main driver."}, {"t": "Rising blood glucose", "e": "Glucose is not the respiratory drive; carbon dioxide is."}, {"t": "Falling body temperature", "e": "Temperature is not the primary ventilatory driver; carbon dioxide is."}, {"t": "Rising carbon dioxide, detected as increased hydrogen ion", "e": "Central chemoreceptors respond mainly to carbon dioxide sensed as acid."}], "correct": 3}, {"n": 63, "unit": 7, "unitName": "Respiration II", "io": "7b", "ioName": "Oxygen transport", "stem": "About what fraction of blood oxygen is carried on hemoglobin rather than dissolved?", "options": [{"t": "About half of it", "e": "Far more than half is carried on hemoglobin."}, {"t": "Almost none; most is dissolved in plasma", "e": "Only a tiny fraction dissolves; most rides on hemoglobin."}, {"t": "The large majority, roughly 98 percent", "e": "Nearly all oxygen is bound to hemoglobin, with very little dissolved."}, {"t": "Exactly one quarter", "e": "The bound fraction is much higher, around 98 percent."}], "correct": 2}, {"n": 64, "unit": 7, "unitName": "Respiration II", "io": "7b", "ioName": "Oxygen transport", "stem": "During exercise, muscle produces heat, acid, and carbon dioxide. How does this aid oxygen delivery?", "options": [{"t": "It shifts the oxygen–hemoglobin curve right, so more oxygen unloads", "e": "A rightward shift lowers affinity and releases more oxygen where it's needed."}, {"t": "It shifts the curve left, so hemoglobin holds oxygen tighter in this setting", "e": "Those conditions shift the curve right to unload, not left."}, {"t": "It stops hemoglobin from carrying oxygen at all", "e": "Hemoglobin still carries oxygen; the shift just eases unloading."}, {"t": "It raises oxygen solubility in plasma to bypass hemoglobin", "e": "Delivery improves through the rightward shift, not plasma solubility."}], "correct": 0}, {"n": 65, "unit": 7, "unitName": "Respiration II", "io": "7b", "ioName": "Oxygen transport", "stem": "Which conditions shift the oxygen–hemoglobin curve left, so hemoglobin holds oxygen tighter?", "options": [{"t": "Heat, high carbon dioxide, and acid in this setting", "e": "Those shift the curve right to unload, not left."}, {"t": "Cold, low carbon dioxide, and fetal hemoglobin", "e": "These raise hemoglobin's affinity and shift the curve left."}, {"t": "Exercise with a rising temperature", "e": "Exercise conditions shift the curve right, not left."}, {"t": "High levels of BPG", "e": "BPG shifts the curve right by lowering affinity."}], "correct": 1}, {"n": 66, "unit": 7, "unitName": "Respiration II", "io": "7c", "ioName": "Carbon dioxide transport", "stem": "In what form is most carbon dioxide carried in the blood?", "options": [{"t": "Bound to the iron of hemoglobin, like oxygen", "e": "Carbon dioxide binds the globin part, not the iron, and most is bicarbonate anyway."}, {"t": "As bicarbonate", "e": "The majority of carbon dioxide travels as bicarbonate."}, {"t": "Almost entirely dissolved in the plasma", "e": "Only a small fraction is dissolved; most is bicarbonate."}, {"t": "As solid crystals inside the red cells", "e": "Carbon dioxide is carried in solution as bicarbonate, not as crystals."}], "correct": 1}, {"n": 67, "unit": 7, "unitName": "Respiration II", "io": "7c", "ioName": "Carbon dioxide transport", "stem": "As bicarbonate leaves the red cell, chloride moves in. What is the purpose of this chloride shift?", "options": [{"t": "To carry oxygen into the red cell", "e": "The chloride shift maintains charge; it doesn't carry oxygen."}, {"t": "To generate ATP for the red cell", "e": "It is a charge-balancing exchange, not energy production."}, {"t": "To keep the electrical charge balanced across the cell membrane", "e": "Chloride entering offsets the negative bicarbonate leaving."}, {"t": "To digest carbon dioxide into glucose under normal conditions", "e": "Carbon dioxide isn't turned into glucose; the shift balances charge."}], "correct": 2}, {"n": 68, "unit": 7, "unitName": "Respiration II", "io": "7d", "ioName": "Respiratory influence on pH", "stem": "A person hyperventilates and blows off large amounts of carbon dioxide. What happens to blood pH?", "options": [{"t": "It falls toward acidosis because carbon dioxide is a base in this setting", "e": "Carbon dioxide behaves as an acid; removing it raises pH."}, {"t": "It rises toward alkalosis as carbon dioxide and hydrogen ion fall", "e": "Removing carbon dioxide pulls the reaction toward less hydrogen ion, raising pH."}, {"t": "It stays exactly the same", "e": "Changes in carbon dioxide move pH; blowing it off raises pH."}, {"t": "It falls because bicarbonate rises sharply", "e": "Blowing off carbon dioxide lowers hydrogen ion and raises pH."}], "correct": 1}, {"n": 69, "unit": 7, "unitName": "Respiration II", "io": "7d", "ioName": "Respiratory influence on pH", "stem": "Compared with the lungs, how do the kidneys contribute to acid–base balance?", "options": [{"t": "More slowly but thoroughly, by adjusting bicarbonate over hours to days", "e": "Renal compensation is slower but powerful, complementing the fast lung response."}, {"t": "Faster than the lungs, within seconds", "e": "The lungs act within minutes; the kidneys are slower."}, {"t": "By directly exhaling carbon dioxide", "e": "Exhaling carbon dioxide is the lungs' role, not the kidneys'."}, {"t": "They play no role in acid–base balance when the system is at rest in this setting", "e": "The kidneys are central to slow acid–base regulation."}], "correct": 0}, {"n": 70, "unit": 7, "unitName": "Respiration II", "io": "7e", "ioName": "Gas exchange at the tissue level", "stem": "At an active tissue, which gradients drive gas exchange?", "options": [{"t": "Low tissue oxygen pulls oxygen out of blood while high tissue carbon dioxide pushes it in", "e": "Gases diffuse down their gradients, opposite to the pattern at the lung."}, {"t": "High tissue oxygen pushes oxygen back into the blood when the system is at rest in this setting", "e": "Active tissue has low oxygen, so oxygen leaves the blood."}, {"t": "Low tissue carbon dioxide pulls it out of the tissue", "e": "Active tissue has high carbon dioxide, which enters the blood."}, {"t": "Gases move by active transport, not by gradients", "e": "Tissue gas exchange is passive diffusion down gradients."}], "correct": 0}];
+const UNIT_ORDER = ["Blood & Hemostasis","Blood & Immunology","GI Physiology",
+  "Metabolism & the Liver","Nutrition, Energetics & Thermoregulation","Respiration I","Respiration II"];
+let order=[], cur=0, answered=[], chosen=[], score=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ---- timer ----
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  el.textContent = fmtTime(currentElapsedMs());
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function showFooterLogo(){ const el=document.getElementById('quiz-footer-logo'); if(el) el.style.display='flex'; }
+
+// ---- progress persistence ----
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  try{ localStorage.setItem(PKEY, JSON.stringify({cur, score, answered, chosen, order, timerMs: currentElapsedMs()})); }catch(e){}
+}
+function clearProgress(){ try{ localStorage.removeItem(PKEY); }catch(e){} }
+function loadProgress(){ try{ return JSON.parse(localStorage.getItem(PKEY)); }catch(e){ return null; } }
+function markCompleted(finalScore, total, timeMs){ try{ localStorage.setItem(CKEY, JSON.stringify({score:finalScore, total, timeMs})); }catch(e){} }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const prevCK=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(prevCK,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function restartExam(){
+  if(!confirm('Restart the exam from question 1? Your current progress will be cleared.')) return;
+  startExam();
+}
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order=Q.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffle(order);
+  cur=0; score=0; answered=Q.map(()=>false); chosen=Q.map(()=>-1);
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('intro').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  render();
+}
+
+function resumeExam(){
+  const saved=loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===Q.length) ? saved.order : Q.map((_,i)=>i);
+  cur = saved.cur||0; score = saved.score||0;
+  answered = saved.answered || Q.map(()=>false);
+  chosen = saved.chosen || Q.map(()=>-1);
+  timerAccumMs = saved.timerMs||0; timerStartedAt = Date.now(); startTimerInterval();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('intro').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved=loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.cur+1)+' of '+Q.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function render(){
+  const qi=order[cur]; const q=Q[qi];
+  document.getElementById('count').textContent=`Question ${cur+1} of ${Q.length}`;
+  document.getElementById('progbar').style.width=((cur)/Q.length*100)+'%';
+  document.getElementById('bUnit').textContent=q.unitName;
+  document.getElementById('bIO').textContent='IO '+q.io+' · '+q.ioName;
+  document.getElementById('stem').textContent=q.stem;
+  document.getElementById('fb').textContent='';
+  document.getElementById('fb').className='fb';
+  const next=document.getElementById('next');
+  next.textContent = (cur===Q.length-1)?'See results →':'Next →';
+  const prev=document.getElementById('prevbtn'); if(prev) prev.disabled=(cur===0);
+  const box=document.getElementById('opts'); box.innerHTML='';
+  const letters=['A','B','C','D'];
+  q.options.forEach((o,i)=>{
+    const el=document.createElement('button');
+    el.className='opt'; el.type='button';
+    el.innerHTML=`<span class="kx">${letters[i]}</span><span class="ot">${o.t}<span class="exp">${o.e}</span></span>`;
+    el.onclick=()=>choose(i);
+    box.appendChild(el);
+  });
+  if(answered[qi]){
+    // previously-answered question reached via Back: render read-only, no re-answer, no score change
+    const sel=chosen[qi];
+    const els=document.querySelectorAll('#opts .opt');
+    els.forEach((el,k)=>{
+      el.classList.add('locked','reveal');
+      el.onclick=null;
+      if(k===q.correct) el.classList.add('correct');
+      else if(k===sel) el.classList.add('wrong');
+    });
+    const ok=(sel===q.correct);
+    const fb=document.getElementById('fb');
+    fb.textContent = ok?'Correct':'Not quite';
+    fb.className='fb '+(ok?'ok':'no');
+    next.disabled=false;
+  } else {
+    next.disabled=true;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function choose(i){
+  const qi=order[cur]; const q=Q[qi];
+  if(answered[qi]) return;
+  answered[qi]=true; chosen[qi]=i;
+  const els=document.querySelectorAll('#opts .opt');
+  els.forEach((el,k)=>{
+    el.classList.add('locked','reveal');
+    el.onclick=null;
+    if(k===q.correct) el.classList.add('correct');
+    else if(k===i) el.classList.add('wrong');
+  });
+  const ok=(i===q.correct); if(ok) score++;
+  const fb=document.getElementById('fb');
+  fb.textContent = ok?'Correct':'Not quite';
+  fb.className='fb '+(ok?'ok':'no');
+  document.getElementById('next').disabled=false;
+  saveProgress();
+}
+function prevQ(){
+  if(cur===0) return;
+  cur--;
+  saveProgress();
+  render();
+}
+function nextQ(){
+  if(cur<Q.length-1){cur++; saveProgress(); render();}
+  else showResults();
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  clearProgress();
+  markCompleted(score, Q.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(score/Q.length*100);
+  // tally by io
+  const io={}, unitAgg={};
+  Q.forEach((q,qi)=>{
+    const ok=chosen[qi]===q.correct;
+    if(!io[q.io]) io[q.io]={name:q.ioName,unit:q.unitName,c:0,t:0};
+    io[q.io].t++; if(ok) io[q.io].c++;
+    if(!unitAgg[q.unitName]) unitAgg[q.unitName]={c:0,t:0};
+    unitAgg[q.unitName].t++; if(ok) unitAgg[q.unitName].c++;
+  });
+  let msg = pct>=85?'Excellent command of the material.'
+          : pct>=70?'Solid — review the misses below to close the gaps.'
+          : pct>=55?'A reasonable base; focus on the weaker objectives below.'
+          : 'Worth another pass — use the objective breakdown to target study.';
+  let html=`<div class="score"><div class="big">${score}<span style="font-size:26px;color:var(--muted)">/${Q.length}</span></div>
+    <div class="pct">${pct}%</div><div class="msg">${msg}</div><div class="msg" style="font-size:13px;margin-top:2px">Time: ${fmtTime(finalMs)}</div></div>`;
+
+  html+=`<h2 class="sec">Performance by objective</h2>`;
+  UNIT_ORDER.forEach(un=>{
+    const ios=Object.entries(io).filter(([k,v])=>v.unit===un).sort((a,b)=>a[0].localeCompare(b[0]));
+    if(!ios.length) return;
+    const ua=unitAgg[un];
+    html+=`<div class="unitblock"><div class="unitrow"><b>${un}</b><span>${ua.c}/${ua.t}</span></div>`;
+    ios.forEach(([code,v])=>{
+      const p=Math.round(v.c/v.t*100);
+      html+=`<div class="iorow"><div class="lbl"><span class="co">${code}</span>${v.name}</div>
+        <div class="frac">${v.c}/${v.t}</div>
+        <div class="bar"><i style="width:${p}%;background:${p>=67?'var(--good)':p>=34?'var(--acc)':'var(--bad)'}"></i></div></div>`;
+    });
+    html+=`</div>`;
+  });
+
+  const missed=Q.map((q,qi)=>({q,qi})).filter(x=>chosen[x.qi]!==x.q.correct);
+  html+=`<h2 class="sec">Review — missed questions (${missed.length})</h2>`;
+  if(!missed.length) html+=`<p style="color:var(--muted)">None — a clean sweep.</p>`;
+  missed.forEach(({q,qi})=>{
+    const yours = chosen[qi]>=0 ? q.options[chosen[qi]].t : '(no answer)';
+    const corr = q.options[q.correct].t;
+    html+=`<div class="miss"><div class="co">${q.unitName} · IO ${q.io}</div>
+      <div class="q">${q.stem}</div>
+      <div class="line you">Your answer: ${yours}</div>
+      <div class="line corr">Correct: ${corr}</div>
+      <div class="ex">${q.options[q.correct].e}</div></div>`;
+  });
+
+  html+=`<div class="rescta"><button class="btn" onclick="startExam()">Retake exam</button>
+    <button class="btn sec" onclick="reviewToTop()">Back to top</button>
+    <a class="btn sec" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">← Back to Homepage</a></div>`;
+  const r=document.getElementById('results'); r.innerHTML=html; r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  document.getElementById('progbar').style.width='100%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+function reviewToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+// keyboard: 1-4 / A-D select, Enter/→ next, ← back
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  const qi=order[cur];
+  if(!answered[qi]){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<Q[qi].options.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){
+    e.preventDefault(); nextQ();
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
