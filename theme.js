@@ -215,6 +215,22 @@
     if (window.SiteTour) window.SiteTour.start(EXAM_MODE_TOUR_STEPS, "tourSeen:exammode");
   };
 
+  // Guide/study-aid pages call this from a sticky .guide-back-bar link (see
+  // theme.css) instead of the generic scroll-gated #corner-actions-left
+  // button, since guides specifically need to hop back to guides.html to
+  // pick a different guide without the button being hidden until scrolled.
+  // Real "previous page" when there is one (matches how someone actually
+  // got here, e.g. from guides.html); falls back to a guaranteed link to
+  // guides.html when there's no same-origin referrer to go back to (opened
+  // directly / no browsing history) so the button is never a dead end.
+  window.guideGoBack = function () {
+    if (document.referrer && document.referrer.indexOf(location.origin) === 0) {
+      history.back();
+    } else {
+      location.href = "../guides.html";
+    }
+  };
+
   function initShortcutsHelp() {
     if (!document.getElementById("timerpill")) return null;
 
@@ -443,6 +459,7 @@
     // directly (typed URL, bookmark, new tab) with no real "previous page"
     // on this site to go back to.
     if (!document.body.classList.contains("homepage") &&
+        !document.querySelector(".guide-back-bar") &&
         document.referrer && document.referrer.indexOf(location.origin) === 0) {
       var leftGroup = document.createElement("div");
       leftGroup.id = "corner-actions-left";

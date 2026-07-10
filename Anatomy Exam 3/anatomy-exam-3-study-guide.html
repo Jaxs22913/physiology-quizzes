@@ -37,7 +37,7 @@
   header.top h1{font-size:2.15rem; margin:0 0 8px; letter-spacing:.5px;}
   header.top p{margin:4px 0; color:#cbd5e0; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.98rem;}
   nav.sysnav{
-    position:sticky; top:0; z-index:50; background:rgba(253,253,251,.94);
+    position:sticky; top:38px; z-index:50; background:rgba(253,253,251,.94);
     backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
     display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:11px 12px;
   }
@@ -159,6 +159,9 @@
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
 </div>
 <header class="top">
   <div class="inner">

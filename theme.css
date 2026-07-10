@@ -49,6 +49,58 @@
   opacity: 1;
   pointer-events: auto;
 }
+
+/* Guide/study-aid "back" bar -- always visible, no scroll-gate needed like
+   #corner-actions-left above, because this is placed in normal document
+   flow as literally the first thing on the page (before .wrap or any
+   full-bleed header a guide might have), not floated on top of content.
+   That makes it collision-proof by construction for any future guide
+   regardless of that guide's own header design -- nothing else occupies
+   this row, everything else is simply pushed below it. Sticky (not fixed)
+   so it stays reachable while scrolling.
+   **Sticky-stacking gotcha:** two independent `position:sticky; top:0`
+   siblings do NOT auto-stack -- each sticks relative to the scroll
+   container, not to each other, so a guide with its own sticky nav/topbar
+   (already true of both existing narrative guides: the Physiology field
+   guide's `.topbar`, the Anatomy guide's `nav.sysnav`) will visually
+   overlap this bar once both are in their stuck state, unless that
+   element's own `top` is offset by this bar's height (fixed at 38px
+   specifically so this math is exact, not measured/guessed). Any future
+   guide that has its own sticky element must set that element's `top` to
+   `38px`, not `0`, to stack below this bar instead of colliding with it.
+   Standard markup for any new guide, right after <body> opens, before
+   anything else:
+     <div class="guide-back-bar">
+       <a href="#" class="guide-back-link"
+          onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+     </div> */
+.guide-back-bar {
+  position: sticky;
+  top: 0;
+  z-index: 550;
+  height: 38px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+:root[data-theme="dark"] .guide-back-bar {
+  background: #191c22;
+  border-bottom-color: #2a2e37;
+}
+.guide-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 13.5px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1f2937;
+  text-decoration: none;
+  cursor: pointer;
+}
+:root[data-theme="dark"] .guide-back-link { color: #e5e7eb; }
+.guide-back-link:hover { text-decoration: underline; }
 .corner-btn {
   width: 38px;
   height: 38px;
