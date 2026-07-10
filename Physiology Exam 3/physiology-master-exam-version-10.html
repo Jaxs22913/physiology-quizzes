@@ -43,7 +43,8 @@
 <style>
   :root{--ink:#161a24;--body:#2c3242;--muted:#6b7280;--line:#e5e7ef;--paper:#f6f7fb;
     --card:#fff;--acc:#4f46e5;--acc2:#4338ca;--good:#16a34a;--goodbg:#eafaf0;
-    --bad:#dc2626;--badbg:#fdecec;--shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06)}
+    --bad:#dc2626;--badbg:#fdecec;--shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06);
+    --exam-toolbar-accent:var(--acc)}
   *{box-sizing:border-box}
   .hidden{display:none}
   body{margin:0;background:var(--paper);color:var(--body);
@@ -207,9 +208,12 @@
       <div class="prog"><i id="progbar"></i></div>
       <div class="count" id="count"></div>
       <span class="timerpill examctl-timer" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       <button class="restart-mini" onclick="restartExam()">Restart</button>
+    </div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
     </div>
     <div class="card qcard">
       <div class="badge"><span id="bUnit"></span><span class="io" id="bIO"></span></div>
@@ -279,8 +283,7 @@ function restartExam(){
 }
 
 function applyExamModeUI(){
-  document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
-  document.getElementById('navbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
   if (examMode) window.startExamModeTour();
 }
 

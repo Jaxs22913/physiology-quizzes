@@ -57,6 +57,7 @@
     --accent:#1f6f6b; --accent-soft:#e4f1ef; --gold:#c07a2b;
     --right:#1f7a4d; --right-soft:#e5f3ec; --wrong:#b23a3a; --wrong-soft:#f7e7e6;
     --muted:#5d6b86;
+    --exam-toolbar-accent:var(--accent);
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);
@@ -179,11 +180,14 @@
         <input type="checkbox" id="hard-cutoff-toggle" style="width:14px;height:14px">
         Hard time limit (1 minute per question)
       </label>
-      <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       <button class="btn ghost" style="padding:6px 12px;font-size:12px;margin-left:10px" onclick="if(confirm('Restart this quiz from the beginning?')){ clearProgress(); localStorage.setItem('qshuf:'+location.pathname, document.getElementById('shuffle-toggle').checked?'1':'0'); localStorage.setItem('qexam:'+location.pathname, document.getElementById('exam-mode-toggle').checked?'1':'0'); localStorage.setItem('qcut:'+location.pathname, document.getElementById('hard-cutoff-toggle').checked?'1':'0'); location.reload(); }">&#8635; Restart</button>
     </div>
     <div class="track"><i id="fill"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam &#8594;</button>
+    </div>
     <div class="card" id="card"></div>
     <div class="nav"><button class="btn ghost" id="prevBtn" disabled>&larr; Back</button><button class="btn hidden" id="next">Next question</button></div>
   </div>
@@ -242,6 +246,7 @@ const scoreEl = document.getElementById('score');
 const fill = document.getElementById('fill');
 const flagBtn = document.getElementById('flagbtn');
 const navBtn = document.getElementById('navbtn');
+const examToolbar = document.getElementById('examtoolbar');
 const timerEl = document.getElementById('timerpill');
 
 
@@ -253,10 +258,9 @@ function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.st
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function applyExamModeUI(){
   scoreEl.classList.toggle('hidden', examMode);
-  flagBtn.classList.toggle('hidden', !examMode);
-  navBtn.classList.toggle('hidden', !examMode);
+  examToolbar.classList.toggle('hidden', !examMode);
   timerEl.classList.add('examctl-timer');
-  if (examMode) window.startExamModeTour();
+  if (examMode && window.startExamModeTour) window.startExamModeTour();
 }
 (function restoreProgress(){
   document.getElementById('shuffle-toggle').checked = localStorage.getItem(SHUFKEY) === '1';

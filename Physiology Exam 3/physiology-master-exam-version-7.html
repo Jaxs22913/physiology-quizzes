@@ -46,6 +46,7 @@
     --gold:#c99b3f; --ink:#20233a; --muted:#5b6178; --line:#dfe3f0;
     --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
     --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
   *{box-sizing:border-box}
   .hidden{display:none}
@@ -211,8 +212,11 @@
         <div class="bar"><span id="barfill"></span></div>
         <span class="score" id="timerpill">00:00</span>
         <span class="score" id="scoretxt">Score 0</span>
-        <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-        <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
       </div>
       <div class="qmeta">
         <span class="tag tag-topic" id="qtopic"></span>
@@ -278,8 +282,7 @@ function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); ti
 function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
 function applyExamModeUI(){
   document.getElementById('scoretxt').classList.toggle('hidden', examMode);
-  document.getElementById('flagbtn').classList.toggle('hidden', !examMode);
-  document.getElementById('navbtn').classList.toggle('hidden', !examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
   document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }

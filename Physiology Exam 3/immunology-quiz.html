@@ -67,6 +67,7 @@
     --red:#b3261e;
     --red-soft:#fbe9e8;
     --shadow:0 10px 30px rgba(6,32,31,.20);
+    --exam-toolbar-accent:var(--teal);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -280,9 +281,12 @@
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="scorepill" id="timerpill">00:00</span>
       <span class="scorepill" id="scorepill">Score: 0</span>
-      <button type="button" class="examctl-btn hidden" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
-      <button type="button" class="examctl-btn hidden" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
       <button class="btn ghost" style="padding:6px 12px;font-size:12px" onclick="if(confirm('Restart this quiz from the beginning?')) startQuiz();">&#8635; Restart</button>
+    </div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam &rarr;</button>
     </div>
     <div class="bar"><i id="barfill"></i></div>
 
@@ -586,8 +590,7 @@ function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.st
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
 function applyExamModeUI(){
   $("scorepill").classList.toggle("hidden", examMode);
-  $("flagbtn").classList.toggle("hidden", !examMode);
-  $("navbtn").classList.toggle("hidden", !examMode);
+  $("examtoolbar").classList.toggle("hidden", !examMode);
   $("timerpill").classList.add("examctl-timer");
   if (examMode) window.startExamModeTour();
 }

@@ -39,6 +39,7 @@
     --wrong:#a2323f;
     --wrong-bg:#f6e7e8;
     --shadow:0 12px 30px rgba(28,42,51,.12);
+    --exam-toolbar-accent:var(--oxblood);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -240,9 +241,14 @@
     <div class="status">
       <span class="qcount" id="qcount">Question 1 of 50</span>
       <span class="score" id="timerpill">00:00</span>
-      <span class="score" id="score">Score: 0 / 0</span><button type="button" class="examctl-btn hidden" id="flagbtn">&#9873; Flag</button><button type="button" class="examctl-btn hidden" id="navbtn">&#9776; Questions<span id="navbadge"></span></button><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
     </div>
     <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
 
     <div class="topic-tag" id="topicTag">Topic</div>
     <h2 class="qtext" id="qtext">Question text</h2>
@@ -790,14 +796,14 @@ const intro = el('intro'), quiz = el('quiz'), results = el('results');
 
 function applyExamModeUI(){
   el('score').classList.toggle('hidden', examMode);
-  el('flagbtn').classList.toggle('hidden', !examMode);
-  el('navbtn').classList.toggle('hidden', !examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
   el('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
 el('flagbtn').addEventListener('click', toggleFlag);
 el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
 
 el('startBtn').addEventListener('click', () => {
   clearProgress();
