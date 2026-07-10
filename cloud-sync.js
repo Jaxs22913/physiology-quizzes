@@ -142,11 +142,30 @@
     });
   }
 
+  function reportAuthError(err) {
+    var msg = (err && err.code) ? err.code : "unknown error";
+    console.warn("Sign-in failed:", err);
+    var friendly = msg;
+    if (msg === "auth/unauthorized-domain") {
+      friendly = "This site's domain isn't authorized for sign-in yet (Firebase Console -> Authentication -> Settings -> Authorized domains).";
+    } else if (msg === "auth/operation-not-allowed") {
+      friendly = "Google sign-in isn't enabled yet (Firebase Console -> Authentication -> Sign-in method).";
+    } else if (msg === "auth/popup-closed-by-user" || msg === "auth/cancelled-popup-request") {
+      return; // user just closed it -- not a real error, nothing to show
+    } else if (location.protocol === "file:") {
+      friendly = "Sign-in can't complete when the page is opened as a local file (file://) -- try it on the live site instead.";
+    }
+    if (window.showToast) window.showToast("Sign-in error: " + friendly, 6000);
+    else alert("Sign-in error: " + friendly);
+  }
+
   window.cloudSignIn = function () {
+    if (location.protocol === "file:") {
+      reportAuthError({ code: "file-protocol" });
+      return Promise.resolve();
+    }
     var provider = new firebase.auth.GoogleAuthProvider();
-    return auth.signInWithPopup(provider).catch(function (err) {
-      console.warn("Sign-in failed:", err && err.message);
-    });
+    return auth.signInWithPopup(provider).catch(reportAuthError);
   };
   window.cloudSignOut = function () {
     return auth.signOut();
