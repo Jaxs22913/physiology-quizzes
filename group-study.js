@@ -46,23 +46,37 @@
   var readyResolvers = [];
   var authReady = false;
   var currentUid = null;
+  var anonAttempted = false;
 
+  // cloud-sync.js shares this same Auth instance (LOCAL persistence) for a
+  // signed-in Google user. signInAnonymously() always REPLACES whoever is
+  // currently signed in -- it doesn't check first -- so calling it
+  // unconditionally here used to silently clobber a real Google session
+  // with a throwaway anonymous one the moment someone opened this page,
+  // breaking cloud sync (writes went to the anonymous UID's own Firestore
+  // doc) and leaving the account panel showing a bare "Signed in" with no
+  // name/email/photo. A stable uid is all Group Study actually needs (see
+  // the file-level comment above), and a real Google uid satisfies that
+  // just as well -- so only fall back to anonymous once we've confirmed,
+  // via the first onAuthStateChanged callback, that nobody is signed in.
   auth.onAuthStateChanged(function (user) {
     if (user) {
       currentUid = user.uid;
       authReady = true;
       readyResolvers.forEach(function (fn) { fn(user.uid); });
       readyResolvers = [];
+    } else if (!anonAttempted) {
+      anonAttempted = true;
+      auth.signInAnonymously().catch(function (err) {
+        console.warn("Group Study: anonymous sign-in failed", err);
+        var msg = "Group Study couldn't connect (" + ((err && err.code) || "unknown error") + ").";
+        if (err && err.code === "auth/admin-restricted-operation") {
+          msg = "Group Study isn't set up yet -- Anonymous sign-in needs to be enabled in the Firebase Console (Authentication -> Sign-in method -> Anonymous).";
+        }
+        if (window.showToast) window.showToast(msg, 9000);
+        else alert(msg);
+      });
     }
-  });
-  auth.signInAnonymously().catch(function (err) {
-    console.warn("Group Study: anonymous sign-in failed", err);
-    var msg = "Group Study couldn't connect (" + ((err && err.code) || "unknown error") + ").";
-    if (err && err.code === "auth/admin-restricted-operation") {
-      msg = "Group Study isn't set up yet -- Anonymous sign-in needs to be enabled in the Firebase Console (Authentication -> Sign-in method -> Anonymous).";
-    }
-    if (window.showToast) window.showToast(msg, 9000);
-    else alert(msg);
   });
 
   function whenReady() {

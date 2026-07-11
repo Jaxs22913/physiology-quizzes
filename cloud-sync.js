@@ -30,7 +30,6 @@
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function () {});
 
   var META_KEY = "__cloudSyncMeta"; // { [localStorageKey]: lastWriteTimestampMs }
-  var RELOAD_GUARD_KEY = "__cloudSyncReloaded"; // sessionStorage, prevents a reload loop
   var THROTTLE_MS = 5000;
 
   var realSetItem = Storage.prototype.setItem;
@@ -198,10 +197,15 @@
     if (user) {
       hydrateFromCloud(user.uid).then(function (changed) {
         pushAllLocal();
-        if (changed && !sessionStorage.getItem(RELOAD_GUARD_KEY)) {
-          sessionStorage.setItem(RELOAD_GUARD_KEY, "1");
-          location.reload();
-        }
+        // No extra loop guard needed: hydrateFromCloud() already writes the
+        // updated timestamp into META_KEY before we get here, so the very
+        // next hydrate (on the page this reload lands on) sees
+        // cloudTs <= localTs for every key that just got pulled down and
+        // reports changed=false. That's what makes it safe to reload again
+        // here whenever a *later* change shows up -- e.g. syncing a theme
+        // toggle made on another device a few minutes into this same tab's
+        // session -- instead of only ever reloading once per session.
+        if (changed) location.reload();
       }).catch(reportWriteError);
     }
   });
