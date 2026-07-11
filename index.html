@@ -417,8 +417,8 @@
         display: flex;
         justify-content: center;
         position: absolute;
-        top: 54px;
-        left: calc(100% + 24px);
+        left: auto;
+        right: calc(100% + 24px);
         width: 260px;
       }
       .search-wrap .guides-btn, .search-wrap .group-btn { display: none; }
@@ -1810,13 +1810,21 @@
         if (weekEl) weekEl.style.top = offset + "px";
         if (continueEl) continueEl.style.top = offset + "px";
         const guidesFloatBtn = document.getElementById("guides-btn-floating");
+        const groupFloatBtn = document.getElementById("group-btn-floating");
         const searchInput = document.getElementById("site-search");
         const searchWrap = document.querySelector(".search-wrap");
-        if (guidesFloatBtn && searchInput && searchWrap) {
+        if (searchInput && searchWrap) {
           const searchHeight = searchInput.getBoundingClientRect().height / zoom;
           const gap = (card.getBoundingClientRect().top - searchWrap.getBoundingClientRect().bottom) / zoom;
-          guidesFloatBtn.style.height = Math.round(searchHeight) + "px";
-          guidesFloatBtn.style.top = Math.round(offset - searchHeight - gap) + "px";
+          const btnTop = Math.round(offset - searchHeight - gap) + "px";
+          if (guidesFloatBtn) {
+            guidesFloatBtn.style.height = Math.round(searchHeight) + "px";
+            guidesFloatBtn.style.top = btnTop;
+          }
+          if (groupFloatBtn) {
+            groupFloatBtn.style.height = Math.round(searchHeight) + "px";
+            groupFloatBtn.style.top = btnTop;
+          }
         }
       }
       alignSidebars();
