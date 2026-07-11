@@ -59,6 +59,22 @@
   .lb-row .name{flex:1;font-weight:600}
   .lb-row .score{font-weight:800;color:var(--acc)}
   .status-toast{text-align:center;color:var(--muted);font-size:14px;margin-top:8px}
+  .field-label{display:block;font-size:14.5px;font-weight:600;margin-bottom:8px}
+  .quiz-search-input{width:100%;font:inherit;font-size:15px;padding:11px 14px;border-radius:10px;
+    border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+  .quiz-search-input:focus{outline:none;border-color:var(--acc)}
+  .quiz-results{max-height:260px;overflow-y:auto;margin-top:8px;border-radius:10px}
+  .quiz-result{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:12px 14px;border-radius:10px;cursor:pointer;border:1.5px solid transparent}
+  .quiz-result:hover{background:var(--paper)}
+  .quiz-result .qr-title{font-weight:600;font-size:14.5px}
+  .quiz-result .qr-count{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .quiz-none{color:var(--muted);font-size:14px;padding:14px;text-align:center}
+  .quiz-selected{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 14px;border-radius:10px;border:1.5px solid var(--acc);background:#eef0fd}
+  .quiz-selected .qs-title{font-weight:700;font-size:14.5px}
+  .quiz-selected .qs-count{color:var(--muted);font-size:12.5px}
+  .quiz-change-btn{appearance:none;border:0;background:none;color:var(--acc);font:700 13px/1 inherit;cursor:pointer;padding:6px}
   .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:600;margin-bottom:16px}
   .back-link:hover{color:var(--acc)}
   .footer-mark-ink { stroke: #1f2937; }
@@ -89,11 +105,19 @@
   </header>
 
   <section id="setup" class="card">
-    <label class="row">
-      Quiz
-      <select id="quiz-select"></select>
-    </label>
-    <label class="row">
+    <label class="field-label">Quiz</label>
+    <div id="quiz-picker">
+      <input type="text" id="quiz-search" class="quiz-search-input" placeholder="Search quizzes…" autocomplete="off">
+      <div id="quiz-results" class="quiz-results"></div>
+    </div>
+    <div id="quiz-selected-box" class="quiz-selected hidden" style="margin-bottom:14px">
+      <div>
+        <div class="qs-title" id="quiz-selected-title"></div>
+        <div class="qs-count" id="quiz-selected-count"></div>
+      </div>
+      <button type="button" class="quiz-change-btn" id="quiz-change-btn">Change</button>
+    </div>
+    <label class="row" style="margin-top:14px">
       Timed questions
       <input type="checkbox" id="timed-toggle">
     </label>
@@ -156,17 +180,70 @@
   function hide(id) { $(id).classList.add("hidden"); }
   function toast(msg) { $("status-toast").textContent = msg || ""; }
 
-  function populateQuizSelect() {
-    var sel = $("quiz-select");
-    sel.innerHTML = "";
+  var selectedQuizId = null;
+  var groupStudyReady = false;
+
+  function quizList() {
     var quizzes = window.GROUP_QUIZZES || {};
-    Object.keys(quizzes).forEach(function (id) {
-      var opt = document.createElement("option");
-      opt.value = id;
-      opt.textContent = quizzes[id].title + " (" + quizzes[id].questions.length + " questions)";
-      sel.appendChild(opt);
+    return Object.keys(quizzes).map(function (id) {
+      return { id: id, title: quizzes[id].title, count: quizzes[id].questions.length };
     });
   }
+
+  function renderQuizResults(filterText) {
+    var box = $("quiz-results");
+    box.innerHTML = "";
+    var list = quizList();
+    var term = (filterText || "").trim().toLowerCase();
+    if (term) list = list.filter(function (q) { return q.title.toLowerCase().indexOf(term) !== -1; });
+    if (list.length === 0) {
+      var none = document.createElement("div");
+      none.className = "quiz-none";
+      none.textContent = term ? ('No quizzes match "' + filterText + '".') : "No quizzes available yet.";
+      box.appendChild(none);
+      return;
+    }
+    list.forEach(function (q) {
+      var row = document.createElement("div");
+      row.className = "quiz-result";
+      row.innerHTML = '<span class="qr-title"></span><span class="qr-count">' + q.count + ' questions</span>';
+      row.querySelector(".qr-title").textContent = q.title;
+      row.addEventListener("click", function () { selectQuiz(q.id); });
+      box.appendChild(row);
+    });
+  }
+
+  function selectQuiz(id) {
+    var quizzes = window.GROUP_QUIZZES || {};
+    if (!quizzes[id]) return;
+    selectedQuizId = id;
+    hide("quiz-picker");
+    show("quiz-selected-box");
+    $("quiz-selected-title").textContent = quizzes[id].title;
+    $("quiz-selected-count").textContent = quizzes[id].questions.length + " questions";
+    updateCreateBtnState();
+  }
+
+  function clearQuizSelection() {
+    selectedQuizId = null;
+    hide("quiz-selected-box");
+    show("quiz-picker");
+    $("quiz-search").value = "";
+    renderQuizResults("");
+    $("quiz-search").focus();
+    updateCreateBtnState();
+  }
+
+  function updateCreateBtnState() {
+    var btn = $("create-btn");
+    if (!groupStudyReady) { btn.disabled = true; btn.textContent = "Connecting…"; return; }
+    if (!selectedQuizId) { btn.disabled = true; btn.textContent = "Pick a quiz to continue"; return; }
+    btn.disabled = false;
+    btn.textContent = "Create room →";
+  }
+
+  $("quiz-search").addEventListener("input", function () { renderQuizResults(this.value); });
+  $("quiz-change-btn").addEventListener("click", clearQuizSelection);
 
   $("timed-toggle").addEventListener("change", function () {
     $("seconds-row").classList.toggle("hidden", !this.checked);
@@ -179,25 +256,46 @@
     setTimeout(function () { waitForGroupStudy(cb); }, 150);
   }
 
+  // group-questions.js is a separate `defer` script -- deferred scripts run
+  // in document order right before DOMContentLoaded, which is AFTER this
+  // inline (non-deferred) script block has already executed. So GROUP_QUIZZES
+  // is not guaranteed to exist yet at this point; poll for it instead of
+  // assuming it's ready, or the picker permanently shows "no quizzes" until
+  // something else (e.g. typing in the search box) forces a re-render.
+  function waitForGroupQuizzes(cb) {
+    if (window.GROUP_QUIZZES) { cb(); return; }
+    setTimeout(function () { waitForGroupQuizzes(cb); }, 50);
+  }
+
+  waitForGroupQuizzes(function () {
+    renderQuizResults("");
+    var urlParams = new URLSearchParams(location.search);
+    var preselectId = urlParams.get("quiz");
+    if (preselectId && window.GROUP_QUIZZES[preselectId]) {
+      selectQuiz(preselectId);
+    }
+    updateCreateBtnState();
+  });
+
   waitForGroupStudy(function () {
-    populateQuizSelect();
     GroupStudy.whenReady().then(function () {
-      $("create-btn").disabled = false;
-      $("create-btn").textContent = "Create room →";
+      groupStudyReady = true;
+      updateCreateBtnState();
     });
   });
 
   $("join-url-hint").textContent = location.href.replace(/group-host\.html.*/, "group-join.html");
 
   $("create-btn").addEventListener("click", function () {
+    if (!selectedQuizId) return;
     $("create-btn").disabled = true;
     $("create-btn").textContent = "Creating…";
-    currentQuiz = window.GROUP_QUIZZES[$("quiz-select").value];
+    currentQuiz = window.GROUP_QUIZZES[selectedQuizId];
     var opts = {
       timedMode: $("timed-toggle").checked,
       secondsPerQuestion: parseInt($("seconds-input").value, 10) || 20
     };
-    GroupStudy.createRoom($("quiz-select").value, opts).then(function (code) {
+    GroupStudy.createRoom(selectedQuizId, opts).then(function (code) {
       roomCode = code;
       $("room-code-display").textContent = code;
       hide("setup");
