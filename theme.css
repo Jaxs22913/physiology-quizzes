@@ -16,6 +16,20 @@
   display: flex;
   gap: 8px;
 }
+/* On narrow screens, 5 separate circular icon buttons (settings, calculator,
+   refresh, theme, account) is a lot of same-weight chrome competing for
+   attention right at the top of every page. Below 641px, only #settings-btn
+   stays visible; the other four collapse into quick-action rows inside the
+   settings panel itself (see initSettingsPanel() in theme.js) -- same
+   underlying buttons/handlers, just triggered from inside the panel instead
+   of duplicated. .settings-quick-actions is the inverse: only shown at this
+   same breakpoint, since the icons already cover these actions above it. */
+@media (max-width: 640px) {
+  #refresh-btn, #theme-toggle-btn, #calc-btn, #account-btn { display: none; }
+}
+@media (min-width: 641px) {
+  .settings-panel .quick-action { display: none; }
+}
 #install-app-btn {
   left: 14px;
 }
@@ -374,6 +388,21 @@
 }
 :root[data-theme="dark"] .settings-row { border-bottom-color: #22262e; }
 .settings-row:last-child { border-bottom: none; }
+.settings-action-btn {
+  appearance: none;
+  border: 1px solid #e5e7eb;
+  background: none;
+  color: #2563eb;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+:root[data-theme="dark"] .settings-action-btn { border-color: #2a2e37; color: #60a5fa; }
+.settings-action-btn:hover { border-color: currentColor; }
 .settings-switch {
   position: relative;
   width: 38px;

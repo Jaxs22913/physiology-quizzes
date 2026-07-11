@@ -435,6 +435,24 @@
     return { row: row, input: input };
   }
 
+  function makeActionRow(label, onClick) {
+    var row = document.createElement("div");
+    row.className = "settings-row quick-action";
+
+    var span = document.createElement("span");
+    span.textContent = label;
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "settings-action-btn";
+    btn.textContent = "Open";
+    btn.addEventListener("click", onClick);
+
+    row.appendChild(span);
+    row.appendChild(btn);
+    return row;
+  }
+
   function initSettingsPanel() {
     var overlay = document.createElement("div");
     overlay.className = "settings-overlay";
@@ -454,6 +472,54 @@
 
     panel.appendChild(closeBtn);
     panel.appendChild(heading);
+
+    // Quick actions: on mobile, #refresh-btn/#theme-toggle-btn/#calc-btn/
+    // #account-btn are hidden (see theme.css) to cut down the row of same-
+    // weight corner icons -- these rows are the mobile replacement, wired
+    // by literally delegating to the still-fully-functional-but-hidden
+    // buttons (except dark mode, which calls setTheme/paintIcon directly
+    // since on mobile this row is the *only* way to toggle it, so there's
+    // no other place its state could drift out of sync from). Hidden again
+    // on desktop via the same .quick-action class (theme.css), since the
+    // icons already cover these there.
+    var darkModeToggle = makeToggleRow(
+      "Dark mode",
+      currentTheme() === "dark",
+      function (checked) {
+        setTheme(checked ? "dark" : "light");
+        var tBtn = document.getElementById("theme-toggle-btn");
+        if (tBtn) paintIcon(tBtn, checked ? "dark" : "light");
+      }
+    );
+    darkModeToggle.row.classList.add("quick-action");
+    panel.appendChild(darkModeToggle.row);
+
+    // setTimeout(...,0) defers the delegated click until after this click
+    // event's own bubble phase finishes -- calc/account both have their own
+    // document-level "click outside closes this" listener, and firing the
+    // delegated click synchronously means the *original* click event (whose
+    // target is this row's button, not something inside the calc/account
+    // panel) is still bubbling and reaches that listener right after,
+    // reading the panel as freshly-opened-but-clicked-outside and closing
+    // it again in the same tick.
+    panel.appendChild(makeActionRow("Calculator", function () {
+      close();
+      setTimeout(function () {
+        var b = document.getElementById("calc-btn");
+        if (b) b.click();
+      }, 0);
+    }));
+    panel.appendChild(makeActionRow("Refresh / check for updates", function () {
+      var b = document.getElementById("refresh-btn");
+      if (b) b.click();
+    }));
+    panel.appendChild(makeActionRow("Account / sign in", function () {
+      close();
+      setTimeout(function () {
+        var b = document.getElementById("account-btn");
+        if (b) b.click();
+      }, 0);
+    }));
 
     var textSizeToggle = makeToggleRow(
       "Larger text",

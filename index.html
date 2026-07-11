@@ -925,6 +925,25 @@
       #semester-card .exam-section summary {
         background: var(--card);
       }
+
+      /* This Week: show only the next upcoming exam, not the whole week --
+         .week-item.done items are always the earliest in the (date-sorted)
+         list, so "the first :not(.done) item" is exactly "what's next."
+         Pure CSS (general sibling combinator hides every :not(.done) item
+         that has another :not(.done) item before it, i.e. all but the
+         first), so it stays correct as days pass with zero JS changes.
+         Fallback for the rare moment everything this week is already done
+         (normally covered by the whole widget flipping to next week Friday
+         5pm first): reveal the last .done item instead of showing nothing. */
+      .week-item.done { display: none; }
+      .week-item:not(.done) ~ .week-item:not(.done) { display: none; }
+      #week-list:not(:has(.week-item:not(.done))) .week-item.done:last-child { display: flex; }
+
+      /* Continue where you left off: show only the single most recent quiz
+         instead of up to 5 -- the list itself is now sorted by real last-
+         touched recency (see the continue-widget JS), so "first" is
+         correct, not arbitrary DOM order. */
+      .continue-item ~ .continue-item { display: none; }
     }
   </style>
 </head>
@@ -1967,11 +1986,19 @@
     (function () {
       const widget = document.getElementById("continue-widget");
       const list = document.getElementById("continue-list");
+      // cloud-sync.js already timestamps every localStorage write (for its
+      // own cross-device merge logic) in this same-origin meta map -- reuse
+      // it here instead of relying on document order (which reflects
+      // wherever a quiz link happens to sit on the page, not when it was
+      // actually last played) so "most recent" is actually accurate.
+      let lastWriteMeta = {};
+      try { lastWriteMeta = JSON.parse(localStorage.getItem("__cloudSyncMeta")) || {}; } catch (e) {}
       const entries = [];
       document.querySelectorAll("a.quiz-link").forEach(a => {
         try {
           const pathname = new URL(a.getAttribute("href"), location.href).pathname;
-          const raw = localStorage.getItem("qp:" + pathname);
+          const pkey = "qp:" + pathname;
+          const raw = localStorage.getItem(pkey);
           if (!raw) return;
           const saved = JSON.parse(raw);
           const current = saved.current ?? saved.i ?? saved.idx;
@@ -1979,6 +2006,7 @@
           const total = saved.total ?? (saved.order ? saved.order.length : undefined);
           entries.push({
             href: a.getAttribute("href"),
+            lastWriteMs: lastWriteMeta[pkey] || 0,
             label: a.dataset.quizLabel || a.textContent.trim(),
             current, total,
             score: saved.score
@@ -1986,6 +2014,7 @@
         } catch (e) {}
       });
       if (entries.length === 0) return;
+      entries.sort((a, b) => b.lastWriteMs - a.lastWriteMs);
       entries.slice(0, 5).forEach(entry => {
         const item = document.createElement("a");
         item.className = "continue-item";
