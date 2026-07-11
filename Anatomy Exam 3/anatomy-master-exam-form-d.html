@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Exam 3 Comprehensive Master Exam — Form D
+  Single self-contained file. Draws 50 questions spanning all 5 Anatomy Exam 3 topics
+  (GI, Endocrine, Male & Female Reproductive, Nephrology/Urinary) from the uploaded lecture material.
+  This is Form D of 5 parallel forms (A–E) drawing from the same shared question pool.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Exam 3 Comprehensive Master Exam — Form D</title>
+<style>
+  :root{
+    --ink:#2a1f3d;
+    --ink-soft:#5c4a73;
+    --paper:#f5f0f8;
+    --paper-2:#fbf8fc;
+    --line:#ddd0e8;
+    --oxblood:#5b2a6e;
+    --oxblood-soft:#7a4390;
+    --brass:#b8860b;
+    --teal:#4a7c59;
+    --teal-deep:#355e40;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(42,31,61,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(184,134,11,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(91,42,110,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(91,42,110,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;justify-content:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Exam 3<span class="sys">Comprehensive Master Exam — Form D</span></h1>
+    <p class="sub">GI &middot; Endocrine &middot; Male &amp; Female Reproductive &middot; Nephrology/Urinary &middot; 50 Questions</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This is a 50-question comprehensive exam spanning all five Anatomy Exam 3 topics: the gastrointestinal system, the endocrine system, the male reproductive system, the female reproductive system, and the nephrology/urinary system. Every item is drawn only from the lecture material for these units. This is Form D of five parallel comprehensive forms (A&ndash;E), each drawing a different 50-question set from the same shared question pool.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Gastrointestinal system &mdash; abdominal regions, peritoneum/mesenteries, GI tract organs, hepatobiliary and pancreatic anatomy, and abdominal vasculature/lymphatics.</span></li>
+      <li><span class="n">2</span><span>Endocrine system &mdash; gross and histological anatomy of the major endocrine glands, their blood supply, and calcium regulation.</span></li>
+      <li><span class="n">3</span><span>Male reproductive system &mdash; embryology, pelvic floor and scrotal anatomy, blood supply, innervation, histology, and the semen pathway.</span></li>
+      <li><span class="n">4</span><span>Female reproductive system &mdash; embryology, perineum, ligaments, pelvic floor, vasculature, innervation/lymphatics, and histology.</span></li>
+      <li><span class="n">5</span><span>Nephrology/urinary system &mdash; kidney gross anatomy, renal vasculature, nephron structure/physiology, and the ureters, bladder &amp; urethra.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=anatomy-master-d" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 50</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 50</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Anatomy Exam 3 lecture material &mdash; GI, Endocrine, Male &amp; Female Reproductive, and Nephrology/Urinary &middot; PAJ 5000 Anatomy &middot; for study use.
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 50 items, a comprehensive draw spanning all 5
+   Anatomy Exam 3 topics: GI, Endocrine, Male Reproductive,
+   Female Reproductive, and Nephrology/Urinary. This is Form D of
+   5 parallel forms (A–E) drawing from the same shared question pool.
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    topic:"GI — Abdominal Regions & Overview",
+    q:"The oral cavity's superior boundary is formed by the:",
+    choices:["Tongue and mylohyoid","Hard and soft palates","Teeth and lips","Oropharynx"],
+    answer:1,
+    correct:"The oral cavity is bounded superiorly by the hard and soft palates, with the floor formed by the tongue and mylohyoid, the anterior/lateral walls by the teeth and lips, and it opens posteriorly into the oropharynx.",
+    why:"The tongue and mylohyoid form the floor of the oral cavity, not its roof; the teeth and lips mark the anterior/lateral boundary (the outer wall of the vestibule), not the superior boundary; and the oropharynx is the space the oral cavity opens into posteriorly, not a boundary of the cavity's roof.",
+    src:"Slide 24 (Oral Cavity)"
+  },
+  {
+    topic:"GI — Abdominal Regions & Overview",
+    q:"The space between the cheeks or lips and the gums is the:",
+    choices:["Oral cavity proper","Vestibule","Vermilion border","Fauces"],
+    answer:1,
+    correct:"The vestibule is the slit-like space between the cheeks/lips and the gums and teeth, while the oral cavity proper lies internal to the teeth.",
+    why:"The oral cavity proper is the space bounded internally by the dental arches, not the outer cheek-to-gum slit; the vermilion border is the visible reddish edge of the lip itself, a surface landmark rather than a space; and the fauces is the archway connecting the oral cavity to the oropharynx, located posteriorly rather than between the cheeks and gums.",
+    src:"Slide 26 (Oral Cavity)"
+  },
+  {
+    topic:"GI — Peritoneum & Mesenteries",
+    q:"The greater omentum performs which notable function in the abdomen?",
+    choices:["Forms the inguinal canal","Suspends the liver from the diaphragm","Anchors the kidneys","Covers the transverse colon and small bowel"],
+    answer:3,
+    correct:"The greater omentum is a peritoneal fold hanging from the greater curvature of the stomach that drapes over and covers the transverse colon and loops of small bowel, and contains fat and immune tissue that can wall off infection.",
+    why:"The inguinal canal is formed by the layers of the anterior abdominal wall during testicular descent, not by the omentum; the liver is suspended from the diaphragm by the falciform and coronary ligaments, not the greater omentum; and the kidneys are retroperitoneal and held in place by renal fascia and perinephric fat, not by the omentum, which lies anterior to them in the peritoneal cavity.",
+    src:"Slide 19 (Greater Omentum)"
+  },
+  {
+    topic:"GI — General GI Tract Structure",
+    q:"The outermost layer of the esophagus is the:",
+    choices:["Adventitia","Serosa","Mucosa","Submucosa"],
+    answer:0,
+    correct:"The esophagus is composed of mucosa, submucosa, and muscularis externa, with an outer adventitia rather than a serosa along most of its course, since it is not suspended within the peritoneal cavity.",
+    why:"Serosa is the peritoneum-derived outer covering found on intraperitoneal GI organs like the stomach and jejunum, which the esophagus lacks because it runs through the thorax outside the peritoneal cavity; the mucosa is the innermost layer lining the lumen, not the outermost; and the submucosa is the layer of connective tissue just deep to the mucosa, well internal to the outer wall.",
+    src:"Slides 42–43 (Histology of the Esophagus)"
+  },
+  {
+    topic:"GI — Stomach",
+    q:"The inferior esophageal (cardiac) sphincter is described as:",
+    choices:["Skeletal muscle under voluntary control","Circular smooth muscle that is not a true sphincter","A cartilaginous ring","Absent in humans"],
+    answer:1,
+    correct:"The inferior (cardiac) esophageal sphincter is a physiological sphincter made of circular smooth muscle rather than a distinct anatomical sphincter, and its competence is reinforced by the diaphragm's crural fibers.",
+    why:"Skeletal muscle under voluntary control describes the upper esophageal sphincter (cricopharyngeus), not the lower one, which is smooth muscle and involuntary; there is no cartilaginous ring at the gastroesophageal junction — cartilage rings are a tracheal feature; and the sphincter is very much present in humans, functioning to prevent reflux of gastric contents into the esophagus.",
+    src:"Slide 46 (Esophagus)"
+  },
+  {
+    topic:"GI — Spleen",
+    q:"Which component of the spleen supports hematopoietic function and blood filtration?",
+    choices:["Hilum","White pulp","Splenic capsule","Red pulp"],
+    answer:3,
+    correct:"Red pulp is the site of blood filtration and (particularly in fetal life or disease states) hematopoiesis, removing old/damaged erythrocytes and recycling iron.",
+    why:"The hilum is simply the indentation where splenic vessels and nerves enter/exit, not a filtering tissue; white pulp is lymphoid tissue organized around central arterioles that mounts immune responses, not blood filtration; and the splenic capsule is the dense connective-tissue covering that gives the organ its shape and support, not a filtering or hematopoietic tissue.",
+    src:"Slide 136 (The Spleen)"
+  },
+  {
+    topic:"GI — Small Intestine",
+    q:"The jejunum occupies mostly which region of the abdomen?",
+    choices:["Pelvis","Right lower quadrant","Right upper quadrant","Left upper quadrant"],
+    answer:3,
+    correct:"The jejunum, comprising the proximal ~40% of the small intestine distal to the duodenum, occupies mostly the left upper quadrant, while the ileum occupies more of the right lower quadrant.",
+    why:"The pelvis mainly houses the terminal ileum, sigmoid colon, and pelvic organs, not the bulk of jejunal loops; the right lower quadrant is where the ileum and cecum/appendix are found, not the jejunum; and the right upper quadrant is dominated by the liver, gallbladder, and duodenum rather than jejunal loops.",
+    src:"Slides 75, 77 (Jejunum / Ileum)"
+  },
+  {
+    topic:"GI — Large Intestine",
+    q:"The rectum forms approximately the last how much of the digestive tract?",
+    choices:["15 cm","5 cm","30 cm","50 cm"],
+    answer:0,
+    correct:"The rectum forms roughly the last 15 cm of the digestive tract, distal to the sigmoid colon, and functions to store feces prior to defecation.",
+    why:"5 cm is far too short, closer to the length of the anal canal alone; 30 cm and 50 cm both substantially overstate rectal length, which is a comparatively short, fixed terminal segment rather than a long, mobile one like the sigmoid colon or small intestine.",
+    src:"Slide 101 (The Rectum)"
+  },
+  {
+    topic:"GI — Pancreas",
+    q:"The body of the pancreas is separated from the stomach by which peritoneal space?",
+    choices:["The paracolic gutter","The greater sac only","The rectouterine pouch","The lesser sac (omental bursa)"],
+    answer:3,
+    correct:"The lesser sac (omental bursa) lies posterior to the stomach and anterior to the pancreas, so the pancreatic body is separated from the stomach by this peritoneal space.",
+    why:"The paracolic gutters are peritoneal channels running along the lateral aspects of the ascending and descending colon, unrelated to the stomach-pancreas relationship; 'greater sac only' is incorrect because the greater sac is the main peritoneal cavity anterior to the stomach, not the space directly between stomach and pancreas; and the rectouterine pouch (pouch of Douglas) is a pelvic peritoneal recess between the uterus and rectum, nowhere near the epigastric pancreas.",
+    src:"Slide 70 (Body & Tail of Pancreas)"
+  },
+  {
+    topic:"GI — Liver",
+    q:"Which liver lobe is bounded by the inferior vena cava and the ligamentum venosum?",
+    choices:["Right lobe","Quadrate lobe","Caudate lobe","Left lobe"],
+    answer:2,
+    correct:"The caudate lobe is the posterior lobe bounded by the IVC on its right and the ligamentum venosum (fetal ductus venosus remnant) on its left.",
+    why:"The right lobe is the largest lobe, bounded by the falciform ligament medially rather than by the IVC and ligamentum venosum; the quadrate lobe is bounded by the gallbladder fossa and ligamentum teres, an entirely different pair of landmarks; and the left lobe lies anterior to the caudate lobe, separated from it by the porta hepatis and ligamentum venosum rather than being bounded by it.",
+    src:"Slide 115 (Lobes of the Liver)"
+  },
+  {
+    topic:"GI — Hepatic Portal System",
+    q:"The inferior mesenteric vein typically drains into which vessel of the portal system?",
+    choices:["The splenic vein","The inferior vena cava","The hepatic vein","The renal vein"],
+    answer:0,
+    correct:"The inferior mesenteric vein most commonly drains into the splenic vein, which then joins the superior mesenteric vein to form the hepatic portal vein.",
+    why:"The inferior vena cava receives systemic venous blood, not portal venous blood from the hindgut, so the IMV does not drain there directly; the hepatic vein carries blood out of the liver into the IVC, downstream of the portal system rather than a tributary feeding into it; and the renal vein drains the kidney into the IVC and has no direct connection to the inferior mesenteric vein.",
+    src:"Slide 135 (Pancreas Veins / portal system)"
+  },
+  {
+    topic:"GI — Gallbladder & Bile Ducts",
+    q:"The cystic artery, which supplies the gallbladder, most commonly arises from the:",
+    choices:["Superior mesenteric artery","Left gastric artery","Splenic artery","Right hepatic artery"],
+    answer:3,
+    correct:"The cystic artery most commonly branches from the right hepatic artery, itself a branch of the proper hepatic artery, and typically travels through the cystohepatic triangle to reach the gallbladder.",
+    why:"The superior mesenteric artery supplies midgut structures (distal duodenum through proximal transverse colon), not the gallbladder; the left gastric artery supplies the lesser curvature of the stomach and distal esophagus; and the splenic artery courses along the pancreas toward the spleen, giving pancreatic and short gastric branches rather than a cystic branch.",
+    src:"Slide 142 (Common Hepatic Artery)"
+  },
+  {
+    topic:"GI — Abdominal Arterial Supply",
+    q:"The inferior mesenteric artery supplies which region of the gut?",
+    choices:["The midgut","The foregut","The hindgut","The stomach and spleen"],
+    answer:2,
+    correct:"The inferior mesenteric artery supplies hindgut derivatives, from the distal transverse colon through the upper rectum.",
+    why:"The midgut (distal duodenum to the proximal two-thirds of the transverse colon) is supplied by the superior mesenteric artery, not the IMA; the foregut (esophagus through proximal duodenum, plus liver, spleen, and pancreas) is supplied by the celiac trunk; and the stomach and spleen specifically are foregut derivatives also supplied by the celiac trunk, not the IMA.",
+    src:"Slides 144–145 (Inferior Mesenteric Artery)"
+  },
+  {
+    topic:"GI — Inferior Vena Cava",
+    q:"Which paired veins drain directly into the IVC?",
+    choices:["Left gastric veins","Splenic veins","Superior mesenteric veins","Renal veins"],
+    answer:3,
+    correct:"The renal veins are paired vessels that drain directly into the IVC, alongside other paired tributaries such as the gonadal, suprarenal, phrenic, and lumbar veins.",
+    why:"The left gastric vein drains into the portal vein (or splenic vein) as part of the portal system, not directly into the IVC; the splenic vein is likewise a portal tributary, joining the superior mesenteric vein to form the portal vein rather than emptying into the IVC; and the superior mesenteric vein also feeds the portal system, not the systemic IVC.",
+    src:"Slide 146 (Inferior Vena Cava)"
+  },
+  {
+    topic:"GI — Abdominal Lymphatics",
+    q:"Lymphatic drainage grouped around the celiac artery would primarily drain which organs?",
+    choices:["The lower limbs","The rectum and anal canal","The kidneys","Foregut organs (stomach, liver, spleen, pancreas)"],
+    answer:3,
+    correct:"Celiac lymph nodes cluster around the celiac trunk and drain foregut derivatives — the stomach, liver, spleen, and pancreas — mirroring the celiac artery's vascular territory.",
+    why:"The lower limbs drain to inguinal and external iliac nodes, well outside the abdominal celiac group; the rectum and anal canal drain mainly to inferior mesenteric, internal iliac, and superficial inguinal nodes depending on the level, not celiac nodes; and the kidneys drain to lateral aortic (lumbar) nodes near the renal hilum, not the celiac group anterior to them.",
+    src:"Slide 52 (lymphatic drainage)"
+  },
+  {
+    topic:"Endocrine — Overview",
+    q:"Adipose tissue functions as a secondary endocrine tissue by secreting leptin and:",
+    choices:["Calcitonin","Insulin","Resistin","Aldosterone"],
+    answer:2,
+    correct:"Adipose tissue secretes leptin (which signals satiety) and resistin (linked to insulin resistance), functioning as a secondary endocrine tissue beyond its role in fat storage.",
+    why:"Calcitonin is secreted by parafollicular (C) cells of the thyroid, not adipocytes; insulin is produced by pancreatic beta cells within the islets of Langerhans, an entirely different endocrine organ; and aldosterone is synthesized by the adrenal cortex's zona glomerulosa, not by fat tissue.",
+    src:"Slide 5 (Figure 19.1 — Adipose Tissue)"
+  },
+  {
+    topic:"Endocrine — Overview",
+    q:"The main endocrine organs include the thyroid, parathyroid, pituitary, pineal, and:",
+    choices:["Sebaceous glands","Salivary glands","Sweat glands","Suprarenal glands"],
+    answer:3,
+    correct:"The major endocrine organs include the pituitary, hypothalamus, thyroid, thymus, suprarenal (adrenal) glands, pineal, parathyroid, pancreas, and gonads.",
+    why:"Sebaceous glands are exocrine skin glands that secrete sebum via ducts onto the skin surface, not ductless hormone-secreting organs; salivary glands are exocrine glands releasing saliva into the oral cavity through ducts; and sweat glands are likewise exocrine, releasing sweat through ducts onto the skin — none qualify as classic ductless endocrine organs.",
+    src:"Slide 3 (Overview)"
+  },
+  {
+    topic:"Endocrine — Histology",
+    q:"The pancreatic islets are also known as the:",
+    choices:["Islets of Langerhans","Acini","Follicles of Wirsung","Islets of Santorini"],
+    answer:0,
+    correct:"The pancreatic islets, the endocrine portion of the pancreas that secretes insulin and glucagon, are also called the islets of Langerhans.",
+    why:"Acini are the exocrine clusters of the pancreas that secrete digestive enzymes, the opposite (exocrine) tissue compartment from the islets; 'follicles of Wirsung' is not a real histological term — the duct of Wirsung refers to the main pancreatic duct, not follicular endocrine tissue; and 'islets of Santorini' similarly misapplies a duct name (the accessory pancreatic duct of Santorini) to the islets.",
+    src:"Slide 52 (Pancreas histology)"
+  },
+  {
+    topic:"Endocrine — Histology",
+    q:"The parathyroid gland is described histologically as being formed of:",
+    choices:["Radial columns of lipid-laden cells","Follicles filled with colloid","Solid cell cords, well vascularized, with a capsule","Chromaffin cell nests"],
+    answer:2,
+    correct:"The parathyroid gland has its own capsule, is richly vascularized, and consists of solid cell cords composed of chief cells and oxyphil cells rather than follicles.",
+    why:"Radial columns of lipid-laden cells describes the zona fasciculata of the adrenal cortex, not the parathyroid; follicles filled with colloid describes thyroid histology, the gland the parathyroids sit behind but are histologically distinct from; and chromaffin cell nests describe the adrenal medulla, not the parathyroid.",
+    src:"Slide 46 (Histology of parathyroid glands)"
+  },
+  {
+    topic:"Endocrine — Gross Anatomy & Blood Supply",
+    q:"The right suprarenal gland's anterior relations include the liver and which vessel?",
+    choices:["Portal vein","Aorta","Inferior vena cava","Splenic vein"],
+    answer:2,
+    correct:"The right adrenal gland is related anteriorly to the liver and the inferior vena cava, while the left adrenal gland relates anteriorly to the stomach and pancreas.",
+    why:"The portal vein lies more medially near the porta hepatis and is not the paired anterior relation described for the right adrenal gland; the aorta lies posterior/medial and is more closely related to the left adrenal gland's medial border, not the right gland's anterior surface; and the splenic vein runs along the pancreas toward the spleen on the left side, unrelated to the right adrenal's anterior relations.",
+    src:"Slide 86 (Suprarenal Glands)"
+  },
+  {
+    topic:"Endocrine — Gross Anatomy & Blood Supply",
+    q:"The adrenal glands receive arterial supply from the inferior phrenic artery, the renal artery, and the:",
+    choices:["Middle suprarenal artery from the aorta","Splenic artery","Superior mesenteric artery","Gonadal artery"],
+    answer:0,
+    correct:"The adrenal glands classically receive a triple arterial supply: the superior suprarenal artery (from the inferior phrenic), the middle suprarenal artery (directly from the aorta), and the inferior suprarenal artery (from the renal artery).",
+    why:"The splenic artery supplies the pancreas, spleen, and stomach via its branches, not the adrenal glands; the superior mesenteric artery supplies midgut structures well below the adrenal glands; and the gonadal artery arises from the aorta near the adrenal origin but travels inferiorly to supply the testis/ovary, not the adrenal gland itself.",
+    src:"Slides 81, 86 (Suprarenal Glands)"
+  },
+  {
+    topic:"Endocrine — Calcium Regulation",
+    q:"The gland whose chief cells are the principal PTH source lies in which location?",
+    choices:["On the posterior surface of the thyroid","Within the sella turcica","On the superior kidney","In the mediastinum"],
+    answer:0,
+    correct:"The parathyroid glands, whose chief cells are the principal source of parathyroid hormone (PTH), lie embedded on the posterior surface of the thyroid gland, typically as four small glands.",
+    why:"The sella turcica houses the pituitary gland, not the parathyroids; 'on the superior kidney' describes the location of the adrenal (suprarenal) glands, not the parathyroids; and while ectopic parathyroid tissue can occasionally be found in the mediastinum, this is not the typical/principal location taught for the chief-cell PTH source.",
+    src:"Slides 43–44 (Parathyroid Glands)"
+  },
+  {
+    topic:"Male Repro — Embryology & Testicular Descent",
+    q:"The gonads of the reproductive system are defined as the organs that:",
+    choices:["Store mature sperm","Produce gametes and hormones","Secrete seminal fluid","Form the external genitalia"],
+    answer:1,
+    correct:"The gonads (testes in males, ovaries in females) are defined by their dual function of producing gametes (sperm/oocytes) and sex hormones (testosterone/estrogen and progesterone).",
+    why:"Storing mature sperm is the job of the epididymis, not the gonad itself; secreting seminal fluid is performed by the accessory glands (seminal vesicles, prostate, bulbourethral glands), which are not gonads; and forming the external genitalia describes a separate embryologic process involving the genital tubercle and folds, not the defining function of the gonads.",
+    src:"Slide 4 (Organization of the Reproductive System)"
+  },
+  {
+    topic:"Male Repro — Embryology & Testicular Descent",
+    q:"The tunica vaginalis, which lines the scrotal cavity, is derived embryologically from the:",
+    choices:["Peritoneum","Tunica albuginea","Dartos fascia","Mesonephric duct"],
+    answer:0,
+    correct:"The tunica vaginalis is a peritoneal-derived serous membrane that is carried down into the scrotum along with the descending testis via the processus vaginalis.",
+    why:"The tunica albuginea is the dense fibrous capsule directly investing the testis itself, a separate connective-tissue layer rather than the peritoneal-derived covering; the dartos fascia is the superficial smooth-muscle-containing layer of the scrotal wall, unrelated to the peritoneal origin of the tunica vaginalis; and the mesonephric (Wolffian) duct gives rise to the epididymis, vas deferens, and seminal vesicle, not the tunica vaginalis.",
+    src:"Slides 13, 16 (tunica vaginalis)"
+  },
+  {
+    topic:"Male Repro — Pelvic Floor & Scrotal Muscles",
+    q:"The muscular contractions that expel semen during ejaculation are described as:",
+    choices:["Contraction of the detrusor","Peristalsis of the ureter","Powerful contractions of ischiocavernosus and bulbospongiosus","Relaxation of the external urethral sphincter"],
+    answer:2,
+    correct:"Ejaculation is produced by powerful, rhythmic contractions of the ischiocavernosus and bulbospongiosus muscles, which compress the base of the erectile bodies and propel semen through the urethra.",
+    why:"Detrusor contraction empties the bladder during micturition, not ejaculation, and the two processes are normally kept separate by sphincteric control; ureteral peristalsis moves urine from kidney to bladder, an entirely unrelated urinary process; and while the external urethral sphincter must relax to allow flow, relaxation alone does not generate the expulsive force — that comes from the perineal muscle contractions.",
+    src:"Slide 67 (Semen release and ejaculation)"
+  },
+  {
+    topic:"Male Repro — Pelvic Floor & Scrotal Muscles",
+    q:"The scrotal septum divides the scrotum into how many chambers?",
+    choices:["Three","One","Two","Four"],
+    answer:2,
+    correct:"The scrotal septum, a midline extension of the dartos fascia, divides the scrotum into two separate chambers, one for each testis.",
+    why:"Three and four overstate the number of scrotal compartments — there is only one septum creating a single dividing wall; and 'one' is incorrect because a septum by definition separates the scrotum into two distinct chambers, not leaves it as a single undivided space.",
+    src:"Slide 16 (Scrotum)"
+  },
+  {
+    topic:"Male Repro — Blood Supply",
+    q:"The two arteries traveling within the spermatic cord are the testicular artery and the:",
+    choices:["Deferential artery","Internal pudendal artery","External pudendal artery","Inferior epigastric artery"],
+    answer:0,
+    correct:"The spermatic cord carries the testicular artery (from the aorta) alongside the deferential artery (supplying the ductus deferens, typically from the superior or inferior vesical artery).",
+    why:"The internal pudendal artery supplies the perineum and external genitalia via a separate route, not as a core content of the spermatic cord; the external pudendal artery is a branch of the femoral artery supplying scrotal skin externally, not traveling within the cord itself; and the inferior epigastric artery lies adjacent to the deep inguinal ring and helps define the boundaries of the inguinal triangle, but it is a landmark near the cord, not one of the two named arteries traveling within it.",
+    src:"Slides 14–15 (Spermatic Cords)"
+  },
+  {
+    topic:"Male Repro — Innervation",
+    q:"During erection, arterial smooth muscle responds to parasympathetic signals by:",
+    choices:["Contracting to constrict the vessels","Relaxing to dilate the vessels","Undergoing fibrosis","Secreting testosterone"],
+    answer:1,
+    correct:"Parasympathetic stimulation releases nitric oxide, which relaxes the arterial and trabecular smooth muscle, dilating the helicine arteries so erectile tissue engorges with blood to produce an erection.",
+    why:"Constricting the vessels would prevent, not cause, engorgement, and is instead the effect of sympathetic stimulation during detumescence; fibrosis is a pathological remodeling process (as in Peyronie's disease), not a normal physiologic response to parasympathetic input; and testosterone secretion is a Leydig cell endocrine function unrelated to the acute neurovascular events of erection.",
+    src:"Slide 66 (Erection of the penis)"
+  },
+  {
+    topic:"Male Repro — Organs, Histology & Glands",
+    q:"The acrosome of a sperm head contains which fertilization-critical enzyme?",
+    choices:["Hyaluronidase","Renin","Amylase","Trypsin"],
+    answer:0,
+    correct:"The acrosome, a cap-like vesicle over the sperm head, contains hydrolytic enzymes including hyaluronidase, which help the sperm penetrate the corona radiata and zona pellucida of the oocyte during fertilization.",
+    why:"Renin is a kidney-derived enzyme that regulates blood pressure via the renin-angiotensin system, unrelated to fertilization; amylase is a digestive enzyme secreted by salivary glands and the pancreas to break down starch; and trypsin is a pancreatic protease involved in protein digestion in the small intestine — none are acrosomal fertilization enzymes.",
+    src:"Slide 38 (Anatomy of a Sperm)"
+  },
+  {
+    topic:"Male Repro — Semen Pathway",
+    q:"Capacitation, which renders sperm capable of fertilization, is completed:",
+    choices:["In the epididymis","In the female reproductive tract","In the seminiferous tubules","In the prostate"],
+    answer:1,
+    correct:"Sperm gain initial motility from seminal secretions but only complete capacitation — the final biochemical changes needed to fertilize an oocyte — within the female reproductive tract.",
+    why:"The epididymis is where sperm gain progressive motility and undergo maturation during storage, but this precedes and is distinct from capacitation itself; the seminiferous tubules are the site of spermatogenesis (sperm production), far upstream of capacitation; and the prostate contributes secretions to semen but does not itself complete the capacitation process, which requires the female tract's environment.",
+    src:"Slide 45 (capacitation)"
+  },
+  {
+    topic:"Male Repro — Urethra",
+    q:"The male urethra is approximately how long overall?",
+    choices:["8–10 cm","3–4 cm","18–20 cm","25 cm"],
+    answer:2,
+    correct:"The male urethra is approximately 18–20 cm long, spanning prostatic, membranous, and penile (spongy) regions, compared to the much shorter ~3–4 cm female urethra.",
+    why:"8–10 cm understates the male urethra's length, which must traverse the prostate, urogenital diaphragm, and the entire penile shaft; 3–4 cm is the length of the female urethra, not the male; and 25 cm overstates it, closer to the length of the ureter than the male urethra.",
+    src:"Slide 58 (Urethra)"
+  },
+  {
+    topic:"Female Repro — Embryology",
+    q:"The cervix, along with the uterus, is derived from which embryonic source?",
+    choices:["The urogenital sinus","The fused caudal Müllerian ducts","The mesonephric ducts","The gubernaculum"],
+    answer:1,
+    correct:"The uterus and cervix (along with the upper vagina) develop from the fused caudal portions of the paired Müllerian (paramesonephric) ducts.",
+    why:"The urogenital sinus contributes to the lower vagina, bladder, and urethra, not the uterus/cervix themselves; the mesonephric (Wolffian) ducts regress in females (persisting only as vestigial remnants) and give rise to male duct structures in males, not the uterus/cervix; and the gubernaculum is a fibrous cord guiding gonadal descent/positioning, later forming the round and ovarian ligaments, not a source of uterine tissue.",
+    src:"Slide 16 (The Müllerian ducts)"
+  },
+  {
+    topic:"Female Repro — Embryology",
+    q:"The Müllerian ducts arise from the coelomic epithelium on the lateral aspect of the:",
+    choices:["Pronephros","Metanephros","Mesonephros","Allantois"],
+    answer:2,
+    correct:"The paramesonephric (Müllerian) ducts arise from an invagination of coelomic epithelium on the lateral aspect of the mesonephros, the transient embryonic kidney.",
+    why:"The pronephros is the earliest, rudimentary, and nonfunctional embryonic kidney that regresses before the Müllerian ducts form, so it is not their site of origin; the metanephros becomes the definitive adult kidney and develops largely independently of the paramesonephric ducts' origin site; and the allantois is an extraembryonic membrane related to fetal waste/umbilical vessel development, unrelated to Müllerian duct formation.",
+    src:"Slide 16 (The Müllerian ducts)"
+  },
+  {
+    topic:"Female Repro — Perineum",
+    q:"Which boundary landmark of the female perineum is located posteriorly, palpable at the superior end of the intergluteal cleft?",
+    choices:["The pubic symphysis","The tip of the coccyx","The mons pubis","The ischial tuberosity"],
+    answer:1,
+    correct:"The tip of the coccyx marks the posterior boundary of the perineum's diamond shape, palpable at the superior end of the intergluteal (natal) cleft.",
+    why:"The pubic symphysis marks the anterior boundary of the perineum, not the posterior one; the mons pubis is a soft-tissue anterior landmark overlying the pubic symphysis, also anterior rather than posterior; and the ischial tuberosities mark the lateral boundaries of the perineal diamond, not its posterior apex.",
+    src:"Slide 8 (Boundaries of Female Perineum)"
+  },
+  {
+    topic:"Female Repro — Perineum",
+    q:"In the female, the anterior (urogenital) triangle contains the vaginal orifice and the:",
+    choices:["Rectum","Anus","External os of the cervix","Urethral orifice"],
+    answer:3,
+    correct:"The anterior (urogenital) triangle of the female perineum contains both the urethral orifice and the vaginal orifice.",
+    why:"The rectum lies superior to the perineum within the pelvis proper, not within the urogenital triangle; the anus opens into the posterior (anal) triangle, not the anterior urogenital triangle; and the external os of the cervix is located internally at the top of the vagina, well above the perineum, not within either perineal triangle.",
+    src:"Slide 5 (Perineum)"
+  },
+  {
+    topic:"Female Repro — Ligaments & Peritoneal Folds",
+    q:"The cardinal (transverse cervical) ligaments run from the lateral cervix and vagina to the:",
+    choices:["Sacrum","Pelvic wall","Labia majora","Pubic symphysis"],
+    answer:1,
+    correct:"The cardinal (transverse cervical) ligaments extend laterally from the cervix and upper vagina to the lateral pelvic wall, providing the primary support for the cervix and carrying the uterine vessels.",
+    why:"The sacrum is the attachment site of the uterosacral ligaments, not the cardinal ligaments, which run laterally rather than posteriorly; the labia majora are external genital folds unrelated to internal cervical support ligaments; and the pubic symphysis is connected to the bladder via the pubovesical/pubocervical ligaments, not the cardinal ligaments, which run to the lateral pelvic wall.",
+    src:"Slide 36 (Support of the Uterus)"
+  },
+  {
+    topic:"Female Repro — Pelvic Floor",
+    q:"The urethrovaginal sphincter is one of the muscles related to the vagina, alongside the external urethral sphincter and the:",
+    choices:["Coccygeus","Pubovaginalis (part of levator ani)","Iliococcygeus only","Obturator externus"],
+    answer:1,
+    correct:"Muscles related to the vagina include the pubovaginalis (a subdivision of the levator ani), the external urethral sphincter, the urethrovaginal sphincter, and the bulbospongiosus.",
+    why:"The coccygeus is a posterior pelvic floor muscle running from the ischial spine to the coccyx/sacrum, not one specifically described as related to the vagina; iliococcygeus is also a levator ani component, but it is the more posterolateral part supporting the pelvic floor broadly rather than the specific vagina-related muscle named in this group; and obturator externus is a hip rotator muscle on the pelvic wall, unrelated to vaginal support.",
+    src:"Slide 62 (Muscles Related to the Vagina)"
+  },
+  {
+    topic:"Female Repro — Vasculature",
+    q:"The endometrium's blood supply is derived from the uterine, vaginal, and which arteries?",
+    choices:["Ovarian arteries","Renal arteries","Femoral arteries","Pudendal arteries only"],
+    answer:0,
+    correct:"The uterine layers, including the endometrium, are supplied by the uterine, vaginal, and ovarian arteries, which anastomose to provide a rich blood supply.",
+    why:"The renal arteries supply the kidneys, arising from the aorta at a level well above the pelvic organs, with no direct contribution to the uterus; the femoral arteries supply the lower limb after passing beneath the inguinal ligament, unrelated to pelvic organ perfusion; and 'pudendal arteries only' incorrectly narrows the supply to a single vessel group that mainly serves the perineum and external genitalia, rather than the endometrium.",
+    src:"Slide 35 (Uterine Layers)"
+  },
+  {
+    topic:"Female Repro — Innervation & Lymphatics",
+    q:"Superior lymphatic drainage of the vagina goes to the internal and which other iliac nodes?",
+    choices:["Superficial inguinal nodes","Common iliac nodes only","External iliac nodes","Para-aortic nodes"],
+    answer:2,
+    correct:"The superior part of the vagina drains to both the internal and external iliac nodes, while the inferior part drains more to the superficial inguinal nodes.",
+    why:"Superficial inguinal nodes primarily receive drainage from the lower (inferior) vagina and vulva, not the superior vagina; 'common iliac nodes only' incorrectly narrows drainage to a single, more proximal nodal group rather than the internal/external iliac pairing described; and para-aortic (lumbar) nodes receive drainage from the ovaries via the gonadal vessels, not from the vagina.",
+    src:"Slide 64 (Lymphatic Drainage of Vagina)"
+  },
+  {
+    topic:"Female Repro — Organ Regions & Relationships",
+    q:"The finger-like projections at the distal end of the uterine tube are the:",
+    choices:["Fornices","Fimbriae","Rugae","Papillae"],
+    answer:1,
+    correct:"The fimbriae are the finger-like projections fringing the infundibulum, the distal, funnel-shaped end of the uterine tube, and help sweep the released oocyte into the tube.",
+    why:"Fornices are the recesses formed where the vaginal walls surround the cervix, an entirely different structure at the opposite end of the reproductive tract; rugae are the folds lining the vaginal mucosa (and also seen in the stomach), not projections of the uterine tube; and papillae are small nipple-like projections found on structures like the tongue or renal pyramids, not a feature of the uterine tube.",
+    src:"Slide 51 (Uterine Tube)"
+  },
+  {
+    topic:"Female Repro — Histology",
+    q:"The ovarian follicle consists of an oocyte surrounded by which cells?",
+    choices:["Chief cells","Podocytes","Follicular cells","Chromaffin cells"],
+    answer:2,
+    correct:"An ovarian follicle is composed of an oocyte surrounded by a layer (or layers) of follicular (granulosa) cells, which support oocyte development and produce estrogen.",
+    why:"Chief cells are parathyroid cells that secrete PTH, unrelated to ovarian histology; podocytes are specialized kidney cells with foot processes that form the visceral layer of Bowman's capsule; and chromaffin cells are catecholamine-secreting cells of the adrenal medulla — none of these surround the oocyte within a follicle.",
+    src:"Slide 25 (Ovaries)"
+  },
+  {
+    topic:"Female Repro — Peritoneal Relations",
+    q:"The broad ligament is continuous with which layer of the uterine wall?",
+    choices:["The myometrium","The perimetrium","The endometrium","The mucosa"],
+    answer:1,
+    correct:"The broad ligament, a peritoneal fold draping over the uterus, uterine tubes, and ovaries, is continuous with the perimetrium — the outer serosal layer of the uterine wall.",
+    why:"The myometrium is the thick middle smooth-muscle layer of the uterine wall, internal to the serosa and not directly continuous with the peritoneal fold; the endometrium is the innermost mucosal lining that undergoes cyclic shedding, entirely separate from the outer peritoneal covering; and 'the mucosa' is simply another name for the endometrium in this context, so it is likewise incorrect for the same reason.",
+    src:"Slide 39 (Wall of the Uterus)"
+  },
+  {
+    topic:"Nephro — Urinary System Overview",
+    q:"In the female, the external urethral orifice is located:",
+    choices:["Anterior to the vaginal opening, posterior to the clitoris","Within the vaginal canal","Posterior to the anus","At the tip of the clitoris"],
+    answer:0,
+    correct:"In females, the external urethral orifice lies anterior to the vaginal opening and posterior to the clitoris, an important landmark within the urogenital triangle.",
+    why:"The urethral orifice is a distinct opening located between the clitoris and vaginal opening, not situated within the vaginal canal itself; it lies well anterior to the anus (in the urogenital, not anal, triangle), so 'posterior to the anus' misplaces it entirely; and it is a separate opening below the clitoris, not located at the clitoral tip itself.",
+    src:"Slide 63 (Innervation / orifice)"
+  },
+  {
+    topic:"Nephro — Urinary System Overview",
+    q:"The membranous urethra in the male is the segment that:",
+    choices:["Extends from the prostatic urethra to the penile urethra, piercing the urogenital diaphragm","Passes through the prostate","Runs the length of the penis","Lies within the bladder wall"],
+    answer:0,
+    correct:"The membranous urethra is the short segment extending from the end of the prostatic urethra to the beginning of the penile (spongy) urethra, piercing the urogenital diaphragm (external urethral sphincter) along the way.",
+    why:"Passing through the prostate describes the prostatic urethra, the segment proximal to the membranous urethra, not the membranous segment itself; running the length of the penis describes the penile (spongy) urethra, the segment distal to the membranous urethra; and lying within the bladder wall does not describe any urethral segment, since the urethra begins at the bladder neck rather than coursing within the bladder wall itself.",
+    src:"Slide 59 (Urethra)"
+  },
+  {
+    topic:"Nephro — Kidney Gross Anatomy & Coverings",
+    q:"Minor calyces converge to form which larger structure?",
+    choices:["Renal papillae","Major calyces","Renal columns","Collecting ducts"],
+    answer:1,
+    correct:"Minor calyces receive urine draining from the renal papillae and converge to form the larger major calyces, which in turn join to form the renal pelvis.",
+    why:"Renal papillae are the tips of the renal pyramids that drain into the minor calyces, upstream of them rather than a structure the calyces converge to form; renal columns are cortical tissue extensions between the pyramids, structurally unrelated to calyceal convergence; and collecting ducts are microscopic tubular structures within the pyramids that empty into the minor calyces, far smaller in scale than the gross calyceal system.",
+    src:"Slides 22, 42 (Urinary Flow)"
+  },
+  {
+    topic:"Nephro — Kidney Gross Anatomy & Coverings",
+    q:"The perinephric fat serves primarily which function?",
+    choices:["Hormone production","Filtration","Urine storage","Cushioning and insulation"],
+    answer:3,
+    correct:"Perinephric (perirenal) fat completely surrounds the kidney between the fibrous capsule and renal fascia, primarily providing cushioning and insulation to protect and stabilize the organ.",
+    why:"Hormone production is not a function of this adipose layer in the context of renal support, unlike adipose tissue's endocrine role elsewhere (e.g., leptin) — this fat's role here is purely structural; filtration is carried out by the glomerulus, not by perinephric fat; and urine storage is the job of the bladder, not a perirenal fat layer.",
+    src:"Slide 13 (Surrounding Tissues)"
+  },
+  {
+    topic:"Nephro — Renal Vasculature",
+    q:"Sympathetic stimulation of the kidney affects urine production by:",
+    choices:["Increasing glomerular filtration","Dilating the afferent arteriole to increase output","Vasoconstricting the afferent and efferent arterioles, decreasing output","Relaxing the detrusor muscle"],
+    answer:2,
+    correct:"Sympathetic stimulation vasoconstricts both the afferent and efferent arterioles, reducing glomerular blood flow and thus decreasing filtration and urine production, useful during states like hemorrhage to preserve central blood volume.",
+    why:"Increasing glomerular filtration is the opposite of the true effect, since constriction of the arterioles reduces flow into the glomerulus; dilating the afferent arteriole to increase output describes a resting, parasympathetic-dominant state, not sympathetic activation; and relaxing the detrusor muscle is a separate bladder-storage effect (also sympathetically mediated) rather than the vascular change described here regarding the kidney's blood supply.",
+    src:"Slide 26 (Innervation)"
+  },
+  {
+    topic:"Nephro — Nephron Structure & Physiology",
+    q:"The thick ascending limb of the loop of Henle leads directly into the:",
+    choices:["Renal papilla","Proximal convoluted tubule","Collecting duct","Distal convoluted tubule"],
+    answer:3,
+    correct:"The thick ascending limb returns toward the cortex and leads directly into the distal convoluted tubule.",
+    why:"The renal papilla is the tip of the medullary pyramid where collecting ducts empty into a minor calyx, a much later structure in the flow of filtrate; the proximal convoluted tubule occurs earlier in the nephron, before the loop of Henle, not after the ascending limb; and the collecting duct is reached only after filtrate passes through the distal convoluted tubule, not directly from the ascending limb.",
+    src:"Slide 39 (Loop of Henle)"
+  },
+  {
+    topic:"Nephro — Ureters, Bladder & Urethra",
+    q:"In males, which structure lies posterosuperior to the urinary bladder?",
+    choices:["The uterus","The prostate","The rectum","The vagina"],
+    answer:2,
+    correct:"In males, the rectum lies posterosuperior to the bladder, while the prostate lies inferior to the bladder neck.",
+    why:"The uterus is the structure posterosuperior to the bladder in females, not males, who lack a uterus; the prostate is located inferior to the bladder (surrounding the proximal urethra), not posterosuperior to it; and the vagina is a female structure lying posteroinferior to the bladder, not present in males at all.",
+    src:"Slide 51 (Urinary Bladder)"
+  },
+  {
+    topic:"Nephro — Renal & Urinary Histology",
+    q:"The EPO-producing, oxygen-sensing cells of the juxtaglomerular apparatus secrete:",
+    choices:["Aldosterone","Renin","Calcitonin","Erythropoietin"],
+    answer:3,
+    correct:"The oxygen-sensing (REPOS) cells of the kidney sense low oxygenation and secrete erythropoietin, stimulating red blood cell production in bone marrow.",
+    why:"Aldosterone is produced by the adrenal cortex's zona glomerulosa in response to the renin-angiotensin system, not by renal oxygen-sensing cells; renin is secreted by the separate juxtaglomerular (granular) cells in response to blood pressure/macula densa signals, a distinct cell population from the REPOS cells; and calcitonin is secreted by thyroid parafollicular (C) cells, unrelated to renal oxygen sensing.",
+    src:"Slide 36 (Juxtaglomerular Apparatus)"
+  }
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  else {
+    state.missed.push({ item, chosen: idx });
+  }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the material across all five systems.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>
