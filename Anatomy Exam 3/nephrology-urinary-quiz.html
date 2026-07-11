@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Nephrology / Urinary System
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nephrology / Urinary System — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#1b4f72;
+    --oxblood-soft:#2e6a92;
+    --brass:#3f8fa3;
+    --teal:#0f766e;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;justify-content:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">The Nephrology / Urinary System</span></h1>
+    <p class="sub">Kidneys &middot; Nephron Histology &middot; Renal Vasculature &middot; Ureters, Bladder &amp; Urethra</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the gross and histological anatomy of the kidneys and urinary tract from the nephrology / urinary system lecture. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Describe the gross anatomy of the kidneys, including their coverings, internal structure, and relationships to surrounding structures.</span></li>
+      <li><span class="n">2</span><span>Trace the arterial supply and venous drainage of the kidney, and follow the flow of filtrate through the nephron.</span></li>
+      <li><span class="n">3</span><span>Identify the gross and histological anatomy of the ureters, bladder, and urethra, and the specialized cells of the juxtaglomerular apparatus.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=nephrology-urinary" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Nephrology / Urinary System lecture &middot; PAJ 5000 Anatomy &middot; for study use.
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 60 items, drawn only from the nephrology / urinary lecture.
+   Topics: urinary system overview, kidney gross anatomy & coverings,
+   renal vasculature, nephron structure & physiology,
+   ureters/bladder/urethra, renal & urinary histology.
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    topic:"Urinary System Overview",
+    q:"Which four organs make up the urinary system?",
+    choices:["Kidneys, ureters, prostate, and urethra","Kidneys, adrenal glands, ureters, and bladder","Kidneys, ureters, urinary bladder, and urethra","Nephrons, ureters, bladder, and rectum"],
+    answer:2,
+    correct:"The urinary system consists of the kidneys, ureters, urinary bladder, and urethra.",
+    why:"The prostate is a male reproductive accessory gland, not a urinary organ, so option A wrongly substitutes it for the bladder; the adrenal glands sit atop the kidneys but are endocrine, not urinary, organs; and nephrons are the microscopic functional units within the kidney (not a separate organ), while the rectum belongs to the GI tract.",
+    src:"Slide 3 (Organs Involved)"
+  },
+  {
+    topic:"Urinary System Overview",
+    q:"The primary organs of the urinary system that filter waste and form urine are the:",
+    choices:["Ureters","Urethra","Bladder","Kidneys"],
+    answer:3,
+    correct:"The kidneys are the primary organs; they filter waste from the bloodstream and convert filtrate into urine.",
+    why:"The ureters merely transport already-formed urine from kidney to bladder; the bladder only stores urine; and the urethra only conducts urine out of the body — none of these three actually filters blood or forms urine.",
+    src:"Slide 3 (Organs Involved)"
+  },
+  {
+    topic:"Urinary System Overview",
+    q:"The medical term for urination is:",
+    choices:["Micturition","Defecation","Deglutition","Mastication"],
+    answer:0,
+    correct:"Micturition is the medical term for urination; the ureters, bladder, and urethra transport urine out of the body.",
+    why:"Defecation refers to elimination of feces from the GI tract, deglutition means swallowing, and mastication means chewing — none relate to emptying the bladder.",
+    src:"Slide 4 (Systems Involved)"
+  },
+  {
+    topic:"Urinary System Overview",
+    q:"The ureters, bladder, and urethra together form the:",
+    choices:["Urinary tract (for transport of urine)","Nephron","Renal corpuscle","Juxtaglomerular apparatus"],
+    answer:0,
+    correct:"The urinary tract (ureters, bladder, urethra) transports urine out of the body after the kidneys produce it.",
+    why:"The nephron is the microscopic filtering unit inside the kidney itself, not the tract distal to it; the renal corpuscle is only the glomerulus plus Bowman's capsule, a component of a single nephron; and the juxtaglomerular apparatus is a specialized cell cluster regulating filtration, not a collection of gross transport organs.",
+    src:"Slide 4 (Systems Involved)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"With respect to the peritoneum, the kidneys are:",
+    choices:["Intraperitoneal","Suspended by a mesentery","Subperitoneal","Retroperitoneal"],
+    answer:3,
+    correct:"The kidneys are retroperitoneal organs; the right sits about T12–L3 and the left about T10/11–L2.",
+    why:"Intraperitoneal organs are fully enclosed by peritoneum and typically have a mesentery, which the kidneys lack; 'suspended by a mesentery' describes organs like the small intestine, not the kidney; and 'subperitoneal' is not the term used for organs lying behind the peritoneum on the posterior wall — that is retroperitoneal.",
+    src:"Slide 6 (Kidney Location)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The concave medial border of the kidney, where vessels and nerves enter, is the:",
+    choices:["Hilum","Renal sinus","Renal papilla","Renal pelvis"],
+    answer:0,
+    correct:"The hilum is the concave medial border through which the nerves, arteries, and veins (NAVs) enter and the renal pelvis exits.",
+    why:"The renal sinus is the internal cavity that the hilum opens into, not the border itself; the renal papilla is the apex of a renal pyramid where urine drains into a minor calyx; and the renal pelvis is the funnel-shaped collecting structure that exits through the hilum, not the border itself.",
+    src:"Slides 6, 10 (Kidney anatomy)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"Listing from deep (nearest kidney) to superficial, the tissue layers surrounding the kidney are:",
+    choices:["Renal fascia → fibrous capsule → perinephric fat → paranephric fat","Paranephric fat → renal fascia → perinephric fat → fibrous capsule","Fibrous capsule → perinephric fat → renal fascia → paranephric fat","Perinephric fat → fibrous capsule → paranephric fat → renal fascia"],
+    answer:2,
+    correct:"From deep to superficial: fibrous (renal) capsule, perinephric (adipose) fat, renal fascia, then paranephric fat, then peritoneum.",
+    why:"Option A reverses the order by starting with renal fascia (a superficial layer) and ending with paranephric fat; option B reverses nearly the entire sequence, placing paranephric fat innermost and the capsule outermost; and option D places perinephric fat as the deepest layer and renal fascia as most superficial, which inverts the true middle-to-outer order.",
+    src:"Slides 11, 13 (Surrounding Tissues)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The renal medulla is divided into cone-shaped structures whose apices (renal papillae) point toward the renal sinus; these are the:",
+    choices:["Renal columns","Renal pyramids","Renal calyces","Renal corpuscles"],
+    answer:1,
+    correct:"The medulla is divided into 8–15 renal pyramids per kidney; the base abuts the cortex and the apex is the renal papilla.",
+    why:"Renal columns are cortical tissue extensions that dip between the pyramids, not the cone-shaped medullary structures themselves; renal calyces are the cup-shaped structures that receive urine from the papillae, not the pyramids that produce them; and renal corpuscles are microscopic glomerulus-plus-capsule units within the cortex, unrelated to the gross cone shape described.",
+    src:"Slide 14 (Coronal Plane Sections)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The cortical tissue that dips between the renal pyramids is called the:",
+    choices:["Renal papilla","Minor calyx","Renal sinus","Renal columns"],
+    answer:3,
+    correct:"Renal columns are extensions of cortex between the pyramids.",
+    why:"The renal papilla is the tip of a pyramid itself, not cortical tissue between pyramids; the minor calyx is a cup that catches urine draining from a papilla; and the renal sinus is the internal cavity housing the vessels and collecting structures, not cortical tissue.",
+    src:"Slide 14 (Coronal Plane Sections)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The internal space of the kidney that houses the vessels, renal pelvis, and calyces (plus fat) is the:",
+    choices:["Renal cortex","Renal sinus","Renal papilla","Bowman's capsule"],
+    answer:1,
+    correct:"The renal sinus is the internal space housing blood/lymphatic vessels, nerves, renal pelvis, and calyces, embedded in fat.",
+    why:"The renal cortex is the outer, solid filtering tissue layer, not an internal cavity; the renal papilla is the tip of a single pyramid, a small structure rather than the whole internal space; and Bowman's capsule is a microscopic structure surrounding a single glomerulus, unrelated to the gross internal cavity of the kidney.",
+    src:"Slide 10 (Gross and Sectional Anatomy)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The dense irregular connective tissue layer that directly covers the outer surface (cortex) of the kidney is the:",
+    choices:["Fibrous (renal) capsule","Renal fascia","Paranephric fat","Peritoneum"],
+    answer:0,
+    correct:"The fibrous (renal) capsule is dense irregular connective tissue covering the cortex; the renal fascia anchors the kidney to the posterior wall.",
+    why:"The renal fascia is a more superficial layer that anchors the kidney and its fat to the posterior abdominal wall, not the layer directly on the cortex; paranephric fat lies external to the renal fascia, further from the cortex; and the peritoneum only covers the anterior surface of the kidney indirectly and is not a capsule directly investing the cortex.",
+    src:"Slide 13 (Surrounding Tissues)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"Which sequence correctly traces arterial blood from the aorta to the glomerulus?",
+    choices:["Renal artery → afferent arteriole → arcuate → interlobar → glomerulus","Renal artery → arcuate → interlobar → segmental → afferent arteriole → glomerulus","Renal artery → interlobular → arcuate → interlobar → efferent arteriole → glomerulus","Renal artery → segmental → interlobar → arcuate → interlobular → afferent arteriole → glomerulus"],
+    answer:3,
+    correct:"Aorta → renal → segmental → lobar → interlobar → arcuate → interlobular → afferent arteriole → glomerulus.",
+    why:"Option A skips directly from renal artery to afferent arteriole, omitting the segmental, interlobar, arcuate, and interlobular branches entirely; option B lists interlobar before segmental and jumps straight to the afferent arteriole without passing through the arcuate or interlobular arteries; and option C misorders the branches (interlobular before arcuate and interlobar) and incorrectly ends at the efferent arteriole, which carries blood away from, not into, the glomerulus.",
+    src:"Slide 16 (Blood Supply)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"Blood leaves the glomerulus via the efferent arteriole, which then branches into peritubular capillaries or the:",
+    choices:["Interlobar vein","Arcuate artery","Segmental artery","Vasa recta"],
+    answer:3,
+    correct:"Efferent arterioles form peritubular capillaries (juxtaposed to the nephron) or the vasa recta, where solute exchange occurs.",
+    why:"The interlobar vein is part of the venous drainage occurring far downstream of the efferent arteriole, not a direct branch of it; the arcuate and segmental arteries are upstream arterial vessels supplying blood toward the glomerulus, not structures formed after leaving it.",
+    src:"Slide 18 (Blood Supply)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"The renal vein drains into which large vessel?",
+    choices:["Portal vein","Azygos vein","Inferior vena cava","Superior mesenteric vein"],
+    answer:2,
+    correct:"The renal vein drains to the inferior vena cava; on the left it also receives the gonadal vein.",
+    why:"The portal vein drains the GI tract, spleen, and pancreas toward the liver, not the kidney; the azygos vein drains the posterior thoracic wall; and the superior mesenteric vein drains the small intestine and part of the colon into the portal system — none receives renal venous outflow.",
+    src:"Slides 6, 18 (renal venous drainage)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"Which sequence traces venous blood correctly from the vasa recta back toward the IVC?",
+    choices:["Vasa recta → arcuate vein → interlobular vein → segmental vein → IVC","Vasa recta → renal vein → arcuate vein → interlobar vein → IVC","Vasa recta → interlobular vein → arcuate vein → interlobar vein → renal vein → IVC","Vasa recta → interlobar vein → interlobular vein → renal vein → IVC"],
+    answer:2,
+    correct:"Vasa recta → interlobular vein → arcuate vein → interlobar vein → renal vein → inferior vena cava.",
+    why:"Option A places the arcuate vein before the interlobular vein and substitutes a nonexistent 'segmental vein' step for the interlobar and renal veins; option B jumps straight to the renal vein before passing through the interlobular and interlobar veins, essentially reversing the correct order; and option D omits the arcuate vein step entirely, going directly from interlobar-adjacent vessels to interlobular then renal vein.",
+    src:"Slide 18 (Blood Supply, venous)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"Blood plasma is filtered across which structure into the glomerular (capsular) space?",
+    choices:["The efferent arteriole","The collecting duct","The vasa recta","The glomerulus"],
+    answer:3,
+    correct:"Plasma is filtered across the glomerulus into the glomerular space of Bowman's capsule.",
+    why:"The efferent arteriole is the vessel carrying blood away after filtration has already occurred, not the filtering site itself; the collecting duct is a downstream tubular structure that modifies already-filtered fluid; and the vasa recta are capillaries in the medulla involved in the countercurrent exchange system, not the initial filtration step.",
+    src:"Slide 16 (Blood Supply)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"On the left side, the renal vein additionally receives which vein before draining to the IVC?",
+    choices:["The left gonadal vein","The right gonadal vein","The azygos vein","The splenic vein"],
+    answer:0,
+    correct:"The left renal vein receives the left gonadal (and left suprarenal) vein before entering the IVC.",
+    why:"The right gonadal vein drains directly into the IVC itself, not into the left renal vein; the azygos vein drains the posterior thoracic wall into the SVC system, unrelated to renal venous drainage; and the splenic vein joins the portal venous system, not the renal vein.",
+    src:"Slide 6 (Kidney Location)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"The renal corpuscle is composed of the glomerulus and the:",
+    choices:["Proximal convoluted tubule","Loop of Henle","Glomerular (Bowman's) capsule","Collecting duct"],
+    answer:2,
+    correct:"The renal corpuscle = glomerulus + glomerular (Bowman's) capsule; it is the filtering unit of the nephron.",
+    why:"The proximal convoluted tubule, loop of Henle, and collecting duct are all downstream tubular segments that filtrate passes through after leaving the renal corpuscle — they are not part of the corpuscle itself.",
+    src:"Slide 29 (Nephron Structures)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Which segment of the renal tubule begins at the tubular pole of the renal corpuscle and is lined by simple cuboidal epithelium?",
+    choices:["Distal convoluted tubule","Proximal convoluted tubule","Collecting duct","Ascending limb of Henle"],
+    answer:1,
+    correct:"The proximal convoluted tubule begins at the corpuscle's tubular pole and is lined by simple cuboidal epithelium.",
+    why:"The distal convoluted tubule begins at the end of the ascending limb of Henle, far downstream of the corpuscle, not at its tubular pole; the collecting duct is even further downstream, receiving fluid from multiple nephrons; and the ascending limb of Henle lies between the proximal tubule and the distal tubule, not directly at the corpuscle's tubular pole.",
+    src:"Slide 38 (Proximal Convoluted Tubule)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Which type of nephron has long loops of Henle that extend deep into the medulla and possess vasa recta to concentrate urine?",
+    choices:["Cortical nephrons","Juxtamedullary (medullary) nephrons","Aglomerular nephrons","Superficial nephrons"],
+    answer:1,
+    correct:"Juxtamedullary nephrons (~15%) have long loops and vasa recta to recover water/Na+/Cl- and concentrate urine; cortical nephrons (~85%) have short loops and peritubular capillaries.",
+    why:"Cortical (superficial) nephrons make up about 85% of nephrons and have short loops with peritubular rather than vasa recta capillaries, producing 'standard,' not concentrated, urine; 'aglomerular nephrons' is not a real human nephron type described in this lecture.",
+    src:"Slide 30 (Types of Nephrons)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Approximately what percentage of nephrons are cortical (short-looped) nephrons producing 'standard' urine?",
+    choices:["85%","50%","15%","5%"],
+    answer:0,
+    correct:"About 85% of nephrons are cortical type; ~15% are juxtamedullary.",
+    why:"15% is the proportion of juxtamedullary, not cortical, nephrons; 50% and 5% do not correspond to either nephron population given in the lecture.",
+    src:"Slide 30 (Types of Nephrons)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Which sequence correctly traces filtrate through the nephron tubules?",
+    choices:["Collecting duct → DCT → loop of Henle → PCT → glomerulus","DCT → PCT → loop of Henle → collecting duct → papillary duct","PCT → descending limb → loop of Henle → ascending limb → DCT → collecting duct","PCT → DCT → descending limb → ascending limb → collecting duct"],
+    answer:2,
+    correct:"Filtrate flows: Bowman's → PCT → descending limb → loop of Henle → ascending limb → DCT → collecting duct → papillary duct.",
+    why:"Option A runs the entire sequence backwards, ending at the glomerulus instead of starting there; option B places the DCT before the PCT, reversing the true order since the DCT is downstream of the loop of Henle; and option D skips straight from the PCT to the DCT before doubling back to the descending and ascending limbs, which is out of anatomical sequence.",
+    src:"Slides 22, 42 (Flow of Urine)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"The distal convoluted tubule begins at the end of the thick ascending limb and lies adjacent to the afferent arteriole, forming part of the:",
+    choices:["Renal corpuscle","Juxtaglomerular apparatus","Renal sinus","Vasa recta"],
+    answer:1,
+    correct:"The DCT lies next to the afferent arteriole, contributing to the juxtaglomerular apparatus.",
+    why:"The renal corpuscle refers specifically to the glomerulus and Bowman's capsule, not the distal tubule; the renal sinus is the internal cavity holding vessels and the pelvis, unrelated to this cellular contact point; and the vasa recta are capillaries running alongside the loop of Henle in the medulla, not a structure formed by DCT-arteriole contact.",
+    src:"Slide 40 (Distal Convoluted Tubule)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"The loop of Henle has two limbs; the descending limb runs from the cortex/PCT toward the medulla, and the ascending limb:",
+    choices:["Returns to the renal cortex and leads into the DCT","Continues deeper into the medulla","Empties directly into the minor calyx","Becomes the collecting duct"],
+    answer:0,
+    correct:"The ascending limb (thin then thick) returns toward the cortex and leads into the distal convoluted tubule.",
+    why:"Continuing deeper into the medulla describes the descending limb's direction, not the ascending limb's; the ascending limb does not empty directly into a minor calyx, since filtrate must first pass through the DCT and collecting duct/papilla before reaching a calyx; and the ascending limb transitions into the DCT, it does not itself become the collecting duct.",
+    src:"Slide 39 (Loop of Henle)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Once filtrate enters the collecting ducts, it:",
+    choices:["Can no longer be modified and officially becomes urine","Undergoes further extensive modification","Returns to the glomerulus","Is reabsorbed into the vasa recta entirely"],
+    answer:0,
+    correct:"No further modification occurs once filtrate is in the collecting ducts; it is now officially urine. Multiple collecting ducts converge at a renal papilla.",
+    why:"Extensive further modification is exactly what does not happen at this stage, since it is already finalized as urine; filtrate cannot flow retrograde back to the glomerulus, as flow through the nephron is unidirectional; and it is not entirely reabsorbed into the vasa recta — the vasa recta participate in earlier concentrating exchange, not full reabsorption of collecting-duct contents.",
+    src:"Slide 41 (Collecting Tubule & Ducts)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The ureters are retroperitoneal fibromuscular tubes about how long, conducting urine from the renal pelvis to the bladder?",
+    choices:["About 5 cm","About 50 cm","About 25 cm","About 3 cm"],
+    answer:2,
+    correct:"The ureters average ~25 cm, are retroperitoneal, originate at the renal pelvis, and enter the posterolateral bladder base.",
+    why:"5 cm and 3 cm are far too short to span from the kidney down to the pelvis; 50 cm substantially overstates ureteral length, closer to the length of several small intestine segments than to the actual ~25 cm ureter.",
+    src:"Slide 44 (Ureters)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"In the 'water under the bridge' relationship, the ureter passes deep/inferior to which vessels bilaterally?",
+    choices:["The renal artery and vein","The common iliac artery only","The testicular or ovarian (gonadal) artery and vein","The inferior vena cava"],
+    answer:2,
+    correct:"The ureter travels deep (inferior) to the gonadal (testicular/ovarian) vessels — 'water (ureter) under the bridge (gonadal vessels)'.",
+    why:"The renal artery and vein are encountered at the kidney's hilum, well proximal to this crossing point; 'common iliac artery only' omits the actual named vessels (gonadal artery and vein) and refers to a different, more distal crossing point where the ureter crosses the pelvic brim; and the inferior vena cava lies medially and is not the paired structure referenced in the mnemonic.",
+    src:"Slide 48 ('Water under the bridge')"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The urinary bladder lies immediately superior and posterior to which structure?",
+    choices:["The kidneys","The sacrum","The umbilicus","The pubic symphysis"],
+    answer:3,
+    correct:"The bladder lies immediately superior and posterior to the pubic symphysis.",
+    why:"The kidneys are located in the upper retroperitoneum, far from the pelvic bladder; the sacrum lies posterior to the rectum, well behind the bladder, not immediately adjacent to it; and the umbilicus is an anterior abdominal wall landmark well above the pelvis, not adjacent to the bladder.",
+    src:"Slide 49 (Bladder)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The bladder is a non-peritoneal organ EXCEPT for which wall, which is covered by peritoneum?",
+    choices:["The inferior wall","The anterior wall","The superior wall","The posterior wall"],
+    answer:2,
+    correct:"Only the superior wall of the bladder is peritoneal; this affects where bladder pain is sensed.",
+    why:"The inferior, anterior, and posterior walls of the bladder are all subperitoneal/extraperitoneal, lying below the peritoneal reflection — only the dome-like superior wall is actually draped by peritoneum.",
+    src:"Slides 49, 53 (Bladder)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"In females, the organ located posterosuperior to the bladder is the:",
+    choices:["Rectum","Prostate","Uterus","Sigmoid colon"],
+    answer:2,
+    correct:"In females, the uterus is posterosuperior and the vagina posteroinferior to the bladder; in males the rectum is posterosuperior and the prostate inferior.",
+    why:"The rectum is posterosuperior to the bladder in males, not females, where the uterus intervenes; the prostate is an exclusively male gland lying inferior to the bladder, not present in females; and the sigmoid colon lies more superiorly in the pelvis/abdomen and is not the structure immediately posterosuperior to the female bladder.",
+    src:"Slide 51 (Urinary Bladder relationships)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The median umbilical ligament, related to the bladder, is a remnant of which fetal structure?",
+    choices:["The gubernaculum","The urachus","The mesonephric duct","The ductus venosus"],
+    answer:1,
+    correct:"The median umbilical ligament is the remnant of the urachus, the fetal tube that returned urine to the mother via the umbilical cord.",
+    why:"The gubernaculum is the fetal cord guiding gonadal descent, unrelated to the bladder; the mesonephric (Wolffian) duct contributes to male reproductive structures, not the median umbilical ligament; and the ductus venosus is a fetal vascular shunt within the liver, whose remnant is the ligamentum venosum, not the median umbilical ligament.",
+    src:"Slide 49 (Bladder)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The blood supply to the bladder runs: aorta → common iliac → internal iliac → anterior division → superior and:",
+    choices:["Inferior mesenteric artery","Inferior vesical arteries","Gonadal arteries","Middle rectal arteries only"],
+    answer:1,
+    correct:"The bladder is supplied by the superior and inferior vesical arteries from the anterior division of the internal iliac; venous drainage is via the vesical venous plexus to the internal iliac veins.",
+    why:"The inferior mesenteric artery supplies the hindgut (distal colon and rectum), not the bladder; the gonadal arteries arise directly from the aorta to supply the testes/ovaries, bypassing the internal iliac system entirely; and while the middle rectal arteries also branch from the internal iliac's anterior division, they supply the rectum, and 'only' incorrectly excludes the actual paired vesical arteries that supply the bladder.",
+    src:"Slide 56 (Blood Supply)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"Approximate urethral length differs by sex: the female urethra is about 3–4 cm, whereas the male urethra is about:",
+    choices:["8–10 cm","2 cm","25 cm","18–20 cm"],
+    answer:3,
+    correct:"The female urethra is ~3–4 cm; the male urethra is ~18–20 cm and has prostatic, membranous, and penile (spongy) regions.",
+    why:"8–10 cm and 2 cm both understate the true male urethral length, which must traverse the prostate, urogenital diaphragm, and entire penile shaft; 25 cm overstates it, closer to the length of the ureter than the male urethra.",
+    src:"Slides 58–59 (Urethra)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"Common sites where kidney stones lodge in the ureter include the ureteropelvic junction, where the ureters cross the common iliac artery, and the:",
+    choices:["Renal papilla","Urethral meatus","Ureterovesical junction","Renal sinus"],
+    answer:2,
+    correct:"Stones commonly lodge at the UPJ, at the common iliac crossing, and at the ureterovesical junction — the three natural constrictions.",
+    why:"The renal papilla is where urine first enters the collecting system at the calyx, proximal to the ureter itself, not a described ureteral narrowing; the urethral meatus is the external opening of the urethra, an entirely different tube distal to the bladder; and the renal sinus is an internal cavity of the kidney, not a point of ureteral narrowing.",
+    src:"Slide 47 (Zones Related to the Ureters)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The membranous portion of the male urethra is distinguished anatomically because it pierces the:",
+    choices:["Urogenital diaphragm","Prostate gland","Corpus spongiosum","Renal fascia"],
+    answer:0,
+    correct:"The membranous urethra runs from the prostatic urethra to the penile urethra and pierces the urogenital diaphragm.",
+    why:"The prostate gland is pierced by the prostatic urethra (the segment proximal to the membranous urethra), not the membranous segment itself; the corpus spongiosum surrounds the penile (spongy) urethra distally, not the membranous portion; and the renal fascia is an unrelated kidney-covering structure far from the pelvic urethra.",
+    src:"Slide 59 (Urethra)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The lining of the ureters, which gives them stretch, is composed of which epithelium?",
+    choices:["Transitional epithelium","Simple squamous epithelium","Simple cuboidal epithelium","Stratified squamous epithelium"],
+    answer:0,
+    correct:"The ureteral mucosa is transitional epithelium, allowing distension; the muscularis has inner longitudinal and outer circular smooth muscle (plus an external longitudinal layer distally).",
+    why:"Simple squamous epithelium is a thin, single-layer lining suited for diffusion (as in capillaries or alveoli), not the stretch/protective needs of the ureter; simple cuboidal epithelium lines absorptive/secretory structures like renal tubules, not distensible tracts; and stratified squamous epithelium lines areas of abrasion resistance like the esophagus or vagina, not stretch-tolerant urinary passages.",
+    src:"Slide 45 (Ureter Walls)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The inner lining of the urinary bladder is which stretchy epithelium?",
+    choices:["Simple columnar epithelium","Transitional epithelium","Nonkeratinized stratified squamous epithelium","Simple squamous epithelium"],
+    answer:1,
+    correct:"The bladder's inner lining is transitional (stretchy) epithelium; it can expand ~15× its empty volume to hold ~500 mL.",
+    why:"Simple columnar epithelium lines absorptive/secretory surfaces such as the GI tract, not a distensible reservoir; nonkeratinized stratified squamous epithelium lines the vagina and esophagus, tissues built for abrasion resistance rather than major volume change; and simple squamous epithelium is a single thin cell layer unsuited to withstand the mechanical stretch of a filling bladder.",
+    src:"Slide 53 (Bladder)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The parietal layer of Bowman's capsule is composed of which epithelium?",
+    choices:["Simple squamous epithelium","Podocytes","Simple cuboidal epithelium","Transitional epithelium"],
+    answer:0,
+    correct:"The parietal (outer) layer of Bowman's capsule is simple squamous epithelium; the visceral layer is made of podocytes.",
+    why:"Podocytes make up the visceral (inner) layer of the capsule, not the parietal layer; simple cuboidal epithelium lines the renal tubules (like the PCT), not the outer capsule wall; and transitional epithelium is found in the ureters and bladder, not the renal corpuscle.",
+    src:"Slide 35 (Renal Corpuscle)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The visceral layer of the glomerular capsule is formed by specialized cells with foot processes (pedicles) called:",
+    choices:["Chromaffin cells","Mesangial cells","Chief cells","Podocytes"],
+    answer:3,
+    correct:"Podocytes form the visceral layer; their pedicles create filtration slits and are coated in negatively charged glycocalyx.",
+    why:"Chromaffin cells are found in the adrenal medulla and secrete catecholamines, unrelated to the glomerular capsule; mesangial cells support the glomerular capillary tuft structurally but do not form the outer visceral layer with foot processes; and chief cells are parathyroid cells that secrete PTH, unrelated to renal filtration anatomy.",
+    src:"Slides 33–35 (Glomerulus / Renal Corpuscle)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The glomerular capillary endothelium is described as ______, allowing high permeability during filtration.",
+    choices:["Continuous","Sinusoidal only","Fenestrated","Stratified"],
+    answer:2,
+    correct:"The glomerular endothelium is fenestrated (large pores), making it highly permeable; a negatively charged basement membrane and podocyte slits restrict large anions/proteins.",
+    why:"Continuous endothelium (as in most systemic capillaries) is comparatively impermeable and would not allow the high filtration rate needed here; sinusoidal capillaries, found in the liver/spleen/bone marrow, have even larger discontinuous gaps and are not the type described in the glomerulus; and 'stratified' describes multilayered epithelium, not a capillary endothelium type.",
+    src:"Slides 33–34 (Filtration Membranes)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The detrusor muscle of the bladder wall is composed of which muscle type arranged in three layers?",
+    choices:["Skeletal muscle","Smooth muscle","Cardiac muscle","Transitional epithelium"],
+    answer:1,
+    correct:"The detrusor is smooth muscle (inner and outer longitudinal around a middle circular layer), forming the muscular middle layer of the bladder.",
+    why:"Skeletal muscle is voluntary and striated, found in structures like the external urethral sphincter, not the bladder wall itself; cardiac muscle is unique to the heart; and transitional epithelium is the lining tissue of the bladder mucosa, not the muscular wall layer.",
+    src:"Slide 53 (Bladder)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The macula densa, a sensor of tubular NaCl concentration within the juxtaglomerular apparatus, is a cluster of specialized cells located in the:",
+    choices:["Distal convoluted tubule","Proximal convoluted tubule","Collecting duct","Loop of Henle descending limb"],
+    answer:0,
+    correct:"The macula densa is in the distal (convoluted) tubule and senses NaCl to help regulate GFR and renin release.",
+    why:"The proximal convoluted tubule lies far upstream, before the loop of Henle, and does not contact the afferent arteriole; the collecting duct is downstream of the DCT and not part of the juxtaglomerular apparatus; and the descending limb of the loop of Henle is also upstream of the DCT and does not form this arteriole-adjacent sensor region.",
+    src:"Slides 36, 40 (Juxtaglomerular Apparatus / DCT)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The juxtaglomerular (granular) cells, modified smooth muscle cells of the afferent arteriole, synthesize, store, and secrete:",
+    choices:["Erythropoietin","Renin","Calcitriol","Aldosterone"],
+    answer:1,
+    correct:"Juxtaglomerular (granular) cells secrete renin in response to decreased blood pressure or macula densa signals; EPO-producing/oxygen-sensing (REPOS) cells secrete erythropoietin.",
+    why:"Erythropoietin is secreted by separate oxygen-sensing (REPOS) cells in the kidney, not the granular cells; calcitriol (activated vitamin D) is produced by renal tubular cells via hydroxylation, a distinct process; and aldosterone is produced by the adrenal cortex's zona glomerulosa, not by the kidney's juxtaglomerular cells.",
+    src:"Slide 36 (Juxtaglomerular Apparatus)"
+  },
+  {
+    topic:"Urinary System Overview",
+    q:"The kidneys perform all of the following functions EXCEPT:",
+    choices:["Filtering waste from the blood","Forming urine","Regulating fluid and electrolyte balance","Producing digestive enzymes"],
+    answer:3,
+    correct:"The kidneys filter waste, form urine, and regulate fluids/electrolytes; producing digestive enzymes is a function of the pancreas and GI tract, not the urinary system.",
+    why:"Filtering waste, forming urine, and regulating fluid/electrolyte balance are all genuine, well-established kidney functions, so these are true statements rather than the exception being sought.",
+    src:"Slide 3 (Organs Involved)"
+  },
+  {
+    topic:"Urinary System Overview",
+    q:"After the kidneys produce urine, which structure conducts it from each kidney to the bladder?",
+    choices:["Urethra","Renal pelvis","Collecting duct","Ureter"],
+    answer:3,
+    correct:"Each ureter carries urine from the renal pelvis of the kidney to the bladder; the urethra then carries urine from the bladder out of the body.",
+    why:"The urethra carries urine from the bladder to outside the body, a step that occurs after, not leading to, the bladder; the renal pelvis is the funnel-shaped structure inside the kidney that collects urine before it enters the ureter, so it is the starting point rather than the conduit to the bladder; and the collecting duct is a microscopic tubule within the kidney that empties into the calyces, well upstream of the ureter.",
+    src:"Slide 4 (Systems Involved)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"Which kidney typically sits slightly lower than the other because of the liver?",
+    choices:["The left kidney","The right kidney","Both sit at exactly the same level","Neither — position varies randomly"],
+    answer:1,
+    correct:"The right kidney (about T12–L3) sits slightly lower than the left (about T10/11–L2) because the liver occupies space superiorly on the right.",
+    why:"The left kidney is actually the higher-positioned kidney (T10/11–L2) since the liver crowds the right side, not the left; the two kidneys are not at exactly the same level, since the liver's presence displaces the right kidney inferiorly; and their relative position is a consistent anatomical pattern related to the liver, not random.",
+    src:"Slide 6 (Kidney Location)"
+  },
+  {
+    topic:"Kidney Gross Anatomy & Coverings",
+    q:"The funnel-shaped structure formed by the convergence of the major calyces, which collects urine before the ureter, is the:",
+    choices:["Renal sinus","Renal papilla","Renal pelvis","Renal column"],
+    answer:2,
+    correct:"Minor calyces merge into major calyces, which merge into the renal pelvis; the pelvis funnels urine into the ureter.",
+    why:"The renal sinus is the internal cavity that houses the pelvis and calyces, not the funnel-shaped structure itself; the renal papilla is the tip of a pyramid that drips urine into a minor calyx, upstream of the pelvis; and the renal column is cortical tissue between pyramids, structurally unrelated to urine collection.",
+    src:"Slide 14 (Coronal Plane Sections)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"About what fraction of resting cardiac output do the kidneys receive?",
+    choices:["About 5%","About 75%","About 50%","About 20–25%"],
+    answer:3,
+    correct:"The kidneys receive roughly 20–25% of resting cardiac output, reflecting their high filtration workload.",
+    why:"5% substantially understates the kidneys' large share of cardiac output relative to their small size; 75% and 50% both greatly overstate it — no single paired organ system receives that dominant a share of resting cardiac output.",
+    src:"Slide 16 (Blood Supply)"
+  },
+  {
+    topic:"Renal Vasculature",
+    q:"Sympathetic stimulation constricts BOTH the afferent and efferent arterioles, which has what effect on urine production?",
+    choices:["Increases blood flow to the glomerulus and increases urine production","Has no effect on glomerular blood flow","Decreases blood flow to the glomerulus and decreases urine production","Increases GFR while decreasing urine output"],
+    answer:2,
+    correct:"Vasoconstriction of both afferent and efferent arterioles decreases blood flow to the glomerulus, thus decreasing urine production; filtration increases when sympathetic tone falls.",
+    why:"Constricting both arterioles reduces, not increases, glomerular blood flow, making the increased-flow/increased-production option the opposite of what happens; there is a clear effect on glomerular blood flow (a decrease), so 'no effect' is incorrect; and GFR falls along with urine output under sympathetic constriction, so an increased-GFR-with-decreased-output pairing is inconsistent with the physiology.",
+    src:"Slides 27–28 (autonomic control)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Which is the correct order of nephron structures that filtrate passes through after the renal corpuscle?",
+    choices:["PCT → DCT → loop of Henle → collecting duct","DCT → loop of Henle → PCT → collecting duct","Loop of Henle → PCT → DCT → collecting duct","PCT → loop of Henle → DCT → collecting duct"],
+    answer:3,
+    correct:"After the renal corpuscle, filtrate flows: proximal convoluted tubule → loop of Henle (descending then ascending) → distal convoluted tubule → collecting duct.",
+    why:"Placing the DCT before the loop of Henle reverses their true order, since the DCT is downstream of the loop; starting with the DCT is incorrect because the PCT — not the DCT — is the first segment after the corpuscle; and starting with the loop of Henle skips the proximal convoluted tubule, which is actually the first tubular segment filtrate enters.",
+    src:"Slides 29, 42 (Nephron Structures / Flow of Urine)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Juxtamedullary nephrons, which make up ~15% of nephrons, are specialized for what function?",
+    choices:["Producing 'standard' urine","Concentrating urine via long loops of Henle and vasa recta","Secreting erythropoietin","Filtering large proteins"],
+    answer:1,
+    correct:"Juxtamedullary nephrons (~15%) have long loops of Henle extending into the medulla and vasa recta, enabling recovery of water/Na+/Cl- and concentration of urine.",
+    why:"Producing 'standard' urine describes the role of the more numerous cortical nephrons, not the specialized juxtamedullary population; erythropoietin secretion is performed by separate oxygen-sensing (REPOS) cells, not by nephron tubular segments; and healthy nephrons are specifically built to prevent large proteins from being filtered (via the fenestrated endothelium, basement membrane, and podocyte slits), not to filter them.",
+    src:"Slide 30 (Types of Nephrons)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Cortical nephrons, which make up about 85% of nephrons, are characterized by:",
+    choices:["Short loops of Henle and peritubular capillaries","Long loops of Henle and vasa recta","No glomerulus","Location entirely within the medulla"],
+    answer:0,
+    correct:"Cortical nephrons (~85%) sit near the peripheral cortex, have short loops of Henle and peritubular capillaries, and produce 'standard' urine.",
+    why:"Long loops of Henle with vasa recta describe juxtamedullary nephrons, the minority population, not cortical nephrons; every nephron, cortical or juxtamedullary, does have a glomerulus as part of its renal corpuscle; and cortical nephrons are named for their location near the cortex, not entirely within the medulla.",
+    src:"Slide 30 (Types of Nephrons)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"The proximal convoluted tubule begins at the tubular pole of the renal corpuscle and ends where which structure begins?",
+    choices:["The distal convoluted tubule","The collecting duct","The thick descending limb of the loop of Henle","The papillary duct"],
+    answer:2,
+    correct:"The PCT begins at the tubular pole of the renal corpuscle and ends where the thick descending limb of the loop of Henle begins.",
+    why:"The distal convoluted tubule lies much further downstream, after the entire loop of Henle, not immediately after the PCT; the collecting duct is even further downstream, receiving fluid from the DCT; and the papillary duct is the terminal segment draining into a minor calyx at the tip of a pyramid, far removed from the PCT's endpoint.",
+    src:"Slide 38 (Proximal Convoluted Tubule)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"The distal convoluted tubule begins at the end of the thick ascending limb and lies adjacent to which structure, forming the juxtaglomerular apparatus?",
+    choices:["The efferent arteriole","The afferent arteriole","The vasa recta","The collecting duct"],
+    answer:1,
+    correct:"The DCT begins at the end of the thick ascending limb and lies adjacent to the afferent arteriole, forming the juxtaglomerular apparatus.",
+    why:"The efferent arteriole carries blood away from the glomerulus and is not the vessel contacted by the macula densa of the DCT; the vasa recta are capillaries running through the medulla alongside the loop of Henle, not the arteriole partnered with the DCT in the JGA; and the collecting duct is a separate downstream tubular structure, not a vascular structure the DCT contacts to form the JGA.",
+    src:"Slide 40 (Distal Convoluted Tubule)"
+  },
+  {
+    topic:"Nephron Structure & Physiology",
+    q:"Once filtrate enters the collecting ducts, what happens to its composition?",
+    choices:["No further modifications can be made — it is officially urine","It undergoes major reabsorption of glucose","It is returned to the glomerulus","It is filtered a second time"],
+    answer:0,
+    correct:"Once in the collecting ducts the filtrate officially becomes urine; no further modifications are made. Multiple collecting ducts converge to form a renal papilla.",
+    why:"Major glucose reabsorption occurs earlier, primarily in the proximal convoluted tubule, not in the collecting ducts; filtrate flow through the nephron is unidirectional, so it cannot be returned to the glomerulus; and filtration itself is a one-time event at the renal corpuscle, so the fluid is not filtered a second time at the collecting duct.",
+    src:"Slide 41 (Collecting Tubule & Ducts)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"The kidneys are capped superiorly by which endocrine glands, which share the perinephric fat and renal fascia?",
+    choices:["The thyroid glands","The gonads","The parathyroid glands","The adrenal (suprarenal) glands"],
+    answer:3,
+    correct:"The adrenal (suprarenal) glands sit atop each kidney, enclosed within the renal fascia and perinephric fat.",
+    why:"The thyroid and parathyroid glands are located in the neck, nowhere near the kidneys or their fascia; the gonads are pelvic/scrotal reproductive organs that share neither the renal fascia nor perinephric fat with the kidney.",
+    src:"Slides 6, 11 (Kidney location and coverings)"
+  },
+  {
+    topic:"Ureters, Bladder & Urethra",
+    q:"Which posterior abdominal muscles form part of the bed on which the kidneys rest?",
+    choices:["Rectus abdominis and external oblique","Psoas major, quadratus lumborum, and transversus abdominis","Diaphragm only","Iliacus and sartorius"],
+    answer:1,
+    correct:"The kidneys rest against the psoas major, quadratus lumborum, and transversus abdominis of the posterior abdominal wall (with the diaphragm superiorly).",
+    why:"Rectus abdominis and external oblique are anterior abdominal wall muscles, not part of the posterior renal bed; the diaphragm alone is incomplete, since it only contributes superiorly while the psoas, quadratus lumborum, and transversus abdominis form the bulk of the bed; and iliacus and sartorius are pelvic/thigh muscles located well inferior to the kidneys, not part of their bed.",
+    src:"Slide 6 (Kidney Location)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The epithelium lining the proximal convoluted tubule, specialized for reabsorption with a prominent brush border, is:",
+    choices:["Simple squamous epithelium","Stratified squamous epithelium","Transitional epithelium","Simple cuboidal epithelium"],
+    answer:3,
+    correct:"The PCT is lined by simple cuboidal epithelium (with microvilli/brush border) suited to its heavy reabsorptive role.",
+    why:"Simple squamous epithelium is a thin single layer built for diffusion, not the extensive reabsorptive brush-border function of the PCT; stratified squamous epithelium is a multilayered, abrasion-resistant lining found in structures like the esophagus, not renal tubules; and transitional epithelium lines the stretchy ureters and bladder, not the reabsorptive PCT.",
+    src:"Slide 38 (Proximal Convoluted Tubule)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The negatively charged coating on podocytes that helps repel anions and proteins during filtration is called:",
+    choices:["Glycocalyx","Surfactant","Mucin","Keratin"],
+    answer:0,
+    correct:"Podocytes are coated in a negatively charged substance called glycocalyx, which (with the negatively charged basement membrane) helps prevent filtration of large anions and proteins such as albumin.",
+    why:"Surfactant is a lipoprotein substance that reduces surface tension in the lungs' alveoli, unrelated to renal filtration; mucin is the glycoprotein component of mucus secreted by goblet cells, not a podocyte coating; and keratin is a structural protein found in the epidermis and hair, unrelated to the glomerular filtration barrier.",
+    src:"Slides 33–34 (Filtration Membranes)"
+  },
+  {
+    topic:"Renal & Urinary Histology",
+    q:"The EPO-producing, oxygen-sensing (REPOS) cells of the kidney secrete which hormone in response to low oxygenation?",
+    choices:["Renin","Erythropoietin","Aldosterone","Calcitonin"],
+    answer:1,
+    correct:"REPOS cells sense oxygenation levels and secrete erythropoietin, stimulating red blood cell production; juxtaglomerular (granular) cells instead secrete renin.",
+    why:"Renin is secreted by the separate juxtaglomerular (granular) cells in response to blood pressure changes, not by the oxygen-sensing REPOS cells; aldosterone is produced by the adrenal cortex, an entirely different organ; and calcitonin is secreted by parafollicular (C) cells of the thyroid gland, unrelated to renal oxygen sensing.",
+    src:"Slide 36 (Juxtaglomerular Apparatus)"
+  }
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  else {
+    state.missed.push({ item, chosen: idx });
+  }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>
