@@ -75,6 +75,22 @@
   }
   .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:600;margin-bottom:16px}
   .back-link:hover{color:var(--acc)}
+  .avatar-label{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 8px}
+  .avatar-picker{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px}
+  .avatar-opt{appearance:none;font-size:24px;line-height:1;padding:9px 0;border-radius:10px;
+    border:2px solid var(--line);background:var(--paper);cursor:pointer;text-align:center;filter:grayscale(60%);opacity:.75}
+  .avatar-opt:hover{border-color:var(--acc);filter:grayscale(0%);opacity:1}
+  .avatar-opt.selected{border-color:var(--acc);background:#eef0fd;filter:grayscale(0%);opacity:1}
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:6px 0 26px;min-height:170px}
+  .podium-slot{display:flex;flex-direction:column;align-items:center;width:30%;max-width:110px}
+  .podium-avatar{font-size:32px;margin-bottom:4px}
+  .podium-medal{font-size:19px;margin-bottom:2px}
+  .podium-name{font-weight:700;font-size:12.5px;text-align:center;margin-bottom:3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .podium-score{font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:700}
+  .podium-riser{width:100%;border-radius:10px 10px 0 0}
+  .podium-riser.first{height:110px;background:linear-gradient(180deg,#f5c344,#d89e1f)}
+  .podium-riser.second{height:80px;background:linear-gradient(180deg,#b8c0cc,#8f99a8)}
+  .podium-riser.third{height:58px;background:linear-gradient(180deg,#dba36a,#b97b41)}
 </style>
 </head>
 <body>
@@ -100,6 +116,8 @@
   <section id="join-form" class="card">
     <input type="text" id="code-input" maxlength="5" placeholder="CODE" autocomplete="off" autocapitalize="characters">
     <input type="text" id="nickname-input" maxlength="24" placeholder="Your nickname" autocomplete="off">
+    <p class="avatar-label">Pick an avatar</p>
+    <div class="avatar-picker" id="avatar-picker"></div>
     <p class="err" id="join-err"></p>
     <button class="btn" id="join-btn" disabled>Connecting…</button>
     <p style="text-align:center;font-size:13.5px;color:var(--muted);margin:16px 0 0">
@@ -138,6 +156,7 @@
 
   <section id="finished-screen" class="card hidden">
     <h2 style="margin-top:0;text-align:center">🏁 Final results</h2>
+    <div class="podium" id="podium"></div>
     <div id="final-leaderboard"></div>
     <button class="btn sec" id="join-another-btn" style="margin-top:18px">Join a different game</button>
   </section>
@@ -165,6 +184,28 @@
   $("code-input").addEventListener("input", function () {
     this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
   });
+
+  function playSound(name) { if (window.playSiteSound) window.playSiteSound(name); }
+
+  var AVATAR_OPTIONS = ["🦊","🐻","🐼","🐨","🦁","🐯","🐰","🐸","🐵","🐺","🦉","🐢","🐙","🦈","🐳","🦋"];
+  var selectedAvatar = AVATAR_OPTIONS[Math.floor(Math.random() * AVATAR_OPTIONS.length)];
+  function renderAvatarPicker() {
+    var box = $("avatar-picker");
+    box.innerHTML = "";
+    AVATAR_OPTIONS.forEach(function (a) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "avatar-opt" + (a === selectedAvatar ? " selected" : "");
+      btn.textContent = a;
+      btn.addEventListener("click", function () {
+        selectedAvatar = a;
+        playSound("select");
+        renderAvatarPicker();
+      });
+      box.appendChild(btn);
+    });
+  }
+  renderAvatarPicker();
 
   function waitForGroupStudy(cb) {
     if (window.GroupStudy && window.GroupStudy.whenReady) { cb(); return; }
@@ -197,7 +238,10 @@
       latestPlayers = players;
       if (lastRoomState) {
         if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
-        if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
+        if (lastRoomState.status === "finished") {
+          renderPodium("podium", latestPlayers);
+          renderLeaderboard("final-leaderboard", latestPlayers, 3);
+        }
       }
     });
   }
@@ -240,7 +284,8 @@
 
     $("join-btn").disabled = true;
     $("join-btn").textContent = "Joining…";
-    GroupStudy.joinRoom(code, nickname).then(function (result) {
+    GroupStudy.joinRoom(code, nickname, selectedAvatar).then(function (result) {
+      playSound("join");
       enterRoom(code, result.room.quizId, result.uid);
     }).catch(function (err) {
       $("join-err").textContent = (err && err.message) || "Couldn't join that room.";
@@ -327,6 +372,7 @@
     }
   }
 
+  var soundedRevealIndex = -1;
   function renderRevealScreen(room) {
     stopTimer();
     hideAllScreens();
@@ -334,6 +380,11 @@
     var q = currentQuiz.questions[room.currentQuestionIndex];
     var me = latestPlayers.filter(function (p) { return p.uid === myUid; })[0];
     var myAnswer = me && me.answers ? me.answers[room.currentQuestionIndex] : null;
+
+    if (soundedRevealIndex !== room.currentQuestionIndex) {
+      soundedRevealIndex = room.currentQuestionIndex;
+      if (myAnswer) playSound(myAnswer.correct ? "correct" : "wrong");
+    }
 
     var box = $("feedback-box");
     if (myAnswer) {
@@ -353,11 +404,14 @@
     renderLeaderboard("reveal-leaderboard", latestPlayers);
   }
 
+  var podiumSounded = false;
   function renderFinishedScreen() {
     stopTimer();
     hideAllScreens();
     show("finished-screen");
-    renderLeaderboard("final-leaderboard", latestPlayers);
+    if (!podiumSounded) { podiumSounded = true; playSound("podium"); }
+    renderPodium("podium", latestPlayers);
+    renderLeaderboard("final-leaderboard", latestPlayers, 3);
   }
 
   $("join-another-btn").addEventListener("click", function () {
@@ -365,18 +419,45 @@
     location.reload();
   });
 
-  function renderLeaderboard(containerId, players) {
+  function renderPodium(containerId, players) {
     var box = $(containerId);
+    if (!box) return;
     box.innerHTML = "";
     var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+    var top3 = sorted.slice(0, 3);
+    var order = [top3[1], top3[0], top3[2]];
+    var classes = ["second", "first", "third"];
+    var medals = ["🥈", "🥇", "🥉"];
+    order.forEach(function (p, i) {
+      if (!p) { box.appendChild(document.createElement("div")).className = "podium-slot"; return; }
+      var slot = document.createElement("div");
+      slot.className = "podium-slot";
+      slot.innerHTML =
+        '<div class="podium-avatar"></div>' +
+        '<div class="podium-medal">' + medals[i] + '</div>' +
+        '<div class="podium-name"></div>' +
+        '<div class="podium-score"></div>' +
+        '<div class="podium-riser ' + classes[i] + '"></div>';
+      slot.querySelector(".podium-avatar").textContent = p.avatar || "🦊";
+      slot.querySelector(".podium-name").textContent = p.nickname + (p.uid === myUid ? " (you)" : "");
+      slot.querySelector(".podium-score").textContent = (p.score || 0) + " pts";
+      box.appendChild(slot);
+    });
+  }
+
+  function renderLeaderboard(containerId, players, startIndex) {
+    startIndex = startIndex || 0;
+    var box = $(containerId);
+    box.innerHTML = "";
+    var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); }).slice(startIndex);
     sorted.forEach(function (p, i) {
       var row = document.createElement("div");
       row.className = "lb-row" + (p.uid === myUid ? " me" : "");
       row.innerHTML =
-        '<span class="rank">#' + (i + 1) + '</span>' +
-        '<span class="name"></span>' +
+        '<span class="rank">#' + (startIndex + i + 1) + '</span>' +
+        '<span class="name">' + (p.avatar || "🦊") + ' <span></span></span>' +
         '<span class="score">' + (p.score || 0) + '</span>';
-      row.querySelector(".name").textContent = p.nickname + (p.uid === myUid ? " (you)" : "");
+      row.querySelector(".name span").textContent = p.nickname + (p.uid === myUid ? " (you)" : "");
       box.appendChild(row);
     });
   }

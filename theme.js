@@ -171,51 +171,71 @@
   // works offline. AudioContext is created lazily on first actual play
   // (always from inside a real click handler) so it starts in a valid,
   // already-user-gestured state instead of "suspended" by autoplay policy.
-  function initSoundEffects() {
-    var audioCtx = null;
-    function getCtx() {
-      if (!audioCtx) {
-        var AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return null;
-        audioCtx = new AC();
-      }
-      if (audioCtx.state === "suspended") audioCtx.resume();
-      return audioCtx;
+  //
+  // The tone engine itself (getCtx/tone/SOUNDS/playSound) is hoisted to this
+  // outer scope and exposed as window.playSiteSound so pages outside the
+  // shared quiz engine -- currently group-host.html/group-join.html, which
+  // don't have the #shuffle-toggle this file uses to detect "is this a quiz
+  // page" and so never call initSoundEffects() below -- can still play the
+  // same sounds through the same "soundEffects" localStorage toggle, instead
+  // of duplicating this whole engine.
+  var audioCtx = null;
+  function getCtx() {
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      audioCtx = new AC();
     }
-    function tone(ctx, freq, startTime, duration, type, peakGain) {
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
-      osc.type = type || "sine";
-      osc.frequency.value = freq;
-      var t0 = ctx.currentTime + startTime;
-      gain.gain.setValueAtTime(0, t0);
-      gain.gain.linearRampToValueAtTime(peakGain || 0.12, t0 + 0.008);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(t0);
-      osc.stop(t0 + duration + 0.02);
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function tone(ctx, freq, startTime, duration, type, peakGain) {
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = type || "sine";
+    osc.frequency.value = freq;
+    var t0 = ctx.currentTime + startTime;
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(peakGain || 0.12, t0 + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.02);
+  }
+  var SOUNDS = {
+    select: function (ctx) { tone(ctx, 700, 0, 0.05, "sine", 0.07); },
+    correct: function (ctx) {
+      tone(ctx, 880, 0, 0.09, "sine", 0.12);
+      tone(ctx, 1318.5, 0.08, 0.14, "sine", 0.12);
+    },
+    wrong: function (ctx) { tone(ctx, 170, 0, 0.18, "sine", 0.12); },
+    complete: function (ctx) {
+      [523.25, 659.25, 783.99, 1046.5].forEach(function (freq, i) {
+        tone(ctx, freq, i * 0.11, i === 3 ? 0.24 : 0.12, "sine", 0.12);
+      });
+    },
+    join: function (ctx) { tone(ctx, 990, 0, 0.06, "sine", 0.08); },
+    tick: function (ctx) { tone(ctx, 520, 0, 0.035, "square", 0.04); },
+    reveal: function (ctx) {
+      tone(ctx, 440, 0, 0.07, "triangle", 0.09);
+      tone(ctx, 660, 0.06, 0.12, "triangle", 0.1);
+    },
+    podium: function (ctx) {
+      [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function (freq, i) {
+        tone(ctx, freq, i * 0.1, i === 4 ? 0.35 : 0.12, "sine", 0.13);
+      });
     }
-    var SOUNDS = {
-      select: function (ctx) { tone(ctx, 700, 0, 0.05, "sine", 0.07); },
-      correct: function (ctx) {
-        tone(ctx, 880, 0, 0.09, "sine", 0.12);
-        tone(ctx, 1318.5, 0.08, 0.14, "sine", 0.12);
-      },
-      wrong: function (ctx) { tone(ctx, 170, 0, 0.18, "sine", 0.12); },
-      complete: function (ctx) {
-        [523.25, 659.25, 783.99, 1046.5].forEach(function (freq, i) {
-          tone(ctx, freq, i * 0.11, i === 3 ? 0.24 : 0.12, "sine", 0.12);
-        });
-      }
-    };
-    function playSound(name) {
-      if (localStorage.getItem("soundEffects") !== "1") return;
-      try {
-        var ctx = getCtx();
-        if (ctx && SOUNDS[name]) SOUNDS[name](ctx);
-      } catch (e) {}
-    }
+  };
+  function playSound(name) {
+    if (localStorage.getItem("soundEffects") !== "1") return;
+    try {
+      var ctx = getCtx();
+      if (ctx && SOUNDS[name]) SOUNDS[name](ctx);
+    } catch (e) {}
+  }
+  window.playSiteSound = playSound;
 
+  function initSoundEffects() {
     document.addEventListener("click", function (e) {
       var opt = e.target.closest && e.target.closest(".opt, .choice");
       if (!opt) return;

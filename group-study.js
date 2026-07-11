@@ -134,14 +134,18 @@
     return roomRef(code).update({ status: "finished" });
   };
 
+  var DEFAULT_AVATAR = "🦊";
+
   // ---- Player actions ----
-  window.GroupStudy.joinRoom = function (code, nickname) {
+  window.GroupStudy.joinRoom = function (code, nickname, avatar) {
     nickname = (nickname || "").trim().slice(0, 24) || "Anonymous";
+    avatar = avatar || DEFAULT_AVATAR;
     return whenReady().then(function (uid) {
       return roomRef(code).get().then(function (snap) {
         if (!snap.exists) throw new Error("No room with that code.");
         return playersRef(code).doc(uid).set({
           nickname: nickname,
+          avatar: avatar,
           score: 0,
           answers: {},
           joinedAt: firebase.firestore.FieldValue.serverTimestamp()

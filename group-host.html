@@ -82,6 +82,22 @@
     display:flex;align-items:baseline;gap:8px}
   .host-code-badge .hcb-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
   .host-code-badge .hcb-value{font:800 18px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:var(--acc)}
+  .pchip .pc-av{margin-right:6px}
+  .answerer-avatars{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 16px}
+  .answerer-avatar{font-size:26px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+    border-radius:50%;background:var(--paper);border:2px solid var(--line);filter:grayscale(100%);opacity:.5;
+    transition:filter .25s,opacity .25s,transform .25s,border-color .25s}
+  .answerer-avatar.answered{filter:grayscale(0%);opacity:1;border-color:var(--good);transform:scale(1.1)}
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin:6px 0 26px;min-height:180px}
+  .podium-slot{display:flex;flex-direction:column;align-items:center;width:30%;max-width:130px}
+  .podium-avatar{font-size:36px;margin-bottom:4px}
+  .podium-medal{font-size:20px;margin-bottom:2px}
+  .podium-name{font-weight:700;font-size:13.5px;text-align:center;margin-bottom:3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .podium-score{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:700}
+  .podium-riser{width:100%;border-radius:10px 10px 0 0}
+  .podium-riser.first{height:116px;background:linear-gradient(180deg,#f5c344,#d89e1f)}
+  .podium-riser.second{height:84px;background:linear-gradient(180deg,#b8c0cc,#8f99a8)}
+  .podium-riser.third{height:60px;background:linear-gradient(180deg,#dba36a,#b97b41)}
   .footer-mark-ink { stroke: #1f2937; }
   .footer-mark-accent { stroke: #2563eb; }
   @media (prefers-color-scheme: dark) {
@@ -153,6 +169,7 @@
     <div class="timer hidden" id="timer-display">20</div>
     <div class="qtext" id="q-text"></div>
     <div class="choices" id="q-choices"></div>
+    <div class="answerer-avatars" id="answerer-avatars"></div>
     <div class="progress" id="answer-progress"></div>
     <button class="btn" id="reveal-btn">Reveal answer</button>
   </section>
@@ -168,6 +185,7 @@
 
   <section id="finished-screen" class="card hidden">
     <h2 style="margin-top:0">🏁 Final results</h2>
+    <div class="podium" id="podium"></div>
     <div id="final-leaderboard"></div>
     <button class="btn sec" id="new-game-btn" style="margin-top:18px">Start a new game</button>
   </section>
@@ -188,6 +206,7 @@
   function show(id) { $(id).classList.remove("hidden"); }
   function hide(id) { $(id).classList.add("hidden"); }
   function toast(msg) { $("status-toast").textContent = msg || ""; }
+  function playSound(name) { if (window.playSiteSound) window.playSiteSound(name); }
 
   var selectedQuizId = null;
   var groupStudyReady = false;
@@ -307,13 +326,23 @@
     if (unsubPlayers) unsubPlayers();
     if (unsubRoom) unsubRoom();
 
+    var knownPlayerUids = null;
     unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
+      if (knownPlayerUids && lastRoomState && lastRoomState.status === "lobby") {
+        var isNewJoin = players.some(function (p) { return !knownPlayerUids.has(p.uid); });
+        if (isNewJoin) playSound("join");
+      }
+      knownPlayerUids = new Set(players.map(function (p) { return p.uid; }));
+
       latestPlayers = players;
       renderPlayerList(players);
       updateAnswerProgress();
       if (lastRoomState) {
         if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
-        if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
+        if (lastRoomState.status === "finished") {
+          renderPodium("podium", latestPlayers);
+          renderLeaderboard("final-leaderboard", latestPlayers, 3);
+        }
       }
       $("start-btn").disabled = players.length === 0;
       $("start-btn").textContent = players.length === 0
@@ -375,7 +404,8 @@
     players.forEach(function (p) {
       var chip = document.createElement("span");
       chip.className = "pchip";
-      chip.textContent = p.nickname;
+      chip.innerHTML = '<span class="pc-av">' + (p.avatar || "🦊") + '</span>';
+      chip.appendChild(document.createTextNode(p.nickname));
       box.appendChild(chip);
     });
   }
@@ -459,16 +489,38 @@
     updateAnswerProgress();
   }
 
+  var lastTickedAnsweredCount = -1;
   function updateAnswerProgress() {
-    if (!lastRoomState || lastRoomState.status !== "question") return;
+    if (!lastRoomState || lastRoomState.status !== "question") { lastTickedAnsweredCount = -1; return; }
     var idx = lastRoomState.currentQuestionIndex;
-    var answered = latestPlayers.filter(function (p) { return p.answers && p.answers[idx] != null; }).length;
-    $("answer-progress").textContent = answered + " of " + latestPlayers.length + " answered";
+    var answeredCount = 0;
+
+    var box = $("answerer-avatars");
+    box.innerHTML = "";
+    latestPlayers.forEach(function (p) {
+      var didAnswer = p.answers && p.answers[idx] != null;
+      if (didAnswer) answeredCount++;
+      var chip = document.createElement("div");
+      chip.className = "answerer-avatar" + (didAnswer ? " answered" : "");
+      chip.textContent = p.avatar || "🦊";
+      chip.title = p.nickname + (didAnswer ? " -- answered" : " -- thinking...");
+      box.appendChild(chip);
+    });
+
+    if (lastTickedAnsweredCount >= 0 && answeredCount > lastTickedAnsweredCount) playSound("tick");
+    lastTickedAnsweredCount = answeredCount;
+
+    $("answer-progress").textContent = answeredCount + " of " + latestPlayers.length + " answered";
   }
 
+  var soundedRevealIndex = -1;
   function renderRevealScreen(room) {
     stopTimer();
     hide("question-screen"); hide("lobby"); hide("finished-screen"); show("reveal-screen");
+    if (soundedRevealIndex !== room.currentQuestionIndex) {
+      soundedRevealIndex = room.currentQuestionIndex;
+      playSound("reveal");
+    }
     var q = currentQuiz.questions[room.currentQuestionIndex];
     $("reveal-q-text").textContent = q.q;
     var box = $("reveal-choices");
@@ -484,24 +536,54 @@
     $("next-btn").textContent = isLast ? "Finish game →" : "Next question →";
   }
 
+  var podiumSounded = false;
   function renderFinishedScreen() {
     stopTimer();
     hide("question-screen"); hide("reveal-screen"); hide("lobby"); show("finished-screen");
-    renderLeaderboard("final-leaderboard", latestPlayers);
+    if (!podiumSounded) { podiumSounded = true; playSound("podium"); }
+    renderPodium("podium", latestPlayers);
+    renderLeaderboard("final-leaderboard", latestPlayers, 3);
   }
 
-  function renderLeaderboard(containerId, players) {
+  function renderPodium(containerId, players) {
     var box = $(containerId);
+    if (!box) return;
     box.innerHTML = "";
     var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+    var top3 = sorted.slice(0, 3);
+    var order = [top3[1], top3[0], top3[2]];
+    var classes = ["second", "first", "third"];
+    var medals = ["🥈", "🥇", "🥉"];
+    order.forEach(function (p, i) {
+      if (!p) { var empty = document.createElement("div"); empty.className = "podium-slot"; box.appendChild(empty); return; }
+      var slot = document.createElement("div");
+      slot.className = "podium-slot";
+      slot.innerHTML =
+        '<div class="podium-avatar"></div>' +
+        '<div class="podium-medal">' + medals[i] + '</div>' +
+        '<div class="podium-name"></div>' +
+        '<div class="podium-score"></div>' +
+        '<div class="podium-riser ' + classes[i] + '"></div>';
+      slot.querySelector(".podium-avatar").textContent = p.avatar || "🦊";
+      slot.querySelector(".podium-name").textContent = p.nickname;
+      slot.querySelector(".podium-score").textContent = (p.score || 0) + " pts";
+      box.appendChild(slot);
+    });
+  }
+
+  function renderLeaderboard(containerId, players, startIndex) {
+    startIndex = startIndex || 0;
+    var box = $(containerId);
+    box.innerHTML = "";
+    var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); }).slice(startIndex);
     sorted.forEach(function (p, i) {
       var row = document.createElement("div");
       row.className = "lb-row";
       row.innerHTML =
-        '<span class="rank">#' + (i + 1) + '</span>' +
-        '<span class="name"></span>' +
+        '<span class="rank">#' + (startIndex + i + 1) + '</span>' +
+        '<span class="name">' + (p.avatar || "🦊") + ' <span></span></span>' +
         '<span class="score">' + (p.score || 0) + '</span>';
-      row.querySelector(".name").textContent = p.nickname;
+      row.querySelector(".name span").textContent = p.nickname;
       box.appendChild(row);
     });
   }
