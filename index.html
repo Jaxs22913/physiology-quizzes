@@ -347,18 +347,20 @@
       .search-input-box { flex: 1 1 100%; }
       /* 2-up icon cards instead of two identical full-width stacked bars --
          each button gets its own colored icon chip so "pick one of these
-         two things" reads at a glance instead of parsing two matching rows. */
+         two things" reads at a glance instead of parsing two matching rows.
+         Icon sits beside the label (not stacked above it) so the card only
+         needs to be as tall as one line of text, not icon+text stacked. */
       .guides-btn {
         flex: 1 1 calc(50% - 4px);
-        flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 8px;
-        padding: 12px;
+        padding: 10px 12px;
         white-space: normal;
       }
       .guides-btn-icon {
-        width: 30px; height: 30px; padding: 7px; border-radius: 9px;
+        width: 26px; height: 26px; padding: 6px; border-radius: 8px;
         background: var(--accent-soft); color: var(--accent); box-sizing: border-box;
+        flex-shrink: 0;
       }
       .guides-btn.group-btn .guides-btn-icon { background: var(--accent2-soft); color: var(--accent2); }
       .guides-btn span { font-size: 13px; line-height: 1.25; }
