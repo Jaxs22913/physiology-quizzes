@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renal Physiology I — Quiz (65 Questions)</title>
+<style>
+  :root{
+    --navy:#134e4a; --indigo:#0f766e; --gold:#2dd4bf; --ice:#f0fdfa;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Renal Physiology I</h1>
+    <div class="sub">Bladder &amp; Micturition &middot; Glomerular Filtration &middot; Regulation of GFR &middot; Class of 2028 review</div>
+    <span class="pill">65 questions &middot; Renal Physiology I</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It draws on the instructional objectives below.</p>
+    <div class="chips"><span class="chip">Bladder Anatomy &amp; Innervation</span><span class="chip">Micturition Reflex</span><span class="chip">Glomerular Filtration</span><span class="chip">Regulation of GFR</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=renal-1" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "The detrusor muscle is composed primarily of:", "opts": [["Skeletal muscle", "Skeletal muscle is voluntary and forms the external urethral sphincter, not the detrusor, which is smooth muscle."], ["Cardiac muscle", "Cardiac muscle is unique to the heart wall; the bladder wall is built from smooth muscle, not cardiac tissue."], ["Smooth muscle", "Correct: the detrusor is smooth muscle arranged in interlacing bundles, contracting involuntarily under parasympathetic (pelvic nerve) control to empty the bladder."], ["Elastic connective tissue", "Elastic connective tissue contributes to bladder wall compliance during filling, but the contractile force for voiding comes from smooth muscle, not connective tissue."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "The primary function of the detrusor muscle is to:", "opts": [["Close the urethra", "Closing the urethra is the job of the urethral sphincters, not the detrusor muscle itself."], ["Contract the bladder during urination", "Correct: detrusor contraction raises bladder pressure and generates the force that expels urine during micturition — its defining function."], ["Relax the bladder during filling", "The detrusor does relax to accommodate filling (receptive relaxation), but that is a passive filling property, not the muscle's primary, defining function."], ["Produce urine", "Urine is produced by the kidneys through filtration, reabsorption, and secretion; the detrusor only stores and expels urine, it does not make it."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "The trigone is located:", "opts": [["At the dome of the bladder", "The dome is the opposite, distensible pole of the bladder where most stretch occurs during filling; it is not the trigone."], ["Between the ureter openings and urethra", "Correct: the trigone is the smooth-walled triangular region bounded by the two ureteral orifices and the internal urethral opening."], ["Inside the renal pelvis", "The renal pelvis is a kidney structure that collects urine from the calyces; it is unrelated to the bladder's trigone."], ["Within the ureter", "The trigone is a region of the bladder floor, not a structure located within the ureter itself."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Which sphincter is under voluntary control?", "opts": [["Internal urethral sphincter", "The internal urethral sphincter is smooth muscle under involuntary sympathetic control, not voluntary control."], ["External urethral sphincter", "Correct: the external urethral sphincter is skeletal muscle innervated by the somatic pudendal nerve, giving voluntary control over voiding."], ["Internal anal sphincter", "The internal anal sphincter governs fecal, not urinary, continence, and like its urinary counterpart is smooth muscle under involuntary control."], ["Detrusor muscle", "The detrusor is smooth muscle driven involuntarily by parasympathetic input, not a structure under voluntary control."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Parasympathetic fibers supplying the bladder travel in the:", "opts": [["Pudendal nerve", "The pudendal nerve is a somatic nerve that voluntarily controls the external sphincter; it does not carry autonomic parasympathetic fibers to the detrusor."], ["Pelvic nerve", "Correct: parasympathetic fibers from S2–S4 travel in the pelvic nerve to the bladder, driving detrusor contraction during voiding."], ["Hypogastric nerve", "The hypogastric nerve carries sympathetic fibers that promote storage (detrusor relaxation), not parasympathetic fibers."], ["Vagus nerve", "The vagus nerve supplies parasympathetic innervation to thoracic and upper abdominal viscera; pelvic organs like the bladder are supplied by the pelvic splanchnic nerves instead."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "The pelvic nerve originates from:", "opts": [["T5-T9", "T5–T9 is a mid-thoracic sympathetic level associated with structures like the stomach and spleen via the splanchnic nerves, not the pelvic parasympathetics."], ["L1-L2", "L1–L2 is the sympathetic level that gives rise to the hypogastric nerve (storage function), not the parasympathetic pelvic nerve."], ["S2-S4", "Correct: the pelvic nerve arises from the sacral parasympathetic outflow at S2–S4."], ["C5-C8", "C5–C8 is a cervical level associated with the brachial plexus and phrenic nerve contributions, unrelated to pelvic autonomic outflow."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Sympathetic stimulation of the bladder primarily promotes:", "opts": [["Bladder emptying", "Sympathetic activity favors storage, not emptying; emptying is driven by parasympathetic (pelvic nerve) activity instead."], ["Detrusor contraction", "Sympathetic input relaxes, rather than contracts, the detrusor, which favors bladder filling."], ["Urine storage", "Correct: sympathetic (hypogastric) tone relaxes the detrusor and contracts the internal sphincter, favoring urine storage."], ["External sphincter relaxation", "The external sphincter is skeletal muscle controlled voluntarily by the somatic pudendal nerve, not by the autonomic sympathetic system."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Which nerve controls the external urethral sphincter?", "opts": [["Pelvic", "The pelvic nerve carries parasympathetic fibers that control detrusor contraction, not the external sphincter."], ["Vagus", "The vagus nerve is not involved in pelvic floor or urinary sphincter control."], ["Pudendal", "Correct: the somatic pudendal nerve provides voluntary control of the skeletal-muscle external urethral sphincter."], ["Hypogastric", "The hypogastric nerve is sympathetic and acts on the internal sphincter and detrusor tone for storage, not on the (voluntary) external sphincter."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "The hypogastric nerve primarily:", "opts": [["Contracts the detrusor", "This is the opposite of the hypogastric nerve's effect: it relaxes, rather than contracts, the detrusor to favor filling."], ["Relaxes the detrusor", "Correct: sympathetic input via the hypogastric nerve relaxes the detrusor and closes the internal sphincter, favoring storage."], ["Detects stretch", "Detecting stretch is a sensory (afferent) function carried mainly by the pelvic nerve, not an effect produced by the (motor) hypogastric nerve."], ["Contracts skeletal muscle", "The hypogastric nerve is autonomic and acts on smooth muscle (detrusor, internal sphincter); skeletal muscle of the external sphincter is controlled by the somatic pudendal nerve instead."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Loss of pudendal nerve function would MOST directly impair:", "opts": [["Glomerular filtration", "GFR is set by glomerular hemodynamics (arteriolar tone, Starling forces), which are independent of pudendal nerve function."], ["Voluntary control of urination", "Correct: the pudendal nerve provides voluntary control of the external urethral sphincter, so losing it most directly impairs voluntary continence and voiding control."], ["Kidney blood flow", "Renal blood flow is governed by renal autoregulation and sympathetic input to the renal vasculature, not the pudendal nerve."], ["RAAS activation", "RAAS activation depends on renal perfusion pressure and macula densa signaling, processes unrelated to pudendal nerve function."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Bladder stretch receptors send sensory information primarily through the:", "opts": [["Hypogastric nerve", "The hypogastric nerve is primarily a sympathetic motor pathway promoting storage; it is not the main sensory route for bladder stretch."], ["Pelvic nerve", "Correct: afferent stretch signals from the bladder wall travel centrally via the pelvic nerve, triggering the micturition reflex."], ["Pudendal nerve", "The pudendal nerve carries somatic sensory and motor fibers for the perineum and external sphincter, not the primary bladder-wall stretch afferents."], ["Phrenic nerve", "The phrenic nerve innervates the diaphragm and is entirely unrelated to bladder sensation."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Bladder Anatomy & Innervation", "q": "Which pairing is CORRECT?", "opts": [["Pelvic = storage", "This pairing is reversed: the pelvic nerve mediates voiding (detrusor contraction), not storage."], ["Hypogastric = urination", "This pairing is reversed: the hypogastric nerve mediates storage (detrusor relaxation), not urination."], ["Pudendal = voluntary control", "Correct: the pudendal nerve gives voluntary control over the external urethral sphincter."], ["Vagus = bladder contraction", "The vagus nerve does not innervate the bladder at all; detrusor contraction is driven by the pelvic (parasympathetic) nerve."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The micturition reflex begins when:", "opts": [["Blood pressure rises", "A rise in blood pressure triggers baroreceptor reflexes affecting the cardiovascular system, not the micturition reflex."], ["Stretch receptors in the bladder wall are activated", "Correct: as the bladder fills, stretch receptors in its wall are activated, and their afferent signals initiate the micturition reflex."], ["Plasma osmolarity falls", "A fall in plasma osmolarity triggers osmoreceptor-mediated changes in ADH secretion for water balance, not the micturition reflex."], ["ADH is released", "ADH release governs renal water reabsorption in response to osmolality/volume changes; it does not initiate the micturition reflex."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The micturition reflex is primarily a:", "opts": [["Cortical reflex", "The cortex modulates the reflex by voluntarily inhibiting or permitting it, but the basic reflex arc itself is not cortical."], ["Brainstem reflex", "The pontine micturition center helps coordinate a smooth, complete voiding contraction, but the fundamental reflex arc is spinal, not brainstem-based."], ["Autonomic spinal reflex", "Correct: the micturition reflex is fundamentally an autonomic spinal cord reflex centered on the sacral segments (S2–S4), modulated by higher centers."], ["Somatic reflex", "The core reflex driving detrusor contraction is autonomic (parasympathetic); only control of the external sphincter is somatic, so the reflex as a whole is not classified as somatic."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The spinal cord segments involved are:", "opts": [["C5-C8", "C5–C8 is a cervical level associated with upper limb and phrenic nerve function, not the micturition reflex."], ["T1-T4", "T1–T4 is an upper thoracic level associated mainly with cardiac sympathetic outflow, not the micturition reflex center."], ["L1-L2", "L1–L2 is the sympathetic level giving rise to the hypogastric nerve (storage function), not the reflex center itself."], ["S2-S4", "Correct: the micturition reflex is centered on the sacral spinal segments S2–S4."]], "c": 3, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "During normal urination, the detrusor muscle:", "opts": [["Relaxes", "Detrusor relaxation occurs during filling and storage, the opposite of what happens during voiding."], ["Contracts", "Correct: during urination, the detrusor contracts, generating the pressure needed to expel urine."], ["Does not change", "Detrusor tension changes markedly during voiding; it is not static, since active contraction generates the expulsive pressure."], ["Contracts only voluntarily", "Detrusor contraction is triggered reflexively by parasympathetic input; voluntary control is exerted mainly over the timing (via the external sphincter and cortical permission), not over whether the detrusor itself contracts."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The internal urethral sphincter:", "opts": [["Contracts during urination", "The internal sphincter must relax, not contract, during voiding to allow urine to pass into the urethra."], ["Relaxes during urination", "Correct: the smooth-muscle internal urethral sphincter relaxes during voiding, permitting urine outflow."], ["Is skeletal muscle", "The internal urethral sphincter is smooth muscle, not skeletal muscle — that distinction belongs to the external sphincter."], ["Is controlled by the pudendal nerve", "The internal sphincter is controlled by sympathetic (hypogastric) input, not the pudendal nerve, which governs the external sphincter."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The external urethral sphincter is relaxed by:", "opts": [["Pelvic nerves", "The pelvic nerve drives detrusor contraction; it does not act on the external sphincter."], ["Pudendal reflex inhibition", "Correct: voluntary voiding involves withdrawing (inhibiting) pudendal somatic drive, which relaxes the external urethral sphincter."], ["Hypogastric stimulation", "The hypogastric nerve acts on the internal sphincter and detrusor (sympathetic, storage-promoting effects), not on the (somatically controlled) external sphincter."], ["RAAS activation", "RAAS is a renal hormonal system governing sodium/water handling and blood pressure; it has no role in sphincter relaxation."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "Which brain region normally inhibits the micturition reflex until an appropriate time?", "opts": [["Cerebral cortex", "Correct: the cerebral cortex exerts voluntary inhibitory control over the sacral reflex, holding voiding in check until it is socially appropriate."], ["Cerebellum", "The cerebellum coordinates movement and balance; it is not the site of voluntary suppression of the voiding reflex."], ["Hypothalamus", "The hypothalamus regulates broad autonomic and endocrine homeostasis, but it is not the primary site exerting voluntary inhibitory control over micturition."], ["Medulla only", "The pontine micturition center (not the medulla) helps coordinate voiding, and voluntary inhibition specifically arises from the cortex, not the medulla alone."]], "c": 0, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "Normally, after complete urination, approximately how much urine remains?", "opts": [["0 mL", "A completely empty bladder (literally 0 mL) is not the normal physiologic outcome; a small residual volume normally remains."], ["5-10 mL", "Correct: after normal, complete voiding, only a small residual volume (roughly 5–10 mL) remains in the bladder."], ["100 mL", "A 100 mL residual is well above normal and would suggest incomplete emptying or voiding dysfunction, not the typical outcome."], ["250 mL", "A 250 mL residual is markedly elevated and would indicate significant voiding dysfunction, far from a normal residual volume."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "Increasing abdominal pressure voluntarily helps initiate urination by:", "opts": [["Lowering bladder pressure", "Voluntary abdominal straining raises, rather than lowers, bladder pressure, which is the opposite of what promotes voiding here."], ["Stimulating stretch receptors", "Correct: a Valsalva-type abdominal squeeze raises bladder pressure and further stretches the bladder wall receptors, reinforcing the micturition reflex."], ["Closing the urethra", "Voiding requires the urethra to open, not close; closing the urethra would oppose, not assist, urination."], ["Activating sympathetic nerves", "Sympathetic activation promotes storage (detrusor relaxation and internal sphincter closure), the opposite effect of what is needed to initiate voiding."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "Which event occurs FIRST?", "opts": [["External sphincter relaxes", "Sphincter relaxation occurs after the reflex has been triggered and voluntarily permitted, not as the first event."], ["Stretch receptors activate", "Correct: stretch receptor activation as the bladder fills is the initiating event that triggers the rest of the micturition reflex."], ["Detrusor contracts", "Detrusor contraction is a downstream consequence of stretch receptor activation and reflex processing, not the first event."], ["Urine exits urethra", "Urine exiting the urethra is the final outcome of the sequence, occurring after sphincter relaxation and detrusor contraction."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "Failure of voluntary relaxation of the external sphincter would MOST likely result in:", "opts": [["Polyuria", "Polyuria refers to excess urine production, a renal/hormonal issue, not a consequence of failed sphincter relaxation."], ["Urinary retention", "Correct: if the external sphincter cannot relax voluntarily, outflow is obstructed and urine is retained in the bladder."], ["Increased GFR", "GFR is determined by glomerular hemodynamics upstream in the kidney and is unaffected by a distal urethral outflow problem."], ["Proteinuria", "Proteinuria reflects a defect in the glomerular filtration barrier, not an outflow obstruction caused by failure of sphincter relaxation."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Micturition Reflex", "q": "The micturition reflex becomes stronger as:", "opts": [["Blood pressure rises", "The strength of the micturition reflex depends on bladder wall stretch, not on systemic blood pressure."], ["Bladder filling increases", "Correct: as bladder filling increases, stretch-receptor firing increases proportionally, progressively strengthening the micturition reflex."], ["Plasma sodium rises", "Plasma sodium affects osmoregulation and RAAS activity, not the firing of bladder stretch receptors."], ["Plasma glucose rises", "Plasma glucose level is unrelated to bladder wall stretch or the strength of the micturition reflex."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Glomerular filtration is:", "opts": [["Reabsorption into blood", "Reabsorption is the movement of filtered substances from the tubule back into the blood — the reverse direction of, and a step that occurs after, filtration."], ["Secretion into tubules", "Secretion is a separate tubular process that moves solutes from peritubular blood directly into the tubular fluid; it is distinct from glomerular filtration."], ["Filtration of plasma into Bowman's capsule", "Correct: glomerular filtration is the bulk movement of a protein-free plasma ultrafiltrate from the glomerular capillaries into Bowman's capsule."], ["Excretion of urine", "Excretion is the final elimination of urine from the body, the net product of filtration, reabsorption, and secretion combined — not filtration itself."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Normal GFR is closest to:", "opts": [["25 mL/min", "25 mL/min is far below normal GFR and would represent severe renal impairment."], ["75 mL/min", "75 mL/min is below the normal value of roughly 125 mL/min."], ["125 mL/min", "Correct: normal GFR is approximately 125 mL/min."], ["500 mL/min", "500 mL/min vastly exceeds normal GFR and is not physiologically representative of glomerular filtration."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Approximately how much filtrate is produced each day?", "opts": [["2 L", "2 L is roughly the volume of daily urine output after reabsorption, not the total filtrate volume produced by the glomeruli."], ["20 L", "20 L underestimates daily filtrate; at ~125 mL/min over 24 hours, filtrate volume is much closer to 180 L."], ["180 L", "Correct: about 125 mL/min sustained over 1440 minutes per day yields roughly 180 L of filtrate daily, over 99% of which is reabsorbed."], ["500 L", "500 L overestimates daily filtrate production well beyond what a GFR of ~125 mL/min generates over 24 hours."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Which substance should normally NOT appear in glomerular filtrate?", "opts": [["Glucose", "Glucose is small and freely filtered at the glomerulus; it is normally absent from urine only because the proximal tubule fully reabsorbs it afterward, not because it is excluded from the filtrate."], ["Sodium", "Sodium is a small ion that is freely filtered at the glomerulus and appears in the filtrate."], ["Albumin", "Correct: albumin is large and carries a net negative charge, so it is normally excluded by the size- and charge-selective filtration barrier."], ["Water", "Water is freely filtered and makes up the bulk of the glomerular filtrate."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "The glomerular filtration barrier consists of all EXCEPT:", "opts": [["Fenestrated endothelium", "Fenestrated endothelium IS part of the filtration barrier — its pores exclude blood cells while allowing plasma and solutes through, so this is not the exception."], ["Basement membrane", "The basement membrane IS part of the filtration barrier, providing the main size- and charge-selective layer, so this is not the exception."], ["Podocytes", "Podocytes (via their interdigitating foot processes and filtration slits) ARE part of the filtration barrier, so this is not the exception."], ["Mesangial cells", "Correct: mesangial cells provide structural support and contractile function within the glomerular tuft but are not one of the three layers of the filtration barrier."]], "c": 3, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Podocytes primarily function to:", "opts": [["Produce renin", "Renin is produced by juxtaglomerular cells of the afferent arteriole, not by podocytes."], ["Form filtration slits", "Correct: podocyte foot processes interdigitate to form filtration slits (bridged by slit diaphragms), the final size barrier of the glomerulus."], ["Produce erythropoietin", "Erythropoietin is produced by peritubular interstitial fibroblast-like cells in response to hypoxia, not by podocytes."], ["Reabsorb glucose", "Glucose reabsorption occurs via SGLT transporters on proximal tubule epithelial cells, not podocytes."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Albumin is minimally filtered because it is:", "opts": [["Too small", "Albumin is actually a large molecule; its size (in addition to its charge) is what limits filtration, so smallness is not the reason."], ["Positively charged", "Albumin carries a net negative charge, not a positive one, at physiologic pH."], ["Negatively charged", "Correct: beyond its size, albumin's negative charge is repelled by the negatively charged glomerular basement membrane, further limiting its filtration."], ["Lipid soluble", "Lipid solubility is not the relevant property governing passage through the glomerular filtration barrier, which filters based on size and charge."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Mesangial cells:", "opts": [["Form filtration slits", "Filtration slits are formed by podocyte foot processes, not by mesangial cells."], ["Are part of the filtration barrier", "Mesangial cells are not one of the three layers of the filtration barrier (endothelium, basement membrane, podocytes)."], ["Provide structural support and contractile function", "Correct: mesangial cells provide structural support for the glomerular capillary tuft and can contract to modulate the surface area available for filtration."], ["Produce urine", "Urine is the composite product of filtration, reabsorption, and secretion across the whole nephron, not something produced by mesangial cells."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Which equation correctly describes GFR?", "opts": [["GFR = PG − PB", "This omits the filtration coefficient (Kf) and the oncotic pressure terms that make up net filtration pressure; it is an incomplete description."], ["GFR = Kf × Net Filtration Pressure", "Correct: GFR = Kf × NFP, where Kf is the filtration coefficient (permeability × surface area) and NFP is the net filtration pressure."], ["GFR = BP × HR", "Blood pressure and heart rate together determine cardiac output, not glomerular filtration rate directly."], ["GFR = RBF × FF", "This substitutes renal blood flow for renal plasma flow; filtration fraction is properly defined relative to plasma flow (FF = GFR/RPF), not whole blood flow."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Kf represents:", "opts": [["Blood flow", "Blood flow describes renal blood flow (RBF), a separate hemodynamic variable, not the filtration coefficient Kf."], ["Permeability × Surface Area", "Correct: Kf (the filtration coefficient) equals capillary permeability multiplied by the available surface area for filtration."], ["Pressure gradient", "Pressure gradient describes the hydrostatic and oncotic pressure differences that make up net filtration pressure, a separate term from Kf."], ["Oncotic pressure", "Oncotic pressure is one component of net filtration pressure, not the permeability-surface area coefficient Kf."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Which substance is considered the gold standard for measuring GFR?", "opts": [["Creatinine", "Creatinine is a convenient clinical estimate of GFR, but because it is also mildly secreted by the tubules, it is not the true gold standard."], ["Glucose", "Glucose is normally almost completely reabsorbed by the proximal tubule, so its clearance is near zero and does not reflect GFR."], ["Inulin", "Correct: inulin is freely filtered and neither reabsorbed nor secreted by the tubules, so its clearance exactly equals GFR, making it the gold standard."], ["Albumin", "Albumin is essentially excluded from the filtrate under normal conditions, so its clearance cannot be used to measure GFR."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Creatinine clearance slightly:", "opts": [["Underestimates GFR", "This is the opposite of what happens: tubular secretion adds extra creatinine to the urine, making its clearance slightly higher than, not lower than, true GFR."], ["Equals GFR exactly", "Inulin clearance, not creatinine clearance, equals GFR exactly; creatinine is subject to some tubular secretion."], ["Overestimates GFR", "Correct: a small amount of creatinine is secreted by the renal tubules in addition to being filtered, so creatinine clearance slightly overestimates true GFR."], ["Has no relation to GFR", "Creatinine clearance closely approximates GFR clinically (with a slight overestimation bias), so it is far from unrelated to GFR."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Filtration fraction equals:", "opts": [["GFR/RPF", "Correct: filtration fraction equals GFR divided by renal plasma flow (RPF), normally about 0.2."], ["RPF/GFR", "This is the inverse of the correct relationship; filtration fraction is GFR divided by RPF, not RPF divided by GFR."], ["GFR/RBF", "Filtration fraction is defined relative to renal plasma flow (the fluid portion actually filtered), not whole renal blood flow, which also includes cells."], ["RBF/GFR", "This both inverts the ratio and uses blood flow instead of plasma flow, making it doubly incorrect."]], "c": 0, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Normal filtration fraction is approximately:", "opts": [["5%", "5% is too low; normal filtration fraction is closer to 20%."], ["20%", "Correct: normally about 20% of renal plasma flow is filtered at the glomerulus."], ["50%", "50% would mean half of renal plasma flow is filtered, far above the normal filtration fraction of about 20%."], ["80%", "80% drastically overestimates the normal filtration fraction."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "The clearance equation is:", "opts": [["U/P", "This omits urine flow rate (V), an essential term in the clearance calculation."], ["UV/P", "Correct: clearance equals (urine concentration × urine flow rate) divided by plasma concentration, i.e., UV/P."], ["VP/U", "This rearranges the terms incorrectly; clearance is (U × V) divided by P, not (V × P) divided by U."], ["PU/V", "This inverts the relationship; clearance should be (U × V) over P, not (P × U) over V."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Which pressure PROMOTES filtration?", "opts": [["Bowman's capsule hydrostatic pressure", "Bowman's capsule hydrostatic pressure (PB) opposes, rather than promotes, filtration by pushing back against outward fluid movement."], ["Plasma oncotic pressure", "Plasma oncotic pressure opposes filtration by osmotically pulling fluid back into the glomerular capillary."], ["Glomerular hydrostatic pressure", "Correct: glomerular capillary hydrostatic pressure (PG) is the dominant force driving fluid out of the capillary and into Bowman's space, promoting filtration."], ["Capsular oncotic pressure", "Bowman's capsule (capsular) oncotic pressure is normally near zero because the filtrate is essentially protein-free, so it exerts no meaningful promoting force in the standard model of glomerular filtration pressures."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Which pressure OPPOSES filtration?", "opts": [["PG", "PG (glomerular capillary hydrostatic pressure) promotes filtration by pushing fluid outward; it does not oppose it."], ["PB", "Correct: Bowman's capsule hydrostatic pressure (PB) pushes back against outward fluid movement, opposing filtration, along with plasma oncotic pressure."], ["πB", "Bowman's capsule oncotic pressure (πB) is normally near zero since the filtrate is protein-free, so it exerts negligible opposing force compared with PB."], ["Kf", "Kf is the filtration coefficient (permeability × surface area), a scaling factor applied to net filtration pressure — it is not itself a pressure that opposes filtration."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Bowman's capsule oncotic pressure is normally:", "opts": [["High", "Bowman's capsule oncotic pressure would only be high if protein leaked into the filtrate, as in glomerular disease — this is not the normal state."], ["Moderate", "Since normal filtrate is essentially protein-free, capsular oncotic pressure is negligible, not moderate."], ["Approximately zero", "Correct: because filtrate is normally protein-free, Bowman's capsule (capsular) oncotic pressure is approximately zero."], ["Equal to plasma oncotic pressure", "Plasma oncotic pressure is substantial due to albumin, while normal filtrate contains almost no protein, so the two are far from equal."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Increasing glomerular hydrostatic pressure causes:", "opts": [["Lower GFR", "This is the opposite effect: raising PG increases, rather than decreases, net filtration pressure and GFR."], ["Higher GFR", "Correct: raising glomerular hydrostatic pressure (PG) increases net filtration pressure, which increases GFR."], ["No change", "PG is a primary driving force in the net filtration pressure equation, so changing it directly changes GFR rather than leaving it unaffected."], ["Lower RPF only", "Raising glomerular hydrostatic pressure does not necessarily lower renal plasma flow, and it clearly affects GFR as well, not flow alone."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Increasing Bowman's capsule hydrostatic pressure causes:", "opts": [["Increased GFR", "This is the opposite effect: higher Bowman's capsule pressure opposes filtration and decreases, rather than increases, GFR."], ["Decreased GFR", "Correct: higher PB opposes filtration, reducing net filtration pressure and thus GFR (as seen in urinary tract obstruction)."], ["Increased FF", "Since GFR falls while renal plasma flow is largely unaffected, filtration fraction (GFR/RPF) would decrease, not increase."], ["Increased RPF", "Bowman's capsule pressure affects the filtration pressure gradient within the glomerulus, not renal plasma flow itself."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Glomerular Filtration", "q": "Increasing plasma protein concentration will:", "opts": [["Increase GFR", "This is the opposite effect: higher plasma protein raises oncotic pressure, which opposes filtration and lowers, rather than raises, GFR."], ["Decrease GFR", "Correct: increased plasma protein concentration raises plasma oncotic pressure, which opposes filtration and reduces GFR."], ["Not affect GFR", "Plasma oncotic pressure is a direct term in the net filtration pressure equation, so changes in plasma protein do affect GFR."], ["Increase filtration fraction", "Since GFR falls while renal plasma flow is largely unchanged, filtration fraction would decrease, not increase."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Constriction of the afferent arteriole causes:", "opts": [["Increased GFR", "This is the opposite effect: reduced inflow from afferent constriction lowers, rather than raises, GFR."], ["Decreased GFR", "Correct: afferent arteriolar constriction reduces blood flow into the glomerulus, lowering glomerular hydrostatic pressure (PG) and therefore GFR."], ["Increased PG", "Afferent constriction reduces, rather than increases, the pressure transmitted into the glomerular capillaries."], ["Increased FF", "With both GFR and renal plasma flow falling due to reduced inflow, filtration fraction does not rise in this scenario."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Mild efferent constriction:", "opts": [["Usually increases GFR", "Correct: mild efferent arteriolar constriction increases resistance to outflow, raising glomerular hydrostatic pressure (PG) and thus increasing GFR."], ["Eliminates filtration", "Mild constriction enhances filtration by raising PG; it does not eliminate filtration (only severe, sustained constriction can eventually reduce GFR through a different mechanism)."], ["Lowers PG", "This is the opposite effect: efferent constriction backs up pressure within the glomerulus, raising rather than lowering PG."], ["Decreases FF", "With GFR rising while renal plasma flow falls (due to increased downstream resistance), filtration fraction increases, not decreases."]], "c": 0, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Severe efferent constriction eventually:", "opts": [["Raises GFR indefinitely", "GFR does not rise without limit; with severe efferent constriction, slowed capillary flow eventually allows oncotic pressure to build along the capillary, which reduces GFR."], ["Decreases GFR because oncotic pressure rises", "Correct: with severe efferent constriction, blood moves through the glomerulus so slowly that plasma oncotic pressure rises progressively along the capillary, opposing filtration and lowering GFR."], ["Has no effect", "Severe efferent constriction substantially changes glomerular hemodynamics and pressures, so it clearly does affect GFR."], ["Eliminates plasma proteins", "Efferent constriction alters hydrostatic and oncotic pressures within the glomerular capillary; it does not remove plasma proteins from the blood."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Which determinant of GFR is under the greatest physiological control?", "opts": [["Kf", "Kf is relatively fixed under normal physiologic conditions (it changes mainly in disease states), so it is not the primary lever for moment-to-moment GFR regulation."], ["PG", "Correct: glomerular hydrostatic pressure (PG) is tightly regulated via afferent and efferent arteriolar tone, making it the most actively controlled determinant of GFR."], ["PB", "Bowman's capsule pressure is fairly stable under normal conditions (barring obstruction) and is not the primary regulated variable."], ["πB", "Bowman's capsule oncotic pressure is normally near zero and is not an actively regulated determinant of GFR."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "The myogenic mechanism responds primarily to:", "opts": [["Plasma sodium", "Plasma sodium levels are sensed by the macula densa as part of tubuloglomerular feedback, not by the myogenic mechanism."], ["Increased arterial pressure", "Correct: when arterial pressure rises, stretch of the afferent arteriolar smooth muscle triggers reflex contraction (the myogenic response), helping stabilize renal blood flow and GFR."], ["Plasma potassium", "Plasma potassium is not the stimulus for the myogenic response, which is triggered by vascular wall stretch/pressure."], ["ADH", "ADH governs collecting duct water permeability and is unrelated to the pressure-induced myogenic response of the afferent arteriole."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "The macula densa senses:", "opts": [["Oxygen", "Oxygen sensing that drives erythropoietin release occurs in peritubular interstitial cells, not at the macula densa."], ["Potassium", "Potassium is not the macula densa's sensing signal; its role is sensing NaCl delivery."], ["Sodium chloride", "Correct: macula densa cells in the early distal tubule sense NaCl delivery, the signal underlying tubuloglomerular feedback."], ["Glucose", "Glucose concentration is not what the macula densa senses; its function is centered on NaCl delivery."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "High NaCl delivery to the macula densa causes:", "opts": [["Renin release", "This is the opposite response: high NaCl delivery actually suppresses renin release; it is low NaCl delivery that stimulates renin."], ["Afferent constriction", "Correct: high NaCl delivery triggers ATP/adenosine release from the macula densa, constricting the afferent arteriole to lower GFR back toward normal."], ["Efferent dilation", "The tubuloglomerular feedback response to high NaCl acts mainly on the afferent arteriole (constriction), not by dilating the efferent arteriole."], ["Increased GFR", "This is the opposite effect: the purpose of this feedback is to lower, not raise, GFR when NaCl delivery is elevated."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Low NaCl at the macula densa stimulates:", "opts": [["ATP release", "ATP/adenosine release from the macula densa is associated with the high-NaCl response (causing afferent constriction), not the low-NaCl response."], ["Renin release", "Correct: low NaCl delivery to the macula densa signals juxtaglomerular cells to release renin, activating RAAS to help restore renal perfusion."], ["ANP release", "ANP is released by atrial myocytes in response to stretch from volume expansion, not by low NaCl sensing at the macula densa."], ["ADH release", "ADH is released by the posterior pituitary in response to plasma osmolality and volume changes, not directly triggered by macula densa NaCl sensing."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "The juxtaglomerular apparatus consists primarily of:", "opts": [["Podocytes and mesangial cells", "Podocytes and mesangial cells are glomerular filtration/support structures, not the components that make up the juxtaglomerular apparatus."], ["Macula densa and juxtaglomerular cells", "Correct: the juxtaglomerular apparatus consists of the macula densa (in the early distal tubule) and the juxtaglomerular (granular, renin-secreting) cells of the afferent arteriole."], ["Bowman's capsule and glomerulus", "Bowman's capsule and the glomerulus together form the renal corpuscle, a distinct structure from the juxtaglomerular apparatus."], ["Collecting duct and loop of Henle", "The collecting duct and loop of Henle are tubular segments involved in urine concentration, not components of the juxtaglomerular apparatus."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "RAAS primarily acts to:", "opts": [["Lower GFR", "RAAS works to defend, not lower, GFR when renal perfusion drops."], ["Maintain GFR during low perfusion", "Correct: RAAS defends renal perfusion and GFR during states of low blood flow/pressure, through angiotensin II-mediated vasoconstriction (including preferential efferent constriction) and aldosterone-driven volume retention."], ["Increase urine production", "Aldosterone from RAAS promotes sodium and water retention, which decreases, not increases, urine output."], ["Decrease blood pressure", "RAAS raises, rather than decreases, blood pressure through vasoconstriction and volume retention."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "ANP generally:", "opts": [["Decreases filtration", "This is the opposite effect: ANP increases, rather than decreases, GFR by dilating the afferent and constricting the efferent arteriole."], ["Increases GFR", "Correct: ANP dilates the afferent arteriole and constricts the efferent arteriole, raising GFR and promoting natriuresis."], ["Increases sympathetic tone", "ANP opposes, rather than increases, sympathetic and renin-angiotensin activity as part of its natriuretic actions."], ["Releases renin", "ANP actually suppresses renin release, counteracting the RAAS system rather than triggering it."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Sympathetic stimulation of the kidney generally:", "opts": [["Raises GFR", "This is the opposite effect: strong sympathetic activity constricts the afferent arteriole, lowering rather than raising GFR."], ["Lowers GFR", "Correct: strong renal sympathetic activation constricts afferent arterioles, reducing renal blood flow and GFR."], ["Has no effect", "Sympathetic activation has a clear vasoconstrictive effect on the renal vasculature, so it is not without effect."], ["Eliminates autoregulation", "While very high sympathetic tone can override autoregulation, the described general effect on the kidney is reduced GFR, not simply the elimination of autoregulation."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Renal prostaglandins primarily:", "opts": [["Destroy nephrons", "Renal prostaglandins protect, rather than damage, renal tissue by helping preserve adequate blood flow."], ["Protect renal blood flow", "Correct: renal prostaglandins vasodilate to preserve renal blood flow, particularly during states of RAAS or sympathetic activation — which is why NSAIDs (which block prostaglandin synthesis) can harm the kidney."], ["Block filtration", "Prostaglandins support the blood flow that sustains filtration; they do not block filtration."], ["Increase albumin filtration", "Prostaglandins do not alter the size- or charge-selectivity of the filtration barrier to albumin; that barrier property is set by the endothelium, basement membrane, and podocytes."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "The kidneys receive approximately what percentage of cardiac output?", "opts": [["5%", "5% underestimates renal perfusion, which is disproportionately high relative to the kidneys' small mass."], ["10%", "10% is still below the actual renal share of cardiac output, which is closer to 20–25%."], ["22%", "Correct: despite their small mass, the kidneys receive roughly 20–25% of cardiac output."], ["50%", "50% overestimates renal perfusion; that large a share of cardiac output going to the kidneys alone would be physiologically excessive."]], "c": 2, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Renal blood flow is determined by:", "opts": [["Pressure gradient ÷ Resistance", "Correct: renal blood flow, like any flow, equals the pressure gradient divided by resistance (an application of Ohm's law to the renal circulation)."], ["Pressure × Resistance", "Flow equals pressure gradient divided by resistance, not pressure multiplied by resistance."], ["GFR × FF", "Rearranging FF = GFR/RPF gives RPF = GFR/FF (renal plasma flow), not renal blood flow, and this is not the fundamental hemodynamic definition of flow."], ["CO × BP", "Cardiac output and blood pressure are systemic variables; renal blood flow specifically depends on the local renal pressure gradient and renal vascular resistance."]], "c": 0, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Which arteriole enters the glomerulus?", "opts": [["Efferent", "The efferent arteriole carries blood away from, not into, the glomerulus."], ["Afferent", "Correct: the afferent arteriole carries blood into the glomerular capillary tuft."], ["Interlobar", "Interlobar arteries are larger vessels running between the renal pyramids, well upstream of the arterioles supplying individual glomeruli."], ["Arcuate", "Arcuate arteries arch along the corticomedullary junction, further upstream than the afferent arteriole that directly feeds the glomerulus."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "Which arteriole exits the glomerulus?", "opts": [["Afferent", "The afferent arteriole carries blood into, not out of, the glomerulus."], ["Efferent", "Correct: the efferent arteriole drains blood out of the glomerulus toward the peritubular capillaries or vasa recta."], ["Segmental", "Segmental arteries are large proximal branches of the renal artery, far upstream of the glomerulus itself."], ["Interlobular", "Interlobular (cortical radiate) arteries feed the afferent arterioles but do not themselves exit the glomerulus."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "The primary purpose of renal autoregulation is to maintain:", "opts": [["Constant urine color", "Urine color is not a physiologic variable that renal autoregulation governs."], ["Stable GFR despite changing blood pressure", "Correct: renal autoregulation (myogenic mechanism plus tubuloglomerular feedback) keeps GFR and renal blood flow relatively stable across a wide range of arterial pressures."], ["Constant plasma glucose", "Plasma glucose homeostasis is governed by insulin, glucagon, and hepatic regulation, not by renal autoregulation."], ["Constant sodium intake", "Sodium intake is a dietary/behavioral variable, not something a hemodynamic mechanism like renal autoregulation controls."]], "c": 1, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "A patient has nephrotic syndrome with damage to the filtration barrier. Which finding is MOST likely?", "opts": [["Albuminuria", "Correct: damage to the glomerular filtration barrier lets albumin leak through, producing the albuminuria/proteinuria that defines nephrotic syndrome."], ["Glycosuria only", "Glycosuria reflects a tubular reabsorption problem or hyperglycemia exceeding transport capacity, not a filtration-barrier defect; nephrotic syndrome is defined by protein loss, not glucose loss."], ["RBC destruction", "Nephrotic syndrome involves excessive protein filtration, not red blood cell destruction; significant hematuria is more typical of nephritic processes with a disrupted, leaky barrier, not the classic nephrotic picture."], ["Increased renin production", "Renin release is tied to renal perfusion and macula densa sensing, not a direct consequence of glomerular filtration-barrier damage."]], "c": 0, "cite": "Renal Physiology I lecture"}, {"topic": "Renal Physiology I", "io": "Regulation of GFR", "q": "A patient has severe dehydration. Renal perfusion decreases, NaCl delivery to the macula densa decreases, and renin is released. Which physiological response helps preserve GFR?", "opts": [["Afferent dilation with no hormonal response", "Dehydration triggers a strong hormonal (RAAS) response; the scenario described is not an isolated, hormone-free afferent mechanism."], ["Increased Angiotensin II causing preferential efferent arteriolar constriction", "Correct: angiotensin II preferentially constricts the efferent arteriole, backing up pressure within the glomerulus (raising PG) to help preserve GFR even as renal perfusion falls."], ["Increased ANP release", "ANP is released in volume-expanded states, such as atrial stretch; dehydration suppresses, rather than stimulates, ANP release."], ["Increased Bowman's capsule pressure", "Rising Bowman's capsule pressure would oppose filtration and lower, not preserve, GFR — the opposite of the compensatory goal during dehydration."]], "c": 1, "cite": "Renal Physiology I lecture"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

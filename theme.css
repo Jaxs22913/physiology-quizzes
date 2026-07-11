@@ -172,6 +172,8 @@
   --accent-soft: #16213a;
   --accent2: #4ade80;
   --accent2-soft: #12251a;
+  --accent3: #c084fc;
+  --accent3-soft: #2e1a47;
   --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   --tab-border: rgba(96, 165, 250, 0.3);
 }
@@ -185,6 +187,8 @@
   --accent-soft: #eff6ff;
   --accent2: #16a34a;
   --accent2-soft: #f0fdf4;
+  --accent3: #9333ea;
+  --accent3-soft: #f3e8ff;
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
   --tab-border: rgba(37, 99, 235, 0.25);
 }

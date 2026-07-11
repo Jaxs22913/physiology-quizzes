@@ -903,6 +903,25 @@
       vertical-align: middle;
     }
 
+    /* Marks a quiz as one of a specific curated set (currently: quizzes from
+       "Ricky") -- unlike .new-badge this never expires, since it's an
+       identity tag for the quiz's source, not a freshness indicator. Uses
+       --accent3/--accent3-soft (theme.css, alongside --accent2) so it's
+       correctly themed both by OS preference and by the manual toggle. */
+    .r-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      background: var(--accent3-soft);
+      color: var(--accent3);
+      border: 1px solid var(--accent3);
+      vertical-align: middle;
+    }
+
     /* Mobile homepage hierarchy pass -- kept as one block at the very end of
        the stylesheet, after every unconditional rule it needs to win over
        (.brand-bars, header, h1, .subtitle, .card), since a media-query rule
@@ -1211,7 +1230,11 @@
         <details class="exam-section" data-examid="physio-exam4">
           <summary><span>Exam 4</span></summary>
           <div class="exam-content">
-            <p class="empty">No quizzes yet.</p>
+            <div class="divider"><span>Individual Topic Exam</span></div>
+            <ul>
+              <li><a class="quiz-link" href="Physiology%20Exam%204/Renal_Physiology_I_Quiz.html">Renal Physiology I</a></li>
+              <li><a class="quiz-link" href="Physiology%20Exam%204/Renal_II_Comprehensive_Quiz.html">Renal Physiology II (Comprehensive)</a></li>
+            </ul>
           </div>
         </details>
       </div>
@@ -1924,6 +1947,10 @@
       <button class="review-modal-close" id="whatsnew-modal-close" aria-label="Close">&times;</button>
       <p class="review-modal-title">What's new</p>
       <div class="review-modal-content">
+        <div class="divider"><span>July 11</span></div>
+        <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>Physiology Exam 4 is open: Renal Physiology I (65 questions) and Renal Physiology II Comprehensive (75 questions), both under the Physiology tab.</li>
+        </ul>
         <div class="divider"><span>July 9</span></div>
         <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
           <li>New Physiology Master Exam (Version 10) &mdash; a 70-question comprehensive review spanning all seven Exam 3 systems, with per-objective breakdown at the end.</li>
@@ -2417,7 +2444,9 @@
         "Physiology%20Exam%203/metabolism-quiz-version-2.html": "2026-07-08",
         "Physiology%20Exam%203/metabolism-quiz-version-3.html": "2026-07-08",
         "Physiology%20Exam%203/pulmonary-quiz-version-2.html": "2026-07-08",
-        "Physiology%20Exam%203/pulmonary-quiz-version-3.html": "2026-07-08"
+        "Physiology%20Exam%203/pulmonary-quiz-version-3.html": "2026-07-08",
+        "Physiology%20Exam%204/Renal_Physiology_I_Quiz.html": "2026-07-11",
+        "Physiology%20Exam%204/Renal_II_Comprehensive_Quiz.html": "2026-07-11"
       };
       var NEW_BADGE_DAYS = 3;
       var now = Date.now();
@@ -2436,6 +2465,28 @@
         // stacked together on the right, which read as cluttered. Keeping
         // NEW next to the title and letting the score badge own the right
         // edge on its own keeps every pill's score in the same spot.
+        const scoreBadge = a.querySelector(".score-badge");
+        if (scoreBadge) a.insertBefore(badge, scoreBadge);
+        else a.appendChild(badge);
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      // Curated set of "special" quizzes (currently: from Ricky) -- unlike
+      // NEW_QUIZZES above, this list never expires by date. Add a quiz's
+      // href here whenever one should be flagged; no removal needed later.
+      var R_QUIZZES = {
+        "Physiology%20Exam%204/Renal_Physiology_I_Quiz.html": true,
+        "Physiology%20Exam%204/Renal_II_Comprehensive_Quiz.html": true
+      };
+      document.querySelectorAll("a.quiz-link").forEach((a) => {
+        if (!R_QUIZZES[a.getAttribute("href")]) return;
+        const badge = document.createElement("span");
+        badge.className = "r-badge";
+        badge.textContent = "R";
+        badge.title = "Special quiz";
         const scoreBadge = a.querySelector(".score-badge");
         if (scoreBadge) a.insertBefore(badge, scoreBadge);
         else a.appendChild(badge);
