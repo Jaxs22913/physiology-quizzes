@@ -1005,6 +1005,15 @@
          touched recency (see the continue-widget JS), so "first" is
          correct, not arbitrary DOM order. */
       .continue-item ~ .continue-item { display: none; }
+
+      /* .more-links (order: 50, see above) is the last thing in the mobile
+         column, which put it right up against the fixed 60px-tall
+         .bottom-decor EKG line pinned to the viewport bottom -- especially
+         once its <details> is expanded and its own content runs even
+         closer to the bottom edge. Clearance here, not on body/.page
+         generally, so desktop (which doesn't show .bottom-decor at all)
+         is untouched. */
+      .page > .more-links { margin-bottom: 56px; }
     }
 
     /* On very wide monitors, .page's fixed 640px max-width (sized for
@@ -2383,7 +2392,7 @@
         "Physiology%20Exam%203/pulmonary-quiz-version-2.html": "2026-07-08",
         "Physiology%20Exam%203/pulmonary-quiz-version-3.html": "2026-07-08"
       };
-      var NEW_BADGE_DAYS = 7;
+      var NEW_BADGE_DAYS = 3;
       var now = Date.now();
 
       document.querySelectorAll("a.quiz-link").forEach((a) => {
@@ -2394,7 +2403,15 @@
         const badge = document.createElement("span");
         badge.className = "new-badge";
         badge.textContent = "NEW";
-        a.appendChild(badge);
+        // Insert right after the title text, not appended last -- the score
+        // badge (added earlier, above) has margin-left:auto to pin itself to
+        // the far right of the pill. Appending NEW after it put both badges
+        // stacked together on the right, which read as cluttered. Keeping
+        // NEW next to the title and letting the score badge own the right
+        // edge on its own keeps every pill's score in the same spot.
+        const scoreBadge = a.querySelector(".score-badge");
+        if (scoreBadge) a.insertBefore(badge, scoreBadge);
+        else a.appendChild(badge);
       });
     })();
   </script>
