@@ -31,7 +31,8 @@
     padding:24px 16px 92px;}
   .wrap{max-width:680px;margin:0 auto}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px 26px}
-  h1{font-size:22px;margin:0 0 4px}
+  h1{font-size:22px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .h1-icon{width:22px;height:22px;flex:none;color:var(--acc)}
   .sub{color:var(--muted);font-size:14px;margin:0 0 22px}
   label.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14.5px;margin:0 0 14px;cursor:pointer}
   select, input[type=number]{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
@@ -142,7 +143,7 @@
 <div class="wrap" style="padding-bottom:40px">
   <a href="index.html" class="back-link">← Back to home</a>
   <header style="margin-bottom:18px">
-    <h1>🎮 Group Study — Host</h1>
+    <h1><svg class="h1-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Group Study — Host</h1>
     <p class="sub">Kahoot-style live session. Everyone joins with a room code, no account needed.</p>
   </header>
 
