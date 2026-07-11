@@ -909,15 +909,34 @@
        the cascade still resolves ties by position. Being last guarantees
        these win at <=640px regardless of where the rest of the file's
        styles get edited later. */
+    .h1-logo { display: none; }
     @media (max-width: 640px) {
       .brand-mark, .brand-bars { display: none; }
-      /* No inline wordmark replacing them -- the H1 right below already
-         says "Class of 2028 Review", so a second "Class of 2028" line was
-         pure duplication. header's own top margin does the corner-buttons
-         clearance job the wordmark used to (indirectly) provide. */
+      /* header's own top margin does the corner-buttons clearance job the
+         old wordmark row used to (indirectly) provide. */
       header { margin: 26px 0 18px; }
       h1 { font-size: 19px; margin-bottom: 4px; }
       .subtitle { font-size: 11.5px; }
+
+      /* The plain-text H1 ("Class of 2028 Review") is swapped for the
+         actual logo mark -- .h1-text stays in the DOM (visually hidden,
+         not display:none) so the heading still has a real accessible name
+         for screen readers, it's just not what's shown on screen here. */
+      .h1-text {
+        position: absolute;
+        width: 1px; height: 1px;
+        padding: 0; margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .h1-logo {
+        display: block;
+        width: 120px;
+        height: auto;
+        margin: 0 auto;
+      }
 
       /* The subject/exam picker is the page's actual content, not another
          navigation action -- give it a tinted surface distinct from the
@@ -1009,7 +1028,14 @@
 
   <div class="page">
     <header>
-      <h1>Class of 2028 Review</h1>
+      <h1>
+        <svg class="h1-logo" aria-hidden="true" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="148,171 198,88 218,125" fill="none" stroke="var(--ink)" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"/>
+          <line x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="16"/>
+          <path d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke="var(--accent)" stroke-width="18"/>
+        </svg>
+        <span class="h1-text">Class of 2028 Review</span>
+      </h1>
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
