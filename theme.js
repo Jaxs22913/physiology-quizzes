@@ -509,10 +509,14 @@
         if (b) b.click();
       }, 0);
     }));
-    panel.appendChild(makeActionRow("Refresh / check for updates", function () {
-      var b = document.getElementById("refresh-btn");
-      if (b) b.click();
-    }));
+    // #refresh-btn stays a visible icon on the homepage (see theme.css) --
+    // skip the quick-action row there so it isn't offered in two places.
+    if (!document.body.classList.contains("homepage")) {
+      panel.appendChild(makeActionRow("Refresh / check for updates", function () {
+        var b = document.getElementById("refresh-btn");
+        if (b) b.click();
+      }));
+    }
     panel.appendChild(makeActionRow("Account / sign in", function () {
       close();
       setTimeout(function () {

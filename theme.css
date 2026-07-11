@@ -23,9 +23,16 @@
    settings panel itself (see initSettingsPanel() in theme.js) -- same
    underlying buttons/handlers, just triggered from inside the panel instead
    of duplicated. .settings-quick-actions is the inverse: only shown at this
-   same breakpoint, since the icons already cover these actions above it. */
+   same breakpoint, since the icons already cover these actions above it.
+   Exception: #refresh-btn stays a visible icon on the homepage specifically
+   (higher specificity than the plain #refresh-btn rule above, so no
+   !important needed) -- the homepage is the one page people land on
+   repeatedly wanting a quick "check for updates" without detouring through
+   Settings; initSettingsPanel() skips adding its quick-action row there to
+   match (see theme.js), so it's not duplicated between icon and panel. */
 @media (max-width: 640px) {
   #refresh-btn, #theme-toggle-btn, #calc-btn, #account-btn { display: none; }
+  body.homepage #refresh-btn { display: flex; }
 }
 @media (min-width: 641px) {
   .settings-panel .quick-action { display: none; }
