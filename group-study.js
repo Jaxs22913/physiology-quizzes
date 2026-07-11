@@ -177,6 +177,20 @@
     });
   };
 
+  // ---- One-shot getters (used to validate a resume-after-reload attempt
+  // before committing to it -- see group-host.html/group-join.html's
+  // sessionStorage-based session recovery) ----
+  window.GroupStudy.getRoom = function (code) {
+    return whenReady().then(function () {
+      return roomRef(code).get().then(function (snap) { return snap.exists ? snap.data() : null; });
+    });
+  };
+  window.GroupStudy.getPlayer = function (code, uid) {
+    return whenReady().then(function () {
+      return playersRef(code).doc(uid).get().then(function (snap) { return snap.exists ? snap.data() : null; });
+    });
+  };
+
   // ---- Real-time listeners (both host and players use these) ----
   window.GroupStudy.listenRoom = function (code, cb) {
     return roomRef(code).onSnapshot(function (snap) { if (snap.exists) cb(snap.data()); });

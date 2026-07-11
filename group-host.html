@@ -77,6 +77,11 @@
   .quiz-change-btn{appearance:none;border:0;background:none;color:var(--acc);font:700 13px/1 inherit;cursor:pointer;padding:6px}
   .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:600;margin-bottom:16px}
   .back-link:hover{color:var(--acc)}
+  .host-code-badge{position:fixed;top:64px;left:14px;z-index:590;background:var(--card);
+    border:1.5px solid var(--acc);border-radius:10px;padding:8px 14px;box-shadow:var(--shadow);
+    display:flex;align-items:baseline;gap:8px}
+  .host-code-badge .hcb-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+  .host-code-badge .hcb-value{font:800 18px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:var(--acc)}
   .footer-mark-ink { stroke: #1f2937; }
   .footer-mark-accent { stroke: #2563eb; }
   @media (prefers-color-scheme: dark) {
@@ -96,6 +101,10 @@
   </svg>
   </a>
   <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="host-code-badge" class="host-code-badge hidden">
+  <span class="hcb-label">Code</span>
+  <span class="hcb-value" id="host-code-badge-value"></span>
 </div>
 <div class="wrap" style="padding-bottom:40px">
   <a href="index.html" class="back-link">← Back to home</a>
@@ -277,10 +286,66 @@
     updateCreateBtnState();
   });
 
+  // A page reload used to lose the entire in-memory session (roomCode,
+  // currentQuiz, listeners) even though the room itself was still alive in
+  // Firestore -- the host would get kicked back to a blank setup screen with
+  // no way back in except sharing a brand-new room code. sessionStorage (not
+  // localStorage -- this is reload-recovery for the current tab only, not
+  // something that should follow the host to another device) remembers the
+  // room code across a reload so it can be validated and rejoined.
+  var HOST_SESSION_KEY = "gsHostSession";
+
+  function enterRoom(code, quizId) {
+    roomCode = code;
+    currentQuiz = window.GROUP_QUIZZES[quizId];
+    $("room-code-display").textContent = code;
+    $("host-code-badge-value").textContent = code;
+    show("host-code-badge");
+    hide("setup");
+    sessionStorage.setItem(HOST_SESSION_KEY, JSON.stringify({ code: code, quizId: quizId }));
+
+    if (unsubPlayers) unsubPlayers();
+    if (unsubRoom) unsubRoom();
+
+    unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
+      latestPlayers = players;
+      renderPlayerList(players);
+      updateAnswerProgress();
+      if (lastRoomState) {
+        if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
+        if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
+      }
+      $("start-btn").disabled = players.length === 0;
+      $("start-btn").textContent = players.length === 0
+        ? "Waiting for players…"
+        : "Start game (" + players.length + " joined) →";
+    });
+    unsubRoom = GroupStudy.listenRoom(roomCode, onRoomUpdate);
+  }
+
+  function tryResumeHostSession() {
+    var raw = sessionStorage.getItem(HOST_SESSION_KEY);
+    if (!raw) return;
+    var saved = null;
+    try { saved = JSON.parse(raw); } catch (e) { /* fall through to cleanup below */ }
+    if (!saved || !saved.code) { sessionStorage.removeItem(HOST_SESSION_KEY); return; }
+
+    GroupStudy.getRoom(saved.code).then(function (room) {
+      if (!room || room.hostUid !== GroupStudy.currentUid()) {
+        sessionStorage.removeItem(HOST_SESSION_KEY);
+        return;
+      }
+      enterRoom(saved.code, room.quizId);
+    }).catch(function () {
+      sessionStorage.removeItem(HOST_SESSION_KEY);
+    });
+  }
+
   waitForGroupStudy(function () {
     GroupStudy.whenReady().then(function () {
       groupStudyReady = true;
       updateCreateBtnState();
+      tryResumeHostSession();
     });
   });
 
@@ -290,30 +355,13 @@
     if (!selectedQuizId) return;
     $("create-btn").disabled = true;
     $("create-btn").textContent = "Creating…";
-    currentQuiz = window.GROUP_QUIZZES[selectedQuizId];
+    var quizIdToCreate = selectedQuizId;
     var opts = {
       timedMode: $("timed-toggle").checked,
       secondsPerQuestion: parseInt($("seconds-input").value, 10) || 20
     };
-    GroupStudy.createRoom(selectedQuizId, opts).then(function (code) {
-      roomCode = code;
-      $("room-code-display").textContent = code;
-      hide("setup");
-      show("lobby");
-      unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
-        latestPlayers = players;
-        renderPlayerList(players);
-        updateAnswerProgress();
-        if (lastRoomState) {
-          if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
-          if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
-        }
-        $("start-btn").disabled = players.length === 0;
-        $("start-btn").textContent = players.length === 0
-          ? "Waiting for players…"
-          : "Start game (" + players.length + " joined) →";
-      });
-      unsubRoom = GroupStudy.listenRoom(roomCode, onRoomUpdate);
+    GroupStudy.createRoom(quizIdToCreate, opts).then(function (code) {
+      enterRoom(code, quizIdToCreate);
     }).catch(function (err) {
       toast("Couldn't create room: " + (err && err.message));
       $("create-btn").disabled = false;
@@ -350,14 +398,19 @@
     }
   });
 
-  $("new-game-btn").addEventListener("click", function () { location.reload(); });
+  $("new-game-btn").addEventListener("click", function () {
+    sessionStorage.removeItem(HOST_SESSION_KEY);
+    location.reload();
+  });
 
   var lastRoomState = null;
   function onRoomUpdate(room) {
     lastRoomState = room;
     if (!currentQuiz) currentQuiz = window.GROUP_QUIZZES[room.quizId];
 
-    if (room.status === "question") {
+    if (room.status === "lobby") {
+      hide("question-screen"); hide("reveal-screen"); hide("finished-screen"); show("lobby");
+    } else if (room.status === "question") {
       renderQuestionScreen(room);
     } else if (room.status === "reveal") {
       renderRevealScreen(room);

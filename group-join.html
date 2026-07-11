@@ -41,6 +41,8 @@
     padding:14px 24px;background:var(--acc);color:#fff;transition:background .15s;width:100%}
   .btn:hover{background:var(--acc2)}
   .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.sec{background:#eceef6;color:var(--ink)}
+  .btn.sec:hover{background:#dfe2f0}
   .btn.choice-btn{background:var(--card);color:var(--ink);border:1.5px solid var(--line);text-align:left;
     padding:16px 18px;font-size:15px;font-weight:600;margin-bottom:10px}
   .btn.choice-btn:hover{border-color:var(--acc)}
@@ -137,6 +139,7 @@
   <section id="finished-screen" class="card hidden">
     <h2 style="margin-top:0;text-align:center">🏁 Final results</h2>
     <div id="final-leaderboard"></div>
+    <button class="btn sec" id="join-another-btn" style="margin-top:18px">Join a different game</button>
   </section>
 </div>
 
@@ -174,8 +177,59 @@
       myUid = uid;
       $("join-btn").disabled = false;
       $("join-btn").textContent = "Join game →";
+      tryResumeJoinSession();
     });
   });
+
+  // Same reload-recovery concern as group-host.html -- see that file's
+  // comment. sessionStorage, not localStorage: this is current-tab-only
+  // recovery, not something that should follow a player to another device.
+  var JOIN_SESSION_KEY = "gsJoinSession";
+
+  function enterRoom(code, quizId, uid) {
+    roomCode = code;
+    myUid = uid;
+    currentQuiz = window.GROUP_QUIZZES[quizId];
+    hideAllScreens();
+    sessionStorage.setItem(JOIN_SESSION_KEY, JSON.stringify({ code: code }));
+    GroupStudy.listenRoom(roomCode, onRoomUpdate);
+    GroupStudy.listenPlayers(roomCode, function (players) {
+      latestPlayers = players;
+      if (lastRoomState) {
+        if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
+        if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
+      }
+    });
+  }
+
+  function tryResumeJoinSession() {
+    var raw = sessionStorage.getItem(JOIN_SESSION_KEY);
+    if (!raw) return;
+    var saved = null;
+    try { saved = JSON.parse(raw); } catch (e) { /* fall through to cleanup below */ }
+    if (!saved || !saved.code) { sessionStorage.removeItem(JOIN_SESSION_KEY); return; }
+
+    var uid = GroupStudy.currentUid();
+    GroupStudy.getRoom(saved.code).then(function (room) {
+      if (!room) { sessionStorage.removeItem(JOIN_SESSION_KEY); return; }
+      return GroupStudy.getPlayer(saved.code, uid).then(function (player) {
+        if (!player) { sessionStorage.removeItem(JOIN_SESSION_KEY); return; }
+        // Seed answeredIndex from the player's real Firestore answers (not
+        // just defaulting to -1) so a reload right after answering doesn't
+        // briefly re-show the choice buttons for a question already locked
+        // in. Also pre-set lastRoomState so onRoomUpdate's first snapshot
+        // (which will report this same currentQuestionIndex) doesn't see a
+        // "question changed" transition and stomp the seeded value back to -1.
+        if (player.answers && player.answers[room.currentQuestionIndex] != null) {
+          answeredIndex = room.currentQuestionIndex;
+        }
+        lastRoomState = room;
+        enterRoom(saved.code, room.quizId, uid);
+      });
+    }).catch(function () {
+      sessionStorage.removeItem(JOIN_SESSION_KEY);
+    });
+  }
 
   $("join-btn").addEventListener("click", function () {
     var code = $("code-input").value.trim();
@@ -187,20 +241,7 @@
     $("join-btn").disabled = true;
     $("join-btn").textContent = "Joining…";
     GroupStudy.joinRoom(code, nickname).then(function (result) {
-      roomCode = code;
-      myUid = result.uid;
-      currentQuiz = window.GROUP_QUIZZES[result.room.quizId];
-      hideAllScreens();
-      show("lobby-wait");
-      $("lobby-quiz-title").textContent = currentQuiz ? currentQuiz.title : "";
-      GroupStudy.listenRoom(roomCode, onRoomUpdate);
-      GroupStudy.listenPlayers(roomCode, function (players) {
-        latestPlayers = players;
-        if (lastRoomState) {
-          if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
-          if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
-        }
-      });
+      enterRoom(code, result.room.quizId, result.uid);
     }).catch(function (err) {
       $("join-err").textContent = (err && err.message) || "Couldn't join that room.";
       $("join-btn").disabled = false;
@@ -217,7 +258,11 @@
     lastRoomState = room;
     if (!currentQuiz) currentQuiz = window.GROUP_QUIZZES[room.quizId];
 
-    if (room.status === "question") {
+    if (room.status === "lobby") {
+      hideAllScreens();
+      show("lobby-wait");
+      $("lobby-quiz-title").textContent = currentQuiz ? currentQuiz.title : "";
+    } else if (room.status === "question") {
       if (questionChanged) answeredIndex = -1;
       renderQuestionScreen(room);
     } else if (room.status === "reveal") {
@@ -314,6 +359,11 @@
     show("finished-screen");
     renderLeaderboard("final-leaderboard", latestPlayers);
   }
+
+  $("join-another-btn").addEventListener("click", function () {
+    sessionStorage.removeItem(JOIN_SESSION_KEY);
+    location.reload();
+  });
 
   function renderLeaderboard(containerId, players) {
     var box = $(containerId);
