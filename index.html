@@ -910,6 +910,7 @@
        these win at <=640px regardless of where the rest of the file's
        styles get edited later. */
     .h1-logo { display: none; }
+    .h1-logo-caption { display: none; }
     @media (max-width: 640px) {
       .brand-mark, .brand-bars { display: none; }
       /* header's own top margin does the corner-buttons clearance job the
@@ -936,6 +937,15 @@
         width: 120px;
         height: auto;
         margin: 0 auto;
+      }
+      .h1-logo-caption {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 6px;
       }
 
       /* The subject/exam picker is the page's actual content, not another
@@ -1034,6 +1044,7 @@
           <line x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="16"/>
           <path d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke="var(--accent)" stroke-width="18"/>
         </svg>
+        <span class="h1-logo-caption" aria-hidden="true">Class of 2028</span>
         <span class="h1-text">Class of 2028 Review</span>
       </h1>
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
