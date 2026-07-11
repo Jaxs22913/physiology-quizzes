@@ -7,5 +7,25 @@ service cloud.firestore {
     match /users/{userId}/kv/{docId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+
+    // Group Study (Kahoot-style live sessions). Both hosts and joining
+    // players use Firebase Anonymous Auth (silent, no popup, no Google
+    // account needed to join per product decision) purely so there's a
+    // stable uid these rules can check -- state itself is readable by
+    // anyone with the room code (no login wall to even watch), but only
+    // the host can advance game state, and each player can only write
+    // their own player doc (their own nickname/score/answers).
+    match /gameRooms/{roomCode} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.hostUid == request.auth.uid;
+      allow update: if request.auth != null && resource.data.hostUid == request.auth.uid;
+      allow delete: if false;
+
+      match /players/{playerId} {
+        allow read: if true;
+        allow create, update: if request.auth != null && request.auth.uid == playerId;
+        allow delete: if false;
+      }
+    }
   }
 }

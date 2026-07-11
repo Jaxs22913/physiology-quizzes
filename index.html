@@ -409,10 +409,19 @@
         display: flex;
         justify-content: center;
         position: absolute;
+        top: 0;
         left: calc(100% + 24px);
         width: 260px;
       }
-      .search-wrap .guides-btn { display: none; }
+      .group-btn-floating {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 54px;
+        left: calc(100% + 24px);
+        width: 260px;
+      }
+      .search-wrap .guides-btn, .search-wrap .group-btn { display: none; }
     }
     .continue-widget.hidden { display: none; }
     .continue-title {
@@ -890,10 +899,12 @@
     <div class="search-wrap">
       <input type="text" id="site-search" class="site-search-input" placeholder="Search all quizzes…" autocomplete="off" spellcheck="false">
       <a href="guides.html" class="guides-btn">Guides &amp; Study Aids</a>
+      <a href="group-join.html" class="guides-btn group-btn">🎮 Group Study</a>
       <div id="search-results" class="search-results hidden"></div>
     </div>
 
     <a href="guides.html" class="guides-btn guides-btn-floating" id="guides-btn-floating">Guides &amp; Study Aids</a>
+    <a href="group-join.html" class="guides-btn guides-btn-floating group-btn-floating" id="group-btn-floating">🎮 Group Study</a>
 
     <div class="mobile-widgets-row">
       <div id="week-widget" class="card week-widget">

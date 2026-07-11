@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<script src="group-questions.js" defer></script>
+<script src="group-study.js" defer></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Study — Host</title>
+<style>
+  :root{
+    --ink:#161a24; --muted:#6b7280; --line:#e5e7ef; --paper:#f6f7fb; --card:#fff;
+    --acc:#4f46e5; --acc2:#4338ca; --good:#16a34a; --goodbg:#eafaf0;
+    --bad:#dc2626; --badbg:#fdecec; --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    padding:24px 16px 60px;}
+  .wrap{max-width:680px;margin:0 auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px 26px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 22px}
+  label.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14.5px;margin:0 0 14px;cursor:pointer}
+  select, input[type=number]{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+  .btn{appearance:none;border:0;cursor:pointer;font:700 15px/1 ui-sans-serif;border-radius:12px;
+    padding:14px 24px;background:var(--acc);color:#fff;transition:background .15s;width:100%}
+  .btn:hover{background:var(--acc2)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.sec{background:#eceef6;color:var(--ink)}
+  .hidden{display:none!important}
+  .roomcode{font:800 54px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-align:center;color:var(--acc);margin:6px 0 4px}
+  .roomcode-label{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
+  .joinhint{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:22px}
+  .playerlist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;min-height:32px}
+  .pchip{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:600}
+  .qnum{font:700 12px/1 ui-sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+  .qtext{font:700 19px/1.4 ui-sans-serif;margin:0 0 20px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+  .choice{border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;font-size:14.5px}
+  .choice.correct{border-color:var(--good);background:var(--goodbg)}
+  .progress{color:var(--muted);font-size:13.5px;margin-bottom:16px;text-align:center}
+  .timer{font:800 40px/1 ui-monospace,monospace;text-align:center;margin:0 0 16px;color:var(--acc)}
+  .timer.low{color:var(--bad)}
+  .lb-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;margin-bottom:6px;background:var(--paper);border:1px solid var(--line)}
+  .lb-row .rank{font-weight:800;color:var(--muted);width:28px}
+  .lb-row .name{flex:1;font-weight:600}
+  .lb-row .score{font-weight:800;color:var(--acc)}
+  .status-toast{text-align:center;color:var(--muted);font-size:14px;margin-top:8px}
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap" style="padding-bottom:40px">
+  <header style="margin-bottom:18px">
+    <h1>🎮 Group Study — Host</h1>
+    <p class="sub">Kahoot-style live session. Everyone joins with a room code, no account needed.</p>
+  </header>
+
+  <section id="setup" class="card">
+    <label class="row">
+      Quiz
+      <select id="quiz-select"></select>
+    </label>
+    <label class="row">
+      Timed questions
+      <input type="checkbox" id="timed-toggle">
+    </label>
+    <label class="row" id="seconds-row">
+      Seconds per question
+      <input type="number" id="seconds-input" value="20" min="5" max="120" style="width:70px">
+    </label>
+    <button class="btn" id="create-btn" disabled>Connecting…</button>
+    <p style="text-align:center;font-size:13.5px;color:var(--muted);margin:16px 0 0">
+      Have a room code already? <a href="group-join.html" style="color:var(--acc);font-weight:600">Join a game →</a>
+    </p>
+  </section>
+
+  <section id="lobby" class="card hidden">
+    <div class="roomcode-label">Room code</div>
+    <div class="roomcode" id="room-code-display">-----</div>
+    <div class="joinhint">Have everyone go to <b id="join-url-hint"></b> and enter this code.</div>
+    <div class="playerlist" id="player-list"></div>
+    <button class="btn" id="start-btn" disabled>Waiting for players…</button>
+  </section>
+
+  <section id="question-screen" class="card hidden">
+    <div class="qnum" id="q-num"></div>
+    <div class="timer hidden" id="timer-display">20</div>
+    <div class="qtext" id="q-text"></div>
+    <div class="choices" id="q-choices"></div>
+    <div class="progress" id="answer-progress"></div>
+    <button class="btn" id="reveal-btn">Reveal answer</button>
+  </section>
+
+  <section id="reveal-screen" class="card hidden">
+    <div class="qnum">Correct answer</div>
+    <div class="qtext" id="reveal-q-text"></div>
+    <div class="choices" id="reveal-choices"></div>
+    <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:22px 0 10px">Leaderboard</h3>
+    <div id="reveal-leaderboard"></div>
+    <button class="btn" id="next-btn" style="margin-top:16px">Next question</button>
+  </section>
+
+  <section id="finished-screen" class="card hidden">
+    <h2 style="margin-top:0">🏁 Final results</h2>
+    <div id="final-leaderboard"></div>
+    <button class="btn sec" id="new-game-btn" style="margin-top:18px">Start a new game</button>
+  </section>
+
+  <p class="status-toast" id="status-toast"></p>
+</div>
+
+<script>
+(function () {
+  var roomCode = null;
+  var currentQuiz = null;
+  var unsubRoom = null, unsubPlayers = null;
+  var latestPlayers = [];
+  var questionStartedAtMs = null;
+  var timerInterval = null;
+
+  function $(id) { return document.getElementById(id); }
+  function show(id) { $(id).classList.remove("hidden"); }
+  function hide(id) { $(id).classList.add("hidden"); }
+  function toast(msg) { $("status-toast").textContent = msg || ""; }
+
+  function populateQuizSelect() {
+    var sel = $("quiz-select");
+    sel.innerHTML = "";
+    var quizzes = window.GROUP_QUIZZES || {};
+    Object.keys(quizzes).forEach(function (id) {
+      var opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = quizzes[id].title + " (" + quizzes[id].questions.length + " questions)";
+      sel.appendChild(opt);
+    });
+  }
+
+  $("timed-toggle").addEventListener("change", function () {
+    $("seconds-row").classList.toggle("hidden", !this.checked);
+  });
+  $("seconds-row").classList.add("hidden");
+
+  function waitForGroupStudy(cb) {
+    if (window.GroupStudy && window.GroupStudy.whenReady) { cb(); return; }
+    if (window.GroupStudy && window.GroupStudy.unavailable) { toast(window.GroupStudy.unavailable); return; }
+    setTimeout(function () { waitForGroupStudy(cb); }, 150);
+  }
+
+  waitForGroupStudy(function () {
+    populateQuizSelect();
+    GroupStudy.whenReady().then(function () {
+      $("create-btn").disabled = false;
+      $("create-btn").textContent = "Create room →";
+    });
+  });
+
+  $("join-url-hint").textContent = location.href.replace(/group-host\.html.*/, "group-join.html");
+
+  $("create-btn").addEventListener("click", function () {
+    $("create-btn").disabled = true;
+    $("create-btn").textContent = "Creating…";
+    currentQuiz = window.GROUP_QUIZZES[$("quiz-select").value];
+    var opts = {
+      timedMode: $("timed-toggle").checked,
+      secondsPerQuestion: parseInt($("seconds-input").value, 10) || 20
+    };
+    GroupStudy.createRoom($("quiz-select").value, opts).then(function (code) {
+      roomCode = code;
+      $("room-code-display").textContent = code;
+      hide("setup");
+      show("lobby");
+      unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
+        latestPlayers = players;
+        renderPlayerList(players);
+        updateAnswerProgress();
+        if (lastRoomState) {
+          if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
+          if (lastRoomState.status === "finished") renderLeaderboard("final-leaderboard", latestPlayers);
+        }
+        $("start-btn").disabled = players.length === 0;
+        $("start-btn").textContent = players.length === 0
+          ? "Waiting for players…"
+          : "Start game (" + players.length + " joined) →";
+      });
+      unsubRoom = GroupStudy.listenRoom(roomCode, onRoomUpdate);
+    }).catch(function (err) {
+      toast("Couldn't create room: " + (err && err.message));
+      $("create-btn").disabled = false;
+      $("create-btn").textContent = "Create room →";
+    });
+  });
+
+  function renderPlayerList(players) {
+    var box = $("player-list");
+    box.innerHTML = "";
+    players.forEach(function (p) {
+      var chip = document.createElement("span");
+      chip.className = "pchip";
+      chip.textContent = p.nickname;
+      box.appendChild(chip);
+    });
+  }
+
+  $("start-btn").addEventListener("click", function () {
+    GroupStudy.startGame(roomCode);
+  });
+
+  $("reveal-btn").addEventListener("click", function () {
+    GroupStudy.revealQuestion(roomCode);
+  });
+
+  $("next-btn").addEventListener("click", function () {
+    var room = lastRoomState;
+    var nextIdx = room.currentQuestionIndex + 1;
+    if (nextIdx >= currentQuiz.questions.length) {
+      GroupStudy.finishGame(roomCode);
+    } else {
+      GroupStudy.nextQuestion(roomCode, nextIdx);
+    }
+  });
+
+  $("new-game-btn").addEventListener("click", function () { location.reload(); });
+
+  var lastRoomState = null;
+  function onRoomUpdate(room) {
+    lastRoomState = room;
+    if (!currentQuiz) currentQuiz = window.GROUP_QUIZZES[room.quizId];
+
+    if (room.status === "question") {
+      renderQuestionScreen(room);
+    } else if (room.status === "reveal") {
+      renderRevealScreen(room);
+    } else if (room.status === "finished") {
+      renderFinishedScreen();
+    }
+  }
+
+  function stopTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  function renderQuestionScreen(room) {
+    hide("lobby"); hide("reveal-screen"); hide("finished-screen"); show("question-screen");
+    var q = currentQuiz.questions[room.currentQuestionIndex];
+    $("q-num").textContent = "Question " + (room.currentQuestionIndex + 1) + " of " + currentQuiz.questions.length;
+    $("q-text").textContent = q.q;
+    var box = $("q-choices");
+    box.innerHTML = "";
+    q.choices.forEach(function (c) {
+      var d = document.createElement("div");
+      d.className = "choice";
+      d.textContent = c;
+      box.appendChild(d);
+    });
+
+    stopTimer();
+    if (room.timedMode && room.currentQuestionStartedAt) {
+      show("timer-display");
+      questionStartedAtMs = room.currentQuestionStartedAt.toMillis();
+      timerInterval = setInterval(function () {
+        var remain = room.secondsPerQuestion - Math.floor((Date.now() - questionStartedAtMs) / 1000);
+        if (remain <= 0) {
+          $("timer-display").textContent = "0";
+          stopTimer();
+          GroupStudy.revealQuestion(roomCode);
+          return;
+        }
+        $("timer-display").textContent = remain;
+        $("timer-display").classList.toggle("low", remain <= 5);
+      }, 250);
+    } else {
+      hide("timer-display");
+    }
+
+    updateAnswerProgress();
+  }
+
+  function updateAnswerProgress() {
+    if (!lastRoomState || lastRoomState.status !== "question") return;
+    var idx = lastRoomState.currentQuestionIndex;
+    var answered = latestPlayers.filter(function (p) { return p.answers && p.answers[idx] != null; }).length;
+    $("answer-progress").textContent = answered + " of " + latestPlayers.length + " answered";
+  }
+
+  function renderRevealScreen(room) {
+    stopTimer();
+    hide("question-screen"); hide("lobby"); hide("finished-screen"); show("reveal-screen");
+    var q = currentQuiz.questions[room.currentQuestionIndex];
+    $("reveal-q-text").textContent = q.q;
+    var box = $("reveal-choices");
+    box.innerHTML = "";
+    q.choices.forEach(function (c, i) {
+      var d = document.createElement("div");
+      d.className = "choice" + (i === q.answer ? " correct" : "");
+      d.textContent = c;
+      box.appendChild(d);
+    });
+    renderLeaderboard("reveal-leaderboard", latestPlayers);
+    var isLast = room.currentQuestionIndex >= currentQuiz.questions.length - 1;
+    $("next-btn").textContent = isLast ? "Finish game →" : "Next question →";
+  }
+
+  function renderFinishedScreen() {
+    stopTimer();
+    hide("question-screen"); hide("reveal-screen"); hide("lobby"); show("finished-screen");
+    renderLeaderboard("final-leaderboard", latestPlayers);
+  }
+
+  function renderLeaderboard(containerId, players) {
+    var box = $(containerId);
+    box.innerHTML = "";
+    var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+    sorted.forEach(function (p, i) {
+      var row = document.createElement("div");
+      row.className = "lb-row";
+      row.innerHTML =
+        '<span class="rank">#' + (i + 1) + '</span>' +
+        '<span class="name"></span>' +
+        '<span class="score">' + (p.score || 0) + '</span>';
+      row.querySelector(".name").textContent = p.nickname;
+      box.appendChild(row);
+    });
+  }
+
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function(){}); });
+  }
+</script>
+</body>
+</html>

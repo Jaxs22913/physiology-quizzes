@@ -15,6 +15,16 @@
   if (typeof firebase === "undefined") return; // SDK failed to load (offline/blocked)
 
   firebase.initializeApp(window.FIREBASE_CONFIG);
+  // Signals other scripts (currently just group-study.js on the Group Study
+  // pages) that the Firebase SDK is loaded AND initialized, so they can wait
+  // for this instead of loading + initializing the SDK a second time
+  // themselves (re-loading firebase-app-compat.js would reset the global
+  // `firebase.apps` registry and break the app reference this file just
+  // created). A flag (checked first, for scripts that load after this
+  // already ran) plus an event (for scripts already listening) covers both
+  // orderings.
+  window.__firebaseReady = true;
+  window.dispatchEvent(new Event("firebaseReady"));
   var auth = firebase.auth();
   var db = firebase.firestore();
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function () {});
