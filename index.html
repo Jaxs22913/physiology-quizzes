@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
 <link rel="stylesheet" href="theme.css">
@@ -273,18 +273,7 @@
     @media (max-width: 640px) {
       body { padding: 32px 16px; }
       .tabs { flex-wrap: wrap; }
-      /* "Pharmacodynamics" has no space to wrap at like the other three
-         labels do, so at this width it was overflowing straight past its
-         own button's right edge (scrollWidth > clientWidth) instead of
-         wrapping -- crowding right up against the .tabs container's edge.
-         overflow-wrap lets it break mid-word as a last resort, matching
-         how "Anatomy Practicum" already wraps at its natural space. */
-      .tab-btn {
-        flex: 1 1 auto;
-        min-width: 45%;
-        padding: 9px 8px;
-        overflow-wrap: break-word;
-      }
+      .tab-btn { flex: 1 1 auto; min-width: 45%; }
       .card { padding: 16px; }
     }
 
@@ -1027,6 +1016,31 @@
          generally, so desktop (which doesn't show .bottom-decor at all)
          is untouched. */
       .page > .more-links { margin-bottom: 56px; }
+
+      /* "Pharmacodynamics" has no space to wrap at like the other three tab
+         labels do, so at this width it was overflowing straight past its
+         own button's right edge instead of wrapping. A first attempt used
+         plain overflow-wrap: break-word, which works but breaks wherever
+         the character happens to run out of room ("Pharmacodyna" /
+         "mics") -- ugly, and not a real word boundary. The actual fix is
+         the &shy; (soft hyphen) placed in the label markup itself
+         ("Pharmaco&shy;dynamics"), which forces the break to land at
+         "Pharmaco-" / "dynamics" and shows a real hyphen only when a
+         break is actually needed there. hyphens: auto (needs
+         <html lang="en">, added above) is kept as a belt-and-suspenders
+         addition for browsers that hyphenate other long strings on this
+         page, and overflow-wrap as a last-resort fallback. This block
+         must come after the base .tab-btn rule (which sets padding: 9px
+         14px) to actually win -- an earlier attempt placed this override
+         before that base rule and it was silently discarded, same trap
+         documented elsewhere in this file: a media query doesn't out-rank
+         an unconditional rule of equal specificity that simply comes
+         later in source order. */
+      .tab-btn {
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        overflow-wrap: break-word;
+      }
     }
 
     /* On very wide monitors, .page's fixed 640px max-width (sized for
@@ -1159,7 +1173,7 @@
       <h2 class="semester-header">Summer Semester 1 - 2026</h2>
       <div class="tabs">
         <button class="tab-btn active" data-tab="physio">Physiology</button>
-        <button class="tab-btn" data-tab="pharmacodynamics">Pharmacodynamics</button>
+        <button class="tab-btn" data-tab="pharmacodynamics">Pharmaco&shy;dynamics</button>
         <button class="tab-btn" data-tab="anatomy">Anatomy</button>
         <button class="tab-btn" data-tab="anatomy-practicum">Anatomy Practicum</button>
       </div>
