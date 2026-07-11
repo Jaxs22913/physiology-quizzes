@@ -191,10 +191,16 @@
         flex: 1 1 0;
         min-width: 0;
         margin: 0;
+        padding: 10px;
       }
-      .mobile-widgets-row #week-widget { padding: 10px; }
       .mobile-widgets-row .week-widget-top { flex-wrap: wrap; margin-bottom: 6px; }
-      .mobile-widgets-row .week-title { font-size: 9.5px; letter-spacing: .02em; }
+      .mobile-widgets-row .week-title {
+        font-size: 9.5px;
+        letter-spacing: .02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       .mobile-widgets-row .week-range { font-size: 9.5px; }
       .mobile-widgets-row .week-list { gap: 4px; }
       .mobile-widgets-row .week-item { padding: 5px 7px; gap: 5px; border-radius: 7px; }
@@ -1036,7 +1042,7 @@
         <div id="week-list" class="week-list"></div>
       </div>
 
-      <div id="continue-widget" class="continue-widget hidden">
+      <div id="continue-widget" class="card continue-widget hidden">
         <h2 class="continue-title">Continue where you left off</h2>
         <div id="continue-list" class="continue-list"></div>
       </div>
