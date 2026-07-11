@@ -163,6 +163,83 @@
       if (el) navigator.vibrate(15);
     });
   }
+
+  // Sound effects (added 2026-07-10), same zero-per-quiz-file delegated-click
+  // pattern as initHaptics above -- default off, toggled in the settings
+  // panel. Synthesized with the Web Audio API (short oscillator tones)
+  // rather than shipping audio files, so there's nothing to fetch and it
+  // works offline. AudioContext is created lazily on first actual play
+  // (always from inside a real click handler) so it starts in a valid,
+  // already-user-gestured state instead of "suspended" by autoplay policy.
+  function initSoundEffects() {
+    var audioCtx = null;
+    function getCtx() {
+      if (!audioCtx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return null;
+        audioCtx = new AC();
+      }
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+    function tone(ctx, freq, startTime, duration, type, peakGain) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      var t0 = ctx.currentTime + startTime;
+      gain.gain.setValueAtTime(0, t0);
+      gain.gain.linearRampToValueAtTime(peakGain || 0.12, t0 + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t0);
+      osc.stop(t0 + duration + 0.02);
+    }
+    var SOUNDS = {
+      select: function (ctx) { tone(ctx, 700, 0, 0.05, "sine", 0.07); },
+      correct: function (ctx) {
+        tone(ctx, 880, 0, 0.09, "sine", 0.12);
+        tone(ctx, 1318.5, 0.08, 0.14, "sine", 0.12);
+      },
+      wrong: function (ctx) { tone(ctx, 170, 0, 0.18, "sine", 0.12); },
+      complete: function (ctx) {
+        [523.25, 659.25, 783.99, 1046.5].forEach(function (freq, i) {
+          tone(ctx, freq, i * 0.11, i === 3 ? 0.24 : 0.12, "sine", 0.12);
+        });
+      }
+    };
+    function playSound(name) {
+      if (localStorage.getItem("soundEffects") !== "1") return;
+      try {
+        var ctx = getCtx();
+        if (ctx && SOUNDS[name]) SOUNDS[name](ctx);
+      } catch (e) {}
+    }
+
+    document.addEventListener("click", function (e) {
+      var opt = e.target.closest && e.target.closest(".opt, .choice");
+      if (!opt) return;
+      if (opt.classList.contains("correct")) playSound("correct");
+      else if (opt.classList.contains("wrong")) playSound("wrong");
+      else playSound("select");
+    });
+
+    // #results becoming visible is the one truly universal "quiz finished"
+    // signal across every family (see feedback_quiz_progress_tracking) --
+    // watched generically via MutationObserver instead of a per-file hook,
+    // checking computed style so it catches both class-based and inline-
+    // style-based hidden/shown toggling.
+    var announcedResults = new WeakSet();
+    var resultsObserver = new MutationObserver(function () {
+      var results = document.getElementById("results");
+      if (!results || announcedResults.has(results)) return;
+      if (getComputedStyle(results).display !== "none") {
+        announcedResults.add(results);
+        playSound("complete");
+      }
+    });
+    resultsObserver.observe(document.body, { attributes: true, attributeFilter: ["class", "style"], subtree: true });
+  }
   function el(tag, cls, html) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -388,6 +465,13 @@
         );
         panel.appendChild(hapticsToggle.row);
       }
+
+      var soundToggle = makeToggleRow(
+        "Sound effects",
+        localStorage.getItem("soundEffects") === "1",
+        function (checked) { localStorage.setItem("soundEffects", checked ? "1" : "0"); }
+      );
+      panel.appendChild(soundToggle.row);
     }
 
     // Exam Mode: no per-question feedback until a real submit, free
@@ -677,6 +761,7 @@
       group.insertBefore(shortcutsBtn, refreshBtn);
 
       initHaptics();
+      initSoundEffects();
 
       var shuffleCb = document.getElementById("shuffle-toggle");
       if (shuffleCb) {
