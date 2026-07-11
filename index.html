@@ -237,15 +237,15 @@
 
     /* Compact mobile header: the full-height logo + title + two-line
        subtitle pushed everything useful below the fold on narrow screens.
-       .brand-mark/.brand-bars (both sit before .page opens, so they can't
-       share a flex row with anything inside header) are hidden entirely on
-       mobile and replaced by .compact-brand, a small inline wordmark that
-       lives inside header itself so it stays in the existing order:10 slot.
-       This override lives in the later @media(max-width:640px) block below
-       (not here) -- .brand-bars's own unconditional `display:flex` comes
-       after this point in the cascade and would otherwise win by source
-       order despite equal specificity. */
-    .compact-brand { display: none; }
+       .brand-mark/.brand-bars are hidden entirely on mobile -- an earlier
+       version replaced them with a small inline wordmark inside header, but
+       that duplicated the H1 right below it ("Class of 2028" vs "Class of
+       2028 Review") and was itself still one more row of clutter at the
+       very top, so it was cut rather than shrunk further. This override
+       lives in the later @media(max-width:640px) block below (not here) --
+       .brand-bars's own unconditional `display:flex` comes after this
+       point in the cascade and would otherwise win by source order despite
+       equal specificity. */
 
     .brand-bars {
       display: flex;
@@ -905,16 +905,11 @@
        styles get edited later. */
     @media (max-width: 640px) {
       .brand-mark, .brand-bars { display: none; }
-      .compact-brand {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin: 26px 0 10px;
-      }
-      .compact-brand svg { width: 24px; height: 15px; flex: none; }
-      .compact-brand span { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
-      header { margin-bottom: 18px; }
+      /* No inline wordmark replacing them -- the H1 right below already
+         says "Class of 2028 Review", so a second "Class of 2028" line was
+         pure duplication. header's own top margin does the corner-buttons
+         clearance job the wordmark used to (indirectly) provide. */
+      header { margin: 26px 0 18px; }
       h1 { font-size: 19px; margin-bottom: 4px; }
       .subtitle { font-size: 11.5px; }
 
@@ -989,14 +984,6 @@
 
   <div class="page">
     <header>
-      <div class="compact-brand" aria-hidden="true">
-        <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="148,171 198,88 218,125" fill="none" stroke="var(--ink)" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"/>
-          <line x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="16"/>
-          <path d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke="var(--accent)" stroke-width="18"/>
-        </svg>
-        <span>Class of 2028</span>
-      </div>
       <h1>Class of 2028 Review</h1>
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
