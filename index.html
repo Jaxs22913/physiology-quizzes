@@ -934,7 +934,7 @@
       /* header's own top margin does the corner-buttons clearance job the
          old wordmark row used to (indirectly) provide. */
       header { margin: 26px 0 18px; }
-      h1 { font-size: 19px; margin-bottom: 4px; }
+      h1 { font-size: 19px; margin-bottom: 0; }
       .subtitle { font-size: 11.5px; }
 
       /* Mirrors desktop's .brand-mark -> .brand-bars -> header rhythm --
@@ -949,7 +949,7 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
-        margin: 8px auto 14px;
+        margin: 2px auto 14px;
       }
       .h1-divider span {
         display: block;
@@ -961,9 +961,15 @@
       .h1-divider span:nth-child(2) { width: 16px; }
       .h1-divider span:nth-child(3) { width: 60px; }
 
+      /* viewBox is cropped tight to the mark+text's own bounding box
+         (getBBox() measured content at y:72-195.86 out of the original
+         0-240 box -- nearly half the box was empty padding above/below,
+         which is what made the gap to the divider look too big regardless
+         of margin tweaks) so height now scales with the visible content,
+         not a mostly-empty box. */
       .h1-logo {
         display: block;
-        width: 140px;
+        width: 200px;
         height: auto;
         margin: 0 auto;
       }
@@ -1071,7 +1077,7 @@
   <div class="page">
     <header>
       <h1>
-        <svg class="h1-logo" aria-hidden="true" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+        <svg class="h1-logo" aria-hidden="true" viewBox="0 62 400 144" xmlns="http://www.w3.org/2000/svg">
           <g id="logo-mark-mobile">
             <polyline class="mark-line a-draw" pathLength="100" points="148,171 198,88 218,125" stroke="var(--ink)" stroke-width="5.8" />
             <line class="mark-line a-draw" pathLength="100" x1="226" y1="142" x2="248" y2="172" stroke="var(--ink)" stroke-width="5.8" />
