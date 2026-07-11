@@ -263,7 +263,7 @@
     .brand-bars span {
       display: block;
       height: 3px;
-      background: #ffffff;
+      background: var(--ink);
       border-radius: 2px;
     }
     .brand-bars span:nth-child(1) { width: 100px; }
@@ -910,6 +910,7 @@
        these win at <=640px regardless of where the rest of the file's
        styles get edited later. */
     .h1-logo { display: none; }
+    .h1-divider { display: none; }
     /* The plain-text H1 ("Class of 2028 Review") duplicated the logo right
        above it -- .brand-mark's own SVG already has "Class of 2028" baked
        in (desktop), and the mobile .h1-logo below reuses that exact same
@@ -935,6 +936,30 @@
       header { margin: 26px 0 18px; }
       h1 { font-size: 19px; margin-bottom: 4px; }
       .subtitle { font-size: 11.5px; }
+
+      /* Mirrors desktop's .brand-mark -> .brand-bars -> header rhythm --
+         can't reuse .brand-bars itself since that element sits before
+         .page opens (so it can't land between .h1-logo and the subtitles,
+         which live inside header), and reusing its class name here would
+         also catch it in the `.brand-mark, .brand-bars { display:none }`
+         rule two lines up. Same visual recipe, scaled down to match the
+         smaller mobile logo. */
+      .h1-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin: 8px auto 14px;
+      }
+      .h1-divider span {
+        display: block;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+      }
+      .h1-divider span:nth-child(1) { width: 60px; }
+      .h1-divider span:nth-child(2) { width: 16px; }
+      .h1-divider span:nth-child(3) { width: 60px; }
 
       .h1-logo {
         display: block;
@@ -1056,6 +1081,7 @@
         </svg>
         <span class="h1-text">Class of 2028 Review</span>
       </h1>
+      <div class="h1-divider" aria-hidden="true"><span></span><span></span><span></span></div>
       <p class="subtitle">Confident, but humble - Dr.Rappa</p>
       <p class="subtitle">-Read the question carefully, DON'T change ya answer-</p>
     </header>
