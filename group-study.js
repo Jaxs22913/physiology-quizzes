@@ -148,9 +148,27 @@
           avatar: avatar,
           score: 0,
           answers: {},
-          joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+          joinedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          lastSeen: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true }).then(function () { return { uid: uid, room: snap.data() }; });
       });
+    });
+  };
+
+  // Firestore (unlike Realtime Database) has no built-in disconnect/presence
+  // detection, so "did this player leave" is inferred client-side from a
+  // periodic heartbeat rather than a server-pushed event. Deliberately NOT
+  // paired with a beforeunload/pagehide "mark left" write -- those fire on
+  // an ordinary page reload too (indistinguishable from actually leaving),
+  // which would falsely flag every reload-to-resume as a departure. A
+  // heartbeat-staleness check trades instant detection for correctness: no
+  // false positives, at the cost of a ~25-30s detection delay -- acceptable
+  // for a casual live study session. See feedback_group_study memory.
+  window.GroupStudy.heartbeat = function (code) {
+    return whenReady().then(function (uid) {
+      return playersRef(code).doc(uid).update({
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(function () {});
     });
   };
 

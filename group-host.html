@@ -28,7 +28,7 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
     font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-    padding:24px 16px 60px;}
+    padding:24px 16px 92px;}
   .wrap{max-width:680px;margin:0 auto}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px 26px}
   h1{font-size:22px;margin:0 0 4px}
@@ -88,6 +88,10 @@
     border-radius:50%;background:var(--paper);border:2px solid var(--line);filter:grayscale(100%);opacity:.5;
     transition:filter .25s,opacity .25s,transform .25s,border-color .25s}
   .answerer-avatar.answered{filter:grayscale(0%);opacity:1;border-color:var(--good);transform:scale(1.1)}
+  .answerer-avatar.away{opacity:.3;border-color:var(--bad);position:relative}
+  .answerer-avatar.away::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:2px;background:var(--bad);transform:rotate(-15deg)}
+  .lb-row.away{opacity:.55}
+  .lb-row .left-tag{color:var(--bad);font-weight:700;font-size:11.5px;margin-left:6px}
   .podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin:6px 0 26px;min-height:180px}
   .podium-slot{display:flex;flex-direction:column;align-items:center;width:30%;max-width:130px}
   .podium-avatar{font-size:36px;margin-bottom:4px}
@@ -103,6 +107,19 @@
   @media (prefers-color-scheme: dark) {
     .footer-mark-ink { stroke: #e5e7eb; }
     .footer-mark-accent { stroke: #60a5fa; }
+  }
+  /* On narrow viewports .wrap has no side margin for #host-code-badge to
+     float in (unlike desktop, where it sits in the empty space left of the
+     centered .wrap) -- it would otherwise sit directly on top of the header
+     text. Reserve clearance instead of trying to squeeze the badge in. */
+  @media (max-width: 480px) {
+    header { margin-top: 46px; }
+    .podium { gap: 6px; }
+    .podium-slot { max-width: 96px; }
+    .podium-avatar { font-size: 28px; }
+    .podium-medal { font-size: 16px; }
+    .podium-name { font-size: 12px; }
+    .podium-score { font-size: 10.5px; }
   }
 </style>
 </head>
@@ -314,6 +331,52 @@
   // room code across a reload so it can be validated and rejoined.
   var HOST_SESSION_KEY = "gsHostSession";
 
+  // Firestore has no built-in disconnect/presence signal (unlike Realtime
+  // Database), so "did this player leave" is inferred from a heartbeat
+  // each player writes every ~10s (see group-study.js/group-join.html) --
+  // a player is considered gone once their lastSeen is stale, checked on a
+  // timer since staleness alone (time passing with no new write) never
+  // triggers a fresh Firestore snapshot on its own.
+  var STALE_MS = 25000;
+  var staleCheckInterval = null;
+  var announcedLeftUids = new Set();
+  function isPlayerAway(p) {
+    var seenMs = (p.lastSeen && p.lastSeen.toMillis) ? p.lastSeen.toMillis()
+      : (p.joinedAt && p.joinedAt.toMillis) ? p.joinedAt.toMillis() : Date.now();
+    return (Date.now() - seenMs) > STALE_MS;
+  }
+
+  function updateStartBtn() {
+    if (lastRoomState && lastRoomState.status !== "lobby") return;
+    var presentCount = latestPlayers.filter(function (p) { return !isPlayerAway(p); }).length;
+    $("start-btn").disabled = presentCount === 0;
+    $("start-btn").textContent = presentCount === 0
+      ? "Waiting for players…"
+      : "Start game (" + presentCount + " joined) →";
+  }
+
+  function refreshPresence() {
+    if (!lastRoomState) return;
+    renderPlayerList(latestPlayers);
+    updateStartBtn();
+    if (lastRoomState.status === "question") updateAnswerProgress();
+    if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
+    if (lastRoomState.status === "finished") {
+      renderPodium("podium", latestPlayers);
+      renderLeaderboard("final-leaderboard", latestPlayers, 3);
+    }
+    if (lastRoomState.status !== "lobby") {
+      latestPlayers.forEach(function (p) {
+        if (isPlayerAway(p) && !announcedLeftUids.has(p.uid)) {
+          announcedLeftUids.add(p.uid);
+          toast((p.avatar || "🦊") + " " + p.nickname + " left the game");
+        } else if (!isPlayerAway(p) && announcedLeftUids.has(p.uid)) {
+          announcedLeftUids.delete(p.uid); // reconnected (e.g. a reload)
+        }
+      });
+    }
+  }
+
   function enterRoom(code, quizId) {
     roomCode = code;
     currentQuiz = window.GROUP_QUIZZES[quizId];
@@ -325,14 +388,16 @@
 
     if (unsubPlayers) unsubPlayers();
     if (unsubRoom) unsubRoom();
+    if (staleCheckInterval) clearInterval(staleCheckInterval);
+    staleCheckInterval = setInterval(refreshPresence, 5000);
 
     var knownPlayerUids = null;
     unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
       if (knownPlayerUids && lastRoomState && lastRoomState.status === "lobby") {
-        var isNewJoin = players.some(function (p) { return !knownPlayerUids.has(p.uid); });
+        var isNewJoin = players.some(function (p) { return !knownPlayerUids.has(p.uid) && !isPlayerAway(p); });
         if (isNewJoin) playSound("join");
       }
-      knownPlayerUids = new Set(players.map(function (p) { return p.uid; }));
+      knownPlayerUids = new Set(players.filter(function (p) { return !isPlayerAway(p); }).map(function (p) { return p.uid; }));
 
       latestPlayers = players;
       renderPlayerList(players);
@@ -344,10 +409,7 @@
           renderLeaderboard("final-leaderboard", latestPlayers, 3);
         }
       }
-      $("start-btn").disabled = players.length === 0;
-      $("start-btn").textContent = players.length === 0
-        ? "Waiting for players…"
-        : "Start game (" + players.length + " joined) →";
+      updateStartBtn();
     });
     unsubRoom = GroupStudy.listenRoom(roomCode, onRoomUpdate);
   }
@@ -401,7 +463,14 @@
   function renderPlayerList(players) {
     var box = $("player-list");
     box.innerHTML = "";
-    players.forEach(function (p) {
+    // Lobby roster only ever shows players who are actually still present --
+    // a player who closed the tab before the game started just quietly
+    // drops off this list once their heartbeat goes stale, rather than
+    // sitting there as a ghost entry the host has to mentally filter out.
+    var present = (!lastRoomState || lastRoomState.status === "lobby")
+      ? players.filter(function (p) { return !isPlayerAway(p); })
+      : players;
+    present.forEach(function (p) {
       var chip = document.createElement("span");
       chip.className = "pchip";
       chip.innerHTML = '<span class="pc-av">' + (p.avatar || "🦊") + '</span>';
@@ -440,6 +509,7 @@
 
     if (room.status === "lobby") {
       hide("question-screen"); hide("reveal-screen"); hide("finished-screen"); show("lobby");
+      show("quiz-footer-logo");
     } else if (room.status === "question") {
       renderQuestionScreen(room);
     } else if (room.status === "reveal") {
@@ -455,6 +525,17 @@
 
   function renderQuestionScreen(room) {
     hide("lobby"); hide("reveal-screen"); hide("finished-screen"); show("question-screen");
+    // The fixed bottom-center homepage logo can end up flush against
+    // reveal-btn/next-btn on short mobile viewports (compact card, few
+    // choices) -- there's no reliable amount of padding that avoids this
+    // for every content-length/scroll-position combination (a
+    // scrollIntoView("end") on the button always lands its bottom edge at
+    // the viewport bottom, same place the fixed footer always sits,
+    // regardless of trailing space). Hiding the footer for just these two
+    // screens sidesteps it entirely -- the "Back to home" link already at
+    // the top of the page keeps every screen compliant with the sitewide
+    // "every page needs a way home" requirement.
+    hide("quiz-footer-logo");
     var q = currentQuiz.questions[room.currentQuestionIndex];
     $("q-num").textContent = "Question " + (room.currentQuestionIndex + 1) + " of " + currentQuiz.questions.length;
     $("q-text").textContent = q.q;
@@ -500,10 +581,11 @@
     latestPlayers.forEach(function (p) {
       var didAnswer = p.answers && p.answers[idx] != null;
       if (didAnswer) answeredCount++;
+      var away = isPlayerAway(p);
       var chip = document.createElement("div");
-      chip.className = "answerer-avatar" + (didAnswer ? " answered" : "");
+      chip.className = "answerer-avatar" + (didAnswer ? " answered" : "") + (away ? " away" : "");
       chip.textContent = p.avatar || "🦊";
-      chip.title = p.nickname + (didAnswer ? " -- answered" : " -- thinking...");
+      chip.title = p.nickname + (away ? " -- left the game" : didAnswer ? " -- answered" : " -- thinking...");
       box.appendChild(chip);
     });
 
@@ -517,6 +599,7 @@
   function renderRevealScreen(room) {
     stopTimer();
     hide("question-screen"); hide("lobby"); hide("finished-screen"); show("reveal-screen");
+    hide("quiz-footer-logo"); // see renderQuestionScreen for why
     if (soundedRevealIndex !== room.currentQuestionIndex) {
       soundedRevealIndex = room.currentQuestionIndex;
       playSound("reveal");
@@ -540,6 +623,7 @@
   function renderFinishedScreen() {
     stopTimer();
     hide("question-screen"); hide("reveal-screen"); hide("lobby"); show("finished-screen");
+    show("quiz-footer-logo");
     if (!podiumSounded) { podiumSounded = true; playSound("podium"); }
     renderPodium("podium", latestPlayers);
     renderLeaderboard("final-leaderboard", latestPlayers, 3);
@@ -577,11 +661,12 @@
     box.innerHTML = "";
     var sorted = players.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); }).slice(startIndex);
     sorted.forEach(function (p, i) {
+      var away = isPlayerAway(p);
       var row = document.createElement("div");
-      row.className = "lb-row";
+      row.className = "lb-row" + (away ? " away" : "");
       row.innerHTML =
         '<span class="rank">#' + (startIndex + i + 1) + '</span>' +
-        '<span class="name">' + (p.avatar || "🦊") + ' <span></span></span>' +
+        '<span class="name">' + (p.avatar || "🦊") + ' <span></span>' + (away ? '<span class="left-tag">left</span>' : '') + '</span>' +
         '<span class="score">' + (p.score || 0) + '</span>';
       row.querySelector(".name span").textContent = p.nickname;
       box.appendChild(row);
