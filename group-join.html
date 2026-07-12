@@ -62,6 +62,11 @@
   .feedback{text-align:center;padding:14px 0}
   .feedback .big{font-size:44px;margin-bottom:8px}
   .feedback .pts{font-weight:800;color:var(--acc);font-size:20px}
+  .reveal-explain{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin-top:14px;font-size:14.5px;line-height:1.55;color:var(--ink);text-align:left}
+  .reveal-explain .re-label{display:block;font:700 11px/1 ui-sans-serif;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--good);margin-bottom:6px}
+  .reveal-explain .re-cite{display:block;margin-top:10px;font-size:12.5px;color:var(--muted);font-style:italic}
   .myrank{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
   .lb-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;margin-bottom:6px;background:var(--paper);border:1px solid var(--line)}
   .lb-row.me{border-color:var(--acc);background:#eef0fd}
@@ -430,6 +435,19 @@
       if (bEl) bEl.textContent = q.choices[q.answer];
     } else {
       box.innerHTML = '<div class="big">⌛</div><div>Time’s up — no answer submitted.</div>';
+    }
+    // Same "why" + source citation shown on the site's regular quizzes after
+    // answering -- exp/cite come straight from group-questions.js (ported
+    // from each quiz's own question bank), not written separately for
+    // Group Study, so it stays consistent with the solo-quiz experience.
+    if (q.exp) {
+      var explainEl = document.createElement("div");
+      explainEl.className = "reveal-explain";
+      explainEl.innerHTML = '<span class="re-label">Why</span><span></span>' +
+        (q.cite ? '<span class="re-cite"></span>' : '');
+      explainEl.querySelectorAll("span")[1].textContent = q.exp;
+      if (q.cite) explainEl.querySelector(".re-cite").textContent = "Source: " + q.cite;
+      box.appendChild(explainEl);
     }
 
     var sorted = latestPlayers.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });

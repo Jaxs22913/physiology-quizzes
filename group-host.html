@@ -52,6 +52,11 @@
   .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
   .choice{border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;font-size:14.5px}
   .choice.correct{border-color:var(--good);background:var(--goodbg)}
+  .reveal-explain{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin-bottom:20px;font-size:14.5px;line-height:1.55;color:var(--ink)}
+  .reveal-explain .re-label{display:block;font:700 11px/1 ui-sans-serif;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--good);margin-bottom:6px}
+  .reveal-explain .re-cite{display:block;margin-top:10px;font-size:12.5px;color:var(--muted);font-style:italic}
   .progress{color:var(--muted);font-size:13.5px;margin-bottom:16px;text-align:center}
   .timer{font:800 40px/1 ui-monospace,monospace;text-align:center;margin:0 0 16px;color:var(--acc)}
   .timer.low{color:var(--bad)}
@@ -206,6 +211,11 @@
     <div class="qnum">Correct answer</div>
     <div class="qtext" id="reveal-q-text"></div>
     <div class="choices" id="reveal-choices"></div>
+    <div class="reveal-explain hidden" id="reveal-explain">
+      <span class="re-label">Why</span>
+      <span id="reveal-explain-text"></span>
+      <span class="re-cite hidden" id="reveal-explain-cite"></span>
+    </div>
     <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:22px 0 10px">Leaderboard</h3>
     <div id="reveal-leaderboard"></div>
     <button class="btn" id="next-btn" style="margin-top:16px">Next question</button>
@@ -679,6 +689,23 @@
       d.textContent = c;
       box.appendChild(d);
     });
+    // Same "why" + source citation shown on the site's regular quizzes after
+    // answering -- exp/cite come straight from group-questions.js (ported
+    // from each quiz's own question bank), so this is the same explanation
+    // text a solo quiz-taker would see, not something written separately
+    // for Group Study.
+    if (q.exp) {
+      $("reveal-explain-text").textContent = q.exp;
+      show("reveal-explain");
+    } else {
+      hide("reveal-explain");
+    }
+    if (q.cite) {
+      $("reveal-explain-cite").textContent = "Source: " + q.cite;
+      show("reveal-explain-cite");
+    } else {
+      hide("reveal-explain-cite");
+    }
     renderLeaderboard("reveal-leaderboard", latestPlayers);
     var isLast = room.currentQuestionIndex >= currentQuiz.questions.length - 1;
     $("next-btn").textContent = isLast ? "Finish game →" : "Next question →";
