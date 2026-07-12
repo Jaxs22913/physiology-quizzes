@@ -233,6 +233,18 @@
   var HEARTBEAT_MS = 10000;
   var STALE_MS = 25000;
   var heartbeatInterval = null;
+
+  // Mobile browsers throttle/suspend setInterval timers on a backgrounded
+  // tab (screen lock, switching apps mid-game) far more aggressively than
+  // desktop -- so the routine 10s heartbeat can stall well past STALE_MS,
+  // and the host keeps showing this player as "left" for longer than the
+  // player is actually gone even after they've switched back. Firing one
+  // heartbeat immediately on tab-foreground (rather than waiting for the
+  // next throttled interval tick) closes that gap instead of relying on
+  // the interval alone to notice the tab is active again.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && roomCode) GroupStudy.heartbeat(roomCode);
+  });
   function isPlayerAway(p) {
     var seenMs = (p.lastSeen && p.lastSeen.toMillis) ? p.lastSeen.toMillis()
       : (p.joinedAt && p.joinedAt.toMillis) ? p.joinedAt.toMillis() : Date.now();

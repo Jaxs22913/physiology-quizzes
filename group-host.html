@@ -400,6 +400,15 @@
       : (p.joinedAt && p.joinedAt.toMillis) ? p.joinedAt.toMillis() : Date.now();
     return (Date.now() - seenMs) > STALE_MS;
   }
+  // Same throttled-background-tab concern as the player side (see
+  // group-join.html) -- if the HOST's own tab gets backgrounded, its
+  // 5s staleCheckInterval can stall too, delaying when a returned
+  // player's "left" tag actually clears even after their heartbeat
+  // resumes. Force one refresh the moment the host's tab is foregrounded
+  // again instead of waiting for the throttled timer to catch up.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") refreshPresence();
+  });
 
   function updateStartBtn() {
     if (lastRoomState && lastRoomState.status !== "lobby") return;
@@ -427,6 +436,7 @@
           toast((p.avatar || "🦊") + " " + p.nickname + " left the game");
         } else if (!isPlayerAway(p) && announcedLeftUids.has(p.uid)) {
           announcedLeftUids.delete(p.uid); // reconnected (e.g. a reload)
+          toast((p.avatar || "🦊") + " " + p.nickname + " is back");
         }
       });
     }
