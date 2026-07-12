@@ -71,10 +71,16 @@
   .quiz-search-input:focus{outline:none;border-color:var(--acc)}
   .quiz-results{max-height:360px;overflow-y:auto;margin-top:8px;border-radius:10px}
   .quiz-result{display:flex;justify-content:space-between;align-items:center;gap:10px;
-    padding:12px 14px;border-radius:10px;cursor:pointer;border:1.5px solid transparent}
-  .quiz-result:hover{background:var(--paper)}
+    padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid transparent}
+  .quiz-result:not(.has-variants):hover{background:var(--paper)}
+  .quiz-result.has-variants{cursor:default}
   .quiz-result .qr-title{font-weight:600;font-size:14.5px}
   .quiz-result .qr-count{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .qr-variants{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .qr-variant-pill{appearance:none;border:1.5px solid var(--line);background:var(--paper);
+    color:var(--ink);font:700 12.5px/1 inherit;width:28px;height:28px;border-radius:8px;
+    cursor:pointer;flex:none}
+  .qr-variant-pill:hover{border-color:var(--acc);color:var(--acc);background:var(--card)}
   .quiz-none{color:var(--muted);font-size:14px;padding:14px;text-align:center}
   .quiz-category{margin-bottom:2px}
   .quiz-category-header{display:flex;align-items:center;justify-content:space-between;gap:8px;
@@ -273,6 +279,44 @@
   var CHEVRON_SVG = '<svg class="qc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
   var openCategories = {}; // in-memory only, category name -> user has expanded it
 
+  // Same topic taught across several question sets (e.g. "Endocrine System
+  // (Set 2)") or several parallel exam forms ("... — Form B") used to each
+  // get their own full-width row -- with 4-10 variants per topic in some
+  // subjects, that's what actually made the list feel endless even after
+  // grouping by category. Splitting the title into a shared base + a short
+  // variant label lets every variant of the same topic collapse onto ONE
+  // row with small clickable pills instead of N stacked rows.
+  function splitVariant(title) {
+    var m;
+    if (m = title.match(/^(.*?)\s*\(Set\s*(\d+)\)$/i)) return { base: m[1], label: m[2] };
+    if (m = title.match(/^(.*?)\s*\(v(\d+)\)$/i)) return { base: m[1], label: "v" + m[2] };
+    if (m = title.match(/^(.*?)\s+Quiz\s+(\d+)$/i)) return { base: m[1], label: m[2] };
+    if (m = title.match(/^(.*?)\s+—\s+Form\s+([A-Za-z])$/)) return { base: m[1], label: m[2] };
+    return { base: title, label: null };
+  }
+
+  function groupByTopic(items) {
+    var order = [], byBase = {};
+    items.forEach(function (q) {
+      var v = splitVariant(q.title);
+      if (!byBase[v.base]) { byBase[v.base] = []; order.push(v.base); }
+      byBase[v.base].push({ q: q, label: v.label });
+    });
+    return order.map(function (base) {
+      var variants = byBase[base];
+      // A lone unlabeled title in a multi-variant group (e.g. the original
+      // "Endocrine System (Set 1)" grouped with "(Set 2)"/"(Set 3)") reads
+      // as variant "1" once its siblings exist, even though its own title
+      // carries no suffix to parse a label from -- match the siblings' own
+      // label style ("v1" alongside "v2"/"v3", plain "1" alongside "2"/"3").
+      if (variants.length > 1) {
+        var vPrefixed = variants.some(function (v) { return v.label && /^v\d+$/.test(v.label); });
+        variants.forEach(function (v) { if (v.label === null) v.label = vPrefixed ? "v1" : "1"; });
+      }
+      return { base: base, variants: variants };
+    });
+  }
+
   function renderQuizResults(filterText) {
     var box = $("quiz-results");
     box.innerHTML = "";
@@ -309,12 +353,34 @@
       });
       var body = document.createElement("div");
       body.className = "quiz-category-body";
-      items.forEach(function (q) {
+      groupByTopic(items).forEach(function (topic) {
         var row = document.createElement("div");
-        row.className = "quiz-result";
-        row.innerHTML = '<span class="qr-title"></span><span class="qr-count">' + q.count + ' questions</span>';
-        row.querySelector(".qr-title").textContent = q.title;
-        row.addEventListener("click", function () { selectQuiz(q.id); });
+        row.className = "quiz-result" + (topic.variants.length > 1 ? " has-variants" : "");
+        var titleEl = document.createElement("span");
+        titleEl.className = "qr-title";
+        titleEl.textContent = topic.base;
+        row.appendChild(titleEl);
+        if (topic.variants.length === 1) {
+          var only = topic.variants[0].q;
+          var countEl = document.createElement("span");
+          countEl.className = "qr-count";
+          countEl.textContent = only.count + " questions";
+          row.appendChild(countEl);
+          row.addEventListener("click", function () { selectQuiz(only.id); });
+        } else {
+          var pills = document.createElement("span");
+          pills.className = "qr-variants";
+          topic.variants.forEach(function (v) {
+            var pill = document.createElement("button");
+            pill.type = "button";
+            pill.className = "qr-variant-pill";
+            pill.textContent = v.label;
+            pill.title = v.q.title + " — " + v.q.count + " questions";
+            pill.addEventListener("click", function (e) { e.stopPropagation(); selectQuiz(v.q.id); });
+            pills.appendChild(pill);
+          });
+          row.appendChild(pills);
+        }
         body.appendChild(row);
       });
       wrap.appendChild(header);
