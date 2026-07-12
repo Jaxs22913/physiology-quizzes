@@ -64,13 +64,23 @@
   .quiz-search-input{width:100%;font:inherit;font-size:15px;padding:11px 14px;border-radius:10px;
     border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
   .quiz-search-input:focus{outline:none;border-color:var(--acc)}
-  .quiz-results{max-height:260px;overflow-y:auto;margin-top:8px;border-radius:10px}
+  .quiz-results{max-height:360px;overflow-y:auto;margin-top:8px;border-radius:10px}
   .quiz-result{display:flex;justify-content:space-between;align-items:center;gap:10px;
     padding:12px 14px;border-radius:10px;cursor:pointer;border:1.5px solid transparent}
   .quiz-result:hover{background:var(--paper)}
   .quiz-result .qr-title{font-weight:600;font-size:14.5px}
   .quiz-result .qr-count{color:var(--muted);font-size:12.5px;white-space:nowrap}
   .quiz-none{color:var(--muted);font-size:14px;padding:14px;text-align:center}
+  .quiz-category{margin-bottom:2px}
+  .quiz-category-header{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:10px 12px;border-radius:8px;cursor:pointer;user-select:none;
+    font:700 12px/1 inherit;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  .quiz-category-header:hover{color:var(--ink);background:var(--paper)}
+  .quiz-category-header .qc-count{display:inline-flex;align-items:center;gap:4px;font-weight:600;letter-spacing:0;text-transform:none;font-size:12px}
+  .quiz-category-header .qc-chevron{width:14px;height:14px;flex:none;transition:transform .15s ease}
+  .quiz-category.open .quiz-category-header .qc-chevron{transform:rotate(180deg)}
+  .quiz-category-body{display:none;padding-left:2px}
+  .quiz-category.open .quiz-category-body{display:block}
   .quiz-selected{display:flex;align-items:center;justify-content:space-between;gap:10px;
     padding:12px 14px;border-radius:10px;border:1.5px solid var(--acc);background:#eef0fd}
   .quiz-selected .qs-title{font-weight:700;font-size:14.5px}
@@ -236,6 +246,23 @@
     });
   }
 
+  // Mirrors the homepage's Physiology/Pharmacodynamics/Anatomy subject
+  // grouping, derived from each quiz id's naming convention (there's no
+  // explicit category field in GROUP_QUIZZES) -- keeps the picker from
+  // being one long flat scroll now that there are 50+ quizzes. New quiz
+  // ids that don't match any prefix fall into "Other" rather than being
+  // hidden, so nothing silently disappears if this list goes stale.
+  var CATEGORY_ORDER = ["Physiology", "Pharmacodynamics", "Anatomy", "Other"];
+  function quizCategory(id) {
+    if (/^(gi-physiology|hemostasis|immunology|metabolism|pulmonary|physio-master|renal-)/.test(id)) return "Physiology";
+    if (/^(pharm-master|antimicrobials)/.test(id)) return "Pharmacodynamics";
+    if (/^(endocrine|female-reproductive|male-reproductive|anatomy-gi-i-ii|nephrology-urinary|anatomy-master)/.test(id)) return "Anatomy";
+    return "Other";
+  }
+
+  var CHEVRON_SVG = '<svg class="qc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  var openCategories = {}; // in-memory only, category name -> user has expanded it
+
   function renderQuizResults(filterText) {
     var box = $("quiz-results");
     box.innerHTML = "";
@@ -249,13 +276,40 @@
       box.appendChild(none);
       return;
     }
+    var groups = {};
     list.forEach(function (q) {
-      var row = document.createElement("div");
-      row.className = "quiz-result";
-      row.innerHTML = '<span class="qr-title"></span><span class="qr-count">' + q.count + ' questions</span>';
-      row.querySelector(".qr-title").textContent = q.title;
-      row.addEventListener("click", function () { selectQuiz(q.id); });
-      box.appendChild(row);
+      var cat = quizCategory(q.id);
+      (groups[cat] = groups[cat] || []).push(q);
+    });
+    CATEGORY_ORDER.forEach(function (cat) {
+      var items = groups[cat];
+      if (!items || !items.length) return;
+      // Searching auto-expands every category with a match, so results are
+      // visible immediately; browsing with an empty search keeps categories
+      // collapsed by default (this site's standing accordion convention).
+      var isOpen = !!term || !!openCategories[cat];
+      var wrap = document.createElement("div");
+      wrap.className = "quiz-category" + (isOpen ? " open" : "");
+      var header = document.createElement("div");
+      header.className = "quiz-category-header";
+      header.innerHTML = "<span>" + cat + "</span><span class=\"qc-count\">" + items.length + " " + CHEVRON_SVG + "</span>";
+      header.addEventListener("click", function () {
+        var nowOpen = wrap.classList.toggle("open");
+        openCategories[cat] = nowOpen;
+      });
+      var body = document.createElement("div");
+      body.className = "quiz-category-body";
+      items.forEach(function (q) {
+        var row = document.createElement("div");
+        row.className = "quiz-result";
+        row.innerHTML = '<span class="qr-title"></span><span class="qr-count">' + q.count + ' questions</span>';
+        row.querySelector(".qr-title").textContent = q.title;
+        row.addEventListener("click", function () { selectQuiz(q.id); });
+        body.appendChild(row);
+      });
+      wrap.appendChild(header);
+      wrap.appendChild(body);
+      box.appendChild(wrap);
     });
   }
 
