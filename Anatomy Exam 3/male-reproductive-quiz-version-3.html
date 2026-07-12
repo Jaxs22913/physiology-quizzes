@@ -934,7 +934,7 @@ function select(idx){
   const right = idx === item.answer;
   if (right){ state.score++; }
   if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  else { state.missed.push({ item, chosen: idx }); }
+  if (!right) { state.missed.push({ item, chosen: idx }); }
 
   el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
 
