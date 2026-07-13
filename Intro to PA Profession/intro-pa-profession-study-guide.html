@@ -171,7 +171,7 @@
   <p>Covers 7 lecture decks · Instructional Objectives (IOs) flagged per lecture</p>
 </header>
 
-<div class="layout wrap" data-readable>
+<div class="layout wrap" data-readable data-audio-dir="intro-pa-profession-study-guide-audio">
 <nav class="toc">
   <h2>Contents</h2>
   <a href="#history">1 · History of the PA Profession</a>
@@ -273,6 +273,7 @@
     <li><strong>Values:</strong> Recognition & Understanding, Dedication, Credibility, Engagement.</li>
     <li><strong>Collections:</strong> oral histories, biographies, illustrated timeline, historical perspectives, videos, photos, memorabilia. Website: <code>pahx.org</code> (Stead Center in NC).</li>
   </ul>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — History of the PA Profession', TEST_YOURSELF.history)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 2 ORGANIZATIONS ============ -->
@@ -353,6 +354,7 @@
     <li><strong>Student membership:</strong> $60 for entire enrollment (extended 6 months post-grad for boards). Students may serve on (but not chair, except Student Affairs) committees; no vote/office except the Student Affairs chair who sits on the BOD for chapter business.</li>
     <li>Holds annual CME conference & monthly CME dinners; lobbies for PA legislation (Legislative Days); recommends PAs to the Governor for the Florida Board of Medicine's Council on PAs.</li>
   </ul>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — PA Organizations', TEST_YOURSELF.orgs)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 3 PROFESSIONAL PRACTICE ============ -->
@@ -469,6 +471,7 @@
     <li>Internationally-trained physicians licensed as PAs (Puerto Rico); doctorate-as-entry-level debate (PAEA addressing).</li>
     <li>Pending federal bills: Professional Student Degree Act (loans), ACO Assignment Improvement Act, Promoting Access to Diabetic Shoes Act, Improving Access to Workers' Comp for Injured Federal Workers Act.</li>
   </ul>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — Professional Practice', TEST_YOURSELF.profpractice)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 4 TEAMWORK ============ -->
@@ -529,6 +532,7 @@
     <tr><td>Medical Lab Technologist</td><td>BS/Doctorate</td><td>Registered/licensed; analyze fluids/tissue</td></tr>
   </table>
   <p><strong>Also:</strong> psychotherapists (LMFT, CRC, LMHC/LPC), EMTs, paramedics, athletic trainers, surgical technologists, medical secretaries, medical coders.</p>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — Health Care is Teamwork', TEST_YOURSELF.teamwork)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 5 CLINICAL PRACTICE ============ -->
@@ -564,6 +568,7 @@
   <h3 class="sub">Specialization & Alternative Roles <span class="tag">IO 4 · 5</span></h3>
   <p>PAs specialize across surgical and medical fields; hospitalist practice is a growing role. <strong>Alternative roles</strong> include administration, education, research, industry, and leadership beyond direct clinical care.</p>
   <p><strong>Credentialing</strong> <span class="tag">IO 7</span> — see the detailed credentialing / privileging / scope breakdown in Lecture 3.</p>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — PAs and Clinical Practice', TEST_YOURSELF.clinical)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 6 PROFESSIONALISM ============ -->
@@ -642,6 +647,7 @@
     <li><strong>Case 2 (copied website):</strong> copying paragraphs verbatim = plagiarism. A fellow student has an ethical duty to confront the lapse.</li>
     <li><strong>Case 3 (AB, phone/late):</strong> distraction & tardiness harm learning, peer relationships, and faculty perception. Remedy: self-reflection, open communication, commitment to change, seeking support, follow-through.</li>
   </ul>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — Professionalism', TEST_YOURSELF.professionalism)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ 7 DIFFICULT CONVERSATIONS ============ -->
@@ -723,6 +729,7 @@
   <p>Clinician brings medical expertise; patient brings expertise about goals/values/circumstances — neither alone is sufficient. Go beyond listing options: connect each option to the patient's daily life, finances, activity goals, risk tolerance. Afterward, ask the patient to restate the plan, confirm comfort, and set a reassessment point. Document the SDM process (professional & often legal standard).</p>
 
   <div class="pearl"><strong>Key takeaways:</strong> listen on multiple channels (incongruence = data); tone is set before you speak; empathy ≠ agreement; address emotion first, information second; use structure but stay authentic; speak up when safety is at risk.</div>
+  <button type="button" class="test-yourself-btn" style="--acc:#7c2d2d" onclick="window.openTestYourself('Test yourself — Difficult Conversations', TEST_YOURSELF.difficult)">Test yourself! &rarr;</button>
 </section>
 
 <!-- ============ QUICK REF ============ -->
@@ -776,6 +783,61 @@
 
 </main>
 </div>
+<script>
+  // High-yield "Test yourself" question sets, one per lecture deck, fed to
+  // window.openTestYourself (theme.js) by each section's button.
+  var TEST_YOURSELF = {
+    history: [
+      { q: "Who is considered the \"father\" of the PA profession and founded the first PA program at Duke in 1965?", choices: ["Dr. Amos Johnson", "Dr. Charles Hudson", "Dr. Richard Smith", "Dr. Eugene Stead"], correct: 3, explain: "Dr. Eugene Stead, chair of medicine at Duke, envisioned a provider between nurse and doctor and founded the first PA program with 4 former Navy corpsmen in 1965." },
+      { q: "Which stage of the profession's 5-stage evolutionary development is when HMO research showed a 76% \"substitutability factor\"?", choices: ["Ideology", "Implementation", "Evaluation", "Maturation"], correct: 2, explain: "The Evaluation stage covered public-policy analysis — cost-effectiveness and quality-of-care research, including the 76% substitutability finding." },
+      { q: "In 2021, the AAPA House of Delegates changed the profession's title designation to:", choices: ["Physician Extender", "Physician Associate", "Medical Practitioner", "Advanced Practice Provider"], correct: 1, explain: "The 2021 HOD vote changed the designation from Physician Assistant to Physician Associate, keeping the same PA abbreviation." },
+      { q: "The \"4 pillars\" of the PA profession are professional association, educational organization, national certification, and:", choices: ["State licensure", "Program accreditation", "Malpractice coverage", "Continuing education"], correct: 1, explain: "The 4 pillars are professional association (AAPA), educational organization (PAEA), national certification (NCCPA), and program accreditation (ARC-PA)." },
+      { q: "The PA History Society (PAHx) was founded in what year?", choices: ["1974", "1994", "2001", "2010"], correct: 2, explain: "PAHx was founded in 2001, the same year CASPA was created and ARC-PA became free-standing." }
+    ],
+    orgs: [
+      { q: "Which organization is the recognized accrediting body for PA educational programs?", choices: ["NCCPA", "PAEA", "ARC-PA", "AAPA"], correct: 2, explain: "ARC-PA (Accreditation Review Commission on Education for the PA), created in 2001, sets standards and evaluates programs for compliance." },
+      { q: "Which organization is the ONLY nationally recognized certifying body for PAs and confers the PA-C designation?", choices: ["AAPA", "NCCPA", "PAEA", "ARC-PA"], correct: 1, explain: "NCCPA (est. 1974) develops and administers PANCE/PANRE/PANRE-LA and is the sole certifying body for the PA-C credential." },
+      { q: "Which organization administers CASPA, the centralized application service, along with PACKRAT and rotation exams?", choices: ["AAPA", "ARC-PA", "PAEA", "NCCPA"], correct: 2, explain: "PAEA (Physician Assistant Education Association) represents PA programs and runs CASPA, PACKRAT, and end-of-rotation/curriculum exams." },
+      { q: "The AAPA's policy-making body, where the Student Academy holds 22 delegates, is called the:", choices: ["Board of Directors", "House of Delegates", "Assembly of Representatives", "Judicial Affairs Commission"], correct: 1, explain: "The House of Delegates (HOD) is AAPA's policy-making body; the Student Academy (SAAAPA) sends the largest single delegation at 22." },
+      { q: "Which organization is the only one representing PAs specifically in Florida?", choices: ["FAPA", "PAF", "SAAAPA", "PAHx"], correct: 0, explain: "FAPA (Florida Academy of Physician Associates), established 1974, is the sole organization representing PAs in Florida." }
+    ],
+    profpractice: [
+      { q: "The PANCE consists of how many multiple-choice questions, given in six blocks over a 6-hour exam day?", choices: ["300", "330", "360", "400"], correct: 2, explain: "The PANCE is 360 MCQs delivered as six 60-question, 60-minute blocks, with 45 minutes of total break time." },
+      { q: "A certified PA must recertify by examination (PANRE or PANRE-LA) how often?", choices: ["Every 2 years", "Every 5 years", "Every 10 years", "Never, if CME is current"], correct: 2, explain: "Recertification by exam is required every 10 years; CME logging (100 hrs/2 yrs) is a separate, more frequent requirement." },
+      { q: "Standard PA reimbursement under Medicare is generally what percentage of the physician fee?", choices: ["50%", "85%", "100%", "13.6%"], correct: 1, explain: "PAs are generally reimbursed at 85% of the physician fee schedule; \"incident-to\" billing (where allowed) pays 100% instead." },
+      { q: "The primary goal of Optimal Team Practice (OTP) is to:", choices: ["Increase PANCE difficulty", "Remove burdensome administrative constraints on PA practice", "Require physician co-signature on every note", "Standardize CME requirements nationally"], correct: 1, explain: "OTP aims to eliminate the legal requirement for a specific PA-physician relationship, letting PAs practice to the full extent of their training." },
+      { q: "EMTALA, enacted in 1986, requires hospitals to provide a medical screening exam (MSE) to:", choices: ["Only insured patients", "Anyone requesting emergency care", "Only patients transferred from another facility", "Only pediatric patients"], correct: 1, explain: "EMTALA requires an MSE for anyone requesting emergency care, regardless of ability to pay; PAs can perform the MSE." }
+    ],
+    teamwork: [
+      { q: "The WHO defines interprofessional collaborative practice as multiple health professionals working together with patients, families, caregivers, and:", choices: ["Insurers", "Communities", "Administrators", "Regulators"], correct: 1, explain: "The WHO definition explicitly includes communities alongside patients, families, and caregivers as partners in collaborative care." },
+      { q: "Which is a documented benefit of interprofessional collaboration?", choices: ["Increased mortality", "Higher error rates", "Decreased professional burnout", "Reduced patient compliance"], correct: 2, explain: "IPC is associated with reduced mortality, improved patient compliance, and decreased professional burnout — the opposite of the other options." },
+      { q: "A CRNA is a nurse with additional training to:", choices: ["Perform surgery independently", "Administer anesthesia", "Deliver babies", "Interpret radiographs"], correct: 1, explain: "A Certified Registered Nurse Anesthetist (CRNA) is an RN with additional training and certification to administer anesthesia." },
+      { q: "Which provider is specifically trained in psychotherapy and holds an LCSW credential?", choices: ["Medical assistant", "Licensed Clinical Social Worker", "Respiratory therapist", "Genetic counselor"], correct: 1, explain: "The Licensed Clinical Social Worker (LCSW) credential specifically denotes training in psychotherapy, unlike a general bachelor's-level social worker." },
+      { q: "Of the 4 tenets of patient-centered care, which emphasizes family beliefs, values, and preferences?", choices: ["Information Sharing", "Participation", "Dignity and Respect", "Collaboration"], correct: 2, explain: "Dignity and Respect is the tenet centered on honoring the patient's and family's own beliefs, values, and preferences in their care." }
+    ],
+    clinical: [
+      { q: "PAs are said to practice \"anywhere there are\":", choices: ["Hospitals", "Nurses", "Physicians", "Pharmacies"], correct: 2, explain: "The lecture's framing is that PAs practice anywhere there are physicians — primary care, inpatient, EDs, surgical and medical specialties, and federal/uniformed service." },
+      { q: "Which of the \"5 C's\" of primary care refers to being the patient's first point of contact in a timely way?", choices: ["Comprehensive", "Accessible", "Coordinated", "Continuous"], correct: 1, explain: "Accessible describes being the first point of contact and available in a timely way — distinct from Comprehensive (full range of services) or Continuous (care over time)." },
+      { q: "Primary-care fields explicitly named in the lecture include family medicine, internal medicine, and:", choices: ["Pediatrics", "Orthopedic surgery", "Dermatology", "Radiology"], correct: 0, explain: "Pediatrics rounds out the three primary-care fields named alongside family medicine and internal medicine." },
+      { q: "Hospitalist practice, growth in specialty roles, and alternative career paths (admin, education, research, industry) are all cited as examples of:", choices: ["A shrinking PA job market", "How PA roles have specialized and diversified beyond direct clinical care", "A requirement for all new graduates", "A CAQ-only pathway"], correct: 1, explain: "The lecture frames these as evidence of PAs specializing and diversifying, not as a shrinking market or a mandatory pathway." },
+      { q: "Credentialing for a new clinical role is verified primarily through:", choices: ["Self-report on a résumé", "Primary-source verification", "A single reference letter", "State licensure alone"], correct: 1, explain: "Credentialing (mandated by the Joint Commission and NCQA) requires verifying education/training via primary source, not self-report or licensure alone." }
+    ],
+    professionalism: [
+      { q: "Which of these is explicitly called the \"hallmark\" behavior in the PA competency of professionalism toward oneself?", choices: ["Self-regulation", "Punctuality", "Teamwork", "Confidentiality"], correct: 0, explain: "Self-regulation — recognizing and acting on your own limitations — is specifically called the hallmark of professionalism toward oneself." },
+      { q: "Per the lecture, academic integrity (International Center for Academic Integrity) is a commitment to six values: honesty, trust, fairness, respect, responsibility, and:", choices: ["Courage", "Discipline", "Loyalty", "Diligence"], correct: 0, explain: "The sixth value is courage — the commitment to those values even in the face of adversity, per the ICAI definition cited in the lecture." },
+      { q: "Which is explicitly listed as an academic-integrity violation at NSU (\"even in the era of AI\")?", choices: ["Asking a professor for clarification", "Plagiarism", "Studying in a group for a simulation", "Requesting an extension"], correct: 1, explain: "Plagiarism (explicitly including AI-generated work presented as one's own) is listed among the violations, alongside cheating, fabrication, and forgery." },
+      { q: "Per the lecture, collaboration is acceptable for simulations and small groups, but NOT for:", choices: ["Written and computerized exams", "Class discussions", "Study groups", "Lab practice sessions"], correct: 0, explain: "Written/computerized exams, OSCEs, and individual written assignments are explicitly listed as off-limits for collaboration." },
+      { q: "\"Early is on time, on time is late, late is unacceptable\" is guidance given for interactions with:", choices: ["Fellow students", "Patients only", "Faculty and staff", "Social media followers"], correct: 2, explain: "This punctuality standard is given specifically for the more formal register expected with faculty and staff, versus the more casual tone with fellow students." }
+    ],
+    difficult: [
+      { q: "The NURSE framework (Name, Understand, Respect, Support, Explore) is used when:", choices: ["Delivering unexpected or serious news", "A patient or family is expressing strong emotion", "An immediate patient-safety concern arises", "Structuring a shared-decision conversation"], correct: 1, explain: "NURSE is the go-to structure for responding to strong emotion in the moment, distinct from SPIKES (breaking bad news) or CUS (safety escalation)." },
+      { q: "The CUS framework (Concerned, Uncomfortable, Safety issue) is specifically for:", choices: ["Recurring interpersonal conflict after the fact", "An immediate, in-the-moment patient-safety concern", "Preference-sensitive shared decision-making", "Routine handoff communication"], correct: 1, explain: "CUS is an escalating, in-the-moment tool for raising an immediate safety concern; recurring conflict after the moment calls for DESC instead." },
+      { q: "In the SPIKES protocol for breaking bad news, what should come immediately after delivering the news clearly?", choices: ["Move straight to the treatment plan", "A pause / allowing silence", "Ask the patient to leave and process alone", "End the conversation"], correct: 1, explain: "SPIKES calls for a pause and allowing silence after delivering news, then responding to emotion (via NURSE) before continuing to Strategy/Summary." },
+      { q: "For medical interpretation with a non-English-speaking patient, best practice is to use:", choices: ["A family member present in the room", "A professional interpreter", "Written translation only", "Simplified English, spoken slowly"], correct: 1, explain: "The lecture explicitly warns against using family for medical interpretation and calls for a professional interpreter to protect accuracy and confidentiality." },
+      { q: "In the SHARE approach to shared decision-making, the patient is understood to bring expertise about:", choices: ["Medical literature", "Their own goals, values, and circumstances", "Diagnostic criteria", "Billing and coding"], correct: 1, explain: "SHARE frames the clinician as bringing medical expertise and the patient as bringing expertise about their own goals, values, and life circumstances — neither alone is sufficient." }
+    ]
+  };
+</script>
 <script>
 (function () {
   const indicator = document.getElementById("pull-refresh");
