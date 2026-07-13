@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro to PA Profession Guide — Class of 2028</title>
+<style>
+  :root{
+    --ink:#1c1a17;
+    --paper:#fbf9f5;
+    --accent:#7c2d2d;      /* oxblood */
+    --accent2:#b08331;      /* brass */
+    --accent3:#256d68;      /* teal */
+    --line:#e4ddd1;
+    --soft:#6d655a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;
+    line-height:1.55;
+  }
+  header.top{
+    background:var(--accent);
+    color:#fff;
+    padding:34px 26px 30px;
+  }
+  header.top h1{
+    font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+    margin:0 0 6px;
+    font-size:2rem;
+    letter-spacing:.3px;
+  }
+  header.top p{margin:2px 0;color:#f3e4d9;font-size:.95rem;}
+  .layout{display:flex;max-width:1180px;margin:0 auto;}
+  nav.toc{
+    position:sticky;top:0;align-self:flex-start;
+    width:270px;min-width:270px;height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);
+    background:#f6f1e8;
+    font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:.85rem;
+  }
+  nav.toc h2{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:14px 0 6px;}
+  nav.toc a{display:block;color:var(--soft);text-decoration:none;padding:3px 0;border-bottom:1px solid transparent;}
+  nav.toc a:hover{color:var(--accent);}
+  main{flex:1;padding:30px 40px 90px;min-width:0;}
+  section.deck{margin-bottom:52px;scroll-margin-top:18px;}
+  h2.deck-title{
+    font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:1.5rem;color:var(--accent);
+    border-bottom:3px solid var(--accent2);
+    padding-bottom:6px;margin:0 0 6px;
+  }
+  .lecturer{color:var(--soft);font-style:italic;font-size:.9rem;margin-bottom:14px;}
+  .io-box{
+    background:#f1ede3;border:1px solid var(--line);
+    border-radius:8px;padding:14px 18px;margin:14px 0 20px;
+  }
+  .io-box h3{
+    font-family:ui-sans-serif,system-ui,sans-serif;
+    margin:0 0 8px;font-size:.8rem;text-transform:uppercase;
+    letter-spacing:1px;color:var(--accent3);
+  }
+  .io-box ol{margin:0;padding-left:20px;}
+  .io-box li{margin-bottom:5px;font-size:.92rem;}
+  h3.sub{
+    font-family:ui-sans-serif,system-ui,sans-serif;
+    color:var(--accent3);font-size:1.12rem;margin:24px 0 6px;
+  }
+  h4.subsub{
+    font-family:ui-sans-serif,system-ui,sans-serif;
+    color:var(--accent2);font-size:.98rem;margin:16px 0 4px;
+    font-weight:600;
+  }
+  ul,ol{margin:6px 0 12px;}
+  li{margin-bottom:3px;}
+  p{margin:8px 0;}
+  .callout{
+    border-left:4px solid var(--accent3);
+    background:#eef4f3;padding:10px 16px;margin:14px 0;border-radius:0 6px 6px 0;
+  }
+  .pearl{
+    border-left:4px solid var(--accent2);
+    background:#f7f0e0;padding:10px 16px;margin:14px 0;border-radius:0 6px 6px 0;
+  }
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--accent);color:#fff;font-family:ui-sans-serif,sans-serif;font-weight:600;}
+  tr:nth-child(even) td{background:#f4efe6;}
+  .frame-name{font-weight:bold;color:var(--accent);}
+  code{background:#efe9dd;padding:1px 5px;border-radius:4px;font-size:.85rem;}
+  .tag{
+    display:inline-block;background:var(--accent2);color:#fff;
+    font-family:ui-sans-serif,sans-serif;font-size:.68rem;
+    padding:2px 8px;border-radius:10px;letter-spacing:.5px;
+    vertical-align:middle;margin-left:8px;
+  }
+  footer.guide-foot{margin:34px 40px 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--soft);font-family:ui-sans-serif,system-ui,sans-serif;}
+  @media(max-width:820px){
+    nav.toc{display:none;}
+    main{padding:22px 18px 60px;}
+    footer.guide-foot{margin:34px 18px 0;}
+  }
+
+  /* header.top sits outside .wrap (full-bleed banner) so it needs its own
+     dark-mode invert -- everything else lives inside .layout.wrap and gets
+     the site-wide body > .wrap invert from theme.css for free. */
+  :root[data-theme="dark"] header.top { filter: invert(1) hue-rotate(180deg); }
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #7c2d2d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1c1a17; }
+  .footer-mark-accent { stroke: #7c2d2d; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #e08a8a; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<header class="top">
+  <h1>Introduction to the PA Profession — Master Study Guide</h1>
+  <p>PAJ 5002 · Class of 2028 · NSU Jacksonville · Summer 2026</p>
+  <p>Covers 7 lecture decks · Instructional Objectives (IOs) flagged per lecture</p>
+</header>
+
+<div class="layout wrap" data-readable>
+<nav class="toc">
+  <h2>Contents</h2>
+  <a href="#history">1 · History of the PA Profession</a>
+  <a href="#orgs">2 · PA Organizations</a>
+  <a href="#profpractice">3 · Professional Practice for PAs</a>
+  <a href="#teamwork">4 · Health Care is Teamwork</a>
+  <a href="#clinical">5 · PAs and Clinical Practice</a>
+  <a href="#professionalism">6 · Professionalism</a>
+  <a href="#difficult">7 · Difficult Conversations</a>
+  <a href="#quickref">★ Quick-Reference Tables</a>
+</nav>
+
+<main>
+
+<!-- ============ 1 HISTORY ============ -->
+<section class="deck" id="history">
+  <h2 class="deck-title">1 · History of the PA Profession</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Discuss the history of the Physician Assistant profession.</li>
+      <li>Describe the Physician Assistant History Society (PAHx).</li>
+      <li>Describe Physician Assistant specialty organizations.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub">Why New Health Professions Arise</h3>
+  <ul>
+    <li>The physician was historically the "captain of the ship," and physician care was the "gold standard"; considerable role overlap has always existed among health professionals.</li>
+    <li>Societal/cultural turmoil (war, revolution) creates physician shortages, prompting new "physician-substitute" / "physician-complementary" roles as a stop-gap.</li>
+    <li>Greatest need has historically been in rural care, prisons, and the military.</li>
+  </ul>
+
+  <h4 class="subsub">Predecessors (Non-Physician Providers)</h4>
+  <table>
+    <tr><th>Provider</th><th>Region</th><th>Era</th></tr>
+    <tr><td>Officer de Santé</td><td>France</td><td>1800s</td></tr>
+    <tr><td>Feldshers</td><td>Russia</td><td>1600s–present</td></tr>
+    <tr><td>Midwife</td><td>Universal</td><td>?–present</td></tr>
+    <tr><td>Nurse Midwife</td><td>—</td><td>1900–present</td></tr>
+    <tr><td>Village Health Worker</td><td>Developing countries</td><td>1940–present</td></tr>
+  </table>
+  <p><strong>Dr. Amos Johnson & Buddy Treadwell</strong> — rural NC, mid-20th century. Johnson publicized the assistant role he created for Treadwell; this served as a role model for the PA profession design.</p>
+
+  <h3 class="sub">5 Stages of Evolutionary Development</h3>
+  <p>Memory hook — <strong>"I Implement Every Important Maturation"</strong> → Ideology, Implementation, Evaluation, Incorporation, Maturation.</p>
+  <table>
+    <tr><th>Stage</th><th>Focus</th><th>Key Points</th></tr>
+    <tr><td>I · Ideology</td><td>Rationale / role concept</td><td>Right social/medical/political climate; increasing specialization + physician maldistribution; stakeholders + policymakers perceive benefit; no threat to existing professions.</td></tr>
+    <tr><td>II · Implementation</td><td>Framework built (1966–1972)</td><td>Education/regulation frameworks; state recognition (licensure, cert, regulation); accreditation & credentialing defined. Strong govt support; models = PA, Medex, CHA, NP. Amendments to medical practice acts first in NC, NY, CA, CO. Allied Health Professions Act 1973 funded programs under Title VII.</td></tr>
+    <tr><td>III · Evaluation</td><td>Public-policy analysis</td><td>Cost-effectiveness, acceptance by professionals & patients, quality of care, role satisfaction. HMO research showed 76% "substitutability factor"; equivalent quality at lower cost.</td></tr>
+    <tr><td>IV · Incorporation</td><td>Growth & institutionalization</td><td>Expanded utilization beyond original scope; regulations promulgated; reimbursement obtained (Medicare); GMENAC report; inpatient & specialty roles grew.</td></tr>
+    <tr><td>V · Maturation</td><td>Full acceptance</td><td>Institutionalized among health occupations; faculty appointments; steady demand. <em>Consolidation:</em> included in health-policy debate (Cawley, Ballweg); supply issues, resident-hour restrictions, name change, Autonomy/OTP.</td></tr>
+  </table>
+
+  <h3 class="sub">Roots of the American PA Profession</h3>
+  <ul>
+    <li><strong>1961</strong> — Dr. Charles Hudson (NBME president) first introduces the PA "concept" in a speech to the AMA House of Delegates; published in JAMA 1961. Envisioned corpsmen given 2–3 yrs college training as technical "externs" who would <em>not</em> make medical judgments.</li>
+    <li><strong>Dr. Eugene Stead</strong> (Chair of Medicine, Duke, 1960s) — the "father of the profession." Had used a fast-track physician model at Emory in the 1940s (competency-based) to staff Grady Hospital. Envisioned a provider between nurse and doctor who would work closely with — and not threaten — physicians.</li>
+    <li>Thelma Ingles, RN attempted an early midlevel program but couldn't get National League of Nursing accreditation.</li>
+    <li><strong>1965</strong> — First PA program at Duke: <strong>4 former Navy corpsmen</strong>, 2-year program. Publicized in Reader's Digest & Look. (Same year Medicare & Medicaid created.)</li>
+    <li>Other early programs: Bowman Gray (1968); Dr. Hu Myers, Alderson-Broaddus (1968); Dr. Richard Smith, Univ. Washington <strong>Medex</strong> model; Dr. Henry Silver, Colorado <strong>Child Health Associate</strong> (1968).</li>
+  </ul>
+
+  <div class="pearl"><strong>4 Pillars of the Profession:</strong> (1) Professional association, (2) Educational organization, (3) National certification, (4) Program accreditation.</div>
+
+  <h3 class="sub">Decade-by-Decade Timeline</h3>
+  <h4 class="subsub">1970s</h4>
+  <ul>
+    <li>1970 — Natl Academy of Science defines PA Types A, B, C by training depth; only Type A supported for primary care.</li>
+    <li>1971 Health Manpower Act funds programs · 1972 APAP founded (now PAEA) · 1973 first cert exam (NBME) · 1973 first AAPA meeting (Wichita Falls, TX) · 1974 NCCPA formed · 1975 first PANCE · 1977 Rural Health Clinic Services Act (Medicare reimbursement in rural clinics) · 1978 AAPA HOD created.</li>
+    <li>By 1980: 9,431 PAs certified, 42 programs.</li>
+  </ul>
+  <h4 class="subsub">1980s</h4>
+  <ul>
+    <li>1981 PANRE introduced · 1984 first female AAPA president · 1987 first National PA Day. CMS reimbursement in HMOs/surgery/rural clinics at 100% physician fee. By 1990: 45 programs, 21,194 certified.</li>
+  </ul>
+  <h4 class="subsub">1990s</h4>
+  <ul>
+    <li>Master's becomes terminal entry-level degree; # programs doubles; more women; positive public view (TV's <em>ER</em>). 1992 all armed services commission PAs · 1993 DEA registers PAs to prescribe controlled substances · 1994 AMA grants AAPA observer status · 1997 Balanced Budget Act → CMS reimbursement in <strong>all settings at 85%</strong> of physician fees.</li>
+  </ul>
+  <h4 class="subsub">2000s</h4>
+  <ul>
+    <li>2000 Mississippi (last state) licenses PAs · 2001 CASPA created, ARC-PA free-standing, PA History Society founded · 2004 Pi Alpha Honor Society · 2005 APAP → PAEA · 2007 all states allow prescribing · 2010 ACA passes (+20–30M patients). By 2010: 92,049 certified.</li>
+  </ul>
+  <h4 class="subsub">2010s</h4>
+  <ul>
+    <li>2011 first CAQs; Chief PA at VA created · 2012 100,000th PA certified; PA rated #1 by Forbes/Money · 2014 recertification moves to every 10 years · 2017 <strong>Optimal Team Practice</strong> passed by HOD.</li>
+  </ul>
+  <h4 class="subsub">2020–Now</h4>
+  <ul>
+    <li>COVID increased PA utilization (telemedicine, mental health) · 2021 AAPA HOD changes name to <strong>Physician Associate</strong>; Hayley Arceneaux = first PA in space · 2023 NCCPA launches PANRE-LA · By end of 2025: <strong>201,038</strong> PAs certified · 2026: <strong>330</strong> accredited entry-level programs · Licensure Compact adopted by 16 states (12 more filed).</li>
+  </ul>
+
+  <h3 class="sub">PA History Society (PAHx) <span class="tag">IO 2</span></h3>
+  <ul>
+    <li><strong>Mission:</strong> share the history of the PA profession and show how PAs make a difference in society.</li>
+    <li><strong>Vision:</strong> bring PA history to life to inspire the next generation of PAs, patients, and policymakers.</li>
+    <li><strong>Values:</strong> Recognition & Understanding, Dedication, Credibility, Engagement.</li>
+    <li><strong>Collections:</strong> oral histories, biographies, illustrated timeline, historical perspectives, videos, photos, memorabilia. Website: <code>pahx.org</code> (Stead Center in NC).</li>
+  </ul>
+</section>
+
+<!-- ============ 2 ORGANIZATIONS ============ -->
+<section class="deck" id="orgs">
+  <h2 class="deck-title">2 · PA Organizations</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the history & role of the ARC-PA accrediting body.</li>
+      <li>Describe the progression of the ARC-PA accreditation process for PA programs.</li>
+      <li>Explain general definitions of the ARC-PA accreditation standards.</li>
+      <li>Discuss the history & mission of PAEA.</li>
+      <li>Discuss the history & mission of NCCPA.</li>
+      <li>Discuss the history & purpose of AAPA.</li>
+      <li>Describe the Student Academy of AAPA (SAAAPA), including student benefits.</li>
+      <li>Identify the role & purpose of the Physician Associate Foundation (PAF).</li>
+      <li>Discuss the history & purpose of the Florida Academy of Physician Associates (FAPA).</li>
+    </ol>
+  </div>
+
+  <div class="callout"><strong>Remember the "4 pillars" organizations:</strong> ARC-PA (accreditation), PAEA (education), NCCPA (certification), AAPA (professional association).</div>
+
+  <h3 class="sub">ARC-PA — Accreditation Review Commission on Education for the PA</h3>
+  <ul>
+    <li><strong>Mission:</strong> recognized accrediting agency protecting the public and the PA profession by defining standards for PA education and evaluating programs (within US territory) for compliance.</li>
+    <li>Created <strong>2001</strong>; publishes <em>Accreditation Standards for PA Education</em> — 6th edition published 9/2025. <strong>322</strong> accredited programs.</li>
+    <li>Up to 30 Commissioners (2/3 PAs; remainder up to 6 physicians, 2 deans, 2 public).</li>
+    <li>Functions: monitors accreditation status, appoints site visitors, reviews applications, determines compliance. <code>arc-pa.org</code></li>
+    <li><strong>Goals:</strong> foster excellence via uniform national standards; require continuous self-study/review; assure stakeholders programs meet standards; serve as accreditation resource.</li>
+  </ul>
+  <h4 class="subsub">Standards — cover:</h4>
+  <p>Didactic & clinical curriculum · classroom/lab/library facilities · clinical affiliations · faculty qualifications · admissions · student issues · fiscal stability · publications · record-keeping · administration · ongoing self-assessment.</p>
+  <p><strong>Also accredits:</strong> Clinical Postgraduate Programs (voluntary, since 2019/2020) and Post-Professional PA Doctoral Programs (PPDP, standards effective 9/25).</p>
+
+  <h3 class="sub">PAEA — Physician Assistant Education Association</h3>
+  <ul>
+    <li>National organization representing PA educational programs. Mission: advancing excellence in PA education through leadership, scholarship, equity, inclusion.</li>
+    <li>Administers <strong>CASPA</strong> (central application); assessment tools: <strong>PACKRAT, End-of-Rotation & End-of-Curriculum exams</strong>. <code>paeaonline.org</code></li>
+    <li>Student section: fellowships (health policy, future educators), leadership webinars, advocacy curriculum, paying-for-school info, National Health Service Corps.</li>
+  </ul>
+
+  <h3 class="sub">NCCPA — National Commission on Certification of PAs</h3>
+  <ul>
+    <li>The <strong>only</strong> nationally recognized certifying body for PAs; established <strong>1974</strong>. Develops/administers the certifying exam & recertification; confers the <strong>PA-C</strong> designation. <code>nccpa.net</code></li>
+    <li>Board: reps from AAPA, PAEA, FSMB + 7 PA directors-at-large, 2 public, 5 physician directors.</li>
+    <li>Exams: <strong>PANCE, PANRE, PANRE-LA</strong>. Log CME every 2 years.</li>
+    <li>Administers <strong>CAQs</strong> (Certificates of Added Qualifications): CV & Thoracic Surgery, Dermatology, Emergency Medicine, Geriatrics, Hospital Medicine, Nephrology, OB/GYN, Occupational Medicine, Orthopaedic Surgery, Palliative/Hospice, Pediatrics, Psychiatry.</li>
+    <li>Produces annual reports, PA Career Center; investigates Code of Conduct breaches; speaks to state medical boards.</li>
+    <li><strong>Code of Conduct</strong> breaches → letter of concern, formal censure, revocation of certification; may be reported to FSMB, state boards, federal govt, employer.</li>
+  </ul>
+
+  <h3 class="sub">AAPA — American Academy of Physician Associates</h3>
+  <ul>
+    <li><strong>Vision:</strong> PAs transforming health through patient-centered, team-based practice. <strong>Mission:</strong> lead the profession & empower members. <strong>74,000+</strong> members. <code>aapa.org</code></li>
+    <li>Advocates through federal legislation; liaises with medical associations; job listings; Annual Salary Report; annual CME conference.</li>
+    <li><strong>House of Delegates (HOD)</strong> = policy-making body. 58 chapters (50 states, DC, USVI, PR + 5 uniformed services), 27 specialty orgs, 15 caucuses, Student Academy (22 delegates).</li>
+    <li>6 Commissions (e.g., Health of the Public, Judicial Affairs); committees (Nominating, Governance, DEI); 27 specialty organizations; caucuses & special interest groups.</li>
+    <li><strong>Student membership:</strong> $75 for entire enrollment. Benefits: JAAPA monthly, Maxwell Quick Medical Reference, PA School Survival Guides, PAF scholarship eligibility, AAPA Huddle, salary report, conference networking.</li>
+  </ul>
+
+  <h3 class="sub">SAAAPA — Student Academy of AAPA <span class="tag">IO 7</span></h3>
+  <ul>
+    <li>Comprised of AAPA student members. Student President sits on the AAPA Board of Directors; students serve on commissions, HOD reference committees, PAF & PAHx boards.</li>
+    <li>Runs the National Medical Challenge Bowl (NSU Jax won 2012). Student delegation = largest in HOD at <strong>22</strong>.</li>
+    <li>Board: President, President-elect, Chief Delegate, 6 Regional Directors, Director of Diversity & Outreach, Director of Student Communication, PAEA Member-at-Large, 2 grad advisors.</li>
+    <li><strong>AOR (Assembly of Representatives) rep:</strong> each recognized student society elects one; must be elected/appointed, society registered with SAAAPA, and a member in good standing.</li>
+  </ul>
+
+  <h3 class="sub">PAF — Physician Associate/Assistant Foundation <span class="tag">IO 8</span></h3>
+  <ul>
+    <li><strong>Vision:</strong> PAs connecting clinical expertise and compassion to community need. <strong>Mission:</strong> empower PAs to improve health through philanthropy & service.</li>
+    <li>Funds & awards: Impact Grants, Global Outreach, student scholarships, NIDA Mentored Outreach, Marquardt Community Health Access & Precepting awards, research awards. Programs on pain/telemedicine, mental health, opioid misuse prevention, SUD. <code>pa-foundation.org</code></li>
+  </ul>
+
+  <h3 class="sub">FAPA — Florida Academy of Physician Associates <span class="tag">IO 9</span></h3>
+  <ul>
+    <li>The only organization representing PAs in Florida; established <strong>1974</strong>. <code>fapaonline.org</code></li>
+    <li><strong>Student membership:</strong> $60 for entire enrollment (extended 6 months post-grad for boards). Students may serve on (but not chair, except Student Affairs) committees; no vote/office except the Student Affairs chair who sits on the BOD for chapter business.</li>
+    <li>Holds annual CME conference & monthly CME dinners; lobbies for PA legislation (Legislative Days); recommends PAs to the Governor for the Florida Board of Medicine's Council on PAs.</li>
+  </ul>
+</section>
+
+<!-- ============ 3 PROFESSIONAL PRACTICE ============ -->
+<section class="deck" id="profpractice">
+  <h2 class="deck-title">3 · Professional Practice for Physician Assistants</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>List the benefits of professional certification for PAs.</li>
+      <li>Identify NCCPA requirements for initial certification and re-certification.</li>
+      <li>Discuss the licensure process for PAs in Florida.</li>
+      <li>Define credentialing as it relates to PA practice.</li>
+      <li>Describe the history & purpose of professional competencies for PAs.</li>
+      <li>Describe general reimbursement for PA services.</li>
+      <li>Describe the components of Optimal Team Practice.</li>
+      <li>Describe the laws & regulations governing PA practice and conduct.</li>
+      <li>Provide an overview of the policy issues impacting PA practice.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub">PA Competencies <span class="tag">IO 5</span></h3>
+  <p>Developed in response to demand for accountability/assessment; adopted & revised by all 4 national PA organizations (last revised <strong>2021</strong>). Recently: Core Competencies for the New PA Graduate.</p>
+  <p><strong>Seven domains</strong> — mnemonic <em>"Knowledgeable Interpersonal People Interact Professionally, Practicing for Society":</em></p>
+  <ol>
+    <li><strong>Knowledge for Practice</strong> — biomedical/clinical science; investigative & critical thinking; cost-effectiveness.</li>
+    <li><strong>Interpersonal & Communication Skills</strong> — effective exchange; culturally competent care; emotional resilience & tolerance of ambiguity.</li>
+    <li><strong>Person-Centered Care</strong> — evidence-based, patient-safety, health equity; elicit the individual's story; shared decision-making.</li>
+    <li><strong>Interprofessional Collaboration</strong> — engage other professionals; integrate clinical care + public health.</li>
+    <li><strong>Professionalism & Ethics</strong> — ethical/legal practice; professional maturity & accountability.</li>
+    <li><strong>Practice-Based Learning & Quality Improvement</strong> — critical self-analysis; adopt new evidence to improve outcomes.</li>
+    <li><strong>Society & Population Health</strong> — determinants of health; improve population health.</li>
+  </ol>
+
+  <h3 class="sub">Certification (NCCPA) <span class="tag">IO 1 · 2</span></h3>
+  <h4 class="subsub">Benefits of certification</h4>
+  <ul>
+    <li>Most employers require/expect it; many payers require or favor it; over half say PA-C affects reimbursement.</li>
+    <li>Signals lifelong learning; eases moving to a new specialty or state; many states require it to renew license/prescribe.</li>
+    <li><strong>Florida:</strong> does <em>not</em> require continued certification to practice, but requires 100 hrs CME every 2 years.</li>
+  </ul>
+  <h4 class="subsub">PANCE (initial exam)</h4>
+  <ul>
+    <li>360 multiple-choice questions on basic medical & surgical knowledge (≥20% surgical, up to 2% legal/ethical); covers 7 knowledge/skill areas + 13 disease/disorder categories.</li>
+    <li>Offered at Pearson VUE 50 weeks/yr; 7-day wait after expected grad date; results ~2 weeks.</li>
+    <li><strong>Test day:</strong> 6-hour exam = six 60-min blocks of 60 Qs, 45 min total break time; arrive 30 min early; bring driver's license + scheduling permit (names must match); no personal belongings.</li>
+    <li><strong>If you don't pass:</strong> take once per 90-day period or 3×/year (whichever is fewer). Eligible up to 6 years / max 6 attempts (whichever comes first) for grads on/after 1/1/2003.</li>
+  </ul>
+  <h4 class="subsub">Certification Maintenance / Recertification</h4>
+  <ul>
+    <li>Renew every 2 years: <strong>100 CME hrs</strong> per cycle (≥50 Category I, rest Category II); log CME; pay fee.</li>
+    <li>Recertify by exam every <strong>10 years</strong>: <strong>PANRE</strong> (Pearson VUE, no reference material, 5 hrs) or <strong>PANRE-LA</strong> (25 questions quarterly × 12 quarters, scored instantly).</li>
+  </ul>
+
+  <h3 class="sub">Licensure & Credentialing <span class="tag">IO 3 · 4</span></h3>
+  <ul>
+    <li><strong>Licensure</strong> = most rigorous method of professional regulation; no PA may practice without a state license. Protects the public and uses a term consumers understand; does <em>not</em> by itself create autonomous practice.</li>
+    <li><strong>Florida licensure</strong> — regulated by Medical Practice Act 458.347, Osteopathic 459.022, FS 456, FAC 64B8-30. License valid 2 years; 100 hrs CME/2 yrs or current NCCPA cert; renewal fee. Continued NCCPA certification not required.</li>
+    <li><strong>FL application:</strong> $305 fee ($100 non-refundable), Livescan criminal background/fingerprints, diploma copy, primary-source verification of program completion & NCCPA cert, disclosures for affirmative responses; e-licenses only.</li>
+    <li><strong>Temporary FL license:</strong> for recent grads registered for next PANCE; expires 30 days after scores; may reapply for one 1-yr extension if failed; granted max 2×.</li>
+    <li><strong>Florida PA Council:</strong> recommends to DOH on PA licensure, develops rules, ensures patient safety, sets a formulary of drugs PAs may <em>not</em> prescribe. Composition: 3 PAs, 1 allopathic + 1 osteopathic physician (each must supervise a PA).</li>
+    <li><strong>Impaired practitioners → PRN</strong> (Professionals Resource Network): addresses substance misuse/mental/physical conditions; coordinates evaluation, treatment, monitoring; self-referral & anonymous complaints allowed.</li>
+  </ul>
+  <div class="callout"><strong>Credentialing vs. Privileging vs. Scope:</strong><br>
+  <strong>Credentialing</strong> (mandated by Joint Commission & NCQA) = verifies education/training via primary source, assures patient safety.<br>
+  <strong>Privileging</strong> = demonstrating ability to perform specific tasks (procedure logs, specialty CME, sim lab, ACLS/PALS, peer attestation); granted at institution, renewed annually.<br>
+  <strong>Scope of practice</strong> defined during credentialing; 3 determining levels = Medicare regs, federal/state law, hospital bylaws (+ malpractice coverage).</div>
+
+  <h4 class="subsub">Telehealth</h4>
+  <ul>
+    <li>Allowed if state law permits; PA must be licensed where the <em>patient</em> is located; verify malpractice coverage for inter/intrastate care.</li>
+    <li>Medicare covers PA telehealth mental-health services after an initial face-to-face; patient may be at home, audio-only if preferred; policies expanded in 2025.</li>
+  </ul>
+
+  <h4 class="subsub">Key Legal/Regulatory Points <span class="tag">IO 8</span></h4>
+  <ul>
+    <li><strong>Informed consent:</strong> required for procedures under anesthesia; CMS requires the person <em>performing</em> the procedure obtain consent.</li>
+    <li><strong>EMTALA (1986):</strong> hospital must provide a medical screening exam (MSE) to anyone requesting emergency care. PAs can do the MSE, certify false labor, certify a stable patient may be transferred; unstable transfer requires physician consult & signature.</li>
+    <li><strong>Restraint & seclusion:</strong> for violent/self-destructive behavior threatening safety; strict, time-limited orders (1–4 hrs by age); face-to-face assessment; no standing/PRN orders; PAs may order but must consult physician ASAP.</li>
+    <li><strong>Documentation:</strong> supports quality/continuity/communication/legal record + payment; document ASAP; never delete an original note (amend only); students may document but supervising PA/physician must read, amend, and sign.</li>
+    <li><strong>Malpractice:</strong> carry insurance entire career; be a "named insured." <em>Occurrence</em> = covers incidents while policy in effect regardless of claim date (no tail needed). <em>Claims-made</em> = covers only while in force (tail coverage needed).</li>
+  </ul>
+
+  <h3 class="sub">Reimbursement <span class="tag">IO 6</span></h3>
+  <ul>
+    <li>Allowed under Medicare, Medicaid, most commercial payers. Generally reimburse PAs at <strong>85%</strong> of physician fees.</li>
+    <li><strong>"Incident-to" billing:</strong> allowed with many restrictions, PA services hidden, bills at 100% of physician fee. Since 2022 Medicare allows <strong>direct</strong> reimbursement to PAs if state law allows.</li>
+    <li>First-assistant surgery: 13.6% of primary surgeon fee. PAs can own 100% of a corporation if state law allows.</li>
+    <li><strong>PAs cannot:</strong> certify terminal illness for hospice, order medical nutrition/therapeutic (diabetic) shoes, or certify services in acute rehab/SNF (physician-only).</li>
+  </ul>
+  <h4 class="subsub">Value-Based Care (FFS → VBC transition)</h4>
+  <ul>
+    <li><strong>Bundled payments</strong> — single payment for all services for a condition over a period (surgery is almost always bundled: pre-op + intra-op + post-op).</li>
+    <li><strong>PCMHs</strong> — primary-care-coordination model improving outcomes via integrated services.</li>
+    <li><strong>ACOs</strong> — networks accepting financial + medical responsibility for a defined population; goal = coordinated, patient-centered care at lower cost. Min 5,000 patients. Jan 2025: Medicare had 476 ACOs / 11M+ patients.</li>
+  </ul>
+  <h4 class="subsub">Payers at a glance</h4>
+  <ul>
+    <li><strong>Medicare</strong> (70M covered): Part A hospital, B outpatient, C Advantage, D drugs. ≥65 or certain chronic diseases.</li>
+    <li><strong>Medicaid/CHIP</strong> (74.8M): all 50 states + DC cover PA services (≈ physician rate). <strong>TRICARE</strong>: covers 7 uniformed services; PAs at 85%, no incident-to. <strong>FEHB</strong>: largest employee program, 8M+.</li>
+  </ul>
+
+  <h3 class="sub">Optimal Team Practice (OTP) <span class="tag">IO 7</span></h3>
+  <p>Primary goal: remove burdensome administrative constraints on PA practice.</p>
+  <ul>
+    <li>Eliminate the legal requirement for a <em>specific</em> PA-physician relationship so PAs can practice to the full extent of their education/training/experience.</li>
+    <li>Create a separate majority-PA board (or add PAs to medical boards).</li>
+    <li>Authorize direct payment from all public/private insurers.</li>
+    <li>PAs are responsible for the care they provide; a physician should not be liable for PA care unless the PA acted on the physician's specific instructions.</li>
+  </ul>
+
+  <h3 class="sub">Current Policy Issues <span class="tag">IO 9</span></h3>
+  <ul>
+    <li><strong>Licensure Compact</strong> — optional agreement letting a PA licensed in a member state gain practice authorization in other member states more easily (24+ states signed on; licenses hoped in 1–2 yrs).</li>
+    <li>Internationally-trained physicians licensed as PAs (Puerto Rico); doctorate-as-entry-level debate (PAEA addressing).</li>
+    <li>Pending federal bills: Professional Student Degree Act (loans), ACO Assignment Improvement Act, Promoting Access to Diabetic Shoes Act, Improving Access to Workers' Comp for Injured Federal Workers Act.</li>
+  </ul>
+</section>
+
+<!-- ============ 4 TEAMWORK ============ -->
+<section class="deck" id="teamwork">
+  <h2 class="deck-title">4 · Health Care is Teamwork</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Define interprofessional education.</li>
+      <li>Define common healthcare providers within an interprofessional team and their contributions to patient care.</li>
+      <li>Discuss the collaborative relationship between PAs, physicians, and other providers in delivering patient care.</li>
+      <li>Identify key challenges and barriers to effective interprofessional collaboration.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub">Interprofessional Collaboration (IPC) <span class="tag">IO 1 · 3</span></h3>
+  <ul>
+    <li><strong>WHO definition:</strong> multiple health professionals working together with patients, families, caregivers, and communities to deliver the highest-quality care.</li>
+    <li><strong>Benefits:</strong> reduces mortality, improves patient compliance, decreases professional burnout; relies on trust, mutual respect, shared values, and regular team rounds with standard communication tools.</li>
+    <li>Requires effective communication — talking <em>and</em> active listening among team and patient/significant others.</li>
+  </ul>
+  <h4 class="subsub">Challenges/Barriers to IPC <span class="tag">IO 4</span></h4>
+  <p>Communication breakdown · hierarchical power structures · role confusion / scope-of-practice issues · organizational constraints · time & resources · cultural & attitudinal barriers · structural & systemic barriers · patient-related factors.</p>
+
+  <h3 class="sub">Patient-Centered Care</h3>
+  <ul>
+    <li>Shift from "what the physician can do for the patient" to a model including patient/family perspectives; more disseminated model driven by technology, information, and demand.</li>
+    <li><strong>Every team member contributes:</strong> maintenance (comfort/safety), housekeeping (clean environment), administration (resources), technicians (diagnostics), nursing (safety/care), physicians/PAs (medical care).</li>
+    <li><strong>4 tenets:</strong> Dignity & Respect · Information Sharing · Participation · Collaboration.</li>
+  </ul>
+
+  <h3 class="sub">The Team — Provider Reference <span class="tag">IO 2</span></h3>
+  <table>
+    <tr><th>Provider</th><th>Education</th><th>Credential / Notes</th></tr>
+    <tr><td>LPN</td><td>2-yr associate/diploma</td><td>State board; bedside care under RN supervision</td></tr>
+    <tr><td>RN</td><td>Diploma → Associate → BSN → MSN → PhD</td><td>Licensed; historic hospital diploma model shifted to "degree-centered"</td></tr>
+    <tr><td>APRN / NP</td><td>RN + certificate/master's/doctorate</td><td>Licensed, board exam req in FL; regulated by Nursing Boards; most specialize</td></tr>
+    <tr><td>CRNA</td><td>RN + experience + master's</td><td>Administers anesthesia (~$223K)</td></tr>
+    <tr><td>CNM (Nurse Midwife)</td><td>RN + master's</td><td>Labor/delivery, well-woman care</td></tr>
+    <tr><td>Clinical Nurse Specialist</td><td>RN + master's</td><td>Licensed; specialized (e.g., diabetes, critical care)</td></tr>
+    <tr><td>Medical Assistant</td><td>HS + MA program</td><td>Pre-exam patient care + clerical</td></tr>
+    <tr><td>Pharmacist</td><td>PharmD</td><td>State Board of Pharmacy; new trend = prescribing (varies by state)</td></tr>
+    <tr><td>Pharmacy Technician</td><td>OJT / certificate</td><td>National cert exam</td></tr>
+    <tr><td>Genetic Counselor</td><td>Master's</td><td>ABGC certified; risk assessment/counseling</td></tr>
+    <tr><td>Physical Therapist (PT)</td><td>Doctoral</td><td>Licensed; rehab, modalities</td></tr>
+    <tr><td>Occupational Therapist (OT)</td><td>Master's</td><td>Licensed; ADLs & independence</td></tr>
+    <tr><td>Recreation Therapist</td><td>BS</td><td>Licensed; therapeutic recreation</td></tr>
+    <tr><td>Chiropractor</td><td>Doctor of Chiropractic (4 yr)</td><td>Licensed; musculoskeletal/spine</td></tr>
+    <tr><td>Optometrist</td><td>Doctoral</td><td>Eye exams, corrective lenses; new FL oral-med privileges</td></tr>
+    <tr><td>Registered Dietitian Nutritionist</td><td>MS</td><td>Licensed; medical nutrition therapy</td></tr>
+    <tr><td>Social Worker / LCSW</td><td>Bachelor's (direct) / Master's (clinical)</td><td>LCSW trained in psychotherapy</td></tr>
+    <tr><td>Podiatrist</td><td>Doctor of Podiatric Medicine</td><td>Foot/ankle/lower-extremity care</td></tr>
+    <tr><td>Respiratory Therapist</td><td>AS/BS</td><td>Licensed (49 states); breathing disorders</td></tr>
+    <tr><td>Speech-Language Pathologist</td><td>Master's</td><td>Licensed; speech/swallowing disorders</td></tr>
+    <tr><td>Audiologist</td><td>Doctorate</td><td>Licensed; hearing & balance</td></tr>
+    <tr><td>Radiology Tech</td><td>Associate's</td><td>Licensed (35 states); imaging (CT/MRI)</td></tr>
+    <tr><td>Nuclear Medicine Tech</td><td>Associate's</td><td>Radioactive drugs for imaging/treatment</td></tr>
+    <tr><td>Medical Lab Technologist</td><td>BS/Doctorate</td><td>Registered/licensed; analyze fluids/tissue</td></tr>
+  </table>
+  <p><strong>Also:</strong> psychotherapists (LMFT, CRC, LMHC/LPC), EMTs, paramedics, athletic trainers, surgical technologists, medical secretaries, medical coders.</p>
+</section>
+
+<!-- ============ 5 CLINICAL PRACTICE ============ -->
+<section class="deck" id="clinical">
+  <h2 class="deck-title">5 · PAs and Clinical Practice</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Identify factors that foster the PA profession (e.g., healthcare access gaps).</li>
+      <li>Describe the role of PAs in the hospital setting.</li>
+      <li>Describe how PAs are utilized in outpatient practice.</li>
+      <li>Identify specialty-care opportunities available to PAs.</li>
+      <li>Explain the various alternative career paths available to PAs.</li>
+      <li>Compare and contrast the roles/responsibilities of PAs and other providers.</li>
+      <li>Explain the general procedure for PA credentialing.</li>
+    </ol>
+  </div>
+  <div class="callout">This deck is largely image/graphic-driven (2025 NCCPA Statistical Profile). Key text content below; pair with the profile figures shown in lecture.</div>
+
+  <h3 class="sub">Where PAs Practice <span class="tag">IO 2 · 3 · 4</span></h3>
+  <p>"Anywhere there are physicians" — primary care · hospital inpatient & Emergency Departments · surgical specialties · medical specialty care · federal government · uniformed services.</p>
+
+  <h3 class="sub">Primary Care (the "5 C's")</h3>
+  <ul>
+    <li><strong>Comprehensive</strong> — full range of services.</li>
+    <li><strong>Continuous</strong> — care throughout the years.</li>
+    <li><strong>Coordinated</strong> — with specialists.</li>
+    <li><strong>Accessible</strong> — first point of contact, timely.</li>
+    <li><strong>Patient-centered</strong> — attentive to satisfaction.</li>
+  </ul>
+  <p>Primary-care fields: family medicine, internal medicine, pediatrics. Distinguish primary vs. secondary vs. tertiary care.</p>
+
+  <h3 class="sub">Specialization & Alternative Roles <span class="tag">IO 4 · 5</span></h3>
+  <p>PAs specialize across surgical and medical fields; hospitalist practice is a growing role. <strong>Alternative roles</strong> include administration, education, research, industry, and leadership beyond direct clinical care.</p>
+  <p><strong>Credentialing</strong> <span class="tag">IO 7</span> — see the detailed credentialing / privileging / scope breakdown in Lecture 3.</p>
+</section>
+
+<!-- ============ 6 PROFESSIONALISM ============ -->
+<section class="deck" id="professionalism">
+  <h2 class="deck-title">6 · Professionalism</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Identify key components of professional conduct for PA students.</li>
+      <li>Compare & contrast professional vs. unprofessional behaviors for PA students.</li>
+      <li>Describe current threats to professionalism.</li>
+      <li>Describe the characteristics, responsibilities, and behavior of a professional.</li>
+      <li>Define intellectual honesty.</li>
+      <li>Discuss the importance of honestly admitting what a clinician knows and does not know.</li>
+      <li>Define academic integrity.</li>
+      <li>Discuss academic integrity re: respect, responsibility, and freedom to build new ideas while acknowledging others' work.</li>
+      <li>Describe academic integrity and acknowledging the work of others.</li>
+      <li>Discuss the importance of honesty, integrity, and ethical conduct in academic work and future practice.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub">What Is Professionalism? <span class="tag">IO 1 · 4</span></h3>
+  <ul>
+    <li>Not one quality but a <em>combination</em>; takes time to perfect — people "know it when they see it." Per PAEA, it's a top-10 noncognitive attribute.</li>
+    <li><strong>Qualities:</strong> responsible, ethical, accountable, integrity, honesty, excellence, lifelong learning, self-regulating, service, strong communication, team-oriented, time management, critical thinking (these overlap with employer-valued "soft skills").</li>
+  </ul>
+
+  <h3 class="sub">Standards & Appearance <span class="tag">IO 2</span></h3>
+  <ul>
+    <li><strong>The Joint Commission</strong> drives quality improvement/patient safety; accredits organizations; failed accreditation = immediate threats to patient/public safety.</li>
+    <li>Ties to PA school: nail length/no artificial nails, hair out of patient space, badge above the waist (chest height), closed-toe shoes, appropriate dress.</li>
+    <li><strong>Classroom attire:</strong> well-fitted clean scrubs, badge above waist, approved NSU jacket, closed-toe/back shoes, no mixing & matching. <strong>Lab:</strong> approved attire only.</li>
+    <li><strong>Professional dress</strong> (clinical settings & ceremonies): collared shirts tucked in + belt (men); no cleavage, hems below fingertips, heels ≤2" (women); closed-toe/back shoes only — no sneakers/mules/open-toe.</li>
+  </ul>
+
+  <h3 class="sub">Interactions & Communication <span class="tag">IO 2 · 3</span></h3>
+  <ul>
+    <li><strong>With students:</strong> casual/informal ok — don't interrupt, be culturally sensitive, respect differing opinions.</li>
+    <li><strong>With faculty/staff:</strong> formal — address as "Dr."/"Professor," arrive ≥15 min early ("early is on time, on time is late, late is unacceptable"), be engaged even when tired, make respectful requests.</li>
+    <li><strong>Email etiquette:</strong> professional greeting/closing, full sentences, clear subject, no colloquialisms/emojis, professional (Nova) address, introduce yourself, proofread; don't send emails while emotional (tone is hard to read).</li>
+    <li><strong>Non-tangible:</strong> respect others' space (don't turn on lights unasked), no gum, present yourself well when exhausted, keep/communicate about meetings — no-shows are unprofessional.</li>
+    <li><strong>Social media:</strong> never share patient info (HIPAA violation); manage your digital image; no selfies in clinic; be careful with personal opinions. Consequences: job loss, damaged provider relationships.</li>
+  </ul>
+
+  <h3 class="sub">Professional Identity & Development</h3>
+  <ul>
+    <li>Goal of teaching professionalism = develop a <strong>professional identity</strong>: shared values/knowledge/beliefs/attitudes; formed around workplace roles (started before PA school); differentiates you and shapes what others say when you're not around.</li>
+    <li>Correlation exists between professionalism in school and in later practice — early professionalism citations predict later concerns.</li>
+    <li><strong>Develop it via:</strong> motivation to invest time/energy; shift from grades to responsibility for patients; daily 5-min self-reflection; awareness of strengths/limitations; plan to address gaps; portfolio of feedback; self-assessment; short-/long-term goals → builds <strong>resilience</strong>.</li>
+  </ul>
+
+  <h3 class="sub">PA Competencies of Professionalism <span class="tag">IO 4</span></h3>
+  <table>
+    <tr><th>Toward…</th><th>Key behaviors</th></tr>
+    <tr><td>The Patient</td><td>Respect, compassion, integrity (know when you don't know, admit errors), accountability, punctuality, boundaries, HIPAA, sensitivity to diverse populations</td></tr>
+    <tr><td>Other Professionals</td><td>Teamwork attitude; failure of teams → medical errors/malpractice; respect staff & colleagues; properly reference others' work</td></tr>
+    <tr><td>The Public</td><td>Responsiveness to patients/society; accountability; adherence to legal/regulatory requirements; ethical principles (confidentiality, informed consent)</td></tr>
+    <tr><td>Oneself</td><td>Lifelong learning, maintain knowledge, adaptability, self-reflection, critical curiosity, initiative, <strong>self-regulation (hallmark)</strong>, self-assessment, know limitations, practice without impairment (drugs/alcohol/stress/fatigue)</td></tr>
+  </table>
+
+  <h3 class="sub">Intellectual Honesty & Academic Integrity <span class="tag">IO 5 · 6 · 7 · 8 · 9 · 10</span></h3>
+  <ul>
+    <li><strong>Intellectual honesty</strong> = being honest when acquiring, analyzing, and transmitting information/ideas — stating the truth whether easy or hard, regardless of personal beliefs; decisions based on facts.</li>
+    <li><strong>Academic integrity</strong> (Intl Center for Academic Integrity) = commitment, even in adversity, to six values: <strong>honesty, trust, fairness, respect, responsibility, courage.</strong></li>
+    <li><strong>Why we care:</strong> promotes respect for others' work, supports personal responsibility, provides freedom to build new ideas → critical thinking.</li>
+    <li><strong>NSU expectations:</strong> submit original work, don't collaborate when disallowed, reference others' work. Violations: cheating, plagiarism (incl. AI), fabrication, multiple submissions, misrepresentation, bribery, forgery, falsification.</li>
+    <li><strong>NSU plagiarism definition:</strong> adopting/reproducing another's ideas, words, or statements as one's own without proper acknowledgment.</li>
+    <li><strong>Collaboration ok:</strong> simulations, small groups. <strong>Not ok:</strong> written/computerized exams, OSCEs, written assignments.</li>
+    <li><strong>Consequences:</strong> academic discipline (dismissal, probation), legal repercussions, loss of patient/colleague trust, loss of licensure/employment.</li>
+    <li><strong>Avoiding plagiarism (Yale/Harvey):</strong> don't wait until the last minute, don't over-rely on one source, distinguish your writing from direct quotes, use APA/AMA formatting, admit when you don't know, ask for help.</li>
+  </ul>
+
+  <h3 class="sub">Case Studies (self-test) <span class="tag">IO 2 · 8</span></h3>
+  <ul>
+    <li><strong>Case 1 (WS):</strong> missed mandatory activities, lied about attending a preceptor clinic. Breaches = pattern of non-attendance + lack of integrity/dishonesty. Matters because early trainee behaviors predict later unprofessional conduct → must be identified, documented, remediated.</li>
+    <li><strong>Case 2 (copied website):</strong> copying paragraphs verbatim = plagiarism. A fellow student has an ethical duty to confront the lapse.</li>
+    <li><strong>Case 3 (AB, phone/late):</strong> distraction & tardiness harm learning, peer relationships, and faculty perception. Remedy: self-reflection, open communication, commitment to change, seeking support, follow-through.</li>
+  </ul>
+</section>
+
+<!-- ============ 7 DIFFICULT CONVERSATIONS ============ -->
+<section class="deck" id="difficult">
+  <h2 class="deck-title">7 · Having Difficult Conversations in Health Care</h2>
+  <p class="lecturer">Monique Jaquith, DMSc, PA-C · Summer 2026</p>
+  <div class="io-box">
+    <h3>Learning Objectives</h3>
+    <ol>
+      <li>Interpret verbal and nonverbal cues affecting clinical information exchange.</li>
+      <li>Set the tone with patients — establish trust, clarity, psychological safety.</li>
+      <li>Set the tone with support systems — manage family/caregiver dynamics, patient at center.</li>
+      <li>Communicate with health care providers using direct, respectful, patient-centered language.</li>
+      <li>Discuss common difficult conversations.</li>
+      <li>Apply NURSE statements (structured empathic language).</li>
+      <li>Apply SPIKES, CUS/DESC, and SHARE across common scenarios.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub">Why It Matters & What Makes a Conversation "Difficult"</h3>
+  <ul>
+    <li>Communication is a <strong>core clinical skill</strong> — affects patient understanding, treatment adherence, shared decision-making (AHRQ definition), team functioning/psychological safety, and patient safety (communication failures are a leading cause of preventable adverse events).</li>
+    <li>Difficulty arises from content <em>and</em> from differing goals/values/understanding. Contributing factors: high emotion, uncertainty, conflicting values, high stakes, time pressure, cultural/linguistic/literacy differences, fear of causing distress, power differentials.</li>
+  </ul>
+
+  <h3 class="sub">Verbal & Nonverbal Communication <span class="tag">IO 1</span></h3>
+  <ul>
+    <li>Three channels: <strong>verbal content</strong> (the words), <strong>paralanguage</strong> (tone/pace/volume), <strong>nonverbal behavior</strong> (expression/posture/silence).</li>
+    <li><strong>Incongruence</strong> (words ≠ behavior) → approach with curiosity, not assumption ("I'm fine" while gripping the armrests).</li>
+    <li><strong>Verbal cues to listen for:</strong> changes in pace/volume/pitch, repeated questions (fear/overload), vague answers, catastrophic language, blame, expressions of fear/anger/guilt/hopelessness, health-literacy signs, long pauses. Respond to emotion before adding facts.</li>
+    <li><strong>Nonverbal cues to observe:</strong> facial expression, eye contact, body orientation, muscle tension, restlessness, withdrawal, tearfulness — always interpret in context (cultural/neurodiversity/trauma). Use observations as an <em>invitation to ask</em>, not proof.</li>
+    <li><strong>Your own nonverbals:</strong> sit when possible, position at eye level, open posture, minimize barriers, intentional silence, calm voice/pace.</li>
+  </ul>
+
+  <h3 class="sub">Setting the Tone <span class="tag">IO 2 · 3 · 4</span></h3>
+  <ul>
+    <li><strong>Before the conversation:</strong> review clinical facts, clarify the goal, anticipate questions/emotions, identify who should be present, select a private setting, assess your own emotional state.</li>
+    <li><strong>With patients:</strong> introduce yourself/role, confirm preferred name, ensure privacy, sit at eye level, ask what they already understand, ask permission to discuss, use jargon-free language, avoid <em>premature reassurance</em>, check understanding.</li>
+    <li><strong>With support systems:</strong> patient stays at the center — get explicit permission before including others, clarify roles, keep addressing the patient, use a <em>professional interpreter</em> (never family for medical interpretation), protect confidentiality.</li>
+    <li><strong>With providers:</strong> be Timely, Direct, Respectful, Patient-Centered, Closed-Loop. Replace "You never listen" with "I am concerned the patient's BP keeps falling despite the intervention." PAs have a professional obligation to raise safety concerns without hesitation.</li>
+  </ul>
+
+  <h3 class="sub">The Five Frameworks (know cold)</h3>
+  <table>
+    <tr><th>Framework</th><th>Use when…</th><th>Steps</th></tr>
+    <tr><td class="frame-name">NURSE</td><td>Patient/family expressing strong emotion</td><td><strong>N</strong>ame · <strong>U</strong>nderstand (legitimize) · <strong>R</strong>espect · <strong>S</strong>upport · <strong>E</strong>xplore</td></tr>
+    <tr><td class="frame-name">SPIKES</td><td>Delivering unexpected/serious/complex news</td><td><strong>S</strong>etting · <strong>P</strong>erception · <strong>I</strong>nvitation · <strong>K</strong>nowledge · <strong>E</strong>motions · <strong>S</strong>trategy/Summary</td></tr>
+    <tr><td class="frame-name">CUS</td><td>Immediate patient-safety concern (in the moment)</td><td><strong>C</strong>oncerned · <strong>U</strong>ncomfortable · <strong>S</strong>afety issue (escalating)</td></tr>
+    <tr><td class="frame-name">DESC</td><td>Recurring interpersonal conflict (after the moment)</td><td><strong>D</strong>escribe · <strong>E</strong>xpress · <strong>S</strong>uggest · <strong>C</strong>onsequences</td></tr>
+    <tr><td class="frame-name">SHARE</td><td>Preference-sensitive shared decision-making</td><td>Communicate options, benefits, harms, uncertainties around patient values (AHRQ 5-step)</td></tr>
+  </table>
+
+  <h4 class="subsub">NURSE detail <span class="tag">IO 6</span></h4>
+  <ul>
+    <li><strong>Name</strong> — "It sounds like you're frightened…"; use tentative language ("I wonder whether…").</li>
+    <li><strong>Understand/legitimize</strong> — "Given what you've been through, your reaction makes sense." (Avoid "I know exactly how you feel.")</li>
+    <li><strong>Respect</strong> — genuine, specific affirmation of coping/effort/advocacy.</li>
+    <li><strong>Support</strong> — realistic commitment ("We'll work through the next steps together"); only promise what you can keep.</li>
+    <li><strong>Explore</strong> — uncover the concern beneath the reaction ("Tell me more about what worries you most").</li>
+  </ul>
+
+  <h4 class="subsub">SPIKES detail & common mistakes <span class="tag">IO 7</span></h4>
+  <ul>
+    <li>Use a <strong>warning statement</strong> ("I'm afraid the results are more serious than we hoped"), then deliver clearly, then <strong>pause/allow silence</strong>; respond to emotion with NURSE before continuing; summarize known/unknown/next steps.</li>
+    <li><strong>Mistakes to avoid:</strong> wrong setting, medical jargon, information overload, avoiding key words (euphemisms), false reassurance, no clear plan.</li>
+  </ul>
+
+  <h4 class="subsub">CUS vs. DESC — choosing</h4>
+  <table>
+    <tr><th>Situation</th><th>Tool</th><th>Timing</th></tr>
+    <tr><td>Immediate patient-safety concern</td><td>CUS</td><td>In the moment</td></tr>
+    <tr><td>Concern not acknowledged after CUS</td><td>CUS + chain of command</td><td>Escalate immediately</td></tr>
+    <tr><td>Recurring unprofessional behavior</td><td>DESC</td><td>Private, after the moment</td></tr>
+    <tr><td>Interpersonal conflict with colleague</td><td>DESC</td><td>Scheduled conversation</td></tr>
+    <tr><td>Conflicting info during urgent event</td><td>CUS</td><td>In the moment</td></tr>
+  </table>
+
+  <h4 class="subsub">SHARE detail</h4>
+  <p>Clinician brings medical expertise; patient brings expertise about goals/values/circumstances — neither alone is sufficient. Go beyond listing options: connect each option to the patient's daily life, finances, activity goals, risk tolerance. Afterward, ask the patient to restate the plan, confirm comfort, and set a reassessment point. Document the SDM process (professional & often legal standard).</p>
+
+  <div class="pearl"><strong>Key takeaways:</strong> listen on multiple channels (incongruence = data); tone is set before you speak; empathy ≠ agreement; address emotion first, information second; use structure but stay authentic; speak up when safety is at risk.</div>
+</section>
+
+<!-- ============ QUICK REF ============ -->
+<section class="deck" id="quickref">
+  <h2 class="deck-title">★ Quick-Reference Tables</h2>
+
+  <h3 class="sub">"Alphabet Soup" — Organizations</h3>
+  <table>
+    <tr><th>Acronym</th><th>Organization</th><th>Role</th></tr>
+    <tr><td>ARC-PA</td><td>Accreditation Review Commission on Education for the PA</td><td>Accredits PA programs (est. 2001)</td></tr>
+    <tr><td>PAEA</td><td>Physician Assistant Education Association</td><td>Represents programs; runs CASPA, PACKRAT (formerly APAP, 1972)</td></tr>
+    <tr><td>NCCPA</td><td>Natl Commission on Certification of PAs</td><td>Only certifying body; PANCE/PANRE; PA-C; CAQs (est. 1974)</td></tr>
+    <tr><td>AAPA</td><td>American Academy of Physician Associates</td><td>National professional advocacy org (1st mtg 1973)</td></tr>
+    <tr><td>SAAAPA</td><td>Student Academy of AAPA</td><td>Student arm; 22 HOD delegates</td></tr>
+    <tr><td>PAF</td><td>Physician Associate Foundation</td><td>Philanthropy, scholarships, grants</td></tr>
+    <tr><td>FAPA</td><td>Florida Academy of Physician Associates</td><td>Only FL PA org (est. 1974)</td></tr>
+    <tr><td>PAHx</td><td>PA History Society</td><td>Preserves profession's history (est. 2001)</td></tr>
+  </table>
+
+  <h3 class="sub">Exam Cheat Sheet</h3>
+  <table>
+    <tr><th>Exam</th><th>Format</th><th>Key facts</th></tr>
+    <tr><td>PANCE</td><td>360 MCQs, 6 blocks × 60 Q, 6 hrs</td><td>≥20% surgical, ≤2% legal/ethical; 7 skill + 13 disorder categories; ≤6 yrs / 6 attempts</td></tr>
+    <tr><td>PANRE</td><td>Pearson VUE, 5 hrs, no references</td><td>Recert exam; every 10 yrs</td></tr>
+    <tr><td>PANRE-LA</td><td>25 Q quarterly × 12 quarters</td><td>Longitudinal, scored instantly (launched 2023)</td></tr>
+    <tr><td>CME</td><td>100 hrs / 2 yrs</td><td>≥50 Category I; log with NCCPA</td></tr>
+  </table>
+
+  <h3 class="sub">Reimbursement Numbers</h3>
+  <table>
+    <tr><th>Item</th><th>Rate/Fact</th></tr>
+    <tr><td>Standard PA reimbursement</td><td>85% of physician fee</td></tr>
+    <tr><td>"Incident-to" billing</td><td>100% of physician fee (many restrictions)</td></tr>
+    <tr><td>First-assistant surgery</td><td>13.6% of primary surgeon fee</td></tr>
+    <tr><td>Direct Medicare reimbursement to PA</td><td>Since 2022 (if state law allows)</td></tr>
+    <tr><td>ACO minimum patients</td><td>5,000</td></tr>
+  </table>
+
+  <h3 class="sub">Communication Frameworks — Mnemonics</h3>
+  <table>
+    <tr><th>NURSE</th><th>SPIKES</th><th>CUS</th><th>DESC</th></tr>
+    <tr><td>Name<br>Understand<br>Respect<br>Support<br>Explore</td><td>Setting<br>Perception<br>Invitation<br>Knowledge<br>Emotions<br>Strategy/Summary</td><td>Concerned<br>Uncomfortable<br>Safety issue</td><td>Describe<br>Express<br>Suggest<br>Consequences</td></tr>
+  </table>
+</section>
+
+<footer class="guide-foot">
+  <p style="text-align:center;margin:0 0 10px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+  <p style="text-align:center;">Built from your PAJ 5002 lecture decks for personal study &middot; Class of 2028</p>
+  <p style="text-align:center;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+</footer>
+
+</main>
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
