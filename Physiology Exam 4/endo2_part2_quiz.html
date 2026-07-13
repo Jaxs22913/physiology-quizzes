@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine Physiology II — Part 2: Pancreas, Calcium &amp; PTH (90 Questions)</title>
+<style>
+  :root{
+    --navy:#064e3b; --indigo:#059669; --gold:#34d399; --ice:#ecfdf5;
+    --ink:#20233a; --muted:#5b6178; --line:#dbf0e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Endocrine Physiology II — Part 2: Pancreas, Calcium &amp; PTH</h1>
+    <div class="sub">Pancreatic hormones, bone/calcium/vitamin D/PTH regulation &amp; clinical integration · Class of 2028 review</div>
+    <span class="pill">90 questions &middot; Endocrine Physiology II &mdash; Part 2 (Pancreas, Calcium &amp; PTH)</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It draws on the instructional objectives below.</p>
+    <div class="chips"><span class="chip">Pancreatic Hormones</span><span class="chip">Bone, Calcium, Vitamin D &amp; PTH</span><span class="chip">Clinical Integration</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=endo2-part2" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 90</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which endocrine portion of the pancreas contains the hormone-producing cells?", "opts": [["Acini", "Acini are the exocrine (digestive) portion."], ["Islets of Langerhans", "Correct. Hormone-producing cells sit in the islets of Langerhans (endocrine pancreas)."], ["Pancreatic ducts", "Ducts carry exocrine secretions."], ["Ampulla of Vater", "The ampulla of Vater is a drainage point, not endocrine tissue."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which pancreatic cell produces insulin?", "opts": [["Alpha cell", "Alpha cells make glucagon."], ["Beta cell", "Correct. Beta cells make insulin."], ["Delta cell", "Delta cells make somatostatin."], ["PP cell", "PP cells make pancreatic polypeptide."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which pancreatic cell produces glucagon?", "opts": [["Alpha cell", "Correct. Alpha cells make glucagon."], ["Beta cell", "Beta cells make insulin."], ["Delta cell", "Delta cells make somatostatin."], ["Acinar cell", "Acinar cells are exocrine."]], "c": 0, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Somatostatin is produced by:", "opts": [["Alpha cells", "Alpha cells make glucagon."], ["Beta cells", "Beta cells make insulin."], ["Delta cells", "Correct. Delta cells make somatostatin."], ["PP cells", "PP cells make pancreatic polypeptide."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Pancreatic polypeptide is secreted by:", "opts": [["Alpha cells", "Alpha cells make glucagon."], ["Beta cells", "Beta cells make insulin."], ["Delta cells", "Delta cells make somatostatin."], ["PP cells", "Correct. PP cells make pancreatic polypeptide."]], "c": 3, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Amylin is secreted together with:", "opts": [["Glucagon", "Glucagon comes from alpha cells, separately."], ["Insulin", "Correct. Amylin is co-secreted with insulin from beta cells."], ["Somatostatin", "Somatostatin comes from delta cells."], ["Cortisol", "Cortisol is adrenal, not pancreatic."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin is classified as a:", "opts": [["Steroid", "Insulin isn't a steroid."], ["Peptide hormone", "Correct. Insulin is a peptide hormone."], ["Catecholamine", "Catecholamines come from tyrosine."], ["Thyroid hormone", "Thyroid hormone is iodinated tyrosine."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin circulates in plasma primarily:", "opts": [["Bound to albumin", "Insulin isn't albumin-bound in a meaningful carrier sense."], ["Bound to CBG", "CBG carries cortisol."], ["Free (unbound)", "Correct. Insulin circulates free (unbound) in plasma."], ["Bound to TBG", "TBG carries thyroid hormone."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which laboratory value best reflects endogenous insulin production?", "opts": [["Hemoglobin A1c", "HbA1c reflects long-term glucose, not insulin output."], ["Glucose", "Glucose is the stimulus, not the insulin marker."], ["C-peptide", "Correct. C-peptide best reflects endogenous insulin production (co-secreted 1:1)."], ["Glucagon", "Glucagon is a different hormone."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin receptors belong to which receptor family?", "opts": [["G-protein coupled receptors", "GPCRs serve catecholamines/glucagon."], ["Nuclear receptors", "Nuclear receptors serve steroids/thyroid."], ["Tyrosine kinase receptors", "Correct. The insulin receptor is a tyrosine kinase receptor."], ["Ligand-gated ion channels", "Ligand-gated ion channels are neurotransmitter receptors."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin increases glucose uptake primarily in:", "opts": [["Brain", "Brain uptake is insulin-independent."], ["Skeletal muscle", "Correct. Insulin drives glucose uptake mainly in skeletal muscle (GLUT4)."], ["Red blood cells", "RBCs use insulin-independent GLUT1."], ["Neurons", "Neurons take up glucose independently of insulin."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin does NOT significantly increase glucose uptake in the:", "opts": [["Skeletal muscle", "Muscle uptake IS insulin-dependent."], ["Adipose tissue", "Adipose uptake IS insulin-dependent."], ["Brain", "Correct. The brain takes up glucose insulin-independently."], ["Cardiac muscle", "Cardiac muscle responds to insulin."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "In skeletal muscle, insulin promotes:", "opts": [["Glycogen breakdown", "Breakdown is glucagon's effect."], ["Glycogen synthesis", "Correct. In skeletal muscle, insulin promotes glycogen synthesis."], ["Lipolysis", "Insulin inhibits lipolysis."], ["Gluconeogenesis", "Gluconeogenesis is inhibited by insulin."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "In the liver, insulin promotes:", "opts": [["Glycogen storage", "Correct. In the liver, insulin promotes glycogen storage."], ["Glycogenolysis", "Glycogenolysis is a fasting/glucagon effect."], ["Ketogenesis", "Ketogenesis rises with insulin lack."], ["Glucose release", "Glucose release is opposed by insulin."]], "c": 0, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin inhibits:", "opts": [["Glycogen synthesis", "Insulin promotes glycogen synthesis, not inhibits it."], ["Gluconeogenesis", "Correct. Insulin inhibits gluconeogenesis."], ["Amino acid uptake", "Insulin increases amino acid uptake."], ["Protein synthesis", "Insulin promotes protein synthesis."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "In adipose tissue insulin:", "opts": [["Stimulates hormone-sensitive lipase", "Insulin inhibits hormone-sensitive lipase."], ["Inhibits hormone-sensitive lipase", "Correct. In adipose tissue insulin inhibits hormone-sensitive lipase (blocks lipolysis)."], ["Increases lipolysis", "Insulin decreases lipolysis."], ["Releases triglycerides", "Insulin promotes storage, not release."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "The major effect of insulin on protein metabolism is:", "opts": [["Increased protein breakdown", "Insulin decreases protein breakdown."], ["Increased amino acid uptake and protein synthesis", "Correct. Insulin increases amino acid uptake and protein synthesis."], ["Increased urea production only", "Urea production falls with insulin (less protein breakdown)."], ["Increased gluconeogenesis", "Insulin is anabolic, not catabolic."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "The overall function of insulin is best described as:", "opts": [["Catabolic hormone", "Insulin is anabolic, not catabolic."], ["Stress hormone", "Stress hormones are the counter-regulatory ones."], ["Storage hormone", "Correct. Insulin is best described as the body's storage (anabolic) hormone."], ["Emergency hormone", "Emergency hormones are epinephrine/cortisol."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Insulin deficiency results in:", "opts": [["Increased glycogen synthesis", "Insulin lack decreases glycogen synthesis."], ["Increased lipolysis", "Correct. Insulin deficiency releases the brake on fat → increased lipolysis."], ["Decreased fatty acids", "Fatty acids rise, not fall."], ["Increased protein synthesis", "Protein synthesis falls with insulin lack."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "A severe lack of insulin results in increased production of:", "opts": [["Lactate", "Lactate isn't the key product here."], ["Ketone bodies", "Correct. Severe insulin lack → excess lipolysis → increased ketone bodies (DKA)."], ["Glycogen", "Glycogen falls, not rises."], ["Cholesterol only", "Cholesterol isn't the DKA product."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "The strongest stimulus for insulin secretion is:", "opts": [["Cortisol", "Cortisol is counter-regulatory, not the main insulin stimulus."], ["Growth hormone", "GH opposes insulin."], ["Increased blood glucose", "Correct. The strongest stimulus for insulin secretion is a rise in blood glucose."], ["Epinephrine", "Epinephrine inhibits insulin."]], "c": 2, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which amino acid strongly stimulates insulin secretion?", "opts": [["Glycine", "Glycine isn't a strong insulin secretagogue."], ["Lysine", "Correct. Among the options, lysine strongly stimulates insulin secretion (certain amino acids are secretagogues)."], ["Histidine", "Histidine isn't the answer keyed."], ["Tyrosine", "Tyrosine isn't the answer keyed."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Which gastrointestinal hormone increases insulin secretion before nutrients are fully absorbed?", "opts": [["ADH", "ADH governs water balance."], ["GLP-1", "Correct. GLP-1 is the incretin that boosts insulin secretion."], ["ACTH", "ACTH drives cortisol."], ["PTH", "PTH governs calcium."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "The incretin effect refers to:", "opts": [["Increased insulin secretion after oral glucose due to GI hormones", "Correct. The incretin effect: oral glucose triggers more insulin than IV, due to gut hormones (GLP-1, GIP)."], ["Increased glucagon secretion during fasting", "That describes glucagon, not incretins."], ["Increased cortisol after meals", "Not related to the incretin definition."], ["Increased growth hormone after meals", "Not the incretin effect."]], "c": 0, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Sulfonylurea drugs stimulate insulin secretion by:", "opts": [["Blocking insulin receptors", "Sulfonylureas don't block insulin receptors."], ["Closing ATP-sensitive potassium channels in beta cells", "Correct. Sulfonylureas close ATP-sensitive K+ channels in beta cells, triggering insulin release."], ["Activating glucagon receptors", "They don't activate glucagon."], ["Blocking calcium channels", "Not their mechanism."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Glucagon is produced by:", "opts": [["Alpha cells", "Correct. Glucagon is produced by alpha cells."], ["Beta cells", "Beta cells make insulin."], ["Delta cells", "Delta cells make somatostatin."], ["PP cells", "PP cells make pancreatic polypeptide."]], "c": 0, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Glucagon primarily acts on the:", "opts": [["Brain", "The brain isn't glucagon's main target."], ["Liver", "Correct. Glucagon acts primarily on the liver."], ["Skeletal muscle", "Skeletal muscle lacks glucagon receptors for this role."], ["Bone", "Bone isn't a glucagon target."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "The primary purpose of glucagon is to:", "opts": [["Lower blood glucose", "That's insulin's job."], ["Increase blood glucose", "Correct. Glucagon's primary purpose is to increase blood glucose."], ["Increase insulin secretion", "Glucagon doesn't increase insulin."], ["Increase calcium absorption", "Calcium absorption is vitamin D/PTH."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "Glucagon stimulates:", "opts": [["Glycogen synthesis", "Glycogen synthesis is insulin's effect."], ["Glycogenolysis and gluconeogenesis", "Correct. Glucagon stimulates glycogenolysis and gluconeogenesis."], ["Protein synthesis", "Protein synthesis is insulin-driven."], ["Fat storage", "Fat storage is insulin-driven."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Pancreatic Hormones", "q": "⭐ Integration: A patient has been fasting for 18 hours. Which hormone would be expected to have the greatest increase?", "opts": [["Insulin", "Insulin falls during fasting."], ["Glucagon", "Correct. After 18 h fasting, glucagon rises the most to maintain glucose."], ["Amylin", "Amylin tracks insulin (falls when fasting)."], ["GLP-1", "GLP-1 is meal-related, not the fasting hormone."]], "c": 1, "cite": "Endocrine Physiology II — Pancreatic Hormones lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The primary function of bone is:", "opts": [["Hormone storage only", "Bone does more than store hormones."], ["Mineral storage only", "Mineral storage is only part of its role."], ["Support, protection, and mineral storage", "Correct. Bone provides support, protection, and mineral (calcium) storage."], ["Fat storage", "Fat storage (marrow) is secondary, not the primary function."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which bone cell differentiates into osteoblasts?", "opts": [["Osteocyte", "Osteocytes are mature, already differentiated."], ["Osteoclast", "Osteoclasts come from monocytes, a different lineage."], ["Osteoprogenitor cell", "Correct. Osteoprogenitor cells differentiate into osteoblasts."], ["Chondrocyte", "Chondrocytes form cartilage."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which bone cell is responsible for producing osteoid?", "opts": [["Osteoblast", "Correct. Osteoblasts produce osteoid (bone matrix)."], ["Osteoclast", "Osteoclasts resorb bone."], ["Osteocyte", "Osteocytes maintain bone."], ["Fibroblast", "Fibroblasts make connective tissue, not osteoid."]], "c": 0, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which bone cell maintains mature bone tissue?", "opts": [["Osteoblast", "Osteoblasts build new bone."], ["Osteocyte", "Correct. Osteocytes maintain mature bone tissue."], ["Osteoclast", "Osteoclasts resorb bone."], ["Osteoprogenitor", "Osteoprogenitors are precursors."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which bone cell is responsible for bone resorption?", "opts": [["Osteoblast", "Osteoblasts build bone."], ["Osteocyte", "Osteocytes maintain bone."], ["Osteoclast", "Correct. Osteoclasts resorb bone."], ["Chondroblast", "Chondroblasts form cartilage."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Osteoclasts are derived primarily from:", "opts": [["Osteoblasts", "Osteoblasts are a mesenchymal lineage, different from osteoclasts."], ["Mesenchymal stem cells", "Mesenchymal stem cells give rise to osteoblasts, not osteoclasts."], ["Monocytes/macrophages", "Correct. Osteoclasts derive from monocytes/macrophages."], ["Chondrocytes", "Chondrocytes form cartilage."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Approximately what percentage of the body's calcium is stored in bone?", "opts": [["50%", "Far more than 50% is in bone."], ["75%", "More than 75% is in bone."], ["90%", "More than 90% is in bone."], ["99%", "Correct. ~99% of body calcium is stored in bone."]], "c": 3, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Only about what percentage of total body calcium is rapidly exchangeable?", "opts": [["20%", "Only ~1%, not 20%, is exchangeable."], ["10%", "Not 10%."], ["5%", "Not 5%."], ["1%", "Correct. Only ~1% of body calcium is rapidly exchangeable."]], "c": 3, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Normal plasma calcium concentration is approximately:", "opts": [["4.5 mg/dL", "4.5 is too low (hypocalcemic)."], ["7.0 mg/dL", "7.0 is low."], ["9.4 mg/dL", "Correct. Normal plasma calcium is ~9.4 mg/dL."], ["12.5 mg/dL", "12.5 is hypercalcemic."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The major mineral stored in bone is:", "opts": [["Magnesium", "Magnesium is minor in bone mineral."], ["Hydroxyapatite (calcium-phosphate)", "Correct. Bone mineral is hydroxyapatite (calcium-phosphate)."], ["Sodium chloride", "Sodium chloride isn't the bone mineral."], ["Potassium phosphate", "Potassium phosphate isn't the bone mineral."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Vitamin D synthesis begins in the:", "opts": [["Liver", "The liver does the first hydroxylation, not synthesis start."], ["Kidney", "The kidney does the final activation."], ["Skin", "Correct. Vitamin D synthesis begins in the skin (UV on 7-dehydrocholesterol)."], ["Intestine", "The intestine is a target, not the synthesis start."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "After being produced in the skin, vitamin D is first converted in the:", "opts": [["Kidney", "The kidney does the second (1-) hydroxylation."], ["Liver", "Correct. The first hydroxylation (25-OH) occurs in the liver."], ["Pancreas", "The pancreas isn't involved."], ["Bone", "Bone is a target, not a hydroxylation site."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The active form of vitamin D is produced primarily in the:", "opts": [["Skin", "Skin starts synthesis, doesn't make the active form."], ["Liver", "The liver makes 25-OH, not the active form."], ["Kidney", "Correct. Active vitamin D (1-hydroxylation) is made in the kidney."], ["Thyroid", "The thyroid isn't involved."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The active form of vitamin D is:", "opts": [["25-hydroxy vitamin D", "25-OH is the storage/precursor form."], ["1,25-dihydroxy vitamin D (Calcitriol)", "Correct. The active form is 1,25-dihydroxyvitamin D (calcitriol)."], ["Cholecalciferol", "Cholecalciferol is inactive D3."], ["Ergocalciferol", "Ergocalciferol is inactive D2."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Vitamin D acts primarily on the:", "opts": [["Brain", "The brain isn't vitamin D's main target."], ["Intestine", "Correct. Vitamin D acts mainly on the intestine."], ["Heart", "The heart isn't the main target."], ["Spleen", "The spleen isn't the target."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Vitamin D primarily increases intestinal absorption of:", "opts": [["Sodium and potassium", "Sodium/potassium aren't vitamin D's targets."], ["Calcium and phosphate", "Correct. Vitamin D increases intestinal absorption of calcium and phosphate."], ["Glucose and amino acids", "Glucose/amino acids aren't its targets."], ["Iron and magnesium", "Iron/magnesium aren't its main targets."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which hormone stimulates activation of vitamin D in the kidney?", "opts": [["Insulin", "Insulin doesn't activate vitamin D."], ["Cortisol", "Cortisol doesn't activate vitamin D."], ["Parathyroid hormone (PTH)", "Correct. PTH stimulates renal 1-hydroxylation (activation) of vitamin D."], ["Calcitonin", "Calcitonin opposes calcium elevation."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Parathyroid hormone is secreted by the:", "opts": [["Thyroid follicular cells", "Follicular cells make thyroid hormone."], ["Adrenal cortex", "The adrenal cortex makes steroids."], ["Parathyroid glands", "Correct. PTH comes from the parathyroid glands."], ["Pancreatic beta cells", "Beta cells make insulin."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The primary stimulus for PTH secretion is:", "opts": [["High plasma calcium", "High calcium suppresses PTH."], ["Low plasma calcium", "Correct. Low plasma calcium is the primary stimulus for PTH."], ["High phosphate", "High phosphate is a secondary influence, not primary."], ["High vitamin D", "High vitamin D suppresses PTH."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "The overall effect of PTH is to:", "opts": [["Lower calcium", "PTH raises calcium, doesn't lower it."], ["Increase calcium", "Correct. PTH's net effect is to increase plasma calcium."], ["Lower sodium", "Sodium isn't PTH's target."], ["Increase potassium", "Potassium isn't PTH's target."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "PTH stimulates bone by:", "opts": [["Increasing bone formation only", "PTH increases resorption, not just formation."], ["Increasing bone resorption", "Correct. PTH increases bone resorption (via osteoclast activation)."], ["Inhibiting osteoclasts", "It activates, not inhibits, osteoclasts."], ["Increasing collagen synthesis", "It doesn't primarily increase collagen."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "In the kidney, PTH increases:", "opts": [["Calcium excretion", "PTH reduces calcium excretion."], ["Calcium reabsorption", "Correct. In the kidney PTH increases calcium reabsorption."], ["Sodium excretion", "Sodium excretion isn't PTH's main renal action."], ["Glucose filtration", "Glucose filtration isn't affected."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "PTH decreases renal reabsorption of:", "opts": [["Calcium", "PTH increases calcium reabsorption."], ["Potassium", "Potassium isn't the target."], ["Phosphate", "Correct. PTH decreases phosphate reabsorption (phosphaturia)."], ["Sodium", "Sodium isn't PTH's phosphate target."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "PTH indirectly increases intestinal calcium absorption by:", "opts": [["Increasing glucagon", "Glucagon isn't involved."], ["Activating vitamin D", "Correct. PTH indirectly boosts intestinal calcium absorption by activating vitamin D."], ["Increasing calcitonin", "Calcitonin opposes calcium elevation."], ["Increasing insulin", "Insulin isn't involved."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which combination best describes PTH?", "opts": [["↓ Calcium, ↑ Phosphate", "PTH raises calcium and lowers phosphate — opposite of this."], ["↑ Calcium, ↓ Phosphate", "Correct. PTH raises calcium and lowers phosphate."], ["↑ Calcium, ↑ Phosphate", "PTH lowers phosphate, not raises it."], ["↓ Calcium, ↓ Phosphate", "PTH raises calcium, not lowers it."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Calcitonin is produced by:", "opts": [["Parathyroid chief cells", "Chief cells make PTH."], ["Thyroid follicular cells", "Follicular cells make thyroid hormone."], ["Thyroid parafollicular (C) cells", "Correct. Calcitonin comes from thyroid parafollicular (C) cells."], ["Adrenal medulla", "The adrenal medulla makes catecholamines."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Calcitonin primarily lowers plasma calcium by:", "opts": [["Increasing osteoclast activity", "Increasing osteoclasts would raise calcium."], ["Increasing intestinal calcium absorption", "Increasing absorption would raise calcium."], ["Inhibiting osteoclast activity", "Correct. Calcitonin lowers calcium by inhibiting osteoclasts."], ["Increasing PTH secretion", "It doesn't work by increasing PTH."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Compared with PTH, calcitonin has:", "opts": [["A major role in adult calcium homeostasis", "Calcitonin has a minor, not major, role."], ["Little physiological importance in healthy adults", "Correct. Calcitonin has little physiological importance in healthy adults."], ["Greater effects on the kidney", "PTH, not calcitonin, has greater kidney effects."], ["Greater effects on vitamin D activation", "It doesn't dominate vitamin D activation."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "Which hormone is considered the MOST important regulator of plasma calcium?", "opts": [["Calcitonin", "Calcitonin plays a minor role."], ["Vitamin D", "Vitamin D is important but PTH is the master regulator."], ["Parathyroid hormone", "Correct. PTH is the most important regulator of plasma calcium."], ["Insulin", "Insulin governs glucose, not calcium."]], "c": 2, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Bone, Calcium, Vitamin D & PTH", "q": "⭐ Integration: A patient develops severe hypocalcemia. Which sequence is MOST likely?", "opts": [["↓ PTH → ↓ Vitamin D → ↓ calcium absorption", "Falling PTH would worsen hypocalcemia, not correct it."], ["↑ PTH → ↑ active Vitamin D → ↑ intestinal calcium absorption", "Correct. Hypocalcemia → PTH rises → activates vitamin D → increases intestinal calcium absorption."], ["↑", "Calcitonin would lower calcium further."], ["↓ Vitamin D → ↓ PTH", "Falling vitamin D/PTH doesn't correct low calcium."]], "c": 1, "cite": "Endocrine Physiology II — Bone, Calcium & PTH lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has destruction of the adrenal cortex (Addison disease). Which hormone would be MOST decreased?", "opts": [["Epinephrine", "Epinephrine is medullary and spared in cortical destruction."], ["Cortisol", "Correct. Addison destroys the cortex, so cortisol (a cortical steroid) drops."], ["Norepinephrine", "Norepinephrine is medullary and spared."], ["Dopamine", "Dopamine is medullary and spared."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which electrolyte abnormality is most consistent with primary adrenal insufficiency?", "opts": [["Hypernatremia", "Aldosterone deficiency causes low, not high, sodium."], ["Hypokalemia", "Aldosterone deficiency raises potassium, not lowers it."], ["Hyperkalemia", "Correct. Adrenal insufficiency → low aldosterone → hyperkalemia."], ["Hypercalcemia", "Calcium isn't the primary abnormality."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has excess aldosterone secretion. Which combination is expected?", "opts": [["Hypotension + Hyperkalemia", "Excess aldosterone raises BP and lowers potassium."], ["Hypertension + Hypokalemia", "Correct. Excess aldosterone → hypertension + hypokalemia."], ["Hypotension + Hyponatremia", "It causes sodium retention, not hyponatremia."], ["Hyperglycemia + Hypercalcemia", "Hyperglycemia isn't the aldosterone pattern."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has chronically elevated cortisol levels. Which metabolic effect is expected?", "opts": [["Hypoglycemia", "Cortisol raises glucose, doesn't cause hypoglycemia."], ["Increased gluconeogenesis", "Correct. Chronic cortisol excess increases gluconeogenesis (hyperglycemia)."], ["Increased insulin sensitivity", "Cortisol decreases insulin sensitivity."], ["Decreased protein breakdown", "Cortisol increases protein breakdown."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Long-term corticosteroid therapy increases the risk of:", "opts": [["Enhanced immune function", "Steroids suppress, not enhance, immunity."], ["Infection", "Correct. Long-term steroids suppress immunity, raising infection risk."], ["Hyperkalemia", "Hyperkalemia isn't the main risk."], ["Hypoglycemia", "Steroids cause hyperglycemia, not hypoglycemia."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient with Cushing syndrome is MOST likely to have:", "opts": [["Weight loss", "Cushing causes weight gain, not loss."], ["Hyperglycemia", "Correct. Cushing → hyperglycemia (cortisol is diabetogenic)."], ["Hypotension", "Cushing causes hypertension, not hypotension."], ["Hyponatremia", "Cortisol excess doesn't cause hyponatremia typically."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Excess cortisol suppresses secretion of:", "opts": [["ACTH", "Correct. Excess cortisol suppresses ACTH via negative feedback."], ["PTH", "PTH isn't in this feedback loop."], ["Insulin", "Insulin isn't suppressed by cortisol feedback."], ["Glucagon", "Glucagon isn't in this loop."]], "c": 0, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which hormone is primarily responsible for the body's response to long-term stress?", "opts": [["Epinephrine", "Epinephrine drives the acute, short-term response."], ["Cortisol", "Correct. Cortisol governs the long-term stress response."], ["Insulin", "Insulin is a storage hormone."], ["Calcitonin", "Calcitonin governs calcium."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient eats excessive black licorice daily. Which finding is most likely?", "opts": [["Hyperkalemia", "Licorice causes hypokalemia, not hyperkalemia."], ["Hypotension", "It causes hypertension, not hypotension."], ["Hypertension with hypokalemia", "Correct. Excess licorice mimics aldosterone → hypertension with hypokalemia."], ["Hypercalcemia", "Calcium isn't affected."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "The physiological effect of licorice resembles excess:", "opts": [["Insulin", "Insulin lowers glucose, unrelated."], ["Aldosterone", "Correct. Licorice produces apparent mineralocorticoid (aldosterone-like) excess."], ["Glucagon", "Glucagon raises glucose, unrelated."], ["PTH", "PTH governs calcium, unrelated."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient with Type 1 diabetes lacks:", "opts": [["Glucagon", "Glucagon isn't deficient in T1DM."], ["Insulin", "Correct. Type 1 diabetes = lack of insulin."], ["Somatostatin", "Somatostatin isn't the deficit."], ["Cortisol", "Cortisol isn't the deficit."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "The major cause of ketoacidosis in Type 1 diabetes is:", "opts": [["Excess glycogen synthesis", "Glycogen synthesis is reduced, not excessive."], ["Excess lipolysis and ketone production", "Correct. Insulin deficiency drives excess lipolysis and ketone production → DKA."], ["Excess calcium", "Calcium isn't the DKA driver."], ["Increased insulin secretion", "Insulin sensitivity isn't increased in DKA."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which hormone opposes nearly every major action of insulin?", "opts": [["ACTH", "ACTH doesn't broadly oppose insulin."], ["Glucagon", "Correct. Glucagon opposes nearly all insulin actions."], ["Oxytocin", "Oxytocin is unrelated to glucose."], ["Prolactin", "Prolactin is unrelated to glucose."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Following a carbohydrate-rich meal, which hormone should increase the most?", "opts": [["Glucagon", "Glucagon falls after a carb meal."], ["Cortisol", "Cortisol isn't the meal-response hormone."], ["Insulin", "Correct. After a carbohydrate meal, insulin rises the most."], ["Epinephrine", "Epinephrine isn't the feeding hormone."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient fasts for 24 hours. Which hormone should be highest?", "opts": [["Insulin", "Insulin falls during fasting."], ["Glucagon", "Correct. After 24 h fasting, glucagon is highest."], ["Amylin", "Amylin tracks insulin (falls)."], ["GLP-1", "GLP-1 is meal-related."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which hormone directly stimulates glycogen breakdown in the liver during fasting?", "opts": [["Insulin", "Insulin promotes glycogen synthesis, not breakdown."], ["Glucagon", "Correct. Glucagon drives hepatic glycogenolysis during fasting."], ["Calcitonin", "Calcitonin governs calcium."], ["Prolactin", "Prolactin governs lactation."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has a beta-cell tumor producing excessive insulin. Which finding is expected?", "opts": [["Hyperglycemia", "Excess insulin lowers glucose, not raises it."], ["Hypoglycemia", "Correct. An insulinoma (excess insulin) causes hypoglycemia."], ["Hypercalcemia", "Calcium isn't affected."], ["Hypernatremia", "Sodium isn't affected."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Somatostatin inhibits secretion of:", "opts": [["Insulin only", "Somatostatin inhibits both, not insulin only."], ["Glucagon only", "It inhibits both, not glucagon only."], ["Both insulin and glucagon", "Correct. Somatostatin inhibits both insulin and glucagon."], ["Cortisol only", "It inhibits pancreatic hormones, not just cortisol."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which hormone is considered the body's primary \"storage hormone\"?", "opts": [["Glucagon", "Glucagon is the fasting hormone."], ["Insulin", "Correct. Insulin is the primary storage (anabolic) hormone."], ["Epinephrine", "Epinephrine is a stress hormone."], ["Cortisol", "Cortisol is a stress hormone."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Which hormone is considered the body's primary fasting hormone?", "opts": [["Insulin", "Insulin is the storage hormone."], ["Glucagon", "Correct. Glucagon is the primary fasting hormone."], ["Oxytocin", "Oxytocin governs lactation/labor."], ["Calcitonin", "Calcitonin governs calcium."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has severe hypocalcemia. Which hormone should increase first?", "opts": [["Calcitonin", "Calcitonin lowers calcium, opposite of what's needed."], ["PTH", "Correct. Hypocalcemia → PTH rises first."], ["Insulin", "Insulin governs glucose."], ["Cortisol", "Cortisol isn't the calcium hormone."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "PTH raises calcium by:", "opts": [["Increasing urinary calcium excretion", "PTH decreases urinary calcium excretion."], ["Increasing bone resorption", "Correct. PTH raises calcium partly by increasing bone resorption."], ["Decreasing vitamin D activation", "PTH increases vitamin D activation."], ["Increasing calcitonin", "Not PTH's mechanism."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Activated vitamin D primarily increases calcium absorption in the:", "opts": [["Kidney", "The kidney reabsorbs calcium under PTH, but vitamin D acts on intestine."], ["Bone", "Bone is not vitamin D's main absorption site."], ["Intestine", "Correct. Active vitamin D increases calcium absorption in the intestine."], ["Liver", "The liver isn't the absorption site."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Calcitonin primarily inhibits:", "opts": [["Osteoblasts", "Osteoblasts build bone; calcitonin doesn't target them."], ["Osteoclasts", "Correct. Calcitonin inhibits osteoclasts."], ["Osteocytes", "Osteocytes aren't calcitonin's target."], ["Fibroblasts", "Fibroblasts aren't bone-resorbing cells."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has chronic vitamin D deficiency. Which finding is most likely?", "opts": [["Increased intestinal calcium absorption", "Deficiency decreases absorption, not increases it."], ["Decreased intestinal calcium absorption", "Correct. Vitamin D deficiency → decreased intestinal calcium absorption."], ["Hypercalcemia", "It causes hypocalcemia, not hypercalcemia."], ["Increased calcitonin secretion", "Calcitonin isn't the response."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "Secondary hyperparathyroidism develops most commonly because of:", "opts": [["Hypercalcemia", "Hypercalcemia would suppress PTH, not raise it."], ["Chronic kidney disease", "Correct. Secondary hyperparathyroidism most often results from chronic kidney disease."], ["Hyperaldosteronism", "Hyperaldosteronism is an adrenal issue."], ["Hyperinsulinemia", "Hyperinsulinemia is unrelated."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "⭐ Integration: A patient has hypertension, hypokalemia, and metabolic alkalosis. Which hormone abnormality best explains these findings?", "opts": [["↑ Cortisol only", "Cortisol excess causes hyperglycemia, not this triad."], ["↑ Aldosterone", "Correct. Hypertension + hypokalemia + metabolic alkalosis = aldosterone excess."], ["↓ PTH", "Low PTH doesn't cause this triad."], ["↑ Insulin", "Insulin excess doesn't cause this pattern."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient develops hyperglycemia, central obesity, and muscle wasting. Which hormone is most likely elevated?", "opts": [["Insulin", "Insulin excess causes hypoglycemia, not this."], ["Cortisol", "Correct. Hyperglycemia + central obesity + muscle wasting = cortisol excess (Cushing)."], ["Glucagon", "Glucagon doesn't cause central obesity."], ["PTH", "PTH governs calcium."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "A patient has low calcium, high PTH, low active vitamin D, and chronic kidney disease. What is the most likely diagnosis?", "opts": [["Primary hyperparathyroidism", "Primary hyperparathyroidism causes high calcium, not low."], ["Secondary hyperparathyroidism", "Correct. Low calcium, high PTH, low active vitamin D with CKD = secondary hyperparathyroidism."], ["Addison disease", "Addison is adrenal insufficiency."], ["Type 1 diabetes", "Type 1 diabetes is an insulin problem."]], "c": 1, "cite": "Endocrine Physiology II — Clinical Integration lecture"}, {"topic": "Endocrine Physiology II — Part 2: Pancreas, Calcium & PTH", "io": "Clinical Integration", "q": "⭐ Final Integration: A patient presents with chronic fasting, low insulin, high glucagon, elevated cortisol, and elevated epinephrine. Which metabolic state is most likely?", "opts": [["Glycogen storage", "Glycogen storage is a fed-state process."], ["Anabolism", "Anabolism is the fed state, opposite of this."], ["Catabolism with increased glucose production and fat utilization", "Correct. Chronic fasting with low insulin and high counter-regulatory hormones = catabolism with increased glucose production and fat use."], ["Hyperinsulinemia", "Hyperinsulinemia is the opposite of this state."]], "c": 2, "cite": "Endocrine Physiology II — Clinical Integration lecture"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
