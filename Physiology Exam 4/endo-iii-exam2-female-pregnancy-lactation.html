@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine III — Female Reproductive, Pregnancy &amp; Lactation (90 Questions)</title>
+<style>
+  :root{
+    --navy:#831843; --indigo:#be185d; --gold:#f9a8d4; --ice:#fdf2f8;
+    --ink:#20233a; --muted:#5b6178; --line:#f3d9e3;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#faf6f8;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Endocrine III — Female Reproductive, Pregnancy &amp; Lactation</h1>
+    <div class="sub">The menstrual cycle, pregnancy &amp; placental physiology, and parturition &amp; lactation · Class of 2028 review</div>
+    <span class="pill">90 questions &middot; Endocrine III (Female Reproductive, Pregnancy &amp; Lactation)</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It spans the three sections of Endocrine III below, from the menstrual cycle through pregnancy to parturition and lactation.</p>
+    <div class="chips"><span class="chip">Female Reproductive Physiology &amp; Menstrual Cycle</span><span class="chip">Pregnancy &amp; Placental Physiology</span><span class="chip">Parturition, Lactation &amp; Integration</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=endo3-female-repro-pregnancy" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 30</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Which hypothalamic hormone initiates the female reproductive cycle?", "opts": [["CRH", "CRH triggers ACTH and cortisol release from the HPA axis, not the gonadotropins that start the reproductive cycle."], ["GnRH", "Correct: GnRH from the hypothalamus initiates the female cycle by stimulating pituitary LH and FSH release, just as in males."], ["TRH", "TRH stimulates TSH release from thyrotropes as part of the thyroid axis, unrelated to initiating the reproductive cycle."], ["GHRH", "GHRH stimulates growth hormone release from somatotropes and has no role in triggering gonadotropin secretion."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "GnRH directly stimulates release of:", "opts": [["Estrogen and progesterone", "Estrogen and progesterone are ovarian steroid hormones secreted downstream, in response to LH and FSH, not directly released by GnRH itself."], ["LH and FSH", "Correct: GnRH acts on the anterior pituitary to release the gonadotropins LH and FSH; estrogen/progesterone are downstream ovarian products."], ["Oxytocin and prolactin", "Oxytocin comes from the posterior pituitary in response to neural reflexes, and prolactin is under tonic dopamine inhibition — neither is a direct GnRH target."], ["hCG", "hCG is produced by the placental syncytiotrophoblast during pregnancy, not released by pituitary gonadotropes responding to GnRH."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "FSH primarily stimulates:", "opts": [["Corpus luteum", "The corpus luteum's function is supported mainly by LH (and hCG in pregnancy), not primarily by FSH."], ["Granulosa cells", "Correct: FSH stimulates granulosa cells of the ovarian follicle to grow and produce estrogen; LH acts more on theca cells and triggers ovulation."], ["Leydig cells", "Leydig cells are a male testicular structure stimulated by LH, unrelated to FSH's action on female granulosa cells."], ["Placenta", "The placenta produces its own hormones (like hCG) independent of pituitary FSH stimulation."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "LH primarily stimulates:", "opts": [["Granulosa cells only", "Granulosa cells are primarily FSH-responsive; LH instead acts mainly on theca cells and triggers ovulation, so this undersells LH's actual targets."], ["Ovulation and theca cell function", "Correct: LH triggers ovulation and stimulates theca cell androgen production; granulosa cells are primarily FSH-responsive."], ["Milk production", "Milk production is stimulated by prolactin, not by LH."], ["Oxytocin secretion", "Oxytocin release is a posterior pituitary neuroendocrine reflex (e.g., suckling, cervical stretch), not a function of LH."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Granulosa cells primarily produce:", "opts": [["Testosterone", "Testosterone (an androgen) is produced by theca cells; granulosa cells instead aromatize it into estrogen rather than producing it themselves."], ["Estrogen", "Correct: Granulosa cells aromatize theca-derived androgens into estrogen — the dominant follicular-phase hormone."], ["Cortisol", "Cortisol is an adrenal cortex glucocorticoid, unrelated to granulosa cell steroidogenesis."], ["hCG", "hCG is a placental hormone made by trophoblast tissue, not by ovarian granulosa cells."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Theca cells primarily synthesize:", "opts": [["Androgens", "Correct: Theca cells synthesize androgens (under LH), which granulosa cells then convert to estrogen — the basis of the two-cell model."], ["Progesterone only", "The luteinized theca can contribute some progesterone after ovulation, but theca cells' hallmark product beforehand is androgens, which granulosa cells aromatize."], ["Oxytocin", "Oxytocin is a posterior pituitary/hypothalamic peptide hormone, unrelated to ovarian theca cell steroidogenesis."], ["Prolactin", "Prolactin is secreted by anterior pituitary lactotrophs, not by ovarian theca cells."]], "c": 0, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Which enzyme converts androgens into estrogen within granulosa cells?", "opts": [["5α-reductase", "5α-reductase converts testosterone to the more potent androgen DHT — the opposite direction from estrogen synthesis."], ["Aromatase", "Correct: Aromatase in granulosa cells converts androgens to estrogen. 5α-reductase makes DHT; neither deiodinase nor ACE is involved here."], ["Deiodinase", "Deiodinase enzymes convert T4 to T3 in thyroid hormone metabolism, unrelated to ovarian steroidogenesis."], ["ACE", "ACE converts angiotensin I to angiotensin II in the renin-angiotensin system, unrelated to ovarian steroid synthesis."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The \"two-cell, two-gonadotropin\" model refers to:", "opts": [["Sertoli and Leydig cells", "Sertoli and Leydig cells describe the analogous two-cell model in the testis, not the ovarian model being asked about."], ["Theca and granulosa cells working together under LH and FSH", "Correct: The two-cell, two-gonadotropin model — theca cells (LH) make androgens, granulosa cells (FSH) aromatize them to estrogen — the two cells cooperate."], ["Hypothalamus and pituitary", "The hypothalamus and pituitary form the axis that controls gonadotropin release, but they are not the two interacting ovarian follicular cell types in this model."], ["Placenta and corpus luteum", "The placenta and corpus luteum are sequential sources of pregnancy hormones, not the two cooperating ovarian follicular cell types."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "During the follicular phase, the dominant ovarian hormone is:", "opts": [["Progesterone", "Progesterone dominates the luteal phase after ovulation, not the follicular phase."], ["Estrogen", "Correct: Estrogen dominates the follicular phase, driving endometrial proliferation and the eventual LH surge. Progesterone dominates the luteal phase."], ["Testosterone", "Testosterone is not the dominant ovarian hormone of the follicular phase; small amounts made by theca cells are rapidly aromatized to estrogen."], ["hCG", "hCG is produced only after implantation of a pregnancy, not during a normal follicular phase."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The purpose of the follicular phase is primarily to:", "opts": [["Maintain pregnancy", "Maintaining pregnancy is the role of progesterone and later placental hormones, not the purpose of the follicular phase."], ["Mature a dominant follicle", "Correct: The follicular phase exists to mature a dominant follicle for ovulation. Pregnancy maintenance and placenta formation come later."], ["Produce prolactin", "Prolactin secretion is not the purpose of the follicular phase; it is mainly relevant postpartum during lactation."], ["Form the placenta", "Placental formation occurs after fertilization and implantation, well after the follicular phase."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Unlike males, oogonia complete most mitotic divisions:", "opts": [["After puberty", "Unlike spermatogonia, oogonia do not continue mitotic proliferation after puberty — their full complement is set before birth."], ["During menopause", "Menopause marks depletion/exhaustion of the existing oocyte supply, not a time of mitotic proliferation."], ["Before birth", "Correct: Oogonia complete most of their mitotic proliferation before birth; a female is born with her lifetime supply of primary oocytes arrested in meiosis I."], ["After fertilization", "After fertilization the zygote undergoes mitotic cleavage divisions, but oogonial mitosis (multiplication of egg precursor cells) is long complete by then."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Each primary oocyte ultimately produces:", "opts": [["Four ova", "Four ova is the result of spermatogenesis in males (each primary spermatocyte yields four sperm), not oogenesis."], ["Two ova", "Meiosis of a primary oocyte produces only one functional ovum; the other products are non-functional polar bodies, not a second ovum."], ["One mature ovum", "Correct: Each primary oocyte yields one mature ovum (the other products become polar bodies), unlike spermatogenesis, which yields four sperm."], ["Eight ova", "Oogenesis involves unequal, asymmetric cytoplasmic division, producing only a single functional gamete, not multiple ova."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Completion of Meiosis II occurs:", "opts": [["Before ovulation", "The oocyte is ovulated while still arrested in metaphase II, not having already completed meiosis II beforehand."], ["During fetal life", "Meiosis I begins in fetal life but arrests at prophase I; meiosis II does not even start until later, at ovulation."], ["Only if fertilization occurs", "Correct: Meiosis II completes only if fertilization occurs; the secondary oocyte is ovulated arrested in metaphase II until a sperm penetrates it."], ["At menopause", "Menopause reflects follicular depletion over a lifetime, not the specific timing of meiosis II completion."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Ovulation is triggered primarily by:", "opts": [["FSH surge", "FSH does rise at midcycle alongside LH, but it is the LH surge, not FSH, that is the direct ovulatory trigger."], ["Estrogen withdrawal", "It is sustained high estrogen (not withdrawal) that produces the positive-feedback LH surge; ovulation is triggered by that surge, not by falling estrogen."], ["LH surge", "Correct: The mid-cycle LH surge is the direct trigger for ovulation. FSH rises too, but LH is the ovulatory signal."], ["Progesterone surge", "Progesterone rises after ovulation from the newly forming corpus luteum; it does not trigger ovulation itself."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Ovulation typically occurs around:", "opts": [["Day 1", "Day 1 marks the start of menstrual flow, not ovulation."], ["Day 7", "Day 7 is still within the early-to-mid follicular phase, well before the LH surge."], ["Day 14", "Correct: In a typical 28-day cycle, ovulation occurs around day 14, roughly midway, driven by the LH surge."], ["Day 28", "Day 28 corresponds to the end of a typical cycle (onset of the next menses), not ovulation."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The follicle remaining after ovulation becomes the:", "opts": [["Corpus albicans", "The corpus albicans is the fibrous scar the corpus luteum degenerates into later, not the structure that forms immediately after ovulation."], ["Corpus luteum", "Correct: After ovulation the ruptured follicle luteinizes into the corpus luteum, which secretes progesterone. The corpus albicans is its later degenerated remnant."], ["Morula", "A morula is an early stage of a fertilized embryo, unrelated to the post-ovulatory follicle."], ["Blastocyst", "A blastocyst is a later embryonic stage after fertilization, not a structure derived from the ruptured follicle itself."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The corpus luteum primarily secretes:", "opts": [["Estrogen only", "The corpus luteum's dominant secretory product is progesterone, with only some accompanying estrogen — not estrogen alone."], ["Progesterone (and some estrogen)", "Correct: The corpus luteum mainly secretes progesterone (plus some estrogen) to maintain the secretory endometrium during the luteal phase."], ["Testosterone", "Testosterone is not a major secretory product of the corpus luteum."], ["hCG", "hCG is produced by the placental syncytiotrophoblast (which acts upon the corpus luteum), not secreted by the corpus luteum itself."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Without fertilization, the corpus luteum:", "opts": [["Continues growing", "Without the rescue signal hCG, the corpus luteum regresses rather than continuing to grow."], ["Degenerates after approximately 12 days", "Correct: Without fertilization the corpus luteum regresses after about 12 days, causing progesterone/estrogen to fall and triggering menstruation."], ["Becomes the placenta", "The corpus luteum does not transform into the placenta; the placenta develops from trophoblast tissue of the conceptus."], ["Produces increasing progesterone indefinitely", "Absent pregnancy, corpus luteum hormone output falls as it regresses; it does not increase indefinitely."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Loss of the corpus luteum causes:", "opts": [["Increased progesterone", "Loss of the corpus luteum removes the main source of progesterone, so progesterone falls, not rises."], ["Decreased estrogen and progesterone", "Correct: Corpus luteum loss removes its hormone output, so estrogen and progesterone both fall — the trigger for menstruation."], ["Increased hCG", "hCG is unrelated to a non-pregnant cycle's corpus luteum regression; hCG only appears if pregnancy occurs."], ["Increased oxytocin", "Oxytocin release is not triggered by corpus luteum regression; it responds to different stimuli like suckling or cervical stretch."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The fall in estrogen and progesterone ultimately results in:", "opts": [["Ovulation", "Ovulation is triggered earlier in the cycle by the LH surge, not by hormone withdrawal at the cycle's end."], ["Menstruation", "Correct: Falling estrogen and progesterone cause the endometrium to shed — menstruation. Their withdrawal is the direct menstrual trigger."], ["Implantation", "Implantation requires a sustained, progesterone-supported endometrium — the opposite of what happens when hormones fall."], ["Fertilization", "Fertilization is an independent event requiring sperm-egg union, not a consequence of falling ovarian hormones."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The average menstrual cycle lasts approximately:", "opts": [["14 days", "14 days approximates the time to ovulation or the length of the luteal phase, not the full cycle length."], ["21 days", "21 days is shorter than the typical average cycle length."], ["28 days", "Correct: The average menstrual cycle is about 28 days, measured from the first day of one period to the next."], ["35 days", "35 days is longer than the average, and though normal individual variation can reach this, it is not the standard reference value."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The primary goal of the menstrual cycle is:", "opts": [["Continuous estrogen production", "Estrogen fluctuates cyclically rather than being continuously produced, and continuous production is not the cycle's purpose."], ["Release one viable ovum and prepare the uterus for implantation", "Correct: The cycle's purpose is to release one viable ovum and prepare the uterine lining for possible implantation."], ["Produce progesterone continuously", "Progesterone is secreted cyclically (mainly in the luteal phase), not continuously, and that is not the cycle's overarching purpose."], ["Prevent ovulation", "This is the opposite of the cycle's reproductive purpose, which is to achieve ovulation, not prevent it."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "During the proliferative (estrogen) phase, the endometrium:", "opts": [["Degenerates", "Degeneration/shedding describes menstruation, the phase preceding the proliferative phase, not the proliferative phase itself."], ["Thickens due to cellular proliferation", "Correct: During the proliferative (estrogen) phase, the endometrium thickens through cellular proliferation, rebuilding after menstruation."], ["Detaches from the uterus", "Detachment describes menstrual sloughing, not the estrogen-driven rebuilding that defines the proliferative phase."], ["Produces hCG", "hCG is a placental hormone made after implantation of a pregnancy, not something the endometrium produces during a normal proliferative phase."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Progesterone transforms the endometrium into a:", "opts": [["Fibrotic layer", "Progesterone promotes glandular secretory activity, not fibrosis, of the endometrium."], ["Secretory endometrium", "Correct: Progesterone converts the proliferated lining into a secretory endometrium, rich in glycogen-secreting glands ready to support an embryo."], ["Keratinized layer", "Keratinization is a feature of stratified squamous epithelium (like skin or vagina), not the glandular uterine endometrium."], ["Calcified layer", "Calcification is not a feature of normal luteal-phase endometrial transformation."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Which hormone decreases uterine contractions during the luteal phase?", "opts": [["Estrogen", "Estrogen tends to increase uterine excitability and oxytocin receptor expression — the opposite of progesterone's quieting effect."], ["Progesterone", "Correct: Progesterone quiets the myometrium, decreasing uterine contractions during the luteal phase to protect a potential pregnancy."], ["Oxytocin", "Oxytocin is a potent stimulator of uterine contraction, not a suppressor of it."], ["Prolactin", "Prolactin's role is milk production, not modulation of uterine contractility."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Positive feedback occurs when rising estrogen causes:", "opts": [["Suppression of LH", "This describes estrogen's usual negative feedback at lower/rising levels; sustained high late-follicular estrogen instead flips to positive feedback and triggers a surge."], ["Suppression of GnRH", "Again, this is the negative-feedback pattern; late-follicular high estrogen instead stimulates a positive-feedback GnRH/LH surge."], ["LH surge", "Correct: Late-follicular high estrogen switches to positive feedback, causing the LH surge that triggers ovulation — the key exception to estrogen's usual negative feedback."], ["Increased progesterone only", "Progesterone rises after ovulation from the newly forming corpus luteum, but it is not the direct product of this estrogen-driven positive-feedback loop."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "Which phase immediately follows ovulation?", "opts": [["Follicular phase", "The follicular phase precedes ovulation, not follows it."], ["Menstrual phase", "Menstruation occurs at the very end of the cycle after the luteal phase regresses, not immediately after ovulation."], ["Luteal phase", "Correct: The luteal phase immediately follows ovulation, when the corpus luteum forms and secretes progesterone. (Proliferative/follicular precede ovulation.)"], ["Proliferative phase", "The estrogen-driven proliferative phase occurs before ovulation, overlapping with the follicular phase."]], "c": 2, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "The major source of progesterone during the luteal phase is the:", "opts": [["Hypothalamus", "The hypothalamus secretes GnRH, not steroid hormones like progesterone."], ["Corpus luteum", "Correct: The corpus luteum is the major progesterone source during the luteal phase, sustaining the secretory endometrium."], ["Placenta", "The placenta becomes the dominant progesterone source only later, during pregnancy, not during a normal luteal phase."], ["Anterior pituitary", "The anterior pituitary secretes gonadotropins (LH/FSH) and other trophic hormones, not progesterone itself."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "A woman has an absent LH surge. Which event is MOST likely to fail?", "opts": [["Menstruation", "Menstruation can still occur as hormone levels eventually decline even without ovulation (an anovulatory cycle), so it is not most directly tied to the LH surge."], ["Ovulation", "Correct: An absent LH surge means ovulation fails, since the surge is the direct ovulatory trigger. Endometrial proliferation (estrogen-driven) can still occur."], ["Endometrial proliferation", "Proliferation is driven by estrogen from the growing follicle, which can still occur even without a subsequent LH surge."], ["FSH secretion", "FSH secretion from the pituitary is regulated by its own feedback loop and is not dependent on the LH surge occurring."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Female Reproductive Physiology & Menstrual Cycle", "q": "A woman has a normal follicular phase but her corpus luteum fails to develop. Which finding is MOST likely?", "opts": [["Elevated progesterone", "A failed corpus luteum means progesterone secretion is deficient, not elevated."], ["Failure of the secretory endometrium to develop", "Correct: If the corpus luteum fails to develop, there is no progesterone to build the secretory endometrium — so the secretory transformation fails."], ["Increased hCG production", "hCG production requires an established pregnancy with functioning trophoblast, unrelated to a failed corpus luteum in this scenario."], ["Sustained pregnancy", "Without adequate luteal progesterone, pregnancy would be jeopardized (increased miscarriage risk), not sustained."]], "c": 1, "cite": "Endocrine III — Female Reproductive Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Fertilization normally occurs in the:", "opts": [["Uterus", "By the time the conceptus reaches the uterus it is already a blastocyst preparing to implant; fertilization itself happens earlier, in the tube."], ["Cervix", "The cervix is the lower passage sperm travel through, not the site where fertilization occurs."], ["Ampulla of the fallopian tube", "Correct: Fertilization normally occurs in the ampulla, the widened distal portion of the fallopian tube, not in the uterus or ovary."], ["Ovary", "The ovary is where the oocyte is released from (ovulation), but sperm meet the egg further along in the ampulla, not within the ovary itself."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The first cell formed after fertilization is the:", "opts": [["Morula", "The morula is a later solid ball of cells formed after several rounds of cleavage of the zygote."], ["Blastocyst", "The blastocyst is a still later stage, formed after the morula develops a fluid-filled cavity."], ["Zygote", "Correct: The zygote is the first single cell formed when sperm and egg fuse; it then cleaves into the morula and later the blastocyst."], ["Gastrula", "Gastrulation is a much later embryonic event establishing the three germ layers, well after the zygote/blastocyst stages."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Implantation normally begins approximately:", "opts": [["24 hours after fertilization", "This is far too early; the conceptus is still traveling down the tube as a cleaving embryo at this point."], ["3 days after fertilization", "By day 3 the embryo is typically at the morula stage, still in the fallopian tube, not yet ready to implant."], ["6-7 days after fertilization", "Correct: Implantation of the blastocyst into the endometrium begins about 6–7 days after fertilization."], ["21 days after fertilization", "This is well past normal implantation timing; by 21 days a pregnancy would already be established with early placental development underway."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The structure that implants into the endometrium is the:", "opts": [["Morula", "The morula must first develop into a blastocyst (with its differentiated trophoblast layer) before implantation can occur."], ["Blastocyst", "Correct: The blastocyst — with its outer trophoblast — is the stage that implants into the endometrium. The morula precedes it."], ["Primary oocyte", "The primary oocyte is the unfertilized egg cell prior to completion of meiosis, not the structure that implants."], ["Corpus luteum", "The corpus luteum is an ovarian endocrine structure, not the developing conceptus that implants in the endometrium."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The trophoblast ultimately contributes to formation of the:", "opts": [["Corpus luteum", "The corpus luteum develops from the ruptured ovarian follicle, not from trophoblast tissue."], ["Placenta", "Correct: The trophoblast (outer blastocyst layer) develops into the placenta and fetal membranes."], ["Ovary", "The ovary is a pre-existing maternal organ, not a structure formed from the trophoblast."], ["Pituitary gland", "The pituitary gland is a maternal endocrine gland already present before conception, unrelated to trophoblast differentiation."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The trophoblast differentiates into:", "opts": [["Granulosa and theca cells", "Granulosa and theca cells are pre-existing ovarian follicular cell types, not derivatives of the trophoblast."], ["Cytotrophoblast and syncytiotrophoblast", "Correct: The trophoblast differentiates into the inner cytotrophoblast and outer syncytiotrophoblast, the latter invading the endometrium and making hCG."], ["Endometrium and myometrium", "The endometrium and myometrium are maternal uterine wall layers, not trophoblast-derived tissues."], ["Chorion and amnion only", "The chorion is trophoblast-associated, but this option omits the essential cytotrophoblast/syncytiotrophoblast differentiation and mischaracterizes the amnion, which arises from the epiblast, not the trophoblast."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Which trophoblastic layer secretes hCG?", "opts": [["Cytotrophoblast", "The cytotrophoblast is the inner, mitotically active layer that gives rise to the syncytiotrophoblast, but it is the syncytiotrophoblast that secretes hCG."], ["Syncytiotrophoblast", "Correct: The syncytiotrophoblast secretes hCG, which rescues the corpus luteum in early pregnancy."], ["Endometrium", "The endometrium is maternal tissue that responds to pregnancy hormones; it does not itself secrete hCG."], ["Corpus luteum", "The corpus luteum is a target of hCG (which rescues it), not the source of hCG."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Human chorionic gonadotropin (hCG) primarily functions to:", "opts": [["Trigger ovulation", "Ovulation is triggered by the LH surge prior to conception; hCG appears only afterward, once implantation has occurred."], ["Maintain the corpus luteum", "Correct: hCG maintains the corpus luteum so it keeps producing progesterone until the placenta takes over — it mimics LH."], ["Stimulate oxytocin release", "hCG's main action is on the corpus luteum via LH-receptor mimicry, not stimulation of oxytocin release."], ["Produce estrogen directly", "hCG does not itself synthesize estrogen; it acts on the corpus luteum (and later placenta) to sustain progesterone/estrogen production indirectly."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "If hCG were absent during early pregnancy, the MOST likely consequence would be:", "opts": [["Increased progesterone", "Without hCG's rescue signal, the corpus luteum would regress and progesterone would fall, not rise."], ["Degeneration of the corpus luteum", "Correct: Without hCG the corpus luteum would degenerate, progesterone would fall, and the pregnancy would likely be lost."], ["Increased estrogen", "Corpus luteum regression would reduce, not increase, estrogen output."], ["Increased prolactin", "Prolactin secretion is not directly governed by hCG's luteal rescue function; it responds to different regulators later in pregnancy and postpartum."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Pregnancy tests detect:", "opts": [["Progesterone", "Progesterone is not the standard analyte for home or clinical pregnancy testing; hCG is."], ["Estrogen", "Estrogen is likewise not what pregnancy test assays are designed to detect."], ["hCG", "Correct: Pregnancy tests detect hCG, produced by the syncytiotrophoblast and detectable in blood/urine shortly after implantation."], ["Relaxin", "Relaxin is a later pregnancy hormone involved in ligament/cervical changes, not the hormone assayed by pregnancy tests."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The placenta functions primarily in:", "opts": [["Gas exchange", "This is true, but incomplete on its own since the placenta performs additional vital functions beyond only gas exchange."], ["Nutrient transfer", "This is true, but incomplete on its own; the placenta does more than only transfer nutrients."], ["Waste removal", "This is true, but incomplete on its own; this doesn't capture the placenta's full functional repertoire."], ["All of the above", "Correct: The placenta serves gas exchange, nutrient transfer, and waste removal simultaneously — all of the above — acting as the fetal lung, gut, and kidney."]], "c": 3, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "How many umbilical arteries are normally present?", "opts": [["One", "This undercounts the arteries; there is only one umbilical vein, but two umbilical arteries."], ["Two", "Correct: There are normally two umbilical arteries (carrying deoxygenated blood to the placenta) and one umbilical vein."], ["Three", "This overcounts; the normal complement is two arteries plus one vein, three vessels total, not three arteries."], ["Four", "This overcounts the normal number of umbilical arteries, which is two."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The umbilical vein carries:", "opts": [["Deoxygenated blood to the placenta", "This describes the umbilical arteries' function — the reverse of what the umbilical vein carries."], ["Oxygenated blood to the fetus", "Correct: The single umbilical vein carries oxygenated, nutrient-rich blood from placenta to fetus — opposite the arteries."], ["Venous blood to the mother", "The umbilical vein carries blood toward the fetus, not toward the mother, and maternal and fetal blood do not directly mix or flow between the two circulations."], ["Mixed blood", "The umbilical vein specifically carries the most oxygenated blood in the fetal circulation, not a mixed or deoxygenated blend."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Which placental hormone contributes to maternal insulin resistance?", "opts": [["hCG", "hCG's principal role is maintaining the corpus luteum early in pregnancy, not inducing maternal insulin resistance."], ["Oxytocin", "Oxytocin's role is uterine contraction and milk ejection, unrelated to maternal glucose/insulin regulation."], ["Human placental lactogen (hPL)", "Correct: Human placental lactogen (hPL) induces maternal insulin resistance to shunt glucose to the fetus, and can precipitate gestational diabetes."], ["Prolactin", "Prolactin's primary pregnancy/lactation role is promoting milk production, not inducing the insulin resistance that shunts glucose to the fetus."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The purpose of maternal insulin resistance during pregnancy is to:", "opts": [["Increase maternal fat loss only", "While maternal lipolysis does increase somewhat, describing this as the sole purpose ignores the central goal of shunting glucose toward the fetus."], ["Preserve glucose for the fetus", "Correct: Maternal insulin resistance preserves circulating glucose for transfer to the fetus, which relies on maternal glucose for growth."], ["Lower fetal glucose", "The purpose is the opposite: insulin resistance raises maternal glucose availability so more can cross to the fetus, not lower fetal glucose."], ["Prevent placental growth", "Insulin resistance is unrelated to limiting placental growth; it concerns glucose partitioning between mother and fetus."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "By approximately the end of the first trimester, progesterone production shifts primarily from the:", "opts": [["Placenta to corpus luteum", "This reverses the actual direction of the shift, which moves production from the corpus luteum to the placenta, not the other way around."], ["Corpus luteum to placenta", "Correct: By the end of the first trimester, progesterone production shifts from the corpus luteum to the placenta (the luteoplacental shift)."], ["Pituitary to placenta", "The pituitary does not produce progesterone at any point; the shift in question is specifically between the corpus luteum and the placenta."], ["Ovary to adrenal gland", "The adrenal gland is not the site that takes over progesterone production in pregnancy; the placenta is."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Which hormone is MOST responsible for maintaining the endometrium during pregnancy?", "opts": [["Estrogen", "Estrogen supports uterine growth and tissue development, but endometrial maintenance and myometrial quiescence during pregnancy is primarily progesterone's role."], ["Progesterone", "Correct: Progesterone is the key hormone maintaining the endometrium (and quieting the uterus) throughout pregnancy."], ["LH", "LH's role is largely superseded by hCG once pregnancy is established; LH itself is not the hormone maintaining the endometrium."], ["FSH", "FSH's role is stimulating follicular development in the ovarian cycle; it is not relevant to maintaining the endometrium once pregnancy is underway."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Estrogen during pregnancy contributes primarily to:", "opts": [["Uterine growth and breast duct development", "Correct: Estrogen in pregnancy promotes uterine growth and breast duct development, preparing tissues for delivery and lactation."], ["Milk production", "Milk synthesis is driven by prolactin, not estrogen; estrogen helps prepare breast tissue but actually inhibits full lactation until after delivery when its levels fall."], ["Ovulation", "Ovulation does not occur during pregnancy; ongoing high progesterone and estrogen suppress the cyclic gonadotropin surges needed for ovulation."], ["Decreased uterine blood flow", "Estrogen actually promotes increased uterine blood flow and vascularization during pregnancy, not a decrease."]], "c": 0, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Relaxin primarily causes:", "opts": [["Increased uterine contractions", "Relaxin's actions are more associated with connective tissue relaxation and preparing the birth canal, not directly driving contractions (that is primarily oxytocin/prostaglandins)."], ["Relaxation of pelvic ligaments and cervical softening", "Correct: Relaxin softens the cervix and loosens pelvic ligaments/pubic symphysis to prepare the birth canal."], ["Increased progesterone secretion", "Relaxin does not function to stimulate progesterone output; it acts on connective tissue targets."], ["Milk ejection", "Milk ejection is mediated by oxytocin acting on myoepithelial cells, not by relaxin."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "A woman with low progesterone during early pregnancy is at increased risk for:", "opts": [["Hyperthyroidism", "Hyperthyroidism is a thyroid hormone excess condition unrelated to progesterone insufficiency."], ["Miscarriage", "Correct: Low progesterone in early pregnancy removes uterine support, raising miscarriage risk — hence progesterone supplementation in some patients."], ["Diabetes insipidus", "Diabetes insipidus results from inadequate ADH/vasopressin action, not from low progesterone."], ["Acromegaly", "Acromegaly results from excess growth hormone, unrelated to progesterone levels in early pregnancy."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "During pregnancy, maternal blood volume generally:", "opts": [["Decreases", "Blood volume rises substantially in pregnancy rather than falling, to support the growing uteroplacental circulation."], ["Remains unchanged", "Blood volume expansion is one of the most characteristic maternal cardiovascular adaptations of pregnancy, not a static value."], ["Increases", "Correct: Maternal blood volume increases (~40–50%) during pregnancy to supply the uteroplacental unit and buffer delivery blood loss."], ["Doubles immediately", "The increase is substantial but gradual over the course of pregnancy, not an immediate doubling."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Cardiac output during pregnancy:", "opts": [["Decreases", "Cardiac output rises in pregnancy to meet increased metabolic and circulatory demands, not falls."], ["Increases", "Correct: Cardiac output increases in pregnancy (higher heart rate and stroke volume) to meet the added circulatory demand."], ["Does not change", "Cardiac output is one of the classic parameters that changes significantly (via increased heart rate and stroke volume) during pregnancy."], ["Stops increasing after implantation", "Cardiac output continues to rise progressively through much of pregnancy, not plateauing immediately at implantation."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Maternal GFR during pregnancy:", "opts": [["Decreases", "GFR rises due to increased renal plasma flow in pregnancy; it does not fall."], ["Increases", "Correct: Maternal GFR increases due to elevated renal plasma flow, which is why creatinine tends to run lower in pregnancy."], ["Remains unchanged", "GFR is one of several renal parameters that characteristically increases during pregnancy, not one that stays constant."], ["Falls after the first trimester", "The increase in GFR is generally sustained through much of pregnancy rather than reversing after the first trimester."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Maternal minute ventilation generally:", "opts": [["Decreases", "Progesterone stimulates increased ventilation in pregnancy; it does not decrease it."], ["Increases", "Correct: Minute ventilation increases (mainly tidal volume) under progesterone's stimulus, producing a mild compensated respiratory alkalosis."], ["Remains unchanged", "Minute ventilation is a hallmark maternal respiratory adaptation that changes (rises), not one that stays constant."], ["Stops during labor", "Ventilation does not stop during labor; if anything, increased respiratory effort accompanies the exertion of labor."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The period of greatest susceptibility to teratogens is:", "opts": [["Third trimester", "By the third trimester, organ systems are already formed and are undergoing growth/maturation, making this a period of lower structural teratogenic risk compared to organogenesis."], ["First trimester (organogenesis)", "Correct: The first trimester (organogenesis) is the period of greatest teratogen susceptibility, when organs are forming."], ["Second trimester", "Most major organ structures have already formed by the end of the first trimester, making the second trimester a period of lower teratogenic vulnerability for gross structural defects."], ["Labor", "Labor is the process of delivery, not a period of fetal organ development, and is not the time of peak teratogen susceptibility."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Which trimester is characterized by rapid fetal growth and maternal awareness of fetal movement?", "opts": [["First", "The first trimester is centered on organogenesis rather than rapid growth and maternal perception of fetal movement."], ["Second", "Correct: The second trimester features rapid fetal growth and quickening — the mother's first awareness of fetal movement."], ["Third", "The third trimester is characterized more by lung maturation and weight gain than by the mother's initial awareness of movement, which occurs earlier."], ["Postpartum", "Postpartum refers to the period after birth, not a stage of fetal development within pregnancy."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "The third trimester is especially important for:", "opts": [["Fertilization", "Fertilization is a first-trimester (very early) event, not characteristic of the third trimester."], ["Organogenesis", "Organogenesis is the hallmark of the first trimester, largely complete before the third trimester."], ["Lung maturation and weight gain", "Correct: The third trimester is critical for lung maturation (surfactant) and fetal weight gain in preparation for birth."], ["Implantation", "Implantation occurs about a week after fertilization, early in pregnancy, far earlier than the third trimester."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "Normal maternal weight gain during pregnancy is approximately:", "opts": [["5-10 pounds", "This is well below the recommended weight gain range for a woman of typical pre-pregnancy weight."], ["10-15 pounds", "This also understates the typical recommended total gain."], ["25-35 pounds", "Correct: Normal total maternal weight gain is roughly 25–35 pounds for a woman of typical pre-pregnancy weight."], ["45-60 pounds", "This overstates the typical recommended range; individual circumstances (like pre-pregnancy BMI) can shift targets somewhat, but this is above standard guidance."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "A pregnant patient develops gestational diabetes because of increased:", "opts": [["Insulin sensitivity", "Gestational diabetes results from decreased insulin sensitivity (insulin resistance), not increased sensitivity."], ["Human placental lactogen", "Correct: Gestational diabetes arises largely from human placental lactogen driving insulin resistance to favor fetal glucose supply."], ["Oxytocin", "Oxytocin's actions concern uterine contraction and milk ejection, not glucose/insulin regulation."], ["Prolactin", "Prolactin has some metabolic effects, but the primary hormone responsible for pregnancy-associated insulin resistance is hPL, not prolactin."]], "c": 1, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Pregnancy & Placental Physiology", "q": "A woman is 8 weeks pregnant. Which hormone is primarily responsible for preventing degeneration of the corpus luteum?", "opts": [["LH", "LH levels are actually suppressed during pregnancy by negative feedback; it is hCG, not LH, that sustains the corpus luteum at this stage."], ["Progesterone", "Progesterone is the hormone being protected/sustained by this mechanism, not itself the signal preventing corpus luteum regression."], ["hCG", "Correct: At 8 weeks, hCG from the syncytiotrophoblast prevents corpus luteum degeneration, maintaining progesterone until the placenta takes over."], ["Prolactin", "Prolactin is not the signal responsible for rescuing the corpus luteum in early pregnancy; that is hCG's specific role."]], "c": 2, "cite": "Endocrine III — Pregnancy & Placental Physiology lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone increases dramatically near term and contributes to uterine contractions?", "opts": [["FSH", "FSH is suppressed during pregnancy and is not the hormone responsible for driving labor contractions."], ["Oxytocin", "Correct: Oxytocin rises near term and drives strong uterine contractions during labor, amplified by positive feedback."], ["Prolactin", "Prolactin's role near term relates to preparing for lactation, not to generating uterine contractions."], ["hCG", "hCG peaks early in pregnancy and declines afterward; it is not the hormone that surges near term to drive contractions."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The initiation of labor is associated with:", "opts": [["Decreased estrogen-to-progesterone ratio", "This is the reverse; it is a rising, not falling, estrogen-to-progesterone ratio that is associated with labor onset."], ["Increased estrogen-to-progesterone ratio", "Correct: Labor onset is associated with an increased estrogen-to-progesterone ratio, which raises uterine excitability and oxytocin sensitivity."], ["Decreased prostaglandin production", "Prostaglandin production actually increases near labor to help drive contractions and cervical ripening, not decreases."], ["Decreased oxytocin receptor expression", "Oxytocin receptor expression increases near term (partly due to estrogen), not decreases, heightening uterine sensitivity to oxytocin."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone helps increase uterine sensitivity to oxytocin near term?", "opts": [["Progesterone", "Progesterone tends to suppress uterine excitability and oxytocin receptor expression — the opposite of the effect described."], ["Estrogen", "Correct: Estrogen upregulates oxytocin receptors near term, increasing uterine sensitivity to oxytocin. Progesterone does the opposite."], ["FSH", "FSH is not involved in regulating uterine oxytocin receptor expression near term."], ["LH", "LH is not the hormone responsible for upregulating uterine oxytocin sensitivity near labor."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Prostaglandins contribute to labor by:", "opts": [["Relaxing the uterus", "Prostaglandins promote uterine contraction, not relaxation, as part of labor."], ["Increasing uterine contractions and cervical ripening", "Correct: Prostaglandins promote uterine contractions and cervical ripening (softening/dilation), working alongside oxytocin in labor."], ["Decreasing cervical dilation", "Prostaglandins help ripen and soften the cervix, promoting rather than decreasing dilation."], ["Inhibiting oxytocin", "Prostaglandins act synergistically alongside oxytocin during labor; they do not inhibit it."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "During labor, cervical stretch stimulates:", "opts": [["Negative feedback", "The reflex is a self-amplifying loop, characteristic of positive feedback, not a self-limiting negative feedback loop."], ["Positive feedback", "Correct: Cervical stretch stimulates a positive feedback loop — the Ferguson reflex — driving more oxytocin and stronger contractions."], ["Decreased oxytocin", "Cervical stretch triggers increased, not decreased, oxytocin release via the Ferguson reflex."], ["Decreased prostaglandins", "Cervical stretch and the associated reflex are linked with increased local prostaglandin/oxytocin activity, not a decrease."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The positive feedback loop during labor involves:", "opts": [["Cervical stretch → Oxytocin → More contractions → More cervical stretch", "Correct: Labor's positive feedback: cervical stretch → oxytocin → more contractions → more stretch, escalating until delivery."], ["Oxytocin → Decreased contractions", "Oxytocin increases, not decreases, uterine contractions; this reverses its actual effect."], ["Estrogen → Decreased oxytocin", "Estrogen actually increases oxytocin receptor sensitivity/responsiveness, not oxytocin's action itself."], ["Progesterone → Increased cervical rigidity", "The labor-promoting shift involves falling progesterone dominance and cervical softening (not rigidity), which is not what this option describes."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The first stage of labor primarily consists of:", "opts": [["Placental delivery", "Placental delivery is the third stage of labor, occurring after the infant is born, not the first stage."], ["Cervical dilation", "Correct: The first stage of labor is cervical dilation and effacement, from onset until the cervix is fully dilated."], ["Delivery of the infant", "Delivery of the infant is the second stage of labor, which follows full cervical dilation."], ["Milk production", "Milk production is a postpartum lactation process, unrelated to the stages of labor itself."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The second stage of labor ends with:", "opts": [["Placental delivery", "Placental delivery marks the end of the third stage, which comes after the infant is born."], ["Delivery of the infant", "Correct: The second stage ends with delivery of the infant, spanning full dilation to birth."], ["Cervical dilation", "Cervical dilation is the hallmark of the first stage of labor, which precedes and enables the second stage."], ["Milk ejection", "Milk ejection is a postpartum lactation reflex, unrelated to the end of the second stage of labor."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The third stage of labor involves:", "opts": [["Ovulation", "Ovulation is a pre-pregnancy menstrual cycle event, entirely unrelated to the stages of labor."], ["Placental delivery", "Correct: The third stage involves delivery of the placenta after the baby is born."], ["Breastfeeding", "Breastfeeding occurs after all three stages of labor are complete, in the postpartum period."], ["Uterine involution", "Uterine involution (the uterus shrinking back down) is a postpartum process occurring over subsequent weeks, not the immediate third stage of labor itself."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone is routinely administered clinically to reduce postpartum hemorrhage?", "opts": [["Prolactin", "Prolactin's role is milk synthesis, not controlling postpartum uterine bleeding."], ["Oxytocin", "Correct: Oxytocin is given clinically after delivery to contract the uterus and reduce postpartum hemorrhage."], ["FSH", "FSH has no role in postpartum uterine contraction or hemorrhage control."], ["hCG", "hCG is relevant to early pregnancy maintenance, not postpartum hemostasis, and it is not administered for this purpose."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Milk production is stimulated primarily by:", "opts": [["Oxytocin", "Oxytocin is responsible for milk ejection (let-down), not for stimulating the synthesis of milk itself."], ["Prolactin", "Correct: Prolactin (anterior pituitary) stimulates milk production/synthesis in the alveolar cells."], ["Estrogen", "Estrogen promotes duct development but actually inhibits full milk production/secretion until its levels fall after delivery."], ["Progesterone", "Progesterone supports alveolar development during pregnancy but, like estrogen, suppresses full lactogenesis until levels drop postpartum."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Milk ejection is stimulated primarily by:", "opts": [["Prolactin", "Prolactin governs milk synthesis/production, a distinct process from the let-down reflex driven by oxytocin."], ["Oxytocin", "Correct: Oxytocin (posterior pituitary) drives milk ejection (let-down) by contracting myoepithelial cells — distinct from prolactin's production role."], ["hCG", "hCG is an early-pregnancy hormone unrelated to the postpartum let-down reflex."], ["LH", "LH's role concerns ovulation, not milk ejection."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which pituitary lobe secretes prolactin?", "opts": [["Posterior pituitary", "The posterior pituitary releases oxytocin and ADH, not prolactin."], ["Anterior pituitary", "Correct: Prolactin is secreted by the anterior pituitary. (Oxytocin, by contrast, comes from the posterior pituitary.)"], ["Hypothalamus", "The hypothalamus regulates prolactin release (mainly via tonic dopamine inhibition) but does not itself secrete prolactin into circulation."], ["Pineal gland", "The pineal gland secretes melatonin, unrelated to prolactin secretion."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which pituitary lobe releases oxytocin?", "opts": [["Anterior pituitary", "The anterior pituitary secretes hormones like prolactin, LH, and FSH, but not oxytocin."], ["Posterior pituitary", "Correct: Oxytocin is released from the posterior pituitary, where it is stored after hypothalamic synthesis."], ["Thyroid", "The thyroid gland secretes thyroid hormones (T3/T4) and calcitonin, unrelated to oxytocin release."], ["Adrenal cortex", "The adrenal cortex secretes corticosteroids like cortisol and aldosterone, not oxytocin."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Oxytocin causes contraction of:", "opts": [["Alveolar epithelial cells", "Alveolar epithelial cells are the milk-secreting cells themselves (stimulated by prolactin to produce milk), not the contractile cells oxytocin acts on."], ["Myoepithelial cells", "Correct: Oxytocin contracts myoepithelial cells surrounding the alveoli, squeezing milk into the ducts (let-down)."], ["Granulosa cells", "Granulosa cells are ovarian follicular cells involved in estrogen production, unrelated to breast myoepithelial contraction."], ["Leydig cells", "Leydig cells are testicular androgen-producing cells, entirely unrelated to lactation physiology."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Suckling stimulates increased secretion of:", "opts": [["Prolactin only", "Suckling triggers both prolactin release for ongoing milk synthesis and oxytocin release for milk ejection, not prolactin alone."], ["Oxytocin only", "Suckling likewise stimulates prolactin release as well, not oxytocin alone."], ["Both prolactin and oxytocin", "Correct: Suckling stimulates both prolactin (more milk production) and oxytocin (milk ejection) — a combined neuroendocrine reflex."], ["Estrogen only", "Suckling does not primarily raise estrogen; if anything, breastfeeding is associated with lower estrogen due to suppressed ovarian cycling."]], "c": 2, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The major stimulus for prolactin release is:", "opts": [["Suckling", "Correct: Suckling is the major stimulus for prolactin release, sustaining milk production through the suckling reflex."], ["Estrogen withdrawal", "Falling estrogen after delivery permits prolactin's lactogenic action to proceed, but the ongoing physiological stimulus sustaining prolactin release during breastfeeding is the suckling reflex itself."], ["High progesterone", "High progesterone during pregnancy actually inhibits full lactation; it is not what stimulates prolactin release for ongoing milk production."], ["hCG", "hCG is not involved in the neuroendocrine reflex that stimulates prolactin secretion during breastfeeding."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "During breastfeeding, prolactin suppresses:", "opts": [["TSH", "Prolactin's suppressive reproductive effect during lactation targets GnRH (and downstream LH/FSH), not TSH."], ["ACTH", "ACTH is part of the adrenal axis, not the target of prolactin's suppressive action during breastfeeding."], ["GnRH", "Correct: Prolactin suppresses GnRH during breastfeeding, lowering LH/FSH and often suppressing ovulation (lactational amenorrhea)."], ["Cortisol", "Cortisol is a downstream adrenal hormone unrelated to the prolactin-mediated suppression of reproductive hormone secretion in lactation."]], "c": 2, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Suppression of GnRH during breastfeeding results in:", "opts": [["Increased ovulation", "Suppressed GnRH leads to decreased gonadotropin secretion, which impairs rather than promotes ovulation."], ["Decreased LH and FSH secretion", "Correct: GnRH suppression lowers LH and FSH secretion, which is why ovulation is often suppressed during lactation."], ["Increased estrogen", "With reduced LH/FSH stimulation, ovarian estrogen production actually falls, not rises."], ["Increased progesterone", "Without an LH surge and subsequent corpus luteum formation, progesterone production is also reduced, not increased."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "This temporary suppression of ovulation during breastfeeding is called:", "opts": [["Menopause", "Menopause is a permanent, age-related cessation of ovarian function, distinct from the temporary, breastfeeding-induced suppression described here."], ["Lactational amenorrhea", "Correct: This breastfeeding-related suppression of ovulation is called lactational amenorrhea."], ["Dysmenorrhea", "Dysmenorrhea refers to painful menstruation, not suppression/absence of menstrual cycling."], ["Hyperprolactinemia", "Hyperprolactinemia describes the elevated prolactin state itself (the cause), not the name for the resulting suppression of ovulation/menstruation."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A woman has normal prolactin levels but no milk ejection. Which hormone is MOST likely deficient?", "opts": [["Estrogen", "Estrogen is not responsible for the milk ejection reflex; its deficiency would not selectively explain failed let-down with normal prolactin."], ["Oxytocin", "Correct: Normal prolactin but absent milk ejection points to an oxytocin deficiency, since oxytocin drives let-down."], ["FSH", "FSH is unrelated to the milk ejection reflex, which involves oxytocin-driven myoepithelial contraction."], ["LH", "LH likewise has no role in the let-down reflex; its deficiency would not explain this clinical picture."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A woman has adequate oxytocin but cannot produce milk. Which hormone is deficient?", "opts": [["Prolactin", "Correct: Adequate oxytocin but no milk production points to a prolactin deficiency, since prolactin drives milk synthesis."], ["Estrogen", "Estrogen deficiency would not selectively explain a failure of milk synthesis when the let-down (oxytocin-dependent) reflex is intact; prolactin governs synthesis specifically."], ["hCG", "hCG is not involved in postpartum lactogenesis; it is an early-pregnancy hormone."], ["Relaxin", "Relaxin affects connective tissue and cervical softening, not milk synthesis."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone primarily maintains pregnancy?", "opts": [["Progesterone", "Correct: Progesterone is the principal hormone maintaining pregnancy by sustaining the endometrium and quieting the uterus."], ["FSH", "FSH is suppressed during pregnancy and does not function to maintain it."], ["LH", "LH is also suppressed during pregnancy (its role is superseded by hCG early on); it does not maintain the pregnant state."], ["Oxytocin", "Oxytocin's major role is in labor and lactation, not maintenance of the pregnant, quiescent uterine state, which instead depends on progesterone."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone is responsible for maintaining the corpus luteum during early pregnancy?", "opts": [["Prolactin", "Prolactin is not the signal responsible for rescuing/maintaining the corpus luteum in early pregnancy."], ["hCG", "Correct: hCG maintains the corpus luteum during early pregnancy so progesterone output continues until the placenta takes over."], ["Oxytocin", "Oxytocin's roles are in labor and lactation, unrelated to sustaining the corpus luteum."], ["Relaxin", "Relaxin affects connective tissue and the cervix; it does not maintain the corpus luteum's hormone output."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "The placenta eventually becomes the primary source of:", "opts": [["Testosterone", "Testosterone is not a primary placental secretory product relevant to maintaining pregnancy."], ["Progesterone and estrogen", "Correct: By later pregnancy the placenta becomes the primary source of progesterone and estrogen, replacing the corpus luteum."], ["FSH", "The placenta does not produce FSH; pituitary FSH secretion is actually suppressed during pregnancy."], ["LH", "The placenta does not produce LH either; it produces the related but distinct hormone hCG, and pituitary LH is suppressed during pregnancy."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "Which hormone prepares the uterus for implantation before pregnancy occurs?", "opts": [["Progesterone", "Correct: Progesterone prepares the uterus for implantation by creating the secretory endometrium before pregnancy is established."], ["Oxytocin", "Oxytocin's actions relate to labor and lactation, not to preparing the endometrium for implantation."], ["hCG", "hCG is produced only after implantation has already begun (by the trophoblast), so it cannot be the hormone that prepares the uterus beforehand."], ["Prolactin", "Prolactin's principal physiological role concerns lactation, not preparing the endometrium for implantation."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A patient has complete failure of LH secretion. Which process would be MOST directly impaired?", "opts": [["Milk production", "Milk production is governed by prolactin, not LH, so LH failure would not directly impair it."], ["Ovulation", "Correct: Complete LH failure most directly impairs ovulation, since the LH surge is the ovulatory trigger."], ["Implantation", "Ovulation failure would secondarily prevent pregnancy (and thus implantation), but the process MOST directly impaired by loss of the LH surge itself is ovulation."], ["Lactation", "Lactation depends on prolactin and oxytocin, not LH, so it is not the process most directly impaired by LH failure."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A patient receives an oxytocin infusion during labor. The expected response is:", "opts": [["Decreased uterine contractions", "This is the opposite of oxytocin's known stimulatory effect on the myometrium."], ["Increased uterine contractions", "Correct: An oxytocin infusion increases uterine contractions — its intended clinical effect for induction/augmentation of labor."], ["Decreased cervical dilation", "By promoting effective contractions, oxytocin infusion supports progression of cervical dilation, not a decrease."], ["Suppressed prostaglandin production", "Oxytocin does not suppress prostaglandins; the two act synergistically to promote labor, not antagonistically."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A patient has destruction of the anterior pituitary after childbirth (Sheehan syndrome). Which finding is MOST likely?", "opts": [["Failure of milk production", "Correct: Sheehan syndrome (postpartum anterior pituitary infarction) causes failure of milk production, since prolactin comes from the anterior pituitary."], ["Excess oxytocin release", "Sheehan syndrome involves anterior pituitary infarction; oxytocin is a posterior pituitary hormone typically preserved, and the syndrome causes hormone deficiency, not excess."], ["Increased FSH", "Anterior pituitary destruction causes deficiency, not increase, of anterior pituitary hormones like FSH."], ["Increased prolactin", "Sheehan syndrome destroys the prolactin-secreting lactotrophs of the anterior pituitary, causing prolactin deficiency, not an increase."]], "c": 0, "cite": "Endocrine III — Parturition & Lactation lecture"}, {"topic": "Endocrine III — Female Reproductive, Pregnancy & Lactation", "io": "Parturition, Lactation & Integration", "q": "A newborn begins suckling immediately after birth. Which sequence correctly describes the endocrine response?", "opts": [["Suckling → ↓ Prolactin → ↓ Oxytocin", "Suckling stimulates increased release of both hormones, not a decrease in either."], ["Suckling → ↑ Oxytocin → Milk ejection AND ↑ Prolactin → Milk production", "Correct: Suckling triggers oxytocin → milk ejection AND prolactin → milk production — the combined reflex that sustains breastfeeding."], ["Suckling → ↑ hCG → Lactation", "hCG is not involved in the postpartum suckling reflex; it is an early-pregnancy placental hormone."], ["Suckling → ↑ Progesterone → Milk production", "Progesterone is not the hormone driving milk production in response to suckling — that is prolactin's role, and progesterone actually inhibits lactogenesis when elevated."]], "c": 1, "cite": "Endocrine III — Parturition & Lactation lecture"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
