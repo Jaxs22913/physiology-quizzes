@@ -1683,3 +1683,143 @@ mark.user-hl.hl-flash {
   text-align: center;
   pointer-events: none;
 }
+
+/* Freehand stylus/Apple Pencil drawing layer (guide-ink.js, added
+   2026-07-14). #guide-ink-svg spans the guide's full scroll height (set/
+   kept in sync by a ResizeObserver in JS) -- pointer-events stays "none"
+   until the toolbar is open, so the layer never blocks normal reading,
+   scrolling, link clicks, or text selection when the feature isn't in
+   active use. */
+#guide-ink-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  touch-action: pan-y;
+}
+.ink-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 110px;
+  z-index: 2000;
+}
+.ink-overlay.open { display: block; }
+.ink-toolbar {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+  width: 200px;
+  padding: 12px;
+}
+:root[data-theme="dark"] .ink-toolbar {
+  background: #191c22;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.ink-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  cursor: move;
+  touch-action: none;
+  user-select: none;
+}
+.ink-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  padding: 0 2px;
+}
+.ink-tool-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.ink-tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 9px 0;
+  cursor: pointer;
+}
+.ink-tool-btn.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+:root[data-theme="dark"] .ink-tool-btn {
+  background: #20242c;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+:root[data-theme="dark"] .ink-tool-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+.ink-color-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: 26px;
+  margin-bottom: 10px;
+}
+.ink-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+}
+.ink-swatch.active {
+  border-color: #2563eb;
+}
+:root[data-theme="dark"] .ink-swatch.active {
+  border-color: #3b82f6;
+}
+.ink-actions-row {
+  display: flex;
+  gap: 6px;
+}
+.ink-action-btn {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 8px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ink-action-btn.danger {
+  color: #dc2626;
+}
+:root[data-theme="dark"] .ink-action-btn {
+  background: #20242c;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+:root[data-theme="dark"] .ink-action-btn.danger {
+  color: #f87171;
+}
+@media (max-width: 480px) {
+  .ink-overlay { left: 12px; right: 12px; top: 60px; }
+  .ink-toolbar { width: auto; }
+}

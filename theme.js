@@ -2868,3 +2868,20 @@ window.openPauseOverlay = function (opts) {
     delete prevPressed[e.gamepad.index];
   });
 })();
+
+// guide-ink.js bootstrap (added 2026-07-14) -- freehand stylus/Apple Pencil
+// drawing layer for guides. Unlike cloud-sync.js's chain, this has no
+// Firebase dependency at all (it just writes to localStorage, which
+// cloud-sync.js picks up for free via its own Storage.prototype patch if
+// that's already loaded) -- so it's injected directly, no waiting on
+// anything. Self-gates internally on .guide-back-bar, same convention as
+// every other guide-only feature, so this script tag is a harmless no-op
+// fetch+eval on every non-guide page rather than something that needs
+// gating here too.
+(function () {
+  var thisScript = document.querySelector('script[src$="theme.js"]');
+  var base = thisScript ? thisScript.getAttribute("src").replace(/theme\.js$/, "") : "";
+  var s = document.createElement("script");
+  s.src = base + "guide-ink.js";
+  document.head.appendChild(s);
+})();
