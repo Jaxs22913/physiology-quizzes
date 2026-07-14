@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Exam 3 — GI Tract I & II · Practice Exam I</title>
+<style>
+  :root{
+    --accent:#0f766e;          /* GI teal */
+    --accent-soft:#cceae6;
+    --accent-deep:#0b5952;
+    --correct:#15803d;
+    --correct-bg:#e7f5ec;
+    --wrong:#b91c1c;
+    --wrong-bg:#fbeaea;
+    --ink:#1c1c1a;
+    --muted:#6b6b66;
+    --line:#e6e4dd;
+    --paper:#faf9f5;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;
+    -webkit-font-smoothing:antialiased;line-height:1.55;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:24px 20px 80px}
+  header.masthead{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep)}
+  h1{font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;font-weight:800;
+    font-size:26px;line-height:1.15;margin:6px 0 2px;letter-spacing:-.01em}
+  .sub{font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;color:var(--muted);font-weight:500}
+
+  .progressbar{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin:18px 0 6px}
+  .progressbar>span{display:block;height:100%;background:var(--accent);width:0;transition:width .35s ease}
+  .meta{display:flex;justify-content:space-between;align-items:center;
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:var(--muted);margin-bottom:22px}
+  .section-tag{font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    background:var(--accent-soft);padding:3px 9px;border-radius:99px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:26px 24px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .qnum{font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;font-weight:700;
+    color:var(--accent-deep);margin-bottom:8px}
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:400}
+  .qtext b{font-weight:700}
+
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;
+    font-family:Georgia,serif;font-size:16.5px;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:11px;
+    padding:14px 15px;cursor:pointer;transition:border-color .15s,background .15s;line-height:1.4}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#fbfefe}
+  .opt:disabled{cursor:default}
+  .opt .badge{flex:0 0 auto;width:26px;height:26px;border-radius:7px;
+    display:grid;place-items:center;font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:13px;font-weight:700;background:var(--accent-soft);color:var(--accent-deep)}
+  .opt.correct{border-color:var(--correct);background:var(--correct-bg)}
+  .opt.correct .badge{background:var(--correct);color:#fff}
+  .opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+  .opt.wrong .badge{background:var(--wrong);color:#fff}
+  .opt.dim{opacity:.55}
+
+  .explain{margin-top:18px;border-left:3px solid var(--accent);
+    background:#f5faf9;padding:13px 16px;border-radius:0 8px 8px 0;
+    font-size:15px;color:#25302e;display:none}
+  .explain.show{display:block;animation:fade .25s ease}
+  .explain .lbl{font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);display:block;margin-bottom:4px}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* cadaver reveal card */
+  .cad-desc{margin-top:16px;display:none}
+  .cad-desc.show{display:block;animation:fade .25s ease}
+  .reveal-btn{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:600;font-size:15px;
+    background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer}
+  .reveal-btn:hover{background:var(--accent-deep)}
+  .struct-name{font-size:19px;font-weight:700;font-family:ui-sans-serif,system-ui,sans-serif;
+    color:var(--accent-deep);margin:0 0 6px}
+
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+  .btn{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:600;font-size:15px;
+    border-radius:10px;padding:12px 22px;cursor:pointer;border:1.5px solid var(--ink);
+    background:#fff;color:var(--ink);transition:.15s}
+  .btn:hover:not(:disabled){background:var(--ink);color:#fff}
+  .btn:disabled{opacity:.35;cursor:not-allowed}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover:not(:disabled){background:var(--accent-deep);border-color:var(--accent-deep)}
+
+  /* results */
+  .results{text-align:center;padding:40px 24px}
+  .score-ring{font-family:ui-sans-serif,system-ui,sans-serif;font-size:52px;font-weight:800;
+    color:var(--accent-deep);line-height:1}
+  .score-sub{font-family:ui-sans-serif,system-ui,sans-serif;color:var(--muted);margin:6px 0 26px;font-size:15px}
+  .review-list{text-align:left;margin-top:10px}
+  .review-item{border-top:1px solid var(--line);padding:14px 0;font-size:15px}
+  .review-item .rn{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:700;color:var(--wrong);font-size:13px}
+  .review-item .rq{margin:3px 0 6px}
+  .review-item .ra{font-size:14px;color:var(--muted)}
+  .review-item .ra b{color:var(--correct)}
+  footer{text-align:center;margin-top:40px;font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:12px;color:var(--muted)}
+  @media (max-width:480px){
+    h1{font-size:22px}.qtext{font-size:18px}.card{padding:22px 18px}
+    .btn{padding:11px 16px;font-size:14px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">PAJ 5000 · Anatomy Exam 3 · Class of 2028</div>
+    <h1>Gastrointestinal Tract I &amp; II</h1>
+    <div class="sub">Practice Exam I — GI Foundations, Peritoneum &amp; Mesenteries, Abdominal Regions</div>
+  </header>
+
+  <div class="progressbar"><span id="bar"></span></div>
+  <div class="meta">
+    <span id="section-label" class="section-tag">GI Foundations</span>
+    <span id="counter">Question 1 of 50</span>
+  </div>
+
+  <div id="stage"></div>
+</div>
+
+<footer>Class of 2028 Review · GI Tract I &amp; II · 50 items</footer>
+
+<script>
+const DATA = {"mc":[{"n":1,"q":"Which structure is NOT considered part of the gastrointestinal tract?","opts":["Esophagus","Stomach","Liver","Small intestine"],"ans":2,"exp":"The liver is an accessory digestive organ; food does not pass through it."},{"n":2,"q":"Food normally passes directly through which structure immediately after leaving the stomach?","opts":["Jejunum","Ileum","Duodenum","Cecum"],"ans":2,"exp":"The duodenum is the first portion of the small intestine immediately distal to the pylorus."},{"n":3,"q":"Which accessory digestive organ stores bile?","opts":["Liver","Pancreas","Gallbladder","Spleen"],"ans":2,"exp":"The gallbladder stores and concentrates bile produced by the liver."},{"n":4,"q":"Which GI wall layer primarily contains blood vessels, lymphatics, and Meissner's plexus?","opts":["Mucosa","Muscularis externa","Serosa","Submucosa"],"ans":3,"exp":"The submucosa contains blood vessels, lymphatics, glands, and Meissner's plexus."},{"n":5,"q":"Auerbach's plexus is located","opts":["inside the mucosa","between the circular and longitudinal muscle layers","inside the serosa","within the lamina propria"],"ans":1,"exp":"Auerbach's (myenteric) plexus lies between the inner circular and outer longitudinal muscle layers."},{"n":6,"q":"Which nervous system is often called the \"brain of the gut\"?","opts":["Sympathetic","Parasympathetic","Enteric","Somatic"],"ans":2,"exp":"The enteric nervous system functions independently and is called the \"brain of the gut.\""},{"n":7,"q":"Rugae are permanent folds found primarily within the","opts":["colon","stomach","jejunum","rectum"],"ans":1,"exp":"Rugae are temporary folds of the stomach that flatten when it fills."},{"n":8,"q":"Plicae circulares differ from rugae because they","opts":["disappear during filling","occur only in the colon","remain permanent","contain Peyer's patches"],"ans":2,"exp":"Plicae circulares are permanent folds of the small intestine."},{"n":9,"q":"Parasympathetic stimulation generally","opts":["decreases secretion","decreases motility","increases digestion","contracts all sphincters"],"ans":2,"exp":"Parasympathetic stimulation increases motility and secretion (\"rest and digest\")."},{"n":10,"q":"Sympathetic stimulation typically","opts":["increases peristalsis","increases secretion","inhibits GI activity","increases bile production"],"ans":2,"exp":"Sympathetic stimulation inhibits digestion."},{"n":11,"q":"The correct order of the four GI wall layers is","opts":["Mucosa > Submucosa > Muscularis > Serosa","Mucosa > Muscularis > Submucosa > Serosa","Serosa > Muscularis > Submucosa > Mucosa","Adventitia > Mucosa > Serosa > Muscularis"],"ans":0,"exp":"Mucosa > Submucosa > Muscularis externa > Serosa."},{"n":12,"q":"Which GI wall layer is responsible primarily for absorption?","opts":["Mucosa","Serosa","Adventitia","Muscularis"],"ans":0,"exp":"Most absorption occurs through the mucosa."},{"n":13,"q":"Peristalsis occurs primarily because of contraction of the","opts":["mucosa","muscularis externa","serosa","lamina propria"],"ans":1,"exp":"Peristalsis is generated by the muscularis externa."},{"n":14,"q":"Which GI function occurs first?","opts":["Absorption","Elimination","Ingestion","Propulsion"],"ans":2,"exp":"Digestion begins with ingestion."},{"n":15,"q":"Which accessory organ produces digestive enzymes AND hormones?","opts":["Gallbladder","Liver","Pancreas","Spleen"],"ans":2,"exp":"The pancreas has both endocrine and exocrine functions."},{"n":16,"q":"The visceral peritoneum directly covers","opts":["abdominal wall","diaphragm only","abdominal organs","retroperitoneal fat"],"ans":2,"exp":"Visceral peritoneum covers abdominal organs."},{"n":17,"q":"The parietal peritoneum lines the","opts":["stomach","liver","abdominal wall","spleen"],"ans":2,"exp":"Parietal peritoneum lines the abdominal wall."},{"n":18,"q":"Pain from the parietal peritoneum is","opts":["poorly localized","referred only","well localized","absent"],"ans":2,"exp":"Somatic innervation makes parietal peritoneal pain sharp and localized."},{"n":19,"q":"The greater sac is","opts":["posterior to the stomach","the main peritoneal compartment","inside the liver","inside the pancreas"],"ans":1,"exp":"The greater sac is the main compartment of the peritoneal cavity."},{"n":20,"q":"The lesser sac is located","opts":["anterior to the liver","behind the stomach","inside the diaphragm","within the spleen"],"ans":1,"exp":"The lesser sac (omental bursa) lies posterior to the stomach."},{"n":21,"q":"The greater omentum originates from the","opts":["lesser curvature","pylorus","greater curvature","fundus only"],"ans":2,"exp":"The greater omentum arises from the greater curvature."},{"n":22,"q":"The greater omentum primarily covers the","opts":["kidneys","pancreas","small intestine","spleen"],"ans":2,"exp":"It drapes over the small intestine."},{"n":23,"q":"The lesser omentum connects the liver to the","opts":["spleen","stomach and duodenum","pancreas","colon"],"ans":1,"exp":"The lesser omentum connects the liver to the stomach and first part of the duodenum."},{"n":24,"q":"Which ligament contains the portal triad?","opts":["Falciform","Hepatogastric","Hepatoduodenal","Coronary"],"ans":2,"exp":"The hepatoduodenal ligament contains the portal triad."},{"n":25,"q":"The portal triad consists of","opts":["hepatic vein, portal vein, bile duct","portal vein, hepatic artery, bile duct","SMA, SMV, bile duct","hepatic artery, hepatic vein, IVC"],"ans":1,"exp":"Portal vein + Proper hepatic artery + Common bile duct = Portal triad."},{"n":26,"q":"The mesentery proper suspends the","opts":["stomach","colon","jejunum and ileum","liver"],"ans":2,"exp":"The mesentery proper suspends the jejunum and ileum."},{"n":27,"q":"The root of the mesentery extends from","opts":["pylorus to cecum","duodenojejunal flexure to right iliac fossa","liver to stomach","stomach to spleen"],"ans":1,"exp":"Its root extends from the duodenojejunal flexure to the right iliac fossa."},{"n":28,"q":"Which structure does NOT travel inside the mesentery?","opts":["Lymphatics","Nerves","SMA branches","Inferior vena cava"],"ans":3,"exp":"The inferior vena cava is retroperitoneal and not within the mesentery."},{"n":29,"q":"Which organ is intraperitoneal?","opts":["Ascending colon","Jejunum","Pancreatic head","Kidney"],"ans":1,"exp":"The jejunum is intraperitoneal."},{"n":30,"q":"Which organ is retroperitoneal?","opts":["Stomach","Ileum","Ascending colon","Spleen"],"ans":2,"exp":"The ascending colon is secondarily retroperitoneal."},{"n":31,"q":"Which portion of the duodenum is intraperitoneal?","opts":["Superior (first)","Descending","Horizontal","Ascending"],"ans":0,"exp":"Only the first (superior) portion of the duodenum is intraperitoneal."},{"n":32,"q":"Which portion of the pancreas is intraperitoneal?","opts":["Head","Neck","Body","Tail"],"ans":3,"exp":"The pancreatic tail extends into the splenorenal ligament and is intraperitoneal."},{"n":33,"q":"Which structure is NOT part of the SAD PUCKER mnemonic?","opts":["Kidneys","Jejunum","Aorta","Pancreas"],"ans":1,"exp":"The jejunum is intraperitoneal, not part of the SAD PUCKER mnemonic."},{"n":34,"q":"The greater omentum is commonly known as","opts":["suspensory ligament","policeman of the abdomen","hepatoduodenal ligament","mesocolon"],"ans":1,"exp":"The greater omentum is known as the \"policeman of the abdomen.\""},{"n":35,"q":"The peritoneal cavity normally contains","opts":["bile","lymph","serous fluid","pancreatic enzymes"],"ans":2,"exp":"The peritoneal cavity normally contains a thin film of serous fluid."},{"n":36,"q":"Which organ is most commonly located in the RUQ?","opts":["Spleen","Gallbladder","Sigmoid colon","Appendix"],"ans":1,"exp":"The gallbladder is located in the RUQ beneath the liver."},{"n":37,"q":"The spleen is primarily located in the","opts":["RLQ","LUQ","LLQ","RUQ"],"ans":1,"exp":"The spleen lies in the LUQ beneath ribs 9-11."},{"n":38,"q":"The appendix is found in the","opts":["LUQ","RLQ","RUQ","Epigastric region"],"ans":1,"exp":"The appendix is classically found in the RLQ."},{"n":39,"q":"The head of the pancreas lies primarily within the","opts":["RUQ","LLQ","RLQ","Left iliac region"],"ans":0,"exp":"The head of the pancreas is primarily in the RUQ within the duodenal \"C-loop.\""},{"n":40,"q":"Which region contains the stomach?","opts":["LUQ","RLQ","LLQ","Right lumbar"],"ans":0,"exp":"Most of the stomach occupies the LUQ."},{"n":41,"q":"The hypogastric region is also called the","opts":["epigastric","pubic","lumbar","hypochondriac"],"ans":1,"exp":"The hypogastric region is also called the pubic region."},{"n":42,"q":"Which organ occupies most of the LUQ?","opts":["Cecum","Liver","Spleen","Appendix"],"ans":2,"exp":"The spleen is a major LUQ organ."},{"n":43,"q":"The hepatic flexure lies adjacent to the","opts":["liver","spleen","bladder","pancreas"],"ans":0,"exp":"The hepatic flexure lies adjacent to the liver."},{"n":44,"q":"The splenic flexure lies adjacent to the","opts":["kidney","liver","spleen","cecum"],"ans":2,"exp":"The splenic flexure lies adjacent to the spleen."},{"n":45,"q":"Which organ primarily occupies the RLQ?","opts":["Appendix","Liver","Gallbladder","Stomach"],"ans":0,"exp":"The appendix is the classic RLQ structure."}],"cadaver":[{"n":46,"struct":"Greater omentum","desc":"Large fatty apron hanging from the greater curvature of the stomach. Covers the small intestine."},{"n":47,"struct":"Lesser omentum","desc":"Thin membrane between the liver and the lesser curvature of the stomach / first part of the duodenum. Contains the hepatogastric and hepatoduodenal ligaments."},{"n":48,"struct":"Mesentery proper","desc":"Fan-shaped double layer of peritoneum suspending the jejunum and ileum. Contains vessels, nerves, and lymphatics."},{"n":49,"struct":"Falciform ligament","desc":"Connects the liver to the anterior abdominal wall. Separates the anatomical right and left lobes on the anterior surface of the liver."},{"n":50,"struct":"Sigmoid colon","desc":"S-shaped intraperitoneal portion of the large intestine. Located in the LLQ and pelvis. Connects the descending colon to the rectum."}]};
+// unified item list
+const ITEMS = [
+  ...DATA.mc.map(m=>({type:"mc",...m})),
+  ...DATA.cadaver.map(c=>({type:"cad",...c}))
+];
+const TOTAL = ITEMS.length;
+const answers = {};   // n -> chosen index
+let idx = 0;
+
+function sectionFor(n){
+  if(n<=15) return "GI Foundations";
+  if(n<=35) return "Peritoneum & Mesenteries";
+  if(n<=45) return "Abdominal Regions";
+  return "Cadaver Identification";
+}
+const LETTERS=["A","B","C","D"];
+
+function render(){
+  const item = ITEMS[idx];
+  document.getElementById("bar").style.width = ((idx)/(TOTAL))*100 + "%";
+  document.getElementById("counter").textContent = "Question "+(idx+1)+" of "+TOTAL;
+  document.getElementById("section-label").textContent = sectionFor(item.n);
+  const stage = document.getElementById("stage");
+
+  if(item.type==="mc"){ stage.innerHTML = mcHTML(item); wireMC(item); }
+  else { stage.innerHTML = cadHTML(item); wireCad(item); }
+}
+
+function mcHTML(item){
+  const answered = answers[item.n]!==undefined;
+  const opts = item.opts.map((o,i)=>{
+    let cls="opt";
+    if(answered){
+      cls+=" dim";
+      if(i===item.ans) cls="opt correct";
+      else if(i===answers[item.n]) cls="opt wrong";
+    }
+    return `<button class="${cls}" data-i="${i}" ${answered?"disabled":""}>
+      <span class="badge">${LETTERS[i]}</span><span>${o}</span></button>`;
+  }).join("");
+  return `<div class="card">
+    <div class="qnum">Question ${item.n}</div>
+    <p class="qtext">${boldNot(item.q)}</p>
+    <div class="opts">${opts}</div>
+    <div class="explain ${answered?"show":""}" id="exp">
+      <span class="lbl">Explanation</span>${item.exp}</div>
+    ${navHTML()}
+  </div>`;
+}
+
+function cadHTML(item){
+  const revealed = answers[item.n]!==undefined;
+  return `<div class="card">
+    <div class="qnum">Question ${item.n} · Cadaver Identification</div>
+    <p class="qtext">Identify this structure from an anatomical specimen:</p>
+    <p class="struct-name">${item.struct}</p>
+    ${revealed ? `<div class="cad-desc show"><div class="explain show"><span class="lbl">Key features</span>${item.desc}</div></div>`
+               : `<button class="reveal-btn" id="reveal">Reveal key features</button>`}
+    ${navHTML()}
+  </div>`;
+}
+
+function navHTML(){
+  const last = idx===TOTAL-1;
+  return `<div class="nav">
+    <button class="btn" id="prev" ${idx===0?"disabled":""}>← Previous</button>
+    <button class="btn primary" id="next">${last?"Finish":"Next →"}</button>
+  </div>`;
+}
+
+function boldNot(t){ return t.replace(/\bNOT\b/g,"<b>NOT</b>").replace(/\bAND\b/g,"<b>AND</b>"); }
+
+function wireMC(item){
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(answers[item.n]!==undefined) return;
+      answers[item.n]=parseInt(btn.dataset.i);
+      render();
+    });
+  });
+  wireNav();
+}
+function wireCad(item){
+  const r=document.getElementById("reveal");
+  if(r) r.addEventListener("click",()=>{ answers[item.n]=1; render(); });
+  wireNav();
+}
+function wireNav(){
+  const p=document.getElementById("prev"), n=document.getElementById("next");
+  if(p) p.addEventListener("click",()=>{ if(idx>0){idx--;render();} });
+  if(n) n.addEventListener("click",()=>{
+    if(idx<TOTAL-1){idx++;render();}
+    else showResults();
+  });
+}
+
+function showResults(){
+  document.getElementById("bar").style.width="100%";
+  document.getElementById("section-label").textContent="Complete";
+  document.getElementById("counter").textContent="Finished";
+  const scored = DATA.mc;
+  let correct=0;
+  const misses=[];
+  scored.forEach(m=>{
+    if(answers[m.n]===m.ans) correct++;
+    else if(answers[m.n]!==undefined) misses.push(m);
+    else misses.push(m); // unanswered counts as missed for review
+  });
+  const pct = Math.round(correct/scored.length*100);
+  let reviewHTML = "";
+  if(misses.length){
+    reviewHTML = `<div class="review-list"><h3 style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Review missed & skipped</h3>`
+      + misses.map(m=>`<div class="review-item">
+          <span class="rn">Q${m.n}</span>
+          <div class="rq">${boldNot(m.q)}</div>
+          <div class="ra">Correct: <b>${LETTERS[m.ans]}. ${m.opts[m.ans]}</b> — ${m.exp}</div>
+        </div>`).join("") + `</div>`;
+  }
+  document.getElementById("stage").innerHTML = `<div class="card results">
+    <div class="score-ring">${pct}%</div>
+    <div class="score-sub">${correct} of ${scored.length} scored questions correct<br>
+      <span style="font-size:13px">(Cadaver ID items are self-graded review cards)</span></div>
+    <button class="btn primary" id="restart">Restart quiz</button>
+    ${reviewHTML}
+  </div>`;
+  document.getElementById("restart").addEventListener("click",()=>{
+    for(const k in answers) delete answers[k];
+    idx=0; render();
+  });
+}
+
+render();
+</script>
+</body>
+</html>
