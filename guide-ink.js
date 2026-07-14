@@ -291,21 +291,36 @@
   // drawing surfaces confirm the fix is a *separate*, non-passive
   // touchmove (and touchstart) listener that calls preventDefault()
   // directly -- not something achievable through pointer events alone.
-  // Harmless for real finger touches too: touch scrolling here is
+  //
+  // Registered on `document` with capture:true, not on the SVG with the
+  // default bubble phase -- every guide's own boilerplate (not this file,
+  // not shared theme.js -- copy-pasted per page) has its own pull-to-
+  // refresh touchstart/touchmove listener at the document level, entirely
+  // independent of this feature. Calling preventDefault() alone does NOT
+  // stop a *different* listener for the same event from also running --
+  // that only stops the browser's own default action, not sibling JS
+  // handlers -- which is exactly why writing downward (scrollY already at
+  // 0) still triggered the pull-to-refresh animation even after the
+  // preventDefault-only version of this fix shipped. The capture phase
+  // runs top-down (document -> ... -> target) strictly before the bubble
+  // phase that the page's own pull-to-refresh listener uses, regardless
+  // of which script registered its listener first -- so this listener
+  // always gets the event before that one does, and stopPropagation()
+  // here (not just preventDefault()) keeps it from ever reaching pull-
+  // to-refresh's handler at all.
+  //
+  // Harmless for real finger touches: touch-driven scrolling here is
   // already fully reimplemented in JS (onTouchPointerDown/Move/End
-  // above), so blocking the native default doesn't remove anything that
-  // still relies on it.
-  function preventDuringDraw(e) {
-    if (drawModeOn) e.preventDefault();
+  // above), so blocking the native default -- and every other page
+  // feature's own reaction to the same raw touch event -- doesn't remove
+  // any behavior a real drag while drawing still needs.
+  function interceptTouchWhileDrawing(e) {
+    if (!drawModeOn) return;
+    e.preventDefault();
+    e.stopPropagation();
   }
-  svg.addEventListener("touchstart", preventDuringDraw, { passive: false });
-  svg.addEventListener("touchmove", preventDuringDraw, { passive: false });
-  // Also at the document level, in case the system-level gesture recognizer
-  // resolves its event target slightly differently than normal DOM hit-
-  // testing would (this bug has already resisted one fix attempt on real
-  // hardware, so the extra redundancy here is deliberate, not guesswork
-  // for its own sake).
-  document.addEventListener("touchmove", preventDuringDraw, { passive: false });
+  document.addEventListener("touchstart", interceptTouchWhileDrawing, { passive: false, capture: true });
+  document.addEventListener("touchmove", interceptTouchWhileDrawing, { passive: false, capture: true });
 
   function eraseNear(p) {
     for (var i = strokes.length - 1; i >= 0; i--) {
@@ -474,16 +489,33 @@
     cornerGroup.appendChild(inkBtn);
   }
 
-  // One-time hint the first time someone actually opens this on a guide,
-  // shown once ever (site-wide, not per-guide) -- same localStorage-flag
-  // pattern as the gamepad connect hint.
-  if (!localStorage.getItem("inkHintShown")) {
-    inkBtn && inkBtn.addEventListener("click", function onceHint() {
-      if (localStorage.getItem("inkHintShown")) return;
-      localStorage.setItem("inkHintShown", "1");
-      if (isOpen() && window.showToast) {
-        window.showToast("Draw with a stylus, Apple Pencil, or mouse — your finger still scrolls normally.", 5000);
-      }
-    });
+  // One-time explanation the first time the toolbar is actually opened,
+  // shown once ever (site-wide, not per-guide, matching the gamepad-hint/
+  // cloud-sync-prompt localStorage-flag convention) -- reuses the same
+  // .tour-overlay/.tour-prompt shell cloud-sync.js's own one-time sign-in
+  // prompt uses, for visual consistency with the site's other first-run
+  // dialogs, rather than a terse toast (this has more to say than fits
+  // comfortably in one). Reuses the el() helper already defined above for
+  // the toolbar's own construction.
+  function maybeShowFirstOpenExplainer() {
+    if (localStorage.getItem("inkHintShown")) return;
+    localStorage.setItem("inkHintShown", "1");
+    var explOverlay = el("div", "tour-overlay open");
+    var card = el("div", "tour-prompt");
+    card.appendChild(el("p", "tour-prompt-title", "Draw on this guide"));
+    card.appendChild(el("p", "tour-prompt-text", "Pen writes, Highlighter marks text, Eraser removes a stroke — pick a color for either from the swatches above."));
+    card.appendChild(el("p", "tour-prompt-text", "Works with a stylus, Apple Pencil, or mouse. Your finger still scrolls the page normally, even while this toolbar is open."));
+    card.appendChild(el("p", "tour-prompt-text", "Your drawings save automatically on this device, sign-in optional. Sign in with Google (Settings → Account) to also sync them across your other devices."));
+    var actions = el("div", "tour-prompt-actions");
+    var gotItBtn = el("button", "tour-btn primary", "Got it");
+    gotItBtn.type = "button";
+    gotItBtn.addEventListener("click", function () { explOverlay.remove(); });
+    actions.appendChild(gotItBtn);
+    card.appendChild(actions);
+    explOverlay.appendChild(card);
+    document.body.appendChild(explOverlay);
   }
+  inkBtn && inkBtn.addEventListener("click", function () {
+    if (isOpen()) maybeShowFirstOpenExplainer();
+  });
 })();
