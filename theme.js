@@ -1135,11 +1135,27 @@
     // there. Guarded so a click that's actually the tail end of a text
     // selection (drag to highlight, then mouseup fires a click too)
     // doesn't hijack it into "jump to here" instead.
+    //
+    // Some guides' markup nests one queue unit inside another (e.g. a
+    // `.io` box wrapping its own `<p>`/`<li>` children, and `.io` is
+    // itself in UNIT_SELECTOR) -- without stopPropagation, clicking the
+    // inner paragraph bubbles up and ALSO fires the outer box's own
+    // click-to-jump handler, so a single click issued two competing
+    // jumpTo() calls for two different indices. The second call's
+    // cancelPlayback() would pause the first call's <audio> before its
+    // play() promise had resolved, which rejects that promise -- and
+    // since nothing tied that rejection back to whether this was still
+    // the active playback, its error handler fired the live-speech
+    // fallback on top of the second call's (correctly playing)
+    // pre-rendered audio. stopPropagation stops the double-fire outright;
+    // speakIndex's `isCurrent()` check (below) is the second line of
+    // defense for any other way two speakIndex calls could race.
     function wireClickToJump() {
       queue.forEach(function (el, idx) {
         el.classList.add("tts-clickable");
-        el.addEventListener("click", function () {
+        el.addEventListener("click", function (e) {
           if (window.getSelection().toString().length > 0) return;
+          e.stopPropagation();
           jumpTo(idx);
         });
       });
@@ -1168,6 +1184,7 @@
       if (currentAudio) {
         currentAudio.onended = null;
         currentAudio.onerror = null;
+        currentAudio.onplaying = null;
         currentAudio.pause();
         currentAudio = null;
       }
@@ -1197,17 +1214,41 @@
         audio.playbackRate = RATES[rateIdx];
         currentAudio = audio;
         var started = false;
-        audio.onplaying = function () { started = true; };
-        audio.onended = function () { if (playing) speakIndex(i + 1); };
+        // A stale callback from a SUPERSEDED speakIndex call (e.g. two
+        // jumpTo() calls firing back-to-back, or any other future race)
+        // must never act -- once a newer call has replaced `currentAudio`,
+        // this specific `audio` object is no longer the one in charge.
+        function isCurrent() { return currentAudio === audio; }
+        // Two independent "did it actually start" signals, unioned, since
+        // the 'playing' DOM event alone isn't consistently reliable across
+        // browsers/codecs -- a resolved play() promise is the more direct
+        // API contract for "the browser accepted and began playback".
+        function markStarted() {
+          if (started || !isCurrent()) return;
+          started = true;
+          // A live utterance can still be queued/speaking from an earlier
+          // paragraph's fallback (e.g. speechSynthesis.cancel() racing with
+          // an utterance that had already started) -- the instant real
+          // pre-rendered audio is confirmed playing, forcibly silence any
+          // live speech so the two can never be heard at once.
+          speechSynthesis.cancel();
+        }
+        audio.onplaying = markStarted;
+        audio.onended = function () { if (isCurrent() && playing) speakIndex(i + 1); };
         // Missing/failed pre-rendered file for this unit (e.g. a guide only
         // partly through the audio pipeline) -- fall back to live synthesis
         // for just this one paragraph rather than breaking the whole read.
         // Guarded on `started`: once the mp3 has actually begun playing, a
         // later error event (e.g. a mid-stream network hiccup) must NOT
         // also kick off live speech on top of audio that's already
-        // audible -- that produced both voices overlapping at once.
-        audio.onerror = function () { if (!started) speakLive(i, el); };
-        audio.play().catch(function () { if (!started) speakLive(i, el); });
+        // audible -- that produced both voices overlapping at once. Also
+        // guarded on `isCurrent()`: if THIS audio was already superseded
+        // by a newer speakIndex call (e.g. play() got aborted by a
+        // same-tick cancelPlayback() from a second, bubbled click), its
+        // rejected play() promise must not fall back to live speech on
+        // top of whatever the newer call is now playing.
+        audio.onerror = function () { if (isCurrent() && !started) { audio.pause(); speakLive(i, el); } };
+        audio.play().then(markStarted).catch(function () { if (isCurrent() && !started) { audio.pause(); speakLive(i, el); } });
       } else {
         speakLive(i, el);
       }
