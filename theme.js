@@ -924,7 +924,14 @@
   // .cap/.io are the Physiology guide's caption/objective classes; .figcap/
   // .callout are the Anatomy guide's equivalents (same idea, different
   // names -- each guide's own markup picks whichever it already uses).
-  var UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io";
+  // .io-head/.io-h are the objective-box heading in guides where `.io`
+  // itself was reused as a big wrapping box rather than a leaf line (see
+  // buildQueue's containment filter, which excludes `.io` in exactly that
+  // case) -- two different class names because the two guides that made
+  // this choice named it differently (.io-head in the redesigned Anatomy
+  // guide, .io-h in Physiology Exam 4); both listed here so either one's
+  // heading still gets read on its own.
+  var UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io, .io-head, .io-h";
   var RATES = [1, 1.25, 1.5, 1.75, 2];
   // Each reading unit is its own separate audio clip (or its own separate
   // speechSynthesis utterance) with no trailing silence baked in -- jumping
@@ -951,7 +958,8 @@
     ["CO₂", "carbon dioxide"],
     ["O₂", "oxygen"],
     ["H⁺", "hydrogen ion"],
-    ["B₁₂", "B twelve"]
+    ["B₁₂", "B twelve"],
+    ["Müllerian", "Mullerian"]
   ];
   var SYMBOL_REPLACEMENTS = [
     ["⇌", " in equilibrium with "],
@@ -962,11 +970,24 @@
     ["↓", " decreases "],
     ["—", ", "],
     ["–", " to "],
+    ["−", " minus "],
+    ["×", " times "],
+    ["≥", " greater than or equal to "],
+    ["≤", " less than or equal to "],
+    ["≠", " does not equal "],
     ["·", ", "],
     ["•", ", "],
     ["≈", " approximately "],
     ["°", " degrees "],
     ["÷", " divided by "],
+    ["…", "..."],
+    ["★", ""],
+    ["’", "'"],
+    ["α", "alpha"],
+    ["β", "beta"],
+    ["Δ", "Delta"],
+    ["δ", "delta"],
+    ["π", "pi"],
     ["vs.", "versus"]
   ];
   var LEFTOVER_CLEANUP = [
@@ -1135,8 +1156,43 @@
     });
 
     function buildQueue() {
-      queue = Array.prototype.slice.call(wrap.querySelectorAll(UNIT_SELECTOR))
-        .filter(function (el) { return el.textContent.trim().length > 0; });
+      var all = Array.prototype.slice.call(wrap.querySelectorAll(UNIT_SELECTOR));
+      // Some guides reuse a UNIT_SELECTOR class name (e.g. `.io`, originally
+      // a small leaf objective line in the first Physiology guide) as a big
+      // wrapping box that itself CONTAINS other matched units -- a heading,
+      // then its own `<p>`/`<li>` body. Reading that wrapper as one unit
+      // both duplicates everything its children already read on their own
+      // right after it, AND runs the wrapper's own child elements' text
+      // together with no space at the seams (e.g. a badge "IO 5" jammed
+      // against the next heading "Spleen..." reads as "IO 5Spleen"). Only
+      // keep matches that don't themselves contain another match -- a
+      // wrapper's real content still gets read exactly once, via whichever
+      // descendant leaf actually holds it.
+      queue = all.filter(function (el) {
+        if (el.textContent.trim().length === 0) return false;
+        for (var i = 0; i < all.length; i++) {
+          if (all[i] !== el && el.contains(all[i])) return false;
+        }
+        return true;
+      });
+    }
+
+    // textContent concatenates every descendant text node with zero
+    // inserted spacing -- fine for a single run of prose, but a box with
+    // sibling elements (e.g. `<span class="io-num">IO 5</span><h3>Spleen
+    // ...</h3>`) reads as "IO 5Spleen..." with the words jammed together.
+    // Join every text node with a single space instead of relying on
+    // however (or whether) the source HTML separates its elements.
+    function spokenTextOf(el) {
+      var parts = [];
+      (function walk(node) {
+        if (node.nodeType === 3) {
+          if (node.textContent) parts.push(node.textContent);
+        } else if (node.nodeType === 1) {
+          Array.prototype.forEach.call(node.childNodes, walk);
+        }
+      })(el);
+      return parts.join(" ").replace(/\s+/g, " ").trim();
     }
 
     // Click any paragraph/list item/etc. to start reading from exactly
@@ -1199,7 +1255,7 @@
     }
 
     function speakLive(i, el) {
-      var utter = new SpeechSynthesisUtterance(speakableText(el.textContent.trim()));
+      var utter = new SpeechSynthesisUtterance(speakableText(spokenTextOf(el)));
       utter.rate = RATES[rateIdx];
       if (selectedVoice) utter.voice = selectedVoice;
       utter.onend = function () { if (playing) setTimeout(function () { if (playing) speakIndex(i + 1); }, PARAGRAPH_PAUSE_MS); };
@@ -1313,7 +1369,7 @@
     // feedback_guides_page memory) -- lets a one-off script extract the
     // exact same queue/normalized text a live page would speak, so
     // pre-rendered audio matches word-for-word. Not used by the page itself.
-    window.__ttsDebug = { queue: queue, speakableText: speakableText };
+    window.__ttsDebug = { queue: queue, speakableText: speakableText, spokenTextOf: spokenTextOf };
   }
 
   if (document.readyState === "loading") {
@@ -1376,11 +1432,24 @@
   var wrap = document.querySelector(".wrap");
   if (!wrap) return;
 
-  var HL_UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io";
+  var HL_UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io, .io-head, .io-h";
   var HL_KEY = "guideHl:" + location.pathname;
   var COLORS = ["yellow", "green", "pink", "blue"];
 
-  var units = Array.prototype.slice.call(wrap.querySelectorAll(HL_UNIT_SELECTOR));
+  // Same containment fix as the read-aloud engine's buildQueue() above --
+  // some guides reuse `.io` as a wrapping box around its own `<p>`/`<li>`
+  // children (see the read-aloud comment for the full story). Without this,
+  // a selection landing on the wrapper itself (rather than its more-specific
+  // child) would try to store an offset against the WRONG unit -- the
+  // wrapper's un-spaced, concatenated textContent -- silently producing a
+  // highlight in the wrong place or none at all.
+  var allMatches = Array.prototype.slice.call(wrap.querySelectorAll(HL_UNIT_SELECTOR));
+  var units = allMatches.filter(function (el) {
+    for (var i = 0; i < allMatches.length; i++) {
+      if (allMatches[i] !== el && el.contains(allMatches[i])) return false;
+    }
+    return true;
+  });
   units.forEach(function (u, i) { u.setAttribute("data-hl-idx", i); });
 
   // Character offset of (node, offset) relative to the full plain text of
@@ -1600,7 +1669,19 @@
     if (!wrap.contains(range.commonAncestorContainer)) { hideToolbar(); return; }
     var startUnit = findUnit(range.startContainer);
     var endUnit = findUnit(range.endContainer);
-    if (!startUnit || startUnit !== endUnit) { hideToolbar(); return; } // cross-unit selection: unsupported, no-op
+    if (!startUnit || startUnit !== endUnit) {
+      // Highlights are stored as a single unit + character offsets, so a
+      // selection spanning two different paragraphs/list items has nowhere
+      // valid to be saved -- this used to fail completely silently, which
+      // in a guide with lots of short adjacent <li>s (easy to accidentally
+      // drag a selection across one without meaning to) reads as
+      // "highlighting is just broken" rather than "select within one
+      // paragraph at a time." A real selection attempt (non-empty, inside
+      // the guide) always deserves feedback even when nothing can be saved.
+      hideToolbar();
+      if (window.showToast) window.showToast("Select text within a single paragraph or list item to highlight it");
+      return;
+    }
     var commonEl = range.commonAncestorContainer.nodeType === 3
       ? range.commonAncestorContainer.parentElement
       : range.commonAncestorContainer;
