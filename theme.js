@@ -1429,7 +1429,21 @@
 // guide with nothing to narrate) and highlighting has no such prerequisite.
 (function () {
   if (!document.querySelector(".guide-back-bar")) return;
-  var wrap = document.querySelector(".wrap");
+  // `document.querySelector(".wrap")` (no scoping) grabs the FIRST match
+  // in the whole document -- on the redesigned Anatomy Exam 3 guide, that's
+  // a small, unrelated `.wrap` reused as a max-width helper INSIDE the
+  // masthead header (a coincidental class-name collision, see
+  // feedback_guide_highlighting_ux memory), not the real content container.
+  // That silently scoped the entire highlighting feature to a tiny header
+  // div with almost no text in it -- selecting real guide content then
+  // found no unit at all (`findUnit` walks up looking for `data-hl-idx`
+  // until it hits `wrap`, but real content isn't even a descendant of the
+  // wrong `wrap`), so highlighting looked completely broken with zero
+  // feedback. Every guide's real content wrap is a direct child of <body>
+  // by convention (same assumption theme.css's dark-mode invert rule makes
+  // via `body > .wrap`) -- match that specifically, falling back to the
+  // old unscoped lookup only if no guide follows that convention.
+  var wrap = document.querySelector("body > .wrap") || document.querySelector(".wrap");
   if (!wrap) return;
 
   var HL_UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io, .io-head, .io-h";
