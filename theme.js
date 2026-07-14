@@ -135,6 +135,7 @@
   var GEAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
   var ARROW_LEFT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
   var CALC = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8" y2="11.01"/><line x1="12" y1="11" x2="12" y2="11.01"/><line x1="16" y1="11" x2="16" y2="11.01"/><line x1="8" y1="15" x2="8" y2="15.01"/><line x1="12" y1="15" x2="12" y2="15.01"/><line x1="16" y1="15" x2="16" y2="15.01"/><line x1="8" y1="19" x2="8" y2="19.01"/><line x1="12" y1="19" x2="12" y2="19.01"/><line x1="16" y1="19" x2="16" y2="19.01"/></svg>';
+  var TIMER = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>';
 
   function currentTheme() {
     return document.documentElement.getAttribute("data-theme") || "light";
@@ -511,6 +512,13 @@
         if (b) b.click();
       }, 0);
     }));
+    panel.appendChild(makeActionRow("Study timer", function () {
+      close();
+      setTimeout(function () {
+        var b = document.getElementById("pomo-btn");
+        if (b) b.click();
+      }, 0);
+    }));
     // #refresh-btn stays a visible icon on the homepage (see theme.css) --
     // skip the quick-action row there so it isn't offered in two places.
     if (!document.body.classList.contains("homepage")) {
@@ -583,6 +591,27 @@
         function (checked) { localStorage.setItem("hardCutoffDefault", checked ? "1" : "0"); }
       );
       panel.appendChild(hardCutoffToggle.row);
+    }
+
+    // Shared highlights (opt-in, added 2026-07-14) -- OFF by default,
+    // unlike "who's studying now" presence, which is automatic for any
+    // signed-in user with no toggle at all. Highlighting itself (position +
+    // color, never the note text) is materially more personal than an
+    // anonymous "someone's here" heartbeat, so this got its own explicit
+    // opt-in per product decision -- see feedback_presence memory. Only
+    // shown on guide pages at all, matching every other guide-only toggle's
+    // gating convention in this panel (shuffle/exam-mode above check for
+    // their own quiz-only trigger elements the same way).
+    if (document.querySelector(".guide-back-bar")) {
+      var shareHlToggle = makeToggleRow(
+        "Share my highlights with other students (anonymously)",
+        localStorage.getItem("shareHighlights") === "1",
+        function (checked) {
+          localStorage.setItem("shareHighlights", checked ? "1" : "0");
+          window.dispatchEvent(new Event("shareHighlightsChanged"));
+        }
+      );
+      panel.appendChild(shareHlToggle.row);
     }
 
     overlay.appendChild(panel);
@@ -772,6 +801,282 @@
     return { toggle: toggle };
   }
 
+  // Study session timer (Pomodoro-style, added 2026-07-14). Same
+  // shared-widget pattern as the calculator above -- fully local, zero
+  // per-page changes, works on any page (quiz, guide, or homepage). State
+  // is keyed by an absolute end-timestamp rather than a plain countdown a
+  // setInterval ticks down, so navigating to a different page or a full
+  // reload never loses time: remaining time is always `endsAt - Date.now()`,
+  // recomputed fresh on every load and every tick, the same trick the
+  // quiz-family timers already use for their own pause/resume.
+  function initPomodoro() {
+    var STATE_KEY = "pomodoroState";
+    var DEFAULTS = { phase: "idle", running: false, endsAt: null, remainingMs: null, focusMin: 25, breakMin: 5, completedSessions: 0 };
+
+    function loadState() {
+      var s;
+      try { s = JSON.parse(localStorage.getItem(STATE_KEY)); } catch (e) { s = null; }
+      var out = {};
+      for (var k in DEFAULTS) out[k] = (s && s[k] !== undefined) ? s[k] : DEFAULTS[k];
+      return out;
+    }
+    function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+
+    var state = loadState();
+
+    var overlay = el("div", "pomo-overlay");
+    var panel = el("div", "pomo-panel");
+
+    var header = el("div", "pomo-header");
+    var title = el("span", null, "Study Timer");
+    var closeBtn = el("button", "pomo-close", "&times;");
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close study timer");
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    // Draggable by its header -- identical mechanics to the calculator's own
+    // makeDraggable() above (see that comment for why left/top instead of
+    // the default top/right anchor, and why clamping is needed).
+    (function makeDraggable() {
+      var dragging = false, startX, startY, startLeft, startTop;
+      header.addEventListener("pointerdown", function (e) {
+        if (e.target.closest(".pomo-close")) return;
+        dragging = true;
+        var r = overlay.getBoundingClientRect();
+        startLeft = r.left; startTop = r.top;
+        startX = e.clientX; startY = e.clientY;
+        overlay.style.left = startLeft + "px";
+        overlay.style.top = startTop + "px";
+        overlay.style.right = "auto";
+        header.setPointerCapture(e.pointerId);
+      });
+      header.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+        var newLeft = startLeft + (e.clientX - startX);
+        var newTop = startTop + (e.clientY - startY);
+        newLeft = Math.max(4, Math.min(window.innerWidth - overlay.offsetWidth - 4, newLeft));
+        newTop = Math.max(4, Math.min(window.innerHeight - overlay.offsetHeight - 4, newTop));
+        overlay.style.left = newLeft + "px";
+        overlay.style.top = newTop + "px";
+      });
+      header.addEventListener("pointerup", function () { dragging = false; });
+      header.addEventListener("pointercancel", function () { dragging = false; });
+    })();
+
+    var phaseLabel = el("div", "pomo-phase");
+    var display = el("div", "pomo-display", "25:00");
+    display.id = "pomo-display";
+
+    var controlsRow = el("div", "pomo-controls");
+    var startBtn = el("button", "pomo-action-btn primary", "Start");
+    startBtn.type = "button";
+    var pauseBtn = el("button", "pomo-action-btn", "Pause");
+    pauseBtn.type = "button";
+    var resetBtn = el("button", "pomo-action-btn", "Reset");
+    resetBtn.type = "button";
+    controlsRow.appendChild(startBtn);
+    controlsRow.appendChild(pauseBtn);
+    controlsRow.appendChild(resetBtn);
+
+    var settingsRow = el("div", "pomo-settings");
+    var focusField = el("label", "pomo-field", "Focus");
+    var focusInput = document.createElement("input");
+    focusInput.type = "number";
+    focusInput.min = "1";
+    focusInput.max = "120";
+    focusInput.id = "pomo-focus-min";
+    focusField.appendChild(focusInput);
+    focusField.appendChild(document.createTextNode(" min"));
+    var breakField = el("label", "pomo-field", "Break");
+    var breakInput = document.createElement("input");
+    breakInput.type = "number";
+    breakInput.min = "1";
+    breakInput.max = "60";
+    breakInput.id = "pomo-break-min";
+    breakField.appendChild(breakInput);
+    breakField.appendChild(document.createTextNode(" min"));
+    settingsRow.appendChild(focusField);
+    settingsRow.appendChild(breakField);
+
+    var sessionsLabel = el("div", "pomo-sessions");
+
+    panel.appendChild(header);
+    panel.appendChild(phaseLabel);
+    panel.appendChild(display);
+    panel.appendChild(controlsRow);
+    panel.appendChild(settingsRow);
+    panel.appendChild(sessionsLabel);
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    focusInput.value = state.focusMin;
+    breakInput.value = state.breakMin;
+    focusInput.addEventListener("change", function () {
+      var v = Math.max(1, Math.min(120, parseInt(focusInput.value, 10) || DEFAULTS.focusMin));
+      focusInput.value = v;
+      state.focusMin = v;
+      saveState();
+      render();
+    });
+    breakInput.addEventListener("change", function () {
+      var v = Math.max(1, Math.min(60, parseInt(breakInput.value, 10) || DEFAULTS.breakMin));
+      breakInput.value = v;
+      state.breakMin = v;
+      saveState();
+    });
+
+    // Persistent mini-pill -- separate from the panel, visible on EVERY page
+    // (not just while the panel happens to be open) whenever a session is
+    // actively running, so the countdown is glanceable without reopening the
+    // panel each time, the same reason quizzes show #timerpill during an
+    // attempt instead of only inside a menu.
+    var pill = el("button", "pomo-pill", "");
+    pill.type = "button";
+    pill.setAttribute("aria-label", "Study timer running — click to open");
+    document.body.appendChild(pill);
+
+    function fmt(ms) {
+      var totalSec = Math.max(0, Math.ceil(ms / 1000));
+      var m = Math.floor(totalSec / 60), s = totalSec % 60;
+      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+    }
+    function phaseTotalMs() { return (state.phase === "break" ? state.breakMin : state.focusMin) * 60000; }
+    function remainingMs() {
+      if (state.running && state.endsAt) return state.endsAt - Date.now();
+      if (state.remainingMs != null) return state.remainingMs;
+      return phaseTotalMs();
+    }
+
+    function render() {
+      var rem = Math.max(0, remainingMs());
+      display.textContent = fmt(rem);
+      var label = state.phase === "focus" ? "Focus" : state.phase === "break" ? "Break" : "Ready to focus";
+      phaseLabel.textContent = label;
+      sessionsLabel.textContent = state.completedSessions > 0
+        ? state.completedSessions + " focus session" + (state.completedSessions === 1 ? "" : "s") + " completed"
+        : "";
+      startBtn.textContent = (state.phase !== "idle" && !state.running) ? "Resume" : "Start";
+      startBtn.style.display = state.running ? "none" : "";
+      pauseBtn.style.display = state.running ? "" : "none";
+      resetBtn.style.display = state.phase !== "idle" ? "" : "none";
+      focusInput.disabled = state.phase !== "idle";
+      breakInput.disabled = state.phase !== "idle";
+
+      if (state.running) {
+        pill.classList.add("visible");
+        pill.textContent = (state.phase === "break" ? "☕ " : "🍅 ") + fmt(rem);
+        pill.classList.toggle("pomo-pill-break", state.phase === "break");
+      } else {
+        pill.classList.remove("visible");
+      }
+    }
+
+    var tickTimer = null;
+    function startTicking() {
+      stopTicking();
+      tickTimer = setInterval(function () {
+        if (!state.running) { stopTicking(); return; }
+        if (remainingMs() <= 0) { advancePhase(); return; }
+        render();
+      }, 1000);
+    }
+    function stopTicking() {
+      if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
+    }
+
+    // Focus -> break auto-advances (the whole point of the technique is not
+    // having to remember to take the break yourself). Break -> idle does
+    // NOT auto-restart another focus round -- silently looping forever while
+    // someone stepped away would be a worse outcome than just stopping and
+    // waiting for an explicit "Start" again.
+    function advancePhase() {
+      if (state.phase === "focus") {
+        state.completedSessions++;
+        state.phase = "break";
+        state.running = true;
+        state.endsAt = Date.now() + state.breakMin * 60000;
+        state.remainingMs = null;
+        saveState();
+        if (window.playSiteSound) window.playSiteSound("complete");
+        if (window.showToast) window.showToast("Focus session done — take a " + state.breakMin + "-minute break.", 5000);
+        startTicking();
+      } else {
+        state.phase = "idle";
+        state.running = false;
+        state.endsAt = null;
+        state.remainingMs = null;
+        saveState();
+        if (window.playSiteSound) window.playSiteSound("reveal");
+        if (window.showToast) window.showToast("Break's over — ready for another focus session?", 5000);
+        stopTicking();
+      }
+      render();
+    }
+
+    function start() {
+      state.endsAt = Date.now() + (state.phase === "idle" ? state.focusMin * 60000 : (state.remainingMs != null ? state.remainingMs : phaseTotalMs()));
+      if (state.phase === "idle") state.phase = "focus";
+      state.running = true;
+      state.remainingMs = null;
+      saveState();
+      startTicking();
+      render();
+    }
+    function pause() {
+      state.remainingMs = Math.max(0, remainingMs());
+      state.running = false;
+      state.endsAt = null;
+      saveState();
+      stopTicking();
+      render();
+    }
+    function reset() {
+      state.phase = "idle";
+      state.running = false;
+      state.endsAt = null;
+      state.remainingMs = null;
+      saveState();
+      stopTicking();
+      render();
+    }
+
+    startBtn.addEventListener("click", start);
+    pauseBtn.addEventListener("click", pause);
+    resetBtn.addEventListener("click", reset);
+    pill.addEventListener("click", open);
+
+    function isOpen() { return overlay.classList.contains("open"); }
+    function open() { overlay.classList.add("open"); render(); }
+    function toggle() { if (isOpen()) close(); else open(); }
+    function close() { overlay.classList.remove("open"); }
+
+    closeBtn.addEventListener("click", close);
+    document.addEventListener("click", function (e) {
+      if (!isOpen()) return;
+      if (panel.contains(e.target) || e.target.closest("#pomo-btn") || e.target === pill) return;
+      close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen()) close();
+    });
+
+    // Catch up on load if a session was left running in a tab/browser that's
+    // since been fully closed and reopened (setInterval doesn't survive
+    // that) -- a single advancePhase() call, not a fast-forwarding loop
+    // through however many phases elapsed during the gap, since exact
+    // catch-up accuracy doesn't matter for a casual study timer and a loop
+    // here risks looping forever on a very long absence.
+    if (state.running && remainingMs() <= 0) {
+      advancePhase();
+    } else if (state.running) {
+      startTicking();
+    }
+    render();
+
+    return { toggle: toggle };
+  }
+
   function init() {
     document.documentElement.setAttribute("data-text-size", localStorage.getItem("textSize") === "large" ? "large" : "normal");
     document.documentElement.setAttribute("data-contrast", localStorage.getItem("contrast") === "high" ? "high" : "normal");
@@ -809,6 +1114,12 @@
     calcBtn.innerHTML = CALC;
     calcBtn.addEventListener("click", calcHelp.toggle);
     group.appendChild(calcBtn);
+
+    var pomoHelp = initPomodoro();
+    var pomoBtn = makeCornerBtn("pomo-btn", "Study timer");
+    pomoBtn.innerHTML = TIMER;
+    pomoBtn.addEventListener("click", pomoHelp.toggle);
+    group.appendChild(pomoBtn);
 
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
@@ -1405,7 +1716,15 @@
     loadScript(CDN + "firebase-auth-compat.js", function () {
       loadScript(CDN + "firebase-firestore-compat.js", function () {
         loadScript(base + "firebase-config.js", function () {
-          loadScript(base + "cloud-sync.js");
+          loadScript(base + "cloud-sync.js", function () {
+            // presence.js (added 2026-07-14): "who's studying now" on guide
+            // pages. Waits for cloud-sync.js's firebaseReady signal itself
+            // (see that file's header comment), so chaining it after
+            // cloud-sync.js here is only to keep load order predictable,
+            // not a hard dependency -- it no-ops instantly on any page
+            // without a .guide-back-bar.
+            loadScript(base + "presence.js");
+          });
         });
       });
     });
@@ -1525,6 +1844,7 @@
     saveHighlights(loadHighlights().filter(function (h) {
       return !(h.idx === idx && h.start === start && h.end === end);
     }));
+    if (sharedHl.enabled && sharedHl.uid) sharedHl.deleteDoc(idx, start, end);
   }
 
   function updateHighlightNote(idx, start, end, note) {
@@ -1612,6 +1932,13 @@
       var list = loadHighlights();
       list.push({ idx: idx, start: start, end: end, color: color, note: note });
       saveHighlights(list);
+      // Only a genuinely new, user-just-made highlight (persist=true) is
+      // pushed out -- NOT the persist=false calls that replay already-saved
+      // highlights back onto the page on load, which would otherwise
+      // re-write every single one to Firestore on every page view for no
+      // reason. Position only (idx/start/end); color and note never leave
+      // this device -- see sharedHl below and firestore.rules.
+      if (sharedHl.enabled && sharedHl.uid) sharedHl.pushDoc(idx, start, end);
     }
     return mark;
   }
@@ -2079,6 +2406,131 @@
   }
 
   var guideSearchHelp = initGuideSearch();
+
+  // Shared highlights (opt-in, added 2026-07-14). Broadcasts each
+  // highlight's POSITION ONLY (idx/start/end + owning uid) to
+  // sharedHighlights/{guideId}/marks/{uid_idx_start_end} in Firestore --
+  // never the color or note text, which stay local-only even when this is
+  // on (see firestore.rules and feedback_presence memory for the full
+  // design and why this needed its own opt-in toggle, unlike "who's
+  // studying now" presence which is automatic). Renders other opted-in
+  // signed-in students' shared marks as a distinct, read-only dotted
+  // overlay (mark.shared-hl, theme.css) -- never your own, which already
+  // render through the normal user-hl system above.
+  //
+  // `sharedHl` is a plain mutable object (not reassigned wholesale) so that
+  // applyHighlight()/removeHighlight() above -- defined and potentially
+  // *called* long before Firebase finishes loading -- can safely read
+  // `sharedHl.enabled`/`sharedHl.uid` at call time without needing to know
+  // whether boot() below has run yet; before boot() ever runs, `enabled`
+  // is simply false and both calls are no-ops.
+  var sharedHl = {
+    enabled: false,
+    uid: null,
+    pushDoc: function () {},
+    deleteDoc: function () {}
+  };
+  (function () {
+    var guideId = encodeURIComponent(location.pathname);
+    var sharedMarksByDocId = {}; // Firestore doc id -> rendered <mark> element, so a later snapshot can cleanly clear exactly these and nothing else
+    var unsubscribe = null;
+    var hintShown = localStorage.getItem("sharedHlHintShown") === "1";
+
+    function isSharingEnabled() { return localStorage.getItem("shareHighlights") === "1"; }
+    function markId(uid, idx, start, end) { return uid + "_" + idx + "_" + start + "_" + end; }
+
+    function clearSharedMarks() {
+      Object.keys(sharedMarksByDocId).forEach(function (id) {
+        var mark = sharedMarksByDocId[id];
+        if (!mark.parentNode) return;
+        var parent = mark.parentNode;
+        while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+        parent.removeChild(mark);
+        parent.normalize();
+      });
+      sharedMarksByDocId = {};
+    }
+
+    function renderSharedDoc(doc, data) {
+      var unit = units[data.idx];
+      if (!unit) return; // guide content changed since this was shared -- skip, don't crash
+      var range = rangeFromOffsets(unit, data.start, data.end);
+      if (!range) return;
+      var mark = document.createElement("mark");
+      mark.className = "shared-hl";
+      mark.title = "Also highlighted by another student";
+      try {
+        var content = range.extractContents();
+        mark.appendChild(content);
+        range.insertNode(mark);
+      } catch (e) { return; }
+      sharedMarksByDocId[doc.id] = mark;
+    }
+
+    function subscribe(db, uid) {
+      unsubscribe = db.collection("sharedHighlights").doc(guideId).collection("marks").onSnapshot(function (snap) {
+        clearSharedMarks();
+        var any = false;
+        snap.forEach(function (doc) {
+          var data = doc.data();
+          if (!data || data.uid === uid) return; // your own highlights already show via the local user-hl system
+          renderSharedDoc(doc, data);
+          any = true;
+        });
+        if (any && !hintShown) {
+          hintShown = true;
+          localStorage.setItem("sharedHlHintShown", "1");
+          if (window.showToast) window.showToast("The dotted marks are highlights other students made on this guide.", 5500);
+        }
+      }, function () { /* permission-denied before Firestore rules are published, or offline -- just stay empty, same as presence.js */ });
+    }
+
+    function pushDoc(db, uid, idx, start, end) {
+      db.collection("sharedHighlights").doc(guideId).collection("marks").doc(markId(uid, idx, start, end))
+        .set({ idx: idx, start: start, end: end, uid: uid, updatedAt: firebase.firestore.FieldValue.serverTimestamp() })
+        .catch(function () {});
+    }
+    function deleteDoc(db, uid, idx, start, end) {
+      db.collection("sharedHighlights").doc(guideId).collection("marks").doc(markId(uid, idx, start, end)).delete().catch(function () {});
+    }
+
+    function applyState(db, user) {
+      var wantsSharing = isSharingEnabled();
+      var signedIn = user && !user.isAnonymous;
+      if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+      clearSharedMarks();
+      if (signedIn && wantsSharing) {
+        var uid = user.uid;
+        sharedHl.enabled = true;
+        sharedHl.uid = uid;
+        sharedHl.pushDoc = function (idx, start, end) { pushDoc(db, uid, idx, start, end); };
+        sharedHl.deleteDoc = function (idx, start, end) { deleteDoc(db, uid, idx, start, end); };
+        // Backfill: push every highlight already saved locally, so turning
+        // the toggle on (or signing in while it's already on) shares
+        // everything made before this exact moment too, not just future
+        // ones. Cheap even for a guide with many highlights -- one small
+        // write per highlight, throttled by nothing since this only runs
+        // on an actual state transition, not on every page load.
+        loadHighlights().forEach(function (h) { pushDoc(db, uid, h.idx, h.start, h.end); });
+        subscribe(db, uid);
+      } else {
+        sharedHl.enabled = false;
+        sharedHl.uid = null;
+        sharedHl.pushDoc = function () {};
+        sharedHl.deleteDoc = function () {};
+      }
+    }
+
+    function boot() {
+      var auth = firebase.auth();
+      var db = firebase.firestore();
+      auth.onAuthStateChanged(function (user) { applyState(db, user); });
+      window.addEventListener("shareHighlightsChanged", function () { applyState(db, auth.currentUser); });
+    }
+
+    if (window.__firebaseReady) boot();
+    else window.addEventListener("firebaseReady", boot, { once: true });
+  })();
 
   // Appended into the existing corner-action button group (id set by the
   // separate corner-buttons IIFE above, which has already run and built it

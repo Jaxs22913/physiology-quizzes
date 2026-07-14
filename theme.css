@@ -31,7 +31,7 @@
    Settings; initSettingsPanel() skips adding its quick-action row there to
    match (see theme.js), so it's not duplicated between icon and panel. */
 @media (max-width: 640px) {
-  #refresh-btn, #theme-toggle-btn, #calc-btn, #account-btn { display: none; }
+  #refresh-btn, #theme-toggle-btn, #calc-btn, #pomo-btn, #account-btn { display: none; }
   body.homepage #refresh-btn { display: flex; }
 }
 @media (min-width: 641px) {
@@ -122,6 +122,30 @@
 }
 :root[data-theme="dark"] .guide-back-link { color: #e5e7eb; }
 .guide-back-link:hover { text-decoration: underline; }
+
+/* "Who's studying now" (presence.js) -- pushed to the right edge of the
+   back bar via margin-left:auto, hidden by default (only shown once
+   presence.js confirms at least one other signed-in viewer is fresh). */
+.presence-pill {
+  display: none;
+  margin-left: auto;
+  font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1f2937;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.presence-pill.visible { display: inline-flex; align-items: center; }
+:root[data-theme="dark"] .presence-pill {
+  color: #bfdbfe;
+  background: #16213a;
+  border-color: #1e3a5f;
+}
+@media (max-width: 480px) {
+  .presence-pill { font-size: 11px; padding: 4px 8px; }
+}
 
 /* In-guide search bar (theme.js, guide-search-* IDs). Sticky right below
    .guide-back-bar at top:38px per that element's own stacking convention
@@ -665,6 +689,176 @@ mark.search-hit-current {
 @media (max-width: 480px) {
   .calc-overlay { left: 12px; right: 12px; }
   .calc-panel { width: auto; }
+}
+
+/* Study session timer (Pomodoro-style, theme.js initPomodoro()). Same
+   overlay/panel/header/draggable shell as .calc-*, just a different body. */
+.pomo-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 62px;
+  z-index: 2000;
+}
+.pomo-overlay.open { display: block; }
+.pomo-panel {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+  width: 240px;
+  padding: 12px;
+}
+:root[data-theme="dark"] .pomo-panel {
+  background: #191c22;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.pomo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  cursor: move;
+  touch-action: none;
+  user-select: none;
+}
+.pomo-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  padding: 0 2px;
+}
+.pomo-phase {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted, #6b7280);
+  margin-bottom: 2px;
+}
+.pomo-display {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+}
+.pomo-controls {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.pomo-action-btn {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pomo-action-btn:active { transform: scale(0.97); }
+.pomo-action-btn.primary {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+:root[data-theme="dark"] .pomo-action-btn {
+  background: #20242c;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+:root[data-theme="dark"] .pomo-action-btn.primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+.pomo-settings {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--muted, #6b7280);
+  margin-bottom: 6px;
+}
+.pomo-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pomo-field input {
+  width: 44px;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #1f2937;
+}
+:root[data-theme="dark"] .pomo-field input {
+  border-color: #2a2e37;
+  background: #0f1115;
+  color: #e5e7eb;
+}
+.pomo-sessions {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted, #6b7280);
+}
+
+/* Always-visible mini countdown, independent of whether the panel above is
+   open -- shown only while a session is actively running (see render() in
+   initPomodoro()). Sits just below #corner-actions, same top offset as
+   .calc-overlay/.pomo-overlay so it doesn't collide with either. */
+.pomo-pill {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 14px;
+  z-index: 590;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+}
+.pomo-pill.visible { display: block; }
+/* The panel already shows the live countdown once open -- hiding the pill
+   in that state avoids the two overlapping (panel width can reach past the
+   pill's own position at right:14px). Relies on the pill being a later
+   DOM sibling of .pomo-overlay (theme.js appends it after), which the
+   general sibling combinator needs to match at all. */
+.pomo-overlay.open ~ .pomo-pill { display: none !important; }
+:root[data-theme="dark"] .pomo-pill {
+  background: #191c22;
+  color: #e5e7eb;
+  border-color: #2a2e37;
+}
+.pomo-pill.pomo-pill-break {
+  border-color: #86efac;
+  color: #166534;
+}
+:root[data-theme="dark"] .pomo-pill.pomo-pill-break {
+  border-color: #166534;
+  color: #86efac;
+}
+
+@media (max-width: 480px) {
+  .pomo-overlay { left: 12px; right: 12px; }
+  .pomo-panel { width: auto; }
 }
 
 /* First-visit guided tour, shared engine (window.SiteTour) used both by
@@ -1235,6 +1429,23 @@ mark.user-hl-yellow { background: rgba(253, 224, 71, .55); }
 mark.user-hl-green  { background: rgba(134, 239, 172, .55); }
 mark.user-hl-pink   { background: rgba(249, 168, 212, .55); }
 mark.user-hl-blue   { background: rgba(147, 197, 253, .55); }
+
+/* Other students' shared highlights (opt-in, theme.js's sharedHl module,
+   added 2026-07-14) -- deliberately a neutral dotted underline, not one of
+   the 4 personal highlight colors above or the orange search-hit color, so
+   "someone else marked this" always reads as visually distinct from "I
+   marked this" at a glance. Read-only (no click handler, no cursor:pointer,
+   no color swatches) -- unlike mark.user-hl, nothing happens on click.
+   Safe to nest inside (or contain) a user-hl/search-hit mark -- see the
+   containment-safety reasoning in the search-hit implementation above,
+   same TreeWalker-based text-node wrapping, no shared state between them. */
+mark.shared-hl {
+  background: rgba(148, 163, 184, .16);
+  border-bottom: 2px dotted rgba(100, 116, 139, .65);
+  padding: 0 1px;
+  border-radius: 2px;
+  cursor: default;
+}
 
 .hl-toolbar {
   position: absolute;
