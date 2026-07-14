@@ -553,6 +553,7 @@
     }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+    .tab-empty { font-size: 14px; color: var(--muted); padding: 20px 4px; }
 
     .exam-section {
       border: 1px solid var(--border);
@@ -1196,6 +1197,7 @@
         <button class="tab-btn" data-tab="anatomy">Anatomy</button>
         <button class="tab-btn" data-tab="anatomy-practicum">Anatomy Practicum</button>
         <button class="tab-btn" data-tab="intro-pa">Intro to PA Profession</button>
+        <button class="tab-btn" data-tab="cam-nutrition">CAM/Nutrition</button>
       </div>
       <p class="ai-disclaimer">Quizzes/Exams made by AI, use at you're own risk. Check info if unsure.</p>
 
@@ -1936,6 +1938,10 @@
         </details>
       </div>
 
+      <div class="tab-panel" id="cam-nutrition" data-class="cam-nutrition">
+        <p class="tab-empty">No quizzes yet for CAM/Nutrition — check back soon.</p>
+      </div>
+
       </div>
     </div>
 
@@ -1993,6 +1999,11 @@
       <button class="review-modal-close" id="whatsnew-modal-close" aria-label="Close">&times;</button>
       <p class="review-modal-title">What's new</p>
       <div class="review-modal-content">
+        <div class="divider"><span>July 14</span></div>
+        <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>New "CAM/Nutrition" tab &mdash; quizzes coming soon.</li>
+          <li>Search built into every study guide &mdash; press <kbd>/</kbd> or the search icon to jump straight to a term, anywhere in the guide.</li>
+        </ul>
         <div class="divider"><span>July 13</span></div>
         <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
           <li>2 new Physiology Exam 4 quizzes: Endocrine III &mdash; Male Reproductive Physiology (30 questions) and Endocrine III &mdash; Female Reproductive, Pregnancy &amp; Lactation (90 questions).</li>
