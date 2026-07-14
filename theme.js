@@ -280,6 +280,8 @@
     ["Select an answer", "1", "2", "3", "4"],
     ["Next question", "Enter", "→"],
     ["Previous question", "←"],
+    ["Controller: select answer", "A", "B", "X", "Y"],
+    ["Controller: next / back", "RB", "LB"],
     ["Show this help", "?"],
     ["Close this help", "Esc"]
   ];
@@ -1788,3 +1790,68 @@ window.openPauseOverlay = function (opts) {
     if (opts && opts.onResume) opts.onResume();
   });
 };
+
+// Optional gamepad support (added 2026-07-13) -- lets a connected
+// controller answer MCQ questions without ever touching the keyboard.
+// Bridges gamepad buttons into synthetic keydown events on the SAME keys
+// every quiz-engine family's own keyboard shortcuts already listen for
+// (a/b/c/d to pick a choice, ArrowRight/Enter to advance, ArrowLeft to go
+// back -- see feedback_new_exam_structure_match: "full keyboard navigation
+// on every quiz" has been a standing feature since early in the site).
+// That means this needs zero per-quiz changes and works identically across
+// every family at once, the same "generic engine, page-specific data"
+// split used elsewhere in this file -- except here the "page" is just
+// whatever keyboard handler already exists.
+(function () {
+  if (!("getGamepads" in navigator)) return;
+
+  // Standard gamepad mapping: 0-3 are the four face buttons (A/B/X/Y on
+  // Xbox-style pads, Cross/Circle/Square/Triangle on PlayStation) -- mapped
+  // left-to-right, top-to-bottom onto the on-screen A/B/C/D choice labels.
+  var CHOICE_KEYS = { 0: "a", 1: "b", 2: "c", 3: "d" };
+  // Right shoulder/trigger/Start advance; left shoulder/trigger goes back --
+  // mirrors how a physical controller's "confirm" side is usually the right
+  // hand and "cancel/back" the left.
+  var NEXT_BUTTONS = [5, 7, 9];
+  var PREV_BUTTONS = [4, 6];
+
+  var prevPressed = {};
+  var polling = false;
+
+  function fireKey(key) {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: key, bubbles: true, cancelable: true }));
+  }
+
+  function pollGamepads() {
+    var pads = navigator.getGamepads();
+    var anyConnected = false;
+    for (var p = 0; p < pads.length; p++) {
+      var gp = pads[p];
+      if (!gp) continue;
+      anyConnected = true;
+      var prev = prevPressed[gp.index] || {};
+      var now = {};
+      for (var i = 0; i < gp.buttons.length; i++) {
+        var pressed = gp.buttons[i].pressed || gp.buttons[i].value > 0.5;
+        now[i] = pressed;
+        if (pressed && !prev[i]) {
+          if (CHOICE_KEYS.hasOwnProperty(i)) fireKey(CHOICE_KEYS[i]);
+          else if (NEXT_BUTTONS.indexOf(i) !== -1) fireKey("ArrowRight");
+          else if (PREV_BUTTONS.indexOf(i) !== -1) fireKey("ArrowLeft");
+        }
+      }
+      prevPressed[gp.index] = now;
+    }
+    if (anyConnected) requestAnimationFrame(pollGamepads);
+    else polling = false;
+  }
+
+  window.addEventListener("gamepadconnected", function (e) {
+    prevPressed[e.gamepad.index] = {};
+    if (window.showToast) window.showToast("Controller connected 🎮 A/B/X/Y answers, RB/RT next, LB/LT back");
+    if (!polling) { polling = true; requestAnimationFrame(pollGamepads); }
+  });
+  window.addEventListener("gamepaddisconnected", function (e) {
+    delete prevPressed[e.gamepad.index];
+  });
+})();
