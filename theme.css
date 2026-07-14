@@ -122,6 +122,100 @@
 }
 :root[data-theme="dark"] .guide-back-link { color: #e5e7eb; }
 .guide-back-link:hover { text-decoration: underline; }
+
+/* In-guide search bar (theme.js, guide-search-* IDs). Sticky right below
+   .guide-back-bar at top:38px per that element's own stacking convention
+   (see the comment above it) -- hidden by default, toggled open by the
+   corner search button or the "/" shortcut. */
+.guide-search-bar {
+  position: sticky;
+  top: 38px;
+  z-index: 540;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.guide-search-bar.open { display: flex; }
+:root[data-theme="dark"] .guide-search-bar {
+  background: #191c22;
+  border-bottom-color: #2a2e37;
+}
+.guide-search-input {
+  flex: 1;
+  min-width: 0;
+  font: 500 14px/1.3 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #111827;
+}
+:root[data-theme="dark"] .guide-search-input {
+  border-color: #2a2e37;
+  background: #12151b;
+  color: #e5e7eb;
+}
+.guide-search-input:focus { outline: 2px solid #3b82f6; outline-offset: 1px; }
+.guide-search-count {
+  font: 600 12.5px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #6b7280;
+  min-width: 46px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+:root[data-theme="dark"] .guide-search-count { color: #9aa2af; }
+.guide-search-nav, .guide-search-close {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.guide-search-nav {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+}
+:root[data-theme="dark"] .guide-search-nav {
+  border-color: #2a2e37;
+  background: #12151b;
+  color: #cbd2dc;
+}
+.guide-search-close {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 19px;
+  line-height: 1;
+}
+:root[data-theme="dark"] .guide-search-close { color: #9aa2af; }
+mark.search-hit {
+  background: #fde68a;
+  color: #111827;
+  border-radius: 2px;
+}
+:root[data-theme="dark"] mark.search-hit {
+  background: #7a5f10;
+  color: #fef3c7;
+}
+mark.search-hit-current {
+  background: #f97316;
+  color: #111827;
+  box-shadow: 0 0 0 2px #ea580c;
+}
+:root[data-theme="dark"] mark.search-hit-current {
+  background: #fb923c;
+  color: #1c1005;
+  box-shadow: 0 0 0 2px #f97316;
+}
 .corner-btn {
   width: 38px;
   height: 38px;

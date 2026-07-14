@@ -1879,12 +1879,200 @@
     document.body.appendChild(hlPanelOverlay);
   }
 
+  // In-guide search. Lives in this same closure (rather than a separate
+  // IIFE) purely to reuse `wrap` -- otherwise unrelated to highlighting.
+  // Walks every text node under `wrap` (not the highlight engine's `units`
+  // list) because search needs to find matches inside table cells, IO-nav
+  // pill labels, chip letters, everything -- not just the paragraph/list
+  // granularity highlighting cares about. On the tabbed Anatomy Exam 3
+  // guide, `.subj-panel`s the user hasn't clicked into are `display:none`
+  // but still fully present in the DOM, so their text is found same as any
+  // other guide's -- jumping to a match there re-uses the guide's own
+  // `.subj-tab` click handler (see inline <script> at the bottom of that
+  // file) to activate the right panel before scrolling, rather than
+  // duplicating that panel-switching logic here.
+  var searchMarks = [];
+  var searchIndex = -1;
+
+  function clearSearchMarks() {
+    searchMarks.forEach(function (mark) {
+      if (!mark.parentNode) return;
+      var parent = mark.parentNode;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      parent.normalize();
+    });
+    searchMarks = [];
+    searchIndex = -1;
+  }
+
+  function runSearch(query) {
+    clearSearchMarks();
+    var q = query.trim().toLowerCase();
+    if (q.length < 2) { updateSearchCount(); return; }
+
+    // Collect text nodes first, then mutate -- splicing marks into the DOM
+    // while a TreeWalker is still mid-walk over it is exactly the kind of
+    // live-mutation-during-traversal bug that produces skipped/duplicated
+    // nodes, so every node is gathered up front and only touched after.
+    var walker = document.createTreeWalker(wrap, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        return node.nodeValue && node.nodeValue.toLowerCase().indexOf(q) !== -1
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var textNodes = [];
+    var n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    textNodes.forEach(function (node) {
+      var text = node.nodeValue;
+      var lower = text.toLowerCase();
+      var frag = document.createDocumentFragment();
+      var lastEnd = 0, pos;
+      while ((pos = lower.indexOf(q, lastEnd)) !== -1) {
+        if (pos > lastEnd) frag.appendChild(document.createTextNode(text.slice(lastEnd, pos)));
+        var mark = document.createElement("mark");
+        mark.className = "search-hit";
+        mark.textContent = text.slice(pos, pos + q.length);
+        frag.appendChild(mark);
+        searchMarks.push(mark);
+        lastEnd = pos + q.length;
+      }
+      if (lastEnd < text.length) frag.appendChild(document.createTextNode(text.slice(lastEnd)));
+      node.parentNode.replaceChild(frag, node);
+    });
+
+    if (searchMarks.length) goToSearchMatch(0);
+    else updateSearchCount();
+  }
+
+  function goToSearchMatch(i) {
+    if (!searchMarks.length) return;
+    if (searchIndex >= 0 && searchMarks[searchIndex]) {
+      searchMarks[searchIndex].classList.remove("search-hit-current");
+    }
+    searchIndex = (i + searchMarks.length) % searchMarks.length;
+    var mark = searchMarks[searchIndex];
+    mark.classList.add("search-hit-current");
+
+    var panel = mark.closest(".subj-panel");
+    if (panel && !panel.classList.contains("active")) {
+      var subj = panel.getAttribute("data-subj");
+      var tab = Array.prototype.filter.call(
+        document.querySelectorAll(".subj-tab"),
+        function (t) { return t.dataset.subj === subj; }
+      )[0];
+      if (tab) tab.click();
+    }
+
+    mark.scrollIntoView({ behavior: "smooth", block: "center" });
+    updateSearchCount();
+  }
+
+  var searchCountEl = null;
+  function updateSearchCount() {
+    if (!searchCountEl) return;
+    searchCountEl.textContent = searchMarks.length
+      ? (searchIndex + 1) + " / " + searchMarks.length
+      : "0 / 0";
+  }
+
+  function initGuideSearch() {
+    var backBar = document.querySelector(".guide-back-bar");
+    if (!backBar || !backBar.parentNode) return null;
+
+    var bar = document.createElement("div");
+    bar.className = "guide-search-bar";
+    bar.id = "guide-search-bar";
+    bar.innerHTML =
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;opacity:.55"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+      '<input type="text" class="guide-search-input" id="guide-search-input" placeholder="Search this guide…" autocomplete="off">' +
+      '<span class="guide-search-count" id="guide-search-count"></span>' +
+      '<button type="button" class="guide-search-nav" id="guide-search-prev" aria-label="Previous match" title="Previous match (Shift+Enter)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>' +
+      '</button>' +
+      '<button type="button" class="guide-search-nav" id="guide-search-next" aria-label="Next match" title="Next match (Enter)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+      '</button>' +
+      '<button type="button" class="guide-search-close" id="guide-search-close" aria-label="Close search">&times;</button>';
+    backBar.parentNode.insertBefore(bar, backBar.nextSibling);
+
+    var input = bar.querySelector("#guide-search-input");
+    searchCountEl = bar.querySelector("#guide-search-count");
+    var prevBtn = bar.querySelector("#guide-search-prev");
+    var nextBtn = bar.querySelector("#guide-search-next");
+    var closeBtn = bar.querySelector("#guide-search-close");
+
+    var debounceTimer = null;
+    input.addEventListener("input", function () {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () { runSearch(input.value); }, 150);
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (e.shiftKey) goToSearchMatch(searchIndex - 1);
+        else goToSearchMatch(searchIndex + 1);
+      } else if (e.key === "Escape") {
+        close();
+      }
+    });
+    prevBtn.addEventListener("click", function () { goToSearchMatch(searchIndex - 1); });
+    nextBtn.addEventListener("click", function () { goToSearchMatch(searchIndex + 1); });
+    closeBtn.addEventListener("click", close);
+
+    function isOpen() { return bar.classList.contains("open"); }
+    function open() {
+      bar.classList.add("open");
+      input.focus();
+    }
+    function close() {
+      bar.classList.remove("open");
+      input.value = "";
+      clearSearchMarks();
+      updateSearchCount();
+    }
+    function toggle() { if (isOpen()) close(); else open(); }
+
+    // "/" opens search from anywhere on the guide, same convention as
+    // GitHub/Slack -- guides have no other single-key shortcut to collide
+    // with (that's quiz-only, gated behind #timerpill, which no guide has).
+    // Guarded against firing while any text input/textarea already has
+    // focus (typing "/" into the highlight note textarea, for instance)
+    // so it only ever acts as a global shortcut, never hijacks real typing.
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || isOpen()) return;
+      var active = document.activeElement;
+      if (active && /^(input|textarea)$/i.test(active.tagName)) return;
+      e.preventDefault();
+      open();
+    });
+
+    return { toggle: toggle };
+  }
+
+  var guideSearchHelp = initGuideSearch();
+
   // Appended into the existing corner-action button group (id set by the
   // separate corner-buttons IIFE above, which has already run and built it
   // by the time this one executes) rather than duplicating makeCornerBtn's
   // setup here -- same visual button, just added from a different closure.
   var cornerGroup = document.getElementById("corner-actions");
   if (cornerGroup) {
+    if (guideSearchHelp) {
+      var searchBtn = document.createElement("button");
+      searchBtn.type = "button";
+      searchBtn.id = "guide-search-btn";
+      searchBtn.className = "corner-btn";
+      searchBtn.setAttribute("aria-label", "Search this guide");
+      searchBtn.title = "Search this guide (/)";
+      searchBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+      searchBtn.addEventListener("click", guideSearchHelp.toggle);
+      cornerGroup.appendChild(searchBtn);
+    }
+
     var hlPanelBtn = document.createElement("button");
     hlPanelBtn.type = "button";
     hlPanelBtn.id = "hl-panel-btn";
