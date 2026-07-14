@@ -926,6 +926,14 @@
   // names -- each guide's own markup picks whichever it already uses).
   var UNIT_SELECTOR = "p, li, .cap, .figcap, .callout, td, .io";
   var RATES = [1, 1.25, 1.5, 1.75, 2];
+  // Each reading unit is its own separate audio clip (or its own separate
+  // speechSynthesis utterance) with no trailing silence baked in -- jumping
+  // straight from one into the next with zero gap reads as a run-on,
+  // since none of the natural inter-sentence pausing a single continuous
+  // utterance would have gets carried over between two separate units.
+  // A short fixed gap between units restores that breathing room
+  // regardless of playback rate.
+  var PARAGRAPH_PAUSE_MS = 350;
 
   // Notation that reads fine on screen (arrows, chemistry sub/superscripts,
   // em dashes) often reads as silence, a mumble, or a literal symbol name
@@ -1194,7 +1202,7 @@
       var utter = new SpeechSynthesisUtterance(speakableText(el.textContent.trim()));
       utter.rate = RATES[rateIdx];
       if (selectedVoice) utter.voice = selectedVoice;
-      utter.onend = function () { if (playing) speakIndex(i + 1); };
+      utter.onend = function () { if (playing) setTimeout(function () { if (playing) speakIndex(i + 1); }, PARAGRAPH_PAUSE_MS); };
       utter.onerror = function () { if (playing) speakIndex(i + 1); };
       speechSynthesis.speak(utter);
     }
@@ -1234,7 +1242,10 @@
           speechSynthesis.cancel();
         }
         audio.onplaying = markStarted;
-        audio.onended = function () { if (isCurrent() && playing) speakIndex(i + 1); };
+        audio.onended = function () {
+          if (!isCurrent() || !playing) return;
+          setTimeout(function () { if (isCurrent() && playing) speakIndex(i + 1); }, PARAGRAPH_PAUSE_MS);
+        };
         // Missing/failed pre-rendered file for this unit (e.g. a guide only
         // partly through the audio pipeline) -- fall back to live synthesis
         // for just this one paragraph rather than breaking the whole read.
