@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro to the PA Profession — Form A</title>
+<style>
+:root{--ink:#1c1a17;--paper:#fbf9f5;--accent:#7c2d2d;--accent2:#b08331;--accent3:#256d68;--line:#e4ddd1;--soft:#6d655a;--good:#256d3f;--bad:#9a2b2b;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;line-height:1.5;}
+header{background:var(--accent);color:#fff;padding:26px 22px;}
+header h1{font-family:ui-sans-serif,system-ui,sans-serif;margin:0 0 4px;font-size:1.5rem;}
+header p{margin:0;color:#f0ddd1;font-size:.9rem;}
+.wrap{max-width:820px;margin:0 auto;padding:22px 18px 80px;}
+.bar{position:sticky;top:0;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line);z-index:5;}
+.progtrack{height:8px;background:#eae3d6;border-radius:6px;overflow:hidden;}
+.progfill{height:100%;width:0;background:var(--accent2);transition:width .25s;}
+.meta{display:flex;justify-content:space-between;font-family:ui-sans-serif,sans-serif;font-size:.8rem;color:var(--soft);margin-top:6px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px 22px 18px;margin-top:18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.iotag{display:inline-block;background:#f1ede3;color:var(--accent3);font-family:ui-sans-serif,sans-serif;font-size:.68rem;letter-spacing:.5px;padding:3px 9px;border-radius:10px;margin-bottom:12px;text-transform:uppercase;}
+.qnum{font-family:ui-sans-serif,sans-serif;color:var(--soft);font-size:.8rem;}
+.stem{font-size:1.1rem;margin:6px 0 16px;font-weight:600;}
+.opt{display:block;width:100%;text-align:left;background:#faf7f1;border:1.5px solid var(--line);border-radius:8px;padding:12px 15px;margin-bottom:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;transition:.12s;color:var(--ink);}
+.opt:hover:not(:disabled){border-color:var(--accent2);background:#f6efe0;}
+.opt:disabled{cursor:default;}
+.opt .lbl{font-weight:bold;color:var(--accent);margin-right:8px;font-family:ui-sans-serif,sans-serif;}
+.opt.correct{border-color:var(--good);background:#e8f3ec;}
+.opt.correct .lbl{color:var(--good);}
+.opt.wrong{border-color:var(--bad);background:#f6e7e7;}
+.opt.wrong .lbl{color:var(--bad);}
+.fb{margin-top:8px;font-family:ui-sans-serif,sans-serif;font-size:.9rem;padding:10px 14px;border-radius:8px;display:none;}
+.fb.show{display:block;}
+.fb.ok{background:#e8f3ec;color:var(--good);}
+.fb.no{background:#f6e7e7;color:var(--bad);}
+.nav{display:flex;justify-content:space-between;margin-top:18px;gap:12px;}
+button.act{font-family:ui-sans-serif,sans-serif;font-size:.95rem;padding:11px 20px;border-radius:8px;border:none;cursor:pointer;background:var(--accent);color:#fff;}
+button.act.ghost{background:#efe9dd;color:var(--ink);}
+button.act:disabled{opacity:.4;cursor:default;}
+.results{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;margin-top:20px;text-align:center;}
+.results h2{font-family:ui-sans-serif,sans-serif;color:var(--accent);}
+.score{font-size:3rem;font-family:ui-sans-serif,sans-serif;color:var(--accent2);margin:8px 0;}
+.iobreak{text-align:left;margin:18px auto 0;max-width:520px;}
+.iobreak h3{font-family:ui-sans-serif,sans-serif;font-size:.9rem;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;}
+.iorow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:.95rem;}
+.hidden{display:none;}
+.rev-item{text-align:left;border-top:1px solid var(--line);padding:14px 0;}
+.rev-q{font-weight:600;}
+.rev-a{font-family:ui-sans-serif,sans-serif;font-size:.9rem;margin-top:4px;}
+.rev-a .yours{color:var(--bad);} .rev-a .right{color:var(--good);}
+</style>
+</head>
+<body>
+<header>
+  <h1>Introduction to the PA Profession</h1>
+  <p>Comprehensive Quiz · Form A · 60 Questions · Class of 2028</p>
+</header>
+<div class="wrap">
+  <div class="bar">
+    <div class="progtrack"><div class="progfill" id="pf"></div></div>
+    <div class="meta"><span id="pos">Question 1 of 60</span><span id="sc">Score: 0/0</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div id="end" class="hidden"></div>
+</div>
+<script>
+const QUESTIONS = [{"q": "Who is considered the 'father' of the PA profession and founded the first program at Duke in 1965?", "o": ["Dr. Amos Johnson", "Dr. Richard Smith", "Dr. Charles Hudson", "Dr. Eugene Stead"], "a": 3, "io": "History of the PA Profession"}, {"q": "The first PA class at Duke University consisted of four former members of which group?", "o": ["Peace Corps volunteers", "Navy corpsmen", "Army medics", "Air Force pararescue"], "a": 1, "io": "History of the PA Profession"}, {"q": "In what year did Dr. Charles Hudson first introduce the PA 'concept' in a speech to the AMA House of Delegates?", "o": ["1965", "1971", "1955", "1961"], "a": 3, "io": "History of the PA Profession"}, {"q": "Which historical non-physician provider originated in Russia and still exists today?", "o": ["Village health worker", "Officer de Santé", "Feldsher", "Nurse midwife"], "a": 2, "io": "History of the PA Profession"}, {"q": "Which rural North Carolina physician-and-assistant pair (Dr. Amos Johnson and Buddy Treadwell) served as a role model for the PA profession?", "o": ["Two military corpsmen", "A pharmacist and a technician", "A nurse and a midwife", "A physician and his doctor's assistant"], "a": 3, "io": "History of the PA Profession"}, {"q": "The five stages of evolutionary development of the PA profession are Ideology, Implementation, Evaluation, Incorporation, and:", "o": ["Maturation", "Regulation", "Certification", "Consolidation"], "a": 0, "io": "History of the PA Profession"}, {"q": "During which stage did HMO research demonstrate a 76% 'substitutability factor' for PAs?", "o": ["Maturation", "Evaluation", "Ideology", "Implementation"], "a": 1, "io": "History of the PA Profession"}, {"q": "The Medex model for PA education was developed by which physician?", "o": ["Dr. Henry Silver", "Dr. Hu Myers", "Dr. Richard Smith", "Dr. Eugene Stead"], "a": 2, "io": "History of the PA Profession"}, {"q": "Colorado's Child Health Associate Program (1968) was developed by:", "o": ["Dr. Amos Johnson", "Dr. Charles Hudson", "Dr. Henry Silver", "Dr. Eugene Stead"], "a": 2, "io": "History of the PA Profession"}, {"q": "The '4 pillars' of the PA profession include professional association, educational organization, national certification, and:", "o": ["Malpractice coverage", "Continuing education", "State licensure", "Program accreditation"], "a": 3, "io": "History of the PA Profession"}, {"q": "In 1997, the Balanced Budget Act allowed CMS reimbursement to PAs in all settings at what percentage of physician fees?", "o": ["80%", "100%", "85%", "75%"], "a": 2, "io": "History of the PA Profession"}, {"q": "In 2021, the AAPA House of Delegates officially changed the profession's title designation to:", "o": ["Physician Associate", "Associate Physician", "Medical Practitioner", "Physician Extender"], "a": 0, "io": "History of the PA Profession"}, {"q": "By the end of 2025, approximately how many PAs were certified?", "o": ["150,000", "201,038", "330,000", "92,049"], "a": 1, "io": "History of the PA Profession"}, {"q": "Optimal Team Practice (OTP) was passed by the AAPA House of Delegates in what year?", "o": ["2021", "2014", "2010", "2017"], "a": 3, "io": "History of the PA Profession"}, {"q": "The mission of the PA History Society (PAHx) is best described as:", "o": ["Sharing the history of the PA profession", "Certifying PAs nationally", "Lobbying for PA legislation", "Accrediting PA programs"], "a": 0, "io": "History of the PA Profession"}, {"q": "Which agency is the recognized accrediting body for PA educational programs?", "o": ["ARC-PA", "NCCPA", "PAEA", "AAPA"], "a": 0, "io": "PA Organizations"}, {"q": "ARC-PA was created in what year?", "o": ["1994", "1974", "2001", "2010"], "a": 2, "io": "PA Organizations"}, {"q": "Which organization administers the CASPA centralized application service?", "o": ["PAEA", "NCCPA", "ARC-PA", "AAPA"], "a": 0, "io": "PA Organizations"}, {"q": "The PACKRAT and End-of-Rotation exams are assessment tools produced by:", "o": ["ARC-PA", "PAEA", "FSMB", "NCCPA"], "a": 1, "io": "PA Organizations"}, {"q": "Which organization is the ONLY nationally recognized certifying body for PAs?", "o": ["AAPA", "PAEA", "ARC-PA", "NCCPA"], "a": 3, "io": "PA Organizations"}, {"q": "NCCPA was established in what year?", "o": ["1972", "1981", "1965", "1974"], "a": 3, "io": "PA Organizations"}, {"q": "The right to use the 'PA-C' designation is conferred by:", "o": ["NCCPA", "State medical boards", "ARC-PA", "AAPA"], "a": 0, "io": "PA Organizations"}, {"q": "Which of the following is a Certificate of Added Qualifications (CAQ) offered by NCCPA?", "o": ["Pathology", "Radiology", "Emergency Medicine", "Anesthesiology"], "a": 2, "io": "PA Organizations"}, {"q": "The policy-making body of the AAPA is the:", "o": ["Judicial Affairs Commission", "House of Delegates", "Assembly of Representatives", "Board of Directors"], "a": 1, "io": "PA Organizations"}, {"q": "The student delegation to the AAPA House of Delegates numbers how many delegates?", "o": ["15", "13", "27", "22"], "a": 3, "io": "PA Organizations"}, {"q": "Which organization is the only one that represents PAs in the state of Florida?", "o": ["SAAAPA", "FSMB", "FAPA", "PAF"], "a": 2, "io": "PA Organizations"}, {"q": "AAPA student membership costs how much for the entire time enrolled in an accredited program?", "o": ["$195", "$75", "$60", "$100"], "a": 1, "io": "PA Organizations"}, {"q": "The Physician Associate Foundation (PAF) primarily focuses on:", "o": ["Program accreditation", "Certification exams", "Philanthropy and service", "Legislative lobbying"], "a": 2, "io": "PA Organizations"}, {"q": "As of the lecture, ARC-PA publishes accreditation standards currently in which edition?", "o": ["4th edition", "5th edition", "6th edition", "7th edition"], "a": 2, "io": "PA Organizations"}, {"q": "The SAAAPA Student President holds what position within AAPA?", "o": ["A seat on the AAPA Board of Directors", "President of PAEA", "Chair of the HOD", "A voting FSMB member"], "a": 0, "io": "PA Organizations"}, {"q": "The PA professional competencies are organized into how many domains?", "o": ["Four", "Seven", "Six", "Five"], "a": 1, "io": "Professional Practice"}, {"q": "The PA competencies were most recently revised in what year?", "o": ["2017", "2021", "2014", "2025"], "a": 1, "io": "Professional Practice"}, {"q": "Which is one of the seven PA competency domains?", "o": ["Financial management", "Pharmacology mastery", "Surgical technique", "Society and population health"], "a": 3, "io": "Professional Practice"}, {"q": "The PANCE consists of how many multiple-choice questions?", "o": ["360", "330", "300", "400"], "a": 0, "io": "Professional Practice"}, {"q": "What percentage of PANCE questions are surgical?", "o": ["At least 20%", "Exactly 50%", "At least 10%", "At least 30%"], "a": 0, "io": "Professional Practice"}, {"q": "How many hours of CME must a certified PA earn every two years to maintain certification?", "o": ["150 hours", "75 hours", "50 hours", "100 hours"], "a": 3, "io": "Professional Practice"}, {"q": "Of the required CME hours, at least how many must be Category I?", "o": ["50", "75", "25", "100"], "a": 0, "io": "Professional Practice"}, {"q": "A PA must recertify by examination every how many years?", "o": ["It is not required", "5 years", "2 years", "10 years"], "a": 3, "io": "Professional Practice"}, {"q": "Which recertification option involves 25 questions quarterly over 12 quarters, scored instantly?", "o": ["PANRE-LA", "PANCE", "PANRE", "PACKRAT"], "a": 0, "io": "Professional Practice"}, {"q": "Licensure is described as which method of professional regulation?", "o": ["The least rigorous", "A voluntary option", "Equivalent to registration", "The most rigorous"], "a": 3, "io": "Professional Practice"}, {"q": "In Florida, PA licenses are valid for how long?", "o": ["10 years", "2 years", "1 year", "5 years"], "a": 1, "io": "Professional Practice"}, {"q": "Which process verifies a provider's education and training via primary source?", "o": ["Licensure", "Privileging", "Credentialing", "Scope determination"], "a": 2, "io": "Professional Practice"}, {"q": "Standard PA reimbursement under Medicare is generally what percentage of the physician fee?", "o": ["50%", "85%", "13.6%", "100%"], "a": 1, "io": "Professional Practice"}, {"q": "'Incident-to' billing reimburses at what rate?", "o": ["13.6% of physician fee", "100% of physician fee", "85% of physician fee", "50% of physician fee"], "a": 1, "io": "Professional Practice"}, {"q": "The Emergency Medical Treatment and Labor Act (EMTALA) was enacted in what year?", "o": ["2010", "1974", "1997", "1986"], "a": 3, "io": "Professional Practice"}, {"q": "Under EMTALA, a hospital must provide what to any individual requesting emergency care?", "o": ["Free treatment", "A medical screening exam", "Immediate surgery", "A specialist consult"], "a": 1, "io": "Professional Practice"}, {"q": "Which type of malpractice policy requires 'tail coverage'?", "o": ["Claims-made", "Named-insured", "Occurrence", "Bundled"], "a": 0, "io": "Professional Practice"}, {"q": "The primary goal of Optimal Team Practice is to:", "o": ["Increase PA salaries", "Require physician co-signature on all notes", "Remove burdensome administrative constraints on PA practice", "Standardize the PANCE"], "a": 2, "io": "Professional Practice"}, {"q": "An Accountable Care Organization (ACO) must have a minimum of how many patients to start?", "o": ["5,000", "10,000", "1,000", "2,500"], "a": 0, "io": "Professional Practice"}, {"q": "The World Health Organization defines interprofessional collaborative practice as multiple professionals working together with patients, families, caregivers, and:", "o": ["Administrators", "Insurers", "Communities", "Regulators"], "a": 2, "io": "Health Care is Teamwork"}, {"q": "Which is a documented benefit of interprofessional collaboration?", "o": ["Reduced patient compliance", "Higher error rates", "Increased mortality", "Decreased professional burnout"], "a": 3, "io": "Health Care is Teamwork"}, {"q": "Which is listed as a challenge/barrier to effective interprofessional collaboration?", "o": ["High staffing levels", "Hierarchical power structures", "Shared electronic records", "Standardized rounds"], "a": 1, "io": "Health Care is Teamwork"}, {"q": "A CRNA is a nurse who has completed additional training to:", "o": ["Interpret radiographs", "Deliver babies", "Perform surgery", "Administer anesthesia"], "a": 3, "io": "Health Care is Teamwork"}, {"q": "A Licensed Practical Nurse (LPN) typically works under the supervision of a(n):", "o": ["Physician", "Physician Assistant", "Registered Nurse", "Pharmacist"], "a": 2, "io": "Health Care is Teamwork"}, {"q": "Which provider requires a PharmD degree and is licensed by a State Board of Pharmacy?", "o": ["Pharmacy technician", "Pharmacist", "Medical assistant", "Respiratory therapist"], "a": 1, "io": "Health Care is Teamwork"}, {"q": "A Licensed Clinical Social Worker (LCSW) is specifically trained in:", "o": ["Anesthesia", "Psychotherapy", "Physical rehabilitation", "Radiologic imaging"], "a": 1, "io": "Health Care is Teamwork"}, {"q": "Which of the four tenets of patient-centered care emphasizes family beliefs and values?", "o": ["Dignity and respect", "Participation", "Information sharing", "Collaboration"], "a": 0, "io": "Health Care is Teamwork"}, {"q": "PAs are said to practice 'anywhere there are':", "o": ["Pharmacies", "Hospitals", "Physicians", "Nurses"], "a": 2, "io": "PAs & Clinical Practice"}, {"q": "Which is one of the '5 C's' describing primary care functions?", "o": ["Coordinated", "Curative", "Corporate", "Compulsory"], "a": 0, "io": "PAs & Clinical Practice"}, {"q": "Per the lecture, the professionalism qualities described are also commonly called:", "o": ["Technical skills", "Hard skills", "Soft skills", "Clinical skills"], "a": 2, "io": "Professionalism"}];
+let idx=0, score=0, answered=0;
+const responses = new Array(QUESTIONS.length).fill(null);
+const quiz=document.getElementById('quiz');
+const pf=document.getElementById('pf'), pos=document.getElementById('pos'), sc=document.getElementById('sc');
+const LETTERS=['A','B','C','D'];
+
+function render(){
+  const q=QUESTIONS[idx];
+  const chosen=responses[idx];
+  let opts=q.o.map((t,i)=>{
+    let cls='opt';
+    if(chosen!==null){
+      if(i===q.a) cls+=' correct';
+      else if(i===chosen.pick && !chosen.correct) cls+=' wrong';
+    }
+    const dis = chosen!==null ? 'disabled' : '';
+    return `<button class="${cls}" ${dis} onclick="pick(${i})"><span class="lbl">${LETTERS[i]}</span>${escapeHtml(t)}</button>`;
+  }).join('');
+  let fb='';
+  if(chosen!==null){
+    fb = chosen.correct
+      ? `<div class="fb ok show">Correct.</div>`
+      : `<div class="fb no show">Incorrect. The correct answer is ${LETTERS[q.a]}: ${escapeHtml(q.o[q.a])}</div>`;
+  }
+  quiz.innerHTML=`<div class="card">
+    <span class="iotag">${escapeHtml(q.io)}</span>
+    <div class="qnum">Question ${idx+1}</div>
+    <div class="stem">${escapeHtml(q.q)}</div>
+    ${opts}${fb}
+    <div class="nav">
+      <button class="act ghost" onclick="prev()" ${idx===0?'disabled':''}>Back</button>
+      ${idx<QUESTIONS.length-1
+         ? `<button class="act" onclick="next()" ${chosen===null?'disabled':''} id="nextb">Next</button>`
+         : `<button class="act" onclick="finish()" ${answered<QUESTIONS.length?'disabled':''} id="nextb">See Results</button>`}
+    </div>
+  </div>`;
+  pos.textContent=`Question ${idx+1} of ${QUESTIONS.length}`;
+  sc.textContent=`Score: ${score}/${answered}`;
+  pf.style.width=(answered/QUESTIONS.length*100)+'%';
+}
+function pick(i){
+  if(responses[idx]!==null) return;
+  const q=QUESTIONS[idx];
+  const correct=(i===q.a);
+  responses[idx]={pick:i,correct};
+  answered++; if(correct) score++;
+  render();
+}
+function next(){ if(idx<QUESTIONS.length-1){idx++;render();} }
+function prev(){ if(idx>0){idx--;render();} }
+function finish(){
+  const io={};
+  QUESTIONS.forEach((q,i)=>{
+    if(!io[q.io]) io[q.io]={c:0,t:0};
+    io[q.io].t++;
+    if(responses[i]&&responses[i].correct) io[q.io].c++;
+  });
+  let iohtml=Object.entries(io).map(([k,v])=>`<div class="iorow"><span>${escapeHtml(k)}</span><span>${v.c}/${v.t}</span></div>`).join('');
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let rev=QUESTIONS.map((q,i)=>{
+    const r=responses[i];
+    if(r&&r.correct) return '';
+    const yours = r? q.o[r.pick] : '(no answer)';
+    return `<div class="rev-item"><div class="rev-q">${i+1}. ${escapeHtml(q.q)}</div>
+      <div class="rev-a"><span class="yours">Your answer: ${escapeHtml(yours)}</span><br>
+      <span class="right">Correct: ${escapeHtml(q.o[q.a])}</span></div></div>`;
+  }).join('');
+  document.querySelector('.bar').classList.add('hidden');
+  quiz.classList.add('hidden');
+  const end=document.getElementById('end');
+  end.classList.remove('hidden');
+  end.innerHTML=`<div class="results">
+    <h2>Quiz Complete — Form A</h2>
+    <div class="score">${score}/${QUESTIONS.length}</div>
+    <div style="font-family:ui-sans-serif,sans-serif;color:var(--soft)">${pct}%</div>
+    <div class="iobreak"><h3>Breakdown by Topic</h3>${iohtml}</div>
+    <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="act" onclick="location.reload()">Retake</button>
+      <button class="act ghost" onclick="toggleReview()">Review Missed</button>
+    </div>
+    <div id="review" class="hidden" style="margin-top:20px">${rev||'<p>Perfect score — nothing to review!</p>'}</div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function toggleReview(){document.getElementById('review').classList.toggle('hidden');}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+render();
+</script>
+</body>
+</html>
