@@ -66,28 +66,58 @@
   svg.setAttribute("preserveAspectRatio", "none");
   wrap.appendChild(svg);
 
+  // Reading wrap.scrollHeight forces the browser to fully compute layout
+  // right then, if it isn't already clean -- on a guide with dozens of
+  // large embedded images still decoding in right after parse, that's a
+  // genuinely expensive synchronous reflow, not a cheap property read.
+  // Doing this the instant the script loads competes with the page's own
+  // initial render for the busiest moment of the page's whole lifecycle.
+  // requestIdleCallback (falling back to a short setTimeout on Safari,
+  // which doesn't implement it) pushes the *first* measurement to after
+  // the browser has caught its breath, instead of adding to that initial
+  // crunch.
   function resizeSvg() {
     svg.style.height = wrap.scrollHeight + "px";
   }
-  resizeSvg();
+  var deferIdle = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
+  deferIdle(resizeSvg);
+
   // Keeps the SVG's own pixel height in sync with the wrap's actual layout
-  // height continuously (not just once at load) -- covers late-loading
-  // fonts/content, window resizes, and the "Larger text" setting toggling
-  // mid-session, all without needing a fixed delay guess.
+  // height as things change (late-loading fonts, window resizes, the
+  // "Larger text" setting toggling mid-session) -- but debounced, not run
+  // on every single fire. Each of a guide's images finishing decode
+  // independently nudges wrap's height slightly, and without debouncing,
+  // a page with dozens of images can fire this observer dozens of times
+  // within the first couple seconds, each one forcing its own synchronous
+  // reflow -- exactly the kind of layout-thrashing pattern that makes a
+  // heavy page feel stuck. Waiting for 200ms of quiet collapses all of
+  // that into one measurement after things settle.
+  var resizeDebounce = null;
+  function onWrapResize() {
+    clearTimeout(resizeDebounce);
+    resizeDebounce = setTimeout(resizeSvg, 200);
+  }
   if (window.ResizeObserver) {
-    new ResizeObserver(resizeSvg).observe(wrap);
+    new ResizeObserver(onWrapResize).observe(wrap);
   } else {
-    window.addEventListener("resize", resizeSvg);
+    window.addEventListener("resize", onWrapResize);
   }
 
+  // Deliberately NOT svg.getScreenCTM()/createSVGPoint() -- WebKit's SVG
+  // coordinate-transform implementation has known inconsistencies on iOS
+  // Safari, especially for a preserveAspectRatio="none" SVG this tall (up
+  // to ~27,000px) inside a scrolling container, and a wrong/stale CTM read
+  // mid-gesture is the leading suspect for ink landing well below the
+  // actual pencil tip. getBoundingClientRect() is a simpler, far more
+  // uniformly-implemented API that returns exactly the same viewport-
+  // relative coordinate space clientX/clientY already use, so the
+  // percent-of-box math below needs no separate scroll-position handling.
   function svgPointFromEvent(e) {
-    var pt = svg.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-    var ctm = svg.getScreenCTM();
-    if (!ctm) return null;
-    var p = pt.matrixTransform(ctm.inverse());
-    return { x: p.x, y: p.y };
+    var r = svg.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    var xPct = (e.clientX - r.left) / r.width;
+    var yPct = (e.clientY - r.top) / r.height;
+    return { x: xPct * VB, y: yPct * VB };
   }
 
   function pathD(points) {
@@ -137,28 +167,40 @@
     svg.style.pointerEvents = on ? "auto" : "none";
   }
 
+  // pointermove/pointerup/pointercancel are attached to `document`, not
+  // `svg`, for the duration of an active stroke (added in onPointerDown,
+  // removed in onPointerUp/onPointerCancel below) rather than relying on
+  // setPointerCapture to keep the SVG receiving them. Capture can silently
+  // fail (see the try/catch below), and even when it doesn't, a fast
+  // stroke's coordinates landing a hair outside the SVG's own layout box
+  // for a frame (sub-pixel rounding, momentary reflow) would otherwise
+  // drop that segment of the stroke entirely -- reported as "writes for a
+  // second, then stops." Listening at the document level makes tracking
+  // independent of the pointer's precise position relative to the SVG's
+  // box once a stroke has actually started.
   function onPointerDown(e) {
     if (!drawModeOn || e.pointerType === "touch") return;
     e.preventDefault();
     var p = svgPointFromEvent(e);
     if (!p) return;
-    // Capture is a nice-to-have (keeps pointermove/pointerup targeting the
-    // SVG even if a fast stroke briefly leaves its bounds) -- not something
-    // the rest of this function should depend on succeeding. It can throw
-    // (InvalidPointerId) in edge cases the browser doesn't consider the
-    // pointer "active" for capture purposes; a failed capture should never
-    // block the stroke itself from being drawn and saved.
+    // Purely a nice-to-have now (helps some browsers keep routing events
+    // to this pointerId consistently) -- document-level tracking below no
+    // longer depends on this succeeding, so a failure here is silently
+    // ignored rather than aborting the stroke.
     try { svg.setPointerCapture(e.pointerId); } catch (err) {}
 
     if (currentTool === "eraser") {
       liveStroke = { erasing: true };
       eraseNear(p);
-      return;
+    } else {
+      var s = { tool: currentTool, color: currentColor, width: currentTool === "highlighter" ? HIGHLIGHTER_WIDTH : PEN_WIDTH, points: [p] };
+      s.el = makePathEl(s);
+      svg.appendChild(s.el);
+      liveStroke = s;
     }
-    var s = { tool: currentTool, color: currentColor, width: currentTool === "highlighter" ? HIGHLIGHTER_WIDTH : PEN_WIDTH, points: [p] };
-    s.el = makePathEl(s);
-    svg.appendChild(s.el);
-    liveStroke = s;
+    document.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerup", onPointerUp);
+    document.addEventListener("pointercancel", onPointerUp);
   }
   function onPointerMove(e) {
     if (!liveStroke) return;
@@ -174,6 +216,9 @@
     liveStroke.el.setAttribute("d", pathD(liveStroke.points));
   }
   function onPointerUp() {
+    document.removeEventListener("pointermove", onPointerMove);
+    document.removeEventListener("pointerup", onPointerUp);
+    document.removeEventListener("pointercancel", onPointerUp);
     if (!liveStroke) return;
     if (!liveStroke.erasing) {
       if (liveStroke.points.length > 1) {
@@ -186,10 +231,13 @@
     liveStroke = null;
   }
 
+  // Only pointerdown lives on the SVG itself -- move/up/cancel are added
+  // to `document` dynamically per-stroke (see onPointerDown above) rather
+  // than being permanent listeners here, specifically so they don't ALSO
+  // fire from bubbling while the pointer is still over the SVG (which
+  // would double-handle every event: once via bubbling from the SVG's own
+  // listener, once from a redundant document-level one).
   svg.addEventListener("pointerdown", onPointerDown);
-  svg.addEventListener("pointermove", onPointerMove);
-  svg.addEventListener("pointerup", onPointerUp);
-  svg.addEventListener("pointercancel", onPointerUp);
 
   function eraseNear(p) {
     for (var i = strokes.length - 1; i >= 0; i--) {

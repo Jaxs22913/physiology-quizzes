@@ -2874,11 +2874,12 @@ window.openPauseOverlay = function (opts) {
 // Firebase dependency at all (it just writes to localStorage, which
 // cloud-sync.js picks up for free via its own Storage.prototype patch if
 // that's already loaded) -- so it's injected directly, no waiting on
-// anything. Self-gates internally on .guide-back-bar, same convention as
-// every other guide-only feature, so this script tag is a harmless no-op
-// fetch+eval on every non-guide page rather than something that needs
-// gating here too.
+// anything. Gated on .guide-back-bar HERE (not just inside guide-ink.js
+// itself) so the ~35 quiz pages and the homepage never even issue the
+// network request for a file they'd immediately no-op on -- one less
+// fetch in the critical path on every page that isn't a guide.
 (function () {
+  if (!document.querySelector(".guide-back-bar")) return;
   var thisScript = document.querySelector('script[src$="theme.js"]');
   var base = thisScript ? thisScript.getAttribute("src").replace(/theme\.js$/, "") : "";
   var s = document.createElement("script");
