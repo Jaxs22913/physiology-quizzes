@@ -279,6 +279,34 @@
   // listener, once from a redundant document-level one).
   svg.addEventListener("pointerdown", onPointerDown);
 
+  // Belt-and-suspenders against a real, documented iOS Safari quirk:
+  // touch-action:none plus preventDefault() on the pointer events (above)
+  // is the "correct by spec" way to stop a vertical pen stroke from being
+  // absorbed as a page scroll, and it's not always enough in practice --
+  // iOS still dispatches legacy touchstart/touchmove events alongside
+  // pointer events even for Apple Pencil input, and Safari's system-level
+  // gesture recognition (the same layer behind Scribble) can act on
+  // those *before* pointer-event handling ever gets a say, regardless of
+  // touch-action. Multiple independent reports of Safari+Pencil web
+  // drawing surfaces confirm the fix is a *separate*, non-passive
+  // touchmove (and touchstart) listener that calls preventDefault()
+  // directly -- not something achievable through pointer events alone.
+  // Harmless for real finger touches too: touch scrolling here is
+  // already fully reimplemented in JS (onTouchPointerDown/Move/End
+  // above), so blocking the native default doesn't remove anything that
+  // still relies on it.
+  function preventDuringDraw(e) {
+    if (drawModeOn) e.preventDefault();
+  }
+  svg.addEventListener("touchstart", preventDuringDraw, { passive: false });
+  svg.addEventListener("touchmove", preventDuringDraw, { passive: false });
+  // Also at the document level, in case the system-level gesture recognizer
+  // resolves its event target slightly differently than normal DOM hit-
+  // testing would (this bug has already resisted one fix attempt on real
+  // hardware, so the extra redundancy here is deliberate, not guesswork
+  // for its own sake).
+  document.addEventListener("touchmove", preventDuringDraw, { passive: false });
+
   function eraseNear(p) {
     for (var i = strokes.length - 1; i >= 0; i--) {
       var pts = strokes[i].points;
