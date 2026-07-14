@@ -167,6 +167,43 @@
     svg.style.pointerEvents = on ? "auto" : "none";
   }
 
+  // #guide-ink-svg has touch-action:none (theme.css) so a *pen* stroke can
+  // never be natively absorbed as a page scroll -- but touch-action has no
+  // way to scope that to pen only, so it also disables the browser's own
+  // touch-panning on this element while draw mode is active. This
+  // reimplements that scrolling manually for touch pointers specifically,
+  // so "your finger still scrolls while the toolbar is open" keeps being
+  // true instead of silently regressing as the cost of fixing the pen bug.
+  // No inertia/momentum -- a plain 1:1 finger-drag-to-scroll, not a full
+  // reproduction of native scroll physics.
+  var touchScroll = null;
+  function onTouchPointerDown(e) {
+    touchScroll = { pointerId: e.pointerId, startClientY: e.clientY, startScrollY: window.scrollY };
+    document.addEventListener("pointermove", onTouchPointerMove);
+    document.addEventListener("pointerup", onTouchPointerEnd);
+    document.addEventListener("pointercancel", onTouchPointerEnd);
+  }
+  function onTouchPointerMove(e) {
+    if (!touchScroll || e.pointerId !== touchScroll.pointerId) return;
+    var dy = e.clientY - touchScroll.startClientY;
+    // behavior:"instant" is required here, not optional -- guide pages set
+    // html{scroll-behavior:smooth} (for the IO-pill/anchor-jump nav), and
+    // the two-argument scrollTo(x,y) form inherits that CSS setting. A
+    // continuous drag fires many pointermove events per second; without
+    // forcing instant, each one would kick off its own smooth-scroll
+    // animation that interrupts the last, producing laggy, queued-feeling
+    // motion instead of the real-time 1:1 finger-tracking a native touch
+    // scroll has.
+    window.scrollTo({ left: window.scrollX, top: touchScroll.startScrollY - dy, behavior: "instant" });
+  }
+  function onTouchPointerEnd(e) {
+    if (!touchScroll || e.pointerId !== touchScroll.pointerId) return;
+    document.removeEventListener("pointermove", onTouchPointerMove);
+    document.removeEventListener("pointerup", onTouchPointerEnd);
+    document.removeEventListener("pointercancel", onTouchPointerEnd);
+    touchScroll = null;
+  }
+
   // pointermove/pointerup/pointercancel are attached to `document`, not
   // `svg`, for the duration of an active stroke (added in onPointerDown,
   // removed in onPointerUp/onPointerCancel below) rather than relying on
@@ -179,7 +216,8 @@
   // independent of the pointer's precise position relative to the SVG's
   // box once a stroke has actually started.
   function onPointerDown(e) {
-    if (!drawModeOn || e.pointerType === "touch") return;
+    if (!drawModeOn) return;
+    if (e.pointerType === "touch") { onTouchPointerDown(e); return; }
     e.preventDefault();
     var p = svgPointFromEvent(e);
     if (!p) return;
@@ -203,8 +241,10 @@
     document.addEventListener("pointercancel", onPointerUp);
   }
   function onPointerMove(e) {
+    // Touch never reaches this function -- onPointerDown routes it to
+    // onTouchPointerDown instead and returns before this listener is even
+    // registered, so there's no touch case to guard against here.
     if (!liveStroke) return;
-    if (e.pointerType === "touch") return;
     e.preventDefault();
     var p = svgPointFromEvent(e);
     if (!p) return;

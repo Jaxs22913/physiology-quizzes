@@ -1696,7 +1696,18 @@ mark.user-hl.hl-flash {
   left: 0;
   width: 100%;
   pointer-events: none;
-  touch-action: pan-y;
+  /* touch-action has no way to say "pan-y for touch, none for pen" on the
+     same element -- it's a whole-element hint, not scoped per pointer
+     type, and WebKit routes Apple Pencil through the same gesture-
+     recognition pipeline as touch. pan-y here let a *vertical* pen stroke
+     get natively absorbed as a page scroll before guide-ink.js's own
+     preventDefault() ever got a say -- confirmed by an actual user
+     reporting exactly that ("when writing it thinks I'm scrolling if I
+     move vertically"). none guarantees a pen stroke is never hijacked;
+     guide-ink.js reimplements touch scrolling manually in JS (see
+     onPointerDown's touch branch) so finger-scroll while the toolbar is
+     open doesn't just regress as the tradeoff for that guarantee. */
+  touch-action: none;
 }
 .ink-overlay {
   display: none;
