@@ -245,6 +245,12 @@
       accountBtnEl = document.getElementById("account-btn");
     }
     if (accountBtnEl) accountBtnEl.classList.toggle("signed-in", !!user);
+    // #account-btn itself is now always hidden (theme.css consolidated it
+    // into a Settings quick-action row) -- also badging #settings-btn
+    // keeps the glanceable "you're signed in" green dot visible somewhere,
+    // instead of it silently living on a button nobody ever sees.
+    var settingsBtnEl = document.getElementById("settings-btn");
+    if (settingsBtnEl) settingsBtnEl.classList.toggle("signed-in", !!user);
     if (accountOverlay) buildAccountPanelBody(user);
   }
 

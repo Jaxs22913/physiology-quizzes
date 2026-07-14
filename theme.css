@@ -16,27 +16,23 @@
   display: flex;
   gap: 8px;
 }
-/* On narrow screens, 5 separate circular icon buttons (settings, calculator,
-   refresh, theme, account) is a lot of same-weight chrome competing for
-   attention right at the top of every page. Below 641px, only #settings-btn
-   stays visible; the other four collapse into quick-action rows inside the
-   settings panel itself (see initSettingsPanel() in theme.js) -- same
-   underlying buttons/handlers, just triggered from inside the panel instead
-   of duplicated. .settings-quick-actions is the inverse: only shown at this
-   same breakpoint, since the icons already cover these actions above it.
+/* Settings, Search, Your highlights, and Draw are the only tools that stay
+   as standalone corner icons (per explicit product decision) -- Calculator,
+   Study timer, Refresh, Dark mode, and Account are consolidated into
+   quick-action rows inside the Settings panel instead (see
+   initSettingsPanel() in theme.js), at every screen width, not just on
+   mobile. This used to be a narrow-screen-only collapse (5-6 same-weight
+   icons is a lot of competing chrome on a small screen); folding it in
+   permanently keeps the corner row down to just the tools meant to be
+   reached for constantly, everywhere.
    Exception: #refresh-btn stays a visible icon on the homepage specifically
-   (higher specificity than the plain #refresh-btn rule above, so no
+   (higher specificity than the plain #refresh-btn rule below, so no
    !important needed) -- the homepage is the one page people land on
    repeatedly wanting a quick "check for updates" without detouring through
    Settings; initSettingsPanel() skips adding its quick-action row there to
    match (see theme.js), so it's not duplicated between icon and panel. */
-@media (max-width: 640px) {
-  #refresh-btn, #theme-toggle-btn, #calc-btn, #pomo-btn, #account-btn { display: none; }
-  body.homepage #refresh-btn { display: flex; }
-}
-@media (min-width: 641px) {
-  .settings-panel .quick-action { display: none; }
-}
+#refresh-btn, #theme-toggle-btn, #calc-btn, #pomo-btn, #account-btn { display: none; }
+body.homepage #refresh-btn { display: flex; }
 #install-app-btn {
   left: 14px;
 }

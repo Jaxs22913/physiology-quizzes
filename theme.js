@@ -476,15 +476,14 @@
     panel.appendChild(closeBtn);
     panel.appendChild(heading);
 
-    // Quick actions: on mobile, #refresh-btn/#theme-toggle-btn/#calc-btn/
-    // #account-btn are hidden (see theme.css) to cut down the row of same-
-    // weight corner icons -- these rows are the mobile replacement, wired
-    // by literally delegating to the still-fully-functional-but-hidden
-    // buttons (except dark mode, which calls setTheme/paintIcon directly
-    // since on mobile this row is the *only* way to toggle it, so there's
-    // no other place its state could drift out of sync from). Hidden again
-    // on desktop via the same .quick-action class (theme.css), since the
-    // icons already cover these there.
+    // Quick actions: #refresh-btn/#theme-toggle-btn/#calc-btn/#pomo-btn/
+    // #account-btn are always hidden now (see theme.css) -- Settings,
+    // Search, Your highlights, and Draw are the only tools that stay as
+    // standalone corner icons, everything else lives here instead. These
+    // rows are wired by literally delegating to the still-fully-functional
+    // -but-hidden buttons (except dark mode, which calls setTheme/
+    // paintIcon directly since this row is the *only* way to toggle it now,
+    // so there's no other place its state could drift out of sync from).
     var darkModeToggle = makeToggleRow(
       "Dark mode",
       currentTheme() === "dark",
