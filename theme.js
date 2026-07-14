@@ -1179,12 +1179,18 @@
         var audio = new Audio(audioDir + "/" + gender + "/" + num + ".mp3");
         audio.playbackRate = RATES[rateIdx];
         currentAudio = audio;
+        var started = false;
+        audio.onplaying = function () { started = true; };
         audio.onended = function () { if (playing) speakIndex(i + 1); };
         // Missing/failed pre-rendered file for this unit (e.g. a guide only
         // partly through the audio pipeline) -- fall back to live synthesis
         // for just this one paragraph rather than breaking the whole read.
-        audio.onerror = function () { speakLive(i, el); };
-        audio.play().catch(function () { speakLive(i, el); });
+        // Guarded on `started`: once the mp3 has actually begun playing, a
+        // later error event (e.g. a mid-stream network hiccup) must NOT
+        // also kick off live speech on top of audio that's already
+        // audible -- that produced both voices overlapping at once.
+        audio.onerror = function () { if (!started) speakLive(i, el); };
+        audio.play().catch(function () { if (!started) speakLive(i, el); });
       } else {
         speakLive(i, el);
       }
