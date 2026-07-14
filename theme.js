@@ -1521,6 +1521,33 @@
     saveHighlights(list);
   }
 
+  function updateHighlightColor(idx, start, end, color) {
+    var list = loadHighlights();
+    list.forEach(function (h) {
+      if (h.idx === idx && h.start === start && h.end === end) h.color = color;
+    });
+    saveHighlights(list);
+  }
+
+  // Keep a floating panel/popover inside the viewport rather than letting it
+  // render partly (or entirely) off-screen -- the previous left-only clamp
+  // (Math.max(8, ...)) never handled the right/top/bottom edges, which a
+  // selection near any of those edges would hit. Called after the element
+  // is appended (so its real rendered size via getBoundingClientRect is
+  // known) with the *desired* top/left already set; nudges them back into
+  // bounds if needed.
+  function clampToViewport(el) {
+    var pad = 8;
+    var rect = el.getBoundingClientRect();
+    var left = rect.left, top = rect.top;
+    if (rect.right > window.innerWidth - pad) left -= (rect.right - (window.innerWidth - pad));
+    if (left < pad) left = pad;
+    if (rect.bottom > window.innerHeight - pad) top -= (rect.bottom - (window.innerHeight - pad));
+    if (top < pad) top = pad;
+    el.style.left = (left + window.scrollX) + "px";
+    el.style.top = (top + window.scrollY) + "px";
+  }
+
   // note indicator is CSS-only (mark.has-note::after, see theme.css) rather
   // than an inserted child node -- an inserted node would become part of
   // the mark's textContent, which would then get re-extracted into the
@@ -1585,9 +1612,33 @@
     notePopover.style.top = (rect.bottom + window.scrollY + 6) + "px";
     notePopover.style.left = Math.max(8, rect.left + window.scrollX) + "px";
 
+    // Recolor without deleting and reapplying -- swap the mark's own
+    // user-hl-COLOR class and persist it. The currently-applied color gets
+    // a visible ring so it reads as "this one's already selected."
+    var colorRow = document.createElement("div");
+    colorRow.className = "hl-note-colors";
+    COLORS.forEach(function (color) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "hl-swatch hl-swatch-" + color;
+      b.setAttribute("aria-label", "Change to " + color);
+      var currentColor = (mark.className.match(/user-hl-(\w+)/) || [])[1];
+      if (color === currentColor) b.classList.add("hl-swatch-current");
+      b.addEventListener("mousedown", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        mark.className = "user-hl user-hl-" + color + (mark.classList.contains("has-note") ? " has-note" : "");
+        updateHighlightColor(idx, start, end, color);
+        colorRow.querySelectorAll(".hl-swatch").forEach(function (sw) { sw.classList.remove("hl-swatch-current"); });
+        b.classList.add("hl-swatch-current");
+      });
+      colorRow.appendChild(b);
+    });
+    notePopover.appendChild(colorRow);
+
     var textarea = document.createElement("textarea");
     textarea.className = "hl-note-textarea";
-    textarea.placeholder = "Add a note about this passage…";
+    textarea.placeholder = "Add a note about this passage… (⌘/Ctrl+Enter to save)";
     textarea.value = mark.dataset.note || "";
     notePopover.appendChild(textarea);
 
@@ -1603,21 +1654,26 @@
       hideNotePopover();
     });
 
-    var saveBtn = document.createElement("button");
-    saveBtn.type = "button";
-    saveBtn.className = "hl-note-btn hl-note-save";
-    saveBtn.textContent = "Save note";
-    saveBtn.addEventListener("click", function () {
+    function save() {
       var note = textarea.value.trim();
       setMarkNote(mark, note);
       updateHighlightNote(idx, start, end, note);
       hideNotePopover();
+    }
+    var saveBtn = document.createElement("button");
+    saveBtn.type = "button";
+    saveBtn.className = "hl-note-btn hl-note-save";
+    saveBtn.textContent = "Save note";
+    saveBtn.addEventListener("click", save);
+    textarea.addEventListener("keydown", function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); save(); }
     });
 
     row.appendChild(removeBtn);
     row.appendChild(saveBtn);
     notePopover.appendChild(row);
     document.body.appendChild(notePopover);
+    clampToViewport(notePopover);
     textarea.focus();
   }
 
@@ -1659,6 +1715,7 @@
       toolbar.appendChild(b);
     });
     document.body.appendChild(toolbar);
+    clampToViewport(toolbar);
   }
 
   document.addEventListener("mouseup", function (e) {
@@ -1693,8 +1750,137 @@
     if (notePopover && !notePopover.contains(e.target)) hideNotePopover();
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { hideToolbar(); hideNotePopover(); }
+    if (e.key === "Escape") { hideToolbar(); hideNotePopover(); closeHlPanel(); }
   });
+
+  // "Your highlights" review panel -- without this, a highlight/note is
+  // effectively write-only: the only way to ever see it again is to
+  // scroll back through the whole guide looking for colored marks. Reads
+  // straight from the live <mark> elements in the DOM (not a separately
+  // maintained list) so it can never drift out of sync with what's
+  // actually on the page.
+  var hlPanelOverlay = null;
+  function closeHlPanel() { if (hlPanelOverlay) { hlPanelOverlay.remove(); hlPanelOverlay = null; } }
+  function openHlPanel() {
+    closeHlPanel();
+    hideToolbar();
+    hideNotePopover();
+    var marks = Array.prototype.slice.call(wrap.querySelectorAll("mark.user-hl"));
+
+    hlPanelOverlay = document.createElement("div");
+    hlPanelOverlay.className = "hl-panel-overlay open";
+    hlPanelOverlay.addEventListener("mousedown", function (e) {
+      if (e.target === hlPanelOverlay) closeHlPanel();
+    });
+
+    var panel = document.createElement("div");
+    panel.className = "hl-panel";
+
+    var closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "hl-panel-close";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.innerHTML = "&times;";
+    closeBtn.addEventListener("click", closeHlPanel);
+    panel.appendChild(closeBtn);
+
+    var heading = document.createElement("h3");
+    heading.textContent = "Your highlights" + (marks.length ? " (" + marks.length + ")" : "");
+    panel.appendChild(heading);
+
+    if (marks.length === 0) {
+      var empty = document.createElement("p");
+      empty.className = "hl-panel-empty";
+      empty.textContent = "No highlights yet — select any text in this guide to add one.";
+      panel.appendChild(empty);
+    } else {
+      var list = document.createElement("div");
+      list.className = "hl-panel-list";
+      marks.forEach(function (mark) {
+        var item = document.createElement("div");
+        item.className = "hl-panel-item";
+
+        var color = (mark.className.match(/user-hl-(\w+)/) || [])[1] || "yellow";
+        var swatch = document.createElement("span");
+        swatch.className = "hl-panel-swatch hl-swatch-" + color;
+        item.appendChild(swatch);
+
+        var textWrap = document.createElement("div");
+        textWrap.className = "hl-panel-text";
+        var excerpt = document.createElement("p");
+        excerpt.className = "hl-panel-excerpt";
+        excerpt.textContent = "“" + mark.textContent.trim() + "”";
+        textWrap.appendChild(excerpt);
+        if (mark.dataset.note) {
+          var note = document.createElement("p");
+          note.className = "hl-panel-note";
+          note.textContent = mark.dataset.note;
+          textWrap.appendChild(note);
+        }
+        item.appendChild(textWrap);
+
+        var actions = document.createElement("div");
+        actions.className = "hl-panel-actions";
+
+        var jumpBtn = document.createElement("button");
+        jumpBtn.type = "button";
+        jumpBtn.className = "hl-panel-jump";
+        jumpBtn.textContent = "Jump to";
+        jumpBtn.addEventListener("click", function () {
+          closeHlPanel();
+          mark.scrollIntoView({ behavior: "smooth", block: "center" });
+          mark.classList.add("hl-flash");
+          setTimeout(function () { mark.classList.remove("hl-flash"); }, 1600);
+        });
+
+        var delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "hl-panel-delete";
+        delBtn.setAttribute("aria-label", "Delete this highlight");
+        delBtn.innerHTML = "&times;";
+        delBtn.addEventListener("click", function () {
+          // Recompute (idx, start, end) fresh from the mark's own current
+          // DOM position rather than needing a closure carried from
+          // creation time -- self-verifying against actual state, and
+          // works identically whether the mark was just created or
+          // restored from localStorage on page load.
+          var unit = findUnit(mark);
+          if (!unit) return;
+          var idx = Number(unit.getAttribute("data-hl-idx"));
+          var start = textOffset(unit, mark, 0);
+          var end = start + mark.textContent.length;
+          removeHighlight(mark, idx, start, end);
+          openHlPanel(); // simplest correct way to reflect the removal + updated count
+        });
+
+        actions.appendChild(jumpBtn);
+        actions.appendChild(delBtn);
+        item.appendChild(actions);
+        list.appendChild(item);
+      });
+      panel.appendChild(list);
+    }
+
+    hlPanelOverlay.appendChild(panel);
+    document.body.appendChild(hlPanelOverlay);
+  }
+
+  // Appended into the existing corner-action button group (id set by the
+  // separate corner-buttons IIFE above, which has already run and built it
+  // by the time this one executes) rather than duplicating makeCornerBtn's
+  // setup here -- same visual button, just added from a different closure.
+  var cornerGroup = document.getElementById("corner-actions");
+  if (cornerGroup) {
+    var hlPanelBtn = document.createElement("button");
+    hlPanelBtn.type = "button";
+    hlPanelBtn.id = "hl-panel-btn";
+    hlPanelBtn.className = "corner-btn";
+    hlPanelBtn.setAttribute("aria-label", "Your highlights");
+    hlPanelBtn.title = "Your highlights";
+    hlPanelBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+    hlPanelBtn.addEventListener("click", openHlPanel);
+    cornerGroup.appendChild(hlPanelBtn);
+  }
 })();
 
 // "Test yourself" quiz popup, generic/reusable across any page. Question
