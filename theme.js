@@ -1569,6 +1569,28 @@
   // glyph into the "highlighted text," plus it'd shift every future
   // textOffset() computation inside this unit. Setting a class + native
   // title tooltip touches neither.
+  // A drag-selection landing mid-word (e.g. dragging from the middle of
+  // "hepatocyte" to the middle of the next word) used to save exactly that
+  // partial-word range. mark.user-hl's own padding/border-radius (theme.css)
+  // then puts a visible color-block edge right in the middle of the word --
+  // reads as if the word had been split into two separate words with a gap
+  // between them, even though no actual space character is there. Widening
+  // the saved range out to the nearest non-word character on each side
+  // (only when that side actually starts/ends mid-word -- a selection that
+  // already lands on a real boundary is left untouched) makes that
+  // particular visual glitch impossible instead of just narrower.
+  function isWordChar(ch) { return !!ch && /[A-Za-z0-9'’-]/.test(ch); }
+  function snapToWordBoundaries(unit, start, end) {
+    var text = unit.textContent;
+    if (isWordChar(text[start])) {
+      while (start > 0 && isWordChar(text[start - 1])) start--;
+    }
+    if (isWordChar(text[end - 1])) {
+      while (end < text.length && isWordChar(text[end])) end++;
+    }
+    return { start: start, end: end };
+  }
+
   function applyHighlight(unit, start, end, color, persist, note) {
     note = note || "";
     var range = rangeFromOffsets(unit, start, end);
@@ -1715,6 +1737,9 @@
         e.stopPropagation();
         var start = textOffset(unit, range.startContainer, range.startOffset);
         var end = textOffset(unit, range.endContainer, range.endOffset);
+        var snapped = snapToWordBoundaries(unit, start, end);
+        start = snapped.start;
+        end = snapped.end;
         var idx = Number(unit.getAttribute("data-hl-idx"));
         var mark = applyHighlight(unit, start, end, color, true);
         window.getSelection().removeAllRanges();
