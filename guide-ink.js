@@ -428,27 +428,6 @@
   }
   function toggle() { if (isOpen()) close(); else open(); }
 
-  // Hard-press-to-open: pressing an Apple Pencil (or any pressure-reporting
-  // stylus) firmly against the guide summons the toolbar, without needing
-  // to reach for the corner button first. Deliberately listens at the
-  // document level rather than on #guide-ink-svg -- the SVG's own
-  // pointer-events stays "none" until drawModeOn is true (see
-  // setDrawMode()), so it can't receive this pointerdown at all while
-  // closed, which is exactly the state this needs to detect a press FROM.
-  // Passive (never preventDefault) so a normal-pressure pen touch, and
-  // Safari's own built-in Pencil scrolling, are completely unaffected --
-  // this only ever *adds* the toolbar-open side effect, never blocks or
-  // changes any other behavior. Once open, drawModeOn short-circuits this
-  // immediately, so a hard press mid-stroke (e.g. for emphasis) is just
-  // part of normal drawing, not a repeated trigger.
-  var HARD_PRESS_THRESHOLD = 0.85; // 0-1 range per the Pointer Events spec; untuned against real hardware, see feedback_guide_ink memory
-  function checkHardPress(e) {
-    if (drawModeOn || e.pointerType !== "pen" || e.pressure < HARD_PRESS_THRESHOLD) return;
-    open();
-  }
-  document.addEventListener("pointerdown", checkHardPress, { passive: true });
-  document.addEventListener("pointermove", checkHardPress, { passive: true });
-
   closeBtn.addEventListener("click", close);
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && isOpen()) close();
