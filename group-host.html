@@ -44,7 +44,8 @@
   .hidden{display:none!important}
   .roomcode{font:800 54px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-align:center;color:var(--acc);margin:6px 0 4px}
   .roomcode-label{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
-  .joinhint{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:22px}
+  .joinhint{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:6px}
+  .hostplayhint{text-align:center;color:var(--muted);font-size:12px;font-style:italic;margin-bottom:22px}
   .playerlist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;min-height:32px}
   .pchip{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:600}
   .qnum{font:700 12px/1 ui-sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
@@ -199,6 +200,7 @@
     <div class="roomcode-label">Room code</div>
     <div class="roomcode" id="room-code-display">-----</div>
     <div class="joinhint">Have everyone go to <b id="join-url-hint"></b> and enter this code.</div>
+    <div class="hostplayhint">Hosting solo and want to play too? Open this same room code in a new tab or browser to join as a player — for the smoothest game, everyone else should still use their own separate device.</div>
     <div class="playerlist" id="player-list"></div>
     <button class="btn" id="start-btn" disabled>Waiting for players…</button>
   </section>
