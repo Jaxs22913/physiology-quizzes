@@ -852,6 +852,21 @@
       shortcutsBtn.addEventListener("click", shortcutsHelp.open);
       group.insertBefore(shortcutsBtn, refreshBtn);
 
+      // One-time, site-wide (not per-quiz) heads-up that gamepads work here
+      // at all -- the shortcuts panel above has the actual button mapping,
+      // but that's opt-in (press ?) and easy to never discover on your own.
+      // Shown once ever via localStorage, not once per quiz, so it doesn't
+      // nag across 35+ quiz pages; delayed so it doesn't collide with the
+      // sign-in/install prompts that can also show on first load.
+      if (!localStorage.getItem("gamepadHintShown")) {
+        localStorage.setItem("gamepadHintShown", "1");
+        setTimeout(function () {
+          if (window.showToast) {
+            window.showToast("🎮 Controller supported on this quiz — A/B/X/Y to answer, RB/LB to move on/back. Press ? for full controls.", 5500);
+          }
+        }, 1400);
+      }
+
       initHaptics();
       initSoundEffects();
 
