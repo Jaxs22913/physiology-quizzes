@@ -1711,9 +1711,21 @@
     document.head.appendChild(s);
   }
 
-  loadScript(CDN + "firebase-app-compat.js", function () {
-    loadScript(CDN + "firebase-auth-compat.js", function () {
-      loadScript(CDN + "firebase-firestore-compat.js", function () {
+  function startFirebaseChain() {
+    loadScript(CDN + "firebase-app-compat.js", function () {
+      // auth-compat and firestore-compat each independently extend the
+      // global `firebase` namespace (firebase.auth / firebase.firestore) --
+      // both only need firebase-app-compat.js to have loaded first, not
+      // each other, so loading them in parallel instead of nested/
+      // sequential cuts one full network round-trip out of the chain
+      // before anything downstream (config, cloud-sync, presence) can
+      // start. Dynamically-created <script> tags execute in whichever
+      // order they finish downloading, not insertion order, which is fine
+      // here since neither depends on the other's code having already run.
+      var remaining = 2;
+      function next() {
+        remaining--;
+        if (remaining > 0) return;
         loadScript(base + "firebase-config.js", function () {
           loadScript(base + "cloud-sync.js", function () {
             // presence.js (added 2026-07-14): "who's studying now" on guide
@@ -1725,9 +1737,21 @@
             loadScript(base + "presence.js");
           });
         });
-      });
+      }
+      loadScript(CDN + "firebase-auth-compat.js", next);
+      loadScript(CDN + "firebase-firestore-compat.js", next);
     });
-  });
+  }
+
+  // Cloud sync / presence are background enhancements -- nothing on the
+  // page needs them to already be usable/readable. Deferring the whole
+  // chain's *start* until the browser reports idle time (falling back to a
+  // short timeout on Safari, which doesn't implement requestIdleCallback)
+  // keeps six-plus network requests from competing with the page's own
+  // critical-path rendering, which matters most on a guide with a lot of
+  // embedded content still settling right after load.
+  var deferIdle = window.requestIdleCallback || function (fn) { setTimeout(fn, 300); };
+  deferIdle(startFirebaseChain, { timeout: 2000 });
 })();
 
 // Guide text highlighting (added 2026-07-10). Select text anywhere inside a
