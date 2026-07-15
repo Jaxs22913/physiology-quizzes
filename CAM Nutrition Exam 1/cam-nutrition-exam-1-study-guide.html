@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAM/Nutrition Exam 1 Study Guide &mdash; Class of 2028</title>
+<style>
+  :root{
+    --ink:#23271e;
+    --paper:#faf8f2;
+    --accent:#3c6e47;      /* forest green */
+    --accent2:#c1702f;      /* roasted terracotta */
+    --accent3:#2c6e78;      /* deep teal (water/hydration) */
+    --line:#e3ddcd;
+    --soft:#66614f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  header.top{
+    background:linear-gradient(120deg,#2c5236,var(--accent) 55%,#4d8a58);
+    color:#fff;
+    padding:34px 26px 30px;
+  }
+  header.top h1{
+    margin:0 0 6px;
+    font-size:2rem;
+    letter-spacing:.2px;
+    font-weight:800;
+  }
+  header.top p{margin:2px 0;color:#e4f1e6;font-size:.95rem;}
+  .layout{display:flex;max-width:1180px;margin:0 auto;}
+  nav.toc{
+    position:sticky;top:0;align-self:flex-start;
+    width:280px;min-width:280px;height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);
+    background:#f2ede0;
+    font-size:.85rem;
+  }
+  nav.toc h2{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:14px 0 6px;}
+  nav.toc a{display:block;color:var(--soft);text-decoration:none;padding:3px 0;border-bottom:1px solid transparent;}
+  nav.toc a.top-link{font-weight:700;color:var(--accent2);margin-top:10px;}
+  nav.toc a:hover{color:var(--accent);}
+  main{flex:1;padding:30px 40px 90px;min-width:0;}
+  section.deck{margin-bottom:56px;scroll-margin-top:18px;}
+  h2.deck-title{
+    font-size:1.55rem;color:var(--accent);
+    border-bottom:3px solid var(--accent2);
+    padding-bottom:8px;margin:0 0 6px;
+    font-weight:800;
+  }
+  .lecturer{color:var(--soft);font-style:italic;font-size:.9rem;margin-bottom:14px;}
+  .io-box{
+    background:#eef3ea;border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0 20px;
+  }
+  .io-box h3{
+    margin:0 0 8px;font-size:.8rem;text-transform:uppercase;
+    letter-spacing:1px;color:var(--accent3);
+  }
+  .io-box ol{margin:0;padding-left:20px;}
+  .io-box li{margin-bottom:5px;font-size:.92rem;}
+  h3.sub{
+    color:var(--accent3);font-size:1.14rem;margin:26px 0 6px;font-weight:800;
+  }
+  h4.subsub{
+    color:var(--accent2);font-size:.98rem;margin:16px 0 4px;
+    font-weight:700;
+  }
+  ul,ol{margin:6px 0 12px;}
+  li{margin-bottom:3px;}
+  p{margin:8px 0;}
+  .callout{
+    border-left:4px solid var(--accent3);
+    background:#eaf3f3;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  .pearl{
+    border-left:4px solid var(--accent2);
+    background:#faf0e4;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--accent);color:#fff;font-weight:700;}
+  tr:nth-child(even) td{background:#f3efe3;}
+  code{background:#eee6d4;padding:1px 5px;border-radius:4px;font-size:.85rem;}
+  .tag{
+    display:inline-block;background:var(--accent2);color:#fff;
+    font-size:.68rem;
+    padding:2px 8px;border-radius:10px;letter-spacing:.5px;
+    vertical-align:middle;margin-left:8px;
+  }
+  figure.fig{
+    margin:18px 0;padding:12px;background:#f2ede0;border-radius:10px;
+    border:1px solid var(--line);text-align:center;
+  }
+  figure.fig img{
+    max-width:100%;height:auto;border-radius:6px;background:#fff;
+    box-shadow:0 1px 4px rgba(0,0,0,.1);
+  }
+  figure.fig figcaption{
+    margin-top:8px;font-size:13.5px;color:var(--soft);font-style:italic;line-height:1.45;
+  }
+  .test-yourself-btn{
+    display:inline-block;margin-top:18px;padding:10px 18px;border:none;border-radius:999px;
+    background:var(--acc,var(--accent));color:#fff;font-weight:700;font-size:.92rem;cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  .test-yourself-btn:hover{filter:brightness(1.08);}
+  footer.guide-foot{margin:34px 40px 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--soft);}
+  @media(max-width:820px){
+    nav.toc{display:none;}
+    main{padding:22px 18px 60px;}
+    footer.guide-foot{margin:34px 18px 0;}
+  }
+
+  /* header.top sits outside .wrap (full-bleed banner) so it needs its own
+     dark-mode invert -- everything else lives inside .layout.wrap and gets
+     the site-wide body > .wrap invert from theme.css for free. */
+  :root[data-theme="dark"] header.top { filter: invert(1) hue-rotate(180deg); }
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #3c6e47; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #23271e; }
+  .footer-mark-accent { stroke: #3c6e47; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #8fd39c; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<header class="top">
+  <h1>CAM/Nutrition Exam 1 — Study Guide</h1>
+  <p>PAJ 5508 Complementary and Alternative Medicine and Nutrition &middot; Heather Allen RD, PA-C &middot; Class of 2028</p>
+  <p>Covers 2 lecture decks so far: Human Nutrition &amp; Macronutrients/Micronutrients/Water &middot; Instructional Objectives (IOs) flagged per lecture</p>
+</header>
+
+<div class="layout wrap" data-readable data-audio-dir="cam-nutrition-exam-1-study-guide-audio">
+<nav class="toc">
+  <h2>Contents</h2>
+  <a class="top-link" href="#human-nutrition">1 &middot; Human Nutrition</a>
+  <a href="#hn-fundamentals">1.1 Nutrition Fundamentals &amp; Terms</a>
+  <a href="#hn-calories">1.2 Energy From Food: Calories</a>
+  <a href="#hn-metric">1.3 The Metric System &amp; Calculating Needs</a>
+  <a href="#hn-death">1.4 Diet, Lifestyle &amp; Leading Causes of Death</a>
+  <a href="#hn-sad">1.5 The Standard American Diet</a>
+  <a href="#hn-guidelines">1.6 Dietary Guidelines, MyPlate &amp; the Food Label</a>
+  <a href="#hn-choices">1.7 What Shapes Our Food Choices</a>
+  <a class="top-link" href="#macro-micro">2 &middot; Macronutrients, Micronutrients &amp; Water</a>
+  <a href="#mm-carbs">2.1 Carbohydrates: RDA &amp; Metabolism</a>
+  <a href="#mm-fiber">2.2 Fiber</a>
+  <a href="#mm-carbfoods">2.3 Carbs in Foods, Sugar &amp; Diabetes</a>
+  <a href="#mm-lipids">2.4 Lipids: Fatty Acid Types</a>
+  <a href="#mm-cvd">2.5 Fats, Lipoproteins &amp; Cardiovascular Disease</a>
+  <a href="#mm-protein">2.6 Protein: Balance &amp; Malnutrition</a>
+  <a href="#mm-veg">2.7 Vegetarian &amp; Plant-Based Diets</a>
+  <a href="#mm-vitamins">2.8 Vitamins</a>
+  <a href="#mm-minerals">2.9 Minerals</a>
+  <a href="#mm-water">2.10 Water &amp; Electrolyte Balance</a>
+</nav>
+
+<main>
+
+<!-- ============ 1 HUMAN NUTRITION ============ -->
+<section class="deck" id="human-nutrition">
+  <h2 class="deck-title">1 &middot; Human Nutrition</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Review the terms nutrition, carbohydrate, protein, lipid, alcohol, vitamin, mineral, water, kilocalorie (kcal), and fiber.</li>
+      <li>Review the total calories (kcal) of each nutrient in food.</li>
+      <li>Calculate the total calories needed to determine the breakdown of nutrients necessary for a healthy diet using the metric system.</li>
+      <li>Identify diet and lifestyle factors that contribute to leading causes of death in North America.</li>
+      <li>Identify the major characteristics of the Standard American Diet and the food habits that often need improvement.</li>
+      <li>Describe how food habits are affected by physiological processes, meal size and composition, early experiences, ethnic customs, health concerns, advertising, social class, and economics.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="hn-fundamentals">1.1 Nutrition Fundamentals &amp; Terms <span class="tag">IO 1</span></h3>
+  <p><strong>Nutrition</strong> is the science that links foods to health. Food provides both energy (calories) and the compounds needed to build and maintain every cell in the body. Not every compound in food is essential — an <strong>essential nutrient</strong> must meet three criteria: (1) a specific biological function is identified for it in the body, (2) omitting it from the diet causes a decline in that function, and (3) replacing it in the diet restores normal function.</p>
+  <p>Nutrients fall into three functional categories: they <strong>provide energy</strong>, <strong>promote growth, development, and maintenance</strong>, and <strong>regulate body processes</strong>. There are six classes of nutrients: <strong>carbohydrates, proteins, lipids, vitamins, minerals,</strong> and <strong>water</strong>.</p>
+  <table>
+    <tr><th>Term</th><th>Definition</th></tr>
+    <tr><td><strong>Carbohydrate</strong></td><td>Macronutrient providing ~4 kcal/g; simple forms (mono- and disaccharides) and complex forms (glycogen, starch, fiber). The body's preferred, most abundant fuel source.</td></tr>
+    <tr><td><strong>Protein</strong></td><td>Macronutrient providing ~4 kcal/g; the main structural material in the body, formed from amino acids bonded together. Component of blood cells, enzymes, and immune factors.</td></tr>
+    <tr><td><strong>Lipid</strong></td><td>Macronutrient providing ~9 kcal/g; fats and oils from plant and animal sources that do not dissolve in water.</td></tr>
+    <tr><td><strong>Alcohol</strong></td><td>Provides ~7 kcal/g. Not a nutrient (serves no essential biological function), but it is calorie-yielding and must be counted in total energy intake.</td></tr>
+    <tr><td><strong>Vitamin</strong></td><td>Carbon-containing (organic) compound needed in small amounts to enable chemical reactions in the body; fat-soluble (A, D, E, K) or water-soluble (B-complex, C). Contains no usable energy of its own.</td></tr>
+    <tr><td><strong>Mineral</strong></td><td>Inorganic substance (no carbon) with numerous body functions; not destroyed by cooking; classified as major or trace; many perform electrolyte functions. Produces no calories.</td></tr>
+    <tr><td><strong>Water</strong></td><td>Acts as a solvent and lubricant, transports nutrients and waste, and regulates body temperature. Makes up the majority of body weight; needs are based on body weight. Provides no calories.</td></tr>
+    <tr><td><strong>Kilocalorie (kcal)</strong></td><td>The unit describing the energy content of food — the heat energy required to raise the temperature of 1000 g (1 L) of water by 1°C.</td></tr>
+    <tr><td><strong>Fiber</strong></td><td>The nondigestible-starch class of complex carbohydrate (cellulose, hemicelluloses, pectins, gums, mucilages, lignin); not broken down by human digestive enzymes.</td></tr>
+  </table>
+
+  <h4 class="subsub">Macronutrients vs. Micronutrients</h4>
+  <table>
+    <tr><th></th><th>Macronutrients</th><th>Micronutrients</th></tr>
+    <tr><td><strong>Provide calories?</strong></td><td>Yes</td><td>No</td></tr>
+    <tr><td><strong>Quantity needed</strong></td><td>Gram quantities</td><td>Milligram or microgram quantities</td></tr>
+    <tr><td><strong>Members</strong></td><td>Carbohydrates, protein, lipids/fat (water is sometimes grouped here too)</td><td>Vitamins, minerals</td></tr>
+  </table>
+  <figure class="fig"><img width="878" height="617" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/001.png" alt="Digestible disaccharides in food: sucrose (glucose + fructose), lactose (galactose + glucose), and maltose (glucose + glucose), each with its chemical structure diagram."><figcaption>The three digestible disaccharides — sucrose (table sugar: glucose + fructose), lactose (milk sugar: galactose + glucose), and maltose (glucose + glucose) — are simple carbohydrates that are broken down to monosaccharides for absorption. Per the Human Nutrition lecture's carbohydrate overview.</figcaption></figure>
+
+  <h3 class="sub" id="hn-calories">1.2 Energy From Food: Calories <span class="tag">IO 2</span></h3>
+  <p>A little "c" <strong>calorie</strong> is the amount of heat needed to raise the temperature of 1 g of water by 1°C. A <strong>kilocalorie (kcal)</strong> is the amount of heat needed to raise 1000 g (1 L) of water by 1°C — 1 kcal = 1000 calories. On food labels, energy is expressed as <strong>Calories</strong> (capital C), which is the same unit as kcal: <code>1000 calories = 1 kcal = 1 (food) Calorie</code>.</p>
+  <table>
+    <tr><th>Nutrient</th><th>kcal per gram</th></tr>
+    <tr><td>Carbohydrate</td><td>4 kcal/g</td></tr>
+    <tr><td>Protein</td><td>4 kcal/g</td></tr>
+    <tr><td>Fat (lipid)</td><td>9 kcal/g</td></tr>
+    <tr><td>Alcohol</td><td>7 kcal/g</td></tr>
+  </table>
+  <p>To find the total calorie content of a food, multiply the grams of each macronutrient by its kcal/g factor and sum the results. Worked example — one grilled chicken sandwich:</p>
+  <table>
+    <tr><th>Nutrient</th><th>Grams</th><th>Factor</th><th>kcal</th></tr>
+    <tr><td>Carbohydrate</td><td>46 g</td><td>&times; 4</td><td>184 kcal</td></tr>
+    <tr><td>Fat</td><td>14 g</td><td>&times; 9</td><td>126 kcal</td></tr>
+    <tr><td>Protein</td><td>45 g</td><td>&times; 4</td><td>180 kcal</td></tr>
+    <tr><td>Alcohol</td><td>0 g</td><td>&times; 7</td><td>0 kcal</td></tr>
+    <tr><td colspan="3"><strong>Total</strong></td><td><strong>490 kcal</strong></td></tr>
+  </table>
+  <div class="pearl"><strong>Quick math check:</strong> 184 + 126 + 180 + 0 = 490 kcal. This same "grams &times; kcal/g factor" method is exactly what you'll use to build a patient's macronutrient breakdown from a target total-calorie goal (Section 1.3).</div>
+
+  <h3 class="sub" id="hn-metric">1.3 The Metric System &amp; Calculating Your Needs <span class="tag">IO 3</span></h3>
+  <p>Because food labels, drug dosing, and nutrient recommendations are all expressed in metric units, fluency with basic metric conversions is a prerequisite for calculating a patient's calorie and macronutrient needs.</p>
+  <table>
+    <tr><th>Conversion</th><th>Value</th></tr>
+    <tr><td>1 gram (g)</td><td>&asymp; 28 g to the ounce (weight); 1000 milligrams (mg); 1,000,000 micrograms (mcg)</td></tr>
+    <tr><td>4 grams of sugar</td><td>&asymp; 1 teaspoon</td></tr>
+    <tr><td>6 grams of salt</td><td>&asymp; 1 teaspoon</td></tr>
+    <tr><td>1 pound (lb)</td><td>454 grams</td></tr>
+    <tr><td>1 kilogram (kg)</td><td>1000 g = 2.2 lb (divide lb by 2.2 to get kg)</td></tr>
+    <tr><td>1 liter (L)</td><td>1000 milliliters (mL)</td></tr>
+    <tr><td>1 teaspoon</td><td>&asymp; 5 mL</td></tr>
+    <tr><td>1 cup</td><td>&asymp; 240 mL</td></tr>
+    <tr><td>1 quart (4 cups)</td><td>&asymp; 0.946 L (almost 1 L)</td></tr>
+  </table>
+  <p><strong>Putting it together — a worked calorie-needs example:</strong> a 154 lb patient converts to 154 &divide; 2.2 = 70 kg. If a target intake is, say, 30 kcal/kg/day, total daily needs would be 70 &times; 30 = 2100 kcal. From there, the Food and Nutrition Board's macronutrient distribution ranges (45–65% of kcal from carbohydrate, 10–35% from protein, 20–35% from fat — see Section 1.5) can be applied to that total to set gram targets for each macronutrient, then converted back to grams using the kcal/g factors from Section 1.2 (divide the kcal allotment by 4, 4, or 9 respectively).</p>
+
+  <h3 class="sub" id="hn-death">1.4 Diet, Lifestyle &amp; Leading Causes of Death <span class="tag">IO 4</span></h3>
+  <p>Per CDC data, several of the leading causes of death in North America — heart disease, stroke, type 2 diabetes, and certain cancers — have diet and lifestyle as major modifiable contributors. This is the core rationale for nutrition counseling as a preventive-medicine tool: excess calorie intake, poor macronutrient balance, and sedentary behavior drive the obesity epidemic, which in turn drives much of this chronic-disease burden.</p>
+  <h4 class="subsub">Overweight &amp; Obesity</h4>
+  <ul>
+    <li><strong>Overweight:</strong> a ratio of weight to height that is moderately higher than what is associated with optimal health.</li>
+    <li><strong>Obesity:</strong> an excessive amount of body fat relative to lean tissue.</li>
+  </ul>
+  <table>
+    <tr><th>BMI (kg/m&sup2;)</th><th>Classification</th></tr>
+    <tr><td>18.5–24.9</td><td>Healthy body weight</td></tr>
+    <tr><td>25–29.9</td><td>Overweight</td></tr>
+    <tr><td>30–34.9</td><td>Class 1 obesity</td></tr>
+    <tr><td>35–39.9</td><td>Class 2 obesity</td></tr>
+    <tr><td>40+</td><td>Class 3 obesity</td></tr>
+  </table>
+  <p>Per the lecture's cited 2018 CDC statistics: about <strong>26%</strong> of the U.S. population is at a normal weight, <strong>72.5%</strong> is overweight (BMI &ge; 25, a category that includes everyone with obesity), and within that group, <strong>41%</strong> meets criteria for obesity (BMI &ge; 30).</p>
+  <p><strong>Consequences of obesity</strong> include chronic disease — cardiovascular disease, hypertension, diabetes, kidney failure, arthritis/joint failure, and some cancers — plus a substantial economic burden from lost work productivity.</p>
+
+  <h3 class="sub" id="hn-sad">1.5 The Standard American Diet: Assessing &amp; Improving Our Eating Pattern <span class="tag">IO 5</span></h3>
+  <p>National diet surveys (NHANES) show the overall macronutrient distribution of the American diet is, on average, within the Food and Nutrition Board's recommended ranges — but sits at the edges in ways that matter clinically:</p>
+  <table>
+    <tr><th>Macronutrient</th><th>Actual U.S. average (NHANES 2018)</th><th>Food &amp; Nutrition Board advised range</th></tr>
+    <tr><td>Protein</td><td>15.8% of kcal</td><td>10%–35%</td></tr>
+    <tr><td>Carbohydrate</td><td>46.7% of kcal</td><td>45%–65%</td></tr>
+    <tr><td>Fat</td><td>35.8% of kcal</td><td>20%–35%</td></tr>
+    <tr><td>Alcohol</td><td>3% of kcal</td><td>&mdash;</td></tr>
+  </table>
+  <p>Fat intake averages slightly above the top of its recommended range, while carbohydrate and protein sit near the low end of theirs — consistent with the improvements the lecture calls for: <strong>choose plant sources of protein</strong> rather than animal proteins, <strong>choose plant oils</strong> rather than solid fats, <strong>choose more nutrient-dense foods</strong>, <strong>balance calorie intake with calorie needs</strong>, practice <strong>moderation in sugar, salt, and alcohol</strong>, and <strong>increase the quantity and variety of fruits and vegetables</strong>.</p>
+  <h4 class="subsub">Nutrient Density vs. Energy Density</h4>
+  <p>A food is <strong>nutrient-dense</strong> when it provides a large amount of a nutrient for a relatively small number of calories compared with other foods — i.e., it delivers important nutrients without excess fat, sugar, or sodium. Comparing nutrient density is an easy way to estimate a food's relative nutritional quality.</p>
+  <figure class="fig"><img width="1000" height="905" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/002.jpg" alt="Bar chart comparing the percent contribution to adolescent female nutrient requirements from an 8 fluid ounce sugared soft drink versus 8 fluid ounces of fat-free milk, across calories, protein, vitamin A, vitamin C, thiamin, riboflavin, niacin, and calcium."><figcaption>Nutrient density in a soft drink vs. fat-free milk: for a similar calorie contribution, fat-free milk supplies a far larger share of an adolescent female's daily protein, calcium, riboflavin, and vitamin A needs than an equal-volume sugared soft drink does — illustrating why calorie count alone doesn't capture a food's nutritional quality.</figcaption></figure>
+  <figure class="fig"><img width="1000" height="544" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/003.jpg" alt="Concept map showing shifts toward more nutrient-dense food swaps, such as spinach for iceberg lettuce, peaches for canned fruit in syrup, chicken for higher-fat meats, and shredded wheat for sugary cereal." ><figcaption>Shifting to more nutrient-dense options: simple, familiar swaps (e.g., leafy greens over iceberg lettuce, fresh fruit over syrup-packed fruit, lean poultry, whole-grain cereal) raise a diet's nutrient density without necessarily changing portion size.</figcaption></figure>
+  <p><strong>Energy density</strong> is a related but distinct concept: it compares a food's calorie (kcal) content with its weight, not its nutrient content. A food can be low in energy density (few calories per gram, e.g., because of high water or fiber content) yet still be very nutrient-dense — vegetable soup and fat-free milk are examples the lecture highlights.</p>
+  <table>
+    <tr><th>Very low energy density<br>(&lt;0.6 kcal/g)</th><th>Low energy density<br>(0.6–1.5 kcal/g)</th><th>Medium energy density<br>(1.5–4 kcal/g)</th><th>High energy density<br>(&gt;4 kcal/g)</th></tr>
+    <tr><td>Tomatoes</td><td>Oatmeal</td><td>Eggs</td><td>Bacon</td></tr>
+    <tr><td>Broccoli</td><td>Plain baked potato</td><td>White bread</td><td>Chocolate chip cookies</td></tr>
+    <tr><td>Salsa</td><td>Bananas</td><td>Bagels</td><td>Tortilla chips</td></tr>
+    <tr><td>Fat-free milk</td><td>Fat-free yogurt</td><td>Cream cheese</td><td>Fried food</td></tr>
+    <tr><td>Vegetable soup</td><td>Spaghetti noodles</td><td>Rice cakes</td><td>Butter or margarine</td></tr>
+  </table>
+
+  <h3 class="sub" id="hn-guidelines">1.6 Dietary Guidelines, MyPlate &amp; the Food Label <span class="tag">IO 5</span></h3>
+  <p>The <strong>Dietary Guidelines for Americans</strong>, published every 5 years by the USDA and DHHS, translate nutrition science into food-based guidance for the public and provide the framework health professionals use to design healthy dietary patterns. Four key principles: (1) follow a healthy dietary pattern at every life stage, (2) customize nutrient-dense choices to personal preference, culture, and budget, (3) focus on meeting food-group needs with nutrient-dense foods while staying within calorie limits, and (4) limit foods and beverages higher in added sugars, saturated fat, sodium, and alcohol.</p>
+  <h4 class="subsub">Food components to include</h4>
+  <ul>
+    <li>Variety of vegetables, both starchy and non-starchy</li>
+    <li>Fruits, especially whole fruits</li>
+    <li>Grains — at least half whole grains</li>
+    <li>Fat-free or low-fat dairy (milk, yogurt, cheese, and/or fortified soy beverages)</li>
+    <li>A variety of protein foods: seafood, lean meats and poultry, eggs, legumes, nuts, seeds, and soy</li>
+    <li>Mono- and polyunsaturated oils</li>
+  </ul>
+  <h4 class="subsub">Food components to limit</h4>
+  <ul>
+    <li>Saturated fats (&lt;10% of kcal)</li>
+    <li>Trans fats</li>
+    <li>Added sugars (&lt;10% of kcal)</li>
+    <li>Sodium (&lt;2,300 mg/day)</li>
+    <li>Alcohol, if consumed at all — up to 1 drink/day for women, up to 2 drinks/day for men, and only by adults of legal drinking age</li>
+  </ul>
+  <figure class="fig"><img width="840" height="1356" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/004.jpg" alt="The MyPlate icon: a plate divided into fruits, vegetables, grains, and protein quadrants, with a small circle representing dairy alongside it." ><figcaption>MyPlate divides the five food groups visually: fruits and vegetables cover half the plate, grains occupy about one-fourth, protein occupies the remaining one-fourth, and a cup of dairy is shown alongside the plate. (USDA ChooseMyPlate.gov)</figcaption></figure>
+  <figure class="fig"><img width="675" height="451" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/005.jpg" alt="Annotated Nutrition Facts label with callouts for Check Serving Size, Check Calories, Limit These Nutrients, Get Enough of These Nutrients, and Quick Guide to % Daily Value."><figcaption>How to read a Nutrition Facts label: start with serving size (all other numbers scale to it), check total calories, limit saturated fat/sodium/added sugars, get enough fiber/vitamin D/calcium/iron/potassium, and use %DV as a quick guide — 5% or less is low, 20% or more is high.</figcaption></figure>
+  <figure class="fig"><img width="662" height="650" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/006.jpg" alt="Side-by-side comparison of the old and updated (2020) Nutrition Facts label, with callouts noting larger bold-font calorie counts, updated serving sizes, and a newly added Added Sugars line." ><figcaption>The FDA's updated Nutrition Facts label (fully required since 2020): calories and serving size now appear in larger, bolder type; serving sizes reflect what people actually eat; and grams and %DV for <strong>added sugars</strong> are now broken out separately from total sugars, along with updated Daily Values for vitamin D, calcium, iron, and potassium.</figcaption></figure>
+
+  <h3 class="sub" id="hn-choices">1.7 What Shapes Our Food Choices <span class="tag">IO 6</span></h3>
+  <p>Food choice is driven by more than nutrition knowledge. The lecture ranks <strong>flavor, texture, and appearance as the #1 influence</strong>, followed by early influences, eating habits/food availability/convenience, marketing and advertising, restaurant dining, time and cost, sustainability, and — often last — nutrition itself. In short: physiological processes (hunger, taste preference), meal size and composition, early childhood experiences, ethnic and cultural customs, health concerns, advertising, social class, and economics all shape what ends up on the plate, which is why nutrition counseling has to work with those drivers rather than against them.</p>
+  <h4 class="subsub">Variety &amp; Functional Foods</h4>
+  <p>No single food meets all nutrient needs, so patients should be counseled to choose foods across all five food groups and "eat the colors of the rainbow" among fruits and vegetables. <strong>Functional foods</strong> provide health benefits beyond their traditional nutrient content — phytochemicals (e.g., lycopene in tomatoes) are one example. Practical ways to boost phytochemical intake include using vegetables in main and side dishes, choosing romaine over iceberg lettuce, using salsa instead of creamy dips, choosing whole-grain products, and incorporating soy foods (tofu, soy milk, edamame).</p>
+  <h4 class="subsub">Your Role as the Health Care Provider</h4>
+  <p>As a PA, this means having a working understanding of medical nutrition, recognizing the implications of both under- and over-nutrition, incorporating nutritional assessment into patient evaluation, and being able to give simple, clear nutritional recommendations. When a patient's needs exceed what a brief visit can address, know when to refer: a <strong>Registered Dietitian (RD)</strong> or <strong>Registered Dietitian Nutritionist (RDN)</strong> has completed a four-year degree plus (in most cases) a post-graduate internship, and is certified by the Academy of Nutrition and Dietetics through a national exam.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#3c6e47" onclick="window.openTestYourself('Test yourself — Human Nutrition', TEST_YOURSELF.humanNutrition)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 2 MACRO/MICRO/WATER ============ -->
+<section class="deck" id="macro-micro">
+  <h2 class="deck-title">2 &middot; Macronutrients, Micronutrients, and Trace Minerals in Human Health</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Compare the Food and Nutrition Board RDA recommendations for carbohydrates, protein, and lipids.</li>
+      <li>Discuss carbohydrate metabolism, including glycemic index.</li>
+      <li>Summarize the beneficial effects of fiber on the body.</li>
+      <li>Differentiate among mono-saturated, polyunsaturated, and saturated fatty acids and their role in nutritional health.</li>
+      <li>Discuss the implications of various fats, including omega-3 fatty acids, with respect to cardiovascular disease.</li>
+      <li>Describe positive protein balance, negative protein balance, and protein equilibrium as it applies to nutritional health.</li>
+      <li>Describe how protein-calorie malnutrition can lead to disease in the body.</li>
+      <li>Discuss vegetarian diet plans that meet protein requirements.</li>
+      <li>Describe the major functions of vitamins.</li>
+      <li>Identify food sources for each vitamin.</li>
+      <li>Classify which minerals are major and trace.</li>
+      <li>Describe the food sources of minerals.</li>
+      <li>Describe the role of minerals that aid in maintaining overall health.</li>
+      <li>Describe safety concerns about water supply systems.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="mm-carbs">2.1 Carbohydrates: RDA &amp; Metabolism <span class="tag">IO 1</span> <span class="tag">IO 2</span></h3>
+  <p>Carbohydrates provide 4 kcal/g and are the fuel for every cell in the body — especially the brain, nervous system, and red blood cells, which strongly prefer glucose. Circulating carbohydrate exists as blood glucose or as <strong>glycogen</strong>, a highly branched glucose polymer synthesized in the liver and stored in liver and muscle for quick availability.</p>
+  <figure class="fig"><img width="1000" height="1323" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/007.jpg" alt="Carbohydrate concept map branching from simple carbohydrates (monosaccharides: glucose, fructose, galactose; disaccharides: sucrose, lactose, maltose) and complex carbohydrates (polysaccharides: starch and fiber), down to sources and metabolism in cells and muscle/liver."><figcaption>Carbohydrate concept map: simple carbohydrates (mono- and disaccharides) versus complex carbohydrates (starch and fiber), and how digestible forms are ultimately broken down to glucose for use by cells or storage as glycogen.</figcaption></figure>
+  <h4 class="subsub">RDA Comparison — Carbohydrate, Protein, Lipid <span class="tag">IO 1</span></h4>
+  <table>
+    <tr><th>Macronutrient</th><th>Food &amp; Nutrition Board acceptable range (% of total kcal)</th><th>Other key figures</th></tr>
+    <tr><td>Carbohydrate</td><td>45%–65%</td><td>RDA is 130 g/day (adults); average U.S. intake is 180–330 g/day.</td></tr>
+    <tr><td>Protein</td><td>10%–35%</td><td>Estimated need &asymp; 0.8 g/kg healthy body weight; upper limit 35% of kcal (UL 170 g).</td></tr>
+    <tr><td>Lipid (fat)</td><td>20%–35%</td><td>No formal RDA for total fat; Dietary Guidelines suggest 44–78 g/day at 2000 kcal.</td></tr>
+  </table>
+  <h4 class="subsub">Regulating Blood Glucose &amp; the Glycemic Response <span class="tag">IO 2</span></h4>
+  <p>Poor glucose control produces either hyperglycemia (fasting blood glucose &gt;125 mg/dL) or hypoglycemia (&lt;40–50 mg/dL in a nondiabetic). Glucose is the body's preferred fuel; red blood cells can <em>only</em> use glucose, while the brain prefers glucose but can use ketone bodies (partial fat-breakdown products) if glucose is scarce.</p>
+  <figure class="fig"><img width="1000" height="704" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/012.jpg" alt="Diagram of blood glucose regulation: glucose absorbed from the gut raises blood glucose, triggering insulin release from the pancreas, which normalizes blood glucose; between meals, falling glucose triggers glucagon release, which stimulates glycogen breakdown and raises blood glucose back to normal." ><figcaption>Regulation of blood glucose: rising glucose after a meal triggers pancreatic insulin release, driving glucose into cells and normalizing blood levels; falling glucose between meals triggers glucagon, which mobilizes stored liver glycogen to bring glucose back up — a negative-feedback loop that keeps blood glucose in a tight normal range.</figcaption></figure>
+  <p>The <strong>glycemic index</strong> ranks how quickly a carbohydrate-containing food raises blood glucose relative to a reference (pure glucose or white bread). Foods that are rapidly digested and absorbed (refined starches, sugary drinks) produce a fast, high glycemic response; foods higher in fiber, fat, or protein blunt and slow that rise. Diet quality declines when added-sugar intake is excessive: the Food and Nutrition Board's upper limit is 25% of kcal from added sugars, while the American Heart Association sets a tighter limit — about 100 kcal/day (24 g, ~6 tsp) of added sugar for women and 150 kcal/day (36 g, ~9 tsp) for men.</p>
+
+  <h3 class="sub" id="mm-fiber">2.2 Fiber <span class="tag">IO 3</span></h3>
+  <p>Dietary fiber is nondigestible carbohydrate. Digestible starch itself comes in two forms — <strong>amylopectin</strong> (highly branched, ~80% of starch in potatoes, corn, beans, white bread, and short-grain rice) and <strong>amylose</strong> (long straight chains, ~20% of starch in vegetables, legumes, bread, pasta, and rice) — versus <strong>fiber</strong>, which human digestive enzymes cannot break down at all.</p>
+  <figure class="fig"><img width="1000" height="290" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/008.jpg" alt="Chemical structure comparison of amylose (a long straight chain of glucose units), amylopectin (a highly branched chain of glucose units), and glycogen (an even more highly branched, denser structure of glucose units)."><figcaption>Digestible starch structure: amylose is a long, straight glucose chain; amylopectin is highly branched; glycogen (the body's own glucose-storage polymer, made and stored in liver and muscle) is branched even more densely than amylopectin, giving it many more ends for rapid enzymatic release of glucose when energy is needed quickly.</figcaption></figure>
+  <table>
+    <tr><th>Fiber type</th><th>Examples</th><th>Key property</th></tr>
+    <tr><td><strong>Insoluble</strong> (nonfermentable)</td><td>Lignin (noncarbohydrate); cellulose &amp; hemicelluloses — whole grains, wheat bran, woody vegetable stems, fruit skins, nuts</td><td>Increases fecal bulk; decreases intestinal transit time</td></tr>
+    <tr><td><strong>Soluble / viscous</strong> (fermentable)</td><td>Gum, pectin, carrageenan, mucilage — beans, oats, some fruits/vegetables, rice bran, psyllium</td><td>Readily fermented by colonic bacteria; reduces cholesterol absorption</td></tr>
+    <tr><td><strong>Functional fiber</strong></td><td>Resistant starch, polydextrose, indigestible dextrins, inulin</td><td>Isolated nondigestible carbohydrates added to manufactured foods</td></tr>
+  </table>
+  <h4 class="subsub">Benefits of Fiber</h4>
+  <ul>
+    <li>Encourages regularity and lowers colon-cancer risk</li>
+    <li>Improves the gut microbiome</li>
+    <li>Creates satiety and slows the release of glucose into the bloodstream (blunts glycemic response)</li>
+    <li>Higher-fiber foods are typically more nutrient-dense</li>
+    <li>Soluble fiber reduces cholesterol absorption in the gut and reduces hepatic cholesterol synthesis (oats/barley, chia seeds, kidney beans, apples/bananas/oranges are good sources)</li>
+  </ul>
+  <p>Colonic bacteria ferment soluble fiber into short-chain fatty acids (absorbed) and gases (not harmful) — this fermentation is thought to promote colon health. <strong>Too little fiber</strong> (combined with too little water, or certain pain medications) causes constipation. <strong>Too much fiber</strong> (&gt;60 g/day) requires extra fluid, may decrease absorption of some minerals, and can leave unmet energy needs in children.</p>
+  <figure class="fig"><img width="1000" height="974" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/009.png" alt="Infographic on prebiotics, probiotics, and postbiotics: what each is, and their food sources such as bananas, garlic, leeks, artichokes for prebiotics; yogurt, kefir, kimchi, sauerkraut for probiotics; and byproducts like short-chain fatty acids for postbiotics." ><figcaption>Prebiotics (nondigestible fibers that feed beneficial gut bacteria — bananas, chicory root, garlic, leeks, artichokes), probiotics (live beneficial bacteria — yogurt, kefir, kimchi, sauerkraut, tempeh), and postbiotics (the beneficial byproducts bacteria create by fermenting fiber, such as short-chain fatty acids) work together to promote a healthy gut microbiome.</figcaption></figure>
+
+  <h3 class="sub" id="mm-carbfoods">2.3 Carbohydrates in Foods, Sugar &amp; Diabetes</h3>
+  <p>Carbohydrate sources across the food groups: fruits provide natural sugar and fiber (choose whole/cut fruit over juice); vegetables and legumes/beans contribute carbohydrate plus protein and fiber; dairy provides carbohydrate as lactose; whole grains provide starch plus fiber, and functional foods may have fiber added back in.</p>
+  <figure class="fig"><img width="1000" height="612" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/010.jpg" alt="MyPlate graphic showing sources of carbohydrates by food group: grains (bread, rice, pasta, cereal), vegetables (starchy vegetables), fruits (all fruit), and dairy (milk, yogurt)." ><figcaption>MyPlate sources of carbohydrate span all food groups except most of the protein group — grains, starchy vegetables, fruit, and dairy (as lactose) are the major contributors.</figcaption></figure>
+  <p>The 2020–2025 Dietary Guidelines recommend that at least half of all grains consumed be <strong>whole grains</strong>; check the ingredient list and fiber content on the label, since "wheat bread" is not necessarily whole grain.</p>
+  <figure class="fig"><img width="928" height="384" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/011.jpg" alt="Whole Grains Council stamps: 100% Whole Grain, 50%+ Whole Grain, and Whole Grain stamps used on food packaging to indicate whole-grain content per serving." ><figcaption>Whole Grains Council stamps found on packaging quickly identify whole-grain content per serving — a fast way to counsel patients on label-reading for "at least half your grains as whole grains."</figcaption></figure>
+  <h4 class="subsub">Lactose Maldigestion</h4>
+  <p>Caused by reduced lactase enzyme activity: undigested lactose is not absorbed, causing gas, bloating, cramping, and discomfort. <strong>Primary lactose maldigestion</strong> is the normal physiologic decline in lactase beginning around age 3–5 and is present in roughly 25% of North American adults. <strong>Secondary lactose maldigestion</strong> is temporary, due to a specific cause such as diarrhea; severe, persistent cases are termed lactose <em>intolerance</em>. Yogurt, kefir, and hard cheeses (Manchego, Parmesan) are naturally lower in lactose and often better tolerated.</p>
+  <h4 class="subsub">Sugar Alcohols &amp; Alternative Sweeteners</h4>
+  <p>Sugar alcohols (e.g., in gum, mints, candy, nutrition bars) provide ~2.6 kcal/g; they are incompletely absorbed, stay in the gut longer, and can cause diarrhea in large amounts. Nonnutritive alternative sweeteners yield little to no calories at typical intake; the FDA sets an Acceptable Daily Intake (ADI) for each, based on a 100-fold safety margin below the no-effect level in animal studies — they are considered safe in children, adults, and pregnancy, though some evidence suggests they may negatively affect the gut microbiome or increase insulin levels.</p>
+  <figure class="fig"><img width="1000" height="625" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/013.jpg" alt="Pie chart of dietary sources of added sugars in the U.S. diet: soft drinks/energy/sports drinks largest wedge, followed by grain-based desserts, fruit drinks, dairy desserts, candy, ready-to-eat cereals, sugars/honey, yeast breads, and tea." ><figcaption>Dietary sources of added sugars: sugar-sweetened beverages (soda, sports, and energy drinks) are the single largest contributor to added-sugar intake in the U.S. diet, followed by grain-based desserts and fruit drinks.</figcaption></figure>
+  <h4 class="subsub">Diabetes Mellitus</h4>
+  <table>
+    <tr><th></th><th>Type 1 Diabetes</th><th>Type 2 Diabetes</th></tr>
+    <tr><td><strong>Occurrence</strong></td><td>5%–10% of cases</td><td>90%–95% of cases</td></tr>
+    <tr><td><strong>Cause</strong></td><td>Autoimmune destruction of the pancreas</td><td>Insulin resistance</td></tr>
+    <tr><td><strong>Risk factors</strong></td><td>Moderate genetic predisposition</td><td>Strong genetic predisposition; obesity &amp; physical inactivity; ethnicity; metabolic syndrome/prediabetes</td></tr>
+    <tr><td><strong>Characteristics</strong></td><td>Distinct symptoms (thirst, hunger, urination); ketosis; weight loss</td><td>Mild/early symptoms (fatigue, nighttime urination); generally no ketosis</td></tr>
+    <tr><td><strong>Treatment</strong></td><td>Insulin, diet, exercise</td><td>Diet, exercise, oral glucose-lowering medications; insulin in advanced cases</td></tr>
+    <tr><td><strong>Complications</strong></td><td colspan="2">Cardiovascular disease, kidney disease, nerve disease, blindness, infections (shared by both types)</td></tr>
+    <tr><td><strong>Monitoring</strong></td><td>Blood glucose, urine ketones, HbA1c</td><td>Blood glucose, HbA1c</td></tr>
+  </table>
+  <p><strong>Diagnostic tests:</strong> HbA1c (average blood sugar over ~3 months), Fasting Plasma Glucose (FPG), Oral Glucose Tolerance Test (OGTT — blood sugar before and 2 hours after a glucose drink), and Random Glucose Test (used in severe cases). <strong>Diabetic hypoglycemia</strong> occurs in insulin-using diabetics, typically 2–4 hours after a meal, with shakiness, sweating, palpitations, anxiety, hunger, and sometimes confusion — treat with 15 g of simple carbohydrate, a glucose tablet, or glucagon.</p>
+  <figure class="fig"><img width="592" height="1311" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/014.jpg" alt="Metabolic syndrome risk indicators box listing the diagnostic criteria: high blood pressure 130/85 mmHg or higher; low HDL cholesterol under 40 mg/dL men or under 50 mg/dL women; elevated fasting glucose 100 mg/dL or higher; elevated triglycerides 150 mg/dL or higher; abdominal obesity waist circumference over 40 inches men or over 35 inches women. Three or more of five required to diagnose." ><figcaption>Metabolic syndrome is diagnosed when a patient meets 3 or more of these 5 criteria: high blood pressure (&ge;130/85), low HDL, elevated fasting glucose (&ge;100 mg/dL), elevated triglycerides (&ge;150 mg/dL), and abdominal obesity. It reflects poor blood-glucose regulation, low physical activity, and diets high in refined sugar and low in fiber.</figcaption></figure>
+
+  <h3 class="sub" id="mm-lipids">2.4 Lipids: Fatty Acid Types <span class="tag">IO 4</span></h3>
+  <p>Lipids provide 9 kcal/g — the most calorie-dense macronutrient — and share one defining property: they do not readily dissolve in water. Lipids should make up 20%–35% of an adult's total caloric intake. Major lipid types include <strong>triglycerides</strong> (the primary storage/dietary form), <strong>phospholipids</strong>, and <strong>sterols</strong> (e.g., cholesterol).</p>
+  <figure class="fig"><img width="1000" height="617" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/015.jpg" alt="Lipid concept map branching into fatty acids, triglycerides, and glycerol at the top, then down into saturated and unsaturated fatty acids." ><figcaption>Lipid concept map: fats and oils are built from a glycerol backbone plus fatty acids, which branch into saturated and unsaturated (mono- and polyunsaturated) forms — the structural basis for how different fats behave in the body.</figcaption></figure>
+  <p><strong>Triglycerides</strong> are the primary form of fat in both food and the body, made of three fatty acids bonded to a glycerol backbone. Fatty acids are classified by their degree of saturation:</p>
+  <table>
+    <tr><th>Type</th><th>Structure</th><th>Typical source</th><th>Room-temp state</th></tr>
+    <tr><td><strong>Saturated</strong></td><td>No double bonds — every carbon is "saturated" with hydrogen</td><td>Primarily animal fats</td><td>Solid</td></tr>
+    <tr><td><strong>Monounsaturated</strong></td><td>One double bond (e.g., oleic acid, an omega-9)</td><td>Plant oils (olive, canola)</td><td>Liquid</td></tr>
+    <tr><td><strong>Polyunsaturated</strong></td><td>More than one double bond (omega-3, omega-6)</td><td>Plant oils, fatty fish</td><td>Liquid</td></tr>
+  </table>
+  <figure class="fig"><img width="1000" height="427" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/016.jpg" alt="Diagram of the saturated fatty acid stearic acid, showing a straight chain of carbons with single bonds only, methyl group at the omega end and acid group at the alpha end." ><figcaption>Saturated fatty acid (stearic acid): a straight chain with single carbon-to-carbon bonds only, no double bonds — this uniform structure lets saturated fat molecules pack tightly, which is why saturated fats are solid at room temperature.</figcaption></figure>
+  <figure class="fig"><img width="1000" height="318" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/017.jpg" alt="Diagram of the monounsaturated fatty acid oleic acid (omega-9), showing one double bond kink in the carbon chain." ><figcaption>Monounsaturated fatty acid (oleic acid; &omega;-9): one double bond puts a "kink" in the chain, preventing tight packing — monounsaturated fats are liquid at room temperature.</figcaption></figure>
+  <figure class="fig"><img width="1000" height="411" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/018.jpg" alt="Diagram of the omega-3 polyunsaturated fatty acid alpha-linolenic acid, showing multiple double bonds with the first double bond three carbons from the omega (methyl) end." ><figcaption>Omega-3 polyunsaturated fatty acid (alpha-linolenic acid): more than one double bond, with the first double bond located 3 carbons from the omega (methyl) end of the chain — this is exactly what defines a fat as "omega-3."</figcaption></figure>
+  <figure class="fig"><img width="1000" height="418" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/019.jpg" alt="Diagram of the omega-6 polyunsaturated fatty acid linoleic acid, showing multiple double bonds with the first double bond six carbons from the omega end." ><figcaption>Omega-6 polyunsaturated fatty acid (linoleic acid): the first double bond sits 6 carbons from the omega end — the structural difference between an omega-3 and an omega-6 fat is simply the position of that first double bond.</figcaption></figure>
+  <h4 class="subsub">Essential Fatty Acids</h4>
+  <p>Two families must be supplied by diet because the body cannot synthesize them: the <strong>omega-3</strong> family (alpha-linolenic acid, a short-chain omega-3; and the long-chain marine omega-3s DHA and EPA) and the <strong>omega-6</strong> family (linoleic acid). Omega-3 food sources include flax and flaxseed oil, chia, hemp, canola oil, and walnuts (alpha-linolenic acid) plus fatty fish — salmon, tuna, mackerel, lake trout (DHA/EPA); about 2 servings of fish per week is the general recommendation.</p>
+  <h4 class="subsub">Hydrogenation &amp; Manufactured Fats</h4>
+  <p><strong>Hydrogenation</strong> adds hydrogen across a double bond, converting a liquid oil into a firmer, more solid fat. Food manufacturers also use <strong>interesterified fat</strong> (an unsaturated fatty acid on a triglyceride is swapped for a saturated one, increasing shelf stability), <strong>tropical oils</strong> (palm, palm kernel, coconut — all considered saturated fats despite being plant-derived), and high-oleic plant oils (soybean, canola) engineered for a more stable shelf life.</p>
+
+  <h3 class="sub" id="mm-cvd">2.5 Fats, Lipoproteins &amp; Cardiovascular Disease <span class="tag">IO 5</span></h3>
+  <p>About 95% of dietary fat is absorbed. Short- and medium-chain fatty acids (&lt;12 carbons) diffuse directly into the portal vein; long-chain fatty acids are re-formed into triglycerides and enter the lymphatic system.</p>
+  <figure class="fig"><img width="1000" height="1263" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/020.jpg" alt="Diagram of dietary fat absorption: large intestinal lumen with bile acids and dietary fat forming micelles, absorbed into intestinal cells, reassembled into chylomicrons, and released into the lymphatic system, eventually reaching the liver via the bloodstream." ><figcaption>Fat absorption: emulsified dietary fat forms micelles with bile acids in the small intestine, is absorbed into intestinal cells, reassembled into chylomicrons, and released into the lymphatic system before entering the bloodstream — the route long-chain fatty acids take, distinct from the direct portal-vein route used by short- and medium-chain fatty acids.</figcaption></figure>
+  <p>Because fat and water don't mix, the blood needs a special transport system: <strong>lipoproteins</strong>, spherical particles with a lipid core and an outer shell of protein, phospholipid, and cholesterol.</p>
+  <figure class="fig"><img width="1000" height="782" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/021.jpg" alt="Diagram of a lipoprotein particle's structure: an outer shell of phospholipids, free cholesterol, and protein, surrounding a hydrophobic core of triglycerides and cholesterol bound to fatty acids." ><figcaption>Lipoprotein structure: an amphipathic shell of protein, phospholipid, and free cholesterol surrounds a hydrophobic core of triglycerides and cholesteryl esters — the shell's protein composition determines whether the particle is classified as a chylomicron, VLDL, LDL, or HDL.</figcaption></figure>
+  <table>
+    <tr><th>Lipoprotein</th><th>Primary component</th><th>Key role</th></tr>
+    <tr><td>Chylomicron</td><td>Triglyceride</td><td>Carries dietary fat from the small intestine to cells</td></tr>
+    <tr><td>VLDL</td><td>Triglyceride</td><td>Carries lipids made/taken up by the liver to cells</td></tr>
+    <tr><td>LDL</td><td>Cholesterol</td><td>Carries cholesterol made by the liver (and other sources) to cells — the "bad" cholesterol carrier</td></tr>
+    <tr><td>HDL</td><td>Protein</td><td>Removes cholesterol from cells and carries it back to the liver for excretion — the "good" cholesterol carrier</td></tr>
+  </table>
+  <p><strong>HDL</strong> is synthesized by the liver and intestine and has the highest proportion of protein of any lipoprotein (making it the most dense). It picks up cholesterol from dying cells and returns it to the liver, may block LDL oxidation, and reduces cardiovascular disease risk.</p>
+  <h4 class="subsub">CVD Risk &amp; Fat Recommendations <span class="tag">IO 5</span></h4>
+  <p>Cardiovascular disease is the leading cause of death in North America (~610,000 deaths/year; ~$108.9 billion/year in cost), encompassing myocardial infarction and cerebrovascular accident (stroke). Major risk factors: smoking, hypertension (&gt;139/89), diabetes, total cholesterol &gt;200 mg/dL, low HDL (&lt;40 mg/dL), age (men &gt;45, women &gt;55), family history, triglycerides &gt;200 mg/dL, obesity (especially central adiposity), insulin resistance, and inactivity.</p>
+  <p>There is no formal RDA for total fat, but the Dietary Guidelines recommend 20%–35% of calories from fat (44–78 g at 2000 kcal); the AHA recommends 20%–30% of kcal from fat with saturated fat limited to 7%–10%, plus 2 or more servings of fatty fish per week. There is no specific dietary cholesterol limit, since dietary cholesterol has a limited impact on blood cholesterol compared with saturated and trans fat intake. To minimize unhealthy fat intake, limit hydrogenated fats, deep-fried foods, high-fat baked goods, non-dairy creamers, and high-fat meats.</p>
+
+  <h3 class="sub" id="mm-protein">2.6 Protein: Balance, Functions &amp; Malnutrition <span class="tag">IO 6</span> <span class="tag">IO 7</span></h3>
+  <p>Protein provides 4 kcal/g and is built from 20 amino acids: 9 <strong>essential</strong> amino acids (must come from diet — histidine, isoleucine, leucine, lysine, methionine, phenylalanine, threonine, tryptophan, valine) and 11 <strong>nonessential</strong> amino acids (the body can synthesize them). <strong>Complete proteins</strong> contain ample amounts of all 9 essential amino acids and are readily digestible (most animal proteins, plus soy). <strong>Incomplete proteins</strong> are low in or lack one or more essential amino acids; combining two or more incomplete sources across a day (<strong>complementary proteins</strong>) covers the full essential amino acid profile — modern guidance no longer requires this combination within a single meal.</p>
+  <figure class="fig"><img width="1000" height="687" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/022.jpg" alt="MyPlate graphic showing sources of protein by food group: seafood, lean meat and poultry, eggs, beans and peas, nuts and seeds, and soy products." ><figcaption>MyPlate sources of protein include seafood, lean meat and poultry, eggs, legumes (beans and peas), nuts, seeds, and soy products — legumes and soy also contribute carbohydrate, fiber, and micronutrients that meat and eggs don't.</figcaption></figure>
+  <h4 class="subsub">Protein Balance <span class="tag">IO 6</span></h4>
+  <figure class="fig"><img width="1000" height="652" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/023.jpg" alt="Three-photo comparison illustrating positive protein balance (growth/pregnancy), negative protein balance (illness/wasting), and protein equilibrium (healthy adult maintenance)." ><figcaption>Protein balance: intake versus breakdown determines whether the body is in <strong>positive</strong> balance (net protein gain — growth, pregnancy, athletic muscle-building), <strong>negative</strong> balance (net protein loss — illness, injury, inadequate intake, starvation), or <strong>equilibrium</strong> (intake matches breakdown — the steady state of a healthy, non-growing adult).</figcaption></figure>
+  <p><strong>Protein functions</strong> in the body: maintaining fluid balance, acid-base balance, forming hormones (e.g., insulin, thyroid hormones) and enzymes, supporting immune function, providing energy (a nonpreferred source — the liver can make glucose from amino acids when carbohydrate is inadequate), and contributing to satiety (protein is a large molecule that takes longer to break down, promoting fullness).</p>
+  <ul>
+    <li><strong>Fluid balance:</strong> plasma proteins are too large to leave the bloodstream, so they hold fluid in the vascular space by oncotic pressure. When protein intake is too low, fluid shifts into tissues, producing <strong>edema</strong>.</li>
+    <li><strong>Glucose formation:</strong> in starvation, muscle-tissue amino acids are converted to glucose, causing muscle wasting (which can itself worsen edema).</li>
+    <li><strong>Energy:</strong> the amino group is removed (increasing urea production) and the remaining carbon skeleton is metabolized for energy during prolonged exercise or aggressive weight loss.</li>
+  </ul>
+  <p><strong>RDA for protein</strong> is roughly 0.8 g/kg of healthy body weight (about 10%–15% of total calories), with higher needs for endurance athletes (up to 1.7 g/kg), the elderly (1–1.2 g/kg), and dialysis, cancer, or organ-transplant patients. Excess protein cannot be stored as protein; the Food and Nutrition Board sets an upper limit around 35% of kcal (UL 170 g).</p>
+  <h4 class="subsub">Protein-Calorie Malnutrition <span class="tag">IO 7</span></h4>
+  <p>Protein-calorie malnutrition (PCM) is relatively rare in developed countries (seen in some alcoholics and elderly patients) but remains common in developing countries, where it stunts growth and increases infection risk.</p>
+  <figure class="fig"><img width="1000" height="527" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/024.jpg" alt="Comparison of the characteristics of Kwashiorkor and Marasmus: Kwashiorkor shows edema, wasting of muscle and body fat masked by fluid retention, and growth impairment 60%-80% of normal weight for age; Marasmus shows severe growth impairment less than 60% of normal weight for age, rapid onset, and flat/dry hair." ><figcaption>Two clinical presentations of protein-calorie malnutrition: <strong>kwashiorkor</strong> (protein-deficient, adequate-calorie) causes edema that masks underlying muscle and fat wasting, with growth impairment to 60%–80% of normal weight-for-age. <strong>Marasmus</strong> (both protein- and calorie-deficient) causes severe growth impairment (&lt;60% of normal weight-for-age) with a rapid onset and visibly wasted, "old man" appearance without the fluid retention seen in kwashiorkor.</figcaption></figure>
+
+  <h3 class="sub" id="mm-veg">2.7 Vegetarian &amp; Plant-Based Diets <span class="tag">IO 8</span></h3>
+  <p>People choose vegetarian diets for ethical, religious, economic, or health reasons. A well-planned vegetarian diet can meet all nutritional needs while naturally limiting saturated fat and cholesterol and encouraging high intake of complex carbohydrates, vitamins A/E/C and carotenoids, magnesium, and fiber. Vegetarian and especially vegan diets have a favorable cardiovascular profile: no dietary cholesterol (vegan), little to no trans or saturated fat, ample mono- and polyunsaturated fat, and a good supply of fiber, vitamins, minerals, and phytochemicals.</p>
+  <table>
+    <tr><th>Pattern</th><th>Includes</th></tr>
+    <tr><td><strong>Vegan</strong></td><td>Only plant-based foods</td></tr>
+    <tr><td><strong>Fruitarian</strong></td><td>Fruits, nuts, honey, and vegetable oils</td></tr>
+    <tr><td><strong>Lacto-vegetarian</strong></td><td>Plant foods + dairy</td></tr>
+    <tr><td><strong>Lacto-ovo-vegetarian</strong></td><td>Plant foods + dairy + eggs</td></tr>
+    <tr><td><strong>Pescatarian</strong></td><td>Plant foods + dairy + eggs + fish</td></tr>
+  </table>
+  <p>The most restrictive pattern — <strong>vegan</strong> — carries the greatest nutrient-deficiency risk and needs the most deliberate planning around vitamin B12, vitamin D, calcium, iron, zinc, and omega-3 fatty acids (all nutrients that are naturally concentrated in animal foods).</p>
+  <table>
+    <tr><th>Food group</th><th>Lacto-vegetarian servings</th><th>Vegan servings</th><th>Key nutrients supplied</th></tr>
+    <tr><td>Grains</td><td>6–11</td><td>8–11</td><td>Protein, thiamin, niacin, folate, vitamin E, zinc, magnesium, iron, fiber</td></tr>
+    <tr><td>Beans/legumes</td><td>2–3</td><td>3</td><td>Protein, vitamin B6, zinc, magnesium, fiber</td></tr>
+    <tr><td>Nuts, seeds</td><td>2–3</td><td>3</td><td>Protein, vitamin E, magnesium</td></tr>
+    <tr><td>Vegetables</td><td>3–5</td><td>4–6</td><td>Vitamin A, vitamin C, folate, vitamin K, potassium, magnesium</td></tr>
+    <tr><td>Fruits</td><td>2–4</td><td>4</td><td>Vitamin A, vitamin C, folate</td></tr>
+    <tr><td>Dairy / fortified soy milk</td><td>3</td><td>3 (fortified soy milk)</td><td>Protein, riboflavin, vitamin D, vitamin B12, calcium</td></tr>
+  </table>
+  <p>Legumes, beans, peas, peanuts, nuts, seeds, and whole grains all contribute protein, vitamins, and fiber, plus phytochemicals — practical swaps include a veggie burger, seeds/nuts on salad, edamame, peanut butter on whole-wheat bagel, beans instead of ground meat in tacos, and calcium-fortified soy milk in place of dairy milk. Soy products (soy milk, tofu, soy bread, whole soybeans) are notable among plant sources because they supply all 9 essential amino acids on their own.</p>
+
+  <h3 class="sub" id="mm-vitamins">2.8 Vitamins <span class="tag">IO 9</span> <span class="tag">IO 10</span></h3>
+  <figure class="fig"><img width="974" height="1438" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/025.jpg" alt="Infographic on micronutrient functions grouped into four categories: energy metabolism, bone health, body defenses, and blood health, each listing the relevant vitamins and minerals." ><figcaption>Micronutrients contribute to four broad functional categories — energy metabolism, bone health, body defenses (immunity), and blood health — each drawing on a distinct but overlapping set of vitamins and minerals.</figcaption></figure>
+  <p>Vitamins are carbon-containing (organic) substances the body needs in small amounts but generally cannot synthesize enough of on its own. Deficiency causes a decline in function that resolves once the vitamin is resupplied — the essential-nutrient criteria from Section 1.1 applied to a micronutrient. Megadoses (well above the Upper Level) should be avoided.</p>
+  <h4 class="subsub">Fat-Soluble Vitamins <span class="tag">IO 9</span> <span class="tag">IO 10</span></h4>
+  <table>
+    <tr><th>Vitamin</th><th>Major function(s)</th></tr>
+    <tr><td><strong>A</strong></td><td>Normal vision; gene expression; growth, development, reproduction; embryonic development; immune function; cancer prevention</td></tr>
+    <tr><td><strong>D</strong> (calciferol — D2/ergocalciferol, D3/cholecalciferol)</td><td>Maintains serum calcium and phosphorus; bone health; gene expression and cell growth</td></tr>
+    <tr><td><strong>E</strong></td><td>Antioxidant; prevents breakdown of vitamin A and unsaturated fatty acids</td></tr>
+    <tr><td><strong>K</strong></td><td>Coenzyme in synthesis of blood-clotting proteins and bone metabolism</td></tr>
+  </table>
+  <h4 class="subsub">Water-Soluble Vitamins <span class="tag">IO 9</span> <span class="tag">IO 10</span></h4>
+  <table>
+    <tr><th>Vitamin</th><th>Major function(s)</th></tr>
+    <tr><td>Thiamin (B1)</td><td>Coenzyme in carbohydrate &amp; branched-chain amino acid metabolism</td></tr>
+    <tr><td>Riboflavin (B2)</td><td>Coenzyme in numerous redox (oxidation-reduction) reactions</td></tr>
+    <tr><td>Niacin (B3)</td><td>Coenzyme in energy-metabolism redox reactions</td></tr>
+    <tr><td>Pantothenic acid (B5)</td><td>Coenzyme in fatty acid metabolism</td></tr>
+    <tr><td>Vitamin B6 (pyridoxine)</td><td>Coenzyme for amino-acid metabolism, neurotransmitter synthesis, red blood cell synthesis</td></tr>
+    <tr><td>Biotin (B7)</td><td>Coenzyme in synthesis of fat, glycogen, and amino acids</td></tr>
+    <tr><td>Folate (B9)</td><td>Coenzyme in nucleic- and amino-acid metabolism; red blood cell synthesis</td></tr>
+    <tr><td>Vitamin B12 (cobalamin)</td><td>Coenzyme in nucleic-acid metabolism; red blood cell synthesis</td></tr>
+    <tr><td>Vitamin C (ascorbic acid)</td><td>Connective tissue synthesis; hormone/neurotransmitter synthesis; antioxidant; immune function; improves nonheme iron absorption</td></tr>
+    <tr><td>Choline</td><td>Neurotransmitter and phospholipid synthesis (essential, but classified as neither a vitamin nor a mineral)</td></tr>
+  </table>
+  <p><strong>Absorption &amp; storage:</strong> water-soluble vitamins are absorbed primarily in the small intestine, have relatively high bioavailability, and travel via the portal vein to the liver and body tissues. Fat-soluble vitamins are absorbed together with dietary fat — anything that interferes with fat absorption impairs their absorption too. <strong>Bioavailability</strong> is the degree to which an ingested nutrient is digested, absorbed, and made available for the body to use.</p>
+  <p><strong>Toxicity:</strong> fat-soluble vitamins A, D, and E are not readily excreted and can accumulate — vitamin A toxicity is the most frequently observed. Water-soluble vitamin excess is generally excreted in urine, with the notable exception of B6 and B12, which can be stored in the liver. Toxicity most often comes from supplements, not food, which is why megadosing should be avoided.</p>
+  <p><strong>Preserving vitamins in food:</strong> vitamin content peaks at ripeness; freezing (often after blanching) helps retain nutrients; water-soluble vitamins are especially vulnerable to destruction by heat, light, air exposure, cooking in water, and alkalinity.</p>
+  <figure class="fig"><img width="1000" height="665" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/026.jpg" alt="MyPlate graphic showing sources of vitamins and choline by food group: grains, vegetables, fruits, dairy, and protein, each listing which vitamins they are rich in." ><figcaption>MyPlate sources of vitamins and choline: each food group is a concentrated source of specific vitamins — e.g., dairy for vitamin B12 and riboflavin, vegetables/fruits for vitamin C and folate, grains for thiamin and niacin.</figcaption></figure>
+
+  <h3 class="sub" id="mm-minerals">2.9 Minerals <span class="tag">IO 11</span> <span class="tag">IO 12</span> <span class="tag">IO 13</span></h3>
+  <p>Minerals are inorganic (no carbon) and, unlike vitamins, are not destroyed by cooking. They are classified by the quantity the body contains/needs — <strong>major</strong> minerals (needed in larger amounts) versus <strong>trace</strong> minerals (needed in very small amounts) — not by importance; a trace mineral deficiency can be just as clinically significant as a major mineral deficiency.</p>
+  <figure class="fig"><img width="1000" height="826" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/027.jpg" alt="Bar chart of amounts of minerals in the human body in grams, split into major minerals (calcium, phosphorus, potassium, sulfur, sodium, chlorine, magnesium) on a large scale from 0 to 1200 grams, and trace minerals (iron, fluorine, zinc, and others) on a much smaller scale from 0 to 1 gram." ><figcaption>Amounts of minerals in the human body: calcium (~1200 g) and phosphorus (~650–700 g) dwarf every other mineral by mass — note the axis break, since trace minerals like iron, fluoride, and zinc are present only in single-digit-gram or sub-gram quantities despite their outsized physiologic roles.</figcaption></figure>
+  <table>
+    <tr><th>Major mineral</th><th>Key function(s)</th></tr>
+    <tr><td><strong>Calcium</strong></td><td>Blood clotting; muscle contraction; nerve transmission; bone and tooth formation</td></tr>
+    <tr><td><strong>Phosphorus</strong></td><td>Maintains pH; storage and transfer of energy; nucleotide synthesis</td></tr>
+    <tr><td><strong>Magnesium</strong></td><td>Cofactor for enzyme systems and vitamin D activation; reduces tooth decay</td></tr>
+    <tr><td><strong>Sulfur</strong></td><td>Part of vitamins and amino acids; aids drug detoxification; acid-base balance</td></tr>
+    <tr><td>Sodium, Potassium, Chloride</td><td>Fluid and electrolyte balance (see Section 2.10)</td></tr>
+  </table>
+  <table>
+    <tr><th>Trace mineral</th><th>Key function(s)</th></tr>
+    <tr><td><strong>Iron</strong></td><td>Component of hemoglobin and numerous enzymes; immune function; cognitive development</td></tr>
+    <tr><td><strong>Zinc</strong></td><td>Component of multiple enzymes/proteins; gene expression; protein metabolism; wound healing and growth</td></tr>
+    <tr><td><strong>Selenium</strong></td><td>Defense against oxidative stress; thyroid hormone regulation; redox status of vitamin C and other molecules</td></tr>
+    <tr><td><strong>Iodine</strong></td><td>Component of thyroid hormones</td></tr>
+    <tr><td><strong>Copper</strong></td><td>Component of enzymes in iron metabolism; collagen synthesis</td></tr>
+    <tr><td><strong>Fluoride</strong></td><td>Inhibits initiation/progression of dental caries; stimulates new bone formation</td></tr>
+    <tr><td>Chromium</td><td>Helps maintain normal blood glucose levels</td></tr>
+    <tr><td>Manganese</td><td>Bone formation; cofactor for amino acid, cholesterol, and carbohydrate metabolism enzymes</td></tr>
+    <tr><td>Molybdenum</td><td>Cofactor for enzymes catabolizing sulfur amino acids, purines, and pyridines</td></tr>
+  </table>
+  <p><strong>Absorption/bioavailability</strong> of minerals is affected by age, gender, genetics, nutritional status, overall diet, prescription drugs, and the fiber content of the diet. <strong>Toxicity</strong> is mostly a supplement problem, not a food problem — avoid intakes above 100% of the Daily Value from supplements, watch for harmful drug interactions, look for a USP (United States Pharmacopeial) seal on the label for quality assurance, and take mineral supplements with or just after a meal to improve absorption. Minerals are also lost from plant foods during processing — refined grains lose vitamin E, B vitamins, and trace minerals; enrichment adds back iron and some B vitamins, but not selenium, copper, or zinc.</p>
+  <figure class="fig"><img width="1000" height="389" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/028.jpg" alt="MyPlate graphic showing sources of minerals by food group: grains, vegetables, fruits, dairy, and protein, each listing which minerals they are rich in." ><figcaption>MyPlate sources of minerals: dairy for calcium and phosphorus, protein foods for iron and zinc, vegetables/fruits for potassium and magnesium, and grains for magnesium and selenium.</figcaption></figure>
+  <h4 class="subsub">Minerals &amp; Overall Health <span class="tag">IO 13</span></h4>
+  <ul>
+    <li><strong>Building bones:</strong> vitamin D, vitamin K, calcium, phosphorus, magnesium, and fluoride — bone is living, dynamic tissue that is constantly remodeled.</li>
+    <li><strong>Blood health:</strong> vitamin K and calcium for clotting; iron, copper, folate, vitamin B6, and vitamin B12 for healthy blood cell production.</li>
+    <li><strong>Immune defense:</strong> vitamins A, D, E, some B vitamins, and vitamin C, plus chromium, copper, selenium, iron, and zinc.</li>
+    <li><strong>Antioxidant defense:</strong> vitamin E, vitamin C, carotenoids, and selenium protect tissue from oxidative damage.</li>
+  </ul>
+  <p>Achieving a phytochemical-rich diet is estimated to require at least 5, and ideally 8–9, servings of fruits and vegetables per day — the average American diet provides only about 3,000–5,000 ORAC (oxygen radical absorbance capacity) units of antioxidant capacity versus a target closer to 12,000 units.</p>
+
+  <h3 class="sub" id="mm-water">2.10 Water &amp; Electrolyte Balance <span class="tag">IO 14</span></h3>
+  <p>Water is the most abundant molecule in the body, comprising 50%–70% of body weight (muscle is ~73% water; adipose tissue only 10%–20%; bone ~20%; very lean athletes can be up to 70% body water). The body cannot store water, so intake must be continuous.</p>
+  <figure class="fig"><img width="898" height="552" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/029.jpg" alt="MyPlate graphic showing sources of water by food group: grains, vegetables, fruits, dairy, and protein, each listing water-rich examples such as soups, lettuce, watermelon, and milk." ><figcaption>MyPlate sources of water: while plain drinking water is the obvious source, water-rich foods (soups, lettuce and other high-water vegetables, watermelon, milk) contribute meaningfully to total fluid intake.</figcaption></figure>
+  <figure class="fig"><img width="1000" height="748" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/030.jpg" alt="Hub-and-spoke diagram of the functions of water, with a central image of a person drinking water surrounded by labeled functions: temperature regulation, distribution of nutrients, removal of waste products, component of body fluids, lubricant, chemical reactions, and acid-base balance." ><figcaption>Functions of water: temperature regulation, distributing nutrients, removing waste products, serving as a component of body fluids, acting as a lubricant (saliva, joint fluid, tears, cerebrospinal and amniotic fluid), participating directly in chemical reactions, and maintaining acid-base balance.</figcaption></figure>
+  <h4 class="subsub">Hydration &amp; Fluid Needs</h4>
+  <p>General fluid targets are about 2.2 L/day (9 cups, 72 oz) for women and 3 L/day (13 cups, 104 oz) for men. Typical urine output is about 1 L/day; output below 500 mL (2 cups) signals dehydration (concentrated urine, increased renal workload).</p>
+  <figure class="fig"><img width="871" height="1167" loading="lazy" src="cam-nutrition-exam-1-study-guide-images/031.jpg" alt="Urine color hydration chart, numbered 1 through 8, ranging from pale yellow (1-3, well hydrated) through progressively darker yellow-gold (4-5, dehydrated, need fluids) to dark amber/brown (6-8, danger, immediate action needed)." ><figcaption>Urine color as a hydration indicator: pale straw-colored urine (levels 1–3) indicates adequate hydration; darker yellow (4–5) signals dehydration and the need for fluids; dark amber/brown (6–8) is a danger sign requiring immediate rehydration — a fast, practical bedside/self-assessment tool.</figcaption></figure>
+  <p>Thirst is controlled by the hypothalamus — by the time you feel thirsty, you're already mildly dehydrated. Thirst sensation can lag behind actual fluid needs during exercise or illness; infants and children need close monitoring (especially with vomiting/diarrhea), and hypothalamic sensitivity to thirst declines with age, raising dehydration risk in the elderly. Athletes should consume about 2–3 cups (16–24 oz) of fluid per pound lost during exercise.</p>
+  <p><strong>Overhydration</strong> occurs when water intake exceeds the kidneys' processing capacity, diluting blood sodium. Severe overhydration causes <strong>water intoxication</strong> and <strong>hyponatremia</strong> (dangerously low blood sodium), with swelling of the brain and nerves and fluid in the lungs — a potentially fatal condition.</p>
+  <h4 class="subsub">Water Supply Safety <span class="tag">IO 14</span></h4>
+  <p><strong>Hard water</strong> (about 89% of U.S. homes) contains high levels of calcium and magnesium and doesn't lather soap well; <strong>soft water</strong> contains higher sodium and produces cleaner-feeling laundry — a relevant counseling point for patients on a sodium-restricted diet with a home water softener. For bottled/reusable water bottles: stainless steel is preferred; if using plastic, look for recycling codes 2 or 4, avoid codes 3 or 7 unless labeled "BPA free," discard scratched or cracked bottles, and never store water in a hot garage or car (heat promotes leaching of plastic compounds).</p>
+  <h4 class="subsub">Sodium, Potassium &amp; Chloride</h4>
+  <table>
+    <tr><th>Electrolyte</th><th>Adequate intake / DV</th><th>Typical American intake</th><th>Deficiency risk groups / symptoms</th></tr>
+    <tr><td><strong>Sodium</strong></td><td>1500 mg/day (ages 9–50); DV &amp; UL both 2,300 mg/day; &le;1,500 mg/day to lower blood pressure</td><td>2,300–4,700 mg/day (exceeds needs; ~77% comes from salt added during food manufacturing)</td><td>Low-sodium diets, excessive sweating (athletes), persistent vomiting/diarrhea &rarr; muscle cramps, nausea/vomiting, dizziness, shock, coma</td></tr>
+    <tr><td><strong>Potassium</strong></td><td>AI &amp; DV both 4,700 mg/day</td><td>2,000–3,000 mg/day (below target)</td><td>Chronic diarrhea, vomiting, laxative/alcohol abuse, eating disorders, very-low-calorie diets &rarr; loss of appetite, muscle cramps, confusion, constipation, irregular heartbeat. No UL set — toxicity from food alone is rare with healthy kidneys, but impaired kidney function allows dangerous buildup that can inhibit heart function.</td></tr>
+    <tr><td><strong>Chloride</strong></td><td>Paired with sodium intake (table salt = 40% sodium, 60% chloride by weight; 1 tsp salt &asymp; 2,300 mg sodium)</td><td>&mdash;</td><td>Primary negatively-charged extracellular ion; forms stomach acid (HCl); supports immune response and nerve function</td></tr>
+  </table>
+  <p>High-sodium foods: packaged, processed, restaurant, fast, canned, and frozen prepared foods. Low-sodium foods: fresh fruits and vegetables, whole grains, and unprocessed meats without sauces.</p>
+  <h4 class="subsub">Minerals &amp; Hypertension</h4>
+  <p>About 1 in 5 North Americans has hypertension, rising to roughly 1 in 2 among those over 65. The <strong>DASH diet</strong> (Dietary Approach to Stop Hypertension) is high in calcium, potassium, and magnesium; low in fat and sodium; very high in fruits and vegetables (naturally low-sodium, high-potassium); and rich in low-fat dairy.</p>
+  <table>
+    <tr><th>Intervention</th><th>Approximate systolic BP reduction</th></tr>
+    <tr><td>Lose excess weight (per 20 lb, if BMI &gt;25)</td><td>5–20 points</td></tr>
+    <tr><td>Follow a DASH diet</td><td>8–14 points</td></tr>
+    <tr><td>Exercise daily (30 min aerobic activity)</td><td>4–9 points</td></tr>
+    <tr><td>Limit sodium (&le;2,400 mg/day, ideally &le;1,500 mg/day)</td><td>2–8 points</td></tr>
+    <tr><td>Limit alcohol (&le;2 drinks/day men, &le;1 drink/day women)</td><td>2–4 points</td></tr>
+  </table>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#2c6e78" onclick="window.openTestYourself('Test yourself — Macronutrients, Micronutrients &amp; Water', TEST_YOURSELF.macroMicro)">Test yourself! &rarr;</button>
+</section>
+
+<footer class="guide-foot">
+  <p style="text-align:center;margin:0 0 10px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+  <p style="text-align:center;">Built from your PAJ 5508 lecture decks for personal study &middot; Class of 2028 &middot; more sections will be added to this guide as later CAM/Nutrition lecture decks are covered.</p>
+  <p style="text-align:center;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+</footer>
+
+</main>
+</div>
+<script>
+  // High-yield "Test yourself" question sets, one per lecture deck, fed to
+  // window.openTestYourself (theme.js) by each section's button.
+  var TEST_YOURSELF = {
+    humanNutrition: [
+      { q: "A patient's food contains 46 g of carbohydrate, 14 g of fat, and 45 g of protein. Using 4/9/4 kcal-per-gram factors, what is the total calorie content?", choices: ["390 kcal", "490 kcal", "550 kcal", "630 kcal"], correct: 1, explain: "(46 × 4) + (14 × 9) + (45 × 4) = 184 + 126 + 180 = 490 kcal, matching the grilled chicken sandwich worked example." },
+      { q: "Which criterion is NOT one of the three required to classify something as an essential nutrient?", choices: ["A specific biological function is identified in the body", "Omission from the diet leads to a decline in function", "It must provide at least 4 kcal per gram", "Replacing it in the diet restores normal function"], correct: 2, explain: "The three essential-nutrient criteria are a specific function, a decline in function when omitted, and restoration of function when resupplied — calorie content isn't part of the definition (water, vitamins, and minerals are essential nutrients that provide 0 kcal/g)." },
+      { q: "Per the lecture's cited 2018 CDC statistics, about what percentage of the U.S. population has a BMI of 25 or higher (\"overweight,\" a category that includes obesity)?", choices: ["26%", "41%", "72.5%", "90%"], correct: 2, explain: "72.5% of the population was reported as overweight (BMI ≥25), a group that includes the 41% who meet criteria for obesity (BMI ≥30); 26% was normal weight." },
+      { q: "Compared to Food and Nutrition Board recommended ranges, NHANES 2018 data show the average American diet's fat intake is:", choices: ["Well below the recommended range", "At the low end of the recommended range", "Slightly above the top of the recommended range", "More than double the recommended range"], correct: 2, explain: "Average fat intake (35.8% of kcal) sits slightly above the top of the 20%–35% recommended range, while carbohydrate and protein intake sit near the low end of their ranges." },
+      { q: "On the updated (2020) FDA Nutrition Facts label, which line was newly added compared to the previous label?", choices: ["Total Fat", "Added Sugars (broken out from Total Sugars)", "Sodium", "Ingredients list"], correct: 1, explain: "The 2020 update broke out grams and %DV for Added Sugars separately from Total Sugars, alongside larger/bolder calorie and serving-size type and updated Daily Values for vitamin D, calcium, iron, and potassium." }
+    ],
+    macroMicro: [
+      { q: "A fatty acid's first double bond is located 3 carbons from the omega (methyl) end of the chain. This fatty acid is:", choices: ["Saturated", "An omega-3", "An omega-6", "Monounsaturated"], correct: 1, explain: "The omega-3 designation specifically means the first double bond sits 3 carbons from the omega end (e.g., alpha-linolenic acid); an omega-6 fatty acid's first double bond is 6 carbons from that end instead." },
+      { q: "Which lipoprotein is described as removing cholesterol from cells and carrying it back to the liver for excretion?", choices: ["Chylomicron", "VLDL", "LDL", "HDL"], correct: 3, explain: "HDL (high-density lipoprotein) picks up cholesterol from dying cells and returns it to the liver — its high protein content also makes it the most dense lipoprotein, and higher HDL is associated with lower cardiovascular risk." },
+      { q: "A patient has fatigue and nighttime urination but no ketosis, and insulin resistance is the underlying mechanism. This is most consistent with:", choices: ["Type 1 diabetes", "Type 2 diabetes", "Metabolic syndrome only, not diabetes", "Diabetic hypoglycemia"], correct: 1, explain: "Type 2 diabetes (90%–95% of cases) is driven by insulin resistance and typically presents with mild, early symptoms like fatigue and nighttime urination, generally without ketosis — unlike type 1, which has distinct symptoms, ketosis, and weight loss from autoimmune pancreatic destruction." },
+      { q: "Positive protein balance, negative protein balance, and protein equilibrium describe:", choices: ["Only how much protein is in a single meal", "Whether net protein intake exceeds, falls short of, or matches protein breakdown", "The ratio of essential to nonessential amino acids in a food", "Whether a protein source is complete or incomplete"], correct: 1, explain: "Positive balance = net protein gain (growth, pregnancy); negative balance = net protein loss (illness, starvation); equilibrium = intake matches breakdown, the steady state of a healthy non-growing adult." },
+      { q: "Which pair of nutrients is most specifically at risk of deficiency in a vegan diet, per the lecture?", choices: ["Vitamin C and fiber", "Vitamin B12 and vitamin D", "Vitamin A and vitamin E", "Sodium and chloride"], correct: 1, explain: "Vegan diets carry particular deficiency risk for vitamin B12, vitamin D, calcium, iron, zinc, and omega-3 fatty acids — nutrients concentrated in animal foods; B12 and vitamin D are the most commonly tested examples." }
+    ]
+  };
+</script>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

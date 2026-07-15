@@ -1298,6 +1298,8 @@
     ["Δ", "Delta"],
     ["δ", "delta"],
     ["π", "pi"],
+    ["ω", "omega"],
+    ["Ω", "Omega"],
     ["vs.", "versus"]
   ];
   var LEFTOVER_CLEANUP = [
