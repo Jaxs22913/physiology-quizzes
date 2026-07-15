@@ -2120,6 +2120,7 @@
       // whenever the school revises the schedule -- see feedback_new_exam_structure_match
       // memory for the maintenance note.
       const EXAM_EVENTS = [
+        { date: "2026-07-02", title: "Patient-Centered Healthcare Quiz (Lectures 1-6)" },
         { date: "2026-07-06", title: "Anatomy Practicum #2 (Labs 6-10)" },
         { date: "2026-07-08", title: "Pharmacodynamics - Exam #2 (Lectures 5-7)" },
         { date: "2026-07-10", title: "Physiology - Exam #3 (Lectures 11-17)" },
@@ -2129,17 +2130,26 @@
         { date: "2026-07-16", title: "PD I - Practicum Retest (Practicum #1-3)" },
         { date: "2026-07-17", title: "Anatomy - Exam #3 (Lectures 12-17)" },
         { date: "2026-07-22", title: "PD I Exam #2 (Lectures 7-15)" },
-        { date: "2026-07-24", title: "Anatomy - Exam #4 (Lectures 18-22)" },
+        { date: "2026-07-24", title: "Anatomy - Exam #4 (Lectures 18-21)" },
+        { date: "2026-07-25", title: "RETEST: Anatomy Computer Exam #3" },
+        { date: "2026-07-25", title: "RETEST: Physio #2" },
         { date: "2026-07-27", title: "PD I - Practicum #5 - Musculoskeletal" },
+        { date: "2026-07-28", title: "RETEST: Anatomy Computerized Exam #2" },
         { date: "2026-07-29", title: "CAM/Nutrition - Exam #1 (1-8)" },
         { date: "2026-07-31", title: "PD I - Neuro Practicum #6" },
+        { date: "2026-08-01", title: "RETEST: Physio #1" },
+        { date: "2026-08-01", title: "RETEST: Anatomy Computerized Exam #1" },
         { date: "2026-08-03", title: "Anatomy Practicum #3 (Labs 11-17)" },
         { date: "2026-08-04", title: "PD I - Exam #3 (Lectures 16-21)" },
         { date: "2026-08-04", title: "PD I - Practical Exam Retests (4-6)" },
         { date: "2026-08-05", title: "PD I - Head to Toe Practicum #8" },
         { date: "2026-08-06", title: "CAM/Nutrition Exam #2 (9-13)" },
         { date: "2026-08-07", title: "Physiology - Exam #4 (Lectures 18-23)" },
+        { date: "2026-08-08", title: "RETEST: Anatomy Computerized Exam #3" },
+        { date: "2026-08-08", title: "RETEST: Anatomy Practicum #3" },
+        { date: "2026-08-10", title: "RETEST: Physio #4" },
         { date: "2026-08-10", title: "Anatomy Course Remediation Exam" },
+        { date: "2026-08-10", title: "RETEST: Anatomy Computerized Exam #4" },
         { date: "2026-08-12", title: "Pharmacodynamics Remediation Exam" },
         { date: "2026-08-14", title: "Physiology Course Remediation Exam" }
       ];
@@ -2165,9 +2175,25 @@
       });
       const weekKeys = weekDates.map(ymd);
       const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+      // One-time exception: a handful of retest dates this semester landed on a
+      // Saturday (the school's own scheduling, not something we'd move) -- rather
+      // than redesigning the widget to always show weekends, only pull in Sat/Sun
+      // for THIS specific displayed week if an actual event is scheduled that day.
+      [5, 6].forEach(n => {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + n);
+        const key = ymd(d);
+        if (EXAM_EVENTS.some(e => e.date === key)) {
+          weekDates.push(d);
+          weekKeys.push(key);
+          dayLabels.push(n === 5 ? "Sat" : "Sun");
+        }
+      });
+
       const fmt = d => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
-      document.getElementById("week-range").textContent = fmt(weekDates[0]) + " – " + fmt(weekDates[4]);
+      document.getElementById("week-range").textContent = fmt(weekDates[0]) + " – " + fmt(weekDates[weekDates.length - 1]);
 
       // Keep both floating sidebars (this one and #continue-widget) level with the
       // top of the semester card rather than the top of the page -- measured, not
