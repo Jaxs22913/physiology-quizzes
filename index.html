@@ -352,6 +352,11 @@
         flex-shrink: 0;
       }
       .guides-btn.group-btn .guides-btn-icon { background: var(--accent2-soft); color: var(--accent2); }
+      /* Flashcards is a placeholder pill for a not-yet-built feature -- kept
+         full-width on its own row rather than squeezed into the 2-up grid
+         above, so it doesn't visually compete with the two real destinations. */
+      .guides-btn.flashcards-btn { flex: 1 1 100%; }
+      .guides-btn.flashcards-btn .guides-btn-icon { background: var(--accent3-soft); color: var(--accent3); }
       .guides-btn span { font-size: 13px; line-height: 1.25; }
     }
     .search-results {
@@ -460,7 +465,11 @@
         right: calc(100% + 24px);
         width: 260px;
       }
-      .search-wrap .guides-btn, .search-wrap .group-btn { display: none; }
+      /* Flashcards has no floating sidebar counterpart (no widget to pair it
+         with yet, since the feature itself doesn't exist) -- :not() keeps it
+         inline next to search here instead of disappearing along with the
+         other two. */
+      .search-wrap .guides-btn:not(.flashcards-btn), .search-wrap .group-btn { display: none; }
     }
     .continue-widget.hidden { display: none; }
     .continue-title {
@@ -1160,6 +1169,10 @@
       <a href="group-join.html" class="guides-btn group-btn">
         <svg class="guides-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
         <span>Group Study</span>
+      </a>
+      <a href="#" class="guides-btn flashcards-btn" onclick="event.preventDefault(); if (window.showToast) window.showToast('Flashcards are coming soon!');">
+        <svg class="guides-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="14" height="10" rx="2"/><rect x="7" y="4" width="14" height="10" rx="2"/></svg>
+        <span>Flashcards</span>
       </a>
       <div id="search-results" class="search-results hidden"></div>
     </div>
@@ -2021,6 +2034,7 @@
       <div class="review-modal-content">
         <div class="divider"><span>July 14</span></div>
         <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>New "Flashcards" pill on the homepage &mdash; a placeholder for an upcoming flashcard feature (not built yet).</li>
           <li>New "CAM/Nutrition" tab is open: Nutrition PPT 1-2 Review Qs (25 questions on energy/calories, carbohydrates, lipids, protein, and micronutrients).</li>
           <li>5 more Anatomy Exam 3 topic quizzes (Set 4/5), 895 questions total: Endocrine (160), Female Reproductive (225), GI I &amp; II (45), Male Reproductive (185), and Nephrology/Urinary (280).</li>
           <li>CAM/Nutrition Exam 1 is open: a new study guide (Human Nutrition &amp; Macronutrients/Micronutrients/Water, with audio) plus 4 new quizzes (2 sets each topic, 80 questions total).</li>
