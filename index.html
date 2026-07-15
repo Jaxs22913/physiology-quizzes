@@ -238,7 +238,9 @@
       width: 380px;
       max-width: 85%;
       margin: 0 auto -28px;
+      transition: transform .25s cubic-bezier(.3,.6,.3,1.5);
     }
+    .brand-mark:hover { transform: rotate(-3deg) scale(1.02); }
     .brand-mark svg { width: 100%; height: auto; display: block; }
 
     /* Compact mobile header: the full-height logo + title + two-line
@@ -940,7 +942,8 @@
        the cascade still resolves ties by position. Being last guarantees
        these win at <=640px regardless of where the rest of the file's
        styles get edited later. */
-    .h1-logo { display: none; }
+    .h1-logo { display: none; transition: transform .25s cubic-bezier(.3,.6,.3,1.5); }
+    .h1-logo:hover { transform: rotate(-6deg) scale(1.08); }
     .h1-divider { display: none; }
     /* The plain-text H1 ("Class of 2028 Review") duplicated the logo right
        above it -- .brand-mark's own SVG already has "Class of 2028" baked
