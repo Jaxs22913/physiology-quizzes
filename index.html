@@ -647,12 +647,14 @@
       border-radius: 50%;
       background: var(--accent);
       flex-shrink: 0;
+      transition: transform .25s cubic-bezier(.3,.6,.3,1.5);
     }
     a.quiz-link:hover {
       background: var(--accent-soft);
       border-color: var(--accent);
       transform: translateX(2px);
     }
+    a.quiz-link:hover::before { transform: scale(1.6) rotate(-30deg); }
     .score-badge {
       margin-left: auto;
       flex-shrink: 0;
