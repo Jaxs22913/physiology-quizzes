@@ -177,16 +177,14 @@
     sp.correctAnswer = pair[1];
     sp.answered = false;
 
-    // Excludes both the current card AND any other card whose answer text
-    // happens to be identical to it -- without this, a deck with repeated
-    // answer values (same failure mode as the Match-mode duplicate-value
-    // bug) could offer two choices with the same text, one of which would
-    // silently also read as "correct" per the text-equality check below.
-    var otherAnswers = deck.cards
-      .map(function (c, i) { return { text: c[1], i: i }; })
-      .filter(function (c) { return c.i !== idx && c.text !== pair[1]; })
-      .map(function (c) { return c.text; });
-    var choices = shuffle([pair[1]].concat(shuffle(otherAnswers).slice(0, 3)));
+    // pickDistractors (arcade.js) excludes the current card, excludes any
+    // card whose answer text is identical to the correct one (avoids the
+    // Match-mode duplicate-value failure mode reading as "correct" here
+    // too), and prefers answers of similar length/shape so the right
+    // choice isn't spottable just by being the odd-length one out -- worth
+    // extra care in Sprint specifically since the clock pressures skimming
+    // by shape even more than Learn does.
+    var choices = shuffle([pair[1]].concat(pickDistractors(deck.cards, idx, pair[1], 3)));
     var el = document.getElementById("sprint-choices");
     el.innerHTML = "";
     choices.forEach(function (text, i) {

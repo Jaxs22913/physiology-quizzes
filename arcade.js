@@ -435,6 +435,28 @@ function shuffle(arr) {
   return a;
 }
 
+// Picks `count` distractors for a multiple-choice question, preferring
+// answers whose word count is close to the correct answer's -- without
+// this, a deck mixing short "which nerve..." answers with long
+// "what's the mechanism..." answers lets the correct choice get spotted
+// by being the only short/long option in the list, rather than by
+// actually knowing the fact (see arcade-content-policy memory). Sorts all
+// eligible candidates by length-closeness, keeps a pool of the closest
+// 2x`count` (or fewer, on small decks), then shuffles WITHIN that pool so
+// repeat sessions still vary instead of always showing the same 3.
+function pickDistractors(cards, excludeIdx, correctText, count) {
+  var correctWords = correctText.trim().split(/\s+/).length;
+  var candidates = cards
+    .map(function (c, i) { return { text: c[1], i: i }; })
+    .filter(function (c) { return c.i !== excludeIdx && c.text !== correctText; });
+  candidates.sort(function (a, b) {
+    return Math.abs(a.text.trim().split(/\s+/).length - correctWords) -
+           Math.abs(b.text.trim().split(/\s+/).length - correctWords);
+  });
+  var pool = candidates.slice(0, Math.min(candidates.length, count * 2));
+  return shuffle(pool).slice(0, count).map(function (c) { return c.text; });
+}
+
 // ---- Icons ----
 var RESULT_ICON_SVG_OPEN = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 var AWARD_ICON = RESULT_ICON_SVG_OPEN + '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>';
