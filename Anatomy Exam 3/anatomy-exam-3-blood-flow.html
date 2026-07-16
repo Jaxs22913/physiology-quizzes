@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Flow &amp; Vasculature Guide — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --endo:#7c3aed;--endobg:#f3eefe;
+    --gi:#16a34a;--gibg:#eafaf0;
+    --fem:#db2777;--fembg:#fdeef5;
+    --male:#2563eb;--malebg:#eaf1fe;
+    --neph:#0d9488;--nephbg:#e6f7f4;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--endo)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin:16px 0 4px;font-size:13.5px;color:var(--muted)}
+  .legend b{color:var(--body)}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--endo);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+
+  section.topic{margin:36px 0}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 6px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+
+  .flowbox{border-radius:12px;padding:14px 18px;margin:14px 0 20px;font-size:14px;line-height:1.7;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .flowbox .flabel{font:700 11px/1 ui-sans-serif;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:block}
+  .flowbox .chain{font-weight:600;color:var(--ink)}
+  .flowbox .chain b{padding:1px 6px;border-radius:5px}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card);margin:14px 0}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.6px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1}
+  th.struct{width:18%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--ink)}
+  td.h small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;margin-top:2px}
+  tbody tr:nth-child(even){background:#fafbfe}
+
+  .endo thead th{background:var(--endobg)} .endo tbody tr:nth-child(even){background:#faf7ff} .endo td.h{color:#5b21b6} .endo .flowbox{border-left:4px solid var(--endo)} .endo .chain b{background:var(--endobg);color:#5b21b6}
+  .gi thead th{background:var(--gibg)} .gi tbody tr:nth-child(even){background:#f4fbf6} .gi td.h{color:#146b3a} .gi .flowbox{border-left:4px solid var(--gi)} .gi .chain b{background:var(--gibg);color:#146b3a}
+  .fem thead th{background:var(--fembg)} .fem tbody tr:nth-child(even){background:#fdf3f8} .fem td.h{color:#9d174d} .fem .flowbox{border-left:4px solid var(--fem)} .fem .chain b{background:var(--fembg);color:#9d174d}
+  .male thead th{background:var(--malebg)} .male tbody tr:nth-child(even){background:#f5f8ff} .male td.h{color:#1e40af} .male .flowbox{border-left:4px solid var(--male)} .male .chain b{background:var(--malebg);color:#1e40af}
+  .neph thead th{background:var(--nephbg)} .neph tbody tr:nth-child(even){background:#f2fbf9} .neph td.h{color:#0b6b62} .neph .flowbox{border-left:4px solid var(--neph)} .neph .chain b{background:var(--nephbg);color:#0b6b62}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note,.flowbox{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:18px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #7c3aed; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #7c3aed; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #c4b5fd; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 3 &middot; Class of 2028</div>
+    <h1>Blood Flow &amp; Vasculature Guide</h1>
+    <p class="sub">The arterial supply, venous drainage, and (where the lecture specifies it) lymphatic drainage for every organ across Endocrine, GI, Female Reproductive, Male Reproductive, and Nephrology/Urinary — plus the special sequential "flow chains" (nephron blood flow, hepatic portal system, hypophyseal portal system) worth memorizing as a single path.</p>
+    <div class="toc">
+      <a href="#endocrine" style="color:#5b21b6"><span class="dot" style="background:var(--endo)"></span>Endocrine</a>
+      <a href="#gi" style="color:#146b3a"><span class="dot" style="background:var(--gi)"></span>GI</a>
+      <a href="#female" style="color:#9d174d"><span class="dot" style="background:var(--fem)"></span>Female Reproductive</a>
+      <a href="#male" style="color:#1e40af"><span class="dot" style="background:var(--male)"></span>Male Reproductive</a>
+      <a href="#nephro" style="color:#0b6b62"><span class="dot" style="background:var(--neph)"></span>Nephrology/Urinary</a>
+    </div>
+    <div class="note"><b>How to read this:</b> each table gives arterial supply (where blood comes <em>from</em>) and venous drainage (where it goes <em>to</em>) per structure. Highlighted flow boxes spell out a specific named sequence exactly as it's taught — those are worth memorizing in order.</div>
+  </header>
+
+  <!-- ENDOCRINE -->
+  <section class="topic endo" id="endocrine">
+    <div class="shead"><span class="dot" style="background:var(--endo)"></span><h2>Endocrine System</h2></div>
+
+    <div class="flowbox">
+      <span class="flabel" style="color:#5b21b6">Hypophyseal portal system (pituitary)</span>
+      <span class="chain">Superior hypophyseal artery &rarr; capillary plexus at the <b>median eminence</b> &rarr; hypophyseal <b>portal veins</b> &rarr; second capillary bed in the <b>adenohypophysis</b> (anterior lobe) &mdash; the anterior pituitary receives <b>portal</b> blood, carrying hypothalamic releasing hormones directly to it. The <b>neurohypophysis</b> (posterior lobe), by contrast, is supplied directly by the <b>inferior hypophyseal artery</b> and receives ordinary <b>arterial</b> blood.</span>
+    </div>
+
+    <div class="scroll">
+      <table class="endo">
+        <thead><tr><th class="struct">Structure</th><th>Arterial supply</th><th>Venous drainage</th><th>Lymphatic drainage</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="h">Thyroid gland</td>
+            <td><b>Superior thyroid a.</b> (from external carotid a.) to the apex; <b>inferior thyroid a.</b> (from the thyrocervical trunk of the subclavian a.) related to the recurrent laryngeal nerve; rare <b>thyroidea ima a.</b> variant to the isthmus (arch of aorta or brachiocephalic a.)</td>
+            <td>Superior &amp; middle thyroid veins &rarr; internal jugular vein; inferior thyroid vein &rarr; brachiocephalic vein</td>
+            <td>Paratracheal nodes and deep cervical nodes (inferior to the omohyoid m.), via vessels in the interlobular connective tissue &rarr; thoracic duct &amp; right lymphatic duct</td>
+          </tr>
+          <tr>
+            <td class="h">Parathyroid glands</td>
+            <td colspan="3">Share the <b>same blood, lymphatic, and nerve supply as the thyroid gland</b> (superior/inferior thyroid vessels) — they aren't given their own separate supply.</td>
+          </tr>
+          <tr>
+            <td class="h">Pituitary gland</td>
+            <td>Superior hypophyseal a. (to adenohypophysis, via portal system) and inferior hypophyseal a. (directly to neurohypophysis) — see flow box above</td>
+            <td>Hypophyseal veins &rarr; dural venous sinuses (cavernous sinus is directly adjacent on either side of the gland)</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="h">Pancreas <small>(head)</small></td>
+            <td>Superior pancreaticoduodenal a. (from the gastroduodenal a., a common hepatic a. branch) + inferior pancreaticoduodenal a. (from the SMA) — each splits into anterior/posterior branches</td>
+            <td>Corresponding pancreaticoduodenal veins &rarr; SMV / portal vein</td>
+            <td rowspan="2">Follows the arterial supply to pancreaticosplenic/celiac nodes &rarr; ultimately the cisterna chyli</td>
+          </tr>
+          <tr>
+            <td class="h">Pancreas <small>(body &amp; tail)</small></td>
+            <td>Splenic a. (celiac trunk branch) — runs right to left along the upper margin of the body/tail, giving pancreatic branches</td>
+            <td>Splenic v. (posterior surface, parallel to the artery) &rarr; joins SMV &amp; IMV &rarr; portal vein</td>
+          </tr>
+          <tr>
+            <td class="h">Adrenal (suprarenal) glands</td>
+            <td><b>Triple supply:</b> superior suprarenal a. (from the inferior phrenic a.), middle suprarenal a. (directly off the abdominal aorta), inferior suprarenal a. (from the renal a.)</td>
+            <td>Asymmetric: <b>right</b> suprarenal vein &rarr; IVC directly; <b>left</b> suprarenal vein &rarr; left renal vein first</td>
+            <td>&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GI -->
+  <section class="topic gi" id="gi">
+    <div class="shead"><span class="dot" style="background:var(--gi)"></span><h2>Gastrointestinal Tract I &amp; II</h2></div>
+
+    <div class="flowbox">
+      <span class="flabel" style="color:#146b3a">Hepatic portal system</span>
+      <span class="chain">Splenic vein + superior mesenteric vein (SMV) unite &rarr; <b>hepatic portal vein</b> &rarr; enters the liver at the <b>porta hepatis</b> (as part of the portal triad with the hepatic artery &amp; bile duct) &rarr; hepatic sinusoids &rarr; central vein of each lobule &rarr; <b>hepatic veins</b> &rarr; IVC. The portal vein supplies the <b>majority</b> of the liver's blood (nutrient-rich, needs metabolic processing); the hepatic artery supplies only ~15% but is the liver's true oxygen source.</span>
+    </div>
+
+    <div class="scroll">
+      <table class="gi">
+        <thead><tr><th class="struct">Structure</th><th>Arterial supply</th><th>Venous drainage</th><th>Lymphatic drainage</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="h">Esophagus (abdominal)</td>
+            <td>Inferior thyroid a. (thyrocervical trunk), branches of the descending thoracic aorta, left gastric a. (celiac trunk), and the left inferior phrenic a. (abdominal aorta)</td>
+            <td>Both the <b>azygos vein</b> (systemic) and the <b>left gastric vein</b> (portal, via the portal vein) — a classic portosystemic anastomosis site</td>
+            <td>Both thoracic (mediastinal) nodes and abdominal (celiac) lymphatics</td>
+          </tr>
+          <tr>
+            <td class="h">Stomach, duodenum (proximal), liver, spleen, pancreas (foregut)</td>
+            <td><b>Celiac trunk</b> (off the aorta at the aortic hiatus) &rarr; left gastric a. (lesser curvature), splenic a. (pancreas, spleen), common hepatic a. &rarr; proper hepatic a. (right/left hepatic, cystic) + gastroduodenal a. (supraduodenal, right gastric)</td>
+            <td>Left/right gastric veins &rarr; portal vein directly or via splenic/SMV confluence; splenic vein &rarr; portal vein</td>
+            <td>Celiac nodes &rarr; cisterna chyli</td>
+          </tr>
+          <tr>
+            <td class="h">Jejunum, ileum, cecum, appendix, ascending &amp; proximal transverse colon (midgut)</td>
+            <td><b>Superior mesenteric artery (SMA)</b> — unpaired aortic branch</td>
+            <td>Superior mesenteric vein (SMV) &rarr; joins splenic vein &rarr; portal vein</td>
+            <td>Superior mesenteric nodes &rarr; cisterna chyli</td>
+          </tr>
+          <tr>
+            <td class="h">Distal transverse, descending &amp; sigmoid colon, rectum (hindgut)</td>
+            <td><b>Inferior mesenteric artery (IMA)</b> — unpaired aortic branch</td>
+            <td>Inferior mesenteric vein &rarr; typically joins the splenic vein &rarr; portal vein</td>
+            <td>Inferior mesenteric nodes &rarr; cisterna chyli</td>
+          </tr>
+          <tr>
+            <td class="h">Liver</td>
+            <td colspan="3"><b>Triple blood supply:</b> portal vein (majority of flow, nutrient-rich, needs processing) + hepatic artery (~15% of flow, "biliary artery," supplies bile ducts) &rarr; sinusoids &rarr; central vein &rarr; <b>hepatic veins</b> &rarr; IVC. See flow box above.</td>
+          </tr>
+          <tr>
+            <td class="h">Spleen</td>
+            <td>Splenic a. (celiac trunk branch, runs along the pancreas)</td>
+            <td>Splenic vein &rarr; joins SMV to help form the portal vein</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="h">Inferior vena cava (IVC)</td>
+            <td colspan="3">Formed by the union of the <b>common iliac veins</b>; receives (ascending) lumbar veins, renal veins, right gonadal &amp; right suprarenal veins directly, hepatic veins, and inferior phrenic veins. Left gonadal/suprarenal veins drain into the <b>left renal vein</b> first, not directly into the IVC.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FEMALE REPRODUCTIVE -->
+  <section class="topic fem" id="female">
+    <div class="shead"><span class="dot" style="background:var(--fem)"></span><h2>Female Reproductive System</h2></div>
+    <div class="scroll">
+      <table class="fem">
+        <thead><tr><th class="struct">Structure</th><th>Arterial supply</th><th>Venous drainage</th><th>Lymphatic drainage</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="h">Ovary</td>
+            <td><b>Ovarian a.</b> — direct branch of the abdominal aorta, enters via the suspensory ligament and sends branches through the mesovarium</td>
+            <td>Via the <b>pampiniform plexus</b>: right ovarian vein &rarr; IVC directly; left ovarian vein &rarr; left renal vein first</td>
+            <td>Follows the ovarian vessels up to the <b>lumbar (para-aortic) nodes</b></td>
+          </tr>
+          <tr>
+            <td class="h">Uterus</td>
+            <td><b>Uterine a.</b> (from the internal iliac a.) anastomosing with the ovarian a.</td>
+            <td>Uterine venous plexus &rarr; internal iliac veins</td>
+            <td>Mainly internal/external iliac and lumbar nodes (varies by uterine region)</td>
+          </tr>
+          <tr>
+            <td class="h">Uterine (fallopian) tubes</td>
+            <td>Ovarian a. and uterine a. (anastomotic supply, matching their position between ovary and uterus)</td>
+            <td>Ovarian and uterine venous routes</td>
+            <td>Lumbar nodes (follows the ovarian vessels)</td>
+          </tr>
+          <tr>
+            <td class="h">Vagina</td>
+            <td>Uterine a., vaginal a., and pudendal a. branches</td>
+            <td>Vaginal venous plexus &rarr; internal iliac veins</td>
+            <td><b>By thirds:</b> superior third &rarr; internal/external iliac nodes; middle third &rarr; internal iliac nodes; inferior third &rarr; sacral/common iliac nodes <em>and</em> superficial inguinal nodes</td>
+          </tr>
+          <tr>
+            <td class="h">Breast <small>(medial quadrants)</small></td>
+            <td>Perforating branches (2nd, 3rd, 4th) of the <b>internal thoracic a.</b> + anterior intercostal a. branches</td>
+            <td>Veins follow the corresponding arteries</td>
+            <td rowspan="2">Mostly to the <b>axilla</b> — pectoral (anterior) nodes first (drains most of the breast), then subscapular (posterior), lateral, and central nodes, up to the infra-/supraclavicular nodes; some drainage also crosses to the opposite side</td>
+          </tr>
+          <tr>
+            <td class="h">Breast <small>(lateral quadrants)</small></td>
+            <td>Pectoral branches of the <b>thoracoacromial a.</b> (off the axillary a.) + the external mammary branch of the <b>lateral thoracic a.</b></td>
+            <td>Veins follow the corresponding arteries</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MALE REPRODUCTIVE -->
+  <section class="topic male" id="male">
+    <div class="shead"><span class="dot" style="background:var(--male)"></span><h2>Male Reproductive System</h2></div>
+    <div class="scroll">
+      <table class="male">
+        <thead><tr><th class="struct">Structure</th><th>Arterial supply</th><th>Venous drainage</th><th>Lymphatic / nerve notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="h">Testis</td>
+            <td><b>Testicular a.</b> — direct branch of the abdominal aorta, travels the length of the spermatic cord</td>
+            <td>Via the <b>pampiniform plexus</b> &rarr; testicular vein: <b>right</b> &rarr; IVC directly; <b>left</b> &rarr; left renal vein first (mirrors the ovarian pattern)</td>
+            <td>Ilioinguinal &amp; genitofemoral nerves also run in the spermatic cord alongside the vessels</td>
+          </tr>
+          <tr>
+            <td class="h">Ductus deferens</td>
+            <td><b>Deferential a.</b> — a separate named vessel of the spermatic cord (distinct from the testicular a.)</td>
+            <td>Small veins accompanying the deferential artery</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="h">Scrotum</td>
+            <td><b>Internal pudendal a.</b> (branch of the internal iliac a.), <b>external pudendal a.</b> (branch of the femoral a.), and <b>inferior epigastric a.</b> (branch of the external iliac a.)</td>
+            <td>Corresponding pudendal/epigastric veins</td>
+            <td>Sensory/motor via the hypogastric plexus, ilioinguinal, genitofemoral, and pudendal nerves</td>
+          </tr>
+          <tr>
+            <td class="h">Penis</td>
+            <td>Internal pudendal a. branches: <b>deep artery of the penis</b> (runs centrally through each corpus cavernosum) and the <b>dorsal artery</b> (superficial, alongside the dorsal vein &amp; nerve)</td>
+            <td>Dorsal vein (superficial) and deep venous channels from the corpora cavernosa/spongiosum</td>
+            <td>&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- NEPHRO/URINARY -->
+  <section class="topic neph" id="nephro">
+    <div class="shead"><span class="dot" style="background:var(--neph)"></span><h2>Nephrology / Urinary System</h2></div>
+
+    <div class="flowbox">
+      <span class="flabel" style="color:#0b6b62">Renal blood flow (the classic nephron pathway)</span>
+      <span class="chain">Aorta &rarr; <b>renal artery</b> &rarr; segmental arteries &rarr; lobar arteries &rarr; interlobar arteries &rarr; arcuate artery &rarr; interlobular artery &rarr; <b>afferent arteriole</b> &rarr; <b>glomerulus</b> (filtration) &rarr; <b>efferent arteriole</b> &rarr; peritubular capillaries <em>or</em> vasa recta &rarr; interlobular vein &rarr; arcuate vein &rarr; interlobar vein &rarr; <b>renal vein</b> &rarr; IVC.</span>
+    </div>
+
+    <div class="scroll">
+      <table class="neph">
+        <thead><tr><th class="struct">Structure</th><th>Arterial supply</th><th>Venous drainage</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="h">Kidney</td>
+            <td>Renal a. — direct branch of the abdominal aorta; the renal plexus (autonomics) accompanies it and enters at the hilum</td>
+            <td>Renal vein &rarr; IVC. <b>Left</b> renal vein additionally receives the left gonadal vein (which has no direct IVC route)</td>
+            <td>See the full nephron flow-chain above — this is the pathway worth memorizing step by step</td>
+          </tr>
+          <tr>
+            <td class="h">Ureter</td>
+            <td>Segmental branches from the renal a., abdominal aorta, gonadal a., and (distally) the internal iliac a., depending on level</td>
+            <td>Corresponding segmental veins</td>
+            <td>Sensory: T12&ndash;L2 nerve roots (extremely pain-sensitive); parasympathetic via pelvic splanchnic nerves. Crosses <b>anterior</b> to the common iliac artery and passes <b>deep/inferior</b> to the testicular or ovarian vessels ("water under the bridge")</td>
+          </tr>
+          <tr>
+            <td class="h">Urinary bladder</td>
+            <td>Aorta &rarr; common iliac &rarr; internal iliac &rarr; anterior division &rarr; <b>superior &amp; inferior vesical arteries</b></td>
+            <td>Vesical venous plexus &rarr; internal iliac veins &rarr; IVC</td>
+            <td>Detrusor muscle innervation involves the hypogastric nerve (sympathetic) and pelvic nerve (parasympathetic); external urethral sphincter via the pudendal nerve (voluntary)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Endocrine, GI I &amp; II, Female Reproductive, Male Reproductive, and Nephrology/Urinary System lecture decks (PAJ 5000 Anatomy, Class of 2028) &mdash; every arterial/venous route listed here is drawn directly from those slides, not outside sources.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
