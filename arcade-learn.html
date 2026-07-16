@@ -24,10 +24,6 @@
   <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
 </svg>
 <div class="page page-wide">
-  <div class="proto-badge">
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg>
-    Placeholder decks while real class content gets added — progress saves on this device only.
-  </div>
 
   <div class="brand-row">
     <div class="brand">
@@ -85,9 +81,14 @@
     document.getElementById("learn-progress-fill").style.width = pct + "%";
     document.getElementById("learn-question").textContent = pair[0];
 
+    // Excludes both the current card AND any other card whose answer text
+    // happens to be identical to it -- without this, a deck with repeated
+    // answer values (same failure mode as the Match-mode duplicate-value
+    // bug) could offer two choices with the same text, one of which would
+    // silently also read as "correct" per the text-equality check below.
     var otherAnswers = deck.cards
       .map(function (c, i) { return { text: c[1], i: i }; })
-      .filter(function (c) { return c.i !== idx; })
+      .filter(function (c) { return c.i !== idx && c.text !== pair[1]; })
       .map(function (c) { return c.text; });
     var choices = shuffle([pair[1]].concat(shuffle(otherAnswers).slice(0, 3)));
     correctAnswer = pair[1];

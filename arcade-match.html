@@ -24,10 +24,6 @@
   <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
 </svg>
 <div class="page page-wide">
-  <div class="proto-badge">
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg>
-    Placeholder decks while real class content gets added — progress saves on this device only.
-  </div>
 
   <div class="brand-row">
     <div class="brand">
@@ -92,8 +88,18 @@
   var WINDOW_SIZE = 5;
   var deck = findDeck(deckIdFromURL());
   var pool = [], active = [], matchedCount = 0, totalPairs = 0;
-  var selectedTermId = null, selectedDefId = null;
+  var selectedTermId = null, selectedDefIndex = null;
   var startTime = 0, timerInterval = null, locked = false;
+  // Definitions are grouped by VALUE, not by pairId: some decks (e.g. an
+  // organ deck where many organs are all "Retroperitoneal") have several
+  // terms sharing one definition string. Rendering one tile per pairId used
+  // to duplicate that string across the board, and matching by pairId
+  // equality meant tapping a factually-correct-but-differently-numbered
+  // duplicate was marked wrong. currentDefGroups instead holds one tile per
+  // *unique* definition text among the active terms, each remembering which
+  // pairIds it currently covers -- any of those terms can match against it,
+  // and the tile only leaves the board once every term needing it is gone.
+  var currentDefGroups = [];
 
   function showEmpty(msg) {
     document.getElementById("empty-container").innerHTML =
@@ -112,21 +118,36 @@
     pool = allPairs.slice(active.length);
   }
 
-  function renderColumn(containerId, label, items, field) {
-    var el = document.getElementById(containerId);
-    el.innerHTML = '<div class="match-col-label">' + label + "</div>";
-    items.forEach(function (pair) {
-      var btn = document.createElement("button");
-      btn.className = "match-item pop-in";
-      btn.setAttribute("data-pair-id", pair.pairId);
-      btn.textContent = pair[field];
-      el.appendChild(btn);
+  function computeDefGroups() {
+    var byValue = {}, order = [];
+    active.forEach(function (p) {
+      if (!byValue[p.def]) { byValue[p.def] = []; order.push(p.def); }
+      byValue[p.def].push(p.pairId);
     });
+    currentDefGroups = shuffle(order.map(function (v) { return { value: v, pairIds: byValue[v] }; }));
   }
 
   function renderBoard() {
-    renderColumn("match-terms", "Terms", shuffle(active), "term");
-    renderColumn("match-defs", "Definitions", shuffle(active), "def");
+    var termsEl = document.getElementById("match-terms");
+    termsEl.innerHTML = '<div class="match-col-label">Terms</div>';
+    shuffle(active.slice()).forEach(function (pair) {
+      var btn = document.createElement("button");
+      btn.className = "match-item pop-in";
+      btn.setAttribute("data-pair-id", pair.pairId);
+      btn.textContent = pair.term;
+      termsEl.appendChild(btn);
+    });
+
+    computeDefGroups();
+    var defsEl = document.getElementById("match-defs");
+    defsEl.innerHTML = '<div class="match-col-label">Definitions</div>';
+    currentDefGroups.forEach(function (group, idx) {
+      var btn = document.createElement("button");
+      btn.className = "match-item pop-in";
+      btn.setAttribute("data-def-index", idx);
+      btn.textContent = group.value;
+      defsEl.appendChild(btn);
+    });
   }
 
   function updateStats() {
@@ -143,7 +164,7 @@
   function startGame() {
     buildPool(deck);
     selectedTermId = null;
-    selectedDefId = null;
+    selectedDefIndex = null;
     matchedCount = 0;
     locked = false;
     renderBoard();
@@ -157,42 +178,55 @@
   }
 
   function termEl(pairId) { return document.querySelector('#match-terms [data-pair-id="' + pairId + '"]'); }
-  function defEl(pairId) { return document.querySelector('#match-defs [data-pair-id="' + pairId + '"]'); }
+  function defEl(defIndex) { return document.querySelector('#match-defs [data-def-index="' + defIndex + '"]'); }
 
-  function handleSelect(side, pairId) {
+  function handleSelect(side, id) {
     if (locked) return;
-    var el = side === "term" ? termEl(pairId) : defEl(pairId);
+    var el = side === "term" ? termEl(id) : defEl(id);
     if (!el) return;
 
     SOUNDS.select();
     if (side === "term") {
       if (selectedTermId != null) { var prev = termEl(selectedTermId); if (prev) prev.classList.remove("selected"); }
-      selectedTermId = pairId;
+      selectedTermId = id;
     } else {
-      if (selectedDefId != null) { var prevD = defEl(selectedDefId); if (prevD) prevD.classList.remove("selected"); }
-      selectedDefId = pairId;
+      if (selectedDefIndex != null) { var prevD = defEl(selectedDefIndex); if (prevD) prevD.classList.remove("selected"); }
+      selectedDefIndex = id;
     }
     el.classList.add("selected");
 
-    if (selectedTermId == null || selectedDefId == null) return;
+    if (selectedTermId == null || selectedDefIndex == null) return;
 
-    var tId = selectedTermId, dId = selectedDefId;
+    var tId = selectedTermId, dIdx = selectedDefIndex;
     selectedTermId = null;
-    selectedDefId = null;
-    var tEl = termEl(tId), dEl = defEl(dId);
+    selectedDefIndex = null;
+    var tEl = termEl(tId), dEl = defEl(dIdx);
+    var termPair = active.find(function (p) { return p.pairId === tId; });
+    var defGroup = currentDefGroups[dIdx];
+    // A tap is correct if the tapped definition's TEXT matches this term's
+    // definition -- not by pairId -- so any term sharing that definition
+    // (e.g. any retroperitoneal organ) can correctly match the one shared
+    // tile, instead of only the one pairId the tile happened to be built
+    // from.
+    var isMatch = termPair && defGroup && termPair.def === defGroup.value;
 
-    if (tId === dId) {
+    if (isMatch) {
+      // If this definition tile still covers other not-yet-matched terms,
+      // it stays on the board afterward (no "matched" fade) so those terms
+      // can still match against it; it only leaves once every term needing
+      // it is cleared.
+      var isLastForThisDef = defGroup.pairIds.length === 1;
       SOUNDS.match();
       tEl.classList.remove("selected");
       dEl.classList.remove("selected");
       tEl.classList.add("correct");
-      dEl.classList.add("correct");
+      if (isLastForThisDef) dEl.classList.add("correct");
       matchedCount++;
       updateStats();
       locked = true;
       setTimeout(function () {
         tEl.classList.add("matched");
-        dEl.classList.add("matched");
+        if (isLastForThisDef) dEl.classList.add("matched");
         setTimeout(function () {
           active = active.filter(function (p) { return p.pairId !== tId; });
           if (pool.length) active.push(pool.shift());
@@ -233,8 +267,8 @@
   document.addEventListener("click", function (e) {
     var termBtn = e.target.closest("#match-terms [data-pair-id]");
     if (termBtn) return handleSelect("term", parseInt(termBtn.getAttribute("data-pair-id"), 10));
-    var defBtn = e.target.closest("#match-defs [data-pair-id]");
-    if (defBtn) return handleSelect("def", parseInt(defBtn.getAttribute("data-pair-id"), 10));
+    var defBtn = e.target.closest("#match-defs [data-def-index]");
+    if (defBtn) return handleSelect("def", parseInt(defBtn.getAttribute("data-def-index"), 10));
     if (e.target.id === "match-again-btn") return startGame();
   });
 
