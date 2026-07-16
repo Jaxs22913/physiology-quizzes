@@ -44,8 +44,12 @@ body {
      replaced element with both top and bottom set falls back to its
      intrinsic size (300x150 default) instead of stretching, silently
      ignoring bottom. An explicit height sidesteps that entirely. */
+  /* z-index above theme.css's settings/shortcuts/sign-in overlays (all
+     z-index: 2000) so the marquee dots stay visible through them instead of
+     getting dimmed by the modal backdrop -- they're decorative chrome, not
+     page content a modal needs to obscure. */
   position: fixed; top: 0; width: 74px; height: 100vh;
-  opacity: 0.18; pointer-events: none; z-index: 0; display: none;
+  opacity: 0.18; pointer-events: none; z-index: 2001; display: none;
   animation: decor-pulse-intro 2.2s ease-in-out 1;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
@@ -403,6 +407,21 @@ body {
   position: fixed; top: -20px; width: 8px; height: 14px; z-index: 60; pointer-events: none;
   animation: confetti-fall linear forwards; border-radius: 2px;
 }
+
+/* Settings panel (theme.css/theme.js): on Arcade, Calculator + Study timer
+   share one row instead of stacking as two, since Arcade's Settings panel
+   drops the Refresh row entirely (see initSettingsPanel's isArcade branch
+   in theme.js) and would otherwise leave an odd gap. */
+.settings-row-pair {
+  display: flex; gap: 14px; padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+:root[data-theme="dark"] .settings-row-pair { border-bottom-color: #22262e; }
+.settings-row-pair .settings-row.half {
+  flex: 1; padding: 0; border-bottom: none;
+  flex-direction: column; align-items: flex-start; gap: 6px;
+}
+.settings-row-pair .settings-row.half .settings-action-btn { align-self: flex-start; }
 @keyframes confetti-fall {
   to { transform: translateY(110vh) rotate(540deg); opacity: .3; }
 }
