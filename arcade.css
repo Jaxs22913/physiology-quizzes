@@ -122,7 +122,7 @@ body {
 }
 .proto-badge svg { flex: none; color: var(--accent3); }
 
-.brand-row { display: flex; justify-content: flex-start; align-items: flex-start; gap: 16px; margin-bottom: 6px; }
+.brand-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
   width: 44px; height: 44px; border-radius: 13px;
@@ -139,21 +139,12 @@ body {
 }
 .brand-text p { margin: 3px 0 0; font-size: 14.5px; color: var(--muted); font-weight: 500; }
 
-.corner-btns { display: flex; gap: 8px; flex: none; order: -1; }
-/* theme.css makes #corner-actions position:fixed (pinned top-right of the
-   viewport, independent of page content) for the homepage/quiz pages --
-   cancel that here so it drops back into normal flow inside .brand-row,
-   where order:-1 above then puts it on the left, next to the logo, instead
-   of floating fixed at the top-right corner. */
-#corner-actions { position: static; top: auto; right: auto; }
-.icon-btn {
-  width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border);
-  background: var(--card); color: var(--ink); display: flex; align-items: center;
-  justify-content: center; cursor: pointer; box-shadow: var(--shadow);
-  transition: border-color .15s, transform .15s, color .15s, filter .1s;
+/* #corner-actions (theme.js/theme.css) stays fixed at the top-right of the
+   viewport like every other page -- just pulled in far enough that it
+   clears the 74px edge-decor dot column instead of sitting on top of it. */
+@media (min-width: 1000px) {
+  #corner-actions { right: 98px; }
 }
-.icon-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-.icon-btn:active { filter: brightness(0.9); }
 
 .streak-pill {
   display: inline-flex; align-items: center; gap: 7px; background: var(--card);
