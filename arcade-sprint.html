@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprint — Arcade</title>
+<link rel="stylesheet" href="arcade.css">
+</head>
+<body>
+<svg class="edge-decor left" aria-hidden="true">
+  <defs>
+    <pattern id="zigzag-pattern" width="74" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="37" cy="15" r="10" fill="var(--accent)"/>
+      <circle cx="37" cy="45" r="10" fill="var(--accent2)"/>
+      <circle cx="37" cy="75" r="10" fill="var(--accent3)"/>
+      <circle cx="37" cy="105" r="10" fill="var(--accent4)"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
+</svg>
+<svg class="edge-decor right" aria-hidden="true">
+  <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
+</svg>
+<div class="page page-wide">
+  <div class="proto-badge">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg>
+    Placeholder decks while real class content gets added — progress saves on this device only.
+  </div>
+
+  <div class="brand-row">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="14" height="10" rx="2"/><rect x="7" y="4" width="14" height="10" rx="2"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>Study Arcade</h1>
+        <p>Turn studying into a game</p>
+      </div>
+    </div>
+    <div class="corner-btns">
+      <button class="icon-btn" id="sound-toggle" title="Toggle sound"></button>
+      <button class="icon-btn" id="theme-toggle" title="Toggle dark mode"></button>
+    </div>
+  </div>
+  <div class="streak-pill" id="streak-pill"><span class="flame">🔥</span><b id="streak-count">0</b><span>-day streak</span></div>
+
+  <a class="back-link" href="arcade.html">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to decks
+  </a>
+
+  <div id="empty-container"></div>
+
+  <!-- INTRO -->
+  <div class="view active" id="view-intro">
+    <div class="sprint-intro">
+      <div class="sprint-intro-icon">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h2>Flashcard Sprint</h2>
+      <p>
+        Race a bot through <strong id="sprint-deck-name"></strong>. You get up to 8 seconds per card —
+        pick the matching answer before time runs out. Faster correct answers score more.
+      </p>
+      <p>This is a local practice version — real live multiplayer (like Group Study) needs a real opponent and isn't wired up yet.</p>
+      <button class="btn sprint" id="sprint-start-btn" style="width:100%;margin-top:16px">Start Sprint</button>
+    </div>
+  </div>
+
+  <!-- RACE -->
+  <div class="view" id="view-race">
+    <div class="sprint-race">
+      <div class="race-row">
+        <div class="race-avatar you"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="race-track"><div class="race-fill you" id="race-you"></div></div>
+        <div class="race-score" id="race-you-score">0</div>
+      </div>
+      <div class="race-row">
+        <div class="race-avatar bot"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg></div>
+        <div class="race-track"><div class="race-fill bot" id="race-bot"></div></div>
+        <div class="race-score" id="race-bot-score">0</div>
+      </div>
+    </div>
+    <div class="sprint-timer" id="sprint-timer">8</div>
+    <div class="learn-question" id="sprint-question"></div>
+    <div class="learn-choices" id="sprint-choices"></div>
+    <p class="keyhint">🎮 A/B/X/Y pick an answer · Keys 1-4</p>
+  </div>
+
+  <!-- RESULT -->
+  <div class="view" id="view-result">
+    <div class="result-screen">
+      <div class="result-icon" id="result-icon"></div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-sub" id="result-sub"></div>
+      <div class="deck-actions">
+        <a class="btn ghost" href="arcade.html">Back to decks</a>
+        <button class="btn sprint" id="sprint-again-btn">Sprint again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="arcade.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var deck = findDeck(deckIdFromURL());
+  var SPRINT_LEN = 8, PER_CARD_SECONDS = 8;
+  var sp = null;
+
+  function showEmpty(msg) {
+    document.getElementById("empty-container").innerHTML =
+      '<div class="empty-state"><div class="big">🎉</div><p>' + msg + '</p></div>';
+    document.getElementById("view-intro").classList.remove("active");
+  }
+
+  function showView(name) {
+    ["intro", "race", "result"].forEach(function (v) {
+      document.getElementById("view-" + v).classList.toggle("active", v === name);
+    });
+  }
+
+  function beginSprint() {
+    var due = getDueIndexes(deck);
+    var pool = due.length >= SPRINT_LEN ? due.slice() : deck.cards.map(function (_, i) { return i; });
+    pool = shuffle(pool);
+    var queue = pool.slice(0, Math.min(SPRINT_LEN, pool.length));
+    sp = {
+      queue: queue, qIdx: 0, youScore: 0, botScore: 0,
+      answered: false, timer: null, timeLeft: PER_CARD_SECONDS, botAnsweredThisCard: false
+    };
+    document.getElementById("race-you-score").textContent = "0";
+    document.getElementById("race-bot-score").textContent = "0";
+    document.getElementById("race-you").style.width = "0%";
+    document.getElementById("race-bot").style.width = "0%";
+    showView("race");
+    nextCard();
+  }
+
+  function nextCard() {
+    if (sp.qIdx >= sp.queue.length) return endSprint();
+    var idx = sp.queue[sp.qIdx];
+    var pair = deck.cards[idx];
+    document.getElementById("sprint-question").textContent = pair[0];
+    sp.correctAnswer = pair[1];
+    sp.answered = false;
+
+    var otherAnswers = deck.cards
+      .map(function (c, i) { return { text: c[1], i: i }; })
+      .filter(function (c) { return c.i !== idx; })
+      .map(function (c) { return c.text; });
+    var choices = shuffle([pair[1]].concat(shuffle(otherAnswers).slice(0, 3)));
+    var el = document.getElementById("sprint-choices");
+    el.innerHTML = "";
+    choices.forEach(function (text, i) {
+      var btn = document.createElement("button");
+      btn.className = "learn-choice";
+      btn.setAttribute("data-sprint-choice", i);
+      btn.innerHTML = '<span class="letter">' + LETTERS[i] + '</span><span>' + text + "</span>";
+      el.appendChild(btn);
+    });
+
+    sp.timeLeft = PER_CARD_SECONDS;
+    sp.botAnsweredThisCard = false;
+    updateTimer();
+    clearInterval(sp.timer);
+    sp.timer = setInterval(tick, 1000);
+    scheduleBotAnswer();
+  }
+
+  function scheduleBotAnswer() {
+    var thisSprint = sp;
+    var delay = (1.5 + Math.random() * 4.5) * 1000;
+    var willBeCorrect = Math.random() < 0.72;
+    setTimeout(function () {
+      if (sp !== thisSprint || sp.botAnsweredThisCard) return;
+      sp.botAnsweredThisCard = true;
+      if (willBeCorrect) {
+        var speedBonus = Math.round((sp.timeLeft / PER_CARD_SECONDS) * 5);
+        sp.botScore += 10 + speedBonus;
+      }
+      document.getElementById("race-bot-score").textContent = sp.botScore;
+      document.getElementById("race-bot").style.width = Math.min(100, sp.botScore / (SPRINT_LEN * 15) * 100) + "%";
+    }, delay);
+  }
+
+  function updateTimer() {
+    var el = document.getElementById("sprint-timer");
+    el.textContent = sp.timeLeft;
+    el.classList.toggle("low", sp.timeLeft <= 3);
+  }
+
+  function revealAnswer(chosenIndex) {
+    var buttons = document.querySelectorAll("#sprint-choices .learn-choice");
+    buttons.forEach(function (b) { b.disabled = true; });
+    buttons.forEach(function (b) {
+      if (b.querySelector("span:last-child").textContent === sp.correctAnswer) b.classList.add("correct");
+    });
+    if (chosenIndex != null) {
+      var chosenBtn = buttons[chosenIndex];
+      if (chosenBtn.querySelector("span:last-child").textContent !== sp.correctAnswer) chosenBtn.classList.add("wrong");
+    }
+  }
+
+  function tick() {
+    sp.timeLeft--;
+    updateTimer();
+    if (sp.timeLeft <= 0) {
+      clearInterval(sp.timer);
+      if (!sp.answered) {
+        sp.answered = true;
+        SOUNDS.wrong();
+        revealAnswer(null);
+        setTimeout(advanceCard, 700);
+      }
+    }
+  }
+
+  function answerChoice(choiceIndex) {
+    if (!sp || sp.answered) return;
+    sp.answered = true;
+    clearInterval(sp.timer);
+    var buttons = document.querySelectorAll("#sprint-choices .learn-choice");
+    var isCorrect = buttons[choiceIndex].querySelector("span:last-child").textContent === sp.correctAnswer;
+    revealAnswer(choiceIndex);
+    if (isCorrect) {
+      var speedBonus = Math.round((sp.timeLeft / PER_CARD_SECONDS) * 5);
+      sp.youScore += 10 + speedBonus;
+      SOUNDS.correct();
+    } else {
+      SOUNDS.wrong();
+    }
+    document.getElementById("race-you-score").textContent = sp.youScore;
+    document.getElementById("race-you").style.width = Math.min(100, sp.youScore / (SPRINT_LEN * 15) * 100) + "%";
+    setTimeout(advanceCard, 700);
+  }
+
+  function advanceCard() {
+    sp.qIdx++;
+    if (sp.qIdx >= sp.queue.length) endSprint();
+    else nextCard();
+  }
+
+  function endSprint() {
+    clearInterval(sp.timer);
+    var youWin = sp.youScore >= sp.botScore;
+    showView("result");
+    var iconEl = document.getElementById("result-icon");
+    iconEl.className = "result-icon " + (youWin ? "win" : "lose");
+    iconEl.innerHTML = youWin ? AWARD_ICON : BOT_ICON;
+    document.getElementById("result-title").textContent = youWin ? "You win!" : "Bot wins this one";
+    document.getElementById("result-sub").textContent = "You: " + sp.youScore + "  ·  Bot: " + sp.botScore;
+    if (youWin) { SOUNDS.win(); burstConfetti(); }
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.target.id === "sprint-start-btn") return beginSprint();
+    if (e.target.id === "sprint-again-btn") return beginSprint();
+    var choiceBtn = e.target.closest("[data-sprint-choice]");
+    if (choiceBtn) return answerChoice(parseInt(choiceBtn.getAttribute("data-sprint-choice"), 10));
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var introActive = document.getElementById("view-intro").classList.contains("active");
+    var raceActive = document.getElementById("view-race").classList.contains("active");
+    if (introActive && (e.key === " " || e.key === "Enter")) beginSprint();
+    else if (raceActive && "1234".indexOf(e.key) !== -1) answerChoice(parseInt(e.key, 10) - 1);
+  });
+
+  window.onFCGamepadButton = function (bi) {
+    var introActive = document.getElementById("view-intro").classList.contains("active");
+    var raceActive = document.getElementById("view-race").classList.contains("active");
+    if (introActive && bi === 0) beginSprint();
+    else if (raceActive && bi >= 0 && bi <= 3) answerChoice(bi);
+  };
+
+  initHeader();
+  if (!deck) {
+    showEmpty("Deck not found.");
+  } else {
+    document.getElementById("sprint-deck-name").textContent = deck.name;
+  }
+})();
+</script>
+</body>
+</html>

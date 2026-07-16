@@ -355,7 +355,7 @@
         flex-shrink: 0;
       }
       .guides-btn.group-btn .guides-btn-icon { background: var(--accent2-soft); color: var(--accent2); }
-      .guides-btn.flashcards-btn .guides-btn-icon { background: var(--accent3-soft); color: var(--accent3); }
+      .guides-btn.arcade-btn .guides-btn-icon { background: var(--accent3-soft); color: var(--accent3); }
       /* Guides & Study Aids gets the standalone full-width row (a real,
          working destination), with its icon+label centered as a group --
          Group Study and Flashcards share the 2-up row above it instead. */
@@ -468,11 +468,10 @@
         right: calc(100% + 24px);
         width: 260px;
       }
-      /* Flashcards has no floating sidebar counterpart (no widget to pair it
-         with yet, since the feature itself doesn't exist) -- :not() keeps it
-         inline next to search here instead of disappearing along with the
-         other two. */
-      .search-wrap .guides-btn:not(.flashcards-btn), .search-wrap .group-btn { display: none; }
+      /* Arcade has no floating sidebar counterpart (no widget to pair it
+         with) -- :not() keeps it inline next to search here instead of
+         disappearing along with the other two. */
+      .search-wrap .guides-btn:not(.arcade-btn), .search-wrap .group-btn { display: none; }
     }
     .continue-widget.hidden { display: none; }
     .continue-title {
@@ -1181,9 +1180,9 @@
         <svg class="guides-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
         <span>Group Study</span>
       </a>
-      <a href="#" class="guides-btn flashcards-btn" onclick="event.preventDefault(); if (window.showToast) window.showToast('Flashcards are coming soon!');">
+      <a href="arcade.html" class="guides-btn arcade-btn">
         <svg class="guides-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="14" height="10" rx="2"/><rect x="7" y="4" width="14" height="10" rx="2"/></svg>
-        <span>Flashcards</span>
+        <span>Arcade</span>
       </a>
       <a href="guides.html" class="guides-btn wide-row">
         <svg class="guides-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -2047,6 +2046,10 @@
       <button class="review-modal-close" id="whatsnew-modal-close" aria-label="Close">&times;</button>
       <p class="review-modal-title">What's new</p>
       <div class="review-modal-content">
+        <div class="divider"><span>July 15</span></div>
+        <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
+          <li>Arcade is live &mdash; the homepage "Flashcards" pill is now "Arcade": Study, Learn, Sprint, and Match modes for flashcard-style review, starting with a Physiology &gt; Exam 4 placeholder deck while real class content gets added.</li>
+        </ul>
         <div class="divider"><span>July 14</span></div>
         <ul style="margin:0 0 4px;padding-left:18px;font-size:13.5px;line-height:1.7;">
           <li>New "Flashcards" pill on the homepage &mdash; a placeholder for an upcoming flashcard feature (not built yet).</li>

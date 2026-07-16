@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Match — Arcade</title>
+<link rel="stylesheet" href="arcade.css">
+</head>
+<body>
+<svg class="edge-decor left" aria-hidden="true">
+  <defs>
+    <pattern id="zigzag-pattern" width="74" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="37" cy="15" r="10" fill="var(--accent)"/>
+      <circle cx="37" cy="45" r="10" fill="var(--accent2)"/>
+      <circle cx="37" cy="75" r="10" fill="var(--accent3)"/>
+      <circle cx="37" cy="105" r="10" fill="var(--accent4)"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
+</svg>
+<svg class="edge-decor right" aria-hidden="true">
+  <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
+</svg>
+<div class="page page-wide">
+  <div class="proto-badge">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg>
+    Placeholder decks while real class content gets added — progress saves on this device only.
+  </div>
+
+  <div class="brand-row">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="14" height="10" rx="2"/><rect x="7" y="4" width="14" height="10" rx="2"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>Study Arcade</h1>
+        <p>Turn studying into a game</p>
+      </div>
+    </div>
+    <div class="corner-btns">
+      <button class="icon-btn" id="sound-toggle" title="Toggle sound"></button>
+      <button class="icon-btn" id="theme-toggle" title="Toggle dark mode"></button>
+    </div>
+  </div>
+  <div class="streak-pill" id="streak-pill"><span class="flame">🔥</span><b id="streak-count">0</b><span>-day streak</span></div>
+
+  <a class="back-link" href="arcade.html">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to decks
+  </a>
+
+  <div id="empty-container"></div>
+
+  <div id="game-ui" style="display:none">
+    <div class="match-stats">
+      <div class="match-stat"><span class="num" id="match-timer">0.0s</span><span class="lbl">Time</span></div>
+      <div class="match-stat"><span class="num" id="match-progress">0 / 0</span><span class="lbl">Matched</span></div>
+      <div class="match-stat best"><span class="num" id="match-best">—</span><span class="lbl">Best</span></div>
+    </div>
+    <div class="match-columns">
+      <div class="match-col" id="match-terms"><div class="match-col-label">Terms</div></div>
+      <div class="match-col" id="match-defs"><div class="match-col-label">Definitions</div></div>
+    </div>
+    <p class="keyhint">Tap a term, then tap its matching definition (either side first) — wrong pairs just shake and try again</p>
+  </div>
+
+  <div class="view" id="view-result" style="display:none">
+    <div class="result-screen">
+      <div class="result-icon win" id="result-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+      </div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-sub" id="result-sub"></div>
+      <div class="deck-actions">
+        <a class="btn ghost" href="arcade.html">Back to decks</a>
+        <button class="btn match" id="match-again-btn">Play again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="arcade.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Board stays capped at WINDOW_SIZE pairs at once -- when you clear one,
+  // the next pair waiting in the pool pops in to take its place, same as
+  // Notability's Mix and Match ("correct matches turn green and advance the
+  // quiz with new terms") rather than dumping the whole deck on screen.
+  var WINDOW_SIZE = 5;
+  var deck = findDeck(deckIdFromURL());
+  var pool = [], active = [], matchedCount = 0, totalPairs = 0;
+  var selectedTermId = null, selectedDefId = null;
+  var startTime = 0, timerInterval = null, locked = false;
+
+  function showEmpty(msg) {
+    document.getElementById("empty-container").innerHTML =
+      '<div class="empty-state"><div class="big">🎉</div><p>' + msg + "</p></div>";
+  }
+
+  function buildPool(deck) {
+    var allPairs = shuffle(deck.cards.map(function (c, i) { return { pairId: i, term: c[0], def: c[1] }; }));
+    totalPairs = allPairs.length;
+    active = allPairs.slice(0, Math.min(WINDOW_SIZE, allPairs.length));
+    pool = allPairs.slice(active.length);
+  }
+
+  function renderColumn(containerId, label, items, field) {
+    var el = document.getElementById(containerId);
+    el.innerHTML = '<div class="match-col-label">' + label + "</div>";
+    items.forEach(function (pair) {
+      var btn = document.createElement("button");
+      btn.className = "match-item pop-in";
+      btn.setAttribute("data-pair-id", pair.pairId);
+      btn.textContent = pair[field];
+      el.appendChild(btn);
+    });
+  }
+
+  function renderBoard() {
+    renderColumn("match-terms", "Terms", shuffle(active), "term");
+    renderColumn("match-defs", "Definitions", shuffle(active), "def");
+  }
+
+  function updateStats() {
+    document.getElementById("match-progress").textContent = matchedCount + " / " + totalPairs;
+    var best = getMatchBest(deck.id);
+    document.getElementById("match-best").textContent = best ? formatMs(best) : "—";
+  }
+
+  function tickTimer() {
+    var el = document.getElementById("match-timer");
+    el.textContent = formatMs(Date.now() - startTime);
+  }
+
+  function startGame() {
+    buildPool(deck);
+    selectedTermId = null;
+    selectedDefId = null;
+    matchedCount = 0;
+    locked = false;
+    renderBoard();
+    updateStats();
+    document.getElementById("match-timer").textContent = "0.0s";
+    startTime = Date.now();
+    clearInterval(timerInterval);
+    timerInterval = setInterval(tickTimer, 100);
+    document.getElementById("game-ui").style.display = "block";
+    document.getElementById("view-result").style.display = "none";
+  }
+
+  function termEl(pairId) { return document.querySelector('#match-terms [data-pair-id="' + pairId + '"]'); }
+  function defEl(pairId) { return document.querySelector('#match-defs [data-pair-id="' + pairId + '"]'); }
+
+  function handleSelect(side, pairId) {
+    if (locked) return;
+    var el = side === "term" ? termEl(pairId) : defEl(pairId);
+    if (!el) return;
+
+    SOUNDS.select();
+    if (side === "term") {
+      if (selectedTermId != null) { var prev = termEl(selectedTermId); if (prev) prev.classList.remove("selected"); }
+      selectedTermId = pairId;
+    } else {
+      if (selectedDefId != null) { var prevD = defEl(selectedDefId); if (prevD) prevD.classList.remove("selected"); }
+      selectedDefId = pairId;
+    }
+    el.classList.add("selected");
+
+    if (selectedTermId == null || selectedDefId == null) return;
+
+    var tId = selectedTermId, dId = selectedDefId;
+    selectedTermId = null;
+    selectedDefId = null;
+    var tEl = termEl(tId), dEl = defEl(dId);
+
+    if (tId === dId) {
+      SOUNDS.match();
+      tEl.classList.remove("selected");
+      dEl.classList.remove("selected");
+      tEl.classList.add("correct");
+      dEl.classList.add("correct");
+      matchedCount++;
+      updateStats();
+      locked = true;
+      setTimeout(function () {
+        tEl.classList.add("matched");
+        dEl.classList.add("matched");
+        setTimeout(function () {
+          active = active.filter(function (p) { return p.pairId !== tId; });
+          if (pool.length) active.push(pool.shift());
+          locked = false;
+          if (active.length === 0) {
+            clearInterval(timerInterval);
+            setTimeout(endGame, 300);
+          } else {
+            renderBoard();
+          }
+        }, 250);
+      }, 300);
+    } else {
+      SOUNDS.matchWrong();
+      locked = true;
+      tEl.classList.add("wrong");
+      dEl.classList.add("wrong");
+      setTimeout(function () {
+        tEl.classList.remove("selected", "wrong");
+        dEl.classList.remove("selected", "wrong");
+        locked = false;
+      }, 500);
+    }
+  }
+
+  function endGame() {
+    var finalMs = Date.now() - startTime;
+    var isNewBest = saveMatchBest(deck.id, finalMs);
+    bumpStreak();
+    document.getElementById("game-ui").style.display = "none";
+    document.getElementById("view-result").style.display = "block";
+    document.getElementById("result-title").textContent = "Matched in " + formatMs(finalMs) + "!";
+    document.getElementById("result-sub").textContent = isNewBest ? "New best time 🌟" : "Best: " + formatMs(getMatchBest(deck.id));
+    SOUNDS.win();
+    burstConfetti();
+  }
+
+  document.addEventListener("click", function (e) {
+    var termBtn = e.target.closest("#match-terms [data-pair-id]");
+    if (termBtn) return handleSelect("term", parseInt(termBtn.getAttribute("data-pair-id"), 10));
+    var defBtn = e.target.closest("#match-defs [data-pair-id]");
+    if (defBtn) return handleSelect("def", parseInt(defBtn.getAttribute("data-pair-id"), 10));
+    if (e.target.id === "match-again-btn") return startGame();
+  });
+
+  initHeader();
+  if (!deck) {
+    showEmpty("Deck not found.");
+  } else if (deck.cards.length < 2) {
+    showEmpty("Not enough cards in " + deck.name + " to play Match.");
+  } else {
+    startGame();
+  }
+})();
+</script>
+</body>
+</html>
