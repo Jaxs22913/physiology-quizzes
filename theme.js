@@ -507,41 +507,27 @@
     // Arcade pages (detected by their edge-decor marquee *dots* -- index.html
     // also has its own unrelated, dot-free ".edge-decor" zigzag strips, so
     // matching on ".edge-decor circle" specifically is what tells the two
-    // apart) get a slightly denser panel: no Refresh row (nothing there
-    // needs a "check for updates" affordance) and Calculator + Study timer
-    // paired into one row instead of two, since removing Refresh would
-    // otherwise leave an odd gap. Every other page keeps the original
-    // one-row-per-action layout.
+    // apart) want their Settings panel identical to the homepage's, right
+    // down to #refresh-btn staying a visible standalone icon there instead
+    // of living in this panel -- see the matching arcade.css override.
     var isArcade = !!document.querySelector(".edge-decor circle");
-    var calcRow = makeActionRow("Calculator", function () {
+    panel.appendChild(makeActionRow("Calculator", function () {
       close();
       setTimeout(function () {
         var b = document.getElementById("calc-btn");
         if (b) b.click();
       }, 0);
-    });
-    var timerRow = makeActionRow("Study timer", function () {
+    }));
+    panel.appendChild(makeActionRow("Study timer", function () {
       close();
       setTimeout(function () {
         var b = document.getElementById("pomo-btn");
         if (b) b.click();
       }, 0);
-    });
-    if (isArcade) {
-      var pairRow = document.createElement("div");
-      pairRow.className = "settings-row-pair";
-      calcRow.classList.add("half");
-      timerRow.classList.add("half");
-      pairRow.appendChild(calcRow);
-      pairRow.appendChild(timerRow);
-      panel.appendChild(pairRow);
-    } else {
-      panel.appendChild(calcRow);
-      panel.appendChild(timerRow);
-    }
-    // #refresh-btn stays a visible icon on the homepage (see theme.css) --
-    // skip the quick-action row there so it isn't offered in two places.
-    // Arcade skips it outright (see isArcade comment above).
+    }));
+    // #refresh-btn stays a visible icon on the homepage and on Arcade (see
+    // theme.css / arcade.css) -- skip the quick-action row on both so it
+    // isn't offered in two places.
     if (!document.body.classList.contains("homepage") && !isArcade) {
       panel.appendChild(makeActionRow("Refresh / check for updates", function () {
         var b = document.getElementById("refresh-btn");

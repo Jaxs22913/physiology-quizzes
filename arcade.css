@@ -408,20 +408,12 @@ body {
   animation: confetti-fall linear forwards; border-radius: 2px;
 }
 
-/* Settings panel (theme.css/theme.js): on Arcade, Calculator + Study timer
-   share one row instead of stacking as two, since Arcade's Settings panel
-   drops the Refresh row entirely (see initSettingsPanel's isArcade branch
-   in theme.js) and would otherwise leave an odd gap. */
-.settings-row-pair {
-  display: flex; gap: 14px; padding: 10px 0;
-  border-bottom: 1px solid #f3f4f6;
-}
-:root[data-theme="dark"] .settings-row-pair { border-bottom-color: #22262e; }
-.settings-row-pair .settings-row.half {
-  flex: 1; padding: 0; border-bottom: none;
-  flex-direction: column; align-items: flex-start; gap: 6px;
-}
-.settings-row-pair .settings-row.half .settings-action-btn { align-self: flex-start; }
 @keyframes confetti-fall {
   to { transform: translateY(110vh) rotate(540deg); opacity: .3; }
 }
+
+/* Match the homepage's own treatment: #refresh-btn stays a visible
+   standalone corner icon here too (theme.css hides it everywhere by
+   default), instead of living inside the Settings panel -- see the
+   matching isArcade skip in theme.js's initSettingsPanel(). */
+#refresh-btn { display: flex; }
