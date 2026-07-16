@@ -331,8 +331,9 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .guides-btn-icon { width: 17px; height: 17px; flex: none; }
+    .guides-btn-icon { width: 17px; height: 17px; flex: none; transition: transform .25s cubic-bezier(.3,.6,.3,1.5); }
     .guides-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .guides-btn:hover .guides-btn-icon { transform: rotate(-10deg) scale(1.15); }
     @media (max-width: 640px) {
       .search-wrap { flex-wrap: wrap; gap: 8px; }
       .search-input-box { flex: 1 1 100%; }
@@ -555,9 +556,10 @@
       cursor: pointer;
       color: var(--muted);
       box-shadow: 0 0 7px 1px var(--tab-border);
-      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform .2s cubic-bezier(.3,.6,.3,1.5);
     }
-    .tab-btn:hover { color: var(--ink); }
+    .tab-btn:hover { color: var(--ink); transform: translateY(-2px); }
+    .tab-btn:active { transform: scale(0.96); }
     .tab-btn.active {
       background: var(--accent);
       color: #fff;
@@ -913,6 +915,14 @@
       color: var(--accent2);
       border: 1px solid var(--accent2);
       vertical-align: middle;
+      animation: new-badge-pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes new-badge-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .new-badge { animation: none; }
     }
 
     /* Marks a quiz as one of a specific curated set (currently: quizzes from

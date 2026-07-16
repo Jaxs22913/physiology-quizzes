@@ -249,7 +249,10 @@ mark.search-hit-current {
   background: #ffffff;
   color: #1f2937;
   border: 1px solid #e5e7eb;
+  transition: transform .2s cubic-bezier(.3,.6,.3,1.5);
 }
+.corner-btn:hover { transform: scale(1.1) rotate(-8deg); }
+.corner-btn:active { transform: scale(0.92); }
 :root[data-theme="dark"] .corner-btn {
   background: #191c22;
   color: #e5e7eb;
