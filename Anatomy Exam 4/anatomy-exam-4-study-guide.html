@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Exam 4 Study Guide &mdash; Class of 2028</title>
+<style>
+  :root{
+    --ink:#20242b;
+    --paper:#f7f8fa;
+    --accent:#2c5f8a;      /* bone blue */
+    --accent2:#9c3b3b;      /* muscle red */
+    --accent3:#5b4a8a;      /* deep violet, general/clinical */
+    --line:#dfe3e8;
+    --soft:#5b6472;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  header.top{
+    background:linear-gradient(120deg,#1e3f5c,var(--accent) 55%,#3f7fac);
+    color:#fff;
+    padding:34px 26px 30px;
+  }
+  header.top h1{
+    margin:0 0 6px;
+    font-size:2rem;
+    letter-spacing:.2px;
+    font-weight:800;
+  }
+  header.top p{margin:2px 0;color:#dfeaf3;font-size:.95rem;}
+  .layout{display:flex;max-width:1180px;margin:0 auto;}
+  nav.toc{
+    position:sticky;top:0;align-self:flex-start;
+    width:280px;min-width:280px;height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);
+    background:#eef1f5;
+    font-size:.85rem;
+  }
+  nav.toc h2{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:14px 0 6px;}
+  nav.toc a{display:block;color:var(--soft);text-decoration:none;padding:3px 0;border-bottom:1px solid transparent;}
+  nav.toc a.top-link{font-weight:700;color:var(--accent2);margin-top:10px;}
+  nav.toc a:hover{color:var(--accent);}
+  main{flex:1;padding:30px 40px 90px;min-width:0;}
+  section.deck{margin-bottom:56px;scroll-margin-top:18px;}
+  h2.deck-title{
+    font-size:1.55rem;color:var(--accent);
+    border-bottom:3px solid var(--accent2);
+    padding-bottom:8px;margin:0 0 6px;
+    font-weight:800;
+  }
+  .lecturer{color:var(--soft);font-style:italic;font-size:.9rem;margin-bottom:14px;}
+  .io-box{
+    background:#e9eef4;border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0 20px;
+  }
+  .io-box h3{
+    margin:0 0 8px;font-size:.8rem;text-transform:uppercase;
+    letter-spacing:1px;color:var(--accent3);
+  }
+  .io-box ol{margin:0;padding-left:20px;}
+  .io-box li{margin-bottom:5px;font-size:.92rem;}
+  h3.sub{
+    color:var(--accent3);font-size:1.14rem;margin:26px 0 6px;font-weight:800;
+  }
+  h4.subsub{
+    color:var(--accent2);font-size:.98rem;margin:16px 0 4px;
+    font-weight:700;
+  }
+  ul,ol{margin:6px 0 12px;}
+  li{margin-bottom:3px;}
+  p{margin:8px 0;}
+  .callout{
+    border-left:4px solid var(--accent3);
+    background:#eeecf5;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  .pearl{
+    border-left:4px solid var(--accent2);
+    background:#f6e9e9;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--accent);color:#fff;font-weight:700;}
+  tr:nth-child(even) td{background:#eef1f5;}
+  code{background:#e4e8ee;padding:1px 5px;border-radius:4px;font-size:.85rem;}
+  .tag{
+    display:inline-block;background:var(--accent2);color:#fff;
+    font-size:.68rem;
+    padding:2px 8px;border-radius:10px;letter-spacing:.5px;
+    vertical-align:middle;margin-left:8px;
+  }
+  figure.fig{
+    margin:18px 0;padding:12px;background:#eef1f5;border-radius:10px;
+    border:1px solid var(--line);text-align:center;
+  }
+  figure.fig img{
+    max-width:100%;height:auto;border-radius:6px;background:#fff;
+    box-shadow:0 1px 4px rgba(0,0,0,.1);
+  }
+  figure.fig figcaption{
+    margin-top:8px;font-size:13.5px;color:var(--soft);font-style:italic;line-height:1.45;
+  }
+  .test-yourself-btn{
+    display:inline-block;margin-top:18px;padding:10px 18px;border:none;border-radius:999px;
+    background:var(--acc,var(--accent));color:#fff;font-weight:700;font-size:.92rem;cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  .test-yourself-btn:hover{filter:brightness(1.08);}
+  footer.guide-foot{margin:34px 40px 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--soft);}
+  @media(max-width:820px){
+    nav.toc{display:none;}
+    main{padding:22px 18px 60px;}
+    footer.guide-foot{margin:34px 18px 0;}
+  }
+
+  /* header.top sits outside .wrap (full-bleed banner) so it needs its own
+     dark-mode invert -- everything else lives inside .layout.wrap and gets
+     the site-wide body > .wrap invert from theme.css for free. */
+  :root[data-theme="dark"] header.top { filter: invert(1) hue-rotate(180deg); }
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2c5f8a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #20242b; }
+  .footer-mark-accent { stroke: #2c5f8a; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #7fb2da; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<header class="top">
+  <h1>Anatomy Exam 4 — Study Guide</h1>
+  <p>PAJ 5000 Graduate Anatomy &middot; Prof. Chand Shah, MPAS, PA-C &middot; Class of 2028</p>
+  <p>Appendicular Skeleton &middot; Axial Skeleton &middot; Appendicular Musculature &middot; Axial Musculature &middot; with labeled figures</p>
+</header>
+
+<div class="layout wrap" data-readable data-audio-dir="anatomy-exam-4-study-guide-audio">
+<nav class="toc">
+  <h2>Contents</h2>
+  <a class="top-link" href="#appendicular-skeleton">1 &middot; Appendicular Skeleton</a>
+  <a href="#as-pectoral">1.1 Pectoral Girdle &amp; Upper Limb</a>
+  <a href="#as-pelvic">1.2 Pelvic Girdle &amp; Lower Limb</a>
+  <a class="top-link" href="#axial-skeleton">2 &middot; Axial Skeleton</a>
+  <a href="#ax-osseous">2.1 Osseous Tissue &amp; Bone Growth</a>
+  <a href="#ax-skull">2.2 The Skull</a>
+  <a href="#ax-vertebral">2.3 Vertebral Column &amp; Thoracic Cage</a>
+  <a class="top-link" href="#appendicular-musculature">3 &middot; Appendicular Musculature</a>
+  <a href="#am-upper">3.1 Pectoral Girdle &amp; Upper Limb Muscles</a>
+  <a href="#am-lower">3.2 Pelvic Girdle &amp; Lower Limb Muscles</a>
+  <a class="top-link" href="#axial-musculature">4 &middot; Axial Musculature</a>
+  <a href="#axm-headneck">4.1 Muscles of the Head &amp; Neck</a>
+  <a href="#axm-trunk">4.2 Vertebral Column, Rib Cage &amp; Pelvic Floor Muscles</a>
+</nav>
+
+<main>
+
+<!-- ============ 1 APPENDICULAR SKELETON ============ -->
+<section class="deck" id="appendicular-skeleton">
+  <h2 class="deck-title">1 &middot; Appendicular Skeleton</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Compare and contrast the bones that make up the appendicular skeleton and their important landmarks.</li>
+      <li>Compare and contrast the bones that make up the pectoral girdle.</li>
+      <li>Compare and contrast the bones that make up the pelvic girdle.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="as-pectoral">1.1 Pectoral Girdle &amp; Upper Limb <span class="tag">IO 1&ndash;2</span></h3>
+  <p>The <strong>pectoral (shoulder) girdle</strong> is made of just two bones — the <strong>clavicle</strong> and <strong>scapula</strong> — which anchor the upper limb to the axial skeleton loosely, trading stability for a huge range of motion. The <strong>clavicle</strong> is S-shaped and runs roughly horizontally: its <strong>medial (sternal) end</strong> articulates with the manubrium of the sternum, and its <strong>lateral (acromial) end</strong> articulates with the scapula's acromion. Near the acromial end, its inferior surface carries the <strong>conoid tubercle</strong>; near the sternal end sit the <strong>costal tuberosity</strong> and the sternal articular facet.</p>
+  <p>The <strong>scapula</strong> ("shoulder blade") is a flat, triangular bone with a posterior surface divided by the <strong>scapular spine</strong> into the <strong>supraspinous fossa</strong> (above) and <strong>infraspinous fossa</strong> (below) — the origin sites for the supraspinatus and infraspinatus muscles, respectively. The scapular spine continues laterally into the flattened <strong>acromion</strong>, which forms the acromioclavicular joint with the clavicle and the bony point of the shoulder. Anteriorly, the <strong>coracoid process</strong> hooks forward beneath the clavicle, serving as an attachment point for muscles and ligaments (and forming a passage with the superior border for the suprascapular nerve). Laterally, the shallow <strong>glenoid cavity</strong> articulates with the head of the humerus to form the glenohumeral (shoulder) joint. The medial border, lateral border, and inferior angle round out the scapula's other key landmarks.</p>
+  <figure class="fig"><img width="1402" height="766" loading="lazy" src="anatomy-exam-4-study-guide-images/001.jpg" alt="Anterior, posterior, and lateral views of the scapula"><figcaption>Three views of the scapula. In the posterior view (right), the scapular spine runs diagonally across the bone, dividing the smaller supraspinous fossa above it from the larger infraspinous fossa below it, and continues laterally into the acromion. The lateral (edge-on) view (center) shows the glenoid cavity — the shallow socket that receives the head of the humerus — with the coracoid process hooking forward just above and anterior to it.</figcaption></figure>
+
+  <h4 class="subsub">The Humerus, Radius &amp; Ulna</h4>
+  <p>The <strong>humerus</strong> is the single bone of the upper arm. Proximally, its rounded head articulates with the glenoid cavity; the <strong>greater</strong> and <strong>lesser tubercles</strong> flank the head and serve as rotator-cuff attachment sites, and the <strong>deltoid tuberosity</strong> along the shaft marks the insertion of the deltoid muscle. Distally, the humerus broadens into the <strong>capitulum</strong> (articulating with the radius) and the <strong>trochlea</strong> (articulating with the ulna), with the <strong>coronoid</strong> and <strong>olecranon fossae</strong> accommodating the ulna's processes during elbow flexion and extension.</p>
+  <p>Of the two forearm bones, the <strong>ulna</strong> is medial (pinky side) and forms most of the elbow joint via its <strong>trochlear notch</strong>, bounded by the <strong>olecranon</strong> (proximal, posterior — what you feel as your "elbow point") and the <strong>coronoid process</strong> (anterior). The <strong>radius</strong> is lateral (thumb side); its proximal <strong>radial head</strong> rotates against the humeral capitulum and the ulna's radial notch during pronation/supination, and its <strong>radial tuberosity</strong> nearby is the biceps brachii insertion site. Distally, the radius widens to form most of the wrist joint and carries the <strong>ulnar notch</strong>, where the distal ulna sits. The <strong>interosseous membrane</strong> is a sheet of dense connective tissue running the length of the radius and ulna shafts, binding the two bones together while still allowing the radius to rotate around the fixed ulna.</p>
+  <figure class="fig"><img width="826" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/002.jpg" alt="Anatomy of the humerus"><figcaption>The humerus. Proximally, the head articulates with the glenoid cavity, flanked by the greater and lesser tubercles (rotator-cuff attachment sites); the deltoid tuberosity runs down the lateral shaft. Distally, the capitulum (lateral) articulates with the radius and the trochlea (medial) articulates with the ulna's trochlear notch, with the olecranon and coronoid fossae accepting the ulna's processes as the elbow moves through its range of motion.</figcaption></figure>
+
+  <h4 class="subsub">The Hand: Carpals, Metacarpals &amp; Phalanges</h4>
+  <p>The wrist contains <strong>eight carpal bones</strong> arranged in a proximal row (scaphoid, lunate, triquetrum, pisiform) and a distal row (trapezium, trapezoid, capitate, hamate) — commonly remembered with a mnemonic like "Sally left the party to take Cathy home." Distal to the carpals, <strong>five metacarpals</strong> form the palm, numbered 1 (thumb) through 5 (pinky). Each finger (digits 2–5) has <strong>three phalanges</strong> (proximal, middle, distal), while the thumb (pollex, digit 1) has only <strong>two</strong> — no middle phalanx.</p>
+
+  <h3 class="sub" id="as-pelvic">1.2 Pelvic Girdle &amp; Lower Limb <span class="tag">IO 1, 3</span></h3>
+  <p>The <strong>pelvic girdle</strong> is formed by the two <strong>coxal (hip) bones</strong>, each of which is itself the fusion of three bones — the <strong>ilium</strong> (superior, the flared "wing"), <strong>ischium</strong> (posteroinferior, what you sit on), and <strong>pubis</strong> (anteroinferior, meeting its counterpart at the pubic symphysis). All three converge at the <strong>acetabulum</strong>, the deep cup-shaped socket that receives the head of the femur. Nearby landmarks include the <strong>anterior inferior iliac spine (AIIS)</strong>, the <strong>lesser sciatic notch</strong>, the <strong>obturator foramen</strong> (a large opening bounded by the ischium and pubis), and, on the internal surface, the <strong>arcuate line</strong> and the <strong>auricular surface</strong> (which forms the sacroiliac joint with the sacrum). Together with the sacrum and coccyx, the two coxal bones form the bony <strong>pelvis</strong>.</p>
+  <p>Unlike the pectoral girdle (built for mobility), the pelvic girdle is built for weight-bearing stability, and this is reflected in a key sex difference: the <strong>female pelvis</strong> is comparatively wider, shallower, and has a larger pelvic outlet than the <strong>male pelvis</strong>, an adaptation for childbirth.</p>
+  <figure class="fig"><img width="1402" height="748" loading="lazy" src="anatomy-exam-4-study-guide-images/003.jpg" alt="Anterior view of the hip bone (coxal bone)"><figcaption>Anterior view of the coxal (hip) bone — the fusion of the ilium (superior wing), ischium (posteroinferior), and pubis (anteroinferior), converging at the deep acetabular socket that receives the femoral head. The large obturator foramen sits below the acetabulum, bounded by the ischium and pubis; the anterior inferior iliac spine projects from the ilium just above the acetabulum's rim.</figcaption></figure>
+
+  <h4 class="subsub">The Femur, Patella, Tibia &amp; Fibula</h4>
+  <p>The <strong>femur</strong> is the longest, strongest bone in the body. Proximally, its head fits the acetabulum, connected to the shaft by the femoral neck; the <strong>greater</strong> and <strong>lesser trochanters</strong> nearby serve as major muscle attachment sites, joined anteriorly by the <strong>intertrochanteric line</strong>. Distally, the <strong>medial</strong> and <strong>lateral condyles</strong> articulate with the tibia at the knee joint. The <strong>patella</strong> ("kneecap") is a sesamoid bone — one that develops within a tendon (here, the quadriceps tendon) — and its apex points inferiorly toward the tibial tuberosity.</p>
+  <p>Of the two leg bones, the <strong>tibia</strong> is medial and bears nearly all the body's weight, with a prominent <strong>tibial tuberosity</strong> on its proximal anterior surface (patellar ligament attachment) and the <strong>medial malleolus</strong> forming the inner ankle prominence. The <strong>fibula</strong> is thin, lateral, and non-weight-bearing, but its distal end forms the <strong>lateral malleolus</strong> — the outer ankle prominence — and its proximal head forms the superior tibiofibular joint. Like the forearm, an <strong>interosseous membrane</strong> connects the tibia and fibula shafts.</p>
+  <p>The foot mirrors the hand's structure: <strong>seven tarsal bones</strong> (including the calcaneus, the heel bone), <strong>five metatarsals</strong>, and phalanges following the same 2-for-the-great-toe/3-for-every-other-toe pattern as the hand's thumb/fingers.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#2c5f8a" onclick="window.openTestYourself('Test yourself — Appendicular Skeleton', TEST_YOURSELF.appendicularSkeleton)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 2 AXIAL SKELETON ============ -->
+<section class="deck" id="axial-skeleton">
+  <h2 class="deck-title">2 &middot; Axial Skeleton</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the histology of osseous tissue, and compare and contrast trabecular and compact bone and the various types of marrow.</li>
+      <li>Describe the area of ossification and growth of long bones.</li>
+      <li>Identify the bones of the skull, and discuss the differences between the cranial bones and the facial bones.</li>
+      <li>Identify the cranial foramina and the structures that pass through them.</li>
+      <li>Compare and contrast the bones that make up the axial skeletal system and their important landmarks.</li>
+      <li>Describe the anatomical components of the thoracic cage, and compare and contrast the different vertebrae.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="ax-osseous">2.1 Osseous Tissue &amp; Bone Growth <span class="tag">IO 1&ndash;2</span></h3>
+  <p>Bone tissue comes in two structural forms. <strong>Compact bone</strong> is dense and solid, forming the outer shell of every bone and bearing most of the mechanical load. <strong>Spongy (trabecular/cancellous) bone</strong> is a lattice of thin bony struts with large spaces between them, found at the interior of bones (especially near the ends of long bones). A <strong>medullary (marrow) cavity</strong> — the space where blood cells and platelets are produced — replaces spongy bone at the center of many bones. The entire external surface of a bone (except at joint surfaces) is wrapped in the <strong>periosteum</strong>, a fibrous connective-tissue covering that carries the blood supply and nerve fibers into the bone and serves as an attachment site for tendons and ligaments.</p>
+  <p>By shape, bones fall into four classes: <strong>long bones</strong> (tubular — humerus, phalanges), <strong>short bones</strong> (cuboidal, found only in the wrist and ankle), <strong>flat bones</strong> (thin and protective — the cranium), and <strong>sesamoid bones</strong> (develop within tendons to reduce wear — the patella).</p>
+  <p>Long-bone growth begins at a <strong>primary ossification center</strong> in the diaphysis (shaft) during fetal development, where bone tissue first replaces the original cartilage model. After birth, <strong>secondary ossification centers</strong> appear in the epiphyses (bone ends). Between the diaphysis and each epiphysis sits the <strong>epiphyseal plate (growth plate)</strong> — a layer of hyaline cartilage that is the site of longitudinal bone growth throughout childhood and adolescence, organized into zones (a resting zone of inactive chondrocytes, a proliferative zone of rapidly dividing chondrocytes, a hypertrophic zone of enlarging chondrocytes, and a calcification zone). The plate eventually ossifies completely once growth is finished, fusing the epiphysis to the diaphysis.</p>
+
+  <h3 class="sub" id="ax-skull">2.2 The Skull <span class="tag">IO 3&ndash;4</span></h3>
+  <p>The skull is built from 29 named bones grouped into three categories: <strong>14 facial bones</strong> (which shape the face and support the teeth and jaws), <strong>8 cranial bones</strong> (which enclose and protect the brain), and <strong>7 associated bones</strong> (including the hyoid and the middle-ear ossicles). Most cranial and facial bones are joined by immovable, interlocking joints called <strong>sutures</strong> — the <strong>sagittal suture</strong> runs between the two parietal bones, the <strong>coronal suture</strong> between the frontal bone and the parietals, and the <strong>lambdoid suture</strong> between the occipital bone and the parietals.</p>
+  <figure class="fig"><img width="1402" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/004.jpg" alt="Anterior view of the adult skull"><figcaption>Anterior view of the adult skull. The frontal, nasal, zygomatic, and maxillary bones shape the face; the mandible forms the lower jaw. Each orbit is a composite structure: the frontal bone forms its roof, the maxilla its floor, the zygomatic bone its lateral wall, and the lacrimal and ethmoid bones its medial wall (the sphenoid, not visible from this angle, forms the posterior wall).</figcaption></figure>
+  <p>Among the cranial bones: the <strong>occipital bone</strong> forms the back and base of the skull, pierced by the <strong>foramen magnum</strong> (through which the spinal cord passes) and bearing the paired <strong>occipital condyles</strong> that articulate with the atlas (C1). The <strong>frontal bone</strong> forms the forehead; its <strong>supra-orbital foramen</strong> transmits the supra-orbital nerve and artery. The <strong>temporal bones</strong> house the middle and inner ear structures within their petrous portions, and their <strong>stylomastoid foramen</strong> is the exit point for the facial nerve. The <strong>sphenoid</strong>, a butterfly-shaped bone at the base of the skull, carries the saddle-shaped <strong>sella turcica</strong>, which houses the pituitary gland, along with the <strong>foramen ovale</strong> and <strong>foramen spinosum</strong> (transmitting branches of the trigeminal nerve). The <strong>ethmoid</strong> contributes to the nasal cavity and orbit; its <strong>crista galli</strong> anchors the dural fold called the falx cerebri, and its perforated <strong>cribriform plate</strong> transmits olfactory nerve fibers from the nose to the brain.</p>
+  <p>The base of the skull's interior is divided into three stepped depressions — the <strong>anterior, middle, and posterior cranial fossae</strong> — that cradle the frontal/temporal lobes and cerebellum respectively, with the middle fossa extending from the posterior nasal apertures back to the petrous portions of the temporal bones.</p>
+  <figure class="fig"><img width="831" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/005.jpg" alt="The cranial fossae"><figcaption>The three cranial fossae, viewed from above with the skull cap removed. The anterior cranial fossa (front) cradles the frontal lobes; the middle cranial fossa is centered on the sella turcica and sphenoid, extending back to the petrous temporal bones; the posterior cranial fossa (rear, around the foramen magnum) houses the cerebellum and brainstem.</figcaption></figure>
+  <table>
+    <tr><th>Foramen</th><th>Bone</th><th>Major structure(s) transmitted</th></tr>
+    <tr><td>Foramen magnum</td><td>Occipital</td><td>Spinal cord, vertebral arteries, accessory nerve (XI)</td></tr>
+    <tr><td>Supra-orbital foramen</td><td>Frontal</td><td>Supra-orbital nerve (V) &amp; artery</td></tr>
+    <tr><td>Optic canal</td><td>Sphenoid</td><td>Optic nerve (II), ophthalmic artery</td></tr>
+    <tr><td>Superior orbital fissure</td><td>Sphenoid</td><td>CN III, IV, V1, VI</td></tr>
+    <tr><td>Foramen rotundum</td><td>Sphenoid</td><td>Maxillary nerve (V2)</td></tr>
+    <tr><td>Foramen ovale</td><td>Sphenoid</td><td>Mandibular nerve (V3)</td></tr>
+    <tr><td>Foramen spinosum</td><td>Sphenoid</td><td>Middle meningeal artery</td></tr>
+    <tr><td>Cribriform plate foramina</td><td>Ethmoid</td><td>Olfactory nerve (I) fibers</td></tr>
+    <tr><td>Stylomastoid foramen</td><td>Temporal</td><td>Facial nerve (VII)</td></tr>
+    <tr><td>Jugular foramen</td><td>Temporal + occipital</td><td>CN IX, X, XI; internal jugular vein</td></tr>
+    <tr><td>Mandibular/mental foramina</td><td>Mandible</td><td>Inferior alveolar/mental nerve (V3)</td></tr>
+  </table>
+  <p>Among the facial bones: the <strong>maxillae</strong> form the upper jaw and contain the air-filled <strong>maxillary sinuses</strong> (one of the four paranasal sinuses, alongside the frontal, sphenoidal, and ethmoid sinuses). The <strong>vomer</strong> and the perpendicular plate of the ethmoid together form the bony <strong>nasal septum</strong>. The <strong>mandible</strong>, the only mobile skull bone, articulates with the temporal bone's mandibular fossa at the temporomandibular joint (TMJ) via its <strong>condylar process</strong>; its <strong>coronoid process</strong> is a muscle attachment site, and its mandibular foramen/canal carries the neurovascular bundle to the lower teeth, exiting anteriorly at the <strong>mental foramen</strong>. The <strong>hyoid bone</strong>, suspended in the neck by ligaments rather than articulating with any other bone, anchors muscles of the tongue and larynx.</p>
+  <p>The infant skull is not yet fully ossified: membranous gaps called <strong>fontanelles</strong> — most famously the <strong>anterior fontanelle</strong> ("soft spot") — sit where sutures will eventually form, allowing the skull to compress slightly during birth and accommodate rapid brain growth afterward.</p>
+
+  <h3 class="sub" id="ax-vertebral">2.3 Vertebral Column &amp; Thoracic Cage <span class="tag">IO 5&ndash;6</span></h3>
+  <p>The adult vertebral column contains <strong>26 bones</strong>: 24 individual vertebrae (7 cervical, 12 thoracic, 5 lumbar), plus the <strong>sacrum</strong> (5 fused vertebrae) and <strong>coccyx</strong> (3–5 fused vertebrae). It encloses and protects the spinal cord, supports the head/neck/trunk, and transfers body weight down to the lower limbs. Viewed from the side, it has <strong>four curves</strong> — cervical, thoracic, lumbar, and sacral — alternating in direction to balance the trunk over the pelvis; the thoracic and sacral curves are <em>primary</em> (present before birth), while the cervical and lumbar curves are <em>secondary</em> (developing after birth, as an infant learns to hold up its head and then to stand).</p>
+  <p>A typical vertebra has an anterior weight-bearing <strong>body</strong>, separated from its neighbors by a cartilaginous <strong>intervertebral disc</strong>, and a posterior <strong>vertebral arch</strong> (made of paired pedicles and laminae) enclosing the <strong>vertebral foramen</strong>. Stacked vertebral foramina form the vertebral canal housing the spinal cord, while gaps between adjacent vertebrae — the <strong>intervertebral foramina</strong> — allow spinal nerves to exit. A <strong>spinous process</strong> projects posteriorly and paired <strong>transverse processes</strong> project laterally, both serving as muscle/ligament attachment sites, while <strong>superior</strong> and <strong>inferior articular processes</strong> let adjacent vertebrae articulate with each other.</p>
+  <p>Each region has a distinct signature. <strong>Cervical vertebrae</strong> (C1–C7) all have a <strong>transverse foramen</strong> for the vertebral artery and a spinous process that is bifid (forked) except at C7. <strong>C1 (the atlas)</strong> has no body at all — just anterior/posterior arches — and articulates directly with the occipital condyles, letting the head nod "yes." <strong>C2 (the axis)</strong> has a peg-like <strong>dens</strong> that projects up into the atlas's ring, held by the transverse ligament, letting the head rotate "no." <strong>C7</strong>, the "vertebra prominens," has an unusually long, easily palpable spinous process that anchors the ligamentum nuchae.</p>
+  <figure class="fig"><img width="998" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/006.jpg" alt="The atlas (C1) and axis (C2) vertebrae"><figcaption>The atlas (C1, left/top) and axis (C2, right/bottom). The atlas has no vertebral body — only anterior and posterior arches surrounding a large vertebral foramen — and its superior articular facets cradle the occipital condyles. The axis's dens (odontoid process) projects upward into the atlas's ring, held in place by the transverse ligament, forming a pivot joint that lets the head rotate side to side.</figcaption></figure>
+  <p><strong>Thoracic vertebrae</strong> (T1–T12) carry <strong>costal facets</strong> for rib articulation (T1–T8 have both superior and inferior facets; T9–T12 have only one) and spinous processes that point sharply inferiorly. <strong>Lumbar vertebrae</strong> (L1–L5) have the largest, thickest vertebral bodies of the spine — built for weight-bearing — with a spinous process that points straight posteriorly. The <strong>sacrum</strong>, five fused vertebrae, articulates with the ilium at the auricular surface to form the sacroiliac joint, with landmarks including the sacral promontory, sacral canal, and sacral foramina; the <strong>coccyx</strong> caps the column below it (angled anteriorly in males, inferiorly in females).</p>
+  <p>The <strong>thoracic cage</strong> protects the heart, lungs, and thymus, and anchors the muscles of respiration. Its <strong>12 pairs of ribs</strong> split two ways: <strong>true ribs (1–7)</strong> attach directly to the sternum via their own costal cartilage (also called vertebrosternal), while <strong>false ribs (8–12)</strong> don't — ribs 8–10 (vertebrochondral) attach indirectly via shared cartilage, and ribs 11–12 ("floating ribs") have no anterior attachment at all. The <strong>sternum</strong> itself has three parts: the <strong>manubrium</strong> (superior, with the palpable jugular notch and clavicular articulations), the <strong>body</strong>, and the <strong>xiphoid process</strong> (the inferior cartilaginous/bony tip).</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#5b4a8a" onclick="window.openTestYourself('Test yourself — Axial Skeleton', TEST_YOURSELF.axialSkeleton)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 3 APPENDICULAR MUSCULATURE ============ -->
+<section class="deck" id="appendicular-musculature">
+  <h2 class="deck-title">3 &middot; Appendicular Musculature</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Differentiate between the axial and appendicular muscles, and describe the anatomical structures involved in muscle contraction.</li>
+      <li>Identify origin, insertion, innervation, and action of the muscles that position the pectoral girdle and move the arm, forearm, hand, and fingers.</li>
+      <li>Identify origin, insertion, innervation, and action of the muscles that move the thigh, leg, foot, and toes, and describe the fascial compartments of the limbs.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="am-upper">3.1 Pectoral Girdle &amp; Upper Limb Muscles <span class="tag">IO 1&ndash;2</span></h3>
+  <p>Skeletal muscle is subdivided into <strong>axial musculature</strong> (positions the head/vertebral column, moves the rib cage) and <strong>appendicular musculature</strong> (stabilizes and moves the limbs and girdles) — the latter is responsible for stabilizing the pectoral and pelvic girdles, moving the limbs, absorbing shock during locomotion, and reinforcing the joints. When a muscle contracts, the direction it pulls is its <strong>action line</strong>: lines crossing the anterior aspect of a joint act as flexors, the posterior aspect as extensors, the medial aspect as adductors/medial rotators, and the lateral aspect as abductors/lateral rotators.</p>
+  <p>Muscles that <strong>position the pectoral girdle</strong> — trapezius, rhomboid major/minor, levator scapulae, serratus anterior, pectoralis minor, subclavius — coordinate with the muscles that move the arm itself. The <strong>trapezius</strong> has the broadest range, able to elevate, depress, and rotate the scapula/clavicle and extend the neck. The <strong>serratus anterior</strong> protracts the shoulder and rotates the scapula so the glenoid cavity faces upward; it's innervated by the <strong>long thoracic nerve</strong>, and a lesion there causes serratus anterior paralysis (a "winged scapula").</p>
+  <p>Muscles that <strong>move the arm</strong> at the shoulder include the prime movers — <strong>pectoralis major</strong> (flexion, adduction, medial rotation), <strong>deltoid</strong> (abduction), <strong>coracobrachialis</strong> (adduction), and <strong>latissimus dorsi</strong> (extension, adduction, medial rotation) — plus the four <strong>rotator cuff</strong> muscles that stabilize the humeral head in the glenoid cavity: <strong>supraspinatus</strong> (abduction), <strong>infraspinatus</strong> (lateral rotation), <strong>teres minor</strong> (adduction, lateral rotation), and <strong>subscapularis</strong> (medial rotation).</p>
+  <figure class="fig"><img width="1402" height="1039" loading="lazy" src="anatomy-exam-4-study-guide-images/007.jpg" alt="Anterior view of the shoulder and arm musculature"><figcaption>Anterior view of the superficial shoulder and arm muscles. Pectoralis major forms the broad anterior chest mass and produces flexion, adduction, and medial rotation of the arm; the deltoid caps the shoulder and instead abducts the arm; the biceps brachii runs between them down the anterior arm, flexing the elbow and (weakly) the shoulder.</figcaption></figure>
+  <figure class="fig"><img width="1402" height="957" loading="lazy" src="anatomy-exam-4-study-guide-images/008.jpg" alt="Posterior view of the shoulder showing the rotator cuff muscles"><figcaption>Posterior shoulder dissection showing three of the four rotator cuff muscles — supraspinatus (superior, partly hidden under trapezius), infraspinatus, and teres minor — alongside teres major (not a rotator cuff muscle) and the long head of triceps brachii descending toward the elbow. The fourth rotator cuff muscle, subscapularis, sits on the anterior/deep surface of the scapula and isn't visible from this posterior view.</figcaption></figure>
+  <p>Most muscles that <strong>move the forearm and hand</strong> originate on the humerus (elbow flexors <strong>biceps brachii</strong>, <strong>brachialis</strong>, <strong>brachioradialis</strong>; the elbow extensor <strong>triceps brachii</strong>, all three heads inserting on the ulna's olecranon; and the pronator/supinator pairs <strong>pronator teres</strong>/<strong>pronator quadratus</strong> versus <strong>supinator</strong>). The wrist flexors (<strong>flexor carpi radialis</strong>, <strong>flexor carpi ulnaris</strong>, <strong>palmaris longus</strong>) and extensors (<strong>extensor carpi radialis longus/brevis</strong>, <strong>extensor carpi ulnaris</strong>) are named for their side-to-side action (radial = abduct, ulnar = adduct) as well as flexion/extension. Hand muscles split into <strong>extrinsic</strong> (large, originate in the forearm, provide strength and crude control — the flexor/extensor digitorum and pollicis groups) and <strong>intrinsic</strong> (small, live within the hand itself, provide fine control — thenar muscles like opponens pollicis, hypothenar muscles like abductor digiti minimi, plus the lumbricals and interossei that fine-tune finger flexion/extension and abduction/adduction).</p>
+
+  <h3 class="sub" id="am-lower">3.2 Pelvic Girdle &amp; Lower Limb Muscles <span class="tag">IO 3</span></h3>
+  <p>Lower-limb muscles are larger and more powerful than their upper-limb counterparts, split into three groups: muscles that move the <strong>thigh</strong>, the <strong>leg</strong>, and the <strong>foot/toes</strong>. Thigh movers originate on the pelvis and fall into four groups: the <strong>gluteal group</strong> (gluteus maximus extends the hip; gluteus medius/minimus and tensor fasciae latae abduct it), the <strong>lateral rotator group</strong> (piriformis, obturators, gemelli, quadratus femoris — mostly lateral rotation plus abduction), the <strong>adductor group</strong> (adductor brevis/longus/magnus, pectineus, gracilis), and the <strong>iliopsoas group</strong> (iliacus and psoas major, the primary hip flexors).</p>
+  <figure class="fig"><img width="1031" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/009.jpg" alt="Posterior view of the gluteal muscles"><figcaption>Posterior view of the gluteal region. Gluteus maximus (superficial, cut/reflected in dissection views) produces hip extension; deep to it, gluteus medius and minimus produce hip abduction. Beneath the glutei, the lateral rotator group — piriformis, the gemelli, obturator internus, and quadratus femoris — fans out across the posterior hip, producing lateral rotation of the femur.</figcaption></figure>
+  <p>At the knee, the <strong>quadriceps femoris</strong> (vastus lateralis, medialis, intermedius, plus rectus femoris, which also flexes the hip) extends the leg, while the <strong>hamstrings</strong> (biceps femoris, semimembranosus, semitendinosus) flex the leg and extend the hip. <strong>Sartorius</strong>, the long strap-like muscle that lets you cross your legs, flexes both the hip and knee; together with gracilis and semitendinosus, it converges on the medial tibia to form the <strong>pes anserine</strong>.</p>
+  <p>Below the knee, extrinsic muscles originating on the leg move the foot and toes: <strong>tibialis anterior</strong> dorsiflexes the foot, <strong>gastrocnemius</strong>/<strong>soleus</strong> (joined at the calcaneal/Achilles tendon) plantar-flex it, <strong>tibialis posterior</strong> plantar-flexes and inverts it, and <strong>fibularis longus/brevis</strong> evert it. Intrinsic foot muscles (abductor hallucis, flexor digitorum brevis, lumbricals, interossei, and others) mirror the hand's intrinsic layout, providing fine control of the toes.</p>
+  <p>Fascial <strong>compartments</strong> group functionally related muscles within connective-tissue sheaths that still allow independent movement: the arm has anterior (biceps brachii, brachialis, coracobrachialis) and posterior (triceps brachii) compartments; the thigh has anterior/extensor (quadriceps, iliopsoas, sartorius), medial/adductor (the adductor group, gracilis), and posterior/flexor (hamstrings) compartments.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#9c3b3b" onclick="window.openTestYourself('Test yourself — Appendicular Musculature', TEST_YOURSELF.appendicularMusculature)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 4 AXIAL MUSCULATURE ============ -->
+<section class="deck" id="axial-musculature">
+  <h2 class="deck-title">4 &middot; Axial Musculature</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Compare and contrast the connective tissue coverings of muscles, and describe the structures that make up the neuromuscular junction.</li>
+      <li>Identify the muscles of the head and neck — facial expression, mastication, extra-ocular, tongue, pharynx — and their cranial nerve innervation.</li>
+      <li>Identify the extrinsic and intrinsic muscles of the vertebral column, the rib cage/abdominal wall, the diaphragm, and the pelvic floor.</li>
+    </ol>
+  </div>
+
+  <h4 class="subsub">Muscle Coverings &amp; the Neuromuscular Junction</h4>
+  <p>Three nested layers of connective tissue organize skeletal muscle: the <strong>epimysium</strong> wraps the entire muscle, the <strong>perimysium</strong> wraps bundles of fibers called fascicles, and the <strong>endomysium</strong> wraps each individual muscle fiber (cell), whose plasma membrane is called the <strong>sarcolemma</strong>. Muscle contraction is triggered at the <strong>neuromuscular junction</strong>, the specialized synapse where a motor neuron meets a muscle fiber: the presynaptic terminal releases the neurotransmitter <strong>acetylcholine (ACh)</strong> across the synaptic cleft, where it binds nicotinic receptors on the postsynaptic <strong>motor end plate</strong> (a folded region of sarcolemma) to trigger contraction, before being broken down by <strong>acetylcholinesterase</strong> to end the signal. <strong>Schwann cells</strong> cap and support the junction.</p>
+
+  <h3 class="sub" id="axm-headneck">4.1 Muscles of the Head &amp; Neck <span class="tag">IO 2</span></h3>
+  <p>The <strong>muscles of facial expression</strong> are all innervated by the <strong>facial nerve (CN VII)</strong> and are grouped by the region of the face they act on: mouth (orbicularis oris purses the lips; zygomaticus major/minor elevate the corner of the mouth; buccinator compresses the cheeks; risorius, mentalis, depressor labii inferioris, depressor anguli oris, levator labii superioris round out the group), eyes (orbicularis oculi closes the eye; corrugator supercilii furrows the brow; levator palpebrae superioris elevates the eyelid — its dysfunction causes ptosis, and unlike the others it's innervated by CN III), nose (procerus, nasalis), scalp (occipitofrontalis, temporoparietalis), and neck (platysma).</p>
+  <figure class="fig"><img width="1039" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/010.jpg" alt="Anterior view of the superficial head and neck muscles"><figcaption>Anterior view of the superficial muscles of facial expression and mastication. The zygomaticus major and minor run diagonally from the cheekbone toward the corner of the mouth, elevating and laterally drawing it; orbicularis oris encircles the mouth to purse the lips; buccinator forms the deeper cheek wall; and platysma sheets down over the neck. The masseter and temporalis (muscles of mastication, not facial expression) are visible over the jaw and temple.</figcaption></figure>
+  <p>The four <strong>muscles of mastication</strong> — masseter, temporalis, and medial pterygoid (all close/elevate the jaw) plus lateral pterygoid (the lone jaw-opener) — are all innervated by the <strong>mandibular branch of the trigeminal nerve (CN V)</strong>. The temporalis passes medial to the zygomatic arch to insert on the mandible's coronoid process; the masseter inserts on the mandibular angle.</p>
+  <figure class="fig"><img width="1402" height="1017" loading="lazy" src="anatomy-exam-4-study-guide-images/011.jpg" alt="Muscles of mastication"><figcaption>The muscles of mastication, seen after removing the overlying facial muscles and part of the mandible. The temporalis fans out across the temple and inserts on the coronoid process; the masseter (partly visible) inserts on the mandibular angle; deep to both, the medial and lateral pterygoids run between the sphenoid and the medial mandible/TMJ capsule — the lateral pterygoid is the only one of the four that opens rather than closes the jaw.</figcaption></figure>
+  <p>The six <strong>extra-ocular muscles</strong> follow the classic "LR6 SO4 3" innervation rule: the <strong>lateral rectus</strong> (abducts the eye) is innervated by CN VI, the <strong>superior oblique</strong> (rotates the eye down and out) by CN IV, and the remaining four — medial rectus, superior rectus, inferior rectus, inferior oblique — by CN III. Tongue muscles (genioglossus, hyoglossus, styloglossus) are innervated by CN XII, except <strong>palatoglossus</strong>, which is innervated by CN X. In the neck, the <strong>sternocleidomastoid</strong> (CN XI) flexes the neck when both sides contract together and rotates the head to the opposite side when acting alone, while the infrahyoid/suprahyoid muscles (omohyoid, sternohyoid, sternothyroid, thyrohyoid, digastric, mylohyoid) position the hyoid and larynx. The <strong>pharyngeal constrictors</strong> (CN X), <strong>laryngeal elevators</strong> (CN IX &amp; X), and <strong>palatal muscles</strong> (CN V &amp; X) round out the swallowing musculature.</p>
+
+  <h3 class="sub" id="axm-trunk">4.2 Vertebral Column, Rib Cage &amp; Pelvic Floor Muscles <span class="tag">IO 3</span></h3>
+  <p>Back muscles come in two broad categories. <strong>Extrinsic back muscles</strong> — really appendicular muscles that happen to attach the limbs to the trunk — form a superficial layer (trapezius, latissimus dorsi, levator scapulae, rhomboids) and an intermediate layer (serratus posterior superior/inferior, which elevate/depress the ribs for ventilation). <strong>Intrinsic back muscles</strong> are the true "deep back" muscles, subdivided into superficial, intermediate, and deep layers that together flex, extend, and laterally stabilize the spine — because they act as a functional group, dysfunction of one usually can't be pinpointed clinically. The intermediate layer's <strong>erector spinae</strong> group (spinalis, longissimus, iliocostalis — medial to lateral) extends the column, while the deep layer (multifidus, rotatores, interspinales, intertransversarii) fine-tunes extension, rotation, and lateral flexion. Anteriorly, <strong>longus capitis/colli</strong> flex and rotate the neck, and <strong>quadratus lumborum</strong> laterally flexes the lumbar spine.</p>
+  <figure class="fig"><img width="1142" height="1080" loading="lazy" src="anatomy-exam-4-study-guide-images/012.png" alt="Superficial and deep muscles of the back"><figcaption>Superficial (right) and deep (left) muscles of the back. The superficial extrinsic layer (trapezius, latissimus dorsi, rhomboids, levator scapulae) has been reflected on the left side to reveal the erector spinae group running vertically alongside the vertebral column — spinalis (most medial), longissimus, and iliocostalis (most lateral) — the intermediate intrinsic layer that extends the spine.</figcaption></figure>
+  <p>The rib cage and abdominal wall use opposing muscle pairs to drive ventilation and support the trunk: the <strong>external intercostals</strong> elevate the ribs (inhalation) while the <strong>internal intercostals</strong> depress them (exhalation), assisted by the scalene muscles (elevate) and transversus thoracis (depress). The <strong>diaphragm</strong>, innervated by the <strong>phrenic nerves (C3–C5)</strong>, is the major muscle of inhalation: it contracts and flattens/descends to increase thoracic volume on inhalation, then relaxes and rises on exhalation. The abdominal wall's <strong>external oblique</strong>, <strong>internal oblique</strong>, and <strong>transversus abdominis</strong> compress the abdomen (the obliques also depress the ribs and laterally flex the trunk), while the midline <strong>rectus abdominis</strong> — bounded by the linea alba and segmented by tendinous inscriptions — flexes the vertebral column and depresses the ribs.</p>
+  <p>The <strong>pelvic floor</strong> supports the pelvic organs, flexes the sacrococcygeal joints, and controls the passage of urine and stool; because its individual muscles can't be told apart clinically, dysfunction is worked up by imaging (innervation is S2–S4). The perineum splits into an anterior <strong>urogenital triangle</strong> (superficial transverse perineal, ischiocavernosus, bulbospongiosus; deep transverse perineal, external urethral sphincter) and a posterior <strong>anal triangle</strong> (levator ani — its iliococcygeus and pubococcygeus parts — plus coccygeus, obturator internus, and the external anal sphincter), separated by the superficial transverse perineal muscle. Levator ani and coccygeus together form the bulk of the <strong>pelvic diaphragm</strong>, the muscular floor of the entire pelvic cavity.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#9c3b3b" onclick="window.openTestYourself('Test yourself — Axial Musculature', TEST_YOURSELF.axialMusculature)">Test yourself! &rarr;</button>
+</section>
+
+<footer class="guide-foot">
+  <p style="text-align:center;margin:0 0 10px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+  <p style="text-align:center;">Built from your PAJ 5000 lecture decks for personal study &middot; Class of 2028.</p>
+  <p style="text-align:center;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+</footer>
+
+</main>
+</div>
+<script>
+  // High-yield "Test yourself" question sets, one per section, fed to
+  // window.openTestYourself (theme.js) by each section's button.
+  var TEST_YOURSELF = {
+    appendicularSkeleton: [
+      { q: "Which end of the clavicle articulates with the manubrium of the sternum?", choices: ["The lateral (acromial) end", "The medial (sternal) end", "Neither — the clavicle doesn't articulate with the sternum", "Both ends articulate with the sternum"], correct: 1, explain: "The clavicle's medial (sternal) end articulates with the manubrium; its lateral (acromial) end articulates with the scapula's acromion instead." },
+      { q: "What ridge on the scapula's posterior surface separates the supraspinous fossa from the infraspinous fossa?", choices: ["The coracoid process", "The scapular spine", "The glenoid cavity", "The medial border"], correct: 1, explain: "The scapular spine is the diagonal ridge dividing the smaller supraspinous fossa (above) from the larger infraspinous fossa (below)." },
+      { q: "How many phalanges does the thumb (pollex) have, compared to a typical finger?", choices: ["Two, versus three for a finger", "Three, versus two for a finger", "Two, same as a finger", "Four, versus three for a finger"], correct: 0, explain: "The thumb has only a proximal and distal phalanx (two total) — no middle phalanx — while fingers (digits 2-5) each have three." },
+      { q: "What three bones fuse to form the coxal (hip) bone?", choices: ["Ilium, ischium, and pubis", "Ilium, sacrum, and pubis", "Femur, ilium, and ischium", "Pubis, sacrum, and coccyx"], correct: 0, explain: "The ilium (superior wing), ischium (posteroinferior, weight-bearing when seated), and pubis (anteroinferior, meets its counterpart at the pubic symphysis) fuse at the acetabulum to form each coxal bone." },
+      { q: "How does the female pelvis typically differ from the male pelvis, and why?", choices: ["Narrower and deeper, for greater stability", "Wider and shallower, adapted for childbirth", "No structural difference exists", "Only the sacrum differs between sexes"], correct: 1, explain: "The female pelvis is comparatively wider and shallower with a larger pelvic outlet, an adaptation that accommodates childbirth." }
+    ],
+    axialSkeleton: [
+      { q: "Where is the primary ossification center of a long bone located, and when does it appear?", choices: ["In the epiphyses, after birth", "In the diaphysis, during fetal development", "In the epiphyseal plate, throughout childhood", "In the periosteum, at any age"], correct: 1, explain: "The primary ossification center forms in the diaphysis (shaft) during fetal development, the first site where bone tissue replaces the original cartilage model; secondary centers appear later, after birth, in the epiphyses." },
+      { q: "What large opening in the occipital bone transmits the spinal cord?", choices: ["The jugular foramen", "The foramen magnum", "The stylomastoid foramen", "The foramen ovale"], correct: 1, explain: "The foramen magnum is the large central opening in the occipital bone through which the spinal cord (along with the vertebral arteries and accessory nerve) passes." },
+      { q: "What is unique about the atlas (C1) compared to a typical vertebra?", choices: ["It has an unusually large body", "It has no vertebral body at all, just anterior and posterior arches", "It has a dens projecting superiorly", "It is fused to the axis"], correct: 1, explain: "The atlas has no body — instead it's a ring of anterior and posterior arches with lateral masses, articulating with the occipital condyles above to allow the head to nod." },
+      { q: "What is the sella turcica, and what does it house?", choices: ["A ridge on the occipital bone; houses the cerebellum", "A saddle-shaped depression on the sphenoid; houses the pituitary gland", "A foramen in the ethmoid; houses the olfactory bulb", "A process on the temporal bone; houses the inner ear"], correct: 1, explain: "The sella turcica is a saddle-shaped depression on the body of the sphenoid bone that cradles the pituitary gland in its hypophyseal fossa." },
+      { q: "What distinguishes true ribs from false ribs?", choices: ["True ribs (1-7) attach directly to the sternum; false ribs (8-12) don't", "True ribs are the floating ribs; false ribs attach to the sternum", "There are 7 false ribs and 5 true ribs", "The distinction is based on rib length, not sternal attachment"], correct: 0, explain: "True (vertebrosternal) ribs 1-7 attach to the sternum via their own costal cartilage; false ribs 8-12 either attach indirectly (8-10, vertebrochondral) or not at all (11-12, floating)." }
+    ],
+    appendicularMusculature: [
+      { q: "Which nerve, when injured, classically causes serratus anterior paralysis (a \"winged scapula\")?", choices: ["The axillary nerve", "The long thoracic nerve", "The radial nerve", "The musculocutaneous nerve"], correct: 1, explain: "The serratus anterior is innervated by the long thoracic nerve; a lesion there causes the scapula's medial border to wing out from the chest wall." },
+      { q: "Which four muscles make up the rotator cuff?", choices: ["Deltoid, pectoralis major, biceps, triceps", "Supraspinatus, infraspinatus, teres minor, subscapularis", "Trapezius, rhomboids, levator scapulae, serratus anterior", "Teres major, latissimus dorsi, coracobrachialis, deltoid"], correct: 1, explain: "Supraspinatus (abduction), infraspinatus (lateral rotation), teres minor (adduction/lateral rotation), and subscapularis (medial rotation) together hold the humeral head snug in the glenoid cavity." },
+      { q: "What are the four groups of muscles that move the thigh?", choices: ["Flexor, extensor, abductor, adductor groups", "Gluteal, lateral rotator, adductor, and iliopsoas groups", "Anterior, posterior, medial, lateral groups", "Superficial and deep groups only"], correct: 1, explain: "All muscles that move the thigh originate on the pelvis and fall into the gluteal, lateral rotator, adductor, or iliopsoas groups." },
+      { q: "What three muscles make up the hamstrings?", choices: ["Vastus lateralis, medialis, intermedius", "Biceps femoris, semimembranosus, semitendinosus", "Gracilis, sartorius, pectineus", "Gastrocnemius, soleus, plantaris"], correct: 1, explain: "The hamstrings — biceps femoris, semimembranosus, and semitendinosus — flex the knee and (except for the short head of biceps femoris) extend the hip." },
+      { q: "Which two muscles produce eversion of the foot?", choices: ["Tibialis anterior and tibialis posterior", "Gastrocnemius and soleus", "Fibularis longus and fibularis brevis", "Flexor digitorum longus and flexor hallucis longus"], correct: 2, explain: "Fibularis (peroneus) longus and brevis, running along the lateral leg, both evert the foot — the opposite action of tibialis posterior's inversion." }
+    ],
+    axialMusculature: [
+      { q: "What cranial nerve innervates all the muscles of facial expression?", choices: ["Trigeminal nerve (CN V)", "Facial nerve (CN VII)", "Oculomotor nerve (CN III)", "Hypoglossal nerve (CN XII)"], correct: 1, explain: "Every muscle of facial expression — orbicularis oris, buccinator, zygomaticus, orbicularis oculi, platysma, and the rest — is innervated by CN VII, the facial nerve." },
+      { q: "Which extra-ocular muscle is innervated by the abducens nerve (CN VI)?", choices: ["Superior oblique", "Medial rectus", "Lateral rectus", "Inferior oblique"], correct: 2, explain: "\"LR6 SO4 3\": the lateral rectus is innervated by CN VI; the superior oblique by CN IV; and the remaining four extra-ocular muscles by CN III." },
+      { q: "What happens to thoracic cavity volume when the diaphragm contracts, and what respiratory phase does this represent?", choices: ["Volume decreases; exhalation", "Volume increases; inhalation", "Volume is unchanged; the diaphragm doesn't affect volume", "Volume increases; exhalation"], correct: 1, explain: "When the diaphragm contracts, it flattens and descends, increasing thoracic cavity volume — this is inhalation. It relaxes and rises during exhalation, decreasing volume." },
+      { q: "What three muscles make up the erector spinae group, medial to lateral?", choices: ["Multifidus, rotatores, interspinales", "Spinalis, longissimus, iliocostalis", "Splenius capitis, splenius cervicis, semispinalis", "Longus capitis, longus colli, quadratus lumborum"], correct: 1, explain: "Spinalis (most medial), longissimus, and iliocostalis (most lateral) make up the erector spinae — the intermediate intrinsic back muscle group that extends the vertebral column." },
+      { q: "What two triangles make up the perineum (pelvic floor), and what separates them?", choices: ["Anterior and posterior triangles, separated by the pubic symphysis", "Urogenital and anal triangles, separated by the superficial transverse perineal muscle", "Medial and lateral triangles, separated by levator ani", "Superior and inferior triangles, separated by the pelvic diaphragm"], correct: 1, explain: "The urogenital triangle (anterior) and anal triangle (posterior) are separated by the superficial transverse perineal muscle, with the pelvic diaphragm (levator ani + coccygeus) forming the floor beneath both." }
+    ]
+  };
+</script>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
