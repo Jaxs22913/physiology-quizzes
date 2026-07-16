@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Nephrology / Urinary System
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine Physiology III: Reproductive Hormones — Quiz Set 2 (30 Questions)</title>
+<style>
+  :root{
+    --navy:#1e3a8a; --indigo:#1d4ed8; --gold:#60a5fa; --ice:#eff6ff;
+    --ink:#131f38; --muted:#556485; --line:#d3e0f7;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f8fd;
+    --exam-toolbar-accent:var(--indigo);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5100 &middot; Graduate Physiology</p>
+    <h1>Physiology Integration Exam<span class="sys">Endocrine Physiology III: Reproductive Hormones</span></h1>
+    <p class="sub">Male Reproductive Physiology &middot; Puberty &amp; Menstrual Cycle &middot; Estrogen &amp; Progesterone &middot; Pregnancy &amp; Lactation</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers Endocrine Physiology III: male reproductive physiology and testosterone, puberty and the menstrual cycle, estrogen and progesterone actions, and the hormonal physiology of pregnancy, parturition, and lactation. Every item is drawn only from that lecture and is built around its instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Discuss the synthesis, function, and controlling hormones for testosterone.</span></li>
+      <li><span class="n">2</span><span>List the actions of testosterone and dihydrotestosterone.</span></li>
+      <li><span class="n">3</span><span>Describe the physiology of puberty.</span></li>
+      <li><span class="n">4</span><span>Compare and contrast the synthesis of estrogen and progesterone, including the controlling hormones.</span></li>
+      <li><span class="n">5</span><span>List the actions of estrogen and progesterone.</span></li>
+      <li><span class="n">6</span><span>Describe ovarian regulation and the menstrual cycle.</span></li>
+      <li><span class="n">7</span><span>Describe the stages of pregnancy, parturition, and lactation.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=endocrine-physiology-3-set2" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Endocrine Physiology III lecture &middot; PAJ 5100 Physiology &middot; for study use. (Set 2)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the Endocrine Physiology III lecture.
+   Topics: Labor & Lactation, Male Reproductive Physiology, Pregnancy Hormones, Puberty & Menstrual Cycle.
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    topic:"Male Reproductive Physiology",
+    q:"GnRH is secreted in pulses at approximately what interval, driving LH/FSH release?",
+    choices:["Every 1\u20133 hours","Once every 24 hours","Continuously, with no pulsatile pattern","Once per menstrual cycle only"],
+    answer:0,
+    correct:"GnRH is secreted approximately every 1\u20133 hours, a pulsatile pattern that drives LH release (and testosterone production via LH's action on Leydig cells).",
+    why:"Once every 24 hours substantially understates the described pulse frequency; the lecture specifically describes a pulsatile (not continuous) pattern; this pulsatile GnRH pattern applies broadly, not just once per menstrual cycle (which is female-cycle-specific terminology anyway).",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 24"
+  },
+  {
+    topic:"Male Reproductive Physiology",
+    q:"Testosterone's effects on primary and secondary sexual characteristics include enlargement of the penis/scrotum/testes and:",
+    choices:["Decreased muscle development and bone density","Increased hair growth (axillary, chest, pubic, facial) and deepened voice","Decreased basal metabolic rate","Decreased red blood cell count"],
+    answer:1,
+    correct:"Testosterone increases hair growth (axillary, chest, pubic, facial) and causes voice deepening via laryngeal enlargement, alongside increased muscle development, bone density, and basal metabolic rate.",
+    why:"Testosterone increases, not decreases, muscle development and bone density; testosterone increases, not decreases, basal metabolic rate; testosterone increases, not decreases, red blood cell count (contributing to higher hematocrit in males).",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 19"
+  },
+  {
+    topic:"Male Reproductive Physiology",
+    q:"Testosterone's skeletal effects include increased bone thickness and calcium deposition, but prolonged exposure eventually causes:",
+    choices:["Continuous linear bone growth with no limit","Fusion of the epiphyses/shaft, which can decrease final height if levels are abnormally high","Complete cessation of all bone mineralization","Bones to become more radiolucent with no density change"],
+    answer:1,
+    correct:"Prolonged testosterone exposure causes fusion of the bone epiphyses/shaft; abnormally high levels can cause this fusion to occur early, resulting in a net decrease in final height.",
+    why:"Bone growth does not continue linearly without limit \u2014 it is eventually capped by epiphyseal fusion; mineralization does not completely cease \u2014 testosterone actually increases calcium deposition; testosterone increases (not decreases) bone density, the opposite of increased radiolucency with no change.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 20"
+  },
+  {
+    topic:"Male Reproductive Physiology",
+    q:"Testosterone's metabolic effect at puberty is to increase basal metabolic rate by approximately:",
+    choices:["50\u2013100%","5\u201310%","0.5\u20131%","No measurable change"],
+    answer:1,
+    correct:"Testosterone at puberty increases basal metabolic rate by about 5\u201310%, largely due to increased protein anabolism.",
+    why:"50-100% substantially overstates the described increase; 0.5-1% substantially understates it; the lecture describes a clear, measurable increase, so 'no measurable change' is incorrect.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 21"
+  },
+  {
+    topic:"Male Reproductive Physiology",
+    q:"Increased metabolic rate from testosterone contributes to which hematologic change?",
+    choices:["Decreased hematocrit due to more red blood cells","Increased hematocrit due to more red blood cells","No effect on hematocrit","Decreased white blood cell count"],
+    answer:1,
+    correct:"Testosterone's increased metabolic rate increases hematocrit, due to an increase in red blood cells.",
+    why:"More red blood cells would increase, not decrease, hematocrit \u2014 this option reverses the relationship; the lecture describes a clear hematologic effect, so 'no effect' is incorrect; the described change involves red blood cells specifically, not white blood cells.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 21"
+  },
+  {
+    topic:"Male Reproductive Physiology",
+    q:"Which hormone stimulates testosterone production from Leydig cells, secreted every 1\u20133 hours from the hypothalamus?",
+    choices:["FSH","LH, downstream of pulsatile GnRH","Inhibin","Estrogen"],
+    answer:1,
+    correct:"LH, released downstream of pulsatile GnRH (secreted every 1\u20133 hours), stimulates testosterone production from Leydig cells.",
+    why:"FSH targets Sertoli cells, not Leydig cell testosterone production; inhibin suppresses GnRH release rather than stimulating testosterone production; estrogen in the male is made FROM testosterone (downstream), not a stimulator of its production.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 24"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"During early puberty (about ages 9\u201312), what happens to LH and FSH levels?",
+    choices:["They remain completely flat with no change","They increase steadily","They decrease steadily","They spike once and then permanently shut off"],
+    answer:1,
+    correct:"LH and FSH levels increase steadily starting around ages 9\u201312 as part of pubertal onset.",
+    why:"A clear steady increase is described, so 'remain flat' is incorrect; the direction is an increase, not a decrease; LH/FSH continue cycling throughout reproductive life, not permanently shutting off after a single spike.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 31"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"FSH and LH accelerate growth of approximately how many primary follicles per month?",
+    choices:["1\u20132","6\u201312","20\u201330","Over 100"],
+    answer:1,
+    correct:"FSH (and LH) accelerate growth of approximately 6\u201312 primary follicles per month.",
+    why:"1-2 substantially understates the described number of follicles recruited; 20-30 and over 100 both substantially overstate the 6-12 figure given.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 34"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"What triggers ovulation and development of the corpus luteum?",
+    choices:["A steady, unchanging level of estrogen","An LH surge","A drop in FSH to zero","Progesterone acting alone, with no LH involvement"],
+    answer:1,
+    correct:"An LH surge leads to ovulation and development of the corpus luteum.",
+    why:"Ovulation is triggered by a surge (a sharp change), not a steady/unchanging hormone level; FSH doesn't drop to zero as the trigger; LH is specifically the hormone whose surge triggers ovulation, not progesterone acting without LH.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 46"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"After ovulation, what do estrogen and progesterone from the corpus luteum do to GnRH/LH/FSH?",
+    choices:["Stimulate them continuously","Suppress them","Have no effect on them","Only affect FSH, not LH or GnRH"],
+    answer:1,
+    correct:"Estrogen and progesterone from the corpus luteum suppress GnRH/LH/FSH during the luteal phase, preventing a new cycle from starting prematurely.",
+    why:"They suppress, not continuously stimulate, these hormones during this phase; a clear suppressive effect is described, so 'no effect' is incorrect; the suppression affects GnRH/LH/FSH together, not FSH in isolation.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 47"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"What happens hormonally that allows a new ovulatory cycle to begin?",
+    choices:["Estrogen and progesterone from the corpus luteum fall, relieving suppression of GnRH/LH/FSH","Estrogen and progesterone rise further, extending suppression indefinitely","LH permanently stops being produced","The corpus luteum persists indefinitely without involuting"],
+    answer:0,
+    correct:"As the corpus luteum involutes, estrogen and progesterone levels fall, relieving the suppression on GnRH/LH/FSH and allowing a new cycle to begin.",
+    why:"Rising (not falling) hormone levels would extend suppression, preventing a new cycle, the opposite of what's described; LH is not permanently stopped \u2014 it resumes for the new cycle; the corpus luteum is described as involuting, not persisting indefinitely, absent pregnancy.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 45"
+  },
+  {
+    topic:"Puberty & Menstrual Cycle",
+    q:"Approximately 14 days after ovulation without fertilization, what happens to the endometrium?",
+    choices:["It thickens indefinitely","It sloughs off (menstruation)","It converts entirely into decidual tissue permanently","Nothing changes"],
+    answer:1,
+    correct:"About 14 days after ovulation, if fertilization has not occurred, the endometrium sloughs off \u2014 menstruation.",
+    why:"The endometrium sloughs off rather than thickening indefinitely without fertilization; permanent decidual conversion is what happens WITH implantation/pregnancy, not without fertilization; a clear, described change (sloughing) occurs, so 'nothing changes' is incorrect.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 67"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"Human chorionic gonadotropin (hCG) is secreted from which structure, and is detectable as early as how many days postovulation?",
+    choices:["Corpus luteum; detectable at 30 days","Syncytial trophoblasts; detectable as early as 8 days postovulation","Maternal pituitary; detectable at 1 day","Fetal adrenal cortex; detectable at 20 weeks"],
+    answer:1,
+    correct:"hCG is secreted from syncytial trophoblasts and is detectable as early as 8 days postovulation, peaking at 10\u201312 weeks.",
+    why:"The corpus luteum is a TARGET of hCG (it's stimulated by hCG), not hCG's source; the maternal pituitary does not secrete hCG; the fetal adrenal cortex is relevant to placental estrogen synthesis (DHEA production), not the source of hCG.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 69"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"What is hCG's major function regarding the corpus luteum in early pregnancy?",
+    choices:["It causes immediate involution of the corpus luteum","It prevents involution of the corpus luteum and stimulates its estrogen/progesterone production","It has no relationship to the corpus luteum","It converts the corpus luteum directly into placental tissue"],
+    answer:1,
+    correct:"hCG prevents involution of the corpus luteum (increasing its function about 2\u00d7) and stimulates estrogen/progesterone secretion from it, until the corpus luteum slowly involutes after 12 weeks as hCG declines.",
+    why:"hCG prevents, rather than causes, early corpus luteum involution; a clear functional relationship is described, so 'no relationship' is incorrect; the corpus luteum eventually involutes as hCG declines \u2014 it isn't converted directly into placental tissue.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 69"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"Besides supporting the corpus luteum, hCG also inhibits uterine contractions caused by which hormone?",
+    choices:["Prolactin","Oxytocin","Relaxin","Cortisol"],
+    answer:1,
+    correct:"hCG inhibits uterine contractions caused by oxytocin, helping maintain the pregnancy.",
+    why:"Prolactin, relaxin, and cortisol are not the hormone whose oxytocin-driven contractile effect hCG is described as inhibiting here.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 69"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"Placental estrogen is synthesized primarily from which precursor?",
+    choices:["Maternal cholesterol directly","Androgens (DHEA, 16-hydroxy-DHEA) from maternal and fetal adrenal sources","Progesterone","Thyroxine"],
+    answer:1,
+    correct:"Placental estrogen is synthesized primarily from androgens (DHEA and 16-hydroxy-DHEA), sourced from both maternal and fetal adrenal glands (with a large fetal adrenal cortex producing DHEA).",
+    why:"Maternal cholesterol directly is the precursor described for placental progesterone, not estrogen; progesterone is a separate hormone, not estrogen's precursor in this pathway; thyroxine is unrelated to placental estrogen synthesis.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 70"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"Placental progesterone is synthesized primarily from:",
+    choices:["Fetal androgens","Maternal cholesterol","Placental estrogen","hCG directly"],
+    answer:1,
+    correct:"Placental progesterone is synthesized primarily from maternal cholesterol.",
+    why:"Fetal androgens are the precursor for placental estrogen, not progesterone; progesterone is not synthesized from estrogen (they're parallel, not sequential, products); hCG is a separate glycoprotein hormone, not a steroid precursor for progesterone.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 71"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"One function of placental progesterone is to reduce uterine contractility, which helps to:",
+    choices:["Induce labor prematurely","Prevent spontaneous abortion","Increase menstrual flow","Stimulate immediate lactation"],
+    answer:1,
+    correct:"Placental progesterone reduces uterine contractility to help prevent spontaneous abortion.",
+    why:"Reduced contractility would delay, not induce, premature labor; menstrual flow is not relevant during an established pregnancy; immediate lactation stimulation is not this function of progesterone's reduced-contractility effect.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 71"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"During pregnancy, which anterior pituitary hormones are suppressed, while ACTH, TSH, and prolactin increase?",
+    choices:["Growth hormone and ACTH","LH and FSH","TSH and prolactin","ACTH and TSH"],
+    answer:1,
+    correct:"LH and FSH are suppressed during pregnancy, while ACTH, TSH, and prolactin increase.",
+    why:"Growth hormone and ACTH \u2014 ACTH actually increases, not is suppressed; TSH and prolactin are both described as increasing, not suppressed; ACTH and TSH are both increased hormones in this list, not the suppressed pair.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 72"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"During pregnancy, aldosterone approximately doubles, contributing to:",
+    choices:["Sodium and water loss","Sodium and water retention","No change in fluid balance","Only potassium retention, with no sodium effect"],
+    answer:1,
+    correct:"A twofold increase in aldosterone during pregnancy contributes to sodium and water retention.",
+    why:"Increased aldosterone causes retention, not loss, of sodium and water; a clear fluid-balance effect is described, so 'no change' is incorrect; the described effect includes sodium, not just potassium, retention.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 72"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"During pregnancy, thyroxine can increase by up to what percentage, driven partly by hCG and human chorionic thyrotropin?",
+    choices:["5%","50%","150%","300%"],
+    answer:1,
+    correct:"Thyroxine can increase by up to 50% during pregnancy, caused by hCG and human chorionic thyrotropin.",
+    why:"5% substantially understates the described increase; 150% and 300% both substantially overstate the 50% figure given.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 72"
+  },
+  {
+    topic:"Pregnancy Hormones",
+    q:"Relaxin, secreted from the corpus luteum and stimulated by hCG, has a possible role to:",
+    choices:["Constrict pelvic ligaments to stabilize the pelvis","Relax pelvic ligaments","Increase uterine contractility early in pregnancy","Stimulate ovulation"],
+    answer:1,
+    correct:"Relaxin's possible role is to relax pelvic ligaments, in preparation for later stages of pregnancy/delivery.",
+    why:"Relaxin's described role is relaxing, not constricting, pelvic ligaments; increasing uterine contractility early in pregnancy would risk miscarriage and is not relaxin's described role; relaxin is produced after ovulation (stimulated by hCG from an established pregnancy), not a stimulator of ovulation itself.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 72"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Braxton-Hicks contractions are best described as:",
+    choices:["Strong, rhythmic contractions identical to true labor","Weak, slow, irritable uterine muscle contractions beginning about 1 month before labor","Contractions that only occur during the second stage of labor","A sign of immediate delivery within the hour"],
+    answer:1,
+    correct:"Braxton-Hicks contractions are weak, slow contractions reflecting uterine muscle irritability, beginning about 1 month before true labor.",
+    why:"They are explicitly weaker than, not identical to, true labor contractions; they occur well before labor begins, not during the second stage specifically; they don't indicate imminent delivery within the hour \u2014 they can occur weeks before true labor.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 83"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"True labor has a circadian rhythm, with contractions peaking during which time window?",
+    choices:["Noon to 3 pm","Midnight to 5 am","6 am to 9 am","There is no time-of-day pattern"],
+    answer:1,
+    correct:"True labor has a circadian rhythm, peaking between midnight and 5 am.",
+    why:"Noon to 3pm and 6am to 9am are not the peak window described; the lecture explicitly describes a circadian (time-of-day) pattern, so 'no pattern' is incorrect.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 83"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"In the four-stage labor framework, what characterizes Stage 3?",
+    choices:["Cervical dilation","Fetal expulsion (delivery of the baby)","Placental delivery (separation and expulsion of the placenta)","Uterine involution and hemostasis"],
+    answer:2,
+    correct:"Stage 3 of labor is placental delivery \u2014 separation and expulsion of the placenta.",
+    why:"Cervical dilation is Stage 1; fetal expulsion/delivery of the baby is Stage 2; uterine involution and hemostasis is Stage 4, not Stage 3.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 84"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Cervical stretching during labor stimulates oxytocin secretion from which structure?",
+    choices:["Anterior pituitary","Supraoptic nuclei of the hypothalamus (via posterior pituitary release)","Adrenal medulla","Ovary"],
+    answer:1,
+    correct:"Cervical stretching stimulates oxytocin secretion, with oxytocin originating from the supraoptic nuclei of the hypothalamus and released via the posterior pituitary.",
+    why:"The anterior pituitary releases hormones like ACTH/TSH/GH, not oxytocin; the adrenal medulla releases catecholamines, unrelated to this reflex; the ovary is not the source of oxytocin in this parturition reflex.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 75"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Besides maternal oxytocin, parturition also involves fetal release of oxytocin, cortisol, and:",
+    choices:["Insulin","Prostaglandins","Growth hormone only","Aldosterone"],
+    answer:1,
+    correct:"Fetal release of oxytocin, cortisol, and prostaglandins all contribute to the parturition process.",
+    why:"Insulin, isolated growth hormone, and aldosterone are not the third fetal factor named alongside oxytocin and cortisol in this parturition mechanism \u2014 that's prostaglandins.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 75"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Which hormone, increasing starting at gestation week 5 from the anterior pituitary, directly promotes milk secretion?",
+    choices:["Oxytocin","Prolactin","Relaxin","hCG"],
+    answer:1,
+    correct:"Prolactin, from the anterior pituitary, increases starting at gestation week 5 and promotes milk secretion.",
+    why:"Oxytocin (from the posterior pituitary) drives milk let-down/ejection, not milk secretion itself; relaxin's role relates to pelvic ligaments, not milk secretion; hCG's major roles relate to corpus luteum support, not directly promoting milk secretion.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 86"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Colostrum, the first milk, differs from mature milk in that it:",
+    choices:["Contains no protein","Has essentially the same content as milk but with no fat","Contains no antibodies","Is produced only after weaning"],
+    answer:1,
+    correct:"Colostrum has essentially the same content as regular milk but contains no fat.",
+    why:"Colostrum does contain protein (and is actually notably protein/antibody-rich in general physiology, though this lecture specifically notes the fat difference); it is not fat that's absent from protein content, and antibody content is not the distinguishing feature named in this lecture; colostrum is produced right after birth, not only after weaning (weaning is the opposite endpoint of lactation).",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 86"
+  },
+  {
+    topic:"Labor & Lactation",
+    q:"Which hormones are described as contributing nutrients needed for milk production, alongside prolactin?",
+    choices:["GH, cortisol, thyroid hormones, and insulin","Only estrogen and progesterone","Only oxytocin","LH and FSH"],
+    answer:0,
+    correct:"GH, cortisol, thyroid hormones, and insulin all contribute to the nutrients needed for milk production, alongside prolactin's direct secretory role.",
+    why:"Estrogen/progesterone are described as promoting breast structural development (ducts, lobules), a distinct role from this nutrient-contributing group; oxytocin's role is let-down/ejection, not nutrient contribution; LH/FSH are suppressed during pregnancy/lactation and are not part of this nutrient-supply group.",
+    src:"20. Endocrine Physiology III-2.pptx, Slide 86"
+  },
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of Endocrine Physiology III: reproductive hormone physiology.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>
