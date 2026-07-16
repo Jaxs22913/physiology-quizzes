@@ -417,3 +417,16 @@ body {
    default), instead of living inside the Settings panel -- see the
    matching isArcade skip in theme.js's initSettingsPanel(). */
 #refresh-btn { display: flex; }
+
+/* theme.css's modals (Settings, keyboard shortcuts, the cloud-sync sign-in
+   prompt) dim the full viewport by default, which reaches into the edge
+   marquee dots' 74px columns. Pull the dimmed area in from both sides at
+   the same width the dots occupy (matching .edge-decor's own min-width:1000px
+   breakpoint) so those columns stay fully undimmed instead of just relying
+   on z-index to paint the dots on top of a still-darkened background. */
+@media (min-width: 1000px) {
+  .settings-overlay, .shortcuts-overlay, .tour-overlay {
+    left: 74px;
+    right: 74px;
+  }
+}

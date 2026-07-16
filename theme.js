@@ -484,6 +484,18 @@
     // -but-hidden buttons (except dark mode, which calls setTheme/
     // paintIcon directly since this row is the *only* way to toggle it now,
     // so there's no other place its state could drift out of sync from).
+    // Arcade pages (detected by their edge-decor marquee *dots* -- index.html
+    // also has its own unrelated, dot-free ".edge-decor" zigzag strips, so
+    // matching on ".edge-decor circle" specifically is what tells the two
+    // apart) want their Settings panel identical to the homepage's, right
+    // down to #refresh-btn staying a visible standalone icon there instead
+    // of living in this panel -- see the matching arcade.css override. The
+    // one addition is a Sound effects row: Arcade dropped its own corner
+    // sound-toggle icon (see arcade.js's initHeader), so this panel is now
+    // the only place to flip arcade.js's fc_sound_v1 flag, same as Dark
+    // mode is the only place to flip the site's theme.
+    var isArcade = !!document.querySelector(".edge-decor circle");
+
     var darkModeToggle = makeToggleRow(
       "Dark mode",
       currentTheme() === "dark",
@@ -496,6 +508,18 @@
     darkModeToggle.row.classList.add("quick-action");
     panel.appendChild(darkModeToggle.row);
 
+    if (isArcade) {
+      var soundToggle = makeToggleRow(
+        "Sound effects",
+        localStorage.getItem("fc_sound_v1") !== "0",
+        function (checked) {
+          if (window.setFCSoundEnabled) window.setFCSoundEnabled(checked);
+        }
+      );
+      soundToggle.row.classList.add("quick-action");
+      panel.appendChild(soundToggle.row);
+    }
+
     // setTimeout(...,0) defers the delegated click until after this click
     // event's own bubble phase finishes -- calc/account both have their own
     // document-level "click outside closes this" listener, and firing the
@@ -504,13 +528,6 @@
     // panel) is still bubbling and reaches that listener right after,
     // reading the panel as freshly-opened-but-clicked-outside and closing
     // it again in the same tick.
-    // Arcade pages (detected by their edge-decor marquee *dots* -- index.html
-    // also has its own unrelated, dot-free ".edge-decor" zigzag strips, so
-    // matching on ".edge-decor circle" specifically is what tells the two
-    // apart) want their Settings panel identical to the homepage's, right
-    // down to #refresh-btn staying a visible standalone icon there instead
-    // of living in this panel -- see the matching arcade.css override.
-    var isArcade = !!document.querySelector(".edge-decor circle");
     panel.appendChild(makeActionRow("Calculator", function () {
       close();
       setTimeout(function () {

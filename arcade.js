@@ -193,46 +193,24 @@ function shuffle(arr) {
 }
 
 // ---- Icons ----
-var ICON_SVG_OPEN = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
-var ICONS = {
-  sun: ICON_SVG_OPEN + '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
-  moon: ICON_SVG_OPEN + '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
-  soundOn: ICON_SVG_OPEN + '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>',
-  soundOff: ICON_SVG_OPEN + '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>'
-};
 var RESULT_ICON_SVG_OPEN = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 var AWARD_ICON = RESULT_ICON_SVG_OPEN + '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>';
 var BOT_ICON = RESULT_ICON_SVG_OPEN + '<rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>';
 
-function applyThemeIcon() {
-  var dark = document.documentElement.getAttribute("data-theme") === "dark";
-  var el = document.getElementById("theme-toggle");
-  if (el) el.innerHTML = dark ? ICONS.sun : ICONS.moon;
-}
-function applySoundIcon() {
-  var el = document.getElementById("sound-toggle");
-  if (el) el.innerHTML = soundOn ? ICONS.soundOn : ICONS.soundOff;
-}
+// Dark mode and sound both live only in the site's shared Settings panel
+// now (theme.js's initSettingsPanel(), gated on its isArcade check) --
+// Arcade no longer has its own corner theme/sound icons, matching the
+// homepage. window.setFCSoundEnabled is that panel's hook into arcade.js's
+// in-memory soundOn flag so toggling it there takes effect immediately,
+// without a reload, exactly like flipping dark mode does.
+window.setFCSoundEnabled = function (on) {
+  soundOn = on;
+  localStorage.setItem(SOUND_KEY, on ? "1" : "0");
+};
 
 // Every page's header (proto-badge/brand/corner-btns/streak-pill) is
 // identical markup -- call this once on load to wire it up.
 function initHeader() {
-  var themeBtn = document.getElementById("theme-toggle");
-  var soundBtn = document.getElementById("sound-toggle");
-  if (themeBtn) themeBtn.addEventListener("click", function () {
-    var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem(THEME_KEY, next);
-    applyThemeIcon();
-  });
-  if (soundBtn) soundBtn.addEventListener("click", function () {
-    soundOn = !soundOn;
-    localStorage.setItem(SOUND_KEY, soundOn ? "1" : "0");
-    applySoundIcon();
-    if (soundOn) playTone(500, 0.08);
-  });
-  applyThemeIcon();
-  applySoundIcon();
   renderStreak();
 }
 
