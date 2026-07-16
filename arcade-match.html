@@ -101,7 +101,12 @@
   }
 
   function buildPool(deck) {
-    var allPairs = shuffle(deck.cards.map(function (c, i) { return { pairId: i, term: c[0], def: c[1] }; }));
+    // matchCards (crisp term:definition pairs) is what Match is meant to
+    // use -- deck.cards is the broader Study/Learn/Sprint content, which
+    // reads as full questions and doesn't fit a tap-to-pair grid. Falls
+    // back to deck.cards only for decks that predate the matchCards split.
+    var source = deck.matchCards || deck.cards;
+    var allPairs = shuffle(source.map(function (c, i) { return { pairId: i, term: c[0], def: c[1] }; }));
     totalPairs = allPairs.length;
     active = allPairs.slice(0, Math.min(WINDOW_SIZE, allPairs.length));
     pool = allPairs.slice(active.length);
@@ -236,7 +241,7 @@
   initHeader();
   if (!deck) {
     showEmpty("Deck not found.");
-  } else if (deck.cards.length < 2) {
+  } else if ((deck.matchCards || deck.cards).length < 2) {
     showEmpty("Not enough cards in " + deck.name + " to play Match.");
   } else {
     startGame();

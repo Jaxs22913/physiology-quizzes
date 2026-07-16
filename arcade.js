@@ -4,17 +4,222 @@
 // used by Study/Learn/Sprint) and `matchCards` (crisp term:definition pairs,
 // used by Match) -- the two modes want differently-shaped content, not one
 // shared list.
-var DEMO_DECKS = [];
+//
+// anatomy-endocrine-glands and anatomy-peritoneal are both sourced ONLY
+// from the Anatomy Exam 3 PPTs (Endocrine for Posting.pptx, GI I & II for
+// posting.pptx, 18. NephrologyUrinary System - 2026.pptx) -- per
+// anatomy-questions-strict-scope, this stays strictly anatomical (which
+// gland/cell type secretes which named hormone; which organ is
+// intraperitoneal vs retroperitoneal), never drifting into physiology
+// (hormone action/regulation, which the Anatomy PPT itself barely covers
+// anyway -- it's a histology/gross-anatomy deck, not a function one).
+var DEMO_DECKS = [
+  { id: "anatomy-endocrine-glands", name: "Endocrine Glands → Hormones", color: "accent2",
+    icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>',
+    cards: [
+      ["Which adrenal cortex zone secretes aldosterone?", "Zona glomerulosa — outermost zone of the adrenal cortex, cells arranged in an ovoid configuration; secretes mineralocorticoids."],
+      ["Which adrenal cortex zone secretes cortisol?", "Zona fasciculata — middle zone, lipid-droplet-laden cells arranged in radial columns; secretes glucocorticoids."],
+      ["Which adrenal cortex zone secretes androgens?", "Zona reticularis — innermost cortical zone, loose meshwork configuration."],
+      ["What do the chromaffin cells of the adrenal medulla secrete?", "Epinephrine and norepinephrine — chromaffin cells are modified post-ganglionic sympathetic neurons lacking dendrites and axons."],
+      ["Which thyroid cells secrete thyroxine (T4) and triiodothyronine (T3)?", "Follicular epithelial cells — simple cuboidal cells surrounding the colloid-filled thyroid follicle."],
+      ["Which thyroid cells secrete calcitonin?", "Parafollicular (C) cells — located near the follicular basement lamina, larger and lighter-staining than follicular cells."],
+      ["Which parathyroid cells produce parathyroid hormone (PTH)?", "Principal (chief) cells — slightly eosinophilic cytoplasm; oxyphil cells may also secrete PTH but their function is otherwise unknown."],
+      ["What hormones does the adenohypophysis's corticotropes release?", "ACTH (adrenocorticotropic hormone) and MSH (melanocyte-stimulating hormone)."],
+      ["What hormone do the adenohypophysis's thyrotropes release?", "TSH (thyroid-stimulating hormone)."],
+      ["What hormones do the adenohypophysis's gonadotropes release?", "FSH (follicle-stimulating hormone) and LH (luteinizing hormone)."],
+      ["What does the neurohypophysis (posterior pituitary lobe) release?", "ADH (antidiuretic hormone) and oxytocin — both actually produced by the hypothalamus and released from the posterior lobe."],
+      ["What do the pancreatic islets secrete?", "Insulin and glucagon — the endocrine tissue of the pancreas, scattered as about 1% of pancreatic cells."],
+      ["What does the pineal gland secrete?", "Melatonin."],
+      ["What does adipose tissue secrete, endocrinologically?", "Leptin and resistin."]
+    ],
+    matchCards: [
+      ["Zona glomerulosa", "Aldosterone"],
+      ["Zona fasciculata", "Cortisol"],
+      ["Zona reticularis", "Androgens"],
+      ["Adrenal medulla (chromaffin cells)", "Epinephrine & norepinephrine"],
+      ["Thyroid follicular cells", "Thyroxine (T4) & T3"],
+      ["Thyroid parafollicular (C) cells", "Calcitonin"],
+      ["Parathyroid chief cells", "Parathyroid hormone (PTH)"],
+      ["Adenohypophysis thyrotropes", "TSH"],
+      ["Adenohypophysis gonadotropes", "FSH & LH"],
+      ["Neurohypophysis", "ADH & oxytocin"],
+      ["Pancreatic islets", "Insulin & glucagon"],
+      ["Pineal gland", "Melatonin"]
+    ]},
+  { id: "anatomy-peritoneal", name: "Retroperitoneal vs Intraperitoneal", color: "accent4",
+    icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+    cards: [
+      ["Is the stomach intraperitoneal or retroperitoneal?", "Intraperitoneal."],
+      ["Why is the duodenum both intra- and retroperitoneal depending on the part?", "Only the superior part (duodenal cap, first portion) is intraperitoneal; the descending, transverse, and ascending parts become retroperitoneal."],
+      ["Are the jejunum and ileum intra- or retroperitoneal?", "Intraperitoneal — both are suspended by the mesentery proper, which runs from the duodenojejunal flexure to the right iliac fossa."],
+      ["Are the cecum and appendix intra- or retroperitoneal?", "Intraperitoneal."],
+      ["Is the ascending colon intra- or retroperitoneal?", "Retroperitoneal — begins at the ileocecal valve, terminates at the right (hepatic) colic flexure."],
+      ["Is the transverse colon intra- or retroperitoneal?", "Intraperitoneal — the most mobile portion of the colon, suspended by the transverse mesocolon."],
+      ["Is the descending colon intra- or retroperitoneal?", "Retroperitoneal — narrowest-diameter part of the colon, continuous with the sigmoid colon."],
+      ["Is the sigmoid colon intra- or retroperitoneal?", "Intraperitoneal — extends into the pelvis, stores fecal material."],
+      ["Is the pancreas intra- or retroperitoneal?", "Retroperitoneal."],
+      ["Is the spleen intra- or retroperitoneal?", "Intraperitoneal."],
+      ["Are the kidneys intra- or retroperitoneal?", "Retroperitoneal — kidneys sit from T12–L3 on the right and T10/11–L2 on the left, anchored to the posterior wall by the renal fascia."],
+      ["Are the ureters intra- or retroperitoneal?", "Retroperitoneal — run from the renal pelvis to the posterolateral wall of the bladder base."]
+    ],
+    matchCards: [
+      ["Stomach", "Intraperitoneal"],
+      ["Duodenal cap (1st part)", "Intraperitoneal"],
+      ["Duodenum (2nd–4th parts)", "Retroperitoneal"],
+      ["Jejunum & ileum", "Intraperitoneal"],
+      ["Cecum & appendix", "Intraperitoneal"],
+      ["Ascending colon", "Retroperitoneal"],
+      ["Transverse colon", "Intraperitoneal"],
+      ["Descending colon", "Retroperitoneal"],
+      ["Sigmoid colon", "Intraperitoneal"],
+      ["Pancreas", "Retroperitoneal"],
+      ["Spleen", "Intraperitoneal"],
+      ["Kidneys", "Retroperitoneal"],
+      ["Ureters", "Retroperitoneal"]
+    ]},
+  // Physiology Exam 4 decks, one per PPT (Renal I, Renal II, Endocrine
+  // Physiology I/II/III), sourced only from those PPTs -- unlike the
+  // Anatomy decks above, function/mechanism content belongs here, since
+  // that's what these lectures actually are.
+  { id: "physio-renal-1", name: "Renal I: GFR & Micturition", color: "accent",
+    icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>',
+    cards: [
+      ["What does the trigone of the bladder mark?", "A small triangular area immediately superior to the bladder neck, bounded by the two ureteral openings and the internal urethral orifice."],
+      ["What is the detrusor muscle and why does it contract as a unit?", "The smooth muscle of the bladder wall; low-resistance electrical pathways between fused muscle cells let an action potential spread through the entire muscle at once, contracting the whole bladder together."],
+      ["Which nerves carry parasympathetic motor fibers to the detrusor muscle?", "Pelvic nerves (S2–S3) — also carry sensory fibers detecting bladder wall stretch."],
+      ["Which nerve carries skeletal motor fibers to the external urethral sphincter?", "The pudendal nerve — allows voluntary control of urination."],
+      ["Which nerves carry sympathetic innervation to the bladder?", "Hypogastric nerves (from the L2 sympathetic chain) — mainly stimulate blood vessels, with some sensory fibers for fullness/pain."],
+      ["What is the micturition reflex?", "An autonomic spinal cord reflex that empties the bladder once wall tension crosses a threshold, and can be inhibited or facilitated by the cerebral cortex and brainstem."],
+      ["What is the GFR equation?", "GFR = Kf × Net Filtration Pressure, where Net Filtration Pressure = PG (glomerular hydrostatic) − PB (Bowman's capsule hydrostatic) − πG (glomerular oncotic) + πB (Bowman's capsule oncotic)."],
+      ["Which determinant of GFR is most subject to physiological control?", "Glomerular hydrostatic pressure (PG) — Bowman's capsule hydrostatic pressure normally just changes as a function of GFR rather than regulating it."],
+      ["What is the myogenic mechanism of renal autoregulation?", "Increased arterial pressure stretches the afferent arteriole, triggering smooth muscle contraction that constricts it — preventing excessive increases in glomerular hydrostatic pressure and stabilizing GFR."],
+      ["What is tubuloglomerular feedback?", "Macula densa cells (part of the JGA) monitor NaCl delivery to the distal tubule: more NaCl → adenosine/ATP release → afferent arteriole constricts → GFR falls back toward normal; less NaCl → more renin → more angiotensin II → GFR maintained despite reduced renal perfusion."],
+      ["Over what arterial pressure range does renal autoregulation keep GFR and renal blood flow roughly constant?", "Approximately 80–180 mmHg."],
+      ["Why is average GFR about 10% lower in women than men?", "Body size and sex are both factors that affect GFR, independent of kidney disease."]
+    ],
+    matchCards: [
+      ["Trigone", "Triangular area above the bladder neck"],
+      ["Pelvic nerve", "Parasympathetic motor + sensory to detrusor"],
+      ["Pudendal nerve", "Skeletal motor to external sphincter"],
+      ["Hypogastric nerve", "Sympathetic, mainly to blood vessels"],
+      ["Micturition reflex", "Autonomic spinal reflex that empties the bladder"],
+      ["Kf", "Glomerular filtration coefficient"],
+      ["PG", "Glomerular hydrostatic pressure — most regulated GFR determinant"],
+      ["Myogenic mechanism", "Afferent arteriole stretch → constriction"],
+      ["Tubuloglomerular feedback", "Macula densa senses NaCl, adjusts afferent tone"],
+      ["Renal autoregulation range", "~80–180 mmHg"]
+    ]},
+  { id: "physio-renal-2", name: "Renal II: Nephron & RAAS", color: "accent2",
+    icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+    cards: [
+      ["What triggers renin release from the JGA?", "Reduced renal perfusion pressure, reduced NaCl delivery to the macula densa, or increased sympathetic stimulation (via β1 adrenoreceptors)."],
+      ["Walk through the RAAS cascade from renin to blood pressure.", "Renin converts angiotensinogen to angiotensin I; ACE converts angiotensin I to angiotensin II; angiotensin II increases aldosterone release, Na+ reabsorption, efferent arteriole constriction, ADH release, and thirst — raising blood volume and pressure."],
+      ["What does aldosterone do to principal cells and intercalated cells?", "In principal cells: increases Na+ reabsorption and K+ secretion (via Na+/K+ ATPase, ENaC, and ROMK channels). In intercalated cells: increases H+ secretion."],
+      ["What triggers ADH release, and what is its mechanism?", "Released when plasma osmolality rises (dehydration) or blood volume/pressure falls; binds V2 receptors on principal cells of the late distal tubule/collecting duct, inserting aquaporin-2 channels into the apical membrane so water moves from tubular fluid back into the bloodstream."],
+      ["What does atrial natriuretic peptide (ANP) promote?", "Sodium excretion (natriuresis) and water excretion (diuresis), lowering blood volume and blood pressure — the opposite direction from aldosterone/ADH."],
+      ["What does PTH do at the early distal tubule?", "Enhances calcium reabsorption through apical calcium channels (TRPV5); the early distal tubule is also where the macula densa sits and ~5% of filtered NaCl is normally reabsorbed."],
+      ["What generates the corticomedullary osmotic gradient in the countercurrent multiplier?", "Active NaCl reabsorption by the water-impermeable thick ascending limb, combined with water movement out of the descending limb — this lets the kidney concentrate urine when ADH is present."],
+      ["What is the role of the vasa recta as a countercurrent exchanger?", "Low-volume countercurrent blood flow through the vasa recta maintains the corticomedullary gradient while still supplying blood to the medulla."],
+      ["One-line summary: what does each of ADH, aldosterone, angiotensin II, ANP, and PTH mainly do?", "ADH: water reabsorption. Aldosterone: Na+ reabsorption/K+ secretion. Angiotensin II: Na+ and water reabsorption. ANP: Na+ and water excretion. PTH: Ca++ reabsorption/phosphate excretion."]
+    ],
+    matchCards: [
+      ["ADH", "Water reabsorption"],
+      ["Aldosterone", "Na+ reabsorption, K+ secretion"],
+      ["Angiotensin II", "Na+ and water reabsorption"],
+      ["ANP", "Na+ and water excretion"],
+      ["PTH (renal action)", "Ca++ reabsorption, phosphate excretion"],
+      ["Macula densa", "Senses NaCl delivery, triggers renin release"],
+      ["Thick ascending limb", "Water-impermeable, reabsorbs NaCl"],
+      ["Vasa recta", "Countercurrent exchanger, preserves medullary gradient"],
+      ["ADH target", "V2 receptors, principal cells, aquaporin-2"],
+      ["Aldosterone target", "Principal & intercalated cells, late DT/collecting duct"]
+    ]},
+  { id: "physio-endocrine-1", name: "Endocrine Physiology I: Pituitary & Thyroid", color: "accent3",
+    icon: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>',
+    cards: [
+      ["Which anterior pituitary cell type produces growth hormone, and what does GH do metabolically?", "Somatotropes; GH increases protein synthesis, increases fat utilization, and decreases carbohydrate utilization."],
+      ["Match the anterior pituitary cell types to what they secrete.", "Somatotropes → GH, Corticotropes → ACTH, Thyrotropes → TSH, Gonadotropes → FSH & LH, Lactotropes → Prolactin."],
+      ["Where is ADH produced, and where does it act?", "Produced mainly in the supraoptic nuclei of the hypothalamus (80–90%); acts on the kidney and vasculature."],
+      ["Where is oxytocin produced, and what does it do?", "Produced in the paraventricular nucleus; acts on breast myoepithelial cells and the uterus to cause milk let-down and uterine contraction."],
+      ["What happens to basal metabolic rate, protein metabolism, and thermogenesis with high T3/T4?", "All increase: BMR rises, protein synthesis and proteolysis both rise, and thermogenesis rises — along with increased gluconeogenesis, glycogenolysis, and glycolysis, and decreased serum cholesterol."],
+      ["Why does T3 act faster than T4 despite T4 being secreted in greater amounts?", "T3 has a higher affinity for the nuclear thyroid hormone receptor and a shorter latency (6–12 hours) than T4 (2–3 days), even though T4's activity half-life is much longer (~15 days)."],
+      ["What are the cardiovascular effects of thyroid hormone?", "Increased cardiac output and tissue blood flow, increased heart rate, and (at slight increases) increased heart contractile strength."],
+      ["What hormone from the hypothalamus stimulates prolactin secretion, and how is prolactin normally kept in check?", "Prolactin is unusual in being tonically inhibited — dopamine (as prolactin-inhibiting hormone) suppresses lactotrope secretion rather than a releasing hormone stimulating it."]
+    ],
+    matchCards: [
+      ["Somatotropes", "Growth hormone"],
+      ["Corticotropes", "ACTH"],
+      ["Thyrotropes", "TSH"],
+      ["Gonadotropes", "FSH & LH"],
+      ["Lactotropes", "Prolactin"],
+      ["ADH", "↑ Water reabsorption (kidney)"],
+      ["Oxytocin", "Milk let-down, uterine contraction"],
+      ["High T3/T4", "↑ BMR, ↑ thermogenesis"],
+      ["Prolactin-inhibiting hormone", "Dopamine"],
+      ["GH metabolic effect", "↑ Protein synthesis, ↑ fat use, ↓ carb use"]
+    ]},
+  { id: "physio-endocrine-2", name: "Endocrine Physiology II: Adrenal, PTH & Pancreas", color: "accent4",
+    icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>',
+    cards: [
+      ["What happens with high vs. low aldosterone?", "High aldosterone: hypokalemia, muscle weakness, slow HR/arrhythmias, cell alkalosis. Low aldosterone: hyperkalemia, increased muscle excitability early on, arrhythmias/V-fib, cell acidosis."],
+      ["What does cortisol do to carbohydrate metabolism?", "Increases gluconeogenesis (more enzymes converting amino acids to glucose, more plasma amino acids, more liver glycogen), moderately decreases glucose utilization, and raises blood glucose — its best-known metabolic effect."],
+      ["What does cortisol do to protein metabolism, and where is the exception?", "Decreases protein stores almost everywhere (decreased synthesis, increased catabolism, decreased amino acid transport) — except in the liver, where it increases protein synthesis and amino acid uptake."],
+      ["How does insulin get glucose into skeletal muscle and fat cells?", "Increases glucose uptake within seconds by increasing membrane permeability/GLUT transporter activity — but insulin does NOT increase glucose transport into the brain, which uses GLUT1 instead."],
+      ["How does insulin promote glucose storage in the liver?", "Inactivates liver phosphorylase (which normally splits glycogen to glucose), increases glucokinase (traps glucose in the cell), and increases glycogen synthase — up to 6% of liver mass can become glycogen."],
+      ["What does glucagon do, and where is it produced?", "Produced by α cells of the pancreatic islets, acts on the liver; increases glycogenolysis and gluconeogenesis — actions that directly oppose insulin, raising plasma glucose."],
+      ["What are the major actions of PTH?", "Increases plasma calcium, increases renal production of 1,25-dihydroxycholecalciferol (active vitamin D), and increases calcium/phosphate release from bone by activating osteocytes and osteoclast proliferation."]
+    ],
+    matchCards: [
+      ["High aldosterone", "Hypokalemia, muscle weakness"],
+      ["Low aldosterone", "Hyperkalemia, arrhythmia risk"],
+      ["Cortisol + carbs", "↑ Gluconeogenesis, ↑ blood glucose"],
+      ["Cortisol + protein (liver)", "↑ Synthesis (exception to rest of body)"],
+      ["Insulin + muscle/fat", "↑ Glucose uptake"],
+      ["Insulin + brain", "No effect — brain uses GLUT1"],
+      ["Glucagon source", "α cells, pancreatic islets"],
+      ["Glucagon action", "↑ Glycogenolysis & gluconeogenesis"],
+      ["PTH", "↑ Plasma calcium"],
+      ["PTH + bone", "Activates osteoclasts, releases Ca/phosphate"]
+    ]},
+  { id: "physio-endocrine-3", name: "Endocrine Physiology III: Reproductive Hormones", color: "accent",
+    icon: '<circle cx="10" cy="14" r="7"/><path d="M21 3l-6.75 6.75M21 3h-6M21 3v6"/>',
+    cards: [
+      ["What are testosterone's effects on primary/secondary sexual characteristics?", "Enlargement of penis/scrotum/testes, axillary/chest/pubic/facial hair, deepened voice, thicker skin with more sebaceous secretion, increased muscle and bone density, increased RBCs, and minor increased distal-tubule Na+ reabsorption."],
+      ["What does testosterone do to metabolism at puberty?", "Increases basal metabolic rate by 5–10%, largely from increased protein anabolism; the resulting higher metabolic rate also increases hematocrit."],
+      ["What controls testosterone production?", "GnRH from the hypothalamus (pulses every 1–3 hours) stimulates LH from the anterior pituitary, and LH stimulates testosterone production by the testes."],
+      ["What is the dual, cycle-dependent effect of estrogen on GnRH/LH/FSH?", "Estrogen suppresses GnRH/LH/FSH for most of the cycle, but switches to stimulating them preovulatory (the LH surge that triggers ovulation)."],
+      ["What is the dual effect of progesterone on GnRH/LH/FSH?", "Progesterone suppresses GnRH/LH/FSH, except preovulatory when it stimulates them, mirroring estrogen's dual pattern."],
+      ["What happens hormonally right before a new ovulatory cycle begins?", "Estrogen and progesterone from the corpus luteum fall, which relieves the suppression on GnRH/LH/FSH, allowing a new cycle to begin."],
+      ["What do estrogen and progesterone each do to breast tissue during pregnancy?", "Estrogen promotes breast size and duct growth (along with GH, prolactin, cortisol, and insulin); progesterone promotes development of breast lobules, alveoli, and secretory characteristics."],
+      ["What does progesterone do to the uterine lining?", "Prepares it for implantation."]
+    ],
+    matchCards: [
+      ["GnRH", "Stimulates LH & FSH release"],
+      ["LH (male)", "Stimulates testosterone production"],
+      ["Testosterone + puberty", "↑ BMR 5–10%"],
+      ["Estrogen (most of cycle)", "Suppresses GnRH/LH/FSH"],
+      ["Estrogen (preovulatory)", "Stimulates GnRH/LH/FSH (LH surge)"],
+      ["Progesterone", "Prepares uterine lining for implantation"],
+      ["Estrogen + breast", "Duct growth"],
+      ["Progesterone + breast", "Lobules, alveoli, secretory tissue"]
+    ]}
+];
 
 function findDeck(id) { return DEMO_DECKS.find(function (d) { return d.id === id; }); }
 function deckIdFromURL() { return new URLSearchParams(location.search).get("deck"); }
 
 // Real Class Tabs -> Exam Accordion structure, mirroring the main site's
-// tab/exam-section pattern. Physiology / Exam 4 is the first real
-// class+exam pairing; its deckIds fill in as real decks are authored.
+// tab/exam-section pattern. deckIds fill in as real decks are authored per
+// class/exam.
 var DEMO_CLASSES = [
+  { id: "anatomy", name: "Anatomy", exams: [
+    { id: "exam3", name: "Exam 3", deckIds: ["anatomy-endocrine-glands", "anatomy-peritoneal"] }
+  ]},
   { id: "physiology", name: "Physiology", exams: [
-    { id: "exam4", name: "Exam 4", deckIds: [] }
+    { id: "exam4", name: "Exam 4", deckIds: [
+      "physio-renal-1", "physio-renal-2",
+      "physio-endocrine-1", "physio-endocrine-2", "physio-endocrine-3"
+    ] }
   ]}
 ];
 
