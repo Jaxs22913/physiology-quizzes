@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - The Integumentary System (Set 1)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Integumentary System — Anatomy Exam 2</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#9c2b4e;
+    --oxblood-soft:#2e6a92;
+    --brass:#b8860b;
+    --teal:#1e3a5f;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">The Integumentary System</span></h1>
+    <p class="sub">Skin Layers &amp; Fascia &middot; Blood/Nerve Supply, Hair, Glands &amp; Nails</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the Integumentary System lecture, spanning the layers of the skin (epidermis, dermis, subcutaneous tissue, deep fascia), the skin's blood/nerve supply and sensory receptors, and its accessory structures (hair, glands, nails). Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Describe the integumentary system and the various cell types found in the skin.</span></li>
+      <li><span class="n">2</span><span>Describe and contrast the various components of the skin appendages (hair, glands, nails).</span></li>
+      <li><span class="n">3</span><span>Compare and contrast the sensory receptors of the skin and the skin's blood supply.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=integumentary-system" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Integumentary System lecture &middot; PAJ 5000 Anatomy &middot; for study use. (Set 1)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the integumentary system lecture (Set 1).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Integumentary Basics", "q": "What structures make up the integumentary system?", "choices": ["Skin, hair, nails, sweat glands, oil glands, mammary glands, and enamel of teeth", "Only skin and hair", "Skin and the skeletal system", "Only sweat glands and oil glands"], "answer": 0, "correct": "The integumentary system is composed of skin, hair, nails, sweat glands, oil glands, mammary glands, and enamel of teeth.", "why": "Limiting it to only skin and hair omits several described components (nails, glands, enamel); the skeletal system is an entirely separate organ system, not part of the integument; and sweat/oil glands alone omit skin, hair, nails, and the other listed components.", "src": "The Integumentary System - Shahsv.pptx, Slide 3"},
+{"topic": "Roles of the Skin", "q": "What are the five functions of the skin listed in the material?", "choices": ["Protection, containment, heat regulation, sensation, and synthesis/storage of vitamin D", "Only protection and sensation", "Digestion and absorption of nutrients", "Only heat regulation"], "answer": 0, "correct": "The skin's functions are protection (from environmental effects), containment (of tissues/organs, preventing dehydration), heat regulation (via sweat glands/blood vessels/fat), sensation (via nerve endings), and synthesis/storage of vitamin D.", "why": "Limiting the functions to only protection and sensation omits containment, heat regulation, and vitamin D synthesis; digestion/absorption of nutrients is a digestive system function, not a skin function; and heat regulation alone omits the other four described functions.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Skin Makeup", "q": "What are the two main layers of the skin, and what characterizes each?", "choices": ["Epidermis (superficial cellular layer, tough protective outer surface) and dermis (basal regenerative and pigmented connective tissue layer)", "Epidermis (deep connective tissue) and dermis (superficial cellular layer)", "Only one layer: the epidermis", "Subcutaneous tissue and deep fascia"], "answer": 0, "correct": "The skin consists of the epidermis, a superficial cellular layer creating a tough protective outer surface, and the dermis, a basal (deep) regenerative and pigmented connective tissue layer.", "why": "Reversing which layer is superficial versus deep contradicts the material's stated organization; the skin has two main layers, not just one; and subcutaneous tissue and deep fascia are layers beneath the skin itself, not the two main skin layers (epidermis and dermis).", "src": "The Integumentary System - Shahsv.pptx, Slide 6"},
+{"topic": "Epidermis", "q": "What is the epidermis composed of, and is it vascular?", "choices": ["A keratinized stratified epithelium with a tough outer surface of keratin; avascular, nourished by vessels in the underlying dermis", "A single layer of connective tissue; highly vascular", "A keratinized simple (single-layer) epithelium; highly vascular", "Smooth muscle tissue; avascular"], "answer": 0, "correct": "The epidermis is a keratinized stratified (layered) epithelium with a tough outer surface composed of keratin; it is avascular and nourished by vessels in the underlying dermis.", "why": "It is not a connective tissue layer, and it is avascular (not highly vascular), unlike that option's claim; it is stratified (multi-layered), not simple (single-layered); and it is epithelial tissue, not smooth muscle tissue.", "src": "The Integumentary System - Shahsv.pptx, Slide 8"},
+{"topic": "Epidermis", "q": "How often is the epidermis renewed, per the material?", "choices": ["Every 25-45 days", "Every 24 hours", "Every 5 years", "Never — epidermal cells do not turn over"], "answer": 0, "correct": "The outer layer of the epidermis is continuously shed or rubbed away, with replacement of new cells from the basal layer, renewing the entire epidermis of the body every 25-45 days.", "why": "Every 24 hours is far too rapid a turnover rate compared to the stated 25-45 days; every 5 years is far too slow; and the epidermis does turn over continuously, so claiming it never does is incorrect.", "src": "The Integumentary System - Shahsv.pptx, Slide 8"},
+{"topic": "Epidermal Layers", "q": "What are the five layers of the epidermis, from top (superficial) to bottom (deep)?", "choices": ["Stratum corneum, stratum lucidum, stratum granulosum, stratum spinosum, stratum germinativum/basale", "Stratum basale, stratum spinosum, stratum granulosum, stratum lucidum, stratum corneum (reversed order is correct top to bottom)", "Only three layers exist: corneum, spinosum, and basale", "Stratum corneum, stratum basale, stratum granulosum, stratum lucidum, stratum spinosum"], "answer": 0, "correct": "The five layers of the epidermis, from top (superficial) to bottom (deep), are the stratum corneum, stratum lucidum, stratum granulosum, stratum spinosum, and stratum germinativum/basale.", "why": "Reversing the order (basale to corneum) presents the layers bottom-to-top instead of the requested top-to-bottom sequence; there are five layers, not three; and the third option scrambles the correct order, misplacing basale and granulosum/lucidum/spinosum out of sequence.", "src": "The Integumentary System - Shahsv.pptx, Slide 10"},
+{"topic": "Stratum Germinativum/Basale", "q": "What is the stratum germinativum/basale, and what cell types does it contain?", "choices": ["A single layer of stem cells firmly attached to the basal lamina, composed of basal cells and melanocytes (ratio 4:1 to 20:1), refurbishing keratinocytes", "A layer of dead, flattened cells with no nucleus", "The most superficial epidermal layer, containing only keratin", "A layer found only in thick skin of the palms and soles"], "answer": 0, "correct": "The stratum germinativum/basale is a single layer of stem cells firmly attached to the basal lamina, separating the dermis from the epidermis; it is composed of basal cells and melanocytes in a ratio of 4:1 to 20:1, and it refurbishes keratinocytes (also containing Merkel cells).", "why": "Dead, flattened, nucleus-free cells describes the stratum corneum, not the basale; it is the deepest (not most superficial) epidermal layer; and the stratum lucidum (not the basale) is the layer found only in thick skin of the palms and soles.", "src": "The Integumentary System - Shahsv.pptx, Slide 11"},
+{"topic": "Stratum Germinativum/Basale", "q": "What do Merkel cells in the stratum basale do?", "choices": ["Stimulate sensory nerve endings", "Initiate the immune response", "Produce keratohyalin granules", "Produce melanin pigment"], "answer": 0, "correct": "Merkel cells, found in the stratum basale, stimulate sensory nerve endings.", "why": "Initiating the immune response is a Langerhans cell function, found in the stratum spinosum, not the basale's Merkel cells; producing keratohyalin granules occurs in the stratum granulosum, a different layer and cell activity; and producing melanin pigment is a melanocyte function (also present in the basale, but that's a distinct cell type from Merkel cells).", "src": "The Integumentary System - Shahsv.pptx, Slide 11"},
+{"topic": "Stratum Spinosum", "q": "What is the stratum spinosum, and what cell type initiates the immune response there?", "choices": ["Located above the stratum basale, several cells thick, containing mostly keratinocytes connected by tonofibrils; Langerhans cells (about 6%) initiate the immune response", "Located above the stratum granulosum, containing no keratinocytes; melanocytes initiate the immune response", "The most superficial epidermal layer; Merkel cells initiate the immune response", "A layer found only in thick skin; basal cells initiate the immune response"], "answer": 0, "correct": "The stratum spinosum is located above the stratum basale, several cells thick, containing mostly keratinocytes connected to each other by tonofibrils, with some melanocytes and Langerhans cells (about 6%) that initiate the immune response.", "why": "It is located above the basale (below granulosum), not above the granulosum, and it does contain keratinocytes as its majority cell type; it is a mid-depth layer, not the most superficial one, and Langerhans (not Merkel) cells initiate the immune response there; and the stratum spinosum is a general epidermal layer, not confined to thick skin, and Langerhans (not basal) cells handle immune initiation.", "src": "The Integumentary System - Shahsv.pptx, Slide 13"},
+{"topic": "Stratum Granulosum", "q": "What is produced in the stratum granulosum, and what effect does keratohyalin have?", "choices": ["Keratohyalin and keratin are produced; keratohyalin coats cells with a lipid-rich substance making the layer water-resistant and causing the top layer of cells to die", "Only melanin is produced; no effect on water resistance", "Collagen and elastin are produced; increases layer flexibility", "Nothing is produced in this layer; it is entirely metabolically inactive"], "answer": 0, "correct": "The stratum granulosum, located above the stratum spinosum, is where keratohyalin and keratin are produced; keratohyalin granules coat cells with a lipid-rich substance, making the layer water-resistant and causing the top layer of cells to die (this layer also forms calluses).", "why": "Melanin production occurs in melanocytes throughout the deeper layers, not specifically defining the stratum granulosum's key product; collagen and elastin are dermal (not epidermal) fiber proteins, unrelated to this layer; and the stratum granulosum is metabolically active, producing keratohyalin and keratin, not inactive.", "src": "The Integumentary System - Shahsv.pptx, Slide 16"},
+{"topic": "Stratum Lucidum", "q": "Where is the stratum lucidum found, and what are its cells like?", "choices": ["Found in thick skin of the palms and soles, covering the stratum granulosum; cells have no nucleus, are flattened and densely packed, filled with keratin filaments oriented parallel to the surface", "Found throughout all skin, including thin skin; cells retain a nucleus", "Found only in the dermis; cells are loosely packed", "Found only in hair follicles; cells contain melanin"], "answer": 0, "correct": "The stratum lucidum is found in thick skin of the palms and soles, covering the stratum granulosum; its cells have no nucleus, are flattened and densely packed, and are filled with keratin filaments oriented parallel to the surface.", "why": "It is found only in thick skin (palms/soles), not throughout all skin types; its cells specifically lack a nucleus, unlike that option's claim; it is an epidermal layer, not part of the dermis or hair follicles, and doesn't contain melanin as its defining feature.", "src": "The Integumentary System - Shahsv.pptx, Slide 18"},
+{"topic": "Stratum Corneum", "q": "What characterizes the stratum corneum, and how long does it take keratinocytes to travel there and be shed?", "choices": ["Most superficial layer, 15-30 layers of flattened keratinized cells, water-resistant but not waterproof; keratinocytes take 15-30 days to arrive and are shed in about 2 weeks", "The deepest epidermal layer, single cell thick, fully waterproof", "A layer found only over the anterior eye surface", "A layer that never sheds cells throughout life"], "answer": 0, "correct": "The stratum corneum is the most superficial layer of the skin, consisting of 15-30 layers of flattened, keratinized cells; it is relatively dry, water-resistant but not waterproof (allowing perspiration), with keratinocytes taking 15-30 days to travel from the basal layer to this layer and being shed in about 2 weeks.", "why": "It is the most superficial (not deepest) layer, and it is far thicker than a single cell layer; it is present over most of the body except specifically the anterior eye surface, the opposite of that option's claim; and it does continuously shed cells (in about 2 weeks), not never shedding.", "src": "The Integumentary System - Shahsv.pptx, Slide 20"},
+{"topic": "Epidermal Ridges", "q": "What forms epidermal ridges, and what is their function?", "choices": ["Formed by the stratum basale, with dermal papillae extending into the epidermis; increases contact area between dermis and epidermis, forms skin contours (including fingerprints), and ensures a secure grip", "Formed by the stratum corneum; decreases contact area between layers", "Formed by melanocytes; produce skin color patterns only", "Change significantly throughout life as skin ages"], "answer": 0, "correct": "Epidermal ridges are formed by the stratum basale, with dermal papillae extending into the epidermis from the dermis; they increase the contact area between the dermis and epidermis, form the contours of the skin (including fingerprints), do not change throughout life, and ensure a secure grip.", "why": "The stratum corneum is the outer dead cell layer, not the layer forming ridges via dermal papillae interaction; epidermal ridges increase (not decrease) the contact area between layers; and melanocytes produce pigment, not the ridge pattern itself, and the material explicitly states ridges do not change throughout life.", "src": "The Integumentary System - Shahsv.pptx, Slide 21"},
+{"topic": "Skin Color", "q": "What factors mainly determine skin color, per the material?", "choices": ["Dermal blood supply, thickness of the stratum corneum, and variable quantity of carotene and melanin", "Only the number of sweat glands present", "Only the thickness of the dermis", "Only the presence of Langerhans cells"], "answer": 0, "correct": "Skin color is mainly due to dermal blood supply, thickness of the stratum corneum, and the variable quantity of carotene and melanin (genetically controlled).", "why": "The number of sweat glands is unrelated to the pigmentation factors described; dermis thickness alone is not the primary factor cited (stratum corneum thickness and pigment quantity are the described factors instead); and Langerhans cells serve an immune function, unrelated to skin color determination.", "src": "The Integumentary System - Shahsv.pptx, Slide 24"},
+{"topic": "Carotene and Melanin", "q": "What is the difference between carotene and melanin?", "choices": ["Carotene is an orange-yellow pigment converted to vitamin A, found in keratinocytes; melanin is produced/stored in melanocytes, forms in melanosomes, and prevents UV skin damage", "Carotene is produced in melanocytes; melanin is found in keratinocytes and converts to vitamin A", "Both pigments are identical in function and location", "Neither pigment has any protective function"], "answer": 0, "correct": "Carotene is an orange-yellow pigment that converts to vitamin A and is found in keratinocytes, while melanin is produced and stored in melanocytes (forming in melanosomes, transferred into keratinocytes, and eventually destroyed by lysosomes), preventing skin damage from UV light.", "why": "Reversing the cell locations (carotene in melanocytes, melanin in keratinocytes) contradicts the material's stated pigment sources; the two pigments have distinct sources and functions, not identical ones; and melanin specifically has a described UV-protective function, so claiming neither has protective function is incorrect.", "src": "The Integumentary System - Shahsv.pptx, Slide 25"},
+{"topic": "The Dermis", "q": "What is the dermis formed by, and what determines the tension (cleavage) lines and wrinkles in the skin?", "choices": ["A dense layer of interlacing collagen and elastic fibers; the direction of the collagen fibers determines tension lines and wrinkles", "A single layer of keratinized epithelial cells; melanin content determines tension lines", "Loose areolar tissue only, with no fiber component; blood vessel density determines wrinkles", "Adipose tissue exclusively; nerve density determines tension lines"], "answer": 0, "correct": "The dermis is formed by a dense layer of interlacing collagen and elastic fibers, which provide skin tone and account for the skin's strength and toughness; the direction of the collagen fibers determines the tension lines (cleavage lines) and wrinkles in the skin.", "why": "Keratinized epithelial cells describe the epidermis, not the dermis, and melanin content is unrelated to tension line formation; the dermis does have a significant fiber component (collagen/elastic), not being fiber-free loose tissue; and adipose tissue is more characteristic of the subcutaneous layer, not the fiber-rich dermis, and nerve density doesn't determine tension lines.", "src": "The Integumentary System - Shahsv.pptx, Slide 27"},
+{"topic": "The Dermis", "q": "What happens when the arrector pili muscles in the dermis contract?", "choices": ["Erects the hair (causing goose bumps) and compresses sebaceous glands, helping them secrete oily product onto the skin", "Causes hair to fall out permanently", "Produces melanin pigment", "Increases the thickness of the stratum corneum"], "answer": 0, "correct": "Contraction of the arrector pili muscles erects the hair, causing goose bumps, and compresses the associated sebaceous glands, helping them secrete oily product onto the skin.", "why": "Contraction of the arrector pili does not cause permanent hair loss, which is an unrelated process; producing melanin is a melanocyte function, not an arrector pili muscle effect; and stratum corneum thickness is an epidermal characteristic unrelated to arrector pili contraction.", "src": "The Integumentary System - Shahsv.pptx, Slide 27"},
+{"topic": "Dermis Organization", "q": "What is the difference between the papillary layer and reticular layer of the dermis?", "choices": ["Papillary layer is loose connective tissue containing capillaries and axons; reticular layer is dense, irregular connective tissue surrounding blood vessels/hair follicles/nerves/glands with interwoven collagen bundles extending into the subcutaneous layer", "Papillary layer is dense irregular connective tissue; reticular layer is loose connective tissue", "Both layers are identical in composition and function", "The dermis has only one layer, with no papillary/reticular distinction"], "answer": 0, "correct": "The papillary layer is loose connective tissue containing capillaries and axons, while the reticular layer is dense, irregular connective tissue surrounding blood vessels, hair follicles, nerves, and glands, with interwoven collagen fiber bundles extending deep into the subcutaneous layer.", "why": "Reversing the tissue types (papillary dense, reticular loose) contradicts the material's stated organization; the two layers have distinct compositions and functions, not identical ones; and the dermis does have this two-layer papillary/reticular organization, not a single undifferentiated layer.", "src": "The Integumentary System - Shahsv.pptx, Slide 28"},
+{"topic": "Subcutaneous Tissue", "q": "What is the subcutaneous tissue (superficial fascia) composed of, and what does it contain?", "choices": ["Loose connective tissue and fat, located between the dermis and deep fascia; contains the deepest parts of sweat glands, blood/lymphatic vessels, and cutaneous nerves, providing most of the body's fat storage", "Dense, organized connective tissue without fat", "Only epithelial cells, with no connective tissue component", "Keratinized cells identical to the epidermis"], "answer": 0, "correct": "The subcutaneous tissue (superficial fascia) is composed of loose connective tissue and fat, located between the dermis and underlying deep fascia; it contains the deepest parts of the sweat glands, blood and lymphatic vessels, and cutaneous nerves, and provides most of the body's fat storage (with thickness varying by nutritional state).", "why": "Dense, organized connective tissue without fat describes the deep fascia, a different, deeper layer from the subcutaneous tissue; the subcutaneous tissue is a connective tissue layer, not composed of epithelial cells; and it is distinct from the epidermis, not composed of keratinized cells.", "src": "The Integumentary System - Shahsv.pptx, Slide 30"},
+{"topic": "Skin Ligaments", "q": "What are skin ligaments, and what do they determine about skin mobility?", "choices": ["Numerous small fibrous bands extending through the subcutaneous tissue, attaching the dermis to the deep fascia; skin mobility over deep structures depends on their length and density", "Muscular bands that produce voluntary skin movement", "Bands found only in the epidermis, unrelated to mobility", "Structures identical to the arrector pili muscles"], "answer": 0, "correct": "Skin ligaments consist of numerous small fibrous bands that extend through the subcutaneous tissue and attach the deep surface of the dermis to the underlying deep fascia; the mobility of the skin over deep structures depends on the length and density of these ligaments.", "why": "They are fibrous connective tissue bands, not muscular structures producing voluntary movement; they are found in the subcutaneous tissue, not confined to the epidermis, and are directly related to (not unrelated to) skin mobility; and they are a distinct structure from the arrector pili muscles, which specifically erect hair rather than anchor the dermis to deep fascia.", "src": "The Integumentary System - Shahsv.pptx, Slide 31"},
+{"topic": "Deep Fascia", "q": "What is deep fascia, and what are its extensions called when they invest deeper structures versus divide muscles into compartments?", "choices": ["A dense, organized connective tissue layer without fat, enveloping most of the body deep to skin/subcutaneous tissue; investing fascia invests deeper structures, and intermuscular septa divide muscles into compartments", "A loose, fat-containing layer identical to subcutaneous tissue; has no distinct extensions", "A layer found only in the limbs, absent from the trunk", "The outermost layer of the epidermis"], "answer": 0, "correct": "Deep fascia is a dense, organized connective tissue layer without fat, enveloping most of the body deep to the skin and subcutaneous tissue; its extensions include investing fascia (investing deeper structures like individual muscles and neurovascular bundles) and intermuscular septa (dividing muscles into groups or compartments, important for compartment syndrome).", "why": "It is a dense, fat-free layer, distinctly different in composition from the loose, fat-containing subcutaneous tissue; it does have named extensions (investing fascia, intermuscular septa), not none; and it envelops most of the body generally, not confined only to the limbs, and it is a connective tissue layer, not part of the epidermis.", "src": "The Integumentary System - Shahsv.pptx, Slide 32"},
+{"topic": "Deep Fascia", "q": "What are retinacula and bursae, as structures formed by deep fascia?", "choices": ["Retinacula hold tendons in place during joint movement; bursae prevent friction and enable structures to move freely over one another", "Retinacula prevent friction between structures; bursae hold tendons in place", "Both structures are identical in function", "Neither structure is related to deep fascia"], "answer": 0, "correct": "Deep fascia also forms retinacula, which hold tendons in place during movement of joints, and bursae, which prevent friction and enable structures to move freely over one another.", "why": "Reversing the functions (retinacula preventing friction, bursae holding tendons) contradicts the material's stated roles; the two structures serve distinct functions, not identical ones; and both are explicitly described as formed by deep fascia, not unrelated to it.", "src": "The Integumentary System - Shahsv.pptx, Slide 33"},
+{"topic": "Fascial Planes", "q": "What are fascial planes, and why are they important surgically?", "choices": ["Potential spaces between adjacent fascias or fascia-lined structures, important in surgical procedures to separate structures and create access to deeper structures", "Actual (not potential) fluid-filled spaces found only in the dermis", "Structures unrelated to surgical access", "The same as bursae"], "answer": 0, "correct": "Fascial planes are potential spaces between adjacent fascias or fascia-lined structures; these planes are important in surgical procedures to separate structures, creating spaces that allow access to deeper structures.", "why": "They are potential (not actual, pre-existing fluid-filled) spaces, and they are not confined to the dermis, since fascial planes exist at various deeper levels; they are explicitly described as important for surgical access, not unrelated to it; and they are distinct from bursae, which specifically function to prevent friction between moving structures.", "src": "The Integumentary System - Shahsv.pptx, Slide 34"},
+{"topic": "Roles of the Skin", "q": "How does the skin provide containment, per the material?", "choices": ["Contains the tissues, organs, and vital substances of the body, preventing dehydration", "Only by producing sweat", "Only through the arrector pili muscles", "By absorbing external fluids into the body"], "answer": 0, "correct": "The skin's containment function involves containing the tissues, organs, and vital substances of the body, preventing dehydration.", "why": "Sweat production is part of the heat regulation function, not the containment function specifically; the arrector pili muscles produce goose bumps, unrelated to containment; and the skin's containment role is about preventing loss of internal substances, not absorbing external fluids inward.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Roles of the Skin", "q": "How does the skin achieve heat regulation, per the material?", "choices": ["Through sweat glands, blood vessels, and fat deposits", "Only through the stratum corneum's thickness", "Only through melanin production", "Through the nail bed exclusively"], "answer": 0, "correct": "The skin achieves heat regulation through sweat glands, blood vessels, and fat deposits.", "why": "Stratum corneum thickness relates more to skin color/protection, not the primary mechanism of heat regulation described; melanin production relates to UV protection and skin color, not thermoregulation; and the nail bed is an accessory structure unrelated to whole-body heat regulation.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Roles of the Skin", "q": "How does the skin provide sensation, and what example is given?", "choices": ["By way of superficial nerves and their sensory endings, e.g. pain", "By way of the nail bed only", "By way of melanocytes detecting light", "By way of the arrector pili muscles"], "answer": 0, "correct": "The skin provides sensation by way of superficial nerves and their sensory endings, with pain given as an example.", "why": "The nail bed is a separate accessory structure, not the general mechanism of cutaneous sensation; melanocytes produce pigment and do not detect light in a sensory capacity; and the arrector pili muscles produce goose bumps, an effector response rather than a sensory mechanism.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Roles of the Skin", "q": "What does the skin synthesize and store, per its listed functions?", "choices": ["Vitamin D", "Vitamin C", "Insulin", "Melatonin"], "answer": 0, "correct": "The skin synthesizes and stores vitamin D.", "why": "Vitamin C is obtained through diet, not synthesized by the skin; insulin is produced by the pancreas, an entirely different organ system; and melatonin is produced by the pineal gland in the brain, not the skin.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Melanin", "q": "What happens to melanin after it is transferred into keratinocytes?", "choices": ["It is eventually destroyed by lysosomes", "It permanently remains unchanged for the life of the cell", "It converts into keratin", "It is transported back into melanocytes"], "answer": 0, "correct": "Melanin, after being produced in melanosomes and transferred into keratinocytes, is eventually destroyed by lysosomes.", "why": "It does not remain permanently unchanged, since the material describes its eventual destruction; melanin does not convert into keratin, a distinct fibrous protein produced by a different process; and melanin's described pathway moves from melanocyte to keratinocyte, not back into the melanocyte.", "src": "The Integumentary System - Shahsv.pptx, Slide 25"},
+{"topic": "Stratum Spinosum", "q": "What structures connect keratinocytes to each other within the stratum spinosum?", "choices": ["Tonofibrils", "Keratohyalin granules", "Melanosomes", "Hemidesmosomes to the basal lamina only"], "answer": 0, "correct": "Keratinocytes within the stratum spinosum are connected to other keratinocytes by tonofibrils.", "why": "Keratohyalin granules are produced in the stratum granulosum, a different layer, and function in water-resistance rather than cell-to-cell connection; melanosomes are melanin-containing structures within melanocytes, not the connecting structures between keratinocytes; and attachment to the basal lamina is a stratum basale feature, not the stratum spinosum's tonofibril connections.", "src": "The Integumentary System - Shahsv.pptx, Slide 13"},
+{"topic": "Roles of the Skin", "q": "How does the skin provide protection, per the material?", "choices": ["Protects the body from environmental effects, such as abrasions and harmful substances", "Only by regulating body temperature", "Only by producing vitamin D", "Only through sensory nerve endings"], "answer": 0, "correct": "The skin's protection function guards the body from environmental effects, such as abrasions and harmful substances.", "why": "Regulating body temperature is a separate, distinct function (heat regulation), not the protection function itself; producing vitamin D is the synthesis/storage function, a different role; and sensory nerve endings serve the sensation function, distinct from the physical/chemical protection function.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!--
+  Physiology Exam 2 - Physiology of Vision (Set 1)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology of Vision — Physiology Exam 2</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#7a2048;
+    --oxblood-soft:#2e6a92;
+    --brass:#0e7c86;
+    --teal:#4a2f6b;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Physiology Exam<span class="sys">Physiology of Vision</span></h1>
+    <p class="sub">Optics, Accommodation &amp; Intraocular Fluid &middot; Photoreceptors &amp; Phototransduction &middot; Retinal Processing &amp; the Visual Pathway</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers Unit 10: Physiology of Vision, spanning the optics of the eye (refraction, accommodation, diopters), aqueous/vitreous humor and intraocular pressure, rod/cone photoreceptor physiology and phototransduction, retinal signal processing (lateral inhibition, ganglion cell types), the visual pathway to the cortex, and autonomic/motor control of the eye. Every item is drawn only from that lecture and is built around its instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Describe the special sense of vision, and compare and contrast the functions of each part of the eye.</span></li>
+      <li><span class="n">2</span><span>Compare and contrast the functions of each photoreceptor of the eye, including phototransduction and color vision.</span></li>
+      <li><span class="n">3</span><span>Describe the function of the optic tract pathway, including retinal processing, eye movement control, and binocular vision.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=physiology-of-vision" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Physiology of Vision lecture &middot; PAJ 5000 Physiology &middot; for study use. (Set 1)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the physiology of vision lecture (Set 1).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Refractive Index", "q": "How is the refractive index of a substance defined?", "choices": ["The ratio of the substance's density to that of air", "The ratio of the speed of light in air to the speed of light in the substance", "The thickness of the substance divided by its width", "The color of light that passes through the substance"], "answer": 1, "correct": "The refractive index is the ratio of the speed of light in air to its speed in the substance; for example, if light travels at 200,000 km/sec in a substance (versus 300,000 km/sec in air), the refractive index is 300,000/200,000 = 1.5.", "src": "Physiology of Vision.pptx, Slide 3"},
+{"topic": "Convex vs Concave Lenses", "q": "What is the difference between how convex and concave lenses affect light rays?", "choices": ["A convex lens focuses light rays; a concave lens diverges light rays", "A convex lens diverges light rays; a concave lens focuses them", "Both lens types have identical effects on light", "Neither lens type affects the path of light rays"], "answer": 0, "correct": "A convex lens focuses light rays to a point, while a concave lens diverges light rays outward.", "src": "Physiology of Vision.pptx, Slide 4"},
+{"topic": "Refractive Power of the Eye", "q": "What fraction of the eye's total refractive power comes from the anterior surface of the cornea, and why does vision blur underwater?", "choices": ["1/3, and blurring underwater is unrelated to the cornea", "About 2/3, and this refraction is virtually eliminated underwater because water has a refractive index close to that of the cornea", "All of the refractive power, with the lens contributing nothing", "The cornea contributes no refractive power at all"], "answer": 1, "correct": "About two-thirds of the eye's refractive power comes from the anterior surface of the cornea; underwater, this refraction is virtually eliminated because water's refractive index is close to that of the cornea, producing a blurry image.", "src": "Physiology of Vision.pptx, Slide 9"},
+{"topic": "Diopter and Total Eye Refractive Power", "q": "What is a diopter, and what is the total refractive power of a normal eye?", "choices": ["A diopter measures visual acuity; total eye power is 20/20", "A diopter is the power of a lens that focuses parallel light rays at 1 meter; the eye's total refractive power is about 59 diopters (since the retina sits 17mm behind the refractive center, 1000/17 ≈ 59)", "A diopter measures intraocular pressure; total eye power is 15 mm Hg", "A diopter has no defined unit"], "answer": 1, "correct": "A diopter is a measure of lens power — 1 diopter is the ability to focus parallel light rays at a distance of 1 meter; since the retina sits about 17 mm behind the eye's refractive center, the eye's total refractive power is about 59 diopters (1000/17).", "src": "Physiology of Vision.pptx, Slide 9"},
+{"topic": "Accommodation Mechanism", "q": "What happens to the lens during accommodation, and what nervous system controls this process?", "choices": ["Contraction of the ciliary muscle relaxes the suspensory ligaments, allowing the lens to become thicker (increasing refractive power from 20 to as much as 34 diopters); controlled by the parasympathetic nervous system", "The lens becomes thinner during accommodation, controlled by the sympathetic nervous system", "Accommodation involves no change in lens shape at all", "Accommodation is controlled entirely by the somatic motor system"], "answer": 0, "correct": "During accommodation, contraction of the ciliary muscle (attached to the suspensory/zonule ligaments) relaxes tension on the lens, allowing it to become thicker and more spherical, increasing its refractive power from about 20 to as much as 34 diopters; this process is under parasympathetic control.", "src": "Physiology of Vision.pptx, Slide 10"},
+{"topic": "Presbyopia", "q": "What is presbyopia, and what causes it?", "choices": ["Nearsightedness caused by an elongated eyeball", "The age-related inability to accommodate, caused by denaturation of lens proteins that makes the lens less elastic", "A bacterial infection of the cornea", "A disorder of the retina causing color blindness"], "answer": 1, "correct": "Presbyopia is the inability to accommodate, caused by denaturation of proteins within the lens that makes it progressively less elastic with age — accommodation power decreases from about 14 diopters in childhood to 2 diopters by age 50 and to essentially 0 by age 70.", "src": "Physiology of Vision.pptx, Slide 10"},
+{"topic": "Visual Acuity Notation", "q": "What does 20/40 vision mean?", "choices": ["The person can see at 40 feet what a normal person sees at 20 feet", "What a normal person can see at 40 feet, this person must be at 20 feet to see — indicating below-normal acuity", "The person has better than normal vision", "This notation only applies to color blindness testing"], "answer": 1, "correct": "20/40 vision means that what a normal person can see clearly at 40 feet, this person must be at 20 feet to see — indicating worse than normal (20/20) visual acuity.", "src": "Physiology of Vision.pptx, Slide 11"},
+{"topic": "Aqueous Humor Production and Flow", "q": "Where is aqueous humor produced, and what is its general flow pathway out of the eye?", "choices": ["Produced by the retina; flows directly into the vitreous chamber", "Produced by the ciliary body; flows through the pupil into the anterior chamber, through the trabecular meshwork into the canal of Schlemm, then into aqueous and extraocular veins", "Produced by the cornea; has no defined outflow pathway", "Produced by the lens; flows into the optic nerve"], "answer": 1, "correct": "Aqueous humor is produced by the ciliary body (at a rate of about 2-3 microliters/min) and flows through the pupil into the anterior chamber, through the trabecular meshwork, into the canal of Schlemm, and then into aqueous veins and extraocular veins.", "src": "Physiology of Vision.pptx, Slide 12"},
+{"topic": "Intraocular Pressure", "q": "What is normal intraocular pressure, and what determines its level?", "choices": ["Normally 15 mm Hg, determined by resistance to aqueous humor outflow through the canal of Schlemm", "Normally 120 mm Hg, determined by arterial blood pressure", "Normally 0 mm Hg, with no clinical significance", "Determined entirely by vitreous humor production"], "answer": 0, "correct": "Normal intraocular pressure is about 15 mm Hg (range 2-20 mm Hg), determined by the resistance to outflow of aqueous humor at the canal of Schlemm; chronically elevated pressure is a risk factor for glaucoma and can damage the optic nerve.", "src": "Physiology of Vision.pptx, Slide 14"},
+{"topic": "Retinal Photoreceptor Counts", "q": "Approximately how many rods, cones, and ganglion cells does each human retina contain?", "choices": ["100 million rods, 3 million cones, and 1.6 million ganglion cells", "3 million rods, 100 million cones, and 1.6 million ganglion cells", "Equal numbers (1 million each) of rods, cones, and ganglion cells", "10,000 rods, 10,000 cones, and 10,000 ganglion cells"], "answer": 0, "correct": "Each retina contains approximately 100 million rods, 3 million cones, and 1.6 million ganglion cells.", "src": "Physiology of Vision.pptx, Slide 15"},
+{"topic": "Fovea Centralis", "q": "What is special about the central fovea (fovea centralis) that gives it the highest visual acuity?", "choices": ["It contains only rods, with a very high rod-to-ganglion cell ratio", "It contains only cones, with a 1:1 ratio of cones to bipolar cells, and neurons/vessels are displaced to the sides so light strikes cones with minimal obstruction", "It has no photoreceptors at all", "It has the lowest density of any retinal cell type"], "answer": 1, "correct": "The central fovea contains only cones (no rods), with a 1:1 ratio of cones to bipolar cells; neuronal cells and blood vessels are displaced to the sides so light can strike the cones with minimal obstruction — together explaining why the fovea has the greatest visual acuity in the retina.", "src": "Physiology of Vision.pptx, Slide 16"},
+{"topic": "Rods vs Cones — Sensitivity", "q": "How do rods and cones differ in light sensitivity and photopigment content?", "choices": ["Rods have high sensitivity (specialized for night/scotopic vision) with more photopigment and high amplification; cones have lower sensitivity (specialized for day/photopic vision) with less photopigment", "Cones are more sensitive than rods in dim light", "Rods and cones have identical sensitivity and photopigment content", "Rods saturate only in very intense light, unlike cones"], "answer": 0, "correct": "Rods have high sensitivity (specialized for night/scotopic vision), contain more photopigment, and show high amplification capable of single-photon detection, but saturate in daylight; cones have lower sensitivity (specialized for day/photopic vision), less photopigment, and saturate only with intense light.", "src": "Physiology of Vision.pptx, Slide 18"},
+{"topic": "Rods vs Cones — Color and Acuity", "q": "Which photoreceptor type provides color vision, and which provides higher visual acuity?", "choices": ["Rods provide color vision; cones provide low acuity", "Cones are trichromatic (three pigment types) and provide color vision with high acuity due to less convergent retinal pathways; rods are achromatic (one pigment, rhodopsin) with lower acuity due to highly convergent pathways", "Both rods and cones are trichromatic", "Rods provide higher acuity than cones"], "answer": 1, "correct": "Cones are trichromatic (three types, each with a different photopsin pigment) and provide color vision along with high acuity due to less convergent retinal pathways (concentrated in the fovea); rods are achromatic (a single pigment, rhodopsin) with lower acuity due to highly convergent retinal pathways, and are more common in the periphery.", "src": "Physiology of Vision.pptx, Slide 18"},
+{"topic": "Pigment Layer of the Retina", "q": "What is the function of the melanin-containing pigment layer of the retina, and what happens in albinism?", "choices": ["It has no functional role; albinism has no visual consequences", "It prevents light reflection/scattering within the eye, maintaining contrast; albinos lack this pigment layer and have poor visual acuity due to light scattering, rarely correctable better than 20/200", "It produces rhodopsin directly, with no role in preventing light scatter", "It only matters for color perception, not acuity"], "answer": 1, "correct": "The pigment layer of the retina contains melanin, which prevents light reflection/scattering within the globe of the eye and maintains contrast; albinos lack this pigment layer, causing diffuse light scattering and poor visual acuity, rarely correctable to better than 20/200 even with lenses.", "src": "Physiology of Vision.pptx, Slide 19"},
+{"topic": "Visual Phototransduction", "q": "What happens when a photon of light is absorbed by the retinal molecule within rhodopsin?", "choices": ["Retinal changes configuration from 11-cis to all-trans, breaks away from rhodopsin (activating it), which then triggers a second-messenger cascade closing Na+/Ca2+ channels and causing hyperpolarization", "Retinal remains unchanged, and rhodopsin is not activated", "The photon directly opens Na+ channels without any second messenger", "Absorption of light causes depolarization, not hyperpolarization"], "answer": 0, "correct": "Absorption of a photon by the 11-cis retinal within rhodopsin causes it to change configuration to all-trans retinal, which breaks away from and activates rhodopsin (forming Metarhodopsin II); this triggers a second-messenger cascade leading to closure of Na+/Ca2+ channels and hyperpolarization of the photoreceptor.", "src": "Physiology of Vision.pptx, Slide 20"},
+{"topic": "Cone Photopigments", "q": "What is the pigment protein found in cones called, and how many types exist?", "choices": ["Rhodopsin; only one type exists in cones", "Photopsin; three types exist (sensitive to red, green, and blue wavelengths)", "Melanopsin; four types exist", "Scotopsin; two types exist"], "answer": 1, "correct": "The pigment protein in cones is called photopsin, a close analog of rhodopsin; there are three types of photopsin (types I, II, and III), each sensitive to a different part of the visible spectrum (red, green, and blue respectively), giving trichromatic color vision.", "src": "Physiology of Vision.pptx, Slide 20"},
+{"topic": "Rhodopsin Composition", "q": "What two components make up rhodopsin, and what configuration of retinal is required to bind scotopsin?", "choices": ["Scotopsin (a protein) and retinal (a pigment); only the cis configuration of retinal can bind scotopsin to form rhodopsin", "Photopsin and melanin; only the trans configuration can bind", "Only retinal, with no protein component", "Melanopsin and opsin, in the trans configuration"], "answer": 0, "correct": "Rhodopsin (visual purple) is a combination of scotopsin (a protein) and retinal (a pigment); only the cis configuration of retinal can bind with scotopsin to form rhodopsin — light exposure converts it to the trans configuration, which cannot bind scotopsin, causing the retinal to split away.", "src": "Physiology of Vision.pptx, Slide 21"},
+{"topic": "Vitamin A and Night Blindness", "q": "Why does vitamin A deficiency cause night blindness (nyctalopia)?", "choices": ["Vitamin A has no relationship to retinal photopigments", "Vitamin A1 (all-trans retinal) is required to regenerate 11-cis retinal for rhodopsin production; deficiency decreases retinal availability, decreasing rhodopsin production and reducing retinal light sensitivity", "Vitamin A deficiency only affects cone function, not rods", "Vitamin A deficiency causes excess rhodopsin production"], "answer": 1, "correct": "Vitamin A1 is converted to 11-cis retinal within the retinal pigment epithelium, needed to regenerate rhodopsin; a deficiency (e.g., from GI absorption problems like celiac disease or cholestasis, since vitamin A is fat-soluble) decreases retinal availability, decreasing rhodopsin production and reducing retinal sensitivity to light — causing night blindness.", "src": "Physiology of Vision.pptx, Slide 23"},
+{"topic": "Vitamin A Deficiency as a Global Health Issue", "q": "What is the global significance of vitamin A deficiency in children?", "choices": ["It has no significant public health impact", "It is the leading cause of preventable childhood blindness worldwide in developing countries, causing an estimated 250,000-500,000 children to become blind each year", "It only causes minor, easily reversible vision changes", "It exclusively affects adults, not children"], "answer": 1, "correct": "Vitamin A deficiency is the leading cause of preventable childhood blindness worldwide in developing countries, with an estimated 250,000-500,000 children becoming blind each year, with highest prevalence in Southeast Asia and Africa; prolonged severe deficiency can cause total, irreversible blindness.", "src": "Physiology of Vision.pptx, Slide 23"},
+{"topic": "Myopia and Focal Length", "q": "Why does an object come into better focus as it moves closer to the eye in a person with myopia (nearsightedness)?", "choices": ["A point source of light has a longer focal length than light from a distant source, which is why closer objects (acting more like point sources) come into focus more easily in myopic (elongated) eyes", "Myopia has no relationship to focal length", "Distant objects always focus better in myopic eyes than near objects", "Myopia only affects color perception, not focus distance"], "answer": 0, "correct": "A point source of light has a longer focal length compared to light from a distant source; this is why an object comes into focus as it moves closer to the eye in a person with myopia (nearsightedness, associated with an elongated eyeball).", "src": "Physiology of Vision.pptx, Slide 7"},
+{"topic": "Vitamin A Food Sources", "q": "What are the two dietary forms of vitamin A, and what is the most common plant-based (pro-vitamin A) source?", "choices": ["Preformed vitamin A (from animal products like meat, fish, dairy) and pro-vitamin A (from plant foods, most commonly beta-carotene)", "Only preformed vitamin A exists, found exclusively in animal products", "Only pro-vitamin A exists, found exclusively in dairy", "Vitamin A cannot be obtained from any dietary source"], "answer": 0, "correct": "Vitamin A comes in two dietary forms: preformed vitamin A (from animal products such as meat, fish, poultry, and dairy) and pro-vitamin A (from plant-based foods such as fruits and vegetables), with beta-carotene being the most common pro-vitamin A source.", "src": "Physiology of Vision.pptx, Slide 23"},
+{"topic": "Concave Lenses and Myopia Correction", "q": "What type of lens is generally used to correct myopia, based on the eye's need to diverge incoming light?", "choices": ["A convex lens, to further focus light", "A concave lens, to diverge light rays before they reach the eye's own overly strong focusing power", "No lens correction is possible for myopia", "Only bifocal lenses can correct myopia"], "answer": 1, "correct": "Since myopia results from the eye's optical system focusing light in front of the retina (excessive focusing power for its axial length), a concave (diverging) lens is used to correct it by diverging light rays before they enter the eye, moving the focal point back onto the retina.", "src": "Physiology of Vision.pptx, Slide 5"},
+{"topic": "Refractive Power of the Lens vs Cornea", "q": "How does the adjustability of the lens compare to that of the cornea in terms of refractive power?", "choices": ["The lens has less overall refractive power than the cornea, but its power is adjustable (via accommodation), while the cornea's refractive power is fixed", "The cornea's power is adjustable, while the lens's is fixed", "Neither structure's refractive power is adjustable", "The lens contributes more total refractive power than the cornea"], "answer": 0, "correct": "The lens has less refractive power than the cornea overall, but its power is adjustable via accommodation (ranging from about 20 to 34 diopters), while the cornea's refractive power (about two-thirds of the eye's total) is essentially fixed.", "src": "Physiology of Vision.pptx, Slide 9"},
+{"topic": "Two Fluid Chambers of the Eye", "q": "What are the two fluid-filled chambers of the eye, and how do they differ in flow characteristics?", "choices": ["Aqueous humor (in front of the lens, freely flowing) and vitreous humor (behind the lens, a gelatinous mass with little fluid flow)", "Both chambers contain identical freely flowing fluid", "Only one fluid chamber exists in the eye", "Vitreous humor is in front of the lens and freely flowing; aqueous humor is behind it and gelatinous"], "answer": 0, "correct": "The eye has two fluid chambers: aqueous humor in front of the lens (a freely flowing fluid) and vitreous humor behind the lens (a gelatinous mass with little fluid flow).", "src": "Physiology of Vision.pptx, Slide 12"},
+{"topic": "Snellen Chart", "q": "Who developed the Snellen chart used for visual acuity testing, and in what year?", "choices": ["Hermann von Helmholtz, in 1850", "Herman Snellen, in 1862", "Thomas Young, in 1801", "Isaac Newton, in 1700"], "answer": 1, "correct": "The Snellen chart, used to measure visual acuity via the 20/20 notation system, was developed by Herman Snellen in 1862.", "src": "Physiology of Vision.pptx, Slide 11"},
+{"topic": "20/15 Vision", "q": "What does 20/15 vision mean?", "choices": ["The person has worse than normal vision", "The person can see at 20 feet what a person with normal (20/20) vision could only see at 15 feet — better than normal acuity", "The measurement is not a valid Snellen notation", "It means the person is legally blind"], "answer": 1, "correct": "20/15 vision means the person can see at 20 feet what a person with standard 20/20 vision could only see at 15 feet — indicating better than normal visual acuity.", "src": "Physiology of Vision.pptx, Slide 11"},
+{"topic": "Aqueous Humor Production Rate", "q": "At approximately what rate is aqueous humor produced by the ciliary body?", "choices": ["2-3 microliters/min (about 3-4 mL/day)", "2-3 mL/min (about 3-4 L/day)", "2-3 mL/day only", "Production rate cannot be measured"], "answer": 0, "correct": "Aqueous humor is produced by the ciliary body at a rate of about 2-3 microliters per minute, amounting to roughly 3-4 mL per day.", "src": "Physiology of Vision.pptx, Slide 12"},
+{"topic": "Glaucoma Risk Factor", "q": "What long-term condition is identified as a risk factor for glaucoma, related to intraocular pressure?", "choices": ["Long-term hypotension", "Long-term (systemic) hypertension, which can increase the rate of aqueous humor production", "Excessive vitamin A intake", "Chronic accommodation of the lens"], "answer": 1, "correct": "Long-term systemic hypertension is identified as a risk factor for glaucoma, since it can increase the rate of aqueous humor production, and chronically elevated intraocular pressure can damage the optic nerve axons and blood vessels, potentially causing blindness.", "src": "Physiology of Vision.pptx, Slide 14"},
+{"topic": "Neural Elements and Light Transmission in the Retina", "q": "Why doesn't the presence of neural elements in front of the photoreceptors significantly degrade the retinal image?", "choices": ["Because light never actually passes through neural elements in the retina", "Because the neural elements are virtually transparent in vivo, even though light must pass through them to reach the rods and cones", "Because neural elements are located entirely behind the photoreceptors, not in front", "Because only cones are affected, and rods are unaffected by this arrangement"], "answer": 1, "correct": "Light must pass through the retina's neural elements before reaching the light-sensitive rods and cones, but this doesn't significantly degrade image quality because the neural elements are virtually transparent in vivo.", "src": "Physiology of Vision.pptx, Slide 15"},
+{"topic": "Vitamin A Storage in the Pigment Layer", "q": "Besides preventing light scattering, what important substance does the pigment layer of the retina store in high levels?", "choices": ["Glucose", "Vitamin A, needed for phototransduction", "Sodium", "Glycogen"], "answer": 1, "correct": "In addition to containing melanin (which prevents light scattering), the pigment layer of the retina contains high levels of vitamin A, which is needed for phototransduction (regeneration of retinal for rhodopsin/photopsin).", "src": "Physiology of Vision.pptx, Slide 19"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

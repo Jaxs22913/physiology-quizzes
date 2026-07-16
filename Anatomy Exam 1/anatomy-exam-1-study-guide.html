@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Exam 1 Study Guide &mdash; Class of 2028</title>
+<style>
+  :root{
+    --ink:#20242b;
+    --paper:#f7f8fa;
+    --accent:#1f6f5c;      /* teal-green */
+    --accent2:#c1440e;      /* rust orange */
+    --accent3:#5b3a8e;      /* purple, general/clinical */
+    --line:#dfe3e8;
+    --soft:#5b6472;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  header.top{
+    background:linear-gradient(120deg,#123a30,var(--accent) 55%,#2f9a80);
+    color:#fff;
+    padding:34px 26px 30px;
+  }
+  header.top h1{
+    margin:0 0 6px;
+    font-size:2rem;
+    letter-spacing:.2px;
+    font-weight:800;
+  }
+  header.top p{margin:2px 0;color:#dcf3ec;font-size:.95rem;}
+  .layout{display:flex;max-width:1180px;margin:0 auto;}
+  nav.toc{
+    position:sticky;top:0;align-self:flex-start;
+    width:280px;min-width:280px;height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);
+    background:#eef1f5;
+    font-size:.85rem;
+  }
+  nav.toc h2{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:14px 0 6px;}
+  nav.toc a{display:block;color:var(--soft);text-decoration:none;padding:3px 0;border-bottom:1px solid transparent;}
+  nav.toc a.top-link{font-weight:700;color:var(--accent2);margin-top:10px;}
+  nav.toc a:hover{color:var(--accent);}
+  main{flex:1;padding:30px 40px 90px;min-width:0;}
+  section.deck{margin-bottom:56px;scroll-margin-top:18px;}
+  h2.deck-title{
+    font-size:1.55rem;color:var(--accent);
+    border-bottom:3px solid var(--accent2);
+    padding-bottom:8px;margin:0 0 6px;
+    font-weight:800;
+  }
+  .lecturer{color:var(--soft);font-style:italic;font-size:.9rem;margin-bottom:14px;}
+  .io-box{
+    background:#e9f2ef;border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0 20px;
+  }
+  .io-box h3{
+    margin:0 0 8px;font-size:.8rem;text-transform:uppercase;
+    letter-spacing:1px;color:var(--accent3);
+  }
+  .io-box ol{margin:0;padding-left:20px;}
+  .io-box li{margin-bottom:5px;font-size:.92rem;}
+  h3.sub{
+    color:var(--accent3);font-size:1.14rem;margin:26px 0 6px;font-weight:800;
+  }
+  h4.subsub{
+    color:var(--accent2);font-size:.98rem;margin:16px 0 4px;
+    font-weight:700;
+  }
+  ul,ol{margin:6px 0 12px;}
+  li{margin-bottom:3px;}
+  p{margin:8px 0;}
+  .callout{
+    border-left:4px solid var(--accent3);
+    background:#eeecf5;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  .pearl{
+    border-left:4px solid var(--accent2);
+    background:#f7ebe4;padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;
+  }
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--accent);color:#fff;font-weight:700;}
+  tr:nth-child(even) td{background:#eef1f5;}
+  code{background:#e4e8ee;padding:1px 5px;border-radius:4px;font-size:.85rem;}
+  .tag{
+    display:inline-block;background:var(--accent2);color:#fff;
+    font-size:.68rem;
+    padding:2px 8px;border-radius:10px;letter-spacing:.5px;
+    vertical-align:middle;margin-left:8px;
+  }
+  figure.fig{
+    margin:18px 0;padding:12px;background:#eef1f5;border-radius:10px;
+    border:1px solid var(--line);text-align:center;
+  }
+  figure.fig img{
+    max-width:100%;height:auto;border-radius:6px;background:#fff;
+    box-shadow:0 1px 4px rgba(0,0,0,.1);
+  }
+  figure.fig figcaption{
+    margin-top:8px;font-size:13.5px;color:var(--soft);font-style:italic;line-height:1.45;
+  }
+  .test-yourself-btn{
+    display:inline-block;margin-top:18px;padding:10px 18px;border:none;border-radius:999px;
+    background:var(--acc,var(--accent));color:#fff;font-weight:700;font-size:.92rem;cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  .test-yourself-btn:hover{filter:brightness(1.08);}
+  footer.guide-foot{margin:34px 40px 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--soft);}
+  @media(max-width:820px){
+    nav.toc{display:none;}
+    main{padding:22px 18px 60px;}
+    footer.guide-foot{margin:34px 18px 0;}
+  }
+
+  /* header.top sits outside .wrap (full-bleed banner) so it needs its own
+     dark-mode invert -- everything else lives inside .layout.wrap and gets
+     the site-wide body > .wrap invert from theme.css for free. */
+  :root[data-theme="dark"] header.top { filter: invert(1) hue-rotate(180deg); }
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #1f6f5c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #20242b; }
+  .footer-mark-accent { stroke: #1f6f5c; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #6fc9b3; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<header class="top">
+  <h1>Anatomy Exam 1 — Study Guide</h1>
+  <p>PAJ 5000 Graduate Anatomy &middot; Prof. Chand Shah, MPAS, PA-C &middot; Class of 2028</p>
+  <p>Intro to Anatomy &middot; Histology &middot; Brain and ANS &middot; Nervous Tissue &amp; Cerebral Blood Flow &middot; Spinal Cord &amp; Sensory Receptors &middot; Peripheral and Cranial Nerves</p>
+</header>
+
+<div class="layout wrap" data-readable data-audio-dir="anatomy-exam-1-study-guide-audio">
+<nav class="toc">
+  <h2>Contents</h2>
+  <a class="top-link" href="#intro-anatomy">1 &middot; Intro to Anatomy</a>
+  <a href="#intro-position">1.1 Anatomical Position &amp; Terminology</a>
+  <a href="#intro-cavities">1.2 Body Cavities &amp; Abdominal Regions</a>
+  <a class="top-link" href="#histology">2 &middot; Histology</a>
+  <a href="#histo-tissue">2.1 Epithelial &amp; Connective Tissue</a>
+  <a href="#histo-specialized">2.2 Muscle, Nervous, Bone &amp; Cartilage</a>
+  <a class="top-link" href="#brain-ans">3 &middot; Brain and ANS</a>
+  <a href="#brain-lobes">3.1 Cerebrum, Diencephalon, Brainstem &amp; Cerebellum</a>
+  <a href="#brain-meninges">3.2 Meninges, Ventricles, CSF &amp; BBB</a>
+  <a href="#brain-ans-divisions">3.3 Autonomic Nervous System</a>
+  <a class="top-link" href="#nervous-tissue-cbf">4 &middot; Nervous Tissue &amp; CBF</a>
+  <a href="#nt-neurons">4.1 Neurons &amp; Neuroglia</a>
+  <a href="#nt-vasculature">4.2 Arterial Supply &amp; Venous Drainage of the CNS</a>
+  <a class="top-link" href="#spinal-cord-sensory">5 &middot; Spinal Cord &amp; Sensory Receptors</a>
+  <a href="#sc-anatomy">5.1 Spinal Cord Anatomy &amp; Tracts</a>
+  <a href="#sc-senses">5.2 General Senses &amp; Receptors</a>
+  <a class="top-link" href="#peripheral-cranial-nerves">6 &middot; Peripheral &amp; Cranial Nerves</a>
+  <a href="#pcn-plexuses">6.1 Spinal Nerves, Plexuses &amp; Reflexes</a>
+  <a href="#pcn-cranial">6.2 The Twelve Cranial Nerves</a>
+</nav>
+
+<main>
+
+<!-- ============ 1 INTRO TO ANATOMY ============ -->
+<section class="deck" id="intro-anatomy">
+  <h2 class="deck-title">1 &middot; Introduction to Anatomy &amp; Anatomical Terminology</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Distinguish gross from microscopic anatomy and describe the levels of structural organization of the human body.</li>
+      <li>Use standard anatomical position, planes, and terms of relationship/laterality/movement to describe body structures.</li>
+      <li>Identify the body cavities and their subdivisions, the serous membranes that line them, and the nine regions of the abdomen.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="intro-position">1.1 Anatomical Position &amp; Terminology <span class="tag">IO 1&ndash;2</span></h3>
+  <p>Anatomy is studied at multiple scales, from broad to fine: <strong>chemical &rarr; cellular &rarr; tissue &rarr; organ &rarr; organ system &rarr; organism</strong> — each level of organization builds on the one below it. <strong>Systemic anatomy</strong> studies the body by functional system (integumentary, musculoskeletal, nervous, circulatory, respiratory, digestive, urinary, reproductive, endocrine), while <strong>regional anatomy</strong> studies all the structures in one area (e.g., everything in the thorax) together. Anatomical descriptions always assume the body is in the <strong>anatomical position</strong>: standing upright, feet flat and forward, arms at the sides, palms facing forward, head and eyes facing forward — a fixed reference frame so directional terms mean the same thing regardless of the body's actual orientation.</p>
+  <p><strong>Terms of relationship</strong> describe one structure relative to another along the body's main axis: <strong>anterior/ventral</strong> (front) vs. <strong>posterior/dorsal</strong> (back); <strong>superior/cranial</strong> (toward the head) vs. <strong>inferior/caudal</strong> (toward the feet). <strong>Terms of laterality</strong> add the medial-lateral and depth axes: <strong>medial</strong> (toward the midline) vs. <strong>lateral</strong> (away from midline); <strong>proximal</strong> (closer to the trunk/point of attachment) vs. <strong>distal</strong> (farther away); <strong>superficial</strong> (closer to the surface) vs. <strong>deep</strong> (farther from the surface); and <strong>ipsilateral</strong> (same side) vs. <strong>contralateral</strong> (opposite side).</p>
+  <p>Three standard <strong>planes</strong> section the body for imaging and dissection: a <strong>sagittal plane</strong> divides the body into left and right parts (a <strong>midsagittal</strong> plane splits it exactly in half; any other sagittal cut is <strong>parasagittal</strong>); a <strong>frontal (coronal) plane</strong> divides the body into anterior and posterior parts; and a <strong>transverse (horizontal/axial) plane</strong> divides the body into superior and inferior parts. <strong>Terms of movement</strong> describe joint actions: <strong>flexion</strong> (decreasing joint angle) vs. <strong>extension</strong> (increasing it); <strong>abduction</strong> (moving away from midline) vs. <strong>adduction</strong> (moving toward it); medial/lateral <strong>rotation</strong>; forearm <strong>pronation</strong> (palm down) vs. <strong>supination</strong> (palm up); foot <strong>inversion</strong> (sole medially) vs. <strong>eversion</strong> (sole laterally); and <strong>elevation/depression</strong> and <strong>protraction/retraction</strong> for structures like the scapula and mandible. It's worth remembering that textbook descriptions represent the statistically typical body plan — <strong>anatomical variation</strong> (extra bones, accessory muscles, unusual branching vessels) is common and clinically relevant, especially during surgery.</p>
+
+  <h3 class="sub" id="intro-cavities">1.2 Body Cavities &amp; Abdominal Regions <span class="tag">IO 3</span></h3>
+  <p>Internal organs sit within two major body cavities. The <strong>dorsal cavity</strong> is subdivided into the <strong>cranial cavity</strong> (houses the brain) and the <strong>vertebral (spinal) canal</strong> (houses the spinal cord), continuous with one another. The <strong>ventral cavity</strong> is subdivided into the <strong>thoracic cavity</strong> — itself split into paired <strong>pleural cavities</strong> (one per lung) and a central <strong>mediastinum</strong> containing the heart (within its own <strong>pericardial cavity</strong>), great vessels, trachea, and esophagus — and the <strong>abdominopelvic cavity</strong>, which has no physical wall separating its abdominal and pelvic portions.</p>
+  <p>Each of these cavities is lined by a <strong>serous membrane</strong>: a <strong>parietal layer</strong> lines the cavity wall and a <strong>visceral layer</strong> covers the organ itself, with a thin film of <strong>serous fluid</strong> between the two layers reducing friction as organs move (breathing, heartbeat, peristalsis). The three serous membranes are named for the cavity/organ they serve: <strong>pleura</strong> (lungs), <strong>pericardium</strong> (heart), and <strong>peritoneum</strong> (abdominal organs).</p>
+  <p>For clinical description and localization of pain or masses, the abdomen is divided into <strong>nine regions</strong> by two horizontal and two vertical lines: superiorly the <strong>right hypochondriac</strong>, <strong>epigastric</strong>, and <strong>left hypochondriac</strong> regions; in the middle row the <strong>right lumbar (lateral)</strong>, <strong>umbilical</strong>, and <strong>left lumbar (lateral)</strong> regions; and inferiorly the <strong>right iliac (inguinal)</strong>, <strong>hypogastric (pubic)</strong>, and <strong>left iliac (inguinal)</strong> regions.</p>
+  <figure class="fig"><img width="1410" height="686" loading="lazy" src="anatomy-exam-1-study-guide-images/001.jpg" alt="The nine abdominal regions with underlying organs"><figcaption>The nine abdominal regions, shown alongside the organs that typically underlie each one. The umbilical region centers on the small intestine and portions of the transverse colon; the right hypochondriac region overlies most of the liver; the epigastric region overlies the stomach and pancreas; and the two iliac (inguinal) regions overlie the cecum/appendix (right) and sigmoid colon (left), with the bladder centered in the hypogastric region.</figcaption></figure>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#1f6f5c" onclick="window.openTestYourself('Test yourself — Intro to Anatomy', TEST_YOURSELF.introAnatomy)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 2 HISTOLOGY ============ -->
+<section class="deck" id="histology">
+  <h2 class="deck-title">2 &middot; Histology</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Classify epithelial tissue by cell shape and layering, and describe the distinguishing features and functions of the connective tissues.</li>
+      <li>Compare cartilage, bone, muscle, and nervous tissue at the microscopic level.</li>
+      <li>Describe the microscopic organization of compact and spongy bone, and the zones of the epiphyseal growth plate.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="histo-tissue">2.1 Epithelial &amp; Connective Tissue <span class="tag">IO 1</span></h3>
+  <p>All body structures are built from just four <strong>primary tissue types</strong>: epithelial, connective, muscle, and nervous tissue. <strong>Epithelial tissue</strong> covers body surfaces, lines cavities/vessels/ducts, and forms glands, and it's classified along two independent axes — cell <strong>shape</strong> (squamous/flat, cuboidal/cube-shaped, columnar/tall-rectangular) and <strong>layering</strong> (simple = one layer, stratified = multiple layers, pseudostratified = one layer that appears layered because nuclei sit at different heights). <strong>Transitional epithelium</strong> is a special stratified type that stretches and recoils (lining the bladder). Functionally, epithelium provides <strong>protection</strong> (stratified squamous, skin), <strong>secretion</strong> (glandular epithelium), <strong>absorption</strong> (simple columnar with microvilli, intestine), and <strong>filtration</strong> (simple squamous, kidney/lung).</p>
+  <p><strong>Connective tissue</strong> is defined by its abundant extracellular matrix — <strong>ground substance</strong> plus <strong>fibers</strong> (collagen fibers for tensile strength, elastic fibers for stretch/recoil, reticular fibers for a supportive mesh around organs) — produced mainly by <strong>fibroblasts</strong>. It falls into several categories: <strong>loose connective tissue</strong> (areolar — widespread packing/binding tissue; adipose — fat storage/insulation; reticular — the meshwork stroma of lymphoid organs), <strong>dense connective tissue</strong> (regular — parallel collagen fibers in tendons/ligaments, built for tension in one direction; irregular — collagen fibers running in multiple directions, found in the dermis and organ capsules; elastic — abundant elastic fibers, found in large arteries), <strong>supportive connective tissue</strong> (cartilage and bone), and <strong>fluid connective tissue</strong> (blood, with a liquid matrix — plasma).</p>
+
+  <h3 class="sub" id="histo-specialized" >2.2 Muscle, Nervous Tissue, Bone &amp; Cartilage <span class="tag">IO 2&ndash;3</span></h3>
+  <p><strong>Muscle tissue</strong> comes in three types: <strong>skeletal muscle</strong> (striated, voluntary, long multinucleate fibers), <strong>cardiac muscle</strong> (striated, involuntary, branching fibers joined end-to-end by <strong>intercalated discs</strong>), and <strong>smooth muscle</strong> (non-striated, involuntary, spindle-shaped uninucleate cells lining hollow organs and vessels). <strong>Nervous tissue</strong> is built from <strong>neurons</strong> (electrically excitable cells that transmit signals) and supporting <strong>neuroglia</strong> — covered in depth in Section 4.</p>
+  <p>Skeletal tissues form a spectrum of stiffness. <strong>Cartilage</strong> is avascular, resilient, and comes in three types: <strong>hyaline cartilage</strong> (the most common — smooth and glassy, covers articular bone surfaces and forms the respiratory tract's cartilaginous rings), <strong>fibrocartilage</strong> (dense collagen fibers give it the highest tensile strength of the three — found in intervertebral discs and the knee menisci), and <strong>elastic cartilage</strong> (abundant elastic fibers give it flexibility — found in the external ear and the epiglottis).</p>
+  <p><strong>Bone tissue</strong> occurs in two arrangements: <strong>compact bone</strong>, dense and solid, forming the outer shell of every bone; and <strong>spongy (trabecular/cancellous) bone</strong>, a lattice of bony struts (trabeculae) with marrow-filled spaces between them, concentrated at the ends of long bones. At the microscopic level, compact bone is organized into cylindrical <strong>osteons (Haversian systems)</strong>: a central <strong>Haversian canal</strong> (carrying blood vessels and nerves) is surrounded by concentric rings of matrix called <strong>lamellae</strong>, with mature bone cells (<strong>osteocytes</strong>) sitting in small cavities called <strong>lacunae</strong> between the lamellae, interconnected by tiny channels called <strong>canaliculi</strong> that let nutrients diffuse out to every osteocyte. <strong>Perforating (Volkmann's) canals</strong> run perpendicular to osteons, connecting them to each other and to the periosteum.</p>
+  <figure class="fig"><img width="1130" height="1559" loading="lazy" src="anatomy-exam-1-study-guide-images/002.png" alt="Bone histology: trabecular vs cortical bone in the femur, and the osteon"><figcaption>Bone histology. The femur cross-section (left) shows spongy/trabecular bone forming a lattice within the medullary cavity, surrounded by a dense shell of compact (cortical) bone. The inset (right) shows a single osteon in cross-section: concentric lamellae surround a central Haversian canal, with osteocytes seated in lacunae between the lamellar rings and connected by canaliculi.</figcaption></figure>
+  <p>Long bones lengthen at the <strong>epiphyseal (growth) plate</strong>, a layer of hyaline cartilage between the diaphysis (shaft) and each epiphysis (bone end), organized into four zones: a <strong>resting zone</strong> of inactive chondrocytes anchoring the plate to the epiphysis, a <strong>proliferative zone</strong> of rapidly dividing chondrocytes that pushes the plate toward the diaphysis, a <strong>hypertrophic zone</strong> where chondrocytes enlarge and their matrix begins calcifying, and a <strong>calcification zone</strong> where chondrocytes die and the calcified cartilage is replaced by bone. The plate ossifies completely once growth is finished, leaving only a faint <strong>epiphyseal line</strong>. At the cellular level, all this tissue is built from cells whose basic <strong>organelles</strong> — nucleus (genetic material), mitochondria (ATP production), rough/smooth endoplasmic reticulum (protein/lipid synthesis), and Golgi apparatus (packaging/secretion) — carry out the same core functions in every tissue type.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#5b3a8e" onclick="window.openTestYourself('Test yourself — Histology', TEST_YOURSELF.histology)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 3 BRAIN AND ANS ============ -->
+<section class="deck" id="brain-ans">
+  <h2 class="deck-title">3 &middot; Brain and ANS</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the major divisions of the brain and their principal structures and functions.</li>
+      <li>Describe the cranial meninges, the ventricular system, CSF circulation, and the blood-brain barrier.</li>
+      <li>Compare the sympathetic, parasympathetic, and enteric divisions of the autonomic nervous system.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="brain-lobes">3.1 Cerebrum, Diencephalon, Brainstem &amp; Cerebellum <span class="tag">IO 1</span></h3>
+  <p>The <strong>cerebrum</strong> is the largest brain division, split into left and right hemispheres joined by the <strong>corpus callosum</strong> (a thick white-matter bridge). Its surface is thrown into folds — <strong>gyri</strong> (ridges) separated by <strong>sulci</strong> (grooves) — which dramatically increase cortical surface area; the deep <strong>central sulcus</strong> and <strong>lateral sulcus</strong> are major landmarks dividing the cerebrum into four <strong>lobes</strong>: <strong>frontal</strong> (voluntary motor control, executive function, personality), <strong>parietal</strong> (somatosensory processing, spatial awareness), <strong>temporal</strong> (auditory processing, memory, language), and <strong>occipital</strong> (visual processing).</p>
+  <p>Within the cerebrum, <strong>gray matter</strong> (unmyelinated neuron cell bodies) forms the outer <strong>cerebral cortex</strong>, while <strong>white matter</strong> (myelinated axons) fills the interior, carrying signals between cortical areas and down to the rest of the CNS. Buried within this white matter are additional gray-matter islands, the <strong>basal nuclei</strong> (caudate, putamen, globus pallidus), which help modulate and smooth voluntary movement. The <strong>limbic system</strong> — including the hippocampus (memory consolidation), amygdala (emotional processing, especially fear), and cingulate gyrus — forms a functional loop spanning the cerebrum and diencephalon that governs emotion and memory.</p>
+  <figure class="fig"><img width="617" height="680" loading="lazy" src="anatomy-exam-1-study-guide-images/003.png" alt="Axial cross-section of the brain"><figcaption>An axial (horizontal) cross-section through the cerebrum. The outer rim of gray matter (the cerebral cortex) is clearly visible wrapping around the interior white matter, with the fluid-filled ventricular spaces visible near the midline. (This particular slide's numbered labels weren't captured in the source file — use it to practice identifying the cortex/white-matter boundary and ventricle locations you've already learned, rather than as a labeled reference.)</figcaption></figure>
+  <p>Below the cerebrum, the <strong>diencephalon</strong> contains the <strong>thalamus</strong> (a relay station that processes and forwards nearly all sensory information — except smell — to the cerebral cortex), the <strong>hypothalamus</strong> (the master regulator of homeostasis: temperature, hunger, thirst, circadian rhythms, and the master controller of the pituitary gland), and the <strong>epithalamus</strong> (containing the pineal gland, which secretes melatonin). The <strong>brainstem</strong> connects the cerebrum to the spinal cord in three parts: the <strong>midbrain (mesencephalon)</strong> (contains the cerebral peduncles carrying descending motor fibers, and the superior/inferior colliculi for visual/auditory reflexes), the <strong>pons</strong> (relays signals between the cerebrum and cerebellum, and contributes to respiratory rhythm), and the <strong>medulla oblongata</strong> (houses cardiovascular and respiratory control centers, and is where most descending motor fibers cross to the opposite side at the <strong>decussation of the pyramids</strong>). The <strong>cerebellum</strong>, tucked beneath the occipital lobe, coordinates fine motor movement, posture, and balance by comparing intended movement to actual movement.</p>
+
+  <h3 class="sub" id="brain-meninges">3.2 Meninges, Ventricles, CSF &amp; Blood-Brain Barrier <span class="tag">IO 2</span></h3>
+  <p>Three connective-tissue layers, the <strong>cranial meninges</strong>, wrap the brain: the tough outer <strong>dura mater</strong> (with periosteal and meningeal layers that separate to form the <strong>dural venous sinuses</strong>, and folds — the <strong>falx cerebri</strong> between the hemispheres and the <strong>tentorium cerebelli</strong> between the cerebrum and cerebellum — that partition the cranial cavity), the middle <strong>arachnoid mater</strong> (web-like, defining the fluid-filled <strong>subarachnoid space</strong> beneath it), and the innermost <strong>pia mater</strong> (a delicate layer that closely follows every gyrus and sulcus, directly adherent to brain tissue).</p>
+  <p>The brain's four interconnected fluid-filled cavities, the <strong>ventricles</strong>, form the path of <strong>cerebrospinal fluid (CSF)</strong> circulation: paired <strong>lateral ventricles</strong> (one per hemisphere) drain through the <strong>interventricular foramina (of Monro)</strong> into the single midline <strong>third ventricle</strong>, which connects via the narrow <strong>cerebral aqueduct</strong> (running through the midbrain) to the <strong>fourth ventricle</strong>, which in turn is continuous with the spinal cord's central canal and drains into the subarachnoid space. CSF is produced by the <strong>choroid plexus</strong> within each ventricle, cushions the brain and spinal cord against impact, and is ultimately reabsorbed into the dural venous sinuses through <strong>arachnoid granulations</strong> that project through the dura. The <strong>blood-brain barrier</strong> tightly regulates what reaches brain tissue: capillary endothelial cells joined by extensive <strong>tight junctions</strong>, reinforced by surrounding <strong>astrocyte end-feet</strong>, block most large or hydrophilic molecules while allowing small lipid-soluble molecules (like O2 and CO2) to cross freely.</p>
+
+  <h3 class="sub" id="brain-ans-divisions">3.3 Autonomic Nervous System <span class="tag">IO 3</span></h3>
+  <p>The <strong>autonomic nervous system (ANS)</strong> controls involuntary effectors — smooth muscle, cardiac muscle, and glands — through a two-neuron chain: a <strong>preganglionic neuron</strong> (cell body in the CNS) synapses on a <strong>postganglionic neuron</strong> (cell body in a peripheral ganglion), which then reaches the target organ. The <strong>sympathetic division</strong> ("fight or flight") has a <strong>thoracolumbar outflow</strong> (preganglionic cell bodies in the T1–L2 spinal cord segments), with short preganglionic fibers synapsing quickly in a chain of ganglia running alongside the vertebral column, then long postganglionic fibers traveling out to targets — a design that allows rapid, widespread activation. The <strong>parasympathetic division</strong> ("rest and digest") has a <strong>craniosacral outflow</strong> (preganglionic cell bodies in select cranial nerve nuclei and the S2–S4 spinal cord segments), with long preganglionic fibers traveling nearly all the way to the target organ before synapsing on short postganglionic fibers in ganglia embedded within or very near the organ wall — producing more localized, specific effects.</p>
+  <p>The gastrointestinal tract has its own semi-independent <strong>enteric nervous system</strong>, organized into the <strong>myenteric plexus</strong> (between muscle layers, controls motility) and the <strong>submucosal plexus</strong> (regulates secretion and local blood flow); it can coordinate peristalsis and secretion on its own, but sympathetic input generally inhibits GI activity (rerouting blood flow away from digestion) while parasympathetic (vagal) input stimulates it.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#1f6f5c" onclick="window.openTestYourself('Test yourself — Brain and ANS', TEST_YOURSELF.brainAns)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 4 NERVOUS TISSUE AND CBF ============ -->
+<section class="deck" id="nervous-tissue-cbf">
+  <h2 class="deck-title">4 &middot; Nervous Tissue &amp; Cerebral Blood Flow</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the structure of a neuron and classify neurons by structure and by function.</li>
+      <li>Identify the types and functions of CNS and PNS neuroglia, and describe the process of myelination.</li>
+      <li>Trace the arterial supply to the brain (including the cerebral arterial circle) and the venous drainage of the cranium.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="nt-neurons">4.1 Neurons &amp; Neuroglia <span class="tag">IO 1&ndash;2</span></h3>
+  <p>The nervous system divides into the <strong>central nervous system (CNS)</strong> — brain and spinal cord — and the <strong>peripheral nervous system (PNS)</strong> — all the nerves and ganglia outside the CNS. Its functional cell, the <strong>neuron</strong>, has a <strong>cell body (soma)</strong> containing the nucleus, branching <strong>dendrites</strong> that receive incoming signals, and a single <strong>axon</strong> (arising from the <strong>axon hillock</strong>, the neuron's action-potential trigger zone) that conducts an outgoing signal to <strong>axon terminals</strong>, often insulated along the way by a <strong>myelin sheath</strong>.</p>
+  <p>Neurons are classified <strong>functionally</strong> as <strong>sensory (afferent)</strong> neurons (carry signals toward the CNS), <strong>motor (efferent)</strong> neurons (carry signals away from the CNS to effectors), or <strong>interneurons</strong> (entirely within the CNS, integrating information between sensory input and motor output). Structurally, neurons are <strong>multipolar</strong> (one axon, many dendrites — most CNS neurons and motor neurons), <strong>bipolar</strong> (one axon, one dendrite — found in some special sensory pathways like the retina), or <strong>unipolar (pseudounipolar)</strong> (a single process splits into a peripheral and central branch — typical of sensory neurons whose cell bodies sit in dorsal root ganglia).</p>
+  <p>Neurons are supported by <strong>neuroglia</strong>, which differ between the CNS and PNS. In the <strong>CNS</strong>: <strong>astrocytes</strong> (the most abundant type — support neurons, help form the blood-brain barrier, regulate the extracellular chemical environment), <strong>oligodendrocytes</strong> (myelinate CNS axons — a single oligodendrocyte extends processes that wrap segments of several different axons), <strong>microglia</strong> (the CNS's resident immune cells, clearing debris and pathogens), and <strong>ependymal cells</strong> (line the ventricles, help produce/circulate CSF). In the <strong>PNS</strong>: <strong>Schwann cells</strong> (myelinate PNS axons — unlike an oligodendrocyte, a single Schwann cell wraps just one segment of a single axon) and <strong>satellite cells</strong> (support neuron cell bodies within peripheral ganglia). Wherever myelin is present, it's interrupted at regular gaps called <strong>nodes of Ranvier</strong>, allowing the action potential to "jump" node to node — <strong>saltatory conduction</strong> — which conducts signals far faster than continuous conduction along an unmyelinated axon. At a <strong>synapse</strong>, the presynaptic terminal releases <strong>neurotransmitter</strong> into the synaptic cleft, which binds receptors on the postsynaptic membrane to excite or inhibit the next cell.</p>
+
+  <h3 class="sub" id="nt-vasculature">4.2 Arterial Supply &amp; Venous Drainage of the CNS <span class="tag">IO 3</span></h3>
+  <p>The brain receives blood from two paired sources that together form a protective loop of collateral circulation. The <strong>internal carotid arteries</strong> supply the <strong>anterior circulation</strong> (most of the cerebrum), while the paired <strong>vertebral arteries</strong> ascend through the cervical vertebrae's transverse foramina and join at the base of the skull to form the single <strong>basilar artery</strong>, supplying the <strong>posterior circulation</strong> (brainstem, cerebellum, and occipital lobes). These two systems are linked together at the base of the brain by the <strong>cerebral arterial circle (Circle of Willis)</strong>: the internal carotids give rise to the <strong>anterior cerebral arteries</strong> (joined to each other by a short <strong>anterior communicating artery</strong>) and the <strong>middle cerebral arteries</strong> (the largest branches, supplying most of the lateral cerebral surface), while the basilar artery terminates in paired <strong>posterior cerebral arteries</strong>, each linked forward to the corresponding internal carotid by a <strong>posterior communicating artery</strong>. This ring of connections means that if one feeding vessel narrows or occludes gradually, flow can often be redirected around the circle to preserve perfusion.</p>
+  <figure class="fig"><img width="1402" height="1011" loading="lazy" src="anatomy-exam-1-study-guide-images/004.jpg" alt="Inferior view of the brain showing the Circle of Willis" ><figcaption>Inferior (base) view of the brain, showing the cerebral arterial circle (Circle of Willis). The two internal carotid arteries feed the anterior cerebral and middle cerebral arteries anteriorly (linked in the midline by the anterior communicating artery), while the single basilar artery — formed by the union of the two vertebral arteries — feeds the paired posterior cerebral arteries posteriorly, each connected forward to its carotid circulation by a posterior communicating artery.</figcaption></figure>
+  <p><strong>Venous drainage</strong> follows a very different route from the arterial supply: superficial and deep cerebral veins empty not into simple paired veins but into the <strong>dural venous sinuses</strong> — endothelium-lined channels running between the two layers of dura mater, including the <strong>superior sagittal sinus</strong> (running along the top of the falx cerebri), <strong>inferior sagittal sinus</strong>, <strong>straight sinus</strong>, and the paired <strong>transverse</strong> and <strong>sigmoid sinuses</strong>, which ultimately drain into the <strong>internal jugular veins</strong> to return blood to the heart.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#c1440e" onclick="window.openTestYourself('Test yourself — Nervous Tissue &amp; CBF', TEST_YOURSELF.nervousTissueCbf)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 5 SPINAL CORD AND SENSORY RECEPTORS ============ -->
+<section class="deck" id="spinal-cord-sensory">
+  <h2 class="deck-title">5 &middot; Spinal Cord and Sensory Receptors</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the gross and sectional anatomy of the spinal cord, including its enlargements, terminal structures, and gray/white matter organization.</li>
+      <li>Identify the major ascending and descending spinal cord tracts and their general functions.</li>
+      <li>Classify the general senses and describe the structure and function of the major sensory receptor types.</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="sc-anatomy">5.1 Spinal Cord Anatomy &amp; Tracts <span class="tag">IO 1&ndash;2</span></h3>
+  <p>The spinal cord runs from the <strong>foramen magnum</strong> down to about the <strong>L1–L2</strong> vertebral level, where it tapers into the <strong>conus medullaris</strong>; below that, a thin fibrous strand called the <strong>filum terminale</strong> anchors the cord to the coccyx, surrounded by a bundle of lumbar and sacral nerve roots descending to their exit points — collectively the <strong>cauda equina</strong> ("horse's tail"), named for its resemblance. The cord is thicker at two points where it innervates the limbs: the <strong>cervical enlargement</strong> (upper limb) and the <strong>lumbosacral enlargement</strong> (lower limb).</p>
+  <figure class="fig"><img width="514" height="1080" loading="lazy" src="anatomy-exam-1-study-guide-images/005.jpg" alt="Posterior view of the spinal cord in situ"><figcaption>Posterior view of the spinal cord within the vertebral canal. The cervical enlargement (upper limb innervation) and lumbosacral enlargement (lower limb innervation) are visible as regions of increased cord diameter; inferiorly, the cord tapers at the conus medullaris before continuing as the filum terminale, surrounded by the fanning nerve roots of the cauda equina.</figcaption></figure>
+  <p>In cross-section, the spinal cord's <strong>gray matter</strong> forms a butterfly/H-shape: <strong>dorsal (posterior) horns</strong> receive incoming sensory input, <strong>ventral (anterior) horns</strong> contain motor neuron cell bodies, and — only at spinal levels T1–L2 — small <strong>lateral horns</strong> contain the <strong>intermediolateral gray horn</strong>, the location of sympathetic preganglionic neuron cell bodies. These sympathetic fibers exit and rejoin the spinal nerve via the <strong>rami communicantes</strong>: a <strong>white ramus</strong> (myelinated preganglionic fibers heading to a sympathetic chain ganglion) and a <strong>gray ramus</strong> (unmyelinated postganglionic fibers rejoining the spinal nerve for distribution to the body wall). Surrounding the gray matter, <strong>white matter</strong> is organized into <strong>funiculi</strong> (dorsal, lateral, and ventral columns) carrying bundles of axons — <strong>tracts</strong> — up and down the cord.</p>
+  <p>Ascending (sensory) tracts include the <strong>dorsal columns</strong> (fasciculus gracilis and fasciculus cuneatus — carry fine touch, vibration, and conscious proprioception, staying ipsilateral until they reach the medulla), the <strong>spinothalamic tracts</strong> (carry pain, temperature, and crude touch, crossing to the opposite side near their level of entry), and the <strong>spinocerebellar tracts</strong> (carry unconscious proprioceptive information to the cerebellum for movement coordination). The major descending (motor) tracts are the <strong>corticospinal tracts</strong>, which carry voluntary motor commands from the cerebral cortex — the <strong>lateral corticospinal tract</strong> (the majority, having already crossed at the medulla's pyramidal decussation) controls limb muscles, while the smaller <strong>anterior corticospinal tract</strong> (crossing at its level of exit) controls axial/trunk muscles. The cord's blood supply comes from a single <strong>anterior spinal artery</strong> and paired <strong>posterior spinal arteries</strong>, reinforced at intervals by segmental <strong>radicular arteries</strong> (the largest of which, the artery of Adamkiewicz, is clinically important in aortic surgery), with corresponding venous and lymphatic drainage running alongside.</p>
+
+  <h3 class="sub" id="sc-senses">5.2 General Senses &amp; Sensory Receptors <span class="tag">IO 3</span></h3>
+  <p>The <strong>general senses</strong> — touch, pressure, temperature, pain, and proprioception — are detected by receptors distributed throughout the body (as opposed to the <strong>special senses</strong>, each with a dedicated sensory organ). Receptors show <strong>specificity</strong>: each type responds preferentially to one stimulus modality, and general senses are classified accordingly into <strong>mechanoreceptors</strong>, <strong>thermoreceptors</strong>, <strong>nociceptors</strong>, and <strong>chemoreceptors</strong>.</p>
+  <p><strong>Mechanoreceptors</strong> respond to physical deformation of the tissue around them: <strong>Meissner corpuscles</strong> (light touch, fine discrimination — abundant in fingertips), <strong>Pacinian corpuscles</strong> (deep pressure and vibration — found deep in the dermis/hypodermis), <strong>Merkel discs</strong> (sustained light touch and pressure), and <strong>Ruffini endings</strong> (skin stretch). <strong>Thermoreceptors</strong> are free nerve endings tuned separately to warming or cooling. <strong>Nociceptors</strong> — mostly free nerve endings — detect tissue damage and generate the sensation of pain. <strong>Chemoreceptors</strong> detect chemical concentration changes: internally, they monitor blood gas and pH levels (e.g., in the carotid and aortic bodies), and the special senses of <strong>olfaction</strong> (smell, via the olfactory epithelium high in the nasal cavity, detected by CN I) and <strong>gustation</strong> (taste, via taste buds on the tongue, detected mainly by CN VII, IX, and X) are also fundamentally chemoreceptor-based.</p>
+  <p>Once a stimulus generates a signal, the nervous system must interpret it: which receptor type fired and where it's located together determine the sensation's quality and location (the "labeled line" principle), with final conscious interpretation occurring in the primary somatosensory cortex of the parietal lobe.</p>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#5b3a8e" onclick="window.openTestYourself('Test yourself — Spinal Cord &amp; Sensory Receptors', TEST_YOURSELF.spinalCordSensory)">Test yourself! &rarr;</button>
+</section>
+
+<!-- ============ 6 PERIPHERAL AND CRANIAL NERVES ============ -->
+<section class="deck" id="peripheral-cranial-nerves">
+  <h2 class="deck-title">6 &middot; Peripheral and Cranial Nerves</h2>
+  <div class="io-box">
+    <h3>Instructional Objectives</h3>
+    <ol>
+      <li>Describe the organization of the peripheral nervous system, spinal nerves, and the major nerve plexuses.</li>
+      <li>Describe the components of the reflex arc and distinguish monosynaptic from polysynaptic reflexes.</li>
+      <li>Identify each of the twelve cranial nerves, the foramen each passes through, and its principal function(s).</li>
+    </ol>
+  </div>
+
+  <h3 class="sub" id="pcn-plexuses">6.1 Spinal Nerves, Plexuses &amp; Reflexes <span class="tag">IO 1&ndash;2</span></h3>
+  <p>The PNS carries <strong>31 pairs of spinal nerves</strong> (8 cervical, 12 thoracic, 5 lumbar, 5 sacral, 1 coccygeal), each formed by the union of a <strong>dorsal (posterior) root</strong> — carrying sensory fibers, with cell bodies in the <strong>dorsal root ganglion</strong> — and a <strong>ventral (anterior) root</strong> — carrying motor fibers. Immediately after exiting the vertebral column, every spinal nerve splits into a <strong>dorsal ramus</strong> (innervating the deep back muscles and overlying skin) and a much larger <strong>ventral ramus</strong> (innervating the anterolateral body wall and limbs, either directly as intercostal nerves in the thorax or by joining a <strong>nerve plexus</strong> elsewhere).</p>
+  <p>Ventral rami from adjacent spinal levels interweave into four major plexuses: the <strong>cervical plexus</strong> (C1–C4, including the phrenic nerve to the diaphragm), the <strong>brachial plexus</strong> (C5–T1, reorganizing through roots, trunks, divisions, and cords into the major nerves of the upper limb — median, ulnar, radial, musculocutaneous, and axillary), the <strong>lumbar plexus</strong> (L1–L4, giving rise to the femoral and obturator nerves), and the <strong>sacral plexus</strong> (L4–S4, giving rise to the sciatic nerve, the body's largest); the lumbar and sacral plexuses are often considered together as the <strong>lumbosacral plexus</strong> because their roots overlap and interconnect.</p>
+  <figure class="fig"><img width="1100" height="1080" loading="lazy" src="anatomy-exam-1-study-guide-images/006.jpg" alt="Dissection of the neck and shoulder showing the brachial plexus"><figcaption>Cadaveric dissection of the neck and axilla, showing the brachial plexus emerging between the anterior and middle scalene muscles and coursing down toward the axilla, where it reorganizes into the major nerves supplying the upper limb.</figcaption></figure>
+  <p>Voluntary <strong>motor commands</strong> originate as an upper motor neuron signal from the cortex, which synapses on a lower motor neuron (in the brainstem or spinal cord ventral horn) that directly innervates skeletal muscle. <strong>Reflexes</strong> are rapid, stereotyped, involuntary responses that bypass conscious processing, built from a <strong>reflex arc</strong>: a receptor detects the stimulus, a sensory neuron carries the signal to an integration center (typically the spinal cord), which connects — directly or through interneurons — to a motor neuron that activates an effector. A <strong>monosynaptic reflex</strong> (like the patellar/stretch reflex) has the sensory neuron synapse directly onto the motor neuron with no interneuron, making it the fastest reflex type; a <strong>polysynaptic reflex</strong> (like the withdrawal reflex from a painful stimulus) involves one or more interneurons and can also recruit the opposite limb.</p>
+
+  <h3 class="sub" id="pcn-cranial">6.2 The Twelve Cranial Nerves <span class="tag">IO 3</span></h3>
+  <p>Twelve pairs of <strong>cranial nerves</strong> arise directly from the brain (rather than the spinal cord) and pass through specific skull foramina to reach their targets. A few carry extra weight clinically: <strong>CN III (oculomotor)</strong> carries parasympathetic fibers (via the <strong>ciliary ganglion</strong>) that constrict the pupil and adjust the lens for near vision, in addition to its motor supply to four of the six extra-ocular muscles and the levator palpebrae superioris. <strong>CN IX (glossopharyngeal)</strong> gives off a <strong>carotid sinus/carotid body branch</strong> carrying baroreceptor and chemoreceptor information used in the reflex regulation of blood pressure and breathing, in addition to its sensory/taste supply to the posterior tongue and motor supply to the stylopharyngeus.</p>
+  <table>
+    <tr><th>Nerve</th><th>Foramen</th><th>Principal function</th></tr>
+    <tr><td>I — Olfactory</td><td>Cribriform plate (ethmoid)</td><td>Smell</td></tr>
+    <tr><td>II — Optic</td><td>Optic canal</td><td>Vision</td></tr>
+    <tr><td>III — Oculomotor</td><td>Superior orbital fissure</td><td>Most eye movements, eyelid elevation, pupillary constriction &amp; lens accommodation (parasympathetic)</td></tr>
+    <tr><td>IV — Trochlear</td><td>Superior orbital fissure</td><td>Superior oblique (eye movement)</td></tr>
+    <tr><td>V — Trigeminal</td><td>V1 &amp; V2: superior orbital fissure/foramen rotundum; V3: foramen ovale</td><td>Facial sensation; muscles of mastication (V3 only)</td></tr>
+    <tr><td>VI — Abducens</td><td>Superior orbital fissure</td><td>Lateral rectus (eye abduction)</td></tr>
+    <tr><td>VII — Facial</td><td>Internal acoustic meatus &rarr; stylomastoid foramen</td><td>Facial expression; taste (anterior 2/3 tongue); lacrimal/salivary glands</td></tr>
+    <tr><td>VIII — Vestibulocochlear</td><td>Internal acoustic meatus</td><td>Hearing &amp; balance</td></tr>
+    <tr><td>IX — Glossopharyngeal</td><td>Jugular foramen</td><td>Taste/sensation (posterior tongue, pharynx); stylopharyngeus; carotid body/sinus reflex input</td></tr>
+    <tr><td>X — Vagus</td><td>Jugular foramen</td><td>Parasympathetic supply to thoracic/abdominal viscera; pharyngeal/laryngeal muscles</td></tr>
+    <tr><td>XI — Accessory</td><td>Jugular foramen</td><td>Sternocleidomastoid &amp; trapezius</td></tr>
+    <tr><td>XII — Hypoglossal</td><td>Hypoglossal canal</td><td>Tongue muscles</td></tr>
+  </table>
+
+  <button type="button" class="test-yourself-btn" style="--acc:#c1440e" onclick="window.openTestYourself('Test yourself — Peripheral &amp; Cranial Nerves', TEST_YOURSELF.peripheralCranialNerves)">Test yourself! &rarr;</button>
+</section>
+
+<footer class="guide-foot">
+  <p style="text-align:center;margin:0 0 10px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+  <p style="text-align:center;">Built from your PAJ 5000 lecture decks for personal study &middot; Class of 2028.</p>
+  <p style="text-align:center;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+</footer>
+
+</main>
+</div>
+<script>
+  // High-yield "Test yourself" question sets, one per section, fed to
+  // window.openTestYourself (theme.js) by each section's button.
+  var TEST_YOURSELF = {
+    introAnatomy: [
+      { q: "What are the six levels of structural organization, from broadest to finest?", choices: ["Organism, organ system, organ, tissue, cellular, chemical", "Chemical, cellular, tissue, organ, organ system, organism", "Cellular, tissue, chemical, organ, organism, organ system", "Organ, tissue, cellular, chemical, organ system, organism"], correct: 1, explain: "From finest to broadest: chemical → cellular → tissue → organ → organ system → organism, with each level built from the one below it." },
+      { q: "In the anatomical position, which way do the palms face?", choices: ["Facing backward (posteriorly)", "Facing forward (anteriorly)", "Facing the midline (medially)", "Facing the thighs"], correct: 1, explain: "In the anatomical position the body stands upright, feet forward, arms at the sides, with the palms facing forward (anteriorly) — this fixed reference frame is what all directional terms are based on." },
+      { q: "What is the difference between a sagittal plane and a frontal (coronal) plane?", choices: ["Sagittal divides superior/inferior; frontal divides left/right", "Sagittal divides left/right; frontal divides anterior/posterior", "They are the same plane by different names", "Sagittal divides anterior/posterior; frontal divides superior/inferior"], correct: 1, explain: "A sagittal plane divides the body into left and right portions; a frontal (coronal) plane divides it into anterior and posterior portions; a transverse plane divides it into superior and inferior portions." },
+      { q: "Which body cavity contains the pericardial cavity?", choices: ["The abdominopelvic cavity", "The vertebral canal", "The thoracic cavity (within the mediastinum)", "The cranial cavity"], correct: 2, explain: "The pericardial cavity, surrounding the heart, sits within the mediastinum — the central portion of the thoracic cavity between the two pleural cavities." },
+      { q: "Which abdominal region sits directly between the two lumbar (lateral) regions?", choices: ["The epigastric region", "The umbilical region", "The hypogastric region", "The right iliac region"], correct: 1, explain: "The umbilical region occupies the center of the middle row, flanked on either side by the right and left lumbar (lateral) regions." }
+    ],
+    histology: [
+      { q: "How is epithelial tissue classified?", choices: ["By vascularity and fiber content", "By cell shape (squamous/cuboidal/columnar) and layering (simple/stratified/pseudostratified)", "By whether it is loose or dense", "By the type of ground substance present"], correct: 1, explain: "Epithelium is classified along two axes: cell shape (squamous, cuboidal, or columnar) and number of layers (simple, stratified, or pseudostratified)." },
+      { q: "Which type of cartilage has the highest tensile strength, and where is it found?", choices: ["Hyaline cartilage, found on articular surfaces", "Elastic cartilage, found in the external ear", "Fibrocartilage, found in intervertebral discs and menisci", "Hyaline cartilage, found in the trachea"], correct: 2, explain: "Fibrocartilage's dense collagen fiber content gives it the greatest tensile strength of the three cartilage types, suited to load-bearing structures like intervertebral discs and knee menisci." },
+      { q: "What structure sits at the center of an osteon (Haversian system)?", choices: ["A lacuna containing an osteocyte", "The Haversian canal, carrying blood vessels and nerves", "A canaliculus", "The periosteum"], correct: 1, explain: "Each osteon is built around a central Haversian canal carrying the blood vessels and nerves that supply the osteocytes seated in lacunae within the surrounding concentric lamellae." },
+      { q: "What is the correct order of the epiphyseal growth plate's zones, from the epiphysis toward the diaphysis?", choices: ["Calcification → hypertrophic → proliferative → resting", "Resting → proliferative → hypertrophic → calcification", "Proliferative → resting → calcification → hypertrophic", "Hypertrophic → calcification → resting → proliferative"], correct: 1, explain: "Moving from the epiphysis toward the diaphysis: resting zone (anchors the plate) → proliferative zone (rapid division) → hypertrophic zone (cells enlarge) → calcification zone (matrix calcifies before replacement by bone)." },
+      { q: "Which connective tissue fiber type provides a supportive meshwork around organs like lymph nodes and the spleen?", choices: ["Collagen fibers", "Elastic fibers", "Reticular fibers", "Keratin fibers"], correct: 2, explain: "Reticular fibers form the delicate supportive meshwork (stroma) of organs such as lymph nodes, the spleen, and bone marrow." }
+    ],
+    brainAns: [
+      { q: "What connects the two cerebral hemispheres?", choices: ["The cerebral aqueduct", "The corpus callosum", "The falx cerebri", "The internal capsule"], correct: 1, explain: "The corpus callosum is the thick band of white matter connecting and allowing communication between the left and right cerebral hemispheres." },
+      { q: "Which brainstem structure is the site of the decussation of the pyramids?", choices: ["The midbrain", "The pons", "The medulla oblongata", "The diencephalon"], correct: 2, explain: "Most descending corticospinal motor fibers cross to the opposite side at the medulla oblongata's pyramidal decussation." },
+      { q: "What is the correct order of CSF flow through the ventricular system?", choices: ["Third ventricle → lateral ventricles → fourth ventricle → cerebral aqueduct", "Lateral ventricles → third ventricle → cerebral aqueduct → fourth ventricle", "Fourth ventricle → cerebral aqueduct → third ventricle → lateral ventricles", "Lateral ventricles → fourth ventricle → third ventricle → cerebral aqueduct"], correct: 1, explain: "CSF flows: lateral ventricles → (interventricular foramina) → third ventricle → cerebral aqueduct → fourth ventricle → subarachnoid space/central canal." },
+      { q: "What forms the blood-brain barrier?", choices: ["Astrocyte cell bodies alone", "Tight junctions between capillary endothelial cells, reinforced by astrocyte end-feet", "The arachnoid mater", "Microglia surrounding capillaries"], correct: 1, explain: "The blood-brain barrier is formed by extensive tight junctions between brain capillary endothelial cells, with astrocyte end-feet wrapping the vessels to reinforce selective permeability." },
+      { q: "What outflow pattern characterizes the sympathetic division of the ANS?", choices: ["Craniosacral outflow, with long preganglionic fibers", "Thoracolumbar outflow, with short preganglionic and long postganglionic fibers", "Thoracolumbar outflow, with long preganglionic and short postganglionic fibers", "Craniosacral outflow, with short preganglionic fibers"], correct: 1, explain: "The sympathetic division has a thoracolumbar (T1–L2) outflow, with short preganglionic fibers synapsing quickly in nearby chain ganglia, then long postganglionic fibers reaching the target — enabling rapid, widespread activation." }
+    ],
+    nervousTissueCbf: [
+      { q: "What is the key structural difference between a multipolar and a unipolar (pseudounipolar) neuron?", choices: ["Multipolar neurons have no axon", "Multipolar neurons have one axon and many dendrites; unipolar neurons have a single process that splits into peripheral and central branches", "Unipolar neurons are found only in the retina", "There is no structural difference, only a functional one"], correct: 1, explain: "Multipolar neurons (most CNS/motor neurons) have one axon and multiple dendrites, while unipolar (pseudounipolar) neurons — typical of sensory neurons — have a single process that splits into peripheral and central branches." },
+      { q: "How does CNS myelination by oligodendrocytes differ from PNS myelination by Schwann cells?", choices: ["Only Schwann cells can myelinate axons; oligodendrocytes cannot", "A single oligodendrocyte myelinates segments of multiple axons, while a single Schwann cell myelinates one segment of one axon", "Oligodendrocytes only myelinate sensory axons", "There is no functional difference between the two cell types"], correct: 1, explain: "One oligodendrocyte extends processes that myelinate segments of several different CNS axons, while each PNS Schwann cell wraps only one segment of a single axon." },
+      { q: "Which cerebral vessels are connected by the anterior communicating artery?", choices: ["The two middle cerebral arteries", "The two anterior cerebral arteries", "The two posterior cerebral arteries", "The basilar artery and the internal carotid artery"], correct: 1, explain: "The short anterior communicating artery links the two anterior cerebral arteries across the midline, forming part of the Circle of Willis." },
+      { q: "What forms the basilar artery?", choices: ["The union of the two internal carotid arteries", "The union of the two vertebral arteries", "A branch of the middle cerebral artery", "The union of the two posterior communicating arteries"], correct: 1, explain: "The paired vertebral arteries ascend and join at the base of the skull to form the single basilar artery, supplying the posterior circulation." },
+      { q: "Where does venous blood from the dural venous sinuses ultimately drain?", choices: ["Directly into the vertebral veins", "Into the internal jugular veins", "Into the cavernous sinus only", "Into the anterior cerebral arteries"], correct: 1, explain: "The dural venous sinuses (superior sagittal, straight, transverse, sigmoid, etc.) ultimately drain into the internal jugular veins." }
+    ],
+    spinalCordSensory: [
+      { q: "At approximately what vertebral level does the spinal cord taper into the conus medullaris?", choices: ["C7", "T12", "L1–L2", "S2"], correct: 2, explain: "The spinal cord proper ends around the L1–L2 vertebral level, tapering into the conus medullaris; nerve roots continue down as the cauda equina." },
+      { q: "At which spinal cord levels are sympathetic preganglionic neuron cell bodies found (the lateral horn)?", choices: ["C1–C8", "T1–L2", "L3–S4", "Throughout the entire spinal cord"], correct: 1, explain: "The intermediolateral gray horn, containing sympathetic preganglionic neuron cell bodies, is present only at spinal levels T1 through L2." },
+      { q: "Which spinal cord tract carries fine touch, vibration, and conscious proprioception?", choices: ["The spinothalamic tract", "The dorsal columns (fasciculus gracilis/cuneatus)", "The spinocerebellar tract", "The corticospinal tract"], correct: 1, explain: "The dorsal columns carry fine touch, vibration sense, and conscious proprioception, remaining ipsilateral until they reach the medulla." },
+      { q: "Which mechanoreceptor is responsible for detecting deep pressure and vibration?", choices: ["Meissner corpuscle", "Merkel disc", "Pacinian corpuscle", "Ruffini ending"], correct: 2, explain: "Pacinian corpuscles, located deep in the dermis/hypodermis, detect deep pressure and vibration." },
+      { q: "What do chemoreceptors in the carotid and aortic bodies monitor?", choices: ["Skin temperature", "Blood gas and pH levels", "Joint position", "Light touch on the skin"], correct: 1, explain: "Chemoreceptors in the carotid and aortic bodies monitor blood oxygen, carbon dioxide, and pH, feeding into reflex control of breathing and blood pressure." }
+    ],
+    peripheralCranialNerves: [
+      { q: "What are the two components that unite to form a spinal nerve?", choices: ["A dorsal ramus and a ventral ramus", "A dorsal root (sensory) and a ventral root (motor)", "A white ramus and a gray ramus", "A cervical root and a thoracic root"], correct: 1, explain: "A spinal nerve forms from the union of the sensory dorsal root and the motor ventral root, just before it exits the vertebral column." },
+      { q: "Which nerve plexus gives rise to the sciatic nerve?", choices: ["The cervical plexus", "The brachial plexus", "The lumbar plexus", "The sacral plexus"], correct: 3, explain: "The sacral plexus (L4–S4) gives rise to the sciatic nerve, the largest nerve in the body." },
+      { q: "What distinguishes a monosynaptic reflex from a polysynaptic reflex?", choices: ["Monosynaptic reflexes are slower", "A monosynaptic reflex has the sensory neuron synapse directly on the motor neuron, with no interneuron", "Polysynaptic reflexes never involve the spinal cord", "Monosynaptic reflexes only occur in cranial nerves"], correct: 1, explain: "In a monosynaptic reflex (like the patellar reflex), the sensory neuron synapses directly onto the motor neuron; a polysynaptic reflex (like withdrawal) involves one or more interneurons." },
+      { q: "Which cranial nerve carries parasympathetic fibers via the ciliary ganglion to constrict the pupil and accommodate the lens?", choices: ["CN II (Optic)", "CN III (Oculomotor)", "CN VI (Abducens)", "CN VII (Facial)"], correct: 1, explain: "CN III (oculomotor) carries parasympathetic fibers through the ciliary ganglion that constrict the pupil and adjust lens shape for near vision, in addition to its motor supply to most extra-ocular muscles." },
+      { q: "Which foramen do cranial nerves IX, X, and XI all pass through?", choices: ["The foramen magnum", "The internal acoustic meatus", "The jugular foramen", "The hypoglossal canal"], correct: 2, explain: "CN IX (glossopharyngeal), CN X (vagus), and CN XI (accessory) all exit the skull together through the jugular foramen, alongside the internal jugular vein." }
+    ]
+  };
+</script>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

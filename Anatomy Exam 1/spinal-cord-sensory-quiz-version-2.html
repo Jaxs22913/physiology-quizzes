@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Spinal Cord and Sensory Receptors (Set 2)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinal Cord &amp; Sensory Receptors — Anatomy Exam 1 — Set 2</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#1f6f5c;
+    --oxblood-soft:#2e6a92;
+    --brass:#c1440e;
+    --teal:#5b3a8e;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">Spinal Cord &amp; Sensory Receptors — Set 2</span></h1>
+    <p class="sub">Spinal Cord Anatomy &amp; Tracts &middot; General &amp; Special Senses</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the Spinal Cord &amp; Sensory Receptors lecture, spanning the gross/sectional anatomy of the spinal cord, its major ascending and descending tracts, and the anatomical classification of sensory receptors (including olfaction and gustation). Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Describe the anatomical divisions of the spinal cord and the arrangement of its white and gray matter.</span></li>
+      <li><span class="n">2</span><span>Compare and contrast the major efferent and afferent tracts of the spinal cord, including the spinocerebellar tracts.</span></li>
+      <li><span class="n">3</span><span>Compare and contrast the sensory receptors of the body anatomically, including the special senses of smell and taste.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=spinal-cord-sensory-2" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Spinal Cord &amp; Sensory Receptors lecture &middot; PAJ 5000 Anatomy &middot; for study use. (Set 2)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the spinal cord and sensory receptors lecture (Set 2).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Sensory Introduction", "q": "What is the difference between a sensation and a perception?", "choices": ["Sensation is sensory information arriving at the CNS; perception is the conscious awareness of that sensation", "Sensation is conscious awareness; perception is the raw arrival of information at the CNS", "Both terms describe the exact same process", "Sensation only occurs in special senses; perception only occurs in general senses"], "answer": 0, "correct": "Sensory information arriving at the CNS is called a sensation, while perception is the conscious awareness of a sensation.", "why": "Reversing the definitions (sensation as conscious awareness, perception as raw arrival) contradicts the material's stated meanings; the two terms describe a sequential, distinct relationship (arrival then awareness), not the same process; and both sensation and perception apply across general and special senses, not split by sense category.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 45"},
+{"topic": "Sensory Introduction", "q": "What is the role of sensory receptors, per the material's introduction?", "choices": ["The interface between the nervous system and the internal and external environment", "Structures that only exist within the brain, with no peripheral location", "Structures exclusively for motor output, not sensory input", "Structures that produce hormones, unrelated to the nervous system"], "answer": 0, "correct": "Sensory receptors are the interface between the nervous system and the internal and external environment, picking up afferent (sensory) information that arrives at the CNS.", "why": "Sensory receptors are distributed throughout the body, not confined only to the brain; they are specifically for sensory input, not motor output, which is the opposite function; and they are not hormone-producing structures, which would instead be an endocrine gland function.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 45"},
+{"topic": "The Senses", "q": "What is the difference between general senses and special senses?", "choices": ["General senses (temperature, pain, touch, pressure, vibration, proprioception) have receptors distributed throughout the body; special senses (smell, taste, balance, hearing, vision) have receptors in complex sense organs", "General senses are located only in complex sense organs; special senses are distributed throughout the body", "Both categories include identical sensory modalities", "General senses include vision and hearing; special senses include touch and pain"], "answer": 0, "correct": "General senses (temperature, pain, touch, pressure, vibration, and proprioception) have receptors distributed throughout the body, while special senses (smell, taste, balance, hearing, and vision) have receptors located in complex sense organs like the eyes, ears, and taste buds.", "why": "Reversing the receptor distribution (general in complex organs, special distributed throughout the body) contradicts the material's stated classification; the two categories include distinct, non-overlapping modalities, not identical ones; and vision/hearing are special senses while touch/pain are general senses, the opposite of that option's claim.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 46"},
+{"topic": "Receptor Specificity", "q": "What is an example given of a nonspecific receptor, and a highly specific receptor?", "choices": ["Free nerve endings (respond to a variety of stimuli) versus retinal receptors (respond only to light)", "Retinal receptors (respond to a variety of stimuli) versus free nerve endings (respond only to light)", "Both free nerve endings and retinal receptors are equally nonspecific", "Neither receptor type shows any specificity"], "answer": 0, "correct": "Free nerve endings are the simplest receptors and respond to a variety of stimuli, while receptors of the retina are very specific and only respond to light.", "why": "Reversing the specificity examples (retina nonspecific, free nerve endings light-specific) contradicts the material's stated examples; the two receptor types have clearly different levels of specificity, not equal nonspecificity; and the material does describe varying specificity, so claiming neither shows specificity is incorrect.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 47"},
+{"topic": "Interpretation of Sensory Information", "q": "What does the identity of the active sensory neuron indicate, and what does the pattern of action potentials provide?", "choices": ["The identity indicates the location and nature of the stimulus; the pattern of action potentials (sensory coding) provides additional information like strength and duration", "The identity indicates only the strength of the stimulus; the pattern indicates only its location", "Neither the identity nor the pattern provides any useful information", "The identity and pattern both convey identical information"], "answer": 0, "correct": "The identity of the active neuron indicates the location and nature of the stimulus, while the pattern of action potentials (sensory coding) provides additional information such as strength and duration.", "why": "Reversing which factor conveys location versus strength contradicts the material's stated coding scheme; both the neuron identity and action potential pattern do provide useful, distinct information, not none at all; and they convey different types of information (location/nature versus strength/duration), not identical information.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 47"},
+{"topic": "Classification of General Senses", "q": "What is the difference between exteroceptors, proprioceptors, and interoceptors, based on sensory location?", "choices": ["Exteroceptors provide information about the external environment; proprioceptors about body position; interoceptors about the inside of the body", "Exteroceptors provide information about body position; proprioceptors about the external environment; interoceptors about pain only", "All three receptor types provide identical information", "Exteroceptors and interoceptors are the same receptor type"], "answer": 0, "correct": "Based on sensory location, exteroceptors provide information about the external environment, proprioceptors provide information about the position of the body, and interoceptors provide information about the inside of the body.", "why": "Swapping the exteroceptor and proprioceptor definitions contradicts the material's stated classification, and interoceptors are not limited only to pain; the three receptor types provide distinct, non-identical information based on location; and exteroceptors and interoceptors are explicitly different categories (external versus internal), not the same type.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 48"},
+{"topic": "Classification of General Senses", "q": "What is the difference between nociceptors, thermoreceptors, mechanoreceptors, and chemoreceptors, based on the nature of the stimulus?", "choices": ["Nociceptors respond to pain; thermoreceptors to temperature changes; mechanoreceptors to physical distortion of membranes; chemoreceptors to chemical composition of body fluids", "Nociceptors respond to temperature; thermoreceptors to pain; mechanoreceptors to chemical composition; chemoreceptors to physical distortion", "All four receptor types respond to the exact same stimulus type", "Only mechanoreceptors and chemoreceptors are classified by stimulus nature"], "answer": 0, "correct": "Classified by the nature of the stimulus: nociceptors respond to pain, thermoreceptors respond to temperature changes, mechanoreceptors are sensitive to physical distortion of cell membranes, and chemoreceptors monitor the chemical composition of body fluids.", "why": "Scrambling the stimulus-receptor pairings (nociceptors-temperature, thermoreceptors-pain, etc.) misassigns each receptor's actual stimulus type; the four receptor types respond to distinctly different stimuli, not the same one; and all four (not just two) are classified by the nature of the stimulus in this scheme.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 48"},
+{"topic": "Nociceptors", "q": "What is the difference between fast pain and slow pain?", "choices": ["Fast pain (\"prickling pain\") reaches the CNS quickly, associated with deep cuts; slow pain (\"burning pain\") reaches the CNS slowly, with delayed onset and longer duration", "Fast pain reaches the CNS slowly; slow pain reaches the CNS quickly", "Both types of pain reach the CNS at identical speeds", "Fast and slow pain describe temperature sensation, not pain"], "answer": 0, "correct": "Fast pain (\"prickling pain\") reaches the CNS quickly and is associated with deep cuts or similar injuries, while slow pain (\"burning pain\") reaches the CNS slowly, has delayed onset, and lasts longer, even for the same type of injury.", "why": "Reversing the speed descriptions (fast pain slow, slow pain fast) contradicts the material's terminology and stated meanings; the two pain types have distinctly different CNS transmission speeds, not identical ones; and fast/slow pain specifically describe pain sensation, not temperature sensation, which is a separate thermoreceptor category.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 49"},
+{"topic": "Nociceptors", "q": "What is referred pain?", "choices": ["Painful sensation from visceral organs that is perceived as coming from another region, with an unknown exact mechanism", "Pain that is always perceived exactly where the injury occurred", "A type of thermoreceptor sensation", "Pain that only occurs in skeletal muscle, never in visceral organs"], "answer": 0, "correct": "Referred pain is a painful sensation from visceral organs that is perceived as coming from another region; the exact mechanism is unknown.", "why": "Pain perceived exactly where the injury occurred describes localized (not referred) pain, the opposite concept; referred pain is a nociceptor phenomenon, not a thermoreceptor sensation; and referred pain specifically originates from visceral organs, not skeletal muscle exclusively.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 49"},
+{"topic": "Thermoreceptors", "q": "Where are thermoreceptors found, and what type of receptor are they (in terms of adaptation)?", "choices": ["Found in the dermis, skeletal muscles, liver, and hypothalamus, as free nerve endings; phasic receptors that adapt quickly to a stable temperature", "Found only in the epidermis; tonic receptors that never adapt", "Found only in the retina; phasic receptors", "Found in bone tissue exclusively; tonic receptors"], "answer": 0, "correct": "Thermoreceptors are found in the dermis, skeletal muscles, liver, and hypothalamus, existing as free nerve endings; they are phasic receptors, very active when temperature changes but quickly adapting to a stable temperature.", "why": "They are not confined only to the epidermis, and they are phasic (adapting), not tonic (non-adapting) receptors; the retina houses photoreceptors, not thermoreceptors; and bone tissue is not a listed location for thermoreceptors, which are instead found in the dermis, muscle, liver, and hypothalamus.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 50"},
+{"topic": "Thermoreceptors", "q": "Are cold receptors or hot receptors more numerous, per the material?", "choices": ["Cold receptors are more numerous than hot receptors", "Hot receptors are more numerous than cold receptors", "Cold and hot receptors are exactly equal in number", "Neither cold nor hot receptors exist as a distinct category"], "answer": 0, "correct": "Cold receptors are more numerous than hot receptors.", "why": "Claiming hot receptors are more numerous reverses the material's stated relative abundance; the material specifically states an unequal (cold greater than hot) relationship, not an equal one; and both cold and hot receptors are described as real, distinct thermoreceptor categories, not absent.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 50"},
+{"topic": "Mechanoreceptors", "q": "What are the three types of mechanoreceptors described in the material?", "choices": ["Tactile receptors, baroreceptors, and proprioceptors", "Nociceptors, thermoreceptors, and chemoreceptors", "Only tactile receptors exist as a mechanoreceptor type", "Photoreceptors, chemoreceptors, and thermoreceptors"], "answer": 0, "correct": "The three types of mechanoreceptors are tactile receptors, baroreceptors, and proprioceptors.", "why": "Nociceptors, thermoreceptors, and chemoreceptors are each their own separate general-sense receptor categories (classified by stimulus nature), not subtypes of mechanoreceptors; there are three mechanoreceptor subtypes described, not just tactile receptors alone; and photoreceptors are special-sense (visual) receptors, not a mechanoreceptor subtype listed here.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 51"},
+{"topic": "Mechanoreceptors", "q": "What is the difference between fine touch/pressure receptors and crude touch/pressure receptors (tactile receptor subtypes)?", "choices": ["Fine touch/pressure receptors provide detailed information about location, shape, size, and texture; crude touch/pressure receptors provide generalized information about stimulus location", "Fine touch/pressure receptors provide only generalized information; crude touch/pressure receptors provide detailed information", "Both subtypes provide identical, non-differentiated information", "Fine and crude touch receptors are the same as baroreceptors"], "answer": 0, "correct": "Fine touch and pressure receptors provide detailed information about the location, shape, size, and texture of a stimulus, while crude touch and pressure receptors provide generalized information about stimulus location.", "why": "Reversing which subtype provides detailed versus generalized information contradicts the material's stated distinction; the two subtypes provide different levels of detail, not identical information; and fine/crude touch receptors are a distinct tactile receptor subtype, separate from baroreceptors, which monitor organ stretch.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 51"},
+{"topic": "Mechanoreceptors", "q": "What are baroreceptors, and where are they located?", "choices": ["Stretch receptors that monitor changes in organ stretch due to pressure, located in structures like the stomach, small intestine, urinary bladder, carotid artery, lungs, and large intestine", "Receptors that monitor joint position, located only in the tendons", "Receptors that detect light touch, located only in the skin", "Chemoreceptors located in the carotid and aortic bodies"], "answer": 0, "correct": "Baroreceptors are stretch receptors that monitor changes in the stretch of organs due to pressure, located in structures like the stomach, small intestine, urinary bladder, carotid artery, lungs, and large intestine.", "why": "Monitoring joint position in the tendons describes proprioceptors (specifically Golgi tendon organs), not baroreceptors; detecting light touch in the skin describes tactile receptors, a different mechanoreceptor subtype; and chemoreceptors (not baroreceptors) are the ones located in the carotid and aortic bodies monitoring chemical composition.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 51"},
+{"topic": "Mechanoreceptors", "q": "What do proprioceptors monitor, and what are Golgi tendon organs versus muscle spindles?", "choices": ["Proprioceptors monitor joint position and tension; Golgi tendon organs are receptors in tendons monitoring tension, while muscle spindles are receptors in muscles monitoring fiber length", "Proprioceptors monitor only skin stretch; Golgi tendon organs and muscle spindles are the same structure", "Golgi tendon organs monitor muscle length; muscle spindles monitor tendon tension", "Proprioceptors are unrelated to joint or muscle monitoring"], "answer": 0, "correct": "Proprioceptors monitor the position of joints and tension in tendons/ligaments; Golgi tendon organs are the receptors in tendons that monitor tension, while muscle spindles are receptors in the muscles that monitor the length of muscle fibers upon contraction.", "why": "Proprioceptors specifically monitor joint/muscle position, not skin stretch (a tactile receptor domain), and Golgi tendon organs/muscle spindles are distinct structures, not the same one; reversing which structure monitors muscle length versus tendon tension contradicts the material's stated roles; and proprioceptors are directly related to joint/muscle monitoring, not unrelated to it.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 51"},
+{"topic": "Chemoreceptors", "q": "Where are chemoreceptors found, per the material?", "choices": ["Respiratory centers of the medulla oblongata, carotid arteries (carotid bodies), and the aortic arch (aortic bodies)", "Only in the retina", "Only in the skin's epidermis", "Only in the cerebellum"], "answer": 0, "correct": "Chemoreceptors, which detect small changes in the concentration of chemicals and respond to water-soluble or lipid-soluble compounds, are found in the respiratory centers of the medulla oblongata, the carotid arteries (carotid bodies), and the aortic arch (aortic bodies).", "why": "The retina houses photoreceptors, not chemoreceptors; the epidermis is where tactile and some thermoreceptors are found, not the chemoreceptors described here; and the cerebellum coordinates movement, unrelated to the chemoreceptor locations listed in this material.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 54"},
+{"topic": "Skin Sensors", "q": "What sensations do Merkel discs detect, and which tract do they relay through?", "choices": ["Light touch; relay through the ventral spinothalamic tract", "Deep touch and high-frequency vibration; relay through the dorsal columns", "Pain; relay through Lissauer's tract", "Pressure, heat, and skin stretching; relay through the dorsal columns"], "answer": 0, "correct": "Merkel discs detect light touch and relay this information through the ventral spinothalamic tract.", "why": "Deep touch and high-frequency vibration describes Pacinian corpuscles, relayed via the dorsal columns, a different receptor; pain relayed through Lissauer's tract describes free nerve endings/nociceptors, not Merkel discs; and pressure/heat/skin stretching describes Ruffini corpuscles, a different skin receptor.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 44"},
+{"topic": "Skin Sensors", "q": "What sensations do Meissner's corpuscles detect, and which pathway do they relay through?", "choices": ["Light touch, movement, and low-frequency vibration; relay through the dorsal columns", "Deep touch and high-frequency vibration; relay through the spinothalamic tract", "Pain only; relay through the dorsal columns", "Pressure and skin stretching; relay through the ventral spinothalamic tract"], "answer": 0, "correct": "Meissner's corpuscles detect light touch, movement, and low-frequency vibration, relaying this information through the dorsal columns.", "why": "Deep touch and high-frequency vibration with spinothalamic relay describes Pacinian corpuscles, a different receptor and pathway; pain is detected by free nerve endings (nociceptors), not Meissner's corpuscles; and pressure/skin stretching describes Ruffini corpuscles, relayed via the dorsal columns (with heat specifically going to the spinothalamic tract), a different receptor than Meissner's corpuscles.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 44"},
+{"topic": "Skin Sensors", "q": "What do Ruffini corpuscles detect, and how is their heat sensation relayed differently from their pressure/stretch sensation?", "choices": ["Detect pressure, heat, and skin stretching; pressure/stretch relays through the dorsal columns, but heat instead goes to the spinothalamic tract", "Detect only pain; all sensations relay through the spinothalamic tract", "Detect deep touch and high-frequency vibration; all sensations relay through the dorsal columns", "Detect light touch only; relays exclusively through the ventral spinothalamic tract"], "answer": 0, "correct": "Ruffini corpuscles detect pressure, heat, and skin stretching; pressure and stretch sensations relay through the dorsal columns, but heat sensation instead goes to the spinothalamic tract.", "why": "Detecting only pain describes free nerve endings/nociceptors, not Ruffini corpuscles; deep touch and high-frequency vibration describes Pacinian corpuscles, a different receptor; and light touch alone with ventral spinothalamic relay describes Merkel discs, not Ruffini corpuscles.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 44"},
+{"topic": "Skin Sensors", "q": "What do Pacinian corpuscles detect, and which pathway relays this information?", "choices": ["Deep touch and high-frequency vibrations; relay through the dorsal columns", "Light touch and low-frequency vibration; relay through the spinothalamic tract", "Pain; relay through the ventral spinothalamic tract", "Pressure and heat; relay through Lissauer's tract"], "answer": 0, "correct": "Pacinian corpuscles detect deep touch and high-frequency vibrations, relaying this information through the dorsal columns.", "why": "Light touch and low-frequency vibration describes Meissner's corpuscles, a different receptor relayed via the dorsal columns (not spinothalamic); pain detection describes free nerve endings, relayed via the spinothalamic tract, not Pacinian corpuscles; and pressure/heat with Lissauer's tract description more closely resembles the nociceptor/Ruffini pathway entry point, not the Pacinian corpuscle pathway.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 44"},
+{"topic": "Skin Sensors", "q": "What do free nerve endings function as, and which tract relays their information?", "choices": ["Function as nociceptors; relay through the spinothalamic tracts", "Function as baroreceptors; relay through the dorsal columns", "Function as proprioceptors; relay through the corticospinal tract", "Function as chemoreceptors; relay through the medial lemniscus only"], "answer": 0, "correct": "Free nerve endings function as nociceptors, relaying pain information through the spinothalamic tracts.", "why": "Baroreceptors monitor organ stretch, a distinct mechanoreceptor function unrelated to free nerve endings' pain role; proprioceptors monitor joint/muscle position via structures like Golgi tendon organs and muscle spindles, not free nerve endings, and the corticospinal tract is a motor (not sensory) pathway; and chemoreceptors monitor chemical composition of body fluids, a different receptor type from free nerve endings.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 44"},
+{"topic": "Olfaction", "q": "What structures make up the olfactory epithelium, per the material?", "choices": ["Olfactory sensory neurons, supporting cells, and basal epithelial cells", "Only olfactory sensory neurons, with no supporting or basal cells", "Taste buds and gustatory epithelial cells", "Photoreceptor cells and bipolar cells"], "answer": 0, "correct": "The olfactory epithelium contains olfactory sensory neurons, supporting cells, and basal epithelial cells.", "why": "Supporting and basal epithelial cells are real, described components alongside the sensory neurons, so limiting it to only sensory neurons is incomplete; taste buds and gustatory epithelial cells are gustation (taste) structures, not olfactory ones; and photoreceptor/bipolar cells are retinal (visual) structures, unrelated to the olfactory epithelium.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 56"},
+{"topic": "Olfaction", "q": "What does the lamina propria underlying the olfactory epithelium contain?", "choices": ["Olfactory glands (producing mucus), blood vessels, and nerves", "Only bone tissue", "Taste buds", "Photoreceptors"], "answer": 0, "correct": "The lamina propria, an underlying loose connective tissue, contains olfactory glands (which produce mucus), blood vessels, and nerves.", "why": "Bone tissue is not a component of the lamina propria described here, which is instead a loose connective tissue with glands/vessels/nerves; taste buds are a gustatory (taste) structure, not part of the olfactory lamina propria; and photoreceptors are retinal structures, unrelated to the olfactory lamina propria.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 56"},
+{"topic": "Olfaction", "q": "What are olfactory sensory neurons, structurally, and how are they replaced?", "choices": ["Highly modified neurons with an apical end containing multiple cilia projecting into the nasal cavity; replaced regularly by regenerative basal cells", "Typical unmodified neurons that are never replaced once formed", "Neurons found only in the tongue, replaced by taste bud regeneration", "Glial cells, not true neurons, replaced by microglia"], "answer": 0, "correct": "Olfactory sensory neurons are highly modified neurons with an apical end containing multiple cilia that project beyond the epithelium into the nasal cavity (covered by mucus from olfactory glands); receptor cells are replaced regularly by regenerative basal cells in the olfactory epithelium.", "why": "They are specifically replaced regularly (not never replaced), a distinctive feature of olfactory neurons; they are found in the nasal cavity's olfactory epithelium, not the tongue (a gustatory structure); and they are true neurons (not glial cells), replaced by basal cells, not microglia.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 57"},
+{"topic": "Olfaction", "q": "What cranial nerve do olfactory receptor axons form, and through what foramina do they leave the epithelium?", "choices": ["Form CN I, leaving through the cribriform foramina to synapse in the olfactory bulb", "Form CN II, leaving through the optic canal", "Form CN VII, leaving through the stylomastoid foramen", "Form CN X, leaving through the jugular foramen"], "answer": 0, "correct": "Axons of olfactory receptors leave the olfactory epithelium through the cribriform foramina and synapse on neurons in the olfactory bulb; these axons form CN I (the olfactory nerve).", "why": "CN II (optic nerve) exits via the optic canal for vision, not olfaction; CN VII (facial nerve) exits via the stylomastoid foramen for facial expression, unrelated to smell; and CN X (vagus nerve) exits via the jugular foramen for visceral innervation, also unrelated to the olfactory pathway.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 58"},
+{"topic": "Olfaction", "q": "After the olfactory bulb, where do olfactory impulses travel, and where do they ultimately arrive?", "choices": ["Travel via the olfactory tract, arriving at the cerebral cortex, hypothalamus, and limbic system", "Travel via the optic tract, arriving only at the visual cortex", "Travel via the corticospinal tract, arriving at the spinal cord", "Travel via the spinothalamic tract, arriving at the primary sensory cortex only"], "answer": 0, "correct": "Impulses travel from the olfactory bulb to the brain via the olfactory tract, arriving at the cerebral cortex, hypothalamus, and limbic system.", "why": "The optic tract and visual cortex are part of the visual pathway, unrelated to olfaction; the corticospinal tract is a descending motor pathway, not an ascending olfactory sensory pathway; and the spinothalamic tract carries pain/temperature/crude touch information from the body, not olfactory information from the nose.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 58"},
+{"topic": "Gustation", "q": "Where are gustatory receptors found in adults, and what are the four types of lingual papillae?", "choices": ["Found in papillae on the dorsal surface of the tongue; the four types are filiform, fungiform, foliate, and vallate", "Found only in the pharynx; only two types of papillae exist", "Found in the olfactory epithelium; three types of papillae exist", "Found in the ear; the four types are identical to lingual papillae types"], "answer": 0, "correct": "Gustatory receptors are found in papillae on the dorsal surface of the tongue in adults, and there are four types of lingual papillae: filiform, fungiform, foliate, and vallate.", "why": "The pharynx is where water receptors are mainly located, not the primary site of gustatory receptors, and there are four (not two) papillae types; the olfactory epithelium is a separate smell-related structure, not where taste papillae are found; and the ear is unrelated to gustation, which is specifically a tongue-based sense.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 59"},
+{"topic": "Gustation", "q": "What do gustatory epithelial cells (taste receptors) have that extends through the taste pore, and what stimulates them?", "choices": ["Slender microvilli (\"taste hairs\") that extend through the taste pore into surrounding fluid; dissolved chemicals contacting the microvilli stimulate the cell", "Cilia that extend into the nasal cavity; airborne odorant molecules stimulate the cell", "Photoreceptive discs; light stimulates the cell", "Stereocilia that detect sound vibrations"], "answer": 0, "correct": "Each gustatory cell has slender microvilli (also called \"taste hairs\") that extend through the taste pore into the surrounding fluid; dissolved chemicals contact the microvilli and stimulate the gustatory cell.", "why": "Cilia extending into the nasal cavity stimulated by airborne odorants describes olfactory sensory neurons, not gustatory cells; photoreceptive discs stimulated by light describes retinal photoreceptors, an unrelated special sense; and stereocilia detecting sound vibrations describes inner ear hair cells, also unrelated to gustation.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 60"},
+{"topic": "Gustation", "q": "What cranial nerves carry gustatory impulses, and where do first-order synapses occur?", "choices": ["CN VII, IX, and X; first-order synapses occur in the nucleus solitarius of the medulla oblongata", "CN I only; synapses occur in the olfactory bulb", "CN II and III; synapses occur in the thalamus directly", "CN V and VI; synapses occur in the cerebellum"], "answer": 0, "correct": "Gustatory impulses travel through CN VII, IX, and X, with first-order synapses occurring in the nucleus solitarius of the medulla oblongata, before second-order synapses in the thalamus and information arriving at the gustatory cortex.", "why": "CN I is the olfactory nerve (smell), not the gustatory cranial nerves; CN II and III are involved in vision and eye movement, unrelated to taste, and synapses don't occur directly in the thalamus bypassing the medulla; and CN V/VI are involved in mastication/lateral eye movement, not gustation, and the cerebellum is not the first-order synapse site.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 61"},
+{"topic": "Gustation", "q": "What are the four (possibly six) primary taste sensations listed in the material?", "choices": ["Sweet, salty, sour, bitter (plus umami and water)", "Sweet, sour, spicy, and bitter", "Only sweet and salty", "Umami, spicy, minty, and sour"], "answer": 0, "correct": "The primary taste sensations are sweet, salty, sour, and bitter, with umami (characteristic of beef and chicken broth) and water receptors (mainly in the pharynx) as possible additional sensations, for a total of four to six.", "why": "\"Spicy\" is not listed among the material's primary taste sensations (it's actually a pain/thermal sensation via nociceptors in real physiology, not a taste bud modality here); limiting the list to only sweet and salty omits several described sensations; and \"minty\" is not one of the primary taste sensations named in this material.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 62"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

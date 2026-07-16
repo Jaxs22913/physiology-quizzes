@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Spinal Cord and Sensory Receptors (Set 1)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinal Cord &amp; Sensory Receptors — Anatomy Exam 1</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#1f6f5c;
+    --oxblood-soft:#2e6a92;
+    --brass:#c1440e;
+    --teal:#5b3a8e;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">Spinal Cord &amp; Sensory Receptors</span></h1>
+    <p class="sub">Spinal Cord Anatomy &amp; Tracts &middot; General &amp; Special Senses</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the Spinal Cord &amp; Sensory Receptors lecture, spanning the gross/sectional anatomy of the spinal cord, its major ascending and descending tracts, and the anatomical classification of sensory receptors (including olfaction and gustation). Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Describe the anatomical divisions of the spinal cord and the arrangement of its white and gray matter.</span></li>
+      <li><span class="n">2</span><span>Compare and contrast the major efferent and afferent tracts of the spinal cord, including the spinocerebellar tracts.</span></li>
+      <li><span class="n">3</span><span>Compare and contrast the sensory receptors of the body anatomically, including the special senses of smell and taste.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=spinal-cord-sensory" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Spinal Cord &amp; Sensory Receptors lecture &middot; PAJ 5000 Anatomy &middot; for study use. (Set 1)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the spinal cord and sensory receptors lecture (Set 1).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Spinal Cord Gross Anatomy", "q": "How long is the spinal cord, and to what vertebral level does it extend?", "choices": ["45 cm; extends from the brain to approximately L2", "100 cm; extends to the sacrum", "45 cm; extends only to T12", "20 cm; extends to L2"], "answer": 0, "correct": "The spinal cord is 45 cm in length and extends from the brain to approximately L2, passing through the foramen magnum.", "why": "100 cm and extending to the sacrum both overstate the cord's actual length and termination; 45 cm with a T12 endpoint understates how far inferiorly the cord actually extends; and 20 cm significantly understates the cord's true length, even though the L2 endpoint is close.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 6"},
+{"topic": "Spinal Cord Gross Anatomy", "q": "What arteries supply the spinal cord, per the gross anatomy overview?", "choices": ["One anterior spinal artery and two posterior spinal arteries", "Two anterior spinal arteries and one posterior spinal artery", "Only the vertebral arteries directly, with no dedicated spinal arteries", "Four spinal arteries, two anterior and two posterior"], "answer": 0, "correct": "The spinal cord is fed by one anterior spinal artery and two posterior spinal arteries.", "why": "Reversing the numbers (two anterior, one posterior) contradicts the material's stated 1-anterior/2-posterior arrangement; the spinal cord does have dedicated spinal arteries (derived from the vertebral arteries), not just direct vertebral artery supply; and there are three spinal arteries total, not four.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 6"},
+{"topic": "Spinal Cord Gross Anatomy", "q": "What is the conus medullaris, and where does it typically end?", "choices": ["The true end of the spinal cord, typically ending at L1-L2", "The beginning of the spinal cord at the foramen magnum", "A bundle of nerve roots extending below the spinal cord's true end", "A ligament connecting the spinal cord to the coccyx"], "answer": 0, "correct": "The conus medullaris is the true end of the spinal cord, typically ending at L1-L2.", "why": "The beginning of the spinal cord at the foramen magnum describes the cord's superior continuation with the medulla oblongata, not the conus medullaris; a bundle of nerve roots extending below the cord's true end describes the cauda equina, a different structure; and the filum terminale (not the conus medullaris) is the ligament-like structure connecting toward the coccyx.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 7"},
+{"topic": "Spinal Cord Gross Anatomy", "q": "What is the cauda equina, and what does it innervate?", "choices": ["Nerve roots extending from the conus medullaris to innervate pelvic and lower extremity structures", "The true end of the spinal cord itself", "A ligament that becomes part of the coccygeal ligament", "The enlarged region of the spinal cord in the cervical area"], "answer": 0, "correct": "The cauda equina consists of nerve roots that extend from the conus medullaris to innervate pelvic and lower extremity structures.", "why": "The conus medullaris (not the cauda equina) is the true end of the spinal cord itself; the filum terminale is the ligament-like structure that becomes part of the coccygeal ligament, not the cauda equina; and the cervical enlargement is a separate, more superior region of the spinal cord, unrelated to the cauda equina.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 7"},
+{"topic": "Spinal Cord Gross Anatomy", "q": "What is the filum terminale, and what does it become?", "choices": ["A structure that becomes a component of the coccygeal ligament", "A bundle of nerve roots innervating the lower extremities", "The widened region of the spinal cord in the lumbosacral area", "The true end of the spinal cord"], "answer": 0, "correct": "The filum terminale becomes a component of the coccygeal ligament.", "why": "A bundle of nerve roots innervating the lower extremities describes the cauda equina, a different structure from the filum terminale; the lumbosacral enlargement is a widened cord region, not the filum terminale; and the conus medullaris (not the filum terminale) is described as the true end of the spinal cord.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 7"},
+{"topic": "Spinal Cord Sectional Anatomy", "q": "What is the difference between the dorsal root and ventral root of a spinal nerve?", "choices": ["Dorsal root is sensory, with axons extending from the soma within the dorsal root ganglion; ventral root is motor", "Dorsal root is motor; ventral root is sensory", "Both roots are purely motor", "Both roots are purely sensory"], "answer": 0, "correct": "The dorsal root is sensory, with axons extending from the soma within the dorsal root ganglion, while the ventral root is motor; the two merge to form a spinal nerve.", "why": "Reversing the functions (dorsal motor, ventral sensory) contradicts the material's stated roles; the two roots have distinct sensory and motor functions, not both being purely motor; and likewise, they are not both purely sensory, since the ventral root specifically carries motor fibers.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 11"},
+{"topic": "Spinal Cord Sectional Anatomy", "q": "What does the gray matter of the spinal cord consist of, and where is it located relative to the central canal?", "choices": ["Somas (cell bodies/nuclei) surrounding the central canal", "Axons organized into tracts, located outside the gray matter area", "Only myelin, with no cell bodies", "Only glial cells, with no neurons"], "answer": 0, "correct": "Gray matter consists of somas (cell bodies; nuclei) surrounding the central canal, which supplies CSF.", "why": "Axons organized into tracts outside the gray matter area instead describes white matter, not gray matter; gray matter is not solely myelin, since myelin is more characteristic of white matter's axon bundles; and gray matter does contain neuron cell bodies, not exclusively glial cells.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 12"},
+{"topic": "Spinal Cord Sectional Anatomy", "q": "What does the white matter of the spinal cord consist of, and how are its nerves organized?", "choices": ["Consists of axons, organized into tracts or columns (generally termed fascicles), located outside the gray matter", "Consists of cell bodies surrounding the central canal", "Consists only of the dorsal root ganglion", "Consists of CSF only"], "answer": 0, "correct": "White matter consists of axons, organized into tracts or columns (generally termed fascicles), located outside the gray matter area.", "why": "Cell bodies surrounding the central canal describes gray matter, not white matter; the dorsal root ganglion is a separate PNS structure housing sensory neuron cell bodies, not the composition of white matter; and white matter consists of axons, not CSF, which instead fills the central canal.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 12"},
+{"topic": "Spinal Cord Gray Matter Organization", "q": "What do the posterior gray horns, lateral gray horns, and anterior gray horns each contain?", "choices": ["Posterior: somatic sensory/visceral nuclei; Lateral: visceral motor nuclei; Anterior: somatic motor nuclei", "Posterior: somatic motor nuclei; Lateral: somatic sensory nuclei; Anterior: visceral motor nuclei", "All three horns contain identical nuclei types", "Only the anterior horn contains any nuclei"], "answer": 0, "correct": "The posterior gray horns contain somatic sensory and visceral nuclei, the lateral gray horns contain visceral motor nuclei (present T1-L2, controlling smooth muscle, heart, and glands), and the anterior gray horns contain somatic motor nuclei.", "why": "Reversing the horn assignments (posterior motor, anterior visceral motor) contradicts the material's stated organization; the three horns have distinct nuclei types, not identical ones; and all three horns contain nuclei, not just the anterior horn alone.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 14"},
+{"topic": "Spinal Cord Gray Matter Organization", "q": "In the anterior gray horn, how are extensor and flexor motor neurons arranged?", "choices": ["Extensors are more anterior/rostral; flexors are more posterior/caudal", "Extensors are more posterior/caudal; flexors are more anterior/rostral", "Both are located in identical positions", "Extensors are lateral; flexors are medial only"], "answer": 0, "correct": "Within the anterior gray horn, extensor motor neurons are positioned more anterior/rostral, while flexor motor neurons are positioned more posterior/caudal.", "why": "Reversing the positions (extensors posterior, flexors anterior) contradicts the material's stated arrangement; the two neuron groups occupy distinct positions, not identical ones; and while there is a medial/lateral organization related to limb versus trunk control, the primary extensor/flexor distinction described here is anterior/posterior, not simply lateral versus medial.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 14"},
+{"topic": "Spinal Cord Gray Matter Organization", "q": "In the dorsal column sensory arrangement, how are the gracile and cuneate fasciculi organized medially/laterally, and what does each represent?", "choices": ["Gracilis is more medial, responsible for the lower extremity; cuneatus is more lateral, responsible for the upper extremity and trunk", "Gracilis is more lateral, responsible for the upper extremity; cuneatus is more medial, responsible for the lower extremity", "Both fasciculi occupy the same medial-lateral position", "Gracilis and cuneatus both represent only trunk sensation"], "answer": 0, "correct": "The dorsal column sensory material is arranged with the gracilis fasciculus more medial, responsible for the lower extremity, and the cuneatus fasciculus more lateral, responsible for the upper extremity and trunk (ceasing around T5-T6).", "why": "Reversing the medial/lateral positions and body-region assignments contradicts the material's stated arrangement; the two fasciculi occupy distinct positions, not the same one; and they represent limb-specific sensation (lower vs. upper extremity), not both representing only the trunk.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 15"},
+{"topic": "Spinal Cord Blood Supply", "q": "What arteries supply the spinal cord along its length, and what supplements them?", "choices": ["A single anterior spinal artery and paired posterior spinal arteries (from the vertebral arteries), supplemented by segmental branches mainly from the aorta", "Only the internal carotid arteries, with no supplementation", "Only the basilar artery", "The pulmonary arteries, supplemented by branches of the internal jugular vein"], "answer": 0, "correct": "The vertebral arteries give off a single anterior spinal artery and paired posterior spinal arteries that descend along the cord, supplemented by segmental branches mainly arising from branches of the aorta.", "why": "The internal carotid arteries primarily supply the brain, not the spinal cord's segmental supply; the basilar artery supplies brainstem/cerebellar structures, not the spinal cord directly; and the pulmonary arteries supply the lungs, entirely unrelated to spinal cord blood supply, and the internal jugular vein is a venous (not arterial) structure.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 16"},
+{"topic": "Spinal Cord Venous Drainage", "q": "Where do veins of the spinal cord drain, and what venous systems do they ultimately connect to?", "choices": ["Drain into vertebral venous plexuses (e.g., internal venous plexus in the epidural space), ultimately connecting to the azygos and caval venous systems", "Drain directly into the internal jugular vein only", "Drain into the hepatic portal vein", "Drain into the pulmonary veins"], "answer": 0, "correct": "Veins of the spinal cord drain into several vertebral venous plexuses associated with the vertebral column, such as the internal venous plexus within the epidural space, ultimately connecting to the azygos and caval venous systems to reach the heart.", "why": "The internal jugular vein primarily drains the cranium, not the spinal cord's venous plexuses; the hepatic portal vein carries blood from digestive organs to the liver, unrelated to spinal cord drainage; and the pulmonary veins carry oxygenated blood from the lungs to the heart, also unrelated to this venous pathway.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 17"},
+{"topic": "Spinal Cord Lymphatic Drainage", "q": "What role do microglia and white blood cells play in spinal cord meningeal lymphatics, per the material?", "choices": ["They play a role in protecting and healing the spinal cord from infections, injury, and immune-mediated disease, often following blood vessel patterning within the meninges", "They have no known role in spinal cord immunity", "They are exclusively involved in CSF production", "They only function in the peripheral nervous system, not the spinal cord"], "answer": 0, "correct": "Microglia and white blood cells play a role in protecting and healing the spinal cord from infections, injury, and immune-mediated diseases, often following the patterning of blood vessels within the meninges, though understanding of spinal cord meningeal lymphatics and immunity remains limited.", "why": "They do have a described immune-related role, so claiming no known role is incorrect; CSF production is instead a function of ependymal cells of the choroid plexus, not microglia/WBCs; and their described role specifically concerns the spinal cord's own meninges, not being limited to the peripheral nervous system.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 18"},
+{"topic": "Dorsal Columns", "q": "What sensory modalities do the dorsal columns carry?", "choices": ["Vibration, proprioception, and 2-point discrimination", "Pain and temperature only", "Crude touch only", "Taste and smell"], "answer": 0, "correct": "The dorsal columns carry vibration, proprioception, and 2-point discrimination (fine touch).", "why": "Pain and temperature are instead carried by the spinothalamic tract, a different sensory pathway; crude touch is also carried by the anterior spinothalamic tract, not the dorsal columns; and taste and smell are special senses processed via cranial nerves and dedicated pathways, unrelated to the dorsal columns.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 22"},
+{"topic": "Dorsal Columns", "q": "What does the fasciculus gracilis carry, and for which body region?", "choices": ["Fine touch, vibration, 2-point discrimination, and proprioception for the mid-thoracic to feet (T7 and down)", "Fine touch, vibration, 2-point discrimination, and proprioception for the upper body (T6 and up)", "Pain and temperature for the lower body", "Crude touch for the entire body"], "answer": 0, "correct": "The fasciculus gracilis carries fine touch, vibration, 2-point discrimination, and proprioception for the mid-thoracic to feet region (T7 and inferiorly).", "why": "Carrying information for the upper body (T6 and up) instead describes the fasciculus cuneatus, a different dorsal column tract; pain and temperature are carried by the spinothalamic tract, not the fasciculus gracilis; and crude touch is carried by the anterior spinothalamic tract, a distinct pathway.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 23"},
+{"topic": "Dorsal Columns", "q": "What does the fasciculus cuneatus carry, and for which body region?", "choices": ["Fine touch, vibration, 2-point discrimination, and proprioception for the upper body (T6 and up), including the upper extremity and neck but not the face/ears", "Fine touch for the lower extremity (T7 and down)", "Pain and temperature for the upper body", "Crude touch for the face and ears"], "answer": 0, "correct": "The fasciculus cuneatus carries fine touch, vibration, 2-point discrimination, and proprioception for the upper body (T6 and superior), including the upper extremity and neck, but not the face and ears.", "why": "Carrying information for the lower extremity (T7 and down) instead describes the fasciculus gracilis, a different dorsal column tract; pain and temperature are carried by the spinothalamic tract, not the fasciculus cuneatus; and the face/ears are explicitly excluded from the cuneate fasciculus's coverage, not included as crude touch territory.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 23"},
+{"topic": "Dorsal Columns", "q": "Where do the dorsal column tracts decussate, and what do they join after crossing?", "choices": ["Decussate in the medulla and join the medial lemniscus", "Decussate in the spinal cord itself and join the spinothalamic tract", "Decussate in the thalamus and join the corticospinal tract", "Do not decussate at all"], "answer": 0, "correct": "The dorsal column tracts ascend in the spinal cord, decussate in the medulla, and join the medial lemniscus, then enter the ventral nuclei of the thalamus before transmission to the primary sensory cortex.", "why": "Decussating in the spinal cord itself describes the spinothalamic tract's crossing pattern, not the dorsal columns; the thalamus is a relay point after decussation, not the site of decussation itself, and the dorsal columns don't join the corticospinal (a motor) tract; and the dorsal columns do decussate, just at the medulla rather than not at all.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 24"},
+{"topic": "Spinocerebellar Tracts", "q": "What do the posterior (dorsal) and anterior (ventral) spinocerebellar tracts have in common?", "choices": ["Both transmit unconscious proprioceptive information to the cerebellum, receiving input from muscle spindles, Golgi tendon organs, and pressure receptors", "Both transmit conscious pain sensation to the thalamus", "Both are motor tracts descending from the cerebral cortex", "Both decussate in the medulla's pyramids"], "answer": 0, "correct": "Both the posterior and anterior spinocerebellar tracts transmit unconscious proprioceptive information to the cerebellum, receiving input from muscle spindles, Golgi tendon organs, and pressure receptors.", "why": "Conscious pain sensation to the thalamus describes the spinothalamic tract, a different (ascending sensory but not cerebellar) pathway; both spinocerebellar tracts are ascending sensory tracts, not descending motor tracts from the cortex; and decussation in the medullary pyramids describes the lateral corticospinal tract, unrelated to the spinocerebellar tracts.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 26"},
+{"topic": "Spinocerebellar Tracts", "q": "Where is the first-order neuron of the posterior (dorsal) spinocerebellar tract found, and how does it ascend to the cerebellum?", "choices": ["Found from C8 to S3; ascends ipsilaterally to the inferior cerebellar peduncle and cerebellar vermis cortex", "Found from L1 to S2; decussates and ascends via the superior cerebellar peduncle", "Found from C3 to T7; ascends via the fasciculus cuneatus", "Found only in the lumbar region; descends to the spinal cord"], "answer": 0, "correct": "The first-order neuron of the posterior spinocerebellar tract is found from C8 to S3, ascending ipsilaterally to the inferior cerebellar peduncle and on to the cortex of the cerebellar vermis.", "why": "L1 to S2 with decussation and the superior cerebellar peduncle instead describes the anterior spinocerebellar tract, a different tract; C3 to T7 with the fasciculus cuneatus describes the cuneocerebellar tract, also distinct; and this tract ascends (does not descend) toward the cerebellum.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 26"},
+{"topic": "Spinocerebellar Tracts", "q": "Where is the first-order neuron of the anterior (ventral) spinocerebellar tract found, and does it decussate?", "choices": ["Found from L1 to S2; decussates (contralateral) within the spinal cord in the anterior white commissure, entering the cerebellum via the superior cerebellar peduncle", "Found from C8 to S3; ascends ipsilaterally without decussating", "Found from C3 to T7; ascends via the fasciculus cuneatus", "Found in the cervical region only; decussates in the medulla"], "answer": 0, "correct": "The first-order neuron of the anterior spinocerebellar tract is found from L1 to S2, and it decussates (contralaterally) within the spinal cord in the anterior white commissure, entering the cerebellum via the superior cerebellar peduncle.", "why": "C8 to S3 with ipsilateral ascent (no decussation) describes the posterior spinocerebellar tract, a different tract; C3 to T7 with the fasciculus cuneatus describes the cuneocerebellar tract, also distinct; and it decussates within the spinal cord itself, not in the medulla.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 27"},
+{"topic": "Spinocerebellar Tracts", "q": "What is the cuneocerebellar tract, and where is its first-order neuron found?", "choices": ["Transmits unconscious proprioceptive information for the upper extremity; first-order neuron found from C3 to T7, ascending within the fasciculus cuneatus to the accessory cuneate nucleus", "Transmits pain sensation for the lower extremity; first-order neuron found from L1 to S2", "Transmits proprioceptive information for the lower extremity; first-order neuron found from C8 to S3", "A motor tract, not a sensory one, found only in the thoracic region"], "answer": 0, "correct": "The cuneocerebellar tract transmits unconscious proprioceptive information to the cerebellum for the entire upper extremity; its first-order neuron is found from C3 to T7, with axons ascending within the fasciculus cuneatus to the accessory cuneate nucleus in the medulla, then a second-order neuron travels ipsilaterally to the inferior cerebellar peduncle.", "why": "L1 to S2 describes the anterior spinocerebellar tract's neuron location, involving the lower (not upper) extremity; C8 to S3 describes the posterior spinocerebellar tract, also lower-extremity-focused, not this upper-extremity tract; and the cuneocerebellar tract is a sensory (not motor) tract, and it is not confined only to the thoracic region given its C3-T7 span.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 28"},
+{"topic": "Intermediolateral Gray Horn", "q": "Where is the intermediolateral gray horn located, and what does it contain?", "choices": ["Lies between the dorsal and ventral gray columns, prominent in the thoracic and upper lumbar regions; contains preganglionic cells for the autonomic nervous system", "Lies within the dorsal columns; contains only sensory neuron cell bodies", "Lies within the anterior white commissure; contains motor neurons only", "Prominent only in the midsacral region; contains parasympathetic preganglionic cells"], "answer": 0, "correct": "The intermediolateral gray column (horn) lies between the dorsal and ventral gray columns, forming a prominent lateral triangular projection in the thoracic and upper lumbar regions (but not the midsacral region), and contains preganglionic cells for the autonomic nervous system.", "why": "It is not part of the dorsal columns (a white matter sensory tract), and it contains autonomic (not purely sensory) neuron cell bodies; it is a gray matter horn, not part of the anterior white commissure, and contains autonomic (not purely somatic motor) neurons; and it is specifically absent (not prominent) in the midsacral region, and its T1-L2 span corresponds to sympathetic (not parasympathetic) preganglionic neurons.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 32"},
+{"topic": "Intermediolateral Gray Horn", "q": "Within spinal segments T1 to L2/L3, what pathway do preganglionic sympathetic axons take after leaving the intermediolateral gray column?", "choices": ["Leave the spinal cord within the ventral roots, then travel to the sympathetic ganglia via the white rami communicantes", "Leave within the dorsal roots, traveling directly to target organs without ganglia", "Remain entirely within the spinal cord, never reaching the periphery", "Travel via the gray rami communicantes directly to the ganglia"], "answer": 0, "correct": "Preganglionic sympathetic neurons within the intermediolateral gray column give rise to sympathetic axons that leave the spinal cord within the ventral roots, then travel to the sympathetic ganglia via the white rami communicantes.", "why": "They leave via the ventral (motor) roots, not the dorsal (sensory) roots; they do reach the periphery via the ganglia, not remaining entirely within the spinal cord; and it is the white (not gray) rami communicantes that carry these preganglionic fibers to the ganglia, since the gray rami carry postganglionic fibers instead.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 35"},
+{"topic": "Intermediolateral Gray Horn — Rami Communicantes", "q": "What is the difference between white rami communicantes and gray rami communicantes?", "choices": ["White rami exist only at T1-L2/L3 and carry preganglionic fibers to the paravertebral ganglia; gray rami carry postganglionic fibers", "White rami carry postganglionic fibers; gray rami carry preganglionic fibers and exist at all spinal levels", "Both carry identical fiber types at identical spinal levels", "White and gray rami are two names for the exact same structure"], "answer": 0, "correct": "White rami communicantes exist only at spinal levels where the intermediolateral cell column is present (T1-L2/L3) and carry preganglionic nerve fibers from the spinal cord to the paravertebral ganglia, while gray rami communicantes carry postganglionic nerve fibers.", "why": "Reversing the fiber types (white postganglionic, gray preganglionic) and the level restriction contradicts the material's stated distinction; the two ramus types carry different fiber types, not identical ones; and they are distinct structures with different fiber content, not simply two names for the same thing.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 35"},
+{"topic": "Corticospinal Tracts", "q": "What does the lateral corticospinal tract innervate, and where does it decussate?", "choices": ["Innervates limbs for skilled movements; decussates in the medulla's pyramids", "Innervates axial muscles; decussates at the spinal cord level", "Innervates limbs; does not decussate at all", "Innervates the diaphragm only; decussates in the thalamus"], "answer": 0, "correct": "The lateral corticospinal tract innervates limbs for skilled movements, with its signal originating in the primary motor cortex and decussating in the medulla's pyramids; in the spinal cord, the tract is located laterally.", "why": "Innervating axial muscles with decussation at the spinal cord level instead describes the anterior corticospinal tract, a different tract; the lateral corticospinal tract does decussate (in the medulla), not skip decussation entirely; and it is not confined to the diaphragm, nor does it decussate in the thalamus, which is not a motor decussation site.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 38"},
+{"topic": "Corticospinal Tracts", "q": "What does the anterior corticospinal tract innervate, and where does it decussate?", "choices": ["Innervates the axial muscles; decussates at the spinal cord level", "Innervates limbs for skilled movements; decussates in the medulla's pyramids", "Innervates the axial muscles; does not decussate", "Innervates the limbs; decussates in the thalamus"], "answer": 0, "correct": "The anterior corticospinal tract innervates the axial muscles, with its signal originating in the primary motor cortex, and decussation occurring at the spinal cord level; in the spinal cord, the tract is located anteriorly along the anterior median fissure.", "why": "Innervating limbs with decussation in the medulla's pyramids instead describes the lateral corticospinal tract, a different tract; the anterior corticospinal tract does decussate, just at the spinal cord level rather than not at all; and it decussates at the spinal cord level, not in the thalamus, which is not a corticospinal decussation site.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 38"},
+{"topic": "Spinothalamic Tracts", "q": "What sensory information does the anterior spinothalamic tract carry, and where does it decussate?", "choices": ["Crude touch sensation; decussates in the spinal cord itself, through the anterior commissure, usually 1-2 levels above cord entry", "Pain, pressure, and temperature sensation; decussates in the medulla", "Fine touch and proprioception; does not decussate", "Crude touch sensation; decussates in the thalamus"], "answer": 0, "correct": "The anterior spinothalamic tract carries crude touch sensation, decussating in the spinal cord itself through the anterior commissure, usually 1-2 levels above the level the sensory fiber enters the cord.", "why": "Pain, pressure, and temperature sensation with medullary decussation instead describes the lateral spinothalamic tract, a different tract; fine touch and proprioception are carried by the dorsal columns, not the spinothalamic tract; and the anterior spinothalamic tract decussates in the spinal cord itself, not in the thalamus.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 41"},
+{"topic": "Spinothalamic Tracts", "q": "What sensory information does the lateral spinothalamic tract carry?", "choices": ["Pain, pressure, and temperature sensation", "Crude touch sensation only", "Fine touch, vibration, and proprioception", "Only pain sensation, with pressure and temperature carried elsewhere"], "answer": 0, "correct": "The lateral spinothalamic tract carries pain, pressure, and temperature sensation, decussating in the spinal cord itself through the anterior commissure.", "why": "Crude touch sensation alone is instead carried by the anterior spinothalamic tract, a different tract; fine touch, vibration, and proprioception are carried by the dorsal columns, not the lateral spinothalamic tract; and the lateral spinothalamic tract carries pressure and temperature together with pain, not pain in isolation.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 41"},
+{"topic": "Spinothalamic Tracts", "q": "What pathway do the spinothalamic tracts follow from the posterior gray horn to the primary sensory cortex?", "choices": ["Enter the posterior gray horn through Lissauer's tract, decussate within the spinal cord, ascend to the medulla, transmit to the ventral posterior nucleus of the thalamus, then to the primary sensory cortex", "Enter the anterior gray horn, decussate in the medulla, and transmit directly to the cerebellum", "Bypass the thalamus entirely, transmitting directly from the spinal cord to the cortex", "Decussate in the thalamus itself, then transmit to the medulla"], "answer": 0, "correct": "Sensory information enters the posterior gray horn through Lissauer's tract and decussates within the spinal cord itself, ascends to the medulla oblongata, transmits to the ventral posterior nucleus of the thalamus, and is then transmitted to the primary sensory cortex.", "why": "Entering the anterior (motor-associated) gray horn and transmitting to the cerebellum describes a different pathway (like the spinocerebellar tracts), not the spinothalamic tracts; the thalamus is a required relay point for the spinothalamic pathway, not bypassed; and decussation occurs in the spinal cord itself, not in the thalamus.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 43"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

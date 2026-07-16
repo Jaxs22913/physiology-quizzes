@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Comprehensive Master Exam — Form C
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Comprehensive Master Exam — Form C</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#1f6f5c;
+    --oxblood-soft:#2e6a92;
+    --brass:#c1440e;
+    --teal:#5b3a8e;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Comprehensive Master Exam<span class="sys">Form C</span></h1>
+    <p class="sub">Intro to Anatomy &middot; Histology &middot; Brain &amp; ANS &middot; Nervous Tissue &amp; CBF &middot; Spinal Cord &amp; Sensory Receptors &middot; Peripheral &amp; Cranial Nerves</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This comprehensive master exam draws cumulatively across all six Anatomy Exam 1 topics — Intro to Anatomy, Histology, Brain and ANS, Nervous Tissue & Cerebral Blood Flow, Spinal Cord & Sensory Receptors, and Peripheral & Cranial Nerves. Each of the five forms (A–E) contains 60 genuinely distinct questions, evenly distributed across all six topics, drawn from the same validated question banks as the individual topic quizzes.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Integrate anatomical terminology, tissue histology, and CNS gross anatomy (brain, ANS, meninges, CSF, cerebral vasculature) across Anatomy Exam 1's full topic range.</span></li>
+      <li><span class="n">2</span><span>Integrate spinal cord anatomy, sensory receptor physiology, and the peripheral/cranial nerve system across Anatomy Exam 1's full topic range.</span></li>
+      <li><span class="n">3</span><span>Demonstrate cumulative mastery of all six Anatomy Exam 1 topics at the level expected for the unit exam.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=anatomy-master-c" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Comprehensive master exam covering all Anatomy Exam 1 topics &middot; PAJ 5000 Anatomy &middot; for study use. (Form C)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 60 items, drawn cumulatively from all six Anatomy Exam 1 topics, cumulative (Form C).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Terms of Laterality", "q": "What do \"ipsilateral\" and \"contralateral\" denote?", "choices": ["Ipsilateral denotes the same side; contralateral denotes the opposite side", "Ipsilateral denotes the opposite side; contralateral denotes the same side", "Both terms describe superior/inferior relationships", "Both terms describe anterior/posterior relationships"], "answer": 0, "correct": "Ipsilateral denotes (of) the same side, while contralateral denotes (on) the opposite side.", "why": "Reversing the definitions (ipsilateral opposite, contralateral same) contradicts the material's stated meanings; neither term describes a superior/inferior relationship, which is a vertical concept unrelated to sidedness; and neither describes an anterior/posterior relationship either, since both terms are specifically about left/right sidedness.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 21"},
+{"topic": "Terms of Relationship", "q": "According to the material, most anatomical descriptions of position are expressed relative to what reference?", "choices": ["The anatomical position", "The position the person happens to be in at the time", "The position used only in radiographic imaging", "An arbitrary reference chosen per description"], "answer": 0, "correct": "All anatomical descriptions are expressed in relation to the anatomical position, regardless of the actual position a person may be in.", "why": "Using the position the person happens to be in at the time would reintroduce the exact ambiguity the anatomical position convention is meant to avoid; the anatomical position is a general convention, not one limited to radiographic imaging; and it is a fixed, standardized reference, not an arbitrary one chosen differently each time.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 5"},
+{"topic": "Anatomical Position", "q": "In the anatomical position, how are the lower limbs, feet, and toes oriented?", "choices": ["Close together with the feet parallel and toes directed anteriorly", "Spread apart with the feet turned outward", "Crossed at the ankles with toes directed medially", "Close together with toes directed posteriorly"], "answer": 0, "correct": "In the anatomical position, the lower limbs are close together with the feet parallel and the toes directed anteriorly.", "why": "Spread apart with feet turned outward does not match the described close-together, parallel positioning; crossed ankles is not part of the standard anatomical position; and toes directed posteriorly reverses the actual anterior-facing toe orientation.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 5"},
+{"topic": "Terms of Relationship", "q": "In the anatomical position, where are the head, eyes, and toes directed?", "choices": ["Anterior (forward)", "Posterior (backward)", "Superior (upward)", "Laterally (outward)"], "answer": 0, "correct": "In the anatomical position, the head, eyes, and toes are directed anterior (forward).", "why": "Posterior (backward) is the opposite of the actual forward-facing orientation; superior (upward) does not describe the forward-facing direction of the head/eyes/toes; and laterally (outward) also does not match the anterior orientation described for the anatomical position.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 5"},
+{"topic": "Terms of Relationship", "q": "Which term describes the intermediate position \"nearer to the head and farther from the median plane,\" with the superolateral surface of the brain as the given example?", "choices": ["Superolateral", "Inferomedial", "Superomedial", "Inferolateral"], "answer": 0, "correct": "Superolateral means nearer to the head and farther from the median plane; the example given is the superolateral surface of the brain.", "why": "Inferomedial instead means nearer to the feet and closer to the median plane, the opposite combination; superomedial (nearer the head, closer to the median plane) and inferolateral (nearer the feet, farther from the median plane) are both plausible-sounding combined terms but are not the one defined with the brain-surface example in the material.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 18"},
+{"topic": "Anatomy Overview", "q": "What does clinical anatomy emphasize?", "choices": ["Structure and function as it relates to the practice of medicine", "Only the classification of organ systems", "Only cadaveric dissection technique", "Only embryological development"], "answer": 0, "correct": "Clinical anatomy emphasizes structure and function as it relates to the practice of medicine.", "why": "Classification of organ systems alone is a narrower, more general anatomical concern, not the specific clinical-practice emphasis described; the material doesn't tie clinical anatomy specifically to cadaveric dissection technique; and embryological development is a distinct anatomical subdiscipline, not the definition given for clinical anatomy here.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 3"},
+{"topic": "Terms of Relationship", "q": "Which pair of terms describes an area's distance from a point of reference, most often the body's center in general use?", "choices": ["Proximal and distal", "Superficial and deep", "Rostral and caudal", "Ipsilateral and contralateral"], "answer": 0, "correct": "Proximal (closest to a point of reference) and distal (farthest from a point of reference) describe distance from a reference point, generally the body's center.", "why": "Superficial and deep instead describe distance from the body's surface, not a general reference point like the center; rostral and caudal describe front/back positioning (often used neurologically), a different concept from proximal/distal; and ipsilateral/contralateral describe sidedness, not distance from a reference point.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 13"},
+{"topic": "Terms of Relationship", "q": "Which term pair is often used interchangeably with anterior/posterior, respectively, particularly in neurological contexts?", "choices": ["Rostral and caudal", "Proximal and distal", "Superficial and deep", "Palmar and plantar"], "answer": 0, "correct": "Rostral is sometimes used interchangeably with anterior, and caudal is sometimes used interchangeably with posterior, particularly in neurological terms.", "why": "Proximal and distal instead describe closeness to/farness from a reference point (not anterior/posterior); superficial and deep describe surface closeness, an unrelated concept; and palmar/plantar are surface-specific terms for the hand and foot, not general anterior/posterior substitutes.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 15"},
+{"topic": "Anatomy Overview", "q": "Which of the following is listed as an example of a regional anatomy division?", "choices": ["Thorax and abdomen", "The circulatory system", "The nervous system", "The endocrine system"], "answer": 0, "correct": "Thorax and abdomen is one of the regional divisions listed (alongside head and neck, back, pelvis, and upper and lower extremities).", "why": "The circulatory, nervous, and endocrine systems are instead examples of the functional systems used to organize systemic anatomy, not regional anatomy's discrete body-part divisions.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 3"},
+{"topic": "Terms of Relationship", "q": "Which term describes lying on the ventral surface, face down?", "choices": ["Prone", "Supine", "Rostral", "Caudal"], "answer": 0, "correct": "Prone means lying on the ventral surface (face down).", "why": "Supine is instead the term for lying on the back, the opposite position; rostral and caudal are directional terms (front/back of the body or neurological axis), not terms describing a lying-down body position at all.", "src": "Introduction to Anatomy & Anatomical Terminology - Shahsv.pptx, Slide 14"},
+{"topic": "Types of Connective Tissue", "q": "What is elastic connective tissue composed of, and what are examples of where it's found?", "choices": ["Composed of mostly elastin fibers; found in vocal cords and ligamenta flava", "Composed of mostly collagen fibers; found in tendons", "Composed of mineral crystals; found in bone", "Composed of ground substance only; found in the basement membrane"], "answer": 0, "correct": "Elastic connective tissue is composed of mostly elastin fibers, found in structures like the vocal cords and ligamenta flava (vertebral connective tissue).", "why": "Mostly collagen fibers found in tendons instead describes dense regular connective tissue, a different type; mineral crystals found in bone describes bone tissue, not elastic connective tissue; and ground substance alone describing the basement membrane doesn't match elastic tissue's elastin-fiber-dominant composition.", "src": "Histology for Posting-2.pptx, Slide 25"},
+{"topic": "Connective Tissue", "q": "According to the material, what is the most abundant and widely distributed tissue type?", "choices": ["Connective tissue", "Epithelial tissue", "Muscle tissue", "Nervous tissue"], "answer": 0, "correct": "Connective tissue is described as the most abundant and widely distributed tissue.", "why": "Epithelial tissue, while widespread as a covering/lining tissue, is not described as the most abundant tissue type; muscle tissue is a distinct, less pervasively distributed tissue category; and nervous tissue is the most specialized and least abundant of the four tissue types by comparison.", "src": "Histology for Posting-2.pptx, Slide 18"},
+{"topic": "Fibers of Connective Tissue", "q": "What ground substance component is described as a \"slippery polysaccharide\" that reduces friction?", "choices": ["Hyaluronic acid", "Collagen", "Elastin", "Calcium hydroxyapatite"], "answer": 0, "correct": "Hyaluronic acid is described as a slippery polysaccharide, part of the ground substance component of the connective tissue matrix.", "why": "Collagen and elastin are both fiber components of the matrix, not the ground substance's slippery polysaccharide; calcium hydroxyapatite is a bone mineral component, unrelated to the ground substance's hyaluronic acid.", "src": "Histology for Posting-2.pptx, Slide 19"},
+{"topic": "Connective Tissue", "q": "What do glycosaminoglycans do within the ground substance, per the material?", "choices": ["Negatively charged, bind Na+ and K+, and attract water", "Positively charged, repel water", "Form the rigid mineral component of bone", "Produce myelin around nerve fibers"], "answer": 0, "correct": "Glycosaminoglycans are negatively charged, bind Na+ and K+, and attract water (H2O) within the ground substance.", "why": "They are negatively (not positively) charged, and they attract (not repel) water; forming the rigid mineral component of bone instead describes calcium hydroxyapatite, an unrelated bone-specific substance; and producing myelin is a function of oligodendrocytes/Schwann cells, entirely unrelated to glycosaminoglycans.", "src": "Histology for Posting-2.pptx, Slide 19"},
+{"topic": "Connective Tissue", "q": "What are proteoglycan aggregates described as, structurally, within the ground substance?", "choices": ["Pine tree-shaped molecules", "Spring-like coiled fibers", "Flat, scale-shaped cells", "Branching network fibers"], "answer": 0, "correct": "Proteoglycan aggregates are described as pine tree-shaped molecules, part of the ground substance.", "why": "Spring-like coiled fibers instead describes elastic fibers, a different matrix component; flat, scale-shaped cells describes squamous epithelial cells, an unrelated tissue type; and branching network fibers describes reticular fibers, also a different matrix component from proteoglycan aggregates.", "src": "Histology for Posting-2.pptx, Slide 19"},
+{"topic": "Connective Tissue", "q": "What cell type contains heparin and histamine, per the material's list of connective tissue cells?", "choices": ["Mast cells", "Adipose cells", "Macrophages", "Fibroblasts"], "answer": 0, "correct": "Mast cells are described as containing heparin and histamine.", "why": "Adipose cells are instead engorged with lipids, not heparin/histamine; macrophages function in phagocytosis/immune defense, not heparin/histamine storage; and fibroblasts (\"blast\" cells) create matrix components, a different function from mast cells' heparin/histamine content.", "src": "Histology for Posting-2.pptx, Slide 17"},
+{"topic": "Epithelial Tissue", "q": "What is notable about the regeneration potential and one surface exposure of epithelial cells?", "choices": ["High regeneration potential, with one side always exposed to the body exterior or an organ cavity", "Low regeneration potential, with no surface exposed to any cavity", "High regeneration potential, with both surfaces embedded in connective tissue", "Low regeneration potential, with one side always vascularized"], "answer": 0, "correct": "Epithelial cells have high regeneration potential, and one side is always exposed to either the body exterior or an organ cavity.", "why": "Low regeneration potential contradicts the material's stated high regeneration potential for epithelial cells; having no surface exposed to any cavity contradicts the defining feature of one side always being exposed; and epithelial tissue is avascular, so a vascularized surface is not accurate.", "src": "Histology for Posting-2.pptx, Slide 4"},
+{"topic": "Epithelial Tissue", "q": "Which of the following describes a listed location of epithelial tissue?", "choices": ["Covers the body and lines the cavities, tubes, ducts, and blood vessels inside the body", "Found only within the walls of hollow organs as muscle", "Found only in the central nervous system", "Found only within bone marrow"], "answer": 0, "correct": "Epithelial tissue covers the body, lines the cavities, tubes, ducts, and blood vessels inside the body, and covers the organs inside body cavities.", "why": "Being found only within hollow organ walls as muscle describes muscle tissue's location, not epithelial tissue; the central nervous system is where nervous tissue is concentrated, not epithelial tissue's defining location; and bone marrow is a connective tissue location (blood cell production), not an epithelial one.", "src": "Histology for Posting-2.pptx, Slide 5"},
+{"topic": "Connective Tissue", "q": "What does the \"fluid\" component of the connective tissue matrix contain?", "choices": ["Gases and nutrients, plus minerals such as calcium salts", "Only collagen and elastin fibers", "Only living blast/cyte/clast cells", "Only myelin"], "answer": 0, "correct": "The fluid component of the connective tissue matrix contains gases and nutrients, along with minerals such as calcium salts.", "why": "Collagen and elastin fibers are instead the fiber component of the matrix, a separate category from the fluid component; blast/cyte/clast cells are the living cellular component of connective tissue, not part of the nonliving matrix's fluid; and myelin is produced by oligodendrocytes/Schwann cells in nervous tissue, unrelated to the connective tissue matrix.", "src": "Histology for Posting-2.pptx, Slide 19"},
+{"topic": "Connective Tissue", "q": "Besides mast cells and adipose cells, which other cell types are listed among the living components of connective tissue?", "choices": ["Macrophages and white blood cells", "Neurons and glial cells", "Chondrocytes and osteocytes only", "Squamous and columnar cells"], "answer": 0, "correct": "Macrophages and white blood cells are listed among the living cellular components of connective tissue, alongside blast/cyte/clast cells, mast cells, and adipose cells.", "why": "Neurons and glial cells are nervous tissue cells, not connective tissue cells; chondrocytes and osteocytes are specific \"cyte\" cell examples found in cartilage and bone respectively, a narrower subset rather than the general category being asked about; and squamous/columnar cells are epithelial cell shapes, not connective tissue cell types.", "src": "Histology for Posting-2.pptx, Slide 17"},
+{"topic": "Midbrain (Mesencephalon)", "q": "What is the corpora quadrigemina, and what are its two pairs of nuclei responsible for?", "choices": ["Two pairs of nuclei in the midbrain; the inferior colliculus processes auditory stimuli and the superior colliculus processes visual stimuli", "Two pairs of nuclei in the medulla; both process only motor output", "A single nucleus in the pons responsible for breathing", "Part of the cerebellum responsible for balance"], "answer": 0, "correct": "The corpora quadrigemina consists of two pairs of nuclei in the midbrain, with auditory processing occurring in the inferior colliculus and visual processing occurring in the superior colliculus.", "why": "The corpora quadrigemina is a midbrain structure, not a medulla structure, and it processes sensory information, not purely motor output; it is not a single nucleus in the pons, since it consists of two nuclei pairs in the midbrain; and it is unrelated to cerebellar balance function.", "src": "3. Brain and ANS 2026.pptx, Slide 32"},
+{"topic": "Midbrain (Mesencephalon)", "q": "What do the red nucleus and substantia nigra do in the midbrain?", "choices": ["Red nucleus integrates information between the cerebrum and cerebellum; substantia nigra regulates motor output of the basal nuclei", "Red nucleus processes visual stimuli; substantia nigra processes auditory stimuli", "Both structures regulate breathing", "Red nucleus produces CSF; substantia nigra reabsorbs CSF"], "answer": 0, "correct": "The red nucleus integrates information between the cerebrum and cerebellum, while the substantia nigra regulates motor output of the basal nuclei.", "why": "Visual and auditory processing are instead functions of the superior and inferior colliculi, not the red nucleus/substantia nigra; neither structure regulates breathing, which is a medulla/pons function; and neither structure is involved in CSF production or reabsorption, which occurs via the choroid plexus and arachnoid granulations.", "src": "3. Brain and ANS 2026.pptx, Slide 32"},
+{"topic": "Cerebellum", "q": "What is the function of the cerebellar cortex, and what does the arbor vitae do?", "choices": ["Cerebellar cortex provides subconscious coordination of movements; arbor vitae connects the cerebellar cortex with the cerebellar peduncles", "Cerebellar cortex regulates breathing; arbor vitae produces CSF", "Cerebellar cortex processes vision; arbor vitae connects the thalamus to the cerebrum", "Cerebellar cortex controls emotions; arbor vitae is part of the limbic system"], "answer": 0, "correct": "The cerebellar cortex provides subconscious coordination of movements, and the arbor vitae (the branching white matter pattern) connects the cerebellar cortex with the cerebellar peduncles.", "why": "Regulating breathing and producing CSF are functions of the medulla and choroid plexus respectively, not the cerebellar cortex/arbor vitae; processing vision and connecting the thalamus to the cerebrum are unrelated cerebral functions; and controlling emotions is a limbic system function, not a cerebellar one.", "src": "3. Brain and ANS 2026.pptx, Slide 35"},
+{"topic": "Cerebellum", "q": "What are the three cerebellar peduncles, and what does each connect?", "choices": ["Superior (connects cerebellum with mesencephalon/diencephalon/cerebrum), middle (communicates with the pons), and inferior (connects with the medulla oblongata)", "Anterior, posterior, and lateral peduncles, all connecting to the spinal cord", "Only one peduncle connects the cerebellum to the brainstem", "Superior, middle, and inferior peduncles, all connecting to the cerebrum only"], "answer": 0, "correct": "The three cerebellar peduncles are the superior (connects the cerebellum with the mesencephalon, diencephalon, and cerebrum), middle (communicates between the cerebellum and pons), and inferior (connection between the cerebellum and medulla oblongata).", "why": "Anterior/posterior/lateral is not the naming scheme used for the cerebellar peduncles, and they don't all connect to the spinal cord; there are three peduncles, not just one; and each peduncle connects to a different brainstem/cerebral structure, not all three connecting only to the cerebrum.", "src": "3. Brain and ANS 2026.pptx, Slide 35"},
+{"topic": "Pons", "q": "What nuclei and centers does the pons contain?", "choices": ["Sensory and motor nuclei for CN V, VI, VII, and VIII, plus apneustic and pneumotaxic centers for involuntary breathing control", "Sensory and motor nuclei for CN I, II, III, and IV only", "Only nuclei relaying visual information", "Only nuclei associated with taste"], "answer": 0, "correct": "The pons contains sensory and motor nuclei for CN V, VI, VII, and VIII, nuclei involved with involuntary control of breathing (apneustic and pneumotaxic centers), and nuclei that relay cerebellar commands.", "why": "CN I-IV are not the cranial nerves associated with pontine nuclei in this material (CN I and II don't have brainstem nuclei at all, and III/IV are midbrain-associated); the pons is not limited to relaying visual information, which is a midbrain (colliculus) function; and taste-related nuclei are not the defining feature of the pons described here.", "src": "3. Brain and ANS 2026.pptx, Slide 39"},
+{"topic": "Medulla Oblongata", "q": "Where is the medulla oblongata located, and what passes through it?", "choices": ["The most caudal segment of the brainstem, lying just above the foramen magnum; all communication from the brain and spinal cord passes through here", "The most rostral segment of the brainstem, lying just below the corpus callosum", "Located within the cerebellum, connecting the two hemispheres", "Located in the diencephalon, adjacent to the thalamus"], "answer": 0, "correct": "The medulla oblongata is the most caudal segment of the brainstem, lying just above the foramen magnum, and all communication from the brain and spinal cord passes through here.", "why": "It is the most caudal (not rostral) brainstem segment, and it is not located below the corpus callosum; it is not located within the cerebellum, which is a separate structure connected to the brainstem via peduncles; and it is not part of the diencephalon, which is a distinct, more rostral brainstem region.", "src": "3. Brain and ANS 2026.pptx, Slide 43"},
+{"topic": "Medulla Oblongata", "q": "What autonomic centers are located in the medulla oblongata's autonomic nuclei?", "choices": ["Cardiovascular and respiratory centers (cardiac, vasomotor, and rhythmic breathing)", "Centers for voluntary muscle control", "Centers for processing visual stimuli", "Centers for long-term memory storage"], "answer": 0, "correct": "The medulla oblongata's autonomic nuclei include cardiovascular and respiratory centers — cardiac, vasomotor, and rhythmic breathing centers.", "why": "Voluntary muscle control is a frontal lobe (precentral gyrus) function, not a medullary autonomic center; processing visual stimuli occurs in the occipital lobe/midbrain, not the medulla's autonomic nuclei; and long-term memory storage is a limbic system/hippocampal function, unrelated to the medulla's cardiovascular/respiratory centers.", "src": "3. Brain and ANS 2026.pptx, Slide 44"},
+{"topic": "Cranial Meninges", "q": "What are the three layers of the cranial meninges, from outer to inner?", "choices": ["Dura mater, arachnoid mater, and pia mater", "Pia mater, arachnoid mater, and dura mater", "Arachnoid mater, dura mater, and pia mater", "Only two layers exist: dura mater and pia mater"], "answer": 0, "correct": "The three layers of the cranial meninges, from outer to inner, are the dura mater, arachnoid mater, and pia mater.", "why": "Reversing the order (pia outermost, dura innermost) contradicts the actual outer-to-inner layering; scrambling the order (arachnoid outermost) also misstates the correct sequence; and there are three meningeal layers, not two — the arachnoid mater is a distinct middle layer.", "src": "3. Brain and ANS 2026.pptx, Slide 47"},
+{"topic": "Cranial Meninges: Dura", "q": "What are the two layers of the dura mater, and what is the space between them called?", "choices": ["Endosteal/periosteal layer and meningeal layer; the space between them is the dural sinus", "Arachnoid layer and pial layer; the space between them is the subarachnoid space", "Only one layer exists: the meningeal layer", "Superficial and deep layers; the space between them is the epidural space"], "answer": 0, "correct": "The dura mater consists of two layers — the endosteal/periosteal layer and the meningeal layer — with the space between them called the dural sinus.", "why": "Arachnoid and pial layers are separate meningeal layers (not part of the dura), and the subarachnoid space lies between the arachnoid and pia, not within the dura; the dura has two layers, not just one; and \"epidural space\" is not the term used for the space between the dura's own two layers in this material.", "src": "3. Brain and ANS 2026.pptx, Slide 48"},
+{"topic": "Cranial Meninges: Dura", "q": "What is the falx cerebri, and where does it attach?", "choices": ["A meningeal dural fold extending into the longitudinal fissure, attaching anteriorly to the crista galli and posteriorly to the internal occipital crest/tentorium cerebelli", "A fold separating the cerebellar hemispheres from the cerebral hemispheres", "A fold lining the sella turcica, encasing the pituitary gland", "A fold extending from the tentorium cerebelli to separate the cerebellar hemispheres"], "answer": 0, "correct": "The falx cerebri is a meningeal layer fold that extends into the longitudinal fissure, with its inferior/anterior portion attaching to the crista galli and its inferior/posterior portion attaching to the internal occipital crest and tentorium cerebelli.", "why": "Separating the cerebellar hemispheres from the cerebral hemispheres describes the tentorium cerebelli, a different dural fold; lining the sella turcica and encasing the pituitary describes the diaphragma sellae, also distinct; and extending from the tentorium cerebelli to separate cerebellar hemispheres describes the falx cerebelli, not the falx cerebri.", "src": "3. Brain and ANS 2026.pptx, Slide 49"},
+{"topic": "Myelination", "q": "Why does it take many Schwann cells to myelinate an entire axon?", "choices": ["Each Schwann cell myelinates only about 1 mm of an axon", "Schwann cells myelinate the entire axon length individually, requiring only one", "Schwann cells never myelinate axons, only oligodendrocytes do in the PNS", "Each Schwann cell myelinates 10 cm of axon"], "answer": 0, "correct": "Because each Schwann cell myelinates only about 1 mm of an axon, it takes many Schwann cells to myelinate an entire axon.", "why": "A single Schwann cell does not myelinate the entire axon length, contradicting the material's stated 1 mm segment size; oligodendrocytes myelinate CNS axons, not PNS axons (Schwann cells handle the PNS); and the material specifies approximately 1 mm per Schwann cell, not 10 cm.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 17"},
+{"topic": "Myelination", "q": "Can a single Schwann cell myelinate multiple unmyelinated axons?", "choices": ["Yes — a single Schwann cell shields multiple unmyelinated axons within superficial grooves, though a chain of Schwann cells is still needed to enclose an entire axon", "No — a Schwann cell can only ever be associated with one axon, myelinated or not", "Yes — a single Schwann cell myelinates the entire length of multiple axons alone", "No — unmyelinated axons have no associated Schwann cells at all"], "answer": 0, "correct": "A single Schwann cell can shield multiple unmyelinated axons within superficial grooves, though a chain of Schwann cells is still needed to enclose an entire axon.", "why": "A Schwann cell can be associated with multiple unmyelinated axons at once, not just a single axon; a single Schwann cell does not myelinate the entire length of multiple axons alone, since a chain of cells is still required; and unmyelinated axons do have associated Schwann cells (shielding them), rather than having none at all.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 17"},
+{"topic": "Myelination", "q": "During myelination of a peripheral axon, what happens as the Schwann cell rotates around the axon?", "choices": ["The inner membranous layers are compressed and the cytoplasm is forced into more superficial layers, leaving the myelin sheath as phospholipid bilayers with the Schwann cell nucleus/cytoplasm at the surface", "The Schwann cell divides into two separate cells", "The axon itself rotates, not the Schwann cell", "The myelin sheath forms entirely from the axon's own membrane, without Schwann cell involvement"], "answer": 0, "correct": "As the Schwann cell rotates around the axon, the inner membranous layers are compressed and the cytoplasm is forced into more superficial layers; when completed, the myelin sheath consists only of the phospholipid bilayers of the plasma membrane, with the Schwann cell nucleus and cytoplasm at the surface.", "why": "The Schwann cell does not divide into two cells during this process, which instead involves rotation and compression of its own membrane layers; it is the Schwann cell (not the axon) that rotates around the axon; and the myelin sheath is formed from the Schwann cell's membrane, not the axon's own membrane.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 18"},
+{"topic": "Synaptic Communication", "q": "What is a synapse, and what are the two major types?", "choices": ["The junction between a neuron and another cell; chemical (vesicular) and electrical (nonvesicular) synapses", "The junction between two axons only; excitatory and inhibitory synapses", "The junction between a neuron and bone; myelinated and unmyelinated synapses", "A structure found only within the cell body, not at any junction"], "answer": 0, "correct": "A synapse is the junction between a neuron and another cell, and the two major types are the chemical synapse (vesicular) and the electrical synapse (nonvesicular).", "why": "A synapse connects a neuron to another cell generally (not specifically two axons), and excitatory/inhibitory describes synaptic effect, not the two major structural types named here; a synapse is not specifically a neuron-to-bone junction, and myelinated/unmyelinated describes axon covering, not synapse type; and a synapse is specifically a junction between cells, not a structure confined within the cell body.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 19"},
+{"topic": "CNS Organization", "q": "In the CNS, what is a \"center,\" and what is it called if it has a distinct boundary?", "choices": ["A collection of cell bodies; if it has a distinct boundary, it is called a nucleus", "A bundle of axons; if it has a distinct boundary, it is called a tract", "A ganglion; if it has a distinct boundary, it is called a column", "A synapse; if it has a distinct boundary, it is called a node"], "answer": 0, "correct": "In the CNS, a collection of cell bodies is called a center; if this center has a distinct boundary, it is called a nucleus.", "why": "A bundle of axons is instead called a tract (part of white matter organization), a different concept from a center of cell bodies; a ganglion is a PNS structure (collection of cell bodies outside the CNS), not the CNS \"center\" being described; and a synapse is a cell-to-cell junction, unrelated to the center/nucleus terminology for cell body collections.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 20"},
+{"topic": "CNS Organization", "q": "In the CNS, what do tracts and columns refer to?", "choices": ["Bundles of axons that make up white matter", "Collections of cell bodies with a distinct boundary", "Collections of cell bodies without a distinct boundary", "Ganglia found in the PNS"], "answer": 0, "correct": "White matter in the CNS consists of axons bundled together in tracts and columns.", "why": "Collections of cell bodies with a distinct boundary describes a nucleus, a different CNS structure from white matter tracts; collections of cell bodies without a distinct boundary describes a center generally, also distinct from axon bundles; and ganglia are PNS (not CNS) collections of cell bodies, unrelated to tracts/columns.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 20"},
+{"topic": "PNS Organization", "q": "In the PNS, what are axons bundled together to form, and what are collections of cell bodies called?", "choices": ["Axons bundle into nerves; cell bodies are clustered in ganglia", "Axons bundle into tracts; cell bodies form nuclei", "Axons bundle into columns; cell bodies form centers", "There is no organizational bundling in the PNS"], "answer": 0, "correct": "In the PNS, axons are bundled together to form nerves, while collections of cell bodies are clustered in ganglia.", "why": "Tracts and columns are CNS (not PNS) terms for bundled axons; nuclei and centers are also CNS terms for cell body collections, not the PNS-specific \"ganglia\" terminology; and the PNS does have organizational structures (nerves and ganglia), so claiming no bundling exists is incorrect.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 15"},
+{"topic": "Functional Neuron Classification", "q": "What are interneurons, and where are they located?", "choices": ["Located entirely in the CNS, situated between motor and sensory neurons, analyzing sensory input and coordinating motor outputs", "Located entirely in the PNS, connecting sensory receptors to effectors directly", "Located in ganglia only, never within the CNS or PNS proper", "The same as afferent neurons, just with a different name"], "answer": 0, "correct": "Interneurons are located entirely in the CNS, situated between the motor and sensory neurons, analyzing sensory input and coordinating motor outputs; they can be excitatory or inhibitory.", "why": "They are located in the CNS, not the PNS; ganglia are PNS structures, not where interneurons are located; and interneurons are a distinct neuron type from afferent neurons, which specifically conduct impulses toward the CNS rather than integrating information within it.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 9"},
+{"topic": "Neuron Structure", "q": "What is the perikaryon, and what are axoplasm and collaterals?", "choices": ["Perikaryon is the neuron cytoplasm (of the cell body); axoplasm is the cytoplasm of the axon; collaterals are branches off the axon", "Perikaryon is the axon cytoplasm; axoplasm is the cell body cytoplasm; collaterals are the axon terminals", "Perikaryon, axoplasm, and collaterals all refer to the same structure", "Perikaryon is a type of neuroglia, not a neuron structure"], "answer": 0, "correct": "The perikaryon is the neuron cytoplasm, axoplasm is the cytoplasm of the axon specifically, and collaterals are branches off the axon.", "why": "Reversing perikaryon and axoplasm's locations (axon vs. cell body cytoplasm) contradicts the material's definitions; collaterals are branches off the axon, not the same as axon terminals (which are the ends of telodendria); and these three terms describe distinct neuron cytoplasm/branch structures, not the same structure, and are not neuroglia at all.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 10"},
+{"topic": "Neuron Classification", "q": "What are anaxonic neurons?", "choices": ["Neurons with more than two processes, where axons cannot be distinguished from dendrites", "Neurons with a single elongate process and the cell body off to one side", "Neurons with exactly two processes separated by the cell body", "Neurons found exclusively in the PNS, never the CNS"], "answer": 0, "correct": "Anaxonic neurons have more than two processes, but axons cannot be distinguished from dendrites.", "why": "A single elongate process with the cell body off to one side describes pseudounipolar neurons, a different structural classification; exactly two processes separated by the cell body describes bipolar neurons, also distinct; and anaxonic neurons are one of four structural classifications described generally, not confined exclusively to the PNS.", "src": "4. Nervous Tissue & Cerebral Blood Flow 2026.pptx, Slide 8"},
+{"topic": "Spinocerebellar Tracts", "q": "Where is the first-order neuron of the anterior (ventral) spinocerebellar tract found, and does it decussate?", "choices": ["Found from L1 to S2; decussates (contralateral) within the spinal cord in the anterior white commissure, entering the cerebellum via the superior cerebellar peduncle", "Found from C8 to S3; ascends ipsilaterally without decussating", "Found from C3 to T7; ascends via the fasciculus cuneatus", "Found in the cervical region only; decussates in the medulla"], "answer": 0, "correct": "The first-order neuron of the anterior spinocerebellar tract is found from L1 to S2, and it decussates (contralaterally) within the spinal cord in the anterior white commissure, entering the cerebellum via the superior cerebellar peduncle.", "why": "C8 to S3 with ipsilateral ascent (no decussation) describes the posterior spinocerebellar tract, a different tract; C3 to T7 with the fasciculus cuneatus describes the cuneocerebellar tract, also distinct; and it decussates within the spinal cord itself, not in the medulla.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 27"},
+{"topic": "Spinocerebellar Tracts", "q": "What is the cuneocerebellar tract, and where is its first-order neuron found?", "choices": ["Transmits unconscious proprioceptive information for the upper extremity; first-order neuron found from C3 to T7, ascending within the fasciculus cuneatus to the accessory cuneate nucleus", "Transmits pain sensation for the lower extremity; first-order neuron found from L1 to S2", "Transmits proprioceptive information for the lower extremity; first-order neuron found from C8 to S3", "A motor tract, not a sensory one, found only in the thoracic region"], "answer": 0, "correct": "The cuneocerebellar tract transmits unconscious proprioceptive information to the cerebellum for the entire upper extremity; its first-order neuron is found from C3 to T7, with axons ascending within the fasciculus cuneatus to the accessory cuneate nucleus in the medulla, then a second-order neuron travels ipsilaterally to the inferior cerebellar peduncle.", "why": "L1 to S2 describes the anterior spinocerebellar tract's neuron location, involving the lower (not upper) extremity; C8 to S3 describes the posterior spinocerebellar tract, also lower-extremity-focused, not this upper-extremity tract; and the cuneocerebellar tract is a sensory (not motor) tract, and it is not confined only to the thoracic region given its C3-T7 span.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 28"},
+{"topic": "Intermediolateral Gray Horn", "q": "Where is the intermediolateral gray horn located, and what does it contain?", "choices": ["Lies between the dorsal and ventral gray columns, prominent in the thoracic and upper lumbar regions; contains preganglionic cells for the autonomic nervous system", "Lies within the dorsal columns; contains only sensory neuron cell bodies", "Lies within the anterior white commissure; contains motor neurons only", "Prominent only in the midsacral region; contains parasympathetic preganglionic cells"], "answer": 0, "correct": "The intermediolateral gray column (horn) lies between the dorsal and ventral gray columns, forming a prominent lateral triangular projection in the thoracic and upper lumbar regions (but not the midsacral region), and contains preganglionic cells for the autonomic nervous system.", "why": "It is not part of the dorsal columns (a white matter sensory tract), and it contains autonomic (not purely sensory) neuron cell bodies; it is a gray matter horn, not part of the anterior white commissure, and contains autonomic (not purely somatic motor) neurons; and it is specifically absent (not prominent) in the midsacral region, and its T1-L2 span corresponds to sympathetic (not parasympathetic) preganglionic neurons.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 32"},
+{"topic": "Intermediolateral Gray Horn", "q": "Within spinal segments T1 to L2/L3, what pathway do preganglionic sympathetic axons take after leaving the intermediolateral gray column?", "choices": ["Leave the spinal cord within the ventral roots, then travel to the sympathetic ganglia via the white rami communicantes", "Leave within the dorsal roots, traveling directly to target organs without ganglia", "Remain entirely within the spinal cord, never reaching the periphery", "Travel via the gray rami communicantes directly to the ganglia"], "answer": 0, "correct": "Preganglionic sympathetic neurons within the intermediolateral gray column give rise to sympathetic axons that leave the spinal cord within the ventral roots, then travel to the sympathetic ganglia via the white rami communicantes.", "why": "They leave via the ventral (motor) roots, not the dorsal (sensory) roots; they do reach the periphery via the ganglia, not remaining entirely within the spinal cord; and it is the white (not gray) rami communicantes that carry these preganglionic fibers to the ganglia, since the gray rami carry postganglionic fibers instead.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 35"},
+{"topic": "Intermediolateral Gray Horn — Rami Communicantes", "q": "What is the difference between white rami communicantes and gray rami communicantes?", "choices": ["White rami exist only at T1-L2/L3 and carry preganglionic fibers to the paravertebral ganglia; gray rami carry postganglionic fibers", "White rami carry postganglionic fibers; gray rami carry preganglionic fibers and exist at all spinal levels", "Both carry identical fiber types at identical spinal levels", "White and gray rami are two names for the exact same structure"], "answer": 0, "correct": "White rami communicantes exist only at spinal levels where the intermediolateral cell column is present (T1-L2/L3) and carry preganglionic nerve fibers from the spinal cord to the paravertebral ganglia, while gray rami communicantes carry postganglionic nerve fibers.", "why": "Reversing the fiber types (white postganglionic, gray preganglionic) and the level restriction contradicts the material's stated distinction; the two ramus types carry different fiber types, not identical ones; and they are distinct structures with different fiber content, not simply two names for the same thing.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 35"},
+{"topic": "Corticospinal Tracts", "q": "What does the lateral corticospinal tract innervate, and where does it decussate?", "choices": ["Innervates limbs for skilled movements; decussates in the medulla's pyramids", "Innervates axial muscles; decussates at the spinal cord level", "Innervates limbs; does not decussate at all", "Innervates the diaphragm only; decussates in the thalamus"], "answer": 0, "correct": "The lateral corticospinal tract innervates limbs for skilled movements, with its signal originating in the primary motor cortex and decussating in the medulla's pyramids; in the spinal cord, the tract is located laterally.", "why": "Innervating axial muscles with decussation at the spinal cord level instead describes the anterior corticospinal tract, a different tract; the lateral corticospinal tract does decussate (in the medulla), not skip decussation entirely; and it is not confined to the diaphragm, nor does it decussate in the thalamus, which is not a motor decussation site.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 38"},
+{"topic": "Corticospinal Tracts", "q": "What does the anterior corticospinal tract innervate, and where does it decussate?", "choices": ["Innervates the axial muscles; decussates at the spinal cord level", "Innervates limbs for skilled movements; decussates in the medulla's pyramids", "Innervates the axial muscles; does not decussate", "Innervates the limbs; decussates in the thalamus"], "answer": 0, "correct": "The anterior corticospinal tract innervates the axial muscles, with its signal originating in the primary motor cortex, and decussation occurring at the spinal cord level; in the spinal cord, the tract is located anteriorly along the anterior median fissure.", "why": "Innervating limbs with decussation in the medulla's pyramids instead describes the lateral corticospinal tract, a different tract; the anterior corticospinal tract does decussate, just at the spinal cord level rather than not at all; and it decussates at the spinal cord level, not in the thalamus, which is not a corticospinal decussation site.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 38"},
+{"topic": "Spinothalamic Tracts", "q": "What sensory information does the anterior spinothalamic tract carry, and where does it decussate?", "choices": ["Crude touch sensation; decussates in the spinal cord itself, through the anterior commissure, usually 1-2 levels above cord entry", "Pain, pressure, and temperature sensation; decussates in the medulla", "Fine touch and proprioception; does not decussate", "Crude touch sensation; decussates in the thalamus"], "answer": 0, "correct": "The anterior spinothalamic tract carries crude touch sensation, decussating in the spinal cord itself through the anterior commissure, usually 1-2 levels above the level the sensory fiber enters the cord.", "why": "Pain, pressure, and temperature sensation with medullary decussation instead describes the lateral spinothalamic tract, a different tract; fine touch and proprioception are carried by the dorsal columns, not the spinothalamic tract; and the anterior spinothalamic tract decussates in the spinal cord itself, not in the thalamus.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 41"},
+{"topic": "Spinothalamic Tracts", "q": "What sensory information does the lateral spinothalamic tract carry?", "choices": ["Pain, pressure, and temperature sensation", "Crude touch sensation only", "Fine touch, vibration, and proprioception", "Only pain sensation, with pressure and temperature carried elsewhere"], "answer": 0, "correct": "The lateral spinothalamic tract carries pain, pressure, and temperature sensation, decussating in the spinal cord itself through the anterior commissure.", "why": "Crude touch sensation alone is instead carried by the anterior spinothalamic tract, a different tract; fine touch, vibration, and proprioception are carried by the dorsal columns, not the lateral spinothalamic tract; and the lateral spinothalamic tract carries pressure and temperature together with pain, not pain in isolation.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 41"},
+{"topic": "Spinothalamic Tracts", "q": "What pathway do the spinothalamic tracts follow from the posterior gray horn to the primary sensory cortex?", "choices": ["Enter the posterior gray horn through Lissauer's tract, decussate within the spinal cord, ascend to the medulla, transmit to the ventral posterior nucleus of the thalamus, then to the primary sensory cortex", "Enter the anterior gray horn, decussate in the medulla, and transmit directly to the cerebellum", "Bypass the thalamus entirely, transmitting directly from the spinal cord to the cortex", "Decussate in the thalamus itself, then transmit to the medulla"], "answer": 0, "correct": "Sensory information enters the posterior gray horn through Lissauer's tract and decussates within the spinal cord itself, ascends to the medulla oblongata, transmits to the ventral posterior nucleus of the thalamus, and is then transmitted to the primary sensory cortex.", "why": "Entering the anterior (motor-associated) gray horn and transmitting to the cerebellum describes a different pathway (like the spinocerebellar tracts), not the spinothalamic tracts; the thalamus is a required relay point for the spinothalamic pathway, not bypassed; and decussation occurs in the spinal cord itself, not in the thalamus.", "src": "5. Spinal Cord and Sensory Receptors 2026.pptx, Slide 43"},
+{"topic": "Sacral Plexus", "q": "What does the sciatic nerve innervate, per the material's listed muscles?", "choices": ["Semimembranosus, semitendinosus, and adductor magnus", "Quadriceps, sartorius, and iliopsoas", "Gracilis, obturator externus, and adductor magnus", "Gluteus medius and minimus"], "answer": 0, "correct": "The sciatic nerve innervates the semimembranosus, semitendinosus, and adductor magnus.", "why": "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus (via a different route) are innervated by the obturator nerve; and gluteus medius/minimus are innervated by the superior gluteal nerve, not the sciatic nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"},
+{"topic": "Sacral Plexus", "q": "What does the pudendal nerve innervate?", "choices": ["The perineum, external anal sphincter, and urethral sphincter", "The quadriceps and sartorius", "The gluteus maximus only", "The diaphragm"], "answer": 0, "correct": "The pudendal nerve innervates the perineum, external anal sphincter, and urethral sphincter.", "why": "The quadriceps and sartorius are innervated by the femoral nerve, a lumbar plexus nerve, not the pudendal nerve; the gluteus maximus is innervated by the inferior gluteal nerve, a different sacral plexus nerve; and the diaphragm is innervated by the phrenic nerve, a cervical plexus nerve, unrelated to the pudendal nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"},
+{"topic": "Sacral Plexus", "q": "What sensory territory does the posterior femoral cutaneous nerve cover?", "choices": ["The perineum, posterior thigh, and posterior leg", "The anterior, lateral, and posterior thigh", "The anteromedial thigh and external genitals", "The neck and posterior head"], "answer": 0, "correct": "The posterior femoral cutaneous nerve provides sensory information from the perineum, posterior thigh, and posterior leg.", "why": "The anterior, lateral, and posterior thigh describes the lateral femoral cutaneous nerve's territory, a lumbar plexus nerve; the anteromedial thigh and external genitals describes the genitofemoral nerve's territory, also a lumbar plexus nerve; and the neck and posterior head describes the lesser occipital nerve, a cervical plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"},
+{"topic": "Reflexes", "q": "What is a reflex, and what is a reflex arc?", "choices": ["A reflex is an immediate involuntary motor response; a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector", "A reflex is a voluntary motor response; a reflex arc is the neural wiring of multiple reflexes combined", "A reflex and reflex arc are the same thing with different names", "A reflex arc begins at a motor neuron and ends at a sensory receptor"], "answer": 0, "correct": "A reflex is an immediate involuntary motor response, and a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector.", "why": "A reflex is specifically involuntary, not voluntary, distinguishing it from consciously controlled movement; a reflex arc describes a single reflex's circuitry, not multiple reflexes combined; and while related, \"reflex\" (the response) and \"reflex arc\" (the wiring) are distinct concepts, not identical; and the reflex arc begins at a sensory receptor and ends at an effector, not the reverse direction.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 22"},
+{"topic": "Reflexes", "q": "What is the correct pathway of a reflex arc, in order?", "choices": ["Activation of a sensory receptor → relay of information to the CNS → information processing → activation of a motor neuron → response by the effector", "Activation of a motor neuron → information processing → activation of a sensory receptor → response by the effector → relay to the CNS", "Response by the effector → activation of a sensory receptor → relay to the CNS → information processing → activation of a motor neuron", "Information processing → response by the effector → activation of a sensory receptor → relay to the CNS → activation of a motor neuron"], "answer": 0, "correct": "The reflex arc pathway is: activation of a sensory receptor, relay of information to the CNS, information processing, activation of a motor neuron, and response by the effector.", "why": "The other sequences scramble this order, placing motor neuron activation or effector response before the sensory receptor is even activated — but a reflex arc must begin with sensory receptor activation and end with the effector response, following the correct sequential order given in the material.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 23"},
+{"topic": "Reflexes", "q": "Reflexes are classified according to which four criteria, per the material?", "choices": ["Development (innate/acquired), site of processing (spinal/cranial), nature of motor response (somatic/visceral/autonomic), and complexity (monosynaptic/polysynaptic)", "Only their development (innate or acquired)", "Only their complexity (monosynaptic or polysynaptic)", "Only the muscle group involved"], "answer": 0, "correct": "Reflexes are classified according to their development (innate or acquired), the site where information is processed (spinal or cranial/cerebral), the nature of the resulting motor response (somatic, visceral, or autonomic), and the complexity of the neural circuit (monosynaptic or polysynaptic).", "why": "Development alone is only one of four classification criteria, not the sole one; complexity alone is also only one of the four criteria; and the material describes four distinct classification schemes, not a single \"muscle group involved\" criterion.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 24"},
+{"topic": "Reflexes", "q": "What is the difference between monosynaptic and polysynaptic spinal reflexes?", "choices": ["Monosynaptic involves a single segment of the spinal cord; polysynaptic integrates motor output from several spinal segments", "Monosynaptic integrates several spinal segments; polysynaptic involves only a single segment", "Both types involve identical numbers of spinal segments", "Neither type involves the spinal cord"], "answer": 0, "correct": "Monosynaptic spinal reflexes involve a single segment of the spinal cord, while polysynaptic reflexes integrate motor output from several spinal segments.", "why": "Reversing the definitions contradicts the material's stated meanings; the two reflex types involve different numbers of spinal segments, not identical ones; and spinal reflexes by definition involve the spinal cord as the processing site (as opposed to cranial reflexes).", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 25"},
+{"topic": "Reflexes", "q": "What is the stretch reflex (e.g., the patellar reflex), and what is its pathway?", "choices": ["A stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts", "A stimulus compresses a muscle, activating a motor neuron directly with no sensory component", "A reflex that only occurs in the upper limb, never the lower limb", "A reflex that requires conscious processing in the cerebral cortex"], "answer": 0, "correct": "In a stretch reflex, a stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts — the patellar reflex is a classic example, controlled by muscle spindles in the quadriceps femoris.", "why": "The stimulus stretches (not compresses) the muscle, and it does involve a sensory neuron component, not a purely direct motor activation; the patellar reflex specifically involves the lower limb (quadriceps), showing this reflex type isn't upper-limb-exclusive; and it is a spinal reflex, processed in the spinal cord, not requiring conscious cerebral cortex processing.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 26"},
+{"topic": "Reflexes", "q": "What role do higher centers play in reflexes, per the material?", "choices": ["Enhance or suppress spinal reflexes, and modify information carried in descending tracts of the spinal cord", "Have no influence on spinal reflexes whatsoever", "Are the sole site of reflex processing, replacing the spinal cord entirely", "Only affect cranial reflexes, never spinal reflexes"], "answer": 0, "correct": "Higher centers can enhance or suppress spinal reflexes and modify information carried in the descending tracts of the spinal cord.", "why": "Higher centers do have a described influence on spinal reflexes, so claiming no influence is incorrect; they modulate (not replace) spinal cord reflex processing, working alongside the spinal cord rather than substituting for it entirely; and their described influence includes spinal reflexes specifically, not being limited only to cranial reflexes.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 29"},
+{"topic": "Peripheral Nervous System Organization", "q": "What structures make up a peripheral nerve, and how does the anatomy relate to the nerve plexuses previously described?", "choices": ["Bundled axons (organized similarly to bundled muscle fibers), which combine within plexuses to form the named peripheral nerves like the radial, femoral, and sciatic nerves", "A single unmyelinated axon with no connective tissue covering", "Only cell bodies, with no axons present", "A structure found exclusively within the CNS"], "answer": 0, "correct": "A peripheral nerve consists of bundled axons, and within nerve plexuses, fibers from multiple spinal nerve roots combine and reorganize to form the named peripheral nerves (such as the radial, femoral, and sciatic nerves) that emerge from each plexus.", "why": "Peripheral nerves have connective tissue coverings (similar in principle to muscle fiber bundling), not a single bare axon; peripheral nerves are composed of many axons, not cell bodies alone (which cluster in ganglia instead); and peripheral nerves are a PNS (not CNS) structure by definition.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 7"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

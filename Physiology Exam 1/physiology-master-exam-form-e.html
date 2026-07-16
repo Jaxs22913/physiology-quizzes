@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<!--
+  Physiology Comprehensive Master Exam — Form E
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology Comprehensive Master Exam — Form E</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#2c4a7c;
+    --oxblood-soft:#2e6a92;
+    --brass:#c68a1f;
+    --teal:#1f6b4a;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Physiology Comprehensive Master Exam<span class="sys">Form E</span></h1>
+    <p class="sub">Cell Physiology &amp; Membranes &middot; Membrane Potentials &amp; Action Potentials &middot; Nervous System: Sensory &amp; Motor &middot; CNS Function</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This comprehensive master exam draws cumulatively across all five Physiology Exam 1 topics — Cell Physiology and Cell Membranes, Cell Membrane Potentials and Action Potentials, Nervous System: Intro and Sensory, Nervous System: Motor, and Central Nervous System Function. Each of the five forms (A–E) contains 60 genuinely distinct questions, evenly distributed across all five topics, drawn from the same validated question banks as the individual topic quizzes.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span></li>
+      <li><span class="n">2</span><span>Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span></li>
+      <li><span class="n">3</span><span>Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=physiology-master-e" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Comprehensive master exam covering all Physiology Exam 1 topics &middot; PAJ 5000 Physiology &middot; for study use. (Form E)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 60 items, drawn cumulatively from all five Physiology Exam 1 topics, cumulative (Form E).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Osmolarity vs Molarity", "q": "150 mM NaCl and 300 mM glucose both equal approximately what osmolarity, and why?", "choices": ["150 mOsm/L, because glucose does not dissociate", "300 mOsm/L, because NaCl dissociates into two particles (Na+ and Cl-) per molecule while glucose does not dissociate", "They cannot be compared", "0 mOsm/L for both"], "answer": 1, "correct": "150 mM NaCl dissociates into 2 particles per molecule (Na+ and Cl-), yielding 300 mOsm/L, matching 300 mM glucose (which does not dissociate) at 300 mOsm/L — both represent 300 mOsm/L.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 74"},
+{"topic": "Permeant vs Impermeant Molecules", "q": "Which of the following is classified as a permeant molecule (crosses the membrane almost as fast as water)?", "choices": ["Glucose", "Sodium ions", "Urea and glycerol", "Amino acids"], "answer": 2, "correct": "Permeant molecules like urea and glycerol have relatively high lipid solubility and move through the cell membrane almost as fast as water, unlike impermeant molecules such as ions, glucose, and amino acids.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 75"},
+{"topic": "Steady-State Cell Volume", "q": "What determines steady-state cell volume?", "choices": ["The concentration of permeant particles like urea", "The concentration of impermeant particles in the extracellular fluid (e.g., Na+, K+, proteins)", "The number of mitochondria in the cell", "The rate of DNA replication"], "answer": 1, "correct": "Steady-state cell volume depends on the concentration of impermeant particles in the extracellular fluid (Na+, K+, proteins); permeant particles like urea and glycerol cause only transient changes in cell volume.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 76"},
+{"topic": "Tonicity vs Osmolarity", "q": "What is the key difference between tonicity and osmolarity?", "choices": ["They are identical concepts", "Osmolarity is simply a measure of solute concentration; tonicity (effective osmotic pressure) depends on both the membrane and the solute's permeability", "Tonicity only applies to gases", "Osmolarity depends on the membrane; tonicity does not"], "answer": 1, "correct": "Osmolarity is merely another way of expressing the concentration of a solution, while tonicity (effective osmotic pressure) depends on the properties of both the membrane and the solute — specifically its permeability.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 77"},
+{"topic": "Active Transport Requires Energy", "q": "Roughly what fraction of a typical cell's energy — and up to what fraction of a neuron's energy — does the Na+-K+ ATPase require?", "choices": ["About 1/5 of a typical cell's energy, up to 2/3 of a neuron's energy", "About 1/100 of any cell's energy", "All of a cell's energy budget", "None — the pump runs passively with no energy cost"], "answer": 0, "correct": "The Na+-K+ ATPase requires about 1/5 of a typical cell's energy budget and up to 2/3 of a neuron's energy, reflecting how metabolically demanding maintaining ionic gradients is, especially in excitable cells.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 64"},
+{"topic": "Isotonic vs Isosmotic", "q": "Is 300 mOsm/L urea isotonic to a typical cell (300 mOsm/L)?", "choices": ["Yes, because it is isosmotic", "No — although it is isosmotic, urea is a permeant solute that crosses into the cell, so it is not isotonic", "Yes, because urea never crosses membranes", "No, because it is not isosmotic"], "answer": 1, "correct": "300 mOsm/L urea is isosmotic (same osmolarity as the cell) but not isotonic — because urea is a permeant solute, it crosses into the cell rather than exerting sustained osmotic pressure, so the cell will swell and burst.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 80"},
+{"topic": "Osmotic Example: Glycerol + NaCl", "q": "A cell (300 mOsm/L) is placed in a solution of 300 mOsm/L glycerol plus 200 mOsm/L NaCl. What happens to cell volume?", "choices": ["The cell swells only", "The cell shrinks then swells", "No change occurs", "The cell shrinks only"], "answer": 1, "correct": "Because the impermeant NaCl (200 mOsm/L) is initially lower than the cell's 300 mOsm/L, the cell first shrinks; but the permeant glycerol equilibrates into the cell over time, causing it to subsequently swell.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 81"},
+{"topic": "Osmotic Example: Urea", "q": "A cell (300 mOsm/L) is placed in 200 mOsm/L urea. What happens to cell volume?", "choices": ["Swells and bursts", "Shrinks and stays shrunk", "No change occurs", "Shrinks then swells"], "answer": 0, "correct": "Because urea is a permeant solute, the cell in 200 mOsm/L urea swells and bursts as urea and water move into the cell.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 83"},
+{"topic": "Cilia & Membrane Transport Review", "q": "What ionic condition is required for motile cilia to produce their whiplike movements (in addition to ATP)?", "choices": ["High extracellular glucose", "Appropriate ionic conditions, e.g., Ca2+", "Complete absence of sodium", "High osmolarity only"], "answer": 1, "correct": "Motile cilia movement requires ATP and appropriate ionic conditions, such as Ca2+, similar to the flagellum of sperm.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 45"},
+{"topic": "Water Diffusion in RBCs", "q": "Approximately how many times does water in a red blood cell exchange during its transport through a capillary?", "choices": ["1 time", "10 times", "100 times", "1000 times"], "answer": 2, "correct": "Water in a red blood cell exchanges approximately 100 times during its transport through a capillary, reflecting the astounding rapidity of water diffusion through aquaporins.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 52"},
+{"topic": "Transcellular Transport", "q": "In transcellular transport of glucose and amino acids across an epithelial cell, what drives the initial entry of glucose/AA from the lumen into the cell?", "choices": ["Simple diffusion alone with no ion involvement", "Secondary active transport coupled to the Na+ gradient (Na+ co-transport)", "Direct ATP hydrolysis by the glucose transporter itself", "Osmotic pressure alone"], "answer": 1, "correct": "Glucose and amino acid entry from the intestinal/renal lumen into epithelial cells is driven by secondary active transport, coupled to the Na+ electrochemical gradient (Na+/glucose and Na+/AA symporters).", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 69"},
+{"topic": "Molecular Gradients", "q": "What does the existence of molecular concentration gradients across the cell membrane primarily reflect?", "choices": ["Random chance with no biological significance", "The selective permeability and active transport mechanisms of the membrane, maintaining different intracellular vs extracellular ion/molecule concentrations", "The absence of any membrane proteins", "Equal concentrations of every molecule inside and outside the cell"], "answer": 1, "correct": "Molecular gradients across the cell membrane (e.g., different concentrations of Na+, K+, and other solutes inside vs. outside the cell) reflect the membrane's selective permeability and active transport mechanisms.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 48"},
+{"topic": "Size Principle & Recruitment", "q": "According to the size principle of motor unit recruitment, which motor units are recruited first?", "choices": ["The largest motor units containing Type 2 fibers", "The smallest, highly excitable motor units containing Type 1 fibers; larger Type 2 units are recruited only when greater force is needed", "Motor units are recruited randomly", "Recruitment order has no relationship to unit size"], "answer": 1, "correct": "The size principle states that smaller motor units (containing Type 1 fibers) are recruited before larger ones — weak CNS signals activate the highly excitable small units first, with larger Type 2 units recruited only when greater force is needed.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 81"},
+{"topic": "Force Summation", "q": "What are the two mechanisms of force summation in skeletal muscle?", "choices": ["Multiple fiber summation (recruiting more motor units) and frequency summation (increasing stimulation frequency of a single motor unit)", "Only frequency summation exists", "Temporal summation and spatial summation of action potentials only", "Summation only occurs at the neuromuscular junction, not in the muscle itself"], "answer": 0, "correct": "Force summation results from multiple fiber summation (an increase in the number of motor units contracting simultaneously, i.e., recruitment) and frequency summation (an increase in the stimulation frequency of a single motor unit).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 81"},
+{"topic": "Tetanus", "q": "What is a \"fused tetanus\" contraction?", "choices": ["A single isolated twitch", "A contraction where individual twitches are no longer resolved because action potential frequency is sufficiently high that the muscle is restimulated before complete relaxation", "A type of muscle atrophy", "A contraction that only occurs in smooth muscle"], "answer": 1, "correct": "If action potential frequency is high enough that a muscle is restimulated before complete relaxation from the previous twitch, the twitches summate and individual contractions are no longer resolved — a \"fused tetanus.\"", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 82"},
+{"topic": "Muscle Hypertrophy vs Hyperplasia", "q": "What is the difference between muscle hypertrophy and hyperplasia as growth responses?", "choices": ["Hypertrophy is the formation of new muscle fibers; hyperplasia is increased actin/myosin production in existing fibers", "Hypertrophy (common) is increased production of actin/myosin and splitting of myofibrils within existing fibers; hyperplasia (rare) is the formation of new muscle fibers, sometimes from endurance training", "They are the same process", "Neither process increases force generation"], "answer": 1, "correct": "Hypertrophy (common, occurs over weeks, e.g., from weight lifting) involves increased production of actin and myosin with myofibril splitting within existing fibers; hyperplasia (rare) is the formation of new muscle fibers, which can be caused by endurance exercise training — both increase force generation without changing shortening capacity or max velocity.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 84"},
+{"topic": "Muscle Fasciculations", "q": "What can cause muscle fasciculations (involuntary, visible muscle twitches)?", "choices": ["High plasma calcium only", "Low plasma magnesium (which blocks ACh release) or low plasma calcium (which lowers the threshold potential of voltage-gated sodium channels), among other causes", "Fasciculations have no known physiological cause", "Only motor neuron disease can cause fasciculations"], "answer": 1, "correct": "Muscle fasciculations result from spontaneous depolarization of a motor neuron, and can be caused by motor neuron disease, hypomagnesemia (Mg2+ blocks ACh release, so low Mg2+ promotes unwanted transmission), hypocalcemia (lowers the threshold potential, causing unplanned APs), over-exertion, or excessive alcohol.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 86"},
+{"topic": "Smooth Muscle Organization", "q": "What distinguishes unitary (visceral) smooth muscle from multiunit smooth muscle?", "choices": ["Unitary smooth muscle is densely innervated and contracts only in response to innervation; multiunit muscle acts as a spontaneously active syncytium", "Unitary smooth muscle is a sheet of electrically coupled cells that often acts spontaneously (a syncytium, e.g., gut, blood vessels); multiunit smooth muscle is made of discrete, densely innervated bundles that contract only in response to innervation (e.g., vas deferens, iris)", "Both types are identical in innervation pattern", "Multiunit smooth muscle is found only in the gut"], "answer": 1, "correct": "Unitary (visceral) smooth muscle is a sheet of electrically coupled cells acting in unison, often spontaneously active (a syncytium, e.g., gut and blood vessels), while multiunit smooth muscle is made of discrete bundles of densely innervated cells that contract only in response to their innervation (e.g., vas deferens, iris, piloerectors).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 89"},
+{"topic": "Special Features of Smooth Muscle", "q": "What is the \"latch state\" of smooth muscle?", "choices": ["A brief, high-energy contraction phase", "The ability to maintain force for long periods (hours to weeks) very efficiently", "A state where the muscle cannot contract at all", "A rapid twitch response unique to smooth muscle"], "answer": 1, "correct": "Smooth muscle can maintain force for long periods (hours, days, or weeks) via the \"latch state,\" reflecting its very high energy efficiency (oxygen consumption is only about 1% of an equally-tensioned skeletal muscle).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 90"},
+{"topic": "Smooth Muscle EC Coupling", "q": "What protein does Ca2+ bind to in smooth muscle contraction, since troponin is absent?", "choices": ["Titin", "Calmodulin", "Calsequestrin", "Tropomyosin"], "answer": 1, "correct": "Smooth muscle lacks the troponin complex; instead, Ca2+ binds to calmodulin, which is structurally similar to troponin C and also binds Ca2+, activating myosin light chain kinase (MLCK).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 92"},
+{"topic": "Smooth Muscle Regulation", "q": "Is smooth muscle contraction regulated at the level of actin or myosin, and what enzyme initiates it?", "choices": ["Actin-based regulation, via troponin", "Myosin-based regulation: myosin light chain kinase (MLCK), activated by Ca2+-calmodulin, phosphorylates the myosin regulatory light chain to enable ATP hydrolysis and cross-bridge cycling", "Neither actin nor myosin regulation exists in smooth muscle", "Regulation occurs entirely at the level of the SR calcium pump"], "answer": 1, "correct": "Unlike the actin-based (troponin) regulation of skeletal/cardiac muscle, smooth muscle contraction is myosin-based: the Ca2+-calmodulin complex activates myosin light chain kinase (MLCK), which phosphorylates the myosin regulatory light chain, allowing the myosin head to hydrolyze ATP and bind actin.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 93"},
+{"topic": "Smooth Muscle Ca2+ Source", "q": "Unlike skeletal muscle, what is an important source of Ca2+ for smooth muscle contraction?", "choices": ["Only the sarcoplasmic reticulum, exactly as in skeletal muscle", "Ca2+ entering through channels in the plasma membrane (Ca2+ action potentials), similar to cardiac muscle", "Smooth muscle requires no calcium at all", "Only calcium bound to titin"], "answer": 1, "correct": "Smooth muscle can generate Ca2+ action potentials, with Ca2+ entering through membrane channels serving as an important calcium source — similar to cardiac muscle and unlike skeletal muscle, which relies solely on SR calcium release.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 90"},
+{"topic": "Neurogenic Control of Smooth Muscle", "q": "How does control of smooth muscle by the autonomic nervous system (e.g., norepinephrine, acetylcholine) differ from control at the skeletal neuromuscular junction?", "choices": ["It is identical in mechanism and always excitatory", "The same neurotransmitter can sometimes relax and sometimes contract smooth muscle depending on the tissue/receptor, unlike ACh at the skeletal NMJ which is always excitatory", "Smooth muscle receives no autonomic innervation", "Norepinephrine has no effect on smooth muscle"], "answer": 1, "correct": "Unlike the skeletal NMJ (where ACh is always excitatory), autonomic neurotransmitters like norepinephrine and acetylcholine can sometimes relax and sometimes contract smooth muscle, depending on the specific tissue and receptor subtype involved.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 96"},
+{"topic": "Muscle Tone", "q": "What causes normal resting muscle tone?", "choices": ["Complete absence of nerve signals to the muscle", "Ongoing subconscious nerve impulses (and signals originating in muscle spindles) that keep groups of muscle fibers in a constant state of partial, involuntary contraction", "Voluntary continuous contraction only", "Muscle tone has no neural basis"], "answer": 1, "correct": "Muscle tone results from ongoing subconscious nerve impulses (and signals from muscle spindles) that keep muscle fibers in a constant state of partial, involuntary contraction; loss of nerve supply causes flaccidity and eventual muscle wasting.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 83"},
+{"topic": "Thermal Receptors", "q": "At approximately what temperature do cold receptors show their peak response, and at what temperature do warm receptors peak?", "choices": ["Cold receptors peak at 44°C; warm receptors peak at 25°C", "Cold receptors peak at 25°C (responding 7-44°C); warm receptors peak at 44°C (responding 30-49°C)", "Both peak at the same temperature (37°C)", "Cold and warm receptors have no distinct peak response"], "answer": 1, "correct": "Cold receptors respond across 7-44°C with peak response at 25°C, while warm receptors respond across 30-49°C with peak response at 44°C; the relative degree of stimulation of each receptor type determines the perceived temperature sensation.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 88"},
+{"topic": "Thermal Receptor Density", "q": "Where is cold receptor density highest and lowest on the body?", "choices": ["Highest on the trunk, lowest on the lips", "Highest on the lips, lowest on the trunk", "Equal everywhere on the body", "Highest on the palms only"], "answer": 1, "correct": "Cold receptor density is highest on the lips and lowest on the trunk; there are also many more cold receptors than warm receptors overall.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 87"},
+{"topic": "Brain Glucose Dependence", "q": "Why is the brain uniquely vulnerable to insulin overtreatment in diabetics, even though brain glucose uptake is not insulin-dependent?", "choices": ["The brain relies almost exclusively on glucose for energy, has only about a 2-minute glycogen reserve, and overtreatment causing hypoglycemia can lead to psychotic disturbances and coma", "The brain stores unlimited glucose reserves", "Insulin is required for all brain glucose uptake, just like other tissues", "The brain can switch entirely to fat metabolism instantly"], "answer": 0, "correct": "The brain uses glucose for energy almost exclusively and has only about a 2-minute glycogen reserve; because brain glucose delivery uses the GLUT1 transporter (not insulin-dependent GLUT4 like most tissues), overtreatment with insulin causing low blood glucose can rapidly cause psychotic disturbances and coma.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 90"},
+{"topic": "Cerebral Blood Flow & CO2", "q": "How does increased arterial CO2 cause cerebral vasodilation?", "choices": ["CO2 directly binds vascular smooth muscle receptors", "CO2 diffuses into brain tissue, raising local H+ ion concentration, and H+ ions cause vasodilation", "CO2 has no effect on cerebral blood flow", "CO2 causes vasoconstriction, not vasodilation"], "answer": 1, "correct": "Increased arterial CO2 diffuses into brain tissue, raising the local H+ ion concentration; the resulting rise in H+ causes cerebral vasodilation, increasing cerebral blood flow.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 92"},
+{"topic": "Astrocytes & Blood Flow Control", "q": "What is the proposed role of astrocytes in matching cerebral blood flow to neuronal activity?", "choices": ["Astrocytes have no role in blood flow regulation", "Increased neuronal activity causes glutamate spillover, triggering an astrocytic calcium wave that leads to release of vasodilatory prostaglandins, dilating arterioles", "Astrocytes only regulate CSF production, not blood flow", "Astrocytes directly constrict vessels in response to activity"], "answer": 1, "correct": "Increased neuronal activity leads to increased glutamate spillover at synapses, which triggers an astrocytic calcium wave; this wave leads to release of vasodilatory prostaglandins, causing arterioles to dilate and matching blood flow to neuronal activity.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 93"},
+{"topic": "Autoregulation of Cerebral Blood Flow", "q": "Over what arterial pressure range is cerebral blood flow (CBF) autoregulated?", "choices": ["0 to 60 mm Hg", "60 mm Hg to 150 mm Hg", "150 to 300 mm Hg", "CBF is never autoregulated"], "answer": 1, "correct": "Cerebral blood flow is autoregulated over a pressure range of approximately 60 to 150 mm Hg; above 160 mm Hg, blood flow increases with pressure and vessels begin to stretch, risking damage and rupture (stroke).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 94"},
+{"topic": "CSF Production", "q": "Where is most cerebrospinal fluid (CSF) produced, and approximately how much is formed each day?", "choices": ["The arachnoid granulations; about 50 mL/day", "The choroid plexus in the lateral ventricles; about 500 mL/day", "The dural venous sinuses; about 150 mL/day", "The pia mater; about 1000 mL/day"], "answer": 1, "correct": "CSF is mainly produced by the choroid plexus in the lateral ventricles, with about 500 mL formed each day (compared to a total CSF volume of only about 150 mL), and performs a cushioning function for the brain.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 95"},
+{"topic": "CSF Composition", "q": "How does CSF glucose concentration compare to plasma glucose concentration?", "choices": ["CSF glucose is about 30% of plasma glucose", "CSF glucose is identical to plasma glucose", "CSF has no glucose at all", "CSF glucose is double that of plasma"], "answer": 0, "correct": "CSF glucose concentration is about 30% of that of plasma; CSF also has slightly less Na+ than plasma, about 15% higher Cl-, 40% of the K+, and only 1-2% of the plasma protein concentration.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 96"},
+{"topic": "Blood-Brain Barrier Structure", "q": "What structural feature makes brain capillaries unique compared to capillaries elsewhere in the body, forming the basis of the blood-brain barrier?", "choices": ["Brain capillaries are fenestrated, allowing free passage of large molecules", "Brain capillaries are a continuous type with tight junctions between endothelial cells (unique to brain capillaries), reinforced by a thick basement membrane and astrocytic end-feet", "Brain capillaries have no endothelial cells at all", "Brain capillaries are identical in structure to liver sinusoids"], "answer": 1, "correct": "The blood-brain barrier is formed by brain endothelial cells with tight junctions between them (a feature unique to brain capillaries), reinforced by a thick basement membrane and astrocytic end-feet, forming a continuous type of capillary that restricts substances to passing through the endothelial cell membrane itself.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 97"},
+{"topic": "Blood-Brain Barrier Permeability", "q": "What can cross the blood-brain barrier by passive diffusion, and what requires selective transport?", "choices": ["Only proteins can cross passively", "Water, gases (N2, O2, CO2), and small lipid molecules cross by passive diffusion; glucose and amino acids require selective transport", "Nothing can cross the BBB under any circumstance", "Neurotoxins like botulinum toxin cross freely by passive diffusion"], "answer": 1, "correct": "The blood-brain barrier allows water, gases (N2, O2, CO2), and small lipid molecules to cross by passive diffusion, while glucose and amino acids crucial to neural function require selective transport; the barrier prevents entry of potential neurotoxins such as botulinum toxin.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 97"},
+{"topic": "Pain Perception & the Cortex", "q": "Does removal of the somatic sensory areas of the cortex destroy the ability to perceive pain?", "choices": ["Yes, pain perception is entirely cortical", "No — pain impulses reaching lower brain areas can still cause conscious perception of pain, suggesting the cortex is more important for determining the quality of pain", "Yes, but only for slow pain", "Removal of the cortex has never been studied in relation to pain"], "answer": 1, "correct": "Removal of the somatic sensory areas of the cortex does not destroy the ability to perceive pain, since pain impulses reaching lower brain areas can still cause conscious perception — the cortex is likely more important for determining the quality/character of pain.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 78"},
+{"topic": "Naloxone", "q": "What is naloxone (Narcan), and how does it work?", "choices": ["An opioid agonist that enhances the effects of heroin and morphine", "An opioid antagonist that binds opioid receptors and can reverse/block the effects of opioids like heroin, morphine, and fentanyl, used to counter overdose", "A synthetic form of Substance P", "An NSAID used for chronic pain"], "answer": 1, "correct": "Naloxone (Narcan) is an opioid antagonist that binds to opioid receptors and reverses/blocks the effects of opioids such as heroin, morphine, oxycodone, and fentanyl, making it effective for countering opiate overdose.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 79"},
+{"topic": "Lateral Cerebellar Hemisphere", "q": "What is the specific role of the lateral cerebellar hemisphere in motor planning?", "choices": ["It has no role in motor planning", "It communicates with the premotor/sensory cortex and basal ganglia, receiving the movement plan and timing the sequential events to carry it out", "It only processes auditory information", "It directly generates the plan for movement without input from other brain regions"], "answer": 1, "correct": "The lateral cerebellar hemisphere is responsible for the planning and timing of sequential movements — it communicates with the premotor and sensory cortex and the corresponding area of the basal ganglia (where the movement plan originates), receiving the plan and timing the sequential events to carry it out.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 71"},
+{"topic": "Basal Ganglia Nuclei", "q": "What are the four nuclei that make up the basal ganglia?", "choices": ["Thalamus, hypothalamus, hippocampus, amygdala", "Striatum (caudate and putamen), globus pallidus, substantia nigra, and subthalamus", "Cerebellum, pons, medulla, midbrain", "Frontal, parietal, temporal, and occipital lobes"], "answer": 1, "correct": "The basal ganglia consist of four nuclei: the striatum (caudate and putamen), globus pallidus, substantia nigra, and subthalamus — the principal subcortical components of parallel circuits linking the thalamus with the cerebral cortex.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 72"},
+{"topic": "Basal Ganglia Motor Function", "q": "What kinds of complex motor activities does the basal ganglia help control?", "choices": ["Only reflexive movements like the patellar reflex", "Complex patterns of motor activity such as writing, using scissors, throwing balls, shoveling dirt, and aspects of vocalization", "Only movements of the eyes", "Only cardiac and respiratory rhythms"], "answer": 1, "correct": "The basal ganglia control complex patterns of motor activity, including writing, using scissors, throwing balls, shoveling dirt, and some aspects of vocalization — thought to function in the timing, scaling, and initiation of motion.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 73"},
+{"topic": "Caudate Circuit", "q": "What is the proposed role of the caudate circuit, given its extensive input from cortical association areas?", "choices": ["Direct control of reflexive spinal withdrawal only", "A role in the cognitive control of motor functions, since most motor actions occur as a result of a sequence of thoughts", "Exclusively controls eye movements", "It has no connections to the rest of the basal ganglia"], "answer": 1, "correct": "The caudate circuit receives large input from association areas of the cortex and projects mostly to the globus pallidus; because most motor actions arise from a sequence of thoughts, the caudate circuit is thought to play a role in the cognitive control of motor functions.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 75"},
+{"topic": "Putamen Circuit", "q": "What is the proposed role of the putamen circuit?", "choices": ["A role in the execution of motor movement, via connections mostly from premotor and supplemental motor cortex, through the putamen, and back to the motor cortex", "It plays no role in motor function", "It solely mediates emotional processing", "It is responsible for producing speech only"], "answer": 0, "correct": "The putamen circuit runs mostly from the premotor and supplemental motor cortex to the putamen and back to the motor cortex, and is thought to play a role in the execution of motor movement (as opposed to the caudate circuit's more cognitive role).", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 76"},
+{"topic": "Levels of Motor Integration", "q": "What is the primary role of the cortical level in the integration of motor control, according to this lecture?", "choices": ["Preprogramming basic patterns of movement like withdrawal reflexes", "Issuing commands that set into motion patterns already available in the spinal cord, controlling their intensity and modifying timing", "Maintaining equilibrium by adjusting axial tone alone", "Directly contracting individual muscle fibers with no intermediary"], "answer": 1, "correct": "At the cortical level of motor integration, the cortex issues commands that set into motion patterns of movement already available in the spinal cord, controlling the intensity of the movement and modifying its timing — distinct from the spinal cord level (preprogrammed patterns) and brainstem level (equilibrium via axial tone).", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 78"},
+{"topic": "Basal Ganglia in Motor Integration", "q": "According to the overall scheme of motor integration, what dual role do the basal ganglia play?", "choices": ["They only inhibit all movement", "They assist the cortex in executing subconscious but learned patterns of movement, and help plan sequential patterns to accomplish a purposeful task", "They have no functional role in integration", "They function only at the spinal cord level"], "answer": 1, "correct": "In the overall integration of motor function, the basal ganglia assist the cortex in executing subconscious but learned patterns of movement, and also help plan sequential patterns of movement needed to accomplish a purposeful task.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 79"},
+{"topic": "Incoming Sensory Pathways to Motor Cortex", "q": "From which thalamic nuclei does the motor cortex receive input important for coordinating function between the motor cortex, basal ganglia, and cerebellum?", "choices": ["The ventrobasal complex only", "The ventrolateral and ventroanterior nuclei of the thalamus", "The lateral geniculate nucleus", "The pulvinar nucleus"], "answer": 1, "correct": "The ventrolateral and ventroanterior nuclei of the thalamus provide input to the motor cortex important for coordinating function between the motor cortex, basal ganglia, and cerebellum, while the intralaminar nuclei help control the level of excitability of the motor cortex.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 39"},
+{"topic": "Excitation of Spinal Motor Neurons", "q": "Approximately how many giant pyramidal (Betz) cells must be excited simultaneously to cause muscle contraction?", "choices": ["1-2", "50-100", "10,000", "All 34,000 Betz cells at once"], "answer": 1, "correct": "Excitation of approximately 50-100 giant pyramidal (Betz) cells is needed to cause muscle contraction; most corticospinal fibers synapse with interneurons, though some synapse directly with alpha motor neurons, especially those innervating the fingers and hand in the cervical enlargement.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 43"},
+{"topic": "Brainstem as Spinal Cord Extension", "q": "How is the brainstem functionally related to the spinal cord?", "choices": ["It has no relationship to the spinal cord", "It acts as an extension of the spinal cord, performing similar motor and sensory functions for the face and head via the cranial nerves, and contains centers for stereotypic movement and equilibrium", "It only processes visual information", "It exclusively controls voluntary fine motor movement"], "answer": 1, "correct": "The brainstem functions as an extension of the spinal cord, performing motor and sensory functions for the face and head (via the cranial nerves) similar to how the spinal cord functions for the body below the head, and it contains centers for stereotypic movement and equilibrium.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 45"},
+{"topic": "Sensory Feedback in Motor Control", "q": "What role does sensory feedback (from muscle spindles, tactile receptors, and proprioceptors) play in motor control?", "choices": ["It plays no role once a movement has begun", "It fine-tunes muscle movement, allowing auto-correction for length mismatch in the spindle and informing the motor cortex of the effectiveness of an intended action", "It only matters for reflexes, never for voluntary movement", "It is only relevant to cerebellar function, not cortical function"], "answer": 1, "correct": "Sensory feedback from muscle spindles, tactile receptors, and proprioceptors fine-tunes muscle movement — a length mismatch detected by the spindle causes auto-correction, and skin compression provides feedback to the motor cortex on how effective an intended action has been.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 42"},
+{"topic": "Other Cortical Motor Pathways", "q": "Besides the direct corticospinal pathway, what indirect pathways carry signals from the motor cortex?", "choices": ["Only the auditory pathway", "Signals to the basal ganglia, cerebellum, and brainstem nuclei", "Only signals to the retina", "The motor cortex has only one output pathway"], "answer": 1, "correct": "Besides the direct pathway (corticospinal tract, for discrete detailed movement), the motor cortex sends signals via indirect pathways to the basal ganglia, cerebellum, and brainstem nuclei.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 33"},
+{"topic": "Amygdala Function", "q": "What is the amygdala's key role within the limbic system?", "choices": ["Long-term memory storage only", "Fear, threat detection, and emotional learning", "Regulation of body temperature", "Motor coordination of speech"], "answer": 1, "correct": "The amygdala is key for fear, threat detection, and emotional learning; it receives input from other limbic areas and most of the cortex, and sends output back to the cortex as well as into the hippocampus, septum, and hypothalamus.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 58"},
+{"topic": "Hypothalamus Vegetative Functions", "q": "Which of the following is a \"vegetative\" function controlled by the hypothalamus, as the major output pathway of the limbic system?", "choices": ["Voluntary fine motor control of the hands", "Neurogenic control of arterial pressure, body temperature regulation, fluid volume regulation, and endocrine gland secretion", "Formation of long-term declarative memory", "Motor speech production"], "answer": 1, "correct": "The hypothalamus, the major output pathway of the limbic system, controls vegetative functions including neurogenic control of arterial pressure, regulation of body temperature, regulation of fluid volume, and regulation of endocrine gland secretion (growth hormone, thyroid hormone, glucocorticoids, sex hormones).", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 60"},
+{"topic": "Hypothalamic Nuclei — Behavioral Functions", "q": "Which hypothalamic region is associated with eating, thirst, general activity level, and rage?", "choices": ["Ventromedial nucleus", "Lateral hypothalamus", "Periventricular nucleus", "Anterior hypothalamus"], "answer": 1, "correct": "The lateral hypothalamus is associated with eating, thirst, general level of activity, and rage; the ventromedial nucleus is associated with satiety and tranquility, and the periventricular nucleus with fear and punishment reactions.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 61"},
+{"topic": "Reward and Punishment Centers", "q": "Where is the reward center located in the brain, and which type of response (reward or punishment) takes precedence?", "choices": ["Reward center in central gray around the aqueduct; punishment always takes precedence", "Reward center around the medial forebrain bundle (lateral and ventromedial hypothalamus); punishment always takes precedence over reward", "Reward center in the hippocampus; reward always takes precedence", "Neither system has precedence over the other"], "answer": 1, "correct": "The reward center is located around the medial forebrain bundle (lateral and ventromedial hypothalamus), while the punishment center is located in the central gray around the aqueduct extending into periventricular zones; punishment always takes precedence over reward.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 64"},
+{"topic": "Hippocampus & Behavior Origin", "q": "What is the evolutionary origin of the hippocampus, and how does this relate to its function?", "choices": ["It originated as part of the motor cortex, controlling fine hand movements", "It originated as part of the olfactory cortex, historically involved in determining the importance of incoming information (e.g., is it food, danger, or a mate) via smell", "It originated as part of the visual cortex", "It has no evolutionary connection to sensory processing"], "answer": 1, "correct": "The hippocampus originated as part of the olfactory cortex; in lower animals, smell was an important determinant of behavior (is it good to eat, does it smell dangerous, is it sexually inviting), and the early hippocampus was involved in determining the importance of incoming sensory information.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 66"},
+{"topic": "Hippocampus & Reward/Punishment Memory", "q": "How do reward and punishment influence whether the hippocampus stores information as memory?", "choices": ["Reward and punishment have no effect on memory storage", "A person becomes habituated to indifferent stimuli, but learns (stores as memory) sensory experiences that cause pain or pleasure — the hippocampus drives rehearsal and consolidation of these experiences", "Only punishment causes memory storage; reward has no effect", "Only reward causes memory storage; punishment has no effect"], "answer": 1, "correct": "A person becomes habituated to indifferent stimuli but learns any sensory experience that causes pain or pleasure; the hippocampus provides the drive to rehearse and consolidate these emotionally significant sensory experiences into memory.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 67"},
+{"topic": "Cingulate Gyrus", "q": "What is the functional role of the cingulate gyrus within the limbic system?", "choices": ["Regulating hormone secretion exclusively", "Integrating emotion with cognition and attention", "Detecting angular acceleration of the head", "Producing speech sounds"], "answer": 1, "correct": "The cingulate gyrus integrates emotion with cognition and attention, serving as a key limbic structure linking emotional processing to higher cognitive function.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 58"},
+{"topic": "Suprachiasmatic Nucleus", "q": "What is the functional significance of the suprachiasmatic nucleus of the hypothalamus?", "choices": ["It functions as the body's \"master clock,\" regulating circadian rhythms", "It is the primary site of long-term memory storage", "It controls only pupillary reflexes", "It has no known function"], "answer": 0, "correct": "The suprachiasmatic nucleus functions as the master clock of the body, coordinating circadian rhythms.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 63"},
+{"topic": "Thoughts and the Cerebral Cortex", "q": "Does destruction of the cerebral cortex prevent an individual from thinking, according to this lecture?", "choices": ["Yes, thinking is impossible without an intact cortex", "No — destruction of the cerebral cortex does not prevent thinking, though depth of thought and level of awareness may be reduced", "Thinking only occurs in the cerebellum", "The neural mechanism of thought is fully understood and localized to one area"], "answer": 1, "correct": "Destruction of the cerebral cortex does not prevent an individual from thinking, although the depth of thought and level of awareness may be reduced; the neural mechanism underlying thought itself is not fully known, but is thought to involve a specific pattern of simultaneous neural activity across many brain areas.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 42"},
+{"topic": "Memory Trace", "q": "What is a \"memory trace\"?", "choices": ["A physical scar on brain tissue", "A specific pattern or pathway of signal transmission that, once established, can be reactivated by the thinking mind to reproduce the memory", "A type of neurotransmitter", "A structure found only in the cerebellum"], "answer": 1, "correct": "A memory trace is a specific pattern or pathway of signal transmission resulting from a change in synaptic transmission capability; once established, it can be activated by the thinking mind to reproduce the associated memory.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 43"},
+{"topic": "Visual Communication Pathway", "q": "In the pathway for visual communication (reading a word aloud), what happens after visual input is processed in the parietal-temporal-occipital association cortex (angular gyrus)?", "choices": ["The signal is discarded, since only auditory input can be understood", "Visual input reaches full interpretation in Wernicke's area, then passes to Broca's area for motor formation of the word before signals go to the motor cortex for speech muscles", "It bypasses Wernicke's area entirely and goes straight to the motor cortex", "It is stored permanently without ever producing speech"], "answer": 1, "correct": "For visual communication, after the primary visual area receives input and it is processed in the angular gyrus region, the visual input reaches full interpretation in Wernicke's area, then passes to Broca's area for motor formation of the word, and finally to the motor cortex to control speech muscles.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 38"},
+{"topic": "Facilitator Terminal & Habituation", "q": "What effect does stimulation of a \"facilitator terminal\" have on habituation?", "choices": ["It accelerates habituation", "It prevents habituation from occurring", "It has no effect on habituation", "It converts habituation into long-term memory instantly"], "answer": 1, "correct": "Stimulation of a facilitator terminal prevents habituation, counteracting the progressive decline in calcium channel activity and neurotransmitter release that normally underlies habituation.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 46"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

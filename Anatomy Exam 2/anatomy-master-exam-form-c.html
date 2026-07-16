@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Comprehensive Master Exam — Form C
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Comprehensive Master Exam — Form C</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#9c2b4e;
+    --oxblood-soft:#2e6a92;
+    --brass:#b8860b;
+    --teal:#1e3a5f;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Comprehensive Master Exam<span class="sys">Form C</span></h1>
+    <p class="sub">Integumentary System &middot; Eye &amp; Ear Anatomy &middot; Heart &amp; Great Vessels &middot; Vascular &amp; Lymphatics &middot; Pulmonary Anatomy</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This comprehensive master exam draws cumulatively across all five Anatomy Exam 2 topics — The Integumentary System, Eye and Ear Anatomy, Anatomy of the Heart and Great Vessels, Arteries/Veins/Lymphatic Systems, and Pulmonary Anatomy. Each of the five forms (A–E) contains 60 genuinely distinct questions, evenly distributed across all five topics, drawn from the same validated question banks as the individual topic quizzes.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Integrate integumentary histology and special-sense (eye/ear) anatomy across Anatomy Exam 2's full topic range.</span></li>
+      <li><span class="n">2</span><span>Integrate cardiac, vascular, and lymphatic anatomy across Anatomy Exam 2's full topic range.</span></li>
+      <li><span class="n">3</span><span>Integrate pulmonary anatomy and demonstrate cumulative mastery of all five Anatomy Exam 2 topics at the level expected for the unit exam.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=anatomy-master-c" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Comprehensive master exam covering all Anatomy Exam 2 topics &middot; PAJ 5000 Anatomy &middot; for study use. (Form C)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 60 items, drawn cumulatively from all five Anatomy Exam 2 topics, cumulative (Form C).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Roles of the Skin", "q": "How does the skin achieve heat regulation, per the material?", "choices": ["Through sweat glands, blood vessels, and fat deposits", "Only through the stratum corneum's thickness", "Only through melanin production", "Through the nail bed exclusively"], "answer": 0, "correct": "The skin achieves heat regulation through sweat glands, blood vessels, and fat deposits.", "why": "Stratum corneum thickness relates more to skin color/protection, not the primary mechanism of heat regulation described; melanin production relates to UV protection and skin color, not thermoregulation; and the nail bed is an accessory structure unrelated to whole-body heat regulation.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Roles of the Skin", "q": "How does the skin provide sensation, and what example is given?", "choices": ["By way of superficial nerves and their sensory endings, e.g. pain", "By way of the nail bed only", "By way of melanocytes detecting light", "By way of the arrector pili muscles"], "answer": 0, "correct": "The skin provides sensation by way of superficial nerves and their sensory endings, with pain given as an example.", "why": "The nail bed is a separate accessory structure, not the general mechanism of cutaneous sensation; melanocytes produce pigment and do not detect light in a sensory capacity; and the arrector pili muscles produce goose bumps, an effector response rather than a sensory mechanism.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Roles of the Skin", "q": "What does the skin synthesize and store, per its listed functions?", "choices": ["Vitamin D", "Vitamin C", "Insulin", "Melatonin"], "answer": 0, "correct": "The skin synthesizes and stores vitamin D.", "why": "Vitamin C is obtained through diet, not synthesized by the skin; insulin is produced by the pancreas, an entirely different organ system; and melatonin is produced by the pineal gland in the brain, not the skin.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Melanin", "q": "What happens to melanin after it is transferred into keratinocytes?", "choices": ["It is eventually destroyed by lysosomes", "It permanently remains unchanged for the life of the cell", "It converts into keratin", "It is transported back into melanocytes"], "answer": 0, "correct": "Melanin, after being produced in melanosomes and transferred into keratinocytes, is eventually destroyed by lysosomes.", "why": "It does not remain permanently unchanged, since the material describes its eventual destruction; melanin does not convert into keratin, a distinct fibrous protein produced by a different process; and melanin's described pathway moves from melanocyte to keratinocyte, not back into the melanocyte.", "src": "The Integumentary System - Shahsv.pptx, Slide 25"},
+{"topic": "Stratum Spinosum", "q": "What structures connect keratinocytes to each other within the stratum spinosum?", "choices": ["Tonofibrils", "Keratohyalin granules", "Melanosomes", "Hemidesmosomes to the basal lamina only"], "answer": 0, "correct": "Keratinocytes within the stratum spinosum are connected to other keratinocytes by tonofibrils.", "why": "Keratohyalin granules are produced in the stratum granulosum, a different layer, and function in water-resistance rather than cell-to-cell connection; melanosomes are melanin-containing structures within melanocytes, not the connecting structures between keratinocytes; and attachment to the basal lamina is a stratum basale feature, not the stratum spinosum's tonofibril connections.", "src": "The Integumentary System - Shahsv.pptx, Slide 13"},
+{"topic": "Roles of the Skin", "q": "How does the skin provide protection, per the material?", "choices": ["Protects the body from environmental effects, such as abrasions and harmful substances", "Only by regulating body temperature", "Only by producing vitamin D", "Only through sensory nerve endings"], "answer": 0, "correct": "The skin's protection function guards the body from environmental effects, such as abrasions and harmful substances.", "why": "Regulating body temperature is a separate, distinct function (heat regulation), not the protection function itself; producing vitamin D is the synthesis/storage function, a different role; and sensory nerve endings serve the sensation function, distinct from the physical/chemical protection function.", "src": "The Integumentary System - Shahsv.pptx, Slide 4"},
+{"topic": "Skin Blood Supply", "q": "What is the cutaneous plexus, and where is it located?", "choices": ["An interconnected network of blood vessels found in the subcutaneous layer, just below the reticular layer", "A network of nerves found in the epidermis", "A lymphatic network found only in the dermis", "A network of sweat gland ducts"], "answer": 0, "correct": "The cutaneous plexus is an interconnected network of blood vessels found in the subcutaneous layer, just below the reticular layer of the dermis; its branches supply blood to the lipid layer as well as the skin.", "why": "A network of nerves describes a different structure (like the root hair plexus), not the cutaneous plexus, which is vascular; a lymphatic network is a separate vessel type from the blood vessel network described; and it is not a network of sweat gland ducts, which is a glandular structure, not a vascular one.", "src": "The Integumentary System - Shahsv.pptx, Slide 36"},
+{"topic": "Skin Blood Supply", "q": "What is the papillary plexus?", "choices": ["Smaller branches of the cutaneous plexus that reach the epidermis", "The main network of blood vessels in the subcutaneous layer", "A network of nerves that reach the stratum corneum", "A lymphatic vessel network in the hypodermis"], "answer": 0, "correct": "The papillary plexus consists of smaller branches from the dermal blood supply that reach the epidermis (supplying the papillary layer near the epidermal-dermal junction).", "why": "The main network in the subcutaneous layer is the cutaneous plexus, a different (deeper) structure than the papillary plexus; nerve networks are a separate system from the vascular papillary plexus; and it is a blood vessel network, not a lymphatic vessel network.", "src": "The Integumentary System - Shahsv.pptx, Slide 36"},
+{"topic": "Thermoregulation", "q": "How does regulated skin blood supply contribute to thermoregulation?", "choices": ["When body temperature increases, increased skin circulation permits heat loss, and vice versa; increased blood flow to skin results in decreased blood flow to other organs", "Skin blood flow has no relationship to body temperature regulation", "Increased skin blood flow always occurs alongside increased blood flow to all other organs simultaneously", "Skin blood flow only decreases when body temperature increases"], "answer": 0, "correct": "When body temperature increases, increased skin circulation permits heat loss (and vice versa when temperature decreases); increased blood flow to the skin results in decreased blood flow to other organs, as these organs interact to maintain constant total body blood flow.", "why": "Skin blood flow does have a clear, described relationship to thermoregulation, so claiming no relationship is incorrect; increased skin blood flow specifically decreases (not increases) flow to other organs, given a constant total blood volume; and skin blood flow increases (not decreases) when body temperature rises, the opposite of that option's claim.", "src": "The Integumentary System - Shahsv.pptx, Slide 37"},
+{"topic": "Skin Nerve Supply", "q": "What are the three general functions of the skin's nerve supply?", "choices": ["Control blood flow, adjust gland secretion, and monitor sensory receptors", "Only produce melanin", "Only regulate hair growth", "Only produce keratin"], "answer": 0, "correct": "The skin's nerve supply functions to control blood flow, adjust gland secretion, and monitor sensory receptors.", "why": "Producing melanin is a melanocyte (cellular) function, not a nerve supply function; regulating hair growth is influenced by follicle biology and hormones, not the primary listed nerve supply function; and producing keratin is a keratinocyte function, unrelated to the nerve supply's roles.", "src": "The Integumentary System - Shahsv.pptx, Slide 39"},
+{"topic": "Skin Nerve Receptors", "q": "What do tactile corpuscles detect, and where are they located?", "choices": ["Light touch; located in dermal papillae and the root hair plexus", "Deep pressure and vibration; located in the reticular layer", "Stretch; located in the reticular layer", "Temperature; located in the epidermis only"], "answer": 0, "correct": "Tactile corpuscles detect light touch and are located in the dermal papillae and root hair plexus.", "why": "Deep pressure and vibration in the reticular layer describes lamellated corpuscles, a different receptor; stretch in the reticular layer describes Ruffini corpuscles, also distinct; and tactile corpuscles are located in the dermal papillae/root hair plexus, not confined to the epidermis, nor are they primarily temperature receptors.", "src": "The Integumentary System - Shahsv.pptx, Slide 39"},
+{"topic": "Skin Nerve Receptors", "q": "What do Ruffini corpuscles detect, and where are they located within the skin?", "choices": ["Stretch; located in the reticular layer", "Light touch; located in dermal papillae", "Deep pressure and vibration; located in the reticular layer", "Pain; located in the epidermis"], "answer": 0, "correct": "Ruffini corpuscles detect stretch and are located in the reticular layer.", "why": "Light touch in dermal papillae describes tactile corpuscles, a different receptor; deep pressure and vibration (though also in the reticular layer) describes lamellated corpuscles, not Ruffini corpuscles; and Ruffini corpuscles detect stretch, not pain, and are not located in the epidermis.", "src": "The Integumentary System - Shahsv.pptx, Slide 39"},
+{"topic": "Accessory Structures of the Eye", "q": "What are the glands of Zeis, and what are they associated with?", "choices": ["Sebaceous glands associated with the eyelashes", "Glands that produce tears, located superiorly and laterally", "Glands that produce thick secretions within the canthus", "Glands that secrete a lipid-rich product along the inner eyelid margin"], "answer": 0, "correct": "Glands of Zeis are sebaceous glands associated with the eyelashes.", "why": "Producing tears from a superior/lateral location describes the lacrimal glands, a different gland type; producing thick secretions within the canthus describes the lacrimal caruncle glands, also distinct; and secreting a lipid-rich product along the inner eyelid margin describes the tarsal glands, not the glands of Zeis.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 15"},
+{"topic": "Accessory Structures of the Eye", "q": "What do lacrimal caruncle glands produce, and where are they located?", "choices": ["Thick secretions; located within the canthus areas", "Tears; located at the superior, lateral portion of the eye", "A lipid-rich product; located along the inner eyelid margin", "Sebum; associated with the eyelashes"], "answer": 0, "correct": "Lacrimal caruncle glands produce thick secretions and are located within the canthus areas.", "why": "Producing tears from the superior/lateral eye describes the lacrimal glands, a different gland; a lipid-rich product along the inner eyelid margin describes the tarsal glands, also distinct; and sebum associated with the eyelashes describes the glands of Zeis, not the lacrimal caruncle glands.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 15"},
+{"topic": "Accessory Structures of the Eye", "q": "An infection of which glands (other than the tarsal gland) may result in a sty?", "choices": ["Glands of Zeis, lacrimal glands, or lacrimal caruncle glands (any gland other than the tarsal gland)", "Only the tarsal gland", "Only the ciliary body", "No gland infection produces a sty; only a cyst"], "answer": 0, "correct": "An infection of any of the eye's glands other than the tarsal gland (e.g., glands of Zeis, lacrimal glands, lacrimal caruncle glands) may result in a sty, whereas a tarsal gland infection specifically results in a cyst.", "why": "The tarsal gland specifically produces a cyst upon infection (not a sty), the opposite of what this question asks about; the ciliary body is not one of the eyelid/ocular glands discussed in this context; and both a sty and a cyst are described outcomes depending on which gland is infected, not just a cyst alone.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 15"},
+{"topic": "Extrinsic Eye Muscles", "q": "How many extrinsic muscles move the eye, and how many primary actions is each associated with?", "choices": ["6 extrinsic muscles, each associated with one primary action", "4 extrinsic muscles, each associated with two primary actions", "8 extrinsic muscles, each associated with no primary action", "6 extrinsic muscles, all sharing the same single primary action"], "answer": 0, "correct": "There are 6 extrinsic muscles that move the eye in many directions, and each muscle is associated with one primary action.", "why": "There are 6 (not 4) extrinsic eye muscles, and each has one (not two) primary actions; there are 6 (not 8) extrinsic muscles; and each muscle has its own distinct primary action, not all six sharing an identical single action.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 9"},
+{"topic": "The Eyes — Fibrous Tunic", "q": "The cornea is described as what, in relation to the sclera?", "choices": ["Modified sclera", "An entirely separate tissue type unrelated to the sclera", "Part of the vascular tunic, not the fibrous tunic", "A component of the neural tunic"], "answer": 0, "correct": "The cornea is modified sclera, both belonging to the fibrous tunic (outer layer) of the eye.", "why": "The cornea is directly related to the sclera as a modified form of it, not an entirely separate, unrelated tissue; both the cornea and sclera belong to the fibrous tunic, not the vascular tunic; and the cornea is part of the fibrous (not neural) tunic, which instead corresponds to the retina.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 18"},
+{"topic": "Retina Histology", "q": "Where are the photoreceptors (rods and cones) located within the retina's layered histology, relative to the choroid and vitreous chamber?", "choices": ["Located closest to the choroid, rather than near the vitreous chamber", "Located closest to the vitreous chamber, rather than near the choroid", "Located exactly midway between the choroid and vitreous chamber", "Located outside the retina entirely, within the choroid itself"], "answer": 0, "correct": "In the histological organization of the retina, the photoreceptors (rods and cones) are located closest to the choroid, rather than near the vitreous chamber — light must pass through the other retinal layers before reaching them.", "why": "This reverses the actual positioning described in the material, which specifically notes photoreceptors are near the choroid, not the vitreous chamber; the material describes a specific position (near the choroid), not a midway position; and rods/cones are photoreceptor cells within the retina's neural tunic itself, not located within the separate choroid layer.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 23"},
+{"topic": "Ear Overview", "q": "Into what three regions is the ear subdivided?", "choices": ["External ear, middle ear, and inner ear", "Only external and inner ear", "Superior, middle, and inferior ear", "Cochlea, vestibule, and auricle only"], "answer": 0, "correct": "The ear is subdivided into three regions: the external ear, middle ear, and inner ear.", "why": "There are three regions, not two — omitting the middle ear misrepresents the ear's organization; superior/middle/inferior is not the terminology used for ear subdivision; and cochlea/vestibule/auricle are individual structures within these regions, not the three overarching regions themselves.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 34"},
+{"topic": "External Ear", "q": "What structures make up the external ear?", "choices": ["Auricle, external acoustic meatus, tympanic membrane, and ceruminous glands", "Malleus, incus, and stapes", "Cochlea and semicircular canals", "Auditory tube (pharyngotympanic tube) only"], "answer": 0, "correct": "The external ear consists of the auricle, external acoustic meatus, tympanic membrane, and ceruminous glands.", "why": "The malleus, incus, and stapes are the auditory ossicles of the middle ear, not the external ear; the cochlea and semicircular canals are inner ear structures, also distinct; and the auditory tube is a middle ear structure, not part of the external ear.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 35"},
+{"topic": "Middle Ear", "q": "What structures make up the middle ear?", "choices": ["Tympanic cavity, auditory ossicles (malleus, incus, stapes), and auditory tube (pharyngotympanic tube)", "Auricle and external acoustic meatus", "Cochlea, vestibule, and semicircular canals", "Only the tympanic membrane"], "answer": 0, "correct": "The middle ear consists of the tympanic cavity, the auditory ossicles (malleus, incus, and stapes), and the auditory tube (pharyngotympanic tube).", "why": "The auricle and external acoustic meatus are external ear structures, not middle ear; the cochlea, vestibule, and semicircular canals are inner ear structures, also distinct from the middle ear; and the tympanic membrane, while adjacent to the middle ear, is classified as an external ear structure in this material's organization, and the middle ear includes more than just it.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 37"},
+{"topic": "Inner Ear", "q": "What structures make up the inner ear?", "choices": ["Receptors, membranous labyrinth (within the bony labyrinth), vestibule, semicircular canals, cochlea, utricle, and saccule", "Auricle, external acoustic meatus, and tympanic membrane", "Tympanic cavity and auditory ossicles only", "Only the cochlea, with no other structures"], "answer": 0, "correct": "The inner ear consists of receptors, the membranous labyrinth (within the bony labyrinth), the vestibule, semicircular canals, cochlea, utricle, and saccule.", "why": "Auricle, external acoustic meatus, and tympanic membrane are external ear structures, not inner ear; tympanic cavity and auditory ossicles are middle ear structures, also distinct; and the inner ear consists of multiple structures beyond just the cochlea, including the vestibule, semicircular canals, utricle, and saccule.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 44"},
+{"topic": "Middle Ear — Auditory Ossicles", "q": "What are the three auditory ossicles, and where does the base of the stapes attach?", "choices": ["Malleus, incus, and stapes; the base of the stapes attaches at the oval window", "Malleus, incus, and cochlea; the base attaches at the round window", "Only two ossicles: malleus and stapes", "Stapes, cochlea, and vestibule"], "answer": 0, "correct": "The three auditory ossicles are the malleus, incus, and stapes; the base of the stapes attaches at the oval window.", "why": "The cochlea is an inner ear structure, not one of the three ossicles; the round window is a separate inner ear opening, not where the stapes base attaches (that is the oval window); and there are three ossicles (not two), and the vestibule is an inner ear structure, not an ossicle.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 38"},
+{"topic": "Middle Ear — Eustachian Tube", "q": "What does the Eustachian (auditory) tube do, and why is its horizontal positioning in children clinically relevant?", "choices": ["Equalizes pressure in the middle ear and allows fluid drainage; in children, its horizontal position results in stasis of fluid", "Only produces earwax, unrelated to pressure regulation", "Connects the cochlea to the vestibule", "Has no clinical relevance regardless of positioning"], "answer": 0, "correct": "The Eustachian tube equalizes pressure in the middle ear and allows fluid to drain from the middle ear; it is positioned horizontally in children, which results in stasis of fluid (a clinically relevant point, since fluid doesn't drain as efficiently).", "why": "Producing earwax is a function of ceruminous glands in the external ear, not the Eustachian tube; the Eustachian tube connects the middle ear to the nasopharynx, not the cochlea to the vestibule (an inner ear relationship); and the horizontal positioning in children is explicitly described as clinically relevant (causing fluid stasis), not irrelevant.", "src": "7. Eye and Ear Anatomy Lecture 2026.pptx, Slide 43"},
+{"topic": "Heart Valves — Structure", "q": "What four parts make up each AV valve?", "choices": ["Ring of connective tissue, cusps, chordae tendineae, and papillary muscles", "Only cusps and chordae tendineae", "Ring of connective tissue and cusps only", "Sarcolemma, myocardium, endocardium, and epicardium"], "answer": 0, "correct": "Each AV valve consists of four parts: a ring of connective tissue connecting to the heart tissue, cusps, chordae tendineae, and papillary muscles.", "why": "Limiting the parts to only cusps and chordae tendineae omits the ring and papillary muscles; limiting it to the ring and cusps also omits the chordae tendineae and papillary muscles; and sarcolemma/myocardium/endocardium/epicardium describe general heart wall/cell structures, not the four specific parts of an AV valve.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 41"},
+{"topic": "Heart Valves — Function", "q": "What causes the AV valves to close, and what happens as a result?", "choices": ["Blood forces the AV valves closed, resulting in blood going through the semilunar valves (pulmonary and aortic) instead, preventing backflow", "The AV valves never close during the cardiac cycle", "Papillary muscle relaxation forces the AV valves closed", "The semilunar valves force the AV valves closed"], "answer": 0, "correct": "Blood forces the AV valves closed, resulting in blood going through the semilunar valves (pulmonary and aortic) instead, preventing backflow of blood; papillary muscles contract to prevent valvular prolapse and maintain tension.", "why": "The AV valves do close during specific phases of the cardiac cycle (ventricular systole), not remaining open throughout; papillary muscle contraction (not relaxation) maintains valve tension during closure; and the semilunar valves are a separate valve set, not the mechanism forcing the AV valves closed.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 42"},
+{"topic": "Heart Valves — Function", "q": "During ventricular diastole, are the AV valves open or closed, and are the semilunar valves open or closed?", "choices": ["AV valves are open; semilunar valves are closed", "AV valves are closed; semilunar valves are open", "Both sets of valves are open simultaneously", "Both sets of valves are closed simultaneously"], "answer": 0, "correct": "During ventricular diastole (when the ventricles are relaxed), the AV valves are open and the semilunar valves are closed, with the chordae tendineae loose and papillary muscles relaxed.", "why": "Reversing which valve set is open versus closed describes ventricular systole instead, the opposite phase of the cardiac cycle; the two valve sets have opposite (not simultaneous identical) states during diastole; and having both closed simultaneously doesn't match either the diastole or systole valve states described.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 43"},
+{"topic": "Heart Valves — Function", "q": "During ventricular systole, are the AV valves open or closed, and are the semilunar valves open or closed?", "choices": ["AV valves are closed; semilunar valves are open", "AV valves are open; semilunar valves are closed", "Both sets of valves remain open throughout systole", "Neither valve set changes state during systole"], "answer": 0, "correct": "During ventricular systole (when the ventricles are contracting), the AV valves are closed and the semilunar valves are open, with the chordae tendineae tense and papillary muscles contracted.", "why": "Reversing which valve set is open versus closed describes ventricular diastole instead, the opposite phase; the two valve sets have opposite (not simultaneous identical open) states during systole; and both valve sets do change state (opening/closing) as the cardiac cycle transitions between systole and diastole.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 44"},
+{"topic": "Cardiac Innervation", "q": "What is the coronary plexus, and what two autonomic components does it consist of?", "choices": ["The heart's autonomic innervation network, consisting of sympathetic and parasympathetic components", "A network of coronary blood vessels only, unrelated to nerves", "A structure consisting only of sympathetic fibers", "A structure found only within the SA node"], "answer": 0, "correct": "The heart is innervated by the autonomic nervous system, referred to as the coronary plexus, consisting of both sympathetic and parasympathetic components; this innervation can increase or decrease (but does not initiate) the heartbeat.", "why": "The coronary plexus is a nerve network, not a blood vessel network (a separate coronary vascular system); it has both sympathetic and parasympathetic components, not sympathetic fibers alone; and it innervates the whole heart broadly (rich innervation to nodes and cardiomyocytes), not being confined only to the SA node.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 66"},
+{"topic": "Cardiac Innervation", "q": "Which nerve is the exception that only innervates the SA and AV nodes (not cardiomyocytes generally), and what is the right versus left tendency?", "choices": ["Vagus nerve (parasympathetic); right vagus tends to innervate the SA node, left vagus tends to innervate the AV node", "Sympathetic cardiac nerves; both sides innervate only the SA node", "Vagus nerve; left vagus innervates the SA node, right vagus innervates the AV node", "Phrenic nerve; innervates only the AV node"], "answer": 0, "correct": "The vagal nerve (parasympathetic) is the exception, only innervating the SA and AV nodes; the right vagus nerve tends to innervate the SA node, while the left vagus nerve tends to innervate the AV node (with significant anatomical variation).", "why": "Sympathetic stimulation goes directly to cardiomyocytes and nodal structures broadly, not being limited only to the SA node; reversing the right/left vagus tendencies contradicts the material's stated pattern; and the phrenic nerve innervates the diaphragm, not the heart's conduction nodes.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 66"},
+{"topic": "The Cardiac Cycle", "q": "What is systole, and what is diastole?", "choices": ["Systole is contraction of the ventricles (ejecting blood into the pulmonary trunk/aorta); diastole is relaxation of the ventricles (chambers filling with blood)", "Systole is relaxation of the ventricles; diastole is contraction", "Both terms describe atrial contraction only", "Systole and diastole both refer to the same phase of the cardiac cycle"], "answer": 0, "correct": "Systole is contraction of the ventricles, during which blood is ejected from the ventricles into the pulmonary trunk and the ascending aorta; diastole is relaxation of the ventricles, during which the chambers fill with blood.", "why": "Reversing the definitions (systole relaxation, diastole contraction) contradicts the material's stated meanings; these terms specifically describe ventricular (not atrial) contraction/relaxation in this context; and systole and diastole are opposite, alternating phases, not the same phase.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 67"},
+{"topic": "SA Node", "q": "What is the sinoatrial (SA) node, and where is it located?", "choices": ["The cardiac pacemaker, embedded in the superior posterior wall of the right atrium", "A relay station in the left ventricle", "A valve structure in the right atrium", "A node found only in the AV bundle"], "answer": 0, "correct": "The sinoatrial (SA) node is the cardiac pacemaker, embedded in the superior posterior wall of the right atrium; it determines the rate of heart contractions.", "why": "It is not located in the left ventricle, which is a completely different chamber; it is a specialized conduction tissue node, not a valve structure; and it is a distinct node from (and precedes) the AV bundle in the conduction pathway, not found within it.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 68"},
+{"topic": "SA Node", "q": "What are bradycardia, normocardia, and tachycardia, in terms of heart rate?", "choices": ["Bradycardia: slow heart rate; normocardia: normal (60-100 bpm); tachycardia: rapid heart rate", "Bradycardia: rapid heart rate; tachycardia: slow heart rate", "Normocardia refers to a rate above 150 bpm", "All three terms describe the identical heart rate"], "answer": 0, "correct": "Bradycardia is a slow heart rate, normocardia is a normal heart rate (60-100 bpm), and tachycardia is a rapid heart rate.", "why": "Reversing bradycardia and tachycardia's definitions (brady-rapid, tachy-slow) contradicts standard terminology and the material's stated meanings; normocardia specifically refers to the 60-100 bpm normal range, not a rate above 150 bpm (which would be tachycardic); and the three terms describe distinct heart rate categories, not an identical rate.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 68"},
+{"topic": "SA Node", "q": "How does the impulse from the SA node travel to the AV node?", "choices": ["Via the internodal pathways", "Directly through the ventricular myocardium, bypassing any pathway", "Via the coronary sinus", "Via the vagus nerve"], "answer": 0, "correct": "The impulse travels from the SA node to the atrioventricular (AV) node via the internodal pathways.", "why": "The impulse does not travel directly through the ventricular myocardium at this stage — that occurs later, after passing through the AV node/bundle system; the coronary sinus is a venous drainage structure, not a conduction pathway; and the vagus nerve modulates heart rate but is not the anatomical conduction pathway between the SA and AV nodes.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 68"},
+{"topic": "AV Node", "q": "Where is the AV node located, and how does its position compare to the SA node?", "choices": ["Sits within the floor or inferomedial aspect of the right atrium; it is more anterior than the SA node", "Sits in the left ventricle; it is more posterior than the SA node", "Sits in the superior posterior wall of the right atrium, identical position to the SA node", "Sits in the left atrium"], "answer": 0, "correct": "The AV node sits within the floor or inferomedial aspect of the right atrium; it is more anterior than the SA node.", "why": "The AV node is in the right atrium, not the left ventricle, and it is more anterior (not posterior) than the SA node; the AV node and SA node are at different positions within the right atrium, not identical ones (the SA node is in the superior posterior wall, per the material); and it is a right atrial (not left atrial) structure.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 69"},
+{"topic": "AV Node", "q": "What is the pathway of the impulse after leaving the AV node, through the bundle branches and Purkinje fibers?", "choices": ["AV node → AV bundle (travels along interventricular septum, divides into right and left bundle branches) → Purkinje fibers → ventricular myocardium", "AV bundle → AV node → Purkinje fibers → SA node", "AV node → Purkinje fibers directly, bypassing the AV bundle and bundle branches", "AV node → coronary sinus → ventricular myocardium"], "answer": 0, "correct": "The impulse travels from the AV node to the AV bundle, which travels along the interventricular septum and then divides to form the right and left bundle branches; the bundle branches send impulses to the Purkinje fibers, which convey impulses to the ventricular myocardium.", "why": "The AV bundle comes after (not before) the AV node in the sequence, and the pathway doesn't loop back to the SA node; the pathway does pass through the AV bundle and bundle branches, not bypassing them directly to the Purkinje fibers; and the coronary sinus is a venous drainage structure, not part of this conduction pathway.", "src": "9. Anatomy of the Heart and Great Vessels - Carter.pptx, Slide 69"},
+{"topic": "Brachiocephalic Veins", "q": "What veins drain into the brachiocephalic veins?", "choices": ["Subclavian veins, azygos, hemi-azygos, and internal thoracic veins", "Only the femoral vein", "Only the renal veins", "Only the hepatic veins"], "answer": 0, "correct": "Subclavian veins, the azygos vein, hemi-azygos vein, and internal thoracic veins all drain into the brachiocephalic veins.", "why": "The femoral vein drains toward the inferior vena cava (via the external iliac/common iliac veins), not the brachiocephalic veins; the renal veins also drain into the inferior vena cava, a different pathway; and the hepatic veins likewise drain into the inferior vena cava, not the (upper body) brachiocephalic veins.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 58"},
+{"topic": "Inferior Vena Cava", "q": "What does the inferior vena cava collect, and what is unique about the left versus right gonadal vein drainage?", "choices": ["Collects most venous blood from organs inferior to the diaphragm; the right gonadal vein drains directly into the IVC, while the left gonadal vein drains into the left renal vein first", "Collects blood only from the head and neck", "Both gonadal veins drain identically, directly into the IVC", "The inferior vena cava drains into the left atrium"], "answer": 0, "correct": "The inferior vena cava collects most of the venous blood from organs inferior to the diaphragm (via common iliac veins, lumbar veins, gonadal veins, hepatic veins, and other abdominal veins); the right gonadal vein drains directly into the inferior vena cava, while the left gonadal vein drains into the left renal vein, which then drains into the inferior vena cava.", "why": "The head and neck drain via the superior vena cava, not the inferior vena cava; the two gonadal veins have different (not identical) drainage patterns, with only the left routing through the renal vein first; and the inferior vena cava drains into the right atrium, not the left atrium.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 59"},
+{"topic": "Venous Return — Lower Extremity", "q": "What is the venous return pathway from the foot's plantar veins to the inferior vena cava?", "choices": ["Plantar veins → anterior/posterior tibial and fibular veins → popliteal vein → femoral vein → external iliac vein → common iliac vein → inferior vena cava", "Plantar veins → inferior vena cava directly", "Popliteal vein → plantar veins → femoral vein → aorta", "Femoral vein → plantar veins → popliteal vein → right atrium directly"], "answer": 0, "correct": "Blood from the sole and digits drains to plantar veins and the ventral plantar arches, then into the anterior tibial, posterior tibial, and fibular veins, then the popliteal vein, femoral vein, external iliac vein, common iliac vein, and finally the inferior vena cava.", "why": "The pathway must proceed through multiple named intermediate veins, not skip directly from plantar veins to the IVC; the sequence must proceed from distal to proximal (plantar veins first, not the popliteal vein first); and the venous pathway drains toward the inferior vena cava (an vein), not the aorta (an artery), and does pass through the IVC before reaching the right atrium, not bypassing it directly.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 61"},
+{"topic": "Venous Return — Lower Extremity", "q": "What are the great and small saphenous veins, and where do they ultimately drain?", "choices": ["Superficial veins draining the dorsal venous arch of the foot, ultimately reaching the femoral vein (great saphenous) and popliteal region (small saphenous) before the deeper system", "Deep veins found only in the thigh", "Arteries supplying the foot", "Veins that drain directly into the inferior vena cava, bypassing the femoral vein"], "answer": 0, "correct": "The great saphenous vein and small saphenous vein are superficial veins draining the dorsal venous arch of the foot; the great saphenous vein reaches the femoral vein (which also receives the deep femoral vein), continuing on to the external iliac vein, common iliac vein, inferior vena cava, and right atrium.", "why": "The saphenous veins are superficial (not deep) veins, and they are found along the leg and thigh, not confined only to the thigh; they are veins, not arteries, supplying nothing (they drain blood, not supply it); and they do route through the femoral vein before reaching the IVC, not bypassing it directly.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 65"},
+{"topic": "Venous Return — Pelvis", "q": "Which veins drain into the internal iliac vein, and where does the median sacral vein drain instead?", "choices": ["Gluteal, internal pudendal, obturator, and lateral sacral veins drain into the internal iliac vein; the median sacral vein drains into the left common iliac vein", "All pelvic veins drain directly into the aorta", "The median sacral vein drains into the internal iliac vein, same as the others", "Gluteal and obturator veins drain into the external iliac vein"], "answer": 0, "correct": "Gluteal veins, internal pudendal veins, obturator veins, and lateral sacral veins drain into the internal iliac vein (then the common iliac vein, then the inferior vena cava); the median sacral vein is an exception, draining into the left common iliac vein instead.", "why": "Pelvic veins drain into the venous system (internal iliac vein), not directly into the aorta, which is an artery; the median sacral vein is specifically the exception that bypasses the internal iliac vein, draining into the left common iliac vein instead, not following the same pathway as the others; and these veins drain into the internal (not external) iliac vein.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 69"},
+{"topic": "Arteries of the Foot", "q": "What does the anterior tibial artery form in the foot, and what does the posterior tibial artery form?", "choices": ["Anterior tibial artery forms the dorsalis pedis artery; posterior tibial artery forms the medial and lateral plantar arteries", "Anterior tibial artery forms the plantar arteries; posterior tibial artery forms the dorsalis pedis artery", "Both arteries form the identical dorsalis pedis artery", "Neither artery contributes to foot circulation"], "answer": 0, "correct": "The anterior tibial artery forms the dorsalis pedis artery (a common site for taking pulses), while the posterior tibial artery forms the medial and lateral plantar arteries.", "why": "Reversing which artery forms which foot vessel contradicts the material's stated anatomy; the two arteries form distinct, non-identical foot vessels; and both arteries do contribute to foot circulation, not neither of them.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 47"},
+{"topic": "Blood Composition", "q": "What are the two main components of blood, and what does the \"formed elements\" component include?", "choices": ["Plasma and formed elements; formed elements include erythrocytes, leukocytes, and platelets", "Plasma and serum only, with no formed elements", "Formed elements only, with no liquid plasma component", "Only erythrocytes, with no other formed elements"], "answer": 0, "correct": "Blood consists of two components: plasma (the liquid matrix) and formed elements (blood cells and cell fragments suspended in the plasma), including erythrocytes (red blood cells), leukocytes (white blood cells), and platelets.", "why": "Serum is plasma without clotting factors, not a separate second component alongside plasma in this classification; blood does have a liquid plasma component, not being formed elements alone; and formed elements include three cell/fragment types (erythrocytes, leukocytes, platelets), not just erythrocytes alone.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 74"},
+{"topic": "Blood Composition", "q": "What are the functions of erythrocytes, leukocytes, and platelets, respectively?", "choices": ["Erythrocytes transport oxygen/carbon dioxide; leukocytes function in the immune system; platelets are involved in blood clotting", "Erythrocytes function in immunity; leukocytes transport gases; platelets have no function", "All three formed elements share an identical function", "Platelets transport oxygen; erythrocytes are involved in clotting"], "answer": 0, "correct": "Erythrocytes (red blood cells) transport oxygen and carbon dioxide, leukocytes (white blood cells) function in the immune system, and platelets are involved in blood clotting.", "why": "Swapping the functions (erythrocytes-immunity, leukocytes-gas transport) contradicts the material's stated roles, and platelets do have a described function (clotting), not none; the three formed elements have distinct, not identical, functions; and platelets are not involved in gas transport, and erythrocytes are not involved in clotting — these are separate, specific roles.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 74"},
+{"topic": "Plasma Proteins", "q": "What are the three main plasma protein types, and what percentage of plasma proteins does albumin make up?", "choices": ["Albumins (60%), globulins (35%), and fibrinogen (4%)", "Albumins (4%), globulins (60%), and fibrinogen (35%)", "Only two plasma protein types: albumins and globulins", "Hemoglobin (60%), albumins (35%), and globulins (4%)"], "answer": 0, "correct": "The three main plasma protein types are albumins (60%, major contributors to osmotic pressure, transport lipids/steroid hormones), globulins (35%, transport ions/hormones/lipids, immune function), and fibrinogen (4%, essential for clotting, convertible to insoluble fibrin), plus regulatory proteins (<1%).", "why": "Scrambling the percentages (albumin 4%, fibrinogen 35%) misassigns each protein's actual proportion; there are more than two plasma protein types, since fibrinogen and regulatory proteins are also described; and hemoglobin is a red blood cell protein (not a plasma protein), unrelated to this plasma protein composition.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 75"},
+{"topic": "Whole Blood", "q": "What percentage of body weight does whole blood approximately make up, and what is the normal blood pH range?", "choices": ["About 7 percent of body weight; pH 7.35-7.45", "About 25 percent of body weight; pH 6.0-6.5", "About 1 percent of body weight; pH 8.0-8.5", "About 50 percent of body weight; pH 7.0 exactly"], "answer": 0, "correct": "Whole blood makes up approximately 7 percent of body weight, with a normal pH range of 7.35-7.45.", "why": "25 percent vastly overstates blood's proportion of body weight, and a pH of 6.0-6.5 is far too acidic for normal blood; 1 percent understates blood's proportion, and pH 8.0-8.5 is too alkaline; and 50 percent grossly overstates blood's body weight proportion, and blood pH is not exactly 7.0, but slightly alkaline (7.35-7.45).", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 77"},
+{"topic": "Whole Blood", "q": "What is the difference between hypovolemic, normovolemic, and hypervolemic?", "choices": ["Hypovolemic: low blood volume; normovolemic: normal blood volume; hypervolemic: excessive blood volume", "Hypovolemic: excessive blood volume; hypervolemic: low blood volume", "All three terms describe the identical blood volume state", "These terms describe blood pH, not blood volume"], "answer": 0, "correct": "Hypovolemic describes low blood volume, normovolemic describes normal blood volume, and hypervolemic describes excessive blood volume.", "why": "Reversing hypovolemic and hypervolemic's definitions contradicts standard terminology and the material's stated meanings; the three terms describe distinct, not identical, blood volume states; and these terms specifically describe blood volume, not blood pH (a separate parameter).", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 77"},
+{"topic": "Plasma", "q": "What percentage of whole blood volume does plasma make up, and what are its three components?", "choices": ["About 55 percent; consists of 92% water, 7% proteins, and 1% other solutes", "About 92 percent; consists of proteins only", "About 7 percent; consists of water only", "About 45 percent; consists of formed elements only"], "answer": 0, "correct": "Plasma makes up about 55 percent of the volume of whole blood, consisting of 92 percent water, 7 percent proteins (albumin, globulins, fibrinogen, regulatory proteins), and 1 percent other solutes (electrolytes, organic nutrients, organic waste).", "why": "92 percent is the water proportion within plasma, not plasma's own proportion of whole blood, and plasma is not composed of proteins alone; 7 percent is the protein proportion within plasma, not plasma's whole-blood percentage, and plasma is not just water; and plasma consists of proteins/water/solutes, not formed elements, which are a separate whole-blood component outside plasma.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 78"},
+{"topic": "Right vs Left Primary Bronchus Branching", "q": "How many secondary bronchi does the right primary bronchus divide into, versus the left?", "choices": ["Right divides into three secondary bronchi (one per lobe: superior, middle, inferior); left divides into two (superior, inferior)", "Right divides into two; left divides into three", "Both sides divide into an identical number of secondary bronchi", "Neither side divides into secondary bronchi"], "answer": 0, "correct": "The right primary bronchus divides into three secondary bronchi, one for each of the right lung's three lobes (superior, middle, inferior lobar bronchus), while the left primary bronchus divides into two secondary bronchi, one for each of the left lung's two lobes (superior, inferior lobar bronchus).", "why": "Reversing the numbers (right two, left three) contradicts the material's stated lobar anatomy, since the right lung has three lobes and the left has two; the two sides have different (not identical) numbers of secondary bronchi, matching their different lobe counts; and both sides do divide into secondary bronchi, not neither of them.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 50"},
+{"topic": "Bronchopulmonary Segments", "q": "How many tertiary bronchi (and therefore bronchopulmonary segments) does each lung have?", "choices": ["10 tertiary bronchi and 10 bronchopulmonary segments per lung", "5 tertiary bronchi and 5 bronchopulmonary segments per lung", "3 tertiary bronchi, matching the 3 lobes of the right lung only", "20 tertiary bronchi per lung, with no anatomical variation"], "answer": 0, "correct": "The right and left lungs each have 10 tertiary bronchi and therefore 10 bronchopulmonary segments, though there is significant anatomical variation.", "why": "5 tertiary bronchi undercounts the actual 10 per lung; matching only the 3 lobes of the right lung conflates lobes with the much more numerous bronchopulmonary segments; and 20 tertiary bronchi overcounts the actual number, and the material does note there is significant anatomical variation, not none.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 54"},
+{"topic": "Respiratory System Functions", "q": "Besides gas exchange, what other functions does the respiratory system serve?", "choices": ["Protects respiratory surfaces from dehydration, protects against pathogens, produces sound for communication, and assists in regulating blood volume/pressure/body fluid pH", "Only gas exchange, with no other described functions", "Only sound production, unrelated to protection or fluid balance", "Digestion of nutrients, identical to the digestive system"], "answer": 0, "correct": "Beyond providing an area for gas exchange, the respiratory system protects respiratory surfaces from dehydration, provides protection against invading pathogens, produces sound involved in verbal communication, and assists in regulating blood volume, blood pressure, and body fluid pH.", "why": "The respiratory system has multiple functions beyond gas exchange alone, as explicitly listed; sound production is only one of several functions, not the sole one; and digestion of nutrients is a digestive system function, not a respiratory system function.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 8"},
+{"topic": "The Nose", "q": "What bony and cartilaginous structures make up the nose?", "choices": ["Nasal bones, nasal septum (vomer and perpendicular plate of ethmoid), cartilage (external nares, alar cartilage), and nasal conchae", "Only the frontal bone, with no other bony or cartilaginous components", "Only cartilage, with no bony component at all", "The maxilla and mandible exclusively"], "answer": 0, "correct": "The nose consists of nasal bones, the nasal septum (formed by the vomer bone and perpendicular plate of the ethmoid), cartilage (including the external nares and alar cartilage forming the dorsum/bridge and apex/tip of the nose), and the nasal conchae.", "why": "The frontal bone is a separate cranial bone, not the primary described component of the nose itself; the nose does have a bony component (nasal bones, vomer, ethmoid), not cartilage alone; and the maxilla/mandible are separate facial bones, not the nose's primary described structural components here.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 19"},
+{"topic": "Columnar vs Pseudocolumnar Epithelium", "q": "What is the key difference in apical (free) surface contact between columnar cells and pseudocolumnar cells?", "choices": ["Every columnar cell reaches the apical surface; not every pseudocolumnar cell reaches the apical surface", "Every pseudocolumnar cell reaches the apical surface; columnar cells do not", "Neither cell type has cells reaching the apical surface", "Both cell types have identical apical surface contact patterns"], "answer": 0, "correct": "In columnar epithelium, every cell reaches the apical (free) surface, while in pseudocolumnar epithelium, not every cell reaches the apical surface (even though every cell in both types touches the basement membrane) — this is part of why pseudocolumnar epithelium falsely appears to have multiple layers.", "why": "Reversing which cell type has full apical surface contact contradicts the material's stated distinction; the two epithelial types have different (not identical) apical contact patterns, which is precisely what distinguishes them; and cells of both types do reach the apical surface to varying degrees, not neither type doing so.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 11"},
+{"topic": "Epiglottis and Vallecula", "q": "What is the vallecula, and where is it located relative to the epiglottis?", "choices": ["A pocket posterior to the tongue, located superior and anterior to the epiglottis", "A cartilage ring found in the trachea", "A fold of the pharynx found in the nasopharynx only", "A ligament connecting the thyroid and cricoid cartilages"], "answer": 0, "correct": "The vallecula is a pocket posterior to the tongue, located superior and anterior to the epiglottis.", "why": "A cartilage ring in the trachea describes the tracheal cartilages, an unrelated structure; a pharyngeal fold in the nasopharynx describes a different region entirely, not the vallecula's actual location near the tongue/epiglottis; and the cricothyroid ligament (not the vallecula) connects the thyroid and cricoid cartilages.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 25"},
+{"topic": "Lung Structure — Lobes", "q": "How many lobes does the right lung have, versus the left lung?", "choices": ["Right lung has three lobes (superior, middle, inferior); left lung has two lobes (superior, inferior)", "Right lung has two lobes; left lung has three lobes", "Both lungs have an identical number of lobes (three each)", "Neither lung is divided into lobes"], "answer": 0, "correct": "The right lung has three lobes (superior, middle, and inferior), while the left lung has two lobes (superior and inferior).", "why": "Reversing the lobe counts (right two, left three) contradicts the material's stated lung anatomy; the two lungs have different (not identical) numbers of lobes, due to the heart's position on the left side; and both lungs are explicitly divided into lobes, not undivided.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 44"},
+{"topic": "Lung Structure — Fissures", "q": "What fissures does the right lung have, versus the left lung?", "choices": ["Right lung has a horizontal fissure and an oblique fissure; left lung has only an oblique fissure", "Right lung has only an oblique fissure; left lung has both a horizontal and oblique fissure", "Both lungs have identical fissure patterns", "Neither lung has any fissures"], "answer": 0, "correct": "The right lung has a horizontal fissure and an oblique fissure (separating its three lobes), while the left lung has only the oblique fissure (separating its two lobes).", "why": "Reversing which lung has the horizontal fissure contradicts the material's stated anatomy — it is the right (three-lobed) lung that needs an extra fissure; the two lungs have different (not identical) fissure patterns, matching their different lobe counts; and both lungs do have described fissures, not lacking any.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 44"},
+{"topic": "Lung Structure — Left Lung Features", "q": "What is the cardiac notch, and what is the lingula?", "choices": ["Cardiac notch is an indentation in the left lung accommodating the heart; lingula is a tongue-like structure from the superior lobe wrapping around the heart", "Cardiac notch is found in the right lung only; lingula is found in the right lung's middle lobe", "Both structures are found identically in both lungs", "Neither structure is related to the heart's position"], "answer": 0, "correct": "The left lung has a cardiac notch (an indentation accommodating the heart) and a groove for the aorta; the lingula is a tongue-like structure coming out of the superior lobe that wraps around the heart.", "why": "The cardiac notch and lingula are both left lung features (accommodating the heart's leftward position), not found in the right lung; the two lungs have distinctly different features related to the heart's position, not identical ones; and both structures are explicitly related to accommodating the heart, not unrelated to it.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 44"},
+{"topic": "Pulmonary Bronchi", "q": "What is the difference between extrapulmonary and intrapulmonary bronchi?", "choices": ["Extrapulmonary bronchi are outside the lungs; intrapulmonary bronchi are inside the lungs (same branching structures, named by location)", "Extrapulmonary bronchi are inside the lungs; intrapulmonary bronchi are outside", "Both terms describe the trachea specifically", "Neither term is related to bronchial anatomy"], "answer": 0, "correct": "The primary bronchi are called extrapulmonary bronchi while outside the lungs, and intrapulmonary bronchi once inside the lungs, where they branch numerous times into secondary and tertiary bronchi.", "why": "Reversing which term describes inside versus outside the lungs contradicts the material's stated naming convention; the trachea is a separate, more proximal structure, not what these two terms describe; and both terms are explicitly bronchial anatomy terms, not unrelated to it.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 48"},
+{"topic": "Bronchioles", "q": "What is the diameter range of bronchioles, and why don't they require cartilage plates?", "choices": ["0.3-0.5 mm diameter; they are self-supporting and therefore don't require cartilage plates", "5-10 mm diameter; they require cartilage plates like the bronchi", "0.3-0.5 mm diameter; they require cartilage plates identical to the trachea", "10-15 mm diameter; they have no smooth muscle at all"], "answer": 0, "correct": "Bronchioles have a diameter of 0.3-0.5 mm; they are self-supporting and therefore do not require cartilage plates (unlike the larger bronchi), consisting instead of smooth muscle for bronchodilation and bronchoconstriction.", "why": "5-10 mm and 10-15 mm both greatly overstate the actual small diameter of bronchioles; bronchioles specifically lack cartilage plates (being self-supporting), unlike the larger bronchi and trachea, so requiring cartilage is incorrect; and bronchioles do have smooth muscle (enabling bronchodilation/constriction), not lacking it.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 57"},
+{"topic": "Bronchioles", "q": "What causes bronchodilation versus bronchoconstriction of the bronchioles' smooth muscle, and what nerve senses irritants/pain there?", "choices": ["Sympathetic stimulation causes bronchodilation; parasympathetic stimulation causes bronchoconstriction; the vagus nerve senses irritants and pain", "Sympathetic stimulation causes bronchoconstriction; parasympathetic causes bronchodilation", "Neither autonomic division affects bronchiole smooth muscle", "The bronchioles have no sensory innervation at all"], "answer": 0, "correct": "Sympathetic stimulation causes bronchodilation, while parasympathetic stimulation causes bronchoconstriction of the bronchioles' smooth muscle; irritants and pain are sensed by the vagus nerve.", "why": "Reversing which autonomic division causes dilation versus constriction contradicts the material's stated mechanism; both autonomic divisions do affect bronchiole smooth muscle, not neither of them; and the bronchioles do have sensory innervation (via the vagus nerve for irritants/pain), not lacking any.", "src": "Pulmonary Anatomy - Slides .pptx, Slide 57"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>

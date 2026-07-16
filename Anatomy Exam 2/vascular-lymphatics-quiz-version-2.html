@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!--
+  Anatomy Integration Exam - Arteries, Veins, and Lymphatic Systems (Set 2)
+  Single self-contained file. To publish on GitHub Pages, save as index.html.
+  All questions are drawn only from the uploaded lecture material.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arteries, Veins, and Lymphatic Systems — Anatomy Exam 2 — Set 2</title>
+<style>
+  :root{
+    --ink:#132635;
+    --ink-soft:#48607a;
+    --paper:#eef4f8;
+    --paper-2:#f9fcfd;
+    --line:#c9dbe6;
+    --oxblood:#9c2b4e;
+    --oxblood-soft:#2e6a92;
+    --brass:#b8860b;
+    --teal:#1e3a5f;
+    --teal-deep:#0b5a54;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(19,38,53,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(27,79,114,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
+  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
+  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
+    <h1>Anatomy Integration Exam<span class="sys">Arteries, Veins, and Lymphatic Systems — Set 2</span></h1>
+    <p class="sub">Vessel Histology &amp; Venous Return &middot; Blood Composition &amp; the Lymphatic System</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This exam covers the Arteries, Veins, and Lymphatic Systems lecture, spanning vessel histology (arteries, veins, capillaries), venous return pathways and the azygos system, blood composition, and the anatomy of the lymphatic system. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
+    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Compare and contrast the histology of the components of the vascular system, and identify the azygos system of veins.</span></li>
+      <li><span class="n">2</span><span>Compare and contrast the cell types within blood and lymphatics.</span></li>
+      <li><span class="n">3</span><span>Compare and contrast the organs and anatomical structures that comprise the lymphatic system.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=vascular-lymphatics-2" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 60</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 60</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from the Arteries, Veins, and Lymphatic Systems lecture &middot; PAJ 5000 Anatomy &middot; for study use. (Set 2)
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 30 items, drawn only from the vascular and lymphatic systems lecture (Set 2).
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+{"topic": "Blood Composition", "q": "What are the two main components of blood, and what does the \"formed elements\" component include?", "choices": ["Plasma and formed elements; formed elements include erythrocytes, leukocytes, and platelets", "Plasma and serum only, with no formed elements", "Formed elements only, with no liquid plasma component", "Only erythrocytes, with no other formed elements"], "answer": 0, "correct": "Blood consists of two components: plasma (the liquid matrix) and formed elements (blood cells and cell fragments suspended in the plasma), including erythrocytes (red blood cells), leukocytes (white blood cells), and platelets.", "why": "Serum is plasma without clotting factors, not a separate second component alongside plasma in this classification; blood does have a liquid plasma component, not being formed elements alone; and formed elements include three cell/fragment types (erythrocytes, leukocytes, platelets), not just erythrocytes alone.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 74"},
+{"topic": "Blood Composition", "q": "What are the functions of erythrocytes, leukocytes, and platelets, respectively?", "choices": ["Erythrocytes transport oxygen/carbon dioxide; leukocytes function in the immune system; platelets are involved in blood clotting", "Erythrocytes function in immunity; leukocytes transport gases; platelets have no function", "All three formed elements share an identical function", "Platelets transport oxygen; erythrocytes are involved in clotting"], "answer": 0, "correct": "Erythrocytes (red blood cells) transport oxygen and carbon dioxide, leukocytes (white blood cells) function in the immune system, and platelets are involved in blood clotting.", "why": "Swapping the functions (erythrocytes-immunity, leukocytes-gas transport) contradicts the material's stated roles, and platelets do have a described function (clotting), not none; the three formed elements have distinct, not identical, functions; and platelets are not involved in gas transport, and erythrocytes are not involved in clotting — these are separate, specific roles.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 74"},
+{"topic": "Plasma Proteins", "q": "What are the three main plasma protein types, and what percentage of plasma proteins does albumin make up?", "choices": ["Albumins (60%), globulins (35%), and fibrinogen (4%)", "Albumins (4%), globulins (60%), and fibrinogen (35%)", "Only two plasma protein types: albumins and globulins", "Hemoglobin (60%), albumins (35%), and globulins (4%)"], "answer": 0, "correct": "The three main plasma protein types are albumins (60%, major contributors to osmotic pressure, transport lipids/steroid hormones), globulins (35%, transport ions/hormones/lipids, immune function), and fibrinogen (4%, essential for clotting, convertible to insoluble fibrin), plus regulatory proteins (<1%).", "why": "Scrambling the percentages (albumin 4%, fibrinogen 35%) misassigns each protein's actual proportion; there are more than two plasma protein types, since fibrinogen and regulatory proteins are also described; and hemoglobin is a red blood cell protein (not a plasma protein), unrelated to this plasma protein composition.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 75"},
+{"topic": "Whole Blood", "q": "What percentage of body weight does whole blood approximately make up, and what is the normal blood pH range?", "choices": ["About 7 percent of body weight; pH 7.35-7.45", "About 25 percent of body weight; pH 6.0-6.5", "About 1 percent of body weight; pH 8.0-8.5", "About 50 percent of body weight; pH 7.0 exactly"], "answer": 0, "correct": "Whole blood makes up approximately 7 percent of body weight, with a normal pH range of 7.35-7.45.", "why": "25 percent vastly overstates blood's proportion of body weight, and a pH of 6.0-6.5 is far too acidic for normal blood; 1 percent understates blood's proportion, and pH 8.0-8.5 is too alkaline; and 50 percent grossly overstates blood's body weight proportion, and blood pH is not exactly 7.0, but slightly alkaline (7.35-7.45).", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 77"},
+{"topic": "Whole Blood", "q": "What is the difference between hypovolemic, normovolemic, and hypervolemic?", "choices": ["Hypovolemic: low blood volume; normovolemic: normal blood volume; hypervolemic: excessive blood volume", "Hypovolemic: excessive blood volume; hypervolemic: low blood volume", "All three terms describe the identical blood volume state", "These terms describe blood pH, not blood volume"], "answer": 0, "correct": "Hypovolemic describes low blood volume, normovolemic describes normal blood volume, and hypervolemic describes excessive blood volume.", "why": "Reversing hypovolemic and hypervolemic's definitions contradicts standard terminology and the material's stated meanings; the three terms describe distinct, not identical, blood volume states; and these terms specifically describe blood volume, not blood pH (a separate parameter).", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 77"},
+{"topic": "Plasma", "q": "What percentage of whole blood volume does plasma make up, and what are its three components?", "choices": ["About 55 percent; consists of 92% water, 7% proteins, and 1% other solutes", "About 92 percent; consists of proteins only", "About 7 percent; consists of water only", "About 45 percent; consists of formed elements only"], "answer": 0, "correct": "Plasma makes up about 55 percent of the volume of whole blood, consisting of 92 percent water, 7 percent proteins (albumin, globulins, fibrinogen, regulatory proteins), and 1 percent other solutes (electrolytes, organic nutrients, organic waste).", "why": "92 percent is the water proportion within plasma, not plasma's own proportion of whole blood, and plasma is not composed of proteins alone; 7 percent is the protein proportion within plasma, not plasma's whole-blood percentage, and plasma is not just water; and plasma consists of proteins/water/solutes, not formed elements, which are a separate whole-blood component outside plasma.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 78"},
+{"topic": "Red Blood Cells", "q": "What is the hematocrit (packed cell volume), and what are the normal male versus female values?", "choices": ["The percentage of whole blood occupied by formed elements; males ~45% (40-54%), females ~42% (37-47%)", "The percentage of plasma in whole blood; identical for males and females at 55%", "The total blood volume in liters, not a percentage", "A measure of blood pH, not cell volume"], "answer": 0, "correct": "Hematocrit (also called packed cell volume or volume of packed red cells) is the percentage of whole blood occupied by the formed elements; normal values are approximately 45% (40-54%) for males and 42% (37-47%) for females.", "why": "The percentage of plasma in whole blood is a related but distinct measurement, and males/females do have different (not identical) hematocrit values; hematocrit is a percentage, not a total volume in liters; and hematocrit measures cell volume proportion, not blood pH, a separate parameter.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 79"},
+{"topic": "Red Blood Cells", "q": "What is the structure of a red blood cell (RBC), and what does it contain?", "choices": ["Biconcave disc shape, lacking organelles and a nucleus (anucleated), containing hemoglobin (4 polypeptide subunits: 2 alpha, 2 beta chains, each with heme containing iron)", "A cell with a large, multilobed nucleus and abundant organelles", "A cell containing melanin instead of hemoglobin", "A cell shaped like a sphere with a thick central region"], "answer": 0, "correct": "Red blood cells are biconcave discs with a thin central region, lacking cell organelles and a nucleus (anucleated); they contain hemoglobin, consisting of 4 polypeptide subunits (2 alpha chains and 2 beta chains), each chain containing heme, which contains iron.", "why": "A large, multilobed nucleus with abundant organelles describes a different cell type (like a neutrophil), not an anucleated RBC; RBCs contain hemoglobin (not melanin, a skin pigment), and are biconcave (not spherical) with a thin (not thick) central region.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 79"},
+{"topic": "White Blood Cells", "q": "What are the two major classes of leukocytes, and which cell types belong to each?", "choices": ["Granulocytes (neutrophils, eosinophils, basophils) and agranulocytes (monocytes, lymphocytes)", "Granulocytes (monocytes, lymphocytes) and agranulocytes (neutrophils, eosinophils, basophils)", "Only one class exists: granulocytes", "Erythrocytes and platelets, which are the two major leukocyte classes"], "answer": 0, "correct": "The two major classes of leukocytes are granulocytes (granular leukocytes: neutrophils, eosinophils, basophils) and agranulocytes (agranular leukocytes: monocytes, lymphocytes), five major types total.", "why": "Swapping which cell types belong to granulocytes versus agranulocytes contradicts the material's stated classification; there are two classes, not just one; and erythrocytes/platelets are entirely separate formed elements, not leukocyte classes at all.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 80"},
+{"topic": "White Blood Cells", "q": "What do neutrophil granules contain, and how long do neutrophils typically live?", "choices": ["Chemicals to kill bacteria; live about 10 hours", "Histamine and heparin; live several years", "Chemicals to reduce inflammation; live about 10 days", "No granules at all; live indefinitely"], "answer": 0, "correct": "Neutrophil granules contain chemicals to kill bacteria; neutrophils are typically the first WBC at a bacterial site, are very active phagocytic cells, and only live about 10 hours.", "why": "Histamine and heparin are contained in basophil granules, not neutrophil granules; chemicals reducing inflammation describes eosinophil granules, a different cell type; and neutrophils are granulocytes (they do have granules) with a short (not indefinite) lifespan of about 10 hours, not 10 days.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 81"},
+{"topic": "White Blood Cells", "q": "What do eosinophil granules release, and what do eosinophils typically attack?", "choices": ["Release chemicals that reduce inflammation; attack foreign substances that have reacted with circulating antibodies (e.g., allergic reactions, parasites)", "Release histamine and heparin; attack bacteria directly", "Release chemicals to attract fibroblasts; attack cancer cells", "Release no chemicals; function only in clotting"], "answer": 0, "correct": "Eosinophil granules release chemicals that reduce inflammation; eosinophils attack foreign substances that have reacted with circulating antibodies, such as in allergic reactions or parasitic infections, and typically have a bilobed nucleus.", "why": "Releasing histamine and heparin describes basophils, not eosinophils, and attacking bacteria directly is more characteristic of neutrophils; releasing chemicals to attract fibroblasts describes monocytes, a different cell type; and eosinophils do release granule chemicals and are unrelated to clotting, which is a platelet function.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 81"},
+{"topic": "White Blood Cells", "q": "What do basophil granules release, and what do histamine and heparin each do?", "choices": ["Release histamine (dilates blood vessels) and heparin (prevents abnormal blood clotting)", "Release chemicals that kill bacteria only", "Release antibodies, functioning identically to plasma cells", "Release chemicals that constrict blood vessels and promote clotting"], "answer": 0, "correct": "Basophil granules release histamine, which dilates blood vessels, and heparin, which prevents abnormal blood clotting; the nucleus is usually hidden due to all the granules.", "why": "Killing bacteria via granule chemicals is more characteristic of neutrophils, not basophils specifically; basophils are not the same as plasma cells (a B-lymphocyte derivative that secretes antibodies), an entirely different cell lineage; and histamine dilates (doesn't constrict) blood vessels, while heparin prevents (doesn't promote) clotting — the opposite of that option's claims.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 82"},
+{"topic": "White Blood Cells", "q": "What is distinctive about monocytes, in terms of size, nucleus shape, and function?", "choices": ["Large phagocytic cells with a kidney-shaped or large oval-shaped nucleus, releasing chemicals to attract other phagocytic cells and fibroblasts", "Small, non-phagocytic cells with a multilobed nucleus", "Cells that only produce antibodies, never phagocytose", "Cells identical in size and function to platelets"], "answer": 0, "correct": "Monocytes are large phagocytic cells with a kidney-shaped or large oval-shaped nucleus; they release chemicals to attract other phagocytic cells and to attract fibroblasts.", "why": "A multilobed nucleus describes neutrophils, not monocytes, and monocytes are large (not small) and are phagocytic (not non-phagocytic); producing antibodies is a plasma cell (B lymphocyte derivative) function, not a monocyte function; and monocytes are cellular formed elements distinct in size/function from platelets, which are cell fragments involved in clotting.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 82"},
+{"topic": "White Blood Cells", "q": "What are lymphocytes responsible for, and what three cell types can they differentiate into?", "choices": ["Primary cells of the lymphatic system, responsible for specific immunity; differentiate into T cells, B cells, and NK cells", "Primary phagocytic cells of the blood; differentiate into neutrophils and eosinophils", "Cells involved only in clotting, differentiating into platelets", "Cells found only in bone, differentiating into osteocytes"], "answer": 0, "correct": "Lymphocytes are the primary cells of the lymphatic system, responsible for specific immunity; they can differentiate to form T cells (attack foreign cells directly), B cells (secrete antibodies), and NK cells (immune surveillance).", "why": "Neutrophils/eosinophils are granulocytes, a separate WBC lineage from lymphocytes (an agranulocyte), not something lymphocytes differentiate into; lymphocytes are not involved in clotting (a platelet function), and don't differentiate into platelets; and lymphocytes are blood/lymphatic cells, not bone cells, and don't differentiate into osteocytes.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 83"},
+{"topic": "Platelets", "q": "What are platelets derived from, and what is thrombocytopenia versus thrombocytosis?", "choices": ["Derived from megakaryocytes; thrombocytopenia is lower-than-normal platelet count, thrombocytosis is higher-than-normal platelet count", "Derived from lymphocytes; thrombocytopenia is higher platelet count, thrombocytosis is lower", "Platelets are not derived from any other cell type", "Thrombocytopenia and thrombocytosis both describe identical platelet counts"], "answer": 0, "correct": "Platelets (formerly called thrombocytes) are derived from megakaryocytes, which fragment to form membrane-enclosed packets of chemicals (about 350,000 platelets per microliter of blood); thrombocytopenia is a lower-than-normal platelet count, while thrombocytosis is a higher-than-normal platelet count.", "why": "Platelets are derived from megakaryocytes, not lymphocytes (a distinct WBC lineage), and thrombocytopenia/thrombocytosis definitions are reversed in that option; platelets are explicitly derived from megakaryocyte fragmentation, not lacking any cellular origin; and the two terms describe opposite (not identical) platelet count abnormalities.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 84"},
+{"topic": "Lymphatic System Overview", "q": "What three things does the lymphatic system consist of?", "choices": ["Lymph, lymphatic vessels, and lymphatic tissues and organs", "Only lymph and blood plasma", "Only lymphatic vessels, with no associated organs", "Erythrocytes, leukocytes, and platelets"], "answer": 0, "correct": "The lymphatic system consists of lymph, lymphatic vessels, and lymphatic tissues and organs.", "why": "Blood plasma is a component of blood, a separate (though related) fluid system, not one of the three lymphatic system components; the lymphatic system does have associated tissues and organs, not just vessels alone; and erythrocytes/leukocytes/platelets are blood formed elements, not the three components of the lymphatic system itself.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 86"},
+{"topic": "Lymph", "q": "What does lymph consist of?", "choices": ["Interstitial fluid, lymphocytes, and macrophages", "Only plasma proteins", "Only red blood cells", "Only platelets and fibrinogen"], "answer": 0, "correct": "Lymph consists of interstitial fluid, lymphocytes, and macrophages.", "why": "Plasma proteins are a blood plasma component, not the defining composition of lymph; red blood cells are not a component of lymph, which lacks RBCs (that's part of why lymph looks different from blood); and platelets/fibrinogen are blood clotting-related components, not part of lymph's composition.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 87"},
+{"topic": "Lymphatic Organs/Tissues", "q": "What are the primary lymphatic structures, and what are the secondary lymphatic structures?", "choices": ["Primary: thymus and red bone marrow; Secondary: tonsils, lymph nodes, spleen, and MALT", "Primary: tonsils and lymph nodes; Secondary: thymus and red bone marrow", "Both categories include identical structures", "Only primary lymphatic structures exist; there are no secondary ones"], "answer": 0, "correct": "Primary lymphatic structures are the thymus and red bone marrow; secondary lymphatic structures are the tonsils, lymph nodes (axillary, lumbar, pelvic, inguinal), spleen, and mucosa-associated lymphoid tissue (MALT).", "why": "Reversing which structures are primary versus secondary contradicts the material's stated classification; the two categories include distinct, non-identical structures; and both primary and secondary categories are explicitly described, not just primary alone.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 89"},
+{"topic": "Lymphatic System Functions", "q": "What are the listed functions of the lymphatic system?", "choices": ["Produce/maintain/distribute lymphocytes, maintain blood volume and interstitial fluid composition, and provide an alternative transport route for hormones/nutrients/waste", "Only produce red blood cells", "Only regulate body temperature", "Only produce digestive enzymes"], "answer": 0, "correct": "The lymphatic system's functions include producing, maintaining, and distributing lymphocytes, maintaining normal blood volume and interstitial fluid composition, and providing an alternative route for the transport of hormones, nutrients, and waste.", "why": "Producing red blood cells is a bone marrow (erythropoiesis) function, not specifically the lymphatic system's described role here; regulating body temperature is a skin/integumentary function, unrelated to the lymphatic system; and producing digestive enzymes is a digestive system function, also unrelated to the lymphatic system's described roles.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 91"},
+{"topic": "Lymphatic Vessels vs Blood Capillaries", "q": "How do lymphatic capillaries compare to vascular (blood) capillaries in diameter and wall thickness?", "choices": ["Lymphatic capillaries are larger in diameter with thinner walls than vascular capillaries", "Lymphatic capillaries are smaller in diameter with thicker walls", "Both types of capillaries are identical in diameter and wall thickness", "Lymphatic capillaries have no walls at all"], "answer": 0, "correct": "Lymphatic capillaries are larger in diameter and have thinner walls than vascular capillaries; they also have an irregular outline, anchoring filaments connecting to surrounding connective tissue, and greater permeability.", "why": "Reversing the size/thickness comparison (smaller diameter, thicker walls) contradicts the material's stated comparison; the two capillary types have distinctly different (not identical) diameter and wall characteristics; and lymphatic capillaries do have walls (just thinner ones), not lacking walls entirely.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 93"},
+{"topic": "Lymphatic Vessels vs Veins", "q": "How do larger lymphatic vessels (ducts) compare to veins in terms of walls, lumen, and pressure?", "choices": ["Lymphatic vessels have thinner walls, larger lumens, and lower pressure than veins, but have valves like most veins", "Lymphatic vessels have thicker walls and higher pressure than veins", "Both vessel types are structurally identical", "Lymphatic vessels lack valves entirely, unlike veins"], "answer": 0, "correct": "Larger lymphatic vessels have thinner walls, larger lumens than veins, and don't have easily identifiable tunics; pressure in lymphatic vessels is lower than in veins, but larger lymphatic vessels do have valves just like most veins (preventing lymph backflow).", "why": "Lymphatic vessels have thinner (not thicker) walls and lower (not higher) pressure than veins; the two vessel types have distinctly different (not identical) structural characteristics; and lymphatic vessels do have valves (similar to veins), not lacking them entirely.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 94"},
+{"topic": "Lymph Propulsion", "q": "What two mechanisms help propel lymph toward the venous system?", "choices": ["Skeletal muscle contraction and decreased thoracic pressure during inhalation", "Only the heart's direct pumping action on lymph", "Only gravity, with no muscular or respiratory assistance", "Lymph is not actively propelled; it remains stationary"], "answer": 0, "correct": "Skeletal muscles contract to help propel lymph, and inhalation decreases thoracic pressure, which helps move lymph toward the venous system (subclavian veins).", "why": "The heart does not directly pump lymph (lymph has no dedicated pump like the heart for blood); lymph propulsion involves both muscular and respiratory mechanisms, not gravity alone; and lymph is actively propelled by these two mechanisms, not remaining stationary.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 94"},
+{"topic": "Sets of Lymphatic Vessels", "q": "What is the difference between superficial and deep lymphatics?", "choices": ["Superficial lymphatics are found in the subcutaneous layer and mucous/serous linings; deep lymphatics collect from skeletal muscles and tissues of the neck/limbs/trunk/viscera", "Superficial lymphatics collect from viscera only; deep lymphatics are found in the skin only", "Both sets collect from identical locations", "Only one set of lymphatic vessels exists"], "answer": 0, "correct": "Superficial lymphatics are found in the subcutaneous layer, and in the mucous lining of the digestive/respiratory/urinary/reproductive tracts and serous lining of the pleural/pericardial/peritoneal cavities; deep lymphatics collect lymph from skeletal muscles and tissues of the neck, limbs, trunk, and visceral organs.", "why": "Reversing which set collects from viscera versus skin contradicts the material's stated distinction; the two sets collect from distinct, non-identical locations; and there are two sets of lymphatic vessels (superficial and deep), not just one.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 96"},
+{"topic": "Lymphatic Trunks", "q": "What are the five major lymphatic trunks?", "choices": ["Lumbar, intestinal, bronchomediastinal, subclavian, and jugular trunks", "Only two trunks: thoracic and right lymphatic", "Cervical, axillary, and inguinal trunks", "Renal, hepatic, and splenic trunks"], "answer": 0, "correct": "The five major lymphatic trunks are the lumbar trunks, intestinal trunks, bronchomediastinal trunks, subclavian trunks, and jugular trunks.", "why": "The thoracic duct and right lymphatic duct are the two major collecting ducts (formed by the trunks converging), not the trunks themselves; cervical/axillary/inguinal describe lymph node group locations, not the five named trunks; and renal/hepatic/splenic are not lymphatic trunk names in this material.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 97"},
+{"topic": "The Thoracic Duct", "q": "What does the thoracic duct drain, and into what vein does it drain?", "choices": ["Drains lymph from both sides of the body inferior to the diaphragm and the left side superior to the diaphragm; drains into the left subclavian vein", "Drains only the right side of the body; drains into the right subclavian vein", "Drains only the upper body; drains into the internal jugular vein", "Drains the entire body equally from both sides; drains into the aorta"], "answer": 0, "correct": "The thoracic duct, the larger lymph duct, drains lymph from both sides of the body inferior to the diaphragm (abdomen, both legs) and the left side of the body superior to the diaphragm (left arm, torso, neck, head); it drains into the left subclavian vein.", "why": "Draining only the right side and emptying into the right subclavian vein describes the right lymphatic duct, not the thoracic duct; the thoracic duct drains more than just the upper body, including the entire lower body; and lymphatic ducts drain into veins (not the aorta, an artery), and the thoracic duct's drainage is not equal from both sides above the diaphragm (only the left side superior to the diaphragm).", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 99"},
+{"topic": "The Thoracic Duct", "q": "What saclike structure does the thoracic duct begin as, and what does it collect lymph from?", "choices": ["The cisterna chyli; collects from left/right lumbar trunks, intestinal trunks, left bronchomediastinal trunk, left subclavian trunk, and left jugular trunk", "The cisterna chyli; collects only from the right jugular trunk", "A structure called the lymphatic bulb, collecting from the spleen only", "No saclike structure is involved; the duct begins as a simple tube"], "answer": 0, "correct": "The thoracic duct begins as a saclike structure called the cisterna chyli, which collects lymph from the left and right lumbar trunks, intestinal trunks, the left bronchomediastinal trunk, the left subclavian trunk, and the left jugular trunk.", "why": "Collecting only from the right jugular trunk describes part of the right lymphatic duct's drainage, not the cisterna chyli, which collects from left-sided and bilateral trunks; \"lymphatic bulb\" is not the name used in this material for this structure; and the thoracic duct does begin as a specific saclike structure (the cisterna chyli), not a simple tube.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 100"},
+{"topic": "The Right Lymphatic Duct", "q": "What does the right lymphatic duct drain, and into what vein does it drain?", "choices": ["Drains the right arm, right side of the torso/neck/head (via right bronchomediastinal, right subclavian, and right jugular trunks); drains into the right subclavian vein", "Drains the entire body; drains into the left subclavian vein", "Drains only the left arm; drains into the right subclavian vein", "Drains the lower extremities; drains into the inferior vena cava"], "answer": 0, "correct": "The right lymphatic duct drains lymph from the right arm, right side of the torso, right side of the neck, and right side of the head (specifically via the right bronchomediastinal trunk, right subclavian trunk, and right jugular trunk); it drains into the right subclavian vein.", "why": "Draining the entire body and emptying into the left subclavian vein describes the thoracic duct, not the right lymphatic duct, which handles only the right upper-body territory; the right lymphatic duct drains the right (not left) arm; and it does not drain the lower extremities, which are drained by the thoracic duct via the cisterna chyli, and it drains into the right subclavian vein, not the inferior vena cava.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 101"},
+{"topic": "Cells of the Lymphatic System", "q": "What do T cells (thymus-dependent cells) stand for, and where do they originate versus become activated?", "choices": ["Originate in the bone marrow but travel to the thymus gland to become activated (immunocompetent) by thymosin", "Originate and become fully activated entirely within the thymus, with no bone marrow origin", "Originate in the spleen, becoming activated in the bone marrow", "T cells do not require any activation process"], "answer": 0, "correct": "T cells (thymus-dependent cells) originate in the bone marrow but travel to the thymus gland, where they become activated (immunocompetent) by thymosin; mature T cells then leave the thymus and migrate to red bone marrow, spleen, and other lymphatic tissues.", "why": "T cells originate in the bone marrow (not entirely within the thymus), only becoming activated in the thymus; the spleen is not the origin site, and the bone marrow is the origin (not the activation site, which is the thymus); and T cells do require an activation process (in the thymus), not skipping this step.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 103"},
+{"topic": "Cells of the Lymphatic System", "q": "What are the four different types of T cells described, and their functions?", "choices": ["Cytotoxic (attack foreign cells/viruses), helper (stimulate T and B cells), regulatory (moderate immune response), and memory (activate upon re-exposure to an antigen)", "Only cytotoxic and helper T cells exist", "B cells, plasma cells, cytotoxic cells, and NK cells", "All four T cell types perform an identical function"], "answer": 0, "correct": "The four types of T cells are cytotoxic T cells (attack foreign cells and viruses), helper T cells (stimulate both T and B cells, enhance antibody production), regulatory T cells (moderate immune response), and memory T cells (become activated if the same antigen appears later).", "why": "There are four T cell types described, not just two; B cells and plasma cells are separate lymphocyte lineages (not types of T cells), and NK cells are also a distinct lymphocyte type; and the four T cell types have distinct, specialized functions, not an identical one.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 103"},
+{"topic": "Cells of the Lymphatic System", "q": "Where do B cells originate and become immunocompetent, and what can they differentiate into?", "choices": ["Originate and become immunocompetent in the bone marrow; differentiate into plasma cells (produce antibodies) and memory B cells", "Originate in the thymus, becoming immunocompetent there", "Differentiate only into cytotoxic T cells", "B cells cannot differentiate into any other cell type"], "answer": 0, "correct": "B cells originate and become immunocompetent in the bone marrow; mature B cells enter the bloodstream and migrate to peripheral tissues, where they can differentiate into plasma cells (producing antibodies/immunoglobulins that react with antigens) and memory B cells (activated upon re-exposure to the same antigen).", "why": "The thymus is where T cells (not B cells) become immunocompetent — B cells specifically become immunocompetent in the bone marrow itself; B cells differentiate into plasma cells and memory B cells, not cytotoxic T cells (a completely separate lymphocyte lineage); and B cells do differentiate into other cell types (plasma cells, memory B cells), not remaining undifferentiated.", "src": "Anatomy - Vascular & Lymphatics - Shah Summer I UPDATEDsv-1.pptx, Slide 104"}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  // Optional per-question image (item.img) -- purely additive, every
+  // existing quiz's questions simply omit this field and render exactly
+  // as before via the hidden default state.
+  if (item.img) {
+    el('qImg').src = item.img;
+    el('qImg').alt = item.imgAlt || '';
+    el('qImgCaption').textContent = item.imgCaption || '';
+    el('qFig').classList.remove('hidden');
+  } else {
+    el('qFig').classList.add('hidden');
+  }
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>
