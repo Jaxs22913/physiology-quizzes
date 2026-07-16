@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sprint — Arcade</title>
+<link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="arcade.css">
 </head>
 <body>
@@ -38,7 +39,7 @@
         <p>Turn studying into a game</p>
       </div>
     </div>
-    <div class="corner-btns">
+    <div class="corner-btns" id="corner-actions">
       <button class="icon-btn" id="sound-toggle" title="Toggle sound"></button>
       <button class="icon-btn" id="theme-toggle" title="Toggle dark mode"></button>
     </div>
@@ -105,6 +106,7 @@
 <div id="toast"></div>
 
 <script src="arcade.js"></script>
+<script src="theme.js" defer></script>
 <script>
 (function () {
   "use strict";

@@ -1,36 +1,20 @@
-var DEMO_DECKS = [
-  { id: "capitals", name: "World Capitals", color: "accent",
-    icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
-    cards: [
-      ["France", "Paris"], ["Japan", "Tokyo"], ["Egypt", "Cairo"], ["Australia", "Canberra"],
-      ["Brazil", "Brasília"], ["Canada", "Ottawa"], ["Kenya", "Nairobi"], ["Norway", "Oslo"]
-    ]},
-  { id: "chem", name: "Chemistry Symbols", color: "accent2",
-    icon: '<path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="8.5" y1="12" x2="15.5" y2="12"/>',
-    cards: [
-      ["Na", "Sodium"], ["Fe", "Iron"], ["Au", "Gold"], ["K", "Potassium"],
-      ["Ag", "Silver"], ["Pb", "Lead"], ["Cu", "Copper"], ["Sn", "Tin"]
-    ]},
-  { id: "vocab", name: "Vocabulary Builder", color: "accent3",
-    icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
-    cards: [
-      ["Ephemeral", "Lasting for a very short time"], ["Ubiquitous", "Present everywhere"],
-      ["Cogent", "Clear, logical, and convincing"], ["Tenacious", "Persistent, holding firmly"],
-      ["Ambivalent", "Having mixed feelings about something"], ["Astute", "Sharp-witted, shrewd"],
-      ["Candid", "Truthful and straightforward"], ["Diligent", "Showing care in one's work"]
-    ]}
-];
+// Real decks get added here per class/exam once source content (PPTs, or
+// the existing quiz Q&A bank as a fallback -- see arcade-content-policy
+// memory) is available. Each deck needs both `cards` (broad concept recall,
+// used by Study/Learn/Sprint) and `matchCards` (crisp term:definition pairs,
+// used by Match) -- the two modes want differently-shaped content, not one
+// shared list.
+var DEMO_DECKS = [];
 
 function findDeck(id) { return DEMO_DECKS.find(function (d) { return d.id === id; }); }
 function deckIdFromURL() { return new URLSearchParams(location.search).get("deck"); }
 
 // Real Class Tabs -> Exam Accordion structure, mirroring the main site's
 // tab/exam-section pattern. Physiology / Exam 4 is the first real
-// class+exam pairing; the decks inside are still placeholder content until
-// real Physiology Exam 4 deck content is added.
+// class+exam pairing; its deckIds fill in as real decks are authored.
 var DEMO_CLASSES = [
   { id: "physiology", name: "Physiology", exams: [
-    { id: "exam4", name: "Exam 4", deckIds: ["capitals", "chem", "vocab"] }
+    { id: "exam4", name: "Exam 4", deckIds: [] }
   ]}
 ];
 
