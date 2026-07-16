@@ -124,13 +124,48 @@
       if (!byValue[p.def]) { byValue[p.def] = []; order.push(p.def); }
       byValue[p.def].push(p.pairId);
     });
-    currentDefGroups = shuffle(order.map(function (v) { return { value: v, pairIds: byValue[v] }; }));
+    currentDefGroups = order.map(function (v) { return { value: v, pairIds: byValue[v] }; });
+  }
+
+  // Shuffling the two columns independently still lets a term's correct
+  // definition land on the same row purely by chance -- with only
+  // WINDOW_SIZE=5 rows on screen, that's roughly a 1-in-5 shot per row, so
+  // across a full board it happens often enough to notice, not a rare
+  // fluke. This swaps definition rows around (never changing which text is
+  // ON the board, just where) until no row's term and definition are each
+  // other's correct match. Capped at a handful of passes since the board
+  // is always tiny (<= WINDOW_SIZE rows); if a safe swap genuinely can't
+  // be found (e.g. only one row left on the board, where alignment is
+  // unavoidable) it just leaves that row as-is rather than looping forever.
+  function derangeDefGroups(termsOrder, defGroups) {
+    var result = defGroups.slice();
+    for (var attempt = 0; attempt < 20; attempt++) {
+      var collisionIdx = -1;
+      for (var i = 0; i < result.length; i++) {
+        if (termsOrder[i].def === result[i].value) { collisionIdx = i; break; }
+      }
+      if (collisionIdx === -1) return result;
+      var swapWith = -1;
+      for (var k = 0; k < result.length; k++) {
+        if (k === collisionIdx) continue;
+        var collisionResolved = termsOrder[collisionIdx].def !== result[k].value;
+        var kStillOk = termsOrder[k].def !== result[collisionIdx].value;
+        if (collisionResolved && kStillOk) { swapWith = k; break; }
+      }
+      if (swapWith === -1) return result;
+      var tmp = result[collisionIdx]; result[collisionIdx] = result[swapWith]; result[swapWith] = tmp;
+    }
+    return result;
   }
 
   function renderBoard() {
+    var termsOrder = shuffle(active.slice());
+    computeDefGroups();
+    currentDefGroups = derangeDefGroups(termsOrder, shuffle(currentDefGroups));
+
     var termsEl = document.getElementById("match-terms");
     termsEl.innerHTML = '<div class="match-col-label">Terms</div>';
-    shuffle(active.slice()).forEach(function (pair) {
+    termsOrder.forEach(function (pair) {
       var btn = document.createElement("button");
       btn.className = "match-item pop-in";
       btn.setAttribute("data-pair-id", pair.pairId);
@@ -138,7 +173,6 @@
       termsEl.appendChild(btn);
     });
 
-    computeDefGroups();
     var defsEl = document.getElementById("match-defs");
     defsEl.innerHTML = '<div class="match-col-label">Definitions</div>';
     currentDefGroups.forEach(function (group, idx) {
