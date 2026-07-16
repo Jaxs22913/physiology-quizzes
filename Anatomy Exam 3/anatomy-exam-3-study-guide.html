@@ -38,42 +38,15 @@
   .masthead .exam { color:#e8b84b; }
   .wrap { max-width:1080px; margin:0 auto; padding:0 20px 60px; }
 
-  /* subject tab bar. top:38px (not 0) so it sticks below .guide-back-bar
-     (theme.css, 38px tall, sticky top:0, z-index:550 -- higher than this
-     bar's z-index:50) instead of pinning underneath it and getting its
-     upper half permanently hidden behind that opaque bar. When the in-guide
-     search bar (theme.js/theme.css, #guide-search-bar) is open it adds
-     another ~56px of opaque sticky content below the back bar, so the
-     sibling-combinator rule further down bumps this again for as long as
-     that bar stays open. */
-  .subj-bar {
-    position:sticky; top:38px; z-index:50; background:rgba(250,248,244,.96);
-    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
-    display:flex; flex-wrap:wrap; gap:8px; padding:12px 20px; margin:0 -20px 0;
-  }
-  .subj-tab {
-    cursor:pointer; border:1px solid var(--line); background:var(--card);
-    color:var(--muted); padding:8px 14px; border-radius:999px; font-size:14px; font-weight:600;
-    transition:all .15s; letter-spacing:.2px;
-  }
-  .subj-tab:hover { border-color:var(--acc); color:var(--accd); }
-  .subj-tab.active { background:var(--acc); color:#fff; border-color:var(--acc); }
-
-  .subj-panel { display:none; }
-  .subj-panel.active { display:block; }
+  .subj-panel { display:block; }
 
   .subj-header { padding:26px 0 6px; }
   .subj-header h2 { margin:0 0 2px; font-size:26px; color:var(--accd); }
   .prof { margin:0 0 14px; color:var(--muted); font-style:italic; font-size:15px; }
   .io-nav {
     display:flex; flex-wrap:wrap; gap:6px; padding:12px; background:var(--accs);
-    border-radius:10px; position:sticky; top:98px; z-index:40;
+    border-radius:10px;
   }
-  /* Same reasoning as .subj-bar's top:38px above, extended: when the guide
-     search bar is open, both this bar and .subj-bar need to sit that much
-     further down so neither pins underneath the extra opaque bar. */
-  #guide-search-bar.open ~ .wrap .subj-bar { top:94px; }
-  #guide-search-bar.open ~ .wrap .io-nav { top:154px; }
   .io-link {
     text-decoration:none; font-size:12.5px; font-weight:600; color:var(--accd);
     background:#fff; border:1px solid var(--line); padding:5px 10px; border-radius:6px;
@@ -135,17 +108,18 @@
   .footer { text-align:center; color:var(--muted); font-size:13px; padding:30px 0 0;
     font-family:ui-sans-serif, sans-serif; }
 
+  @media (max-width:820px) {
+    nav.toc { display:none; }
+    main.gmain { padding:22px 18px 60px; }
+  }
   @media (max-width:640px) {
     body { font-size:16px; }
     .io { padding:18px 16px; }
     .masthead h1 { font-size:24px; }
     .io-head h3 { font-size:17px; }
-    .io-nav { top:94px; }
-    #guide-search-bar.open ~ .wrap .io-nav { top:150px; }
   }
   @media print {
-    .subj-bar, .io-nav, .totop { display:none !important; }
-    .subj-panel { display:block !important; }
+    .io-nav, .totop, nav.toc { display:none !important; }
     .io { break-inside:avoid; box-shadow:none; }
     figure.fig { break-inside:avoid; }
   }
@@ -168,6 +142,21 @@
   }
   #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
   @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+
+  /* ---- uniform site shell (sidebar layout), added for the 2026-07-16 retrofit ---- */
+  .layout { display:flex; max-width:1180px; margin:0 auto; }
+  nav.toc {
+    position:sticky; top:0; align-self:flex-start; height:100vh; overflow-y:auto;
+    width:240px; min-width:240px; padding:24px 16px; border-right:1px solid var(--line);
+    background:#f2efe9; font-family:ui-sans-serif, system-ui, sans-serif; font-size:.85rem;
+  }
+  nav.toc h2 { font-size:.7rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:0 0 10px; }
+  nav.toc a.top-link {
+    display:block; font-weight:700; padding:7px 9px; margin:3px 0; border-radius:8px;
+    text-decoration:none; color:inherit;
+  }
+  nav.toc a.top-link:hover { background:#fff; }
+  main.gmain { flex:1; padding:0 20px 60px; min-width:0; }
 </style>
 </head>
 <body>
@@ -205,12 +194,17 @@
   </div>
 </header>
 
-<div class="wrap" data-readable data-audio-dir="anatomy-exam-3-study-guide-audio">
-  <div class="subj-bar">
-    <button class="subj-tab" data-subj="gi" style="--acc:#3f7d4e;--accd:#2c5a38;--accs:#e8f1ea">GI</button><button class="subj-tab" data-subj="endo" style="--acc:#b8860b;--accd:#8a6508;--accs:#f6efdd">Endocrine</button><button class="subj-tab" data-subj="male" style="--acc:#2f6f8f;--accd:#224f66;--accs:#e4eef3">Male Repro</button><button class="subj-tab" data-subj="fem" style="--acc:#a23b5e;--accd:#7c2b47;--accs:#f6e6ec">Female Repro</button><button class="subj-tab" data-subj="neph" style="--acc:#7a4fa3;--accd:#5a3a7a;--accs:#efe8f6">Renal/Urinary</button>
-  </div>
+<div class="layout wrap" data-readable data-audio-dir="anatomy-exam-3-study-guide-audio">
+<nav class="toc">
+  <h2>Contents</h2>
+  <a class="top-link" href="#gi-top" style="color:#2c5a38">Gastrointestinal System I &amp; II</a>
+  <a class="top-link" href="#endo-top" style="color:#8a6508">Endocrine System</a>
+  <a class="top-link" href="#male-top" style="color:#224f66">Male Reproductive System</a>
+  <a class="top-link" href="#fem-top" style="color:#7c2b47">Female Reproductive System</a>
+  <a class="top-link" href="#neph-top" style="color:#5a3a7a">Nephrology / Urinary System</a>
+</nav>
 
-  
+<main class="gmain">
 <div class="subj-panel" data-subj="gi" style="--acc:#3f7d4e;--accd:#2c5a38;--accs:#e8f1ea">
   <div id="gi-top" class="subj-header">
     <h2>Gastrointestinal System I & II</h2>
@@ -964,33 +958,10 @@
     <p style="margin:14px 0 0;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
     <p style="margin:10px 0 0;font-size:12px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app\u2026'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
   </div>
+
+</main>
 </div>
 
-<script>
-  const tabs = document.querySelectorAll('.subj-tab');
-  const panels = document.querySelectorAll('.subj-panel');
-  function show(subj) {
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.subj===subj));
-    panels.forEach(p => p.classList.toggle('active', p.dataset.subj===subj));
-    window.scrollTo({top:0, behavior:'instant'});
-  }
-  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.subj)));
-  // IO links: switch to correct subject panel if needed then scroll
-  document.querySelectorAll('.io-link').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const subj = id.split('-')[0];
-      const activePanel = document.querySelector('.subj-panel.active');
-      if (!activePanel || activePanel.dataset.subj !== subj) {
-        e.preventDefault();
-        show(subj);
-        setTimeout(()=>{ document.getElementById(id).scrollIntoView(); }, 40);
-      }
-    });
-  });
-  // init first tab
-  show('gi');
-</script>
 <script>
   // High-yield "Test yourself" question sets, one per system, fed to
   // window.openTestYourself (theme.js) by each system's button.
