@@ -178,6 +178,7 @@
   var answeredIndex = -1;
   var questionStartedAtMs = null;
   var timerInterval = null;
+  var unsubRoom = null, unsubPlayers = null;
 
   function $(id) { return document.getElementById(id); }
   function show(id) { $(id).classList.remove("hidden"); }
@@ -273,8 +274,10 @@
     heartbeatInterval = setInterval(function () { GroupStudy.heartbeat(roomCode); }, HEARTBEAT_MS);
     if (staleCheckInterval) clearInterval(staleCheckInterval);
     staleCheckInterval = setInterval(refreshLeaderboardPresence, 5000);
-    GroupStudy.listenRoom(roomCode, onRoomUpdate);
-    GroupStudy.listenPlayers(roomCode, function (players) {
+    if (unsubRoom) unsubRoom();
+    if (unsubPlayers) unsubPlayers();
+    unsubRoom = GroupStudy.listenRoom(roomCode, onRoomUpdate);
+    unsubPlayers = GroupStudy.listenPlayers(roomCode, function (players) {
       latestPlayers = players;
       if (lastRoomState) {
         if (lastRoomState.status === "reveal") renderLeaderboard("reveal-leaderboard", latestPlayers);
@@ -354,13 +357,35 @@
       renderRevealScreen(room);
     } else if (room.status === "finished") {
       renderFinishedScreen();
+    } else if (room.status === "closed") {
+      handleRoomClosed();
     }
+  }
+
+  // Fires for every player (and a host's own second join-as-player tab, if
+  // any -- see group-host.html's hostplayhint) the moment the host hits
+  // Close room. Tears down this room's listeners/timers and drops back to
+  // the plain join-form screen -- same destination as join-another-btn --
+  // rather than leaving players staring at a game that will never advance.
+  function handleRoomClosed() {
+    stopTimer();
+    if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
+    if (staleCheckInterval) { clearInterval(staleCheckInterval); staleCheckInterval = null; }
+    if (unsubRoom) { unsubRoom(); unsubRoom = null; }
+    if (unsubPlayers) { unsubPlayers(); unsubPlayers = null; }
+    sessionStorage.removeItem(JOIN_SESSION_KEY);
+    hideAllScreens();
+    show("join-form");
+    $("code-input").value = "";
+    $("join-err").textContent = "The host closed this room.";
+    $("join-btn").disabled = false;
+    $("join-btn").textContent = "Join game →";
   }
 
   function renderQuestionScreen(room) {
     stopTimer();
     hideAllScreens();
-    var q = currentQuiz.questions[room.currentQuestionIndex];
+    var q = currentQuiz.questions[GroupStudy.resolveQuestionIndex(room, room.currentQuestionIndex)];
 
     if (answeredIndex === room.currentQuestionIndex) {
       show("answered-wait");
@@ -417,7 +442,7 @@
     stopTimer();
     hideAllScreens();
     show("reveal-screen");
-    var q = currentQuiz.questions[room.currentQuestionIndex];
+    var q = currentQuiz.questions[GroupStudy.resolveQuestionIndex(room, room.currentQuestionIndex)];
     var me = latestPlayers.filter(function (p) { return p.uid === myUid; })[0];
     var myAnswer = me && me.answers ? me.answers[room.currentQuestionIndex] : null;
 

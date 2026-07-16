@@ -95,11 +95,30 @@
   function roomRef(code) { return db.collection("gameRooms").doc(code); }
   function playersRef(code) { return roomRef(code).collection("players"); }
 
+  function shuffleArray(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
   // ---- Host actions ----
   window.GroupStudy.createRoom = function (quizId, opts) {
     opts = opts || {};
     var timedMode = !!opts.timedMode;
     var secondsPerQuestion = opts.secondsPerQuestion || 20;
+    // Question order is decided once, at creation, not re-rolled per
+    // question -- every player and the host all index into the SAME quiz
+    // array via this one shared list, so nobody's "Question 3" ever
+    // disagrees with anyone else's. `null` (unshuffled) keeps original
+    // array order, matching every room created before this option existed.
+    var quiz = (window.GROUP_QUIZZES || {})[quizId];
+    var questionCount = quiz ? quiz.questions.length : 0;
+    var questionOrder = opts.shuffleQuestions
+      ? shuffleArray(Array.from({ length: questionCount }, function (_, i) { return i; }))
+      : null;
     return whenReady().then(function (uid) {
       function attempt(triesLeft) {
         var code = randomCode();
@@ -116,12 +135,21 @@
             currentQuestionStartedAt: null,
             timedMode: timedMode,
             secondsPerQuestion: secondsPerQuestion,
+            questionOrder: questionOrder,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           }).then(function () { return code; });
         });
       }
       return attempt(5);
     });
+  };
+
+  // Maps a room's 0-based question POSITION (currentQuestionIndex, which
+  // both host and players key their per-question state off of regardless
+  // of shuffling) to the actual index into currentQuiz.questions. Shared
+  // here so group-host.html and group-join.html can't drift on the mapping.
+  window.GroupStudy.resolveQuestionIndex = function (room, position) {
+    return (room && room.questionOrder) ? room.questionOrder[position] : position;
   };
 
   window.GroupStudy.startGame = function (code) {
@@ -146,6 +174,16 @@
 
   window.GroupStudy.finishGame = function (code) {
     return roomRef(code).update({ status: "finished" });
+  };
+
+  // Host-initiated early shutdown, distinct from finishGame -- "finished"
+  // still shows players the podium/leaderboard for a game that ran its
+  // course, while "closed" is the host bailing out mid-session (or after
+  // the game ended) and every listener (host's own extra join-as-player
+  // tab included -- see group-host.html's hostplayhint) needs to bounce
+  // back to a neutral screen rather than sit on stale game state.
+  window.GroupStudy.closeRoom = function (code) {
+    return roomRef(code).update({ status: "closed" });
   };
 
   var DEFAULT_AVATAR = "🦊";

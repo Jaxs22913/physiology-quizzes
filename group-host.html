@@ -105,6 +105,10 @@
     display:flex;align-items:baseline;gap:8px}
   .host-code-badge .hcb-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
   .host-code-badge .hcb-value{font:800 18px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:var(--acc)}
+  .hcb-close{appearance:none;border:1.5px solid var(--line);background:var(--paper);color:var(--muted);
+    width:24px;height:24px;border-radius:50%;font:700 12px/1 ui-sans-serif;cursor:pointer;flex:none;
+    display:flex;align-items:center;justify-content:center;padding:0}
+  .hcb-close:hover{border-color:var(--bad);color:var(--bad)}
   .pchip .pc-av{margin-right:6px}
   .answerer-avatars{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 16px}
   .answerer-avatar{font-size:26px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;
@@ -161,6 +165,7 @@
 <div id="host-code-badge" class="host-code-badge hidden">
   <span class="hcb-label">Code</span>
   <span class="hcb-value" id="host-code-badge-value"></span>
+  <button type="button" id="host-close-room-btn" class="hcb-close" title="Close room">✕</button>
 </div>
 <div class="wrap" style="padding-bottom:40px">
   <a href="index.html" class="back-link">← Back to home</a>
@@ -182,6 +187,10 @@
       </div>
       <button type="button" class="quiz-change-btn" id="quiz-change-btn">Change</button>
     </div>
+    <label class="row" style="margin-top:14px">
+      Shuffle question order
+      <input type="checkbox" id="shuffle-toggle">
+    </label>
     <label class="row" style="margin-top:14px">
       Timed questions
       <input type="checkbox" id="timed-toggle">
@@ -592,7 +601,8 @@
     var quizIdToCreate = selectedQuizId;
     var opts = {
       timedMode: $("timed-toggle").checked,
-      secondsPerQuestion: parseInt($("seconds-input").value, 10) || 20
+      secondsPerQuestion: parseInt($("seconds-input").value, 10) || 20,
+      shuffleQuestions: $("shuffle-toggle").checked
     };
     GroupStudy.createRoom(quizIdToCreate, opts).then(function (code) {
       enterRoom(code, quizIdToCreate);
@@ -627,6 +637,18 @@
   });
 
   $("reveal-btn").addEventListener("click", function () {
+    // Present-but-unanswered players (not ones who've already gone "away" --
+    // see isPlayerAway) are exactly who'd get cut off mid-thought by an
+    // early reveal, so they're the only ones this check counts.
+    if (lastRoomState && lastRoomState.status === "question") {
+      var idx = lastRoomState.currentQuestionIndex;
+      var present = latestPlayers.filter(function (p) { return !isPlayerAway(p); });
+      var answeredCount = present.filter(function (p) { return p.answers && p.answers[idx] != null; }).length;
+      if (present.length > 0 && answeredCount < present.length) {
+        var msg = "Only " + answeredCount + " of " + present.length + " players have answered. Reveal anyway?";
+        if (!window.confirm(msg)) return;
+      }
+    }
     GroupStudy.revealQuestion(roomCode);
   });
 
@@ -643,6 +665,25 @@
   $("new-game-btn").addEventListener("click", function () {
     sessionStorage.removeItem(HOST_SESSION_KEY);
     location.reload();
+  });
+
+  // Host-initiated shutdown -- available from the code badge on every
+  // screen (lobby, question, reveal, finished), not just the lobby, since
+  // a host may want to bail mid-game. GroupStudy.closeRoom() flips the
+  // shared room status to "closed", which is what actually kicks every
+  // player's group-join.html tab back to the join screen (see that file's
+  // onRoomUpdate). The host doesn't need to wait for its own listener to
+  // round-trip that same update -- it already knows the room is closing,
+  // so it cleans up and reloads immediately, same as new-game-btn above.
+  $("host-close-room-btn").addEventListener("click", function () {
+    if (!roomCode) return;
+    if (!window.confirm("Close this room? Everyone still in it will be sent back to the join screen.")) return;
+    GroupStudy.closeRoom(roomCode).then(function () {
+      sessionStorage.removeItem(HOST_SESSION_KEY);
+      location.reload();
+    }).catch(function (err) {
+      toast("Couldn't close the room: " + (err && err.message));
+    });
   });
 
   var lastRoomState = null;
@@ -679,7 +720,7 @@
     // the top of the page keeps every screen compliant with the sitewide
     // "every page needs a way home" requirement.
     hide("quiz-footer-logo");
-    var q = currentQuiz.questions[room.currentQuestionIndex];
+    var q = currentQuiz.questions[GroupStudy.resolveQuestionIndex(room, room.currentQuestionIndex)];
     $("q-num").textContent = "Question " + (room.currentQuestionIndex + 1) + " of " + currentQuiz.questions.length;
     $("q-text").textContent = q.q;
     var box = $("q-choices");
@@ -747,7 +788,7 @@
       soundedRevealIndex = room.currentQuestionIndex;
       playSound("reveal");
     }
-    var q = currentQuiz.questions[room.currentQuestionIndex];
+    var q = currentQuiz.questions[GroupStudy.resolveQuestionIndex(room, room.currentQuestionIndex)];
     $("reveal-q-text").textContent = q.q;
     var box = $("reveal-choices");
     box.innerHTML = "";
