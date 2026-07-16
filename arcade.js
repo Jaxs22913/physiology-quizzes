@@ -331,6 +331,101 @@ var DEMO_DECKS = [
       ["Sodium", "Extracellular fluid balance"],
       ["Potassium", "Fluid/electrolyte balance"],
       ["Omega-3 fatty acid", "Alpha-linolenic acid; heart health"]
+    ]},
+  { id: "cam-special-topics", name: "Special Topics: Malnutrition & Nutrition Support", color: "accent2",
+    icon: '<path d="M20 6L9 17l-5-5"/>',
+    cards: [
+      ["What is malnutrition, per this lecture's definition?", "An acute, subacute, or chronic nutrition state where over- or under-nutrition, with or without inflammation, leads to altered body composition and diminished function."],
+      ["What are the three etiology-based nutrition diagnoses used in adults?", "Starvation-related, chronic disease-related, and acute disease/injury-related malnutrition."],
+      ["What percentage of hospitalized US adults are estimated to be malnourished?", "20% to 50%."],
+      ["How much longer is the hospital length of stay for malnourished older adults?", "40% to 70% longer."],
+      ["What BMI range is usually incompatible with life?", "11–13."],
+      ["Why doesn't a normal BMI rule out malnutrition?", "Many malnourished patients have normal or above-normal BMIs due to residual obesity or an expanded extracellular fluid volume."],
+      ["Which malnutrition marker has the shortest half-life, making it most sensitive to recent change?", "Retinol binding protein — about a 12-hour half-life."],
+      ["Why can't albumin alone reliably diagnose malnutrition?", "It's affected by inflammation, stress, renal/liver disease, hydration status, and certain medications — hypoalbuminemia won't improve with nutrition therapy alone if systemic inflammation persists."],
+      ["What is enteral nutrition?", "Nutrition delivered to the GI tract using a special tube, bypassing the mouth."],
+      ["What is parenteral nutrition?", "Nutrition delivered directly into a vein (IV)."],
+      ["What is the guiding principle for choosing enteral over parenteral nutrition?", "\"If the gut works, use it\" — enteral nutrition is more physiologic, lower risk, and more cost-effective."],
+      ["What are two contraindications for enteral nutrition (indications for parenteral instead)?", "Severe ileus or feeding intolerance, and intestinal obstruction."],
+      ["What's the difference between peripheral (PPN) and total (TPN) parenteral nutrition?", "PPN is delivered through a peripheral line for a few days to 2 weeks with limited calories/osmolarity; TPN needs central access but can provide full nutritional needs."],
+      ["What is refeeding syndrome?", "A metabolic complication when nutrition support is given to severely malnourished patients — a shift from catabolism to anabolism drives electrolytes into cells."],
+      ["What three electrolyte abnormalities characterize refeeding syndrome?", "Hypophosphatemia, hypokalemia, and hypomagnesemia."],
+      ["What must be given before any dextrose in a refeeding-risk patient, and why?", "Thiamine (B1) — the shift to carbohydrate metabolism requires thiamine as a cofactor, and stores are often already depleted."],
+      ["What neurological complication can untreated thiamine deficiency during refeeding cause?", "Wernicke's and Korsakoff encephalopathy."],
+      ["What micronutrients matter most for pressure wound healing?", "Zinc, vitamin A, and vitamin C — but avoid over-supplementing vitamin A, which can cause toxicity."],
+      ["How does nutrition management change in CKD stages 3-5 (pre-dialysis)?", "Reduce sodium, phosphorus, potassium, and protein intake."],
+      ["Why is protein restriction no longer recommended in chronic liver disease?", "It doesn't improve hepatic encephalopathy and instead breaks down muscle mass, raising ammonia levels."],
+      ["What dietary approach helps manage heart failure?", "Limit sodium and monitor fluid intake, and choose unsaturated, plant-based fats to protect the heart."],
+      ["What nutritional priority applies to trauma patients?", "Start nutrition support early — trauma causes a hypermetabolic state with increased calorie and protein needs for wound healing and to prevent lean muscle loss."]
+    ],
+    matchCards: [
+      ["Enteral nutrition", "Tube feeding to the GI tract"],
+      ["Parenteral nutrition", "IV nutrition"],
+      ["Refeeding syndrome", "Metabolic shift, malnourished + refeeding"],
+      ["Hypophosphatemia", "Refeeding syndrome hallmark"],
+      ["Thiamine (B1)", "Give before dextrose in refeeding risk"],
+      ["Albumin half-life", "3 weeks"],
+      ["Prealbumin half-life", "3 days"],
+      ["Retinol binding protein half-life", "12 hours"],
+      ["Transferrin half-life", "8–10 days"],
+      ["TPN", "Central access, full nutrition needs"],
+      ["PPN", "Peripheral line, limited osmolarity"],
+      ["Pressure wound micronutrients", "Zinc, vitamin A, vitamin C"],
+      ["CKD 3-5 diet", "↓ Na, phosphorus, K, protein"],
+      ["“If the gut works, use it”", "Enteral nutrition principle"]
+    ]},
+  { id: "cam-weight-control", name: "Weight Control", color: "accent",
+    icon: '<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/>',
+    cards: [
+      ["What is energy balance?", "Energy intake equals energy output — food/beverage energy matches what's expended through metabolism and activity."],
+      ["What results from positive energy balance?", "Weight gain — energy intake exceeds energy expended."],
+      ["What results from negative energy balance?", "Weight loss — energy expended exceeds intake."],
+      ["About how many kcal does 1 pound of weight loss represent?", "Approximately 3,500 kcal."],
+      ["What percentage of total energy needs does basal metabolism (BMR) account for?", "60% to 80%."],
+      ["What percentage of total energy needs does physical activity account for?", "15% to 30%."],
+      ["What percentage of total energy needs does the thermic effect of food (TEF) account for?", "8% to 15%."],
+      ["Which macronutrient has the highest thermic effect of food?", "Protein, followed by carbohydrate, then fat."],
+      ["What is the single most significant contributor to basal metabolic rate?", "Lean body mass (LBM)."],
+      ["What is nonexercise activity thermogenesis (NEAT)?", "Energy burned through body posture, ambulation, and spontaneous movements like fidgeting — not intentional exercise."],
+      ["What is adaptive thermogenesis?", "Nonvoluntary heat production triggered by overeating or environmental temperature changes — fidgeting, shivering, maintaining muscle tone and posture."],
+      ["What does direct calorimetry measure?", "Body heat output, using an insulated chamber."],
+      ["What does indirect calorimetry measure?", "Oxygen intake and carbon dioxide output, used to estimate energy expenditure."],
+      ["What BMI range defines “normal” weight?", "18.50–24.99."],
+      ["What BMI defines Class III (most severe) obesity?", "≥40.00."],
+      ["What are the acceptable body fat percentage ranges for women and men?", "Women: 23–31%; men: 13–21%."],
+      ["What waist circumference defines abdominal (android) obesity?", "Greater than 40 inches for men, greater than 35 inches for women."],
+      ["What health risks are specifically associated with upper-body (android, “apple”) fat distribution?", "Insulin resistance, fatty liver, and increased risk of cancer, type 2 diabetes, high blood lipids, and heart disease."],
+      ["What hormones encourage lower-body (gynoid, “pear”) fat distribution?", "Estrogen and progesterone."],
+      ["Which body-fat measurement method is most accurate, but expensive?", "Dual X-ray photon absorptiometry (DXA)."],
+      ["What is the recommended rate of weight loss in a sound weight-loss plan?", "1 to 2 pounds per week."],
+      ["What are the three key principles of the weight-loss triad?", "Restricting calories, adding physical activity, and adding an appropriate behavioral component."],
+      ["About how much should daily calorie intake be reduced to lose about 1 pound of fat per week?", "About 500 kcal per day."],
+      ["What are the “3 Ms” of weight-loss maintenance and relapse prevention?", "Motivation, movement, and monitoring."],
+      ["What BMI criteria make a patient a candidate for weight-loss medication?", "BMI ≥30, or BMI ≥27 with at least one obesity-related comorbid condition."],
+      ["How does orlistat work?", "Reduces fat digestion by about 30% by inhibiting the lipase enzyme in the small intestine."],
+      ["What BMI criteria qualify a patient for bariatric surgery?", "BMI ≥40, or BMI ≥35 with obesity-related comorbid conditions."],
+      ["What distinguishes gastric bypass from adjustable gastric banding?", "Bypass produces greater weight loss and reroutes the small intestine but carries higher surgical risk and is hard to reverse; banding is reversible with lower deficiency risk but less weight loss."],
+      ["What defines underweight, by BMI?", "BMI below 18.5."],
+      ["About how many people in the US lived in food-insecure households in 2022, per this lecture?", "44.2 million."],
+      ["What are common warning signs of an unreliable “fad” diet?", "Promises rapid weight loss, restricts food selections, relies on personal testimonials, and claims to be a cure-all."]
+    ],
+    matchCards: [
+      ["Positive energy balance", "Intake > output → weight gain"],
+      ["Negative energy balance", "Output > intake → weight loss"],
+      ["BMR", "60–80% of energy needs"],
+      ["NEAT", "Fidgeting, posture, spontaneous movement"],
+      ["TEF", "Energy to digest/absorb food"],
+      ["Direct calorimetry", "Measures body heat output"],
+      ["Indirect calorimetry", "Measures O2/CO2 exchange"],
+      ["DXA", "Most accurate body fat measure"],
+      ["Android (apple) obesity", "Upper-body fat, insulin resistance"],
+      ["Gynoid (pear) obesity", "Lower-body fat, estrogen-driven"],
+      ["Weight-loss triad", "Calories, activity, behavior"],
+      ["3 Ms of maintenance", "Motivation, movement, monitoring"],
+      ["Orlistat", "Inhibits intestinal lipase"],
+      ["Semaglutide", "Ozempic/Wegovy"],
+      ["Bariatric surgery BMI criteria", "≥40, or ≥35 with comorbidity"],
+      ["Underweight BMI", "<18.5"]
     ]}
 ];
 
@@ -351,7 +446,10 @@ var DEMO_CLASSES = [
     ] }
   ]},
   { id: "cam-nutrition", name: "CAM/Nutrition", exams: [
-    { id: "exam1", name: "Exam 1", deckIds: ["cam-human-nutrition", "cam-macro-micro-water"] }
+    { id: "exam1", name: "Exam 1", deckIds: [
+      "cam-human-nutrition", "cam-macro-micro-water",
+      "cam-special-topics", "cam-weight-control"
+    ] }
   ]}
 ];
 
