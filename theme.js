@@ -1147,7 +1147,18 @@
 
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
-    document.body.appendChild(group);
+    // Arcade pages (see the isArcade comment in initSettingsPanel) place
+    // this group inline at the left of .brand-row, next to the logo,
+    // instead of fixed-positioning it at the top-right of the viewport --
+    // see the matching #corner-actions override in arcade.css. Every other
+    // page keeps the original fixed top-right placement.
+    var brandRow = document.querySelector(".edge-decor circle") && document.querySelector(".brand-row");
+    if (brandRow) {
+      group.className = "corner-btns";
+      brandRow.appendChild(group);
+    } else {
+      document.body.appendChild(group);
+    }
 
     // "Back to previous page" -- fixed top-left, mirroring #corner-actions'
     // top-right placement. Only on non-homepage pages (index.html has its
