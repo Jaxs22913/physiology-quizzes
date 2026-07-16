@@ -322,6 +322,14 @@ function formatMs(ms) {
   return m > 0 ? m + ":" + (s < 10 ? "0" : "") + s : s + "s";
 }
 
+// ---- Sprint bot speed (how quickly the AI opponent answers) ----
+var SPRINT_BOT_SPEED_KEY = "fc_sprint_bot_speed_v1";
+function getSprintBotSpeed() {
+  var v = localStorage.getItem(SPRINT_BOT_SPEED_KEY);
+  return (v === "easy" || v === "hard") ? v : "normal";
+}
+function saveSprintBotSpeed(speed) { localStorage.setItem(SPRINT_BOT_SPEED_KEY, speed); }
+
 // ---- Sound / haptics ----
 var soundOn = localStorage.getItem(SOUND_KEY) !== "0";
 var audioCtx = null;

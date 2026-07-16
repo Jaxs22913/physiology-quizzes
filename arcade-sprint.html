@@ -57,6 +57,8 @@
         pick the matching answer before time runs out. Faster correct answers score more.
       </p>
       <p>This is a local practice version — real live multiplayer (like Group Study) needs a real opponent and isn't wired up yet.</p>
+      <p class="sprint-diff-label">Bot speed</p>
+      <div class="tabs" id="sprint-diff-tabs" style="justify-content:center;margin-bottom:0"></div>
       <button class="btn sprint" id="sprint-start-btn" style="width:100%;margin-top:16px">Start Sprint</button>
     </div>
   </div>
@@ -106,6 +108,37 @@
   var deck = findDeck(deckIdFromURL());
   var SPRINT_LEN = 8, PER_CARD_SECONDS = 8;
   var sp = null;
+
+  // Bot answer delay ranges in seconds, keyed to the difficulty tabs below.
+  // Kept a real margin under PER_CARD_SECONDS (8s) even on Easy -- a bot
+  // delay that lands too close to the question timer risks its scheduled
+  // setTimeout firing after nextCard() has already moved on (see the
+  // sp.qIdx guard in scheduleBotAnswer), which would credit the bot's old
+  // answer to the new card.
+  var BOT_SPEED_DELAYS = {
+    easy: { min: 3, range: 4 },      // 3.0s - 7.0s
+    normal: { min: 1.5, range: 4.5 }, // 1.5s - 6.0s (previous fixed behavior)
+    hard: { min: 0.4, range: 1.6 }    // 0.4s - 2.0s
+  };
+  var botSpeed = getSprintBotSpeed();
+
+  function renderDiffTabs() {
+    var box = document.getElementById("sprint-diff-tabs");
+    box.innerHTML = "";
+    [["easy", "Easy"], ["normal", "Normal"], ["hard", "Hard"]].forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "tab-btn" + (opt[0] === botSpeed ? " active" : "");
+      btn.textContent = opt[1];
+      btn.setAttribute("data-speed", opt[0]);
+      btn.addEventListener("click", function () {
+        botSpeed = opt[0];
+        saveSprintBotSpeed(botSpeed);
+        box.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.toggle("active", b === btn); });
+      });
+      box.appendChild(btn);
+    });
+  }
 
   function showEmpty(msg) {
     document.getElementById("empty-container").innerHTML =
@@ -174,10 +207,12 @@
 
   function scheduleBotAnswer() {
     var thisSprint = sp;
-    var delay = (1.5 + Math.random() * 4.5) * 1000;
+    var thisQIdx = sp.qIdx;
+    var d = BOT_SPEED_DELAYS[botSpeed] || BOT_SPEED_DELAYS.normal;
+    var delay = (d.min + Math.random() * d.range) * 1000;
     var willBeCorrect = Math.random() < 0.72;
     setTimeout(function () {
-      if (sp !== thisSprint || sp.botAnsweredThisCard) return;
+      if (sp !== thisSprint || sp.qIdx !== thisQIdx || sp.botAnsweredThisCard) return;
       sp.botAnsweredThisCard = true;
       if (willBeCorrect) {
         var speedBonus = Math.round((sp.timeLeft / PER_CARD_SECONDS) * 5);
@@ -283,6 +318,7 @@
   if (!deck) {
     showEmpty("Deck not found.");
   } else {
+    renderDiffTabs();
     document.getElementById("sprint-deck-name").textContent = deck.name;
   }
 })();
