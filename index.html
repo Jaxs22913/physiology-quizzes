@@ -529,6 +529,38 @@
       text-align: center;
     }
 
+    /* Semester progress bar -- same thin track/gradient-fill visual language
+       as every quiz's own question-progress .track/#bar (see e.g.
+       "Anatomy Exam 4/appendicular-skeleton-quiz.html"'s .track{height:6px}
+       rule), just using the homepage's own --accent/--accent3 instead of a
+       quiz's per-topic accent pair. Filled in by JS (see SEMESTER_START/
+       SEMESTER_END below) -- starts at width:0 so the transition below
+       animates it filling in on page load. */
+    .semester-progress { margin: 0 0 16px; }
+    .semester-progress-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .semester-progress-track > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+    .semester-progress-label {
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .semester-progress-track > i { transition: none; }
+    }
+
     .tabs {
       display: flex;
       gap: 6px;
@@ -1243,6 +1275,10 @@
     <div id="semester-card" class="card">
       <div class="semester" data-semester="summer-1-2026">
       <h2 class="semester-header">Summer Semester 1 - 2026</h2>
+      <div class="semester-progress" id="semester-progress">
+        <div class="semester-progress-track"><i id="semester-progress-fill"></i></div>
+        <div class="semester-progress-label" id="semester-progress-label"></div>
+      </div>
       <div class="tabs">
         <button class="tab-btn active" data-tab="physio">Physiology</button>
         <button class="tab-btn" data-tab="pharmacodynamics">Pharmaco&shy;dynamics</button>
@@ -2325,6 +2361,39 @@
         a.appendChild(badge);
       } catch (e) {}
     });
+
+    (function () {
+      // Semester progress bar -- update SEMESTER_START/SEMESTER_END/
+      // TOTAL_WEEKS by hand each new semester, same maintenance pattern as
+      // EXAM_EVENTS below. SEMESTER_END confirmed against the academic
+      // calendar (2026-07-17, same date as the last EXAM_EVENTS entry,
+      // "Physiology Course Remediation Exam"); SEMESTER_START confirmed as
+      // exactly 12 weeks (84 days) before that.
+      const SEMESTER_START = new Date(2026, 4, 22); // May 22, 2026
+      const SEMESTER_END = new Date(2026, 7, 14);   // Aug 14, 2026
+      const TOTAL_WEEKS = 12;
+
+      const fill = document.getElementById("semester-progress-fill");
+      const label = document.getElementById("semester-progress-label");
+      if (fill && label) {
+        const now = new Date();
+        const totalMs = SEMESTER_END - SEMESTER_START;
+        const elapsedMs = now - SEMESTER_START;
+        const pct = Math.max(0, Math.min(100, (elapsedMs / totalMs) * 100));
+        const dayMs = 24 * 60 * 60 * 1000;
+        const weekNum = Math.max(1, Math.min(TOTAL_WEEKS, Math.floor(elapsedMs / (7 * dayMs)) + 1));
+        const daysLeft = Math.max(0, Math.ceil((SEMESTER_END - now) / dayMs));
+
+        requestAnimationFrame(() => { fill.style.width = pct + "%"; });
+        if (now < SEMESTER_START) {
+          label.textContent = "Semester starts soon";
+        } else if (now > SEMESTER_END) {
+          label.textContent = "Semester complete!";
+        } else {
+          label.textContent = `Week ${weekNum} of ${TOTAL_WEEKS} · ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`;
+        }
+      }
+    })();
 
     (function () {
       // Every Exam/Practicum event for the rest of Summer Semester 1 - 2026, pulled
