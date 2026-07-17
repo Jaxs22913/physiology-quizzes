@@ -1903,3 +1903,19 @@ mark.user-hl.hl-flash {
   .ink-overlay { left: 12px; right: 12px; top: 60px; }
   .ink-toolbar { width: auto; }
 }
+
+/* Quiz-completion celebration confetti (added 2026-07-17) -- same visual
+   design as arcade.css's .confetti-piece/@keyframes confetti-fall (used on
+   an Arcade win), ported here so quiz pages -- which load theme.css/theme.js
+   but not arcade.css/arcade.js -- get it too. See theme.js's celebrateScore()
+   for what triggers it. */
+.confetti-piece {
+  position: fixed; top: -20px; width: 8px; height: 14px; z-index: 9999; pointer-events: none;
+  animation: confetti-fall linear forwards; border-radius: 2px;
+}
+@keyframes confetti-fall {
+  to { transform: translateY(110vh) rotate(540deg); opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece { animation: none; display: none; }
+}

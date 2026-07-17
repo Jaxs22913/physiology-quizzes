@@ -236,6 +236,44 @@
   }
   window.playSiteSound = playSound;
 
+  // Quiz-completion celebration (added 2026-07-17). Confetti piece/keyframe
+  // CSS lives in theme.css (ported from arcade.css's existing win-screen
+  // confetti, since quiz pages don't load arcade.css). Every quiz template
+  // family (see the results-scoring research from this session) renders its
+  // percentage as literal "NN%" text somewhere inside #results -- Pattern A's
+  // #finalPct, Pattern B's .ring <b>, Pattern C's #pct, Pattern D's .scoresub
+  // -- so scraping #results.textContent with a plain regex works across all
+  // of them without needing per-template special-casing or touching any of
+  // the ~440 individual quiz files.
+  function burstConfetti(count) {
+    var colors = ["#2563eb", "#16a34a", "#9333ea", "#f59e0b", "#dc2626"];
+    for (var i = 0; i < count; i++) {
+      (function () {
+        var piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[i % colors.length];
+        piece.style.animationDuration = (1.6 + Math.random() * 1.2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.3) + "s";
+        document.body.appendChild(piece);
+        setTimeout(function () { piece.remove(); }, 3200);
+      })();
+    }
+  }
+  function celebrateScore(results) {
+    var match = results.textContent.match(/(\d{1,3})\s*%/);
+    var pct = match ? parseInt(match[1], 10) : NaN;
+    if (pct === 100) {
+      playSound("podium");
+      burstConfetti(70);
+    } else if (pct >= 90) {
+      playSound("complete");
+      burstConfetti(30);
+    } else {
+      playSound("complete");
+    }
+  }
+
   function initSoundEffects() {
     document.addEventListener("click", function (e) {
       var opt = e.target.closest && e.target.closest(".opt, .choice");
@@ -256,7 +294,7 @@
       if (!results || announcedResults.has(results)) return;
       if (getComputedStyle(results).display !== "none") {
         announcedResults.add(results);
-        playSound("complete");
+        celebrateScore(results);
       }
     });
     resultsObserver.observe(document.body, { attributes: true, attributeFilter: ["class", "style"], subtree: true });
