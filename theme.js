@@ -2988,6 +2988,18 @@ window.openPauseOverlay = function (opts) {
   var density = window.innerWidth < 700 ? 45 : 90;
   var windStrength = 0.35;
 
+  // Cursor tracking for the mouse-repel effect below. Listens on window
+  // (not the canvas, which is pointer-events:none) so page UI on top of
+  // the canvas still gets normal clicks/hovers.
+  var mouseX = null, mouseY = null;
+  var REPEL_RADIUS = 110;
+  window.addEventListener("mousemove", function (e) { mouseX = e.clientX; mouseY = e.clientY; });
+  window.addEventListener("mouseleave", function () { mouseX = null; mouseY = null; });
+  window.addEventListener("touchmove", function (e) {
+    if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }
+  }, { passive: true });
+  window.addEventListener("touchend", function () { mouseX = null; mouseY = null; });
+
   function resize() {
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
@@ -3007,7 +3019,12 @@ window.openPauseOverlay = function (opts) {
       speed: 0.5 + r * 0.45 + Math.random() * 0.4,
       drift: Math.random() * Math.PI * 2,
       driftSpeed: 0.005 + Math.random() * 0.01,
-      opacity: 0.6 + Math.random() * 0.4
+      opacity: 0.6 + Math.random() * 0.4,
+      // Perturbation velocity from cursor repulsion, decays each frame so
+      // a flake scatters on contact then settles back into its normal
+      // drift/fall rather than staying permanently displaced.
+      vx: 0,
+      vy: 0
     };
   }
   for (var s = 0; s < density; s++) flakes.push(makeFlake(true));
@@ -3017,9 +3034,22 @@ window.openPauseOverlay = function (opts) {
     ctx.fillStyle = "#ffffff";
     for (var i = 0; i < flakes.length; i++) {
       var f = flakes[i];
-      f.y += f.speed;
+
+      if (mouseX !== null) {
+        var dx = f.x - mouseX, dy = f.y - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < REPEL_RADIUS && dist > 0.01) {
+          var force = (1 - dist / REPEL_RADIUS) * 1.8;
+          f.vx += (dx / dist) * force;
+          f.vy += (dy / dist) * force;
+        }
+      }
+      f.vx *= 0.9;
+      f.vy *= 0.9;
+
+      f.y += f.speed + f.vy;
       f.drift += f.driftSpeed;
-      f.x += Math.sin(f.drift) * (windStrength * 1.6);
+      f.x += Math.sin(f.drift) * (windStrength * 1.6) + f.vx;
       if (f.y > window.innerHeight + 10) { flakes[i] = makeFlake(false); continue; }
       if (f.x < -10) f.x = window.innerWidth + 10;
       if (f.x > window.innerWidth + 10) f.x = -10;
@@ -3061,6 +3091,18 @@ window.openPauseOverlay = function (opts) {
   var speedMul = 0.35;
   var COLORS = ["#ec4899", "#f472b6", "#f43f5e", "#fb7185", "#e11d48"];
 
+  // Cursor tracking for the mouse-repel effect below. Listens on window
+  // (not the canvas, which is pointer-events:none) so page UI on top of
+  // the canvas still gets normal clicks/hovers.
+  var mouseX = null, mouseY = null;
+  var REPEL_RADIUS = 110;
+  window.addEventListener("mousemove", function (e) { mouseX = e.clientX; mouseY = e.clientY; });
+  window.addEventListener("mouseleave", function () { mouseX = null; mouseY = null; });
+  window.addEventListener("touchmove", function (e) {
+    if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }
+  }, { passive: true });
+  window.addEventListener("touchend", function () { mouseX = null; mouseY = null; });
+
   function resize() {
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
@@ -3081,7 +3123,12 @@ window.openPauseOverlay = function (opts) {
       drift: Math.random() * Math.PI * 2,
       driftSpeed: 0.006 + Math.random() * 0.012,
       opacity: 0.35 + Math.random() * 0.4,
-      color: COLORS[(Math.random() * COLORS.length) | 0]
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      // Perturbation velocity from cursor repulsion, decays each frame so
+      // a heart scatters on contact then settles back into its normal
+      // drift/float rather than staying permanently displaced.
+      vx: 0,
+      vy: 0
     };
   }
   for (var hi = 0; hi < density; hi++) hearts.push(makeHeart(true));
@@ -3106,9 +3153,23 @@ window.openPauseOverlay = function (opts) {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for (var i = 0; i < hearts.length; i++) {
       var h = hearts[i];
+
+      if (mouseX !== null) {
+        var dx = h.x - mouseX, dy = h.y - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < REPEL_RADIUS && dist > 0.01) {
+          var force = (1 - dist / REPEL_RADIUS) * 1.8;
+          h.vx += (dx / dist) * force;
+          h.vy += (dy / dist) * force;
+        }
+      }
+      h.vx *= 0.9;
+      h.vy *= 0.9;
+
       h.y -= h.speed;
+      h.y += h.vy;
       h.drift += h.driftSpeed;
-      h.x += Math.sin(h.drift) * 0.6;
+      h.x += Math.sin(h.drift) * 0.6 + h.vx;
       var rot = Math.sin(h.drift) * 0.25;
 
       if (h.y < -20) { hearts[i] = makeHeart(false); continue; }
@@ -3153,6 +3214,18 @@ window.openPauseOverlay = function (opts) {
   var speedMul = 0.35;
   var COLORS = ["#ea580c", "#c2410c", "#ca8a04", "#a16207", "#991b1b", "#b45309"];
 
+  // Cursor tracking for the mouse-repel effect below. Listens on window
+  // (not the canvas, which is pointer-events:none) so page UI on top of
+  // the canvas still gets normal clicks/hovers.
+  var mouseX = null, mouseY = null;
+  var REPEL_RADIUS = 110;
+  window.addEventListener("mousemove", function (e) { mouseX = e.clientX; mouseY = e.clientY; });
+  window.addEventListener("mouseleave", function () { mouseX = null; mouseY = null; });
+  window.addEventListener("touchmove", function (e) {
+    if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }
+  }, { passive: true });
+  window.addEventListener("touchend", function () { mouseX = null; mouseY = null; });
+
   function resize() {
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
@@ -3175,7 +3248,12 @@ window.openPauseOverlay = function (opts) {
       spin: Math.random() * Math.PI * 2,
       spinSpeed: (Math.random() - 0.5) * 0.04,
       opacity: 0.5 + Math.random() * 0.4,
-      color: COLORS[(Math.random() * COLORS.length) | 0]
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      // Perturbation velocity from cursor repulsion, decays each frame so
+      // a leaf scatters on contact then settles back into its normal
+      // drift/fall rather than staying permanently displaced.
+      vx: 0,
+      vy: 0
     };
   }
   for (var li = 0; li < density; li++) leaves.push(makeLeaf(true));
@@ -3194,10 +3272,26 @@ window.openPauseOverlay = function (opts) {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for (var i = 0; i < leaves.length; i++) {
       var l = leaves[i];
-      l.y += l.speed;
+
+      if (mouseX !== null) {
+        var dx = l.x - mouseX, dy = l.y - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < REPEL_RADIUS && dist > 0.01) {
+          var force = (1 - dist / REPEL_RADIUS) * 1.8;
+          l.vx += (dx / dist) * force;
+          l.vy += (dy / dist) * force;
+          l.spinSpeed += (dx > 0 ? 1 : -1) * force * 0.01;
+          if (l.spinSpeed > 0.12) l.spinSpeed = 0.12;
+          if (l.spinSpeed < -0.12) l.spinSpeed = -0.12;
+        }
+      }
+      l.vx *= 0.9;
+      l.vy *= 0.9;
+
+      l.y += l.speed + l.vy;
       l.drift += l.driftSpeed;
       l.spin += l.spinSpeed;
-      l.x += Math.sin(l.drift) * 1.1;
+      l.x += Math.sin(l.drift) * 1.1 + l.vx;
 
       if (l.y > window.innerHeight + 20) { leaves[i] = makeLeaf(false); continue; }
       if (l.x < -20) l.x = window.innerWidth + 20;
@@ -3241,6 +3335,18 @@ window.openPauseOverlay = function (opts) {
   var speedMul = 0.35;
   var COLORS = ["#16a34a", "#22c55e", "#15803d", "#4ade80", "#166534"];
 
+  // Cursor tracking for the mouse-repel effect below. Listens on window
+  // (not the canvas, which is pointer-events:none) so page UI on top of
+  // the canvas still gets normal clicks/hovers.
+  var mouseX = null, mouseY = null;
+  var REPEL_RADIUS = 110;
+  window.addEventListener("mousemove", function (e) { mouseX = e.clientX; mouseY = e.clientY; });
+  window.addEventListener("mouseleave", function () { mouseX = null; mouseY = null; });
+  window.addEventListener("touchmove", function (e) {
+    if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }
+  }, { passive: true });
+  window.addEventListener("touchend", function () { mouseX = null; mouseY = null; });
+
   function resize() {
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
@@ -3263,7 +3369,12 @@ window.openPauseOverlay = function (opts) {
       spin: Math.random() * Math.PI * 2,
       spinSpeed: (Math.random() - 0.5) * 0.035,
       opacity: 0.4 + Math.random() * 0.4,
-      color: COLORS[(Math.random() * COLORS.length) | 0]
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      // Perturbation velocity from cursor repulsion, decays each frame so
+      // a clover scatters on contact then settles back into its normal
+      // drift/fall rather than staying permanently displaced.
+      vx: 0,
+      vy: 0
     };
   }
   for (var ci = 0; ci < density; ci++) clovers.push(makeClover(true));
@@ -3311,10 +3422,26 @@ window.openPauseOverlay = function (opts) {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for (var i = 0; i < clovers.length; i++) {
       var c = clovers[i];
-      c.y += c.speed;
+
+      if (mouseX !== null) {
+        var dx = c.x - mouseX, dy = c.y - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < REPEL_RADIUS && dist > 0.01) {
+          var force = (1 - dist / REPEL_RADIUS) * 1.8;
+          c.vx += (dx / dist) * force;
+          c.vy += (dy / dist) * force;
+          c.spinSpeed += (dx > 0 ? 1 : -1) * force * 0.01;
+          if (c.spinSpeed > 0.12) c.spinSpeed = 0.12;
+          if (c.spinSpeed < -0.12) c.spinSpeed = -0.12;
+        }
+      }
+      c.vx *= 0.9;
+      c.vy *= 0.9;
+
+      c.y += c.speed + c.vy;
       c.drift += c.driftSpeed;
       c.spin += c.spinSpeed;
-      c.x += Math.sin(c.drift) * 1.1;
+      c.x += Math.sin(c.drift) * 1.1 + c.vx;
 
       if (c.y > window.innerHeight + 20) { clovers[i] = makeClover(false); continue; }
       if (c.x < -20) c.x = window.innerWidth + 20;
