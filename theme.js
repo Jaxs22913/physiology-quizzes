@@ -2963,3 +2963,71 @@ window.openPauseOverlay = function (opts) {
   s.src = base + "guide-ink.js";
   document.head.appendChild(s);
 })();
+
+// Seasonal snowfall (added 2026-07-16) -- December only. Lives here rather
+// than in any one page's HTML so every current page picks it up for free
+// and every future page does too, as long as it includes theme.js like the
+// rest of the site. A plain canvas overlay, fixed to the viewport and
+// pushed behind all real content with z-index:-1 -- the same technique
+// index.html's own .edge-decor strips already use, just injected instead
+// of hardcoded per page.
+(function () {
+  if (new Date().getMonth() !== 11) return;
+
+  var canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;";
+  document.body.insertBefore(canvas, document.body.firstChild);
+  var ctx = canvas.getContext("2d");
+
+  var flakes = [];
+  // Lighter on narrow/mobile viewports -- fewer flakes to redraw each
+  // frame keeps this cheap on weaker mobile GPUs/CPUs.
+  var density = window.innerWidth < 700 ? 45 : 90;
+  var windStrength = 0.35;
+
+  function resize() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function makeFlake(randomY) {
+    var r = 1.7 + Math.random() * 3.4;
+    return {
+      x: Math.random() * window.innerWidth,
+      y: randomY ? Math.random() * window.innerHeight : -10 - Math.random() * 40,
+      r: r,
+      speed: 0.5 + r * 0.45 + Math.random() * 0.4,
+      drift: Math.random() * Math.PI * 2,
+      driftSpeed: 0.005 + Math.random() * 0.01,
+      opacity: 0.6 + Math.random() * 0.4
+    };
+  }
+  for (var s = 0; s < density; s++) flakes.push(makeFlake(true));
+
+  function step() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.fillStyle = "#ffffff";
+    for (var i = 0; i < flakes.length; i++) {
+      var f = flakes[i];
+      f.y += f.speed;
+      f.drift += f.driftSpeed;
+      f.x += Math.sin(f.drift) * (windStrength * 1.6);
+      if (f.y > window.innerHeight + 10) { flakes[i] = makeFlake(false); continue; }
+      if (f.x < -10) f.x = window.innerWidth + 10;
+      if (f.x > window.innerWidth + 10) f.x = -10;
+      ctx.globalAlpha = f.opacity;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
