@@ -106,6 +106,18 @@
   .guide-card-title { font-size: 15px; font-weight: 700; margin: 0 0 4px; }
   .guide-card-desc { font-size: 13px; color: var(--muted); margin: 0; }
 
+  /* Quick-reference guides (non-cumulative — hormones, blood flow, peritoneum,
+     flow sequences, etc.) get a distinct amber treatment so they read as
+     companion references rather than the main cumulative exam guide. */
+  .guide-card.ref { border-left: 4px solid #d97706; background: #fffaf3; }
+  .guide-card.ref:hover { border-color: #d97706; }
+  .ref-badge {
+    display: inline-block; font: 700 9.5px/1 ui-sans-serif, -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: .06em; color: #b45309;
+    background: #fef3e2; border: 1px solid #fde3b8; padding: 3px 8px;
+    border-radius: 999px; margin: 0 0 7px;
+  }
+
   .empty-state {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px;
     box-shadow: var(--shadow); padding: 40px 24px; text-align: center; color: var(--muted);
@@ -170,7 +182,8 @@
         <p class="guide-card-title">Physiology Exam 3 Field Guide</p>
         <p class="guide-card-desc">All 7 systems — Hemostasis, Immunology, GI, Metabolism &amp; the Liver, Nutrition &amp; Thermoregulation, and Respiration I &amp; II — with figures and objective-by-objective coverage.</p>
       </a>
-      <a class="guide-card" href="Physiology%20Exam%203/physiology-exam-3-hormones.html">
+      <a class="guide-card ref" href="Physiology%20Exam%203/physiology-exam-3-hormones.html">
+        <span class="ref-badge">Quick Reference</span>
         <p class="guide-card-title">Physiology Exam 3 Hormones</p>
         <p class="guide-card-desc">Quick-reference tables for every hormone — where it's formed, stored, its release stimulus, effect, and target. GI endocrine (gastrin, CCK, secretin, GIP, motilin) and paracrine (somatostatin, histamine) hormones, plus insulin, glucagon, epinephrine, cortisol, growth hormone, thyroxine, leptin, ghrelin, and erythropoietin.</p>
       </a>
@@ -196,19 +209,23 @@
         <p class="guide-card-title">Anatomy Exam 3 Guide</p>
         <p class="guide-card-desc">Gastrointestinal, Endocrine, Male &amp; Female Reproductive, and Urinary/Nephrology (kidney) — organs, relationships, blood supply, innervation, and histology, objective-by-objective.</p>
       </a>
-      <a class="guide-card" href="Anatomy%20Exam%203/anatomy-exam-3-blood-flow.html">
+      <a class="guide-card ref" href="Anatomy%20Exam%203/anatomy-exam-3-blood-flow.html">
+        <span class="ref-badge">Quick Reference</span>
         <p class="guide-card-title">Anatomy Exam 3 Blood Flow &amp; Vasculature</p>
         <p class="guide-card-desc">Arterial supply, venous drainage, and lymphatics for every organ across Endocrine, GI, Female &amp; Male Reproductive, and Nephrology/Urinary — plus the nephron, hepatic portal, and hypophyseal portal flow chains.</p>
       </a>
-      <a class="guide-card" href="Anatomy%20Exam%203/anatomy-exam-3-hormones.html">
+      <a class="guide-card ref" href="Anatomy%20Exam%203/anatomy-exam-3-hormones.html">
+        <span class="ref-badge">Quick Reference</span>
         <p class="guide-card-title">Anatomy Exam 3 Hormones</p>
         <p class="guide-card-desc">Quick-reference tables for every hormone across the exam — where it's made, whether/how it's stored, and what it acts on, kept strictly structural (no release triggers or feedback loops).</p>
       </a>
-      <a class="guide-card" href="Anatomy%20Exam%203/anatomy-exam-3-peritoneum.html">
+      <a class="guide-card ref" href="Anatomy%20Exam%203/anatomy-exam-3-peritoneum.html">
+        <span class="ref-badge">Quick Reference</span>
         <p class="guide-card-title">Anatomy Exam 3 Retroperitoneal vs. Intraperitoneal</p>
         <p class="guide-card-desc">Every organ across the exam classified as retroperitoneal, intraperitoneal, or extraperitoneal/subperitoneal, including the classic SAD PUCKER mnemonic.</p>
       </a>
-      <a class="guide-card" href="Anatomy%20Exam%203/anatomy-exam-3-flows.html">
+      <a class="guide-card ref" href="Anatomy%20Exam%203/anatomy-exam-3-flows.html">
+        <span class="ref-badge">Quick Reference</span>
         <p class="guide-card-title">Anatomy Exam 3 Key Flow Sequences</p>
         <p class="guide-card-desc">Step-by-step non-vascular pathways: filtrate &amp; urine flow, bile &amp; pancreatic juice flow, food/bolus transit, sperm flow, oocyte flow, lymphatic drainage to the venous system, and testicular descent.</p>
       </a>
