@@ -309,6 +309,14 @@ mark.search-hit-current {
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
   --tab-border: rgba(37, 99, 235, 0.25);
 }
+/* Valentine's window (Jan 31 - Feb 14, see theme.js) -- homepage-only
+   light-mode pink tint. Scoped to .vday-theme (a class theme.js adds only
+   inside that date window) so it never bleeds outside the season. */
+:root[data-theme="light"] body.homepage.vday-theme {
+  --bg: #fbe7ee;
+  --card: #fff8fa;
+  --border: #f0cddb;
+}
 :root[data-theme="dark"] body.homepage .edge-decor {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

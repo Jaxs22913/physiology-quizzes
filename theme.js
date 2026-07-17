@@ -3031,3 +3031,99 @@ window.openPauseOverlay = function (opts) {
   }
   requestAnimationFrame(step);
 })();
+
+// Seasonal Valentine's theme (added 2026-07-17) -- two weeks before Feb 14
+// through Feb 14 itself (Jan 31 - Feb 14). Same pattern as the December
+// snow feature above: lives in theme.js (not any one page's HTML) so every
+// current and future page gets it automatically. Floating hearts behind
+// all UI (z-index:-1), plus a homepage-only light-mode pink tint gated on
+// the same window via a body class, rather than a permanent theme.css
+// color change.
+(function () {
+  var d = new Date();
+  var m = d.getMonth(), day = d.getDate();
+  var inWindow = (m === 0 && day === 31) || (m === 1 && day <= 14);
+  if (!inWindow) return;
+
+  document.body.classList.add("vday-theme");
+
+  var canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;";
+  document.body.insertBefore(canvas, document.body.firstChild);
+  var ctx = canvas.getContext("2d");
+
+  var hearts = [];
+  // Lighter on narrow/mobile viewports, same reasoning as the snow above.
+  var density = window.innerWidth < 700 ? 18 : 34;
+  var speedMul = 0.35;
+  var COLORS = ["#ec4899", "#f472b6", "#f43f5e", "#fb7185", "#e11d48"];
+
+  function resize() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function makeHeart(randomY) {
+    var s = 6 + Math.random() * 9;
+    return {
+      x: Math.random() * window.innerWidth,
+      y: randomY ? Math.random() * window.innerHeight : window.innerHeight + 10 + Math.random() * 40,
+      s: s,
+      speed: (0.35 + s * 0.045) * speedMul,
+      drift: Math.random() * Math.PI * 2,
+      driftSpeed: 0.006 + Math.random() * 0.012,
+      opacity: 0.35 + Math.random() * 0.4,
+      color: COLORS[(Math.random() * COLORS.length) | 0]
+    };
+  }
+  for (var hi = 0; hi < density; hi++) hearts.push(makeHeart(true));
+
+  // Classic two-lobe heart silhouette (flat top notch, round lobes,
+  // pointed bottom), drawn at (0,0) sized to `s`, transformed by the
+  // caller via ctx.translate/rotate.
+  function traceHeart(s) {
+    var w = s * 1.8, h = s * 1.7;
+    var top = h * 0.28;
+    var mid = (h + top) / 2;
+    ctx.beginPath();
+    ctx.moveTo(0, top);
+    ctx.bezierCurveTo(0, 0, -w / 2, 0, -w / 2, top);
+    ctx.bezierCurveTo(-w / 2, mid, 0, mid, 0, h);
+    ctx.bezierCurveTo(0, mid, w / 2, mid, w / 2, top);
+    ctx.bezierCurveTo(w / 2, 0, 0, 0, 0, top);
+    ctx.closePath();
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (var i = 0; i < hearts.length; i++) {
+      var h = hearts[i];
+      h.y -= h.speed;
+      h.drift += h.driftSpeed;
+      h.x += Math.sin(h.drift) * 0.6;
+      var rot = Math.sin(h.drift) * 0.25;
+
+      if (h.y < -20) { hearts[i] = makeHeart(false); continue; }
+      if (h.x < -20) h.x = window.innerWidth + 20;
+      if (h.x > window.innerWidth + 20) h.x = -20;
+
+      ctx.save();
+      ctx.translate(h.x, h.y);
+      ctx.rotate(rot);
+      ctx.globalAlpha = h.opacity;
+      ctx.fillStyle = h.color;
+      traceHeart(h.s);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
