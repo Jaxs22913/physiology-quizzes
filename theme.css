@@ -1009,24 +1009,35 @@ mark.search-hit-current {
 /* Read-aloud control bar. Originally desktop-only while audio was live
    speechSynthesis; now that guides ship pre-rendered audio files, it works
    everywhere -- mobile just gets a smaller/lower-profile bar (see the
-   max-width:640px override below) since screen space is tighter. */
+   max-width:640px override below) since screen space is tighter.
+
+   Structurally a row of [tts-bar-content, tts-handle]: the controls all
+   live in tts-bar-content so the bar can collapse down to just the handle
+   tab on mobile (see .tts-handle / .tts-bar.collapsed below) by hiding one
+   div, rather than juggling each row's visibility individually. */
 .tts-bar {
   display: flex;
   position: fixed;
   bottom: 20px;
   left: 20px;
   z-index: 600;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  align-items: stretch;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-  padding: 6px;
+  transition: transform .25s ease;
 }
 :root[data-theme="dark"] .tts-bar {
   background: #191c22;
   border-color: #2a2e37;
+}
+.tts-bar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
 }
 .tts-bar-row {
   display: flex;
@@ -1037,15 +1048,45 @@ mark.search-hit-current {
 @media (min-width: 900px) {
   .tts-clickable:hover { outline: 2px dashed rgba(37, 99, 235, .4); outline-offset: 2px; border-radius: 4px; }
 }
+/* Collapse handle: hidden entirely on desktop (that layout isn't cramped,
+   so there's nothing to collapse) -- only shown at the mobile breakpoint
+   below, where floating controls eat into much more of the viewport. */
+.tts-handle {
+  display: none;
+  flex: none;
+  width: 26px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 19px;
+  line-height: 1;
+  border-left: 1px solid #e5e7eb;
+}
+/* Chevron flips to point the opposite way once collapsed, so the tab
+   itself hints at "tap to bring the controls back." */
+.tts-bar.collapsed .tts-handle { transform: scaleX(-1); }
+:root[data-theme="dark"] .tts-handle {
+  color: #9aa2af;
+  border-left-color: #2a2e37;
+}
 @media (max-width: 640px) {
   /* Smaller footprint, and lifted well clear of the fixed footer-mark
      logo -- on a narrow screen the logo's centered mark sits close
      enough to the bottom-left corner that a bottom:12px bar would
      otherwise cover it (only cosmetic on wide desktop screens, where
      the mark is centered far to the right of the bar). */
-  .tts-bar { bottom: 84px; left: 12px; border-radius: 16px; padding: 5px; gap: 5px; }
+  .tts-bar { bottom: 84px; left: 12px; border-radius: 16px; }
+  .tts-bar-content { padding: 5px; gap: 5px; }
   .tts-btn { width: 34px; height: 34px; }
   .tts-rate, .tts-gender { height: 34px; font-size: 11px; padding: 0 9px; }
+  .tts-handle { display: flex; border-top-right-radius: 16px; border-bottom-right-radius: 16px; }
+  /* Slide the whole bar left by its own width minus the handle's 26px, so
+     the handle (last child, flush with the bar's outer/right edge) is the
+     only part left on screen -- a persistent tab to bring it back. */
+  .tts-bar.collapsed { transform: translateX(calc(-100% + 26px)); }
 }
 .tts-btn {
   width: 38px;

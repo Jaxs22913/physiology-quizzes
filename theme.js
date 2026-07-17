@@ -1439,8 +1439,35 @@
     if (audioDir) settingsRow.appendChild(genderBtn);
     else settingsRow.appendChild(voiceSelect);
 
-    bar.appendChild(playbackRow);
-    bar.appendChild(settingsRow);
+    // Mobile-only collapse: the bar's actual controls live in this inner
+    // wrapper so the outer .tts-bar can shrink down to just the handle tab
+    // (see .tts-handle / .tts-bar.collapsed in theme.css) without any
+    // per-row visibility juggling -- collapsing is just "hide this one div."
+    var barContent = document.createElement("div");
+    barContent.className = "tts-bar-content";
+    barContent.appendChild(playbackRow);
+    barContent.appendChild(settingsRow);
+
+    // Slim tab, last in DOM order so it sits at the bar's outer (right)
+    // edge -- collapsing translates the whole bar left by (100% - handle
+    // width), which leaves exactly this handle visible, flush with the
+    // screen edge, since translateX(100%) is relative to the bar's own
+    // rendered width regardless of how wide its content happens to be.
+    var handleBtn = document.createElement("button");
+    handleBtn.type = "button";
+    handleBtn.className = "tts-handle";
+    handleBtn.setAttribute("aria-label", "Hide or show read-aloud controls");
+    handleBtn.innerHTML = "&lsaquo;";
+
+    var barCollapsed = localStorage.getItem("ttsBarCollapsed") === "1";
+    if (barCollapsed) bar.classList.add("collapsed");
+    handleBtn.addEventListener("click", function () {
+      var nowCollapsed = bar.classList.toggle("collapsed");
+      localStorage.setItem("ttsBarCollapsed", nowCollapsed ? "1" : "0");
+    });
+
+    bar.appendChild(barContent);
+    bar.appendChild(handleBtn);
     document.body.appendChild(bar);
 
     // Voice quality/gender is almost entirely down to which installed voice
