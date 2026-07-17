@@ -16,20 +16,27 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   --shadow-lift: 0 6px 14px rgba(0,0,0,0.35), 0 18px 36px rgba(0,0,0,0.4);
 }
-/* Ambient background gradient drift (added 2026-07-17), same effect as
-   index.html's homepage in theme.css -- covers Arcade + all 4 modes since
-   they share this stylesheet. Wins over the plain `body { background:
-   var(--bg); }` rule below by specificity (data-theme attribute selector
-   beats a bare element selector). Each seasonal block below drifts with
-   that season's own palette instead -- see [[pa-quizzes-seasonal-themes]]. */
+/* Ambient background gradient drift (added 2026-07-17), covers Arcade +
+   all 4 modes since they share this stylesheet. Wins over the plain `body
+   { background: var(--bg); }` rule below by specificity (data-theme
+   attribute selector beats a bare element selector). Each seasonal block
+   below drifts with that season's own palette instead -- see
+   [[pa-quizzes-seasonal-themes]].
+   Recolored 2026-07-17 (same day) to cycle through Arcade's own four mode
+   colors (--accent/2/3/4-soft -- the exact same blue/green/purple/gold
+   already used for the marquee lights and Study/Learn/Sprint/Match badges)
+   instead of the neutral gray the rest of the site uses, so it reads as
+   distinctly "Arcade" rather than a copy of the homepage's tint. Using the
+   var()s directly (not hardcoded hex) keeps this in sync automatically if
+   the mode palette ever changes. */
 :root[data-theme="dark"] body {
-  background: linear-gradient(120deg, #0f1115, #131a28, #150f14, #0f1115);
-  background-size: 300% 300%;
+  background: linear-gradient(120deg, var(--accent-soft), var(--accent2-soft), var(--accent3-soft), var(--accent4-soft), var(--accent-soft));
+  background-size: 400% 400%;
   animation: bg-drift 16s ease-in-out infinite;
 }
 :root[data-theme="light"] body {
-  background: linear-gradient(120deg, #f3f4f6, #e6ecf7, #f7eef2, #f3f4f6);
-  background-size: 300% 300%;
+  background: linear-gradient(120deg, var(--accent-soft), var(--accent2-soft), var(--accent3-soft), var(--accent4-soft), var(--accent-soft));
+  background-size: 400% 400%;
   animation: bg-drift 16s ease-in-out infinite;
 }
 @keyframes bg-drift {
