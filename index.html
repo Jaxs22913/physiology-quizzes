@@ -546,6 +546,16 @@
     }
     .tab-btn {
       flex: 1;
+      /* Without this, a flex item's default min-width:auto floors it at its
+         own min-content size (the widest unbreakable chunk of its text,
+         after wrapping) -- with 6 tabs now sharing one row, the SUM of
+         those floors can exceed .tabs' own width even though each button's
+         own text wraps and fits within its individual box, pushing the
+         whole row (and the last tab, "CAM/Nutrition") past the card's right
+         edge instead of shrinking further. min-width: 0 lets flex-shrink
+         actually shrink each tab below its content's natural minimum,
+         wrapping harder if it has to, so the row itself never overflows. */
+      min-width: 0;
       background: none;
       border: none;
       border-radius: 8px;
@@ -1083,11 +1093,21 @@
          before that base rule and it was silently discarded, same trap
          documented elsewhere in this file: a media query doesn't out-rank
          an unconditional rule of equal specificity that simply comes
-         later in source order. */
+         later in source order.
+
+         min-width: 45% is re-asserted here for the same reason: the
+         earlier @media(max-width:640px) block (near the top of the file)
+         also sets it, but the later, unconditional min-width: 0 added to
+         the base .tab-btn rule (added to fix the CAM/Nutrition tab
+         overflowing the whole row off the card at desktop widths) comes
+         after that first media block in source order and would otherwise
+         win at mobile widths too, collapsing the intended 2-per-row mobile
+         grid back into 6 unreadably narrow slivers. */
       .tab-btn {
         -webkit-hyphens: auto;
         hyphens: auto;
         overflow-wrap: break-word;
+        min-width: 45%;
       }
     }
 
@@ -1229,7 +1249,7 @@
         <button class="tab-btn" data-tab="anatomy">Anatomy</button>
         <button class="tab-btn" data-tab="anatomy-practicum">Anatomy Practicum</button>
         <button class="tab-btn" data-tab="intro-pa">Intro to PA Profession</button>
-        <button class="tab-btn" data-tab="cam-nutrition">CAM/Nutrition</button>
+        <button class="tab-btn" data-tab="cam-nutrition">CAM/&#8203;Nutrition</button>
       </div>
       <p class="ai-disclaimer">Quizzes/Exams made by AI, use at you're own risk. Check info if unsure.</p>
 
