@@ -2390,7 +2390,12 @@
         const elapsedMs = now - SEMESTER_START;
         const pct = Math.max(0, Math.min(100, (elapsedMs / totalMs) * 100));
         const dayMs = 24 * 60 * 60 * 1000;
-        const TOTAL_WEEKS = Math.ceil(totalMs / (7 * dayMs));
+        // Hardcoded, not derived from the date span -- confirmed directly
+        // by the user (2026-07-17, "theres 12 weeks") after an earlier
+        // Math.ceil-based derivation gave 13. The May 18 - Aug 14 calendar
+        // span is ~12.6 weeks, but the program counts it as a 12-week
+        // semester regardless, so trust that over the raw date math.
+        const TOTAL_WEEKS = 12;
         const weekNum = Math.max(1, Math.min(TOTAL_WEEKS, Math.floor(elapsedMs / (7 * dayMs)) + 1));
 
         // "Class days left" counts weekdays only (confirmed with the user
