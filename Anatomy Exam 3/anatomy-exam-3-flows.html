@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Flow Sequences — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --endo:#7c3aed;--endobg:#f3eefe;
+    --gi:#16a34a;--gibg:#eafaf0;
+    --fem:#db2777;--fembg:#fdeef5;
+    --male:#2563eb;--malebg:#eaf1fe;
+    --neph:#0d9488;--nephbg:#e6f7f4;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--neph)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin:16px 0 4px;font-size:13.5px;color:var(--muted)}
+  .legend b{color:var(--body)}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--neph);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+
+  section.flow{margin:30px 0;border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);border:1px solid var(--line);background:var(--card)}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+  h2{font:800 20px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px;font-weight:500}
+  .flowdesc{margin:6px 0 16px;color:var(--body);font-size:14.5px;max-width:74ch}
+
+  .chainwrap{overflow-x:auto;padding-bottom:4px}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px 2px;font-size:14px;line-height:1.5}
+  .step{padding:8px 13px;border-radius:9px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+  .arrow{color:var(--muted);font-weight:700;padding:0 2px}
+  .step.minor{font-weight:500;background:transparent;border:1px dashed var(--line);color:var(--body)}
+  .branch{margin:10px 0 0 2px;padding:10px 14px;border-radius:9px;font-size:13.6px;background:#fafbfe;border:1px dashed var(--line);color:var(--body)}
+  .branch b{color:var(--ink)}
+
+  .sub2{margin:20px 0 0}
+  .sub2 h3{font:700 14.5px ui-sans-serif;color:var(--ink);margin:0 0 8px}
+
+  .endo .step{background:var(--endobg);color:#5b21b6;border-color:#e3d3fb}
+  .gi .step{background:var(--gibg);color:#146b3a;border-color:#c7ecd6}
+  .fem .step{background:var(--fembg);color:#9d174d;border-color:#fbcfe4}
+  .male .step{background:var(--malebg);color:#1e40af;border-color:#c7d9fb}
+  .neph .step{background:var(--nephbg);color:#0b6b62;border-color:#c3ebe4}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    section.flow{box-shadow:none;border:1px solid #bbb;break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:18px 12px 60px} section.flow{padding:16px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #0d9488; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0d9488; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #5eead4; }
+  }
+</style>
+<div id="quiz-footer-logo" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 3 &middot; Class of 2028</div>
+    <h1>Key Flow Sequences</h1>
+    <p class="sub">The named, ordered pathways worth memorizing step-by-step — how filtrate becomes urine, how bile and pancreatic juice reach the duodenum, how food transits the alimentary canal, how sperm and the oocyte travel their respective reproductive tracts, how lymph reaches the venous system, and how the testis migrates into the scrotum during development. (For blood/vascular flow specifically, see the separate <a href="anatomy-exam-3-blood-flow.html" style="color:inherit;font-weight:700">Blood Flow &amp; Vasculature Guide</a>.)</p>
+    <div class="toc">
+      <a href="#filtrate" style="color:#0b6b62"><span class="dot" style="background:var(--neph)"></span>Filtrate &amp; Urine Flow</a>
+      <a href="#biliary" style="color:#146b3a"><span class="dot" style="background:var(--gi)"></span>Bile &amp; Pancreatic Juice Flow</a>
+      <a href="#gitransit" style="color:#146b3a"><span class="dot" style="background:var(--gi)"></span>Food/Bolus Transit</a>
+      <a href="#sperm" style="color:#1e40af"><span class="dot" style="background:var(--male)"></span>Sperm Flow</a>
+      <a href="#oocyte" style="color:#9d174d"><span class="dot" style="background:var(--fem)"></span>Oocyte Flow</a>
+      <a href="#lymph" style="color:#5b21b6"><span class="dot" style="background:var(--endo)"></span>Lymphatic Drainage</a>
+      <a href="#descent" style="color:#1e40af"><span class="dot" style="background:var(--male)"></span>Testicular Descent</a>
+    </div>
+  </header>
+
+  <!-- FILTRATE / URINE FLOW -->
+  <section class="flow neph" id="filtrate">
+    <div class="shead"><span class="dot" style="background:var(--neph)"></span><h2>Filtrate &amp; Urine Flow <span class="tag">Nephrology/Urinary</span></h2></div>
+    <p class="flowdesc">Two stages, exactly as taught: an <b>intrarenal</b> stage (filtrate moving through the nephron's own tubules) followed by an <b>extrarenal / urological</b> stage (urine moving through the collecting system and out of the body).</p>
+    <div class="sub2">
+      <h3>Intrarenal — filtrate through the nephron</h3>
+      <div class="chainwrap"><div class="chain">
+        <span class="step">Glomerulus / Bowman's capsule</span><span class="arrow">&rarr;</span>
+        <span class="step">Proximal convoluted tubule</span><span class="arrow">&rarr;</span>
+        <span class="step">Descending limb (thick &amp; thin)</span><span class="arrow">&rarr;</span>
+        <span class="step">Nephron loop (loop of Henle)</span><span class="arrow">&rarr;</span>
+        <span class="step">Ascending limb (thin &amp; thick)</span><span class="arrow">&rarr;</span>
+        <span class="step">Distal convoluted tubule</span><span class="arrow">&rarr;</span>
+        <span class="step">Collecting duct</span><span class="arrow">&rarr;</span>
+        <span class="step">Papillary duct</span><span class="arrow">&rarr;</span>
+        <span class="step">Renal papilla</span><span class="arrow">&rarr;</span>
+        <span class="step">Minor calyx</span><span class="arrow">&rarr;</span>
+        <span class="step">Major calyx</span>
+      </div></div>
+      <div class="branch">Once filtrate reaches the collecting ducts it is officially <b>urine</b> — no further modifications occur past this point.</div>
+    </div>
+    <div class="sub2">
+      <h3>Extrarenal / urological — urine out of the body</h3>
+      <div class="chainwrap"><div class="chain">
+        <span class="step">Renal pelvis</span><span class="arrow">&rarr;</span>
+        <span class="step">Ureter</span><span class="arrow">&rarr;</span>
+        <span class="step">Bladder</span><span class="arrow">&rarr;</span>
+        <span class="step">Urethra</span><span class="arrow">&rarr;</span>
+        <span class="step">External urethral meatus/orifice</span>
+      </div></div>
+      <div class="branch">The male urethra is subdivided further along this same path: <b>prostatic urethra</b> (through the prostate) &rarr; <b>membranous urethra</b> (pierces the urogenital diaphragm) &rarr; <b>penile/spongy urethra</b> (through the penile shaft) &rarr; external urethral orifice. The female urethra has no such subdivisions — it's simply "the urethra."</div>
+    </div>
+  </section>
+
+  <!-- BILE & PANCREATIC JUICE FLOW -->
+  <section class="flow gi" id="biliary">
+    <div class="shead"><span class="dot" style="background:var(--gi)"></span><h2>Bile &amp; Pancreatic Juice Flow <span class="tag">GI &middot; Endocrine (pancreas)</span></h2></div>
+    <p class="flowdesc">Two separate secretions that converge on the same final doorway into the duodenum — the <b>ampulla of Vater</b>.</p>
+    <div class="sub2">
+      <h3>Bile: liver &amp; gallbladder &rarr; duodenum</h3>
+      <div class="chainwrap"><div class="chain">
+        <span class="step">Liver (hepatocytes)</span><span class="arrow">&rarr;</span>
+        <span class="step minor">intrahepatic bile ductules</span><span class="arrow">&rarr;</span>
+        <span class="step minor">right &amp; left hepatic ducts</span><span class="arrow">&rarr;</span>
+        <span class="step">Common hepatic duct</span><span class="arrow">&rarr;</span>
+        <span class="step">Gallbladder <small>(fundus &rarr; body &rarr; neck)</small></span><span class="arrow">&harr;</span>
+        <span class="step minor">cystic duct</span><span class="arrow">&rarr;</span>
+        <span class="step">Common bile duct (CBD)</span><span class="arrow">&rarr;</span>
+        <span class="step">Ampulla of Vater</span><span class="arrow">&rarr;</span>
+        <span class="step">Major duodenal papilla</span>
+      </div></div>
+      <div class="branch">The <b>gallbladder</b> sits between the right and quadrate lobes of the liver and stores/concentrates bile between meals rather than producing it — bile flows into it via the cystic duct and back out the same duct when needed. The <b>common bile duct</b> passes behind the first part of the duodenum, then through the head of the pancreas, before terminating at the ampulla of Vater.</div>
+    </div>
+    <div class="sub2">
+      <h3>Pancreatic exocrine secretions &rarr; duodenum</h3>
+      <div class="chainwrap"><div class="chain">
+        <span class="step">Pancreatic acini</span><span class="arrow">&rarr;</span>
+        <span class="step minor">small intralobular ducts</span><span class="arrow">&rarr;</span>
+        <span class="step">Main pancreatic duct <small>(of Wirsung)</small></span><span class="arrow">&rarr;</span>
+        <span class="step">joins the CBD at the Ampulla of Vater</span><span class="arrow">&rarr;</span>
+        <span class="step">Major duodenal papilla</span>
+      </div></div>
+      <div class="branch">The main pancreatic duct runs left to right through the gland, receiving numerous small ducts, then turns inferior/posterior/right at the neck of the pancreas to join the CBD about 3&ndash;4 inches below the pylorus. A separate <b>accessory duct (of Santorini)</b>, not universally present, instead empties directly into the duodenum at the <b>minor</b> papilla, bypassing the ampulla. Both ducts arise embryologically from the fusion of a ventral and a dorsal pancreatic duct.</div>
+    </div>
+  </section>
+
+  <!-- GI TRANSIT -->
+  <section class="flow gi" id="gitransit">
+    <div class="shead"><span class="dot" style="background:var(--gi)"></span><h2>Food/Bolus Transit <span class="tag">GI</span></h2></div>
+    <p class="flowdesc">The full path of ingested material through the alimentary canal, mouth to anus — about 9&ndash;10 meters (30 feet) end to end.</p>
+    <div class="chainwrap"><div class="chain">
+      <span class="step">Oral cavity</span><span class="arrow">&rarr;</span>
+      <span class="step">Oropharynx</span><span class="arrow">&rarr;</span>
+      <span class="step">Esophagus</span><span class="arrow">&rarr;</span>
+      <span class="step">Stomach <small>(cardia &rarr; fundus &rarr; body &rarr; pyloric antrum/canal)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Duodenum</span><span class="arrow">&rarr;</span>
+      <span class="step">Jejunum</span><span class="arrow">&rarr;</span>
+      <span class="step">Ileum</span><span class="arrow">&rarr;</span>
+      <span class="step">Cecum</span><span class="arrow">&rarr;</span>
+      <span class="step">Ascending colon</span><span class="arrow">&rarr;</span>
+      <span class="step">Transverse colon</span><span class="arrow">&rarr;</span>
+      <span class="step">Descending colon</span><span class="arrow">&rarr;</span>
+      <span class="step">Sigmoid colon</span><span class="arrow">&rarr;</span>
+      <span class="step">Rectum</span><span class="arrow">&rarr;</span>
+      <span class="step">Anal canal</span>
+    </div></div>
+    <div class="branch">Key checkpoints along the way: the <b>upper esophageal sphincter</b> (cricopharyngeus, skeletal muscle) and <b>lower/cardiac sphincter</b> (smooth muscle, not a true anatomic sphincter) bound the esophagus; the <b>pyloric sphincter</b> gates stomach-to-duodenum flow; the <b>ileocecal valve</b> gates small-to-large intestine flow; and the <b>internal</b> (smooth muscle, involuntary) and <b>external</b> (skeletal muscle, voluntary) anal sphincters gate the final exit.</div>
+  </section>
+
+  <!-- SPERM FLOW -->
+  <section class="flow male" id="sperm">
+    <div class="shead"><span class="dot" style="background:var(--male)"></span><h2>Sperm Flow <span class="tag">Male Reproductive</span></h2></div>
+    <p class="flowdesc">From production in the testis to ejaculation — sperm are functionally immature until they finish this entire path.</p>
+    <div class="chainwrap"><div class="chain">
+      <span class="step">Seminiferous tubules</span><span class="arrow">&rarr;</span>
+      <span class="step">Straight tubules</span><span class="arrow">&rarr;</span>
+      <span class="step">Rete testis</span><span class="arrow">&rarr;</span>
+      <span class="step">Efferent ductules</span><span class="arrow">&rarr;</span>
+      <span class="step">Epididymis <small>(head &rarr; body &rarr; tail)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Ductus deferens</span><span class="arrow">&rarr;</span>
+      <span class="step">Ampulla of ductus deferens</span><span class="arrow">+</span>
+      <span class="step minor">excretory duct of seminal gland</span><span class="arrow">&rarr;</span>
+      <span class="step">Ejaculatory duct</span><span class="arrow">&rarr;</span>
+      <span class="step">Prostatic urethra</span><span class="arrow">&rarr;</span>
+      <span class="step">Membranous urethra</span><span class="arrow">&rarr;</span>
+      <span class="step">Spongy (penile) urethra</span><span class="arrow">&rarr;</span>
+      <span class="step">External urethral orifice</span>
+    </div></div>
+    <div class="branch">Within the testis, the seminiferous tubules uncoil into straight tubules in the mediastinum, which interconnect to form the rete testis. The tail of the epididymis is where the coiled tubes finally uncoil into the single tube of the ductus deferens. Before entering the prostate, the ductus deferens curves around the bladder and ureter, then expands into the <b>ampulla</b>, which joins the seminal gland's excretory duct to form the <b>ejaculatory duct</b> — the point where the sperm pathway and the accessory-gland secretions finally merge, just before both empty into the prostatic urethra.</div>
+  </section>
+
+  <!-- OOCYTE FLOW -->
+  <section class="flow fem" id="oocyte">
+    <div class="shead"><span class="dot" style="background:var(--fem)"></span><h2>Oocyte Flow <span class="tag">Female Reproductive</span></h2></div>
+    <p class="flowdesc">From ovulation to the uterine cavity — note that the uterine tube never physically attaches to the ovary; the fimbriae simply sweep the released oocyte inward.</p>
+    <div class="chainwrap"><div class="chain">
+      <span class="step">Ovary <small>(ovulation)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Fimbriae</span><span class="arrow">&rarr;</span>
+      <span class="step">Infundibulum</span><span class="arrow">&rarr;</span>
+      <span class="step">Ampulla <small>(fertilization site)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Isthmus</span><span class="arrow">&rarr;</span>
+      <span class="step">Interstitial (intramural) segment</span><span class="arrow">&rarr;</span>
+      <span class="step">Uterine cavity</span>
+    </div></div>
+    <div class="branch">Ciliary movement carries the oocyte through the tube toward the uterus over about 3&ndash;4 days; the full trip for a fertilized pre-embryo to reach the uterine lumen takes roughly 5&ndash;6 days total. The isthmus is the narrow segment attaching to the uterus, and the interstitial/intramural segment is the short final stretch that actually passes through the uterine wall itself.</div>
+  </section>
+
+  <!-- LYMPHATIC DRAINAGE -->
+  <section class="flow endo" id="lymph">
+    <div class="shead"><span class="dot" style="background:var(--endo)"></span><h2>Lymphatic Drainage &rarr; Venous System <span class="tag">cross-topic</span></h2></div>
+    <p class="flowdesc">Regardless of which organ it starts at, lymph everywhere in the body funnels toward one of two final ducts before rejoining the bloodstream.</p>
+    <div class="chainwrap"><div class="chain">
+      <span class="step">Organ / regional nodes</span><span class="arrow">&rarr;</span>
+      <span class="step">Lymphatic trunks <small>(follow the arteries)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Cisterna chyli <small>(abdomen, L1&ndash;L2)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Thoracic duct</span><span class="arrow">&rarr;</span>
+      <span class="step">Left venous angle <small>(left subclavian v. + left IJV)</small></span>
+    </div></div>
+    <div class="branch">
+      <b>The exception — right lymphatic duct:</b> lymph from the right upper quadrant of the body (right head/neck, right arm, right side of the thorax) skips the cisterna chyli/thoracic duct route entirely and drains via the shorter <b>right lymphatic duct</b> directly into the <b>right venous angle</b> (right subclavian v. + right IJV). The <b>thyroid gland</b> is a good example of an organ whose lymphatics explicitly terminate in <em>both</em> the thoracic duct and the right lymphatic duct, depending on which side of the gland is draining.<br><br>
+      Two organ-specific routes worth knowing by name: the <b>ovaries/testes</b> drain to the <b>lumbar (para-aortic) nodes</b> — bypassing the pelvic nodes entirely, since these organs migrate down from near the kidneys in development — before those lumbar nodes feed into the cisterna chyli; and the abdominal GI organs drain to nodes clustered <b>around their corresponding artery</b> (celiac nodes for foregut, superior mesenteric nodes for midgut, inferior mesenteric nodes for hindgut) before likewise reaching the cisterna chyli.
+    </div>
+  </section>
+
+  <!-- TESTICULAR DESCENT -->
+  <section class="flow male" id="descent">
+    <div class="shead"><span class="dot" style="background:var(--male)"></span><h2>Testicular Descent <small style="font-weight:500;color:var(--muted)">(developmental migration, not a fluid flow)</small></h2></div>
+    <p class="flowdesc">Included here because it's taught as a staged, ordered path just like the fluid flows above — the testis physically migrates from its site of formation to its final home in the scrotum.</p>
+    <div class="chainwrap"><div class="chain">
+      <span class="step">Forms near the kidneys <small>(intra-abdominal)</small></span><span class="arrow">&rarr;</span>
+      <span class="step">Pulled inferiorly by the gubernaculum</span><span class="arrow">&rarr;</span>
+      <span class="step">Passes through the inguinal canal</span><span class="arrow">&rarr;</span>
+      <span class="step">Scrotum</span>
+    </div></div>
+    <div class="branch">The <b>gubernaculum testis</b> anchors the testis early on; as the fetus grows in length, the gubernaculum itself does <em>not</em> elongate, so it effectively pulls the testis inferiorly relative to the lengthening body. The ductus deferens, blood vessels, lymphatics, and nerves all stay bundled to the descending testis, forming the <b>spermatic cord</b>, and travel with it through the inguinal canal. Along the way the testis picks up its <b>tunica vaginalis</b> — a peritoneal pouch dragged down during descent that becomes the serous lining of the scrotal cavity. Two temperature notes tie directly to <em>why</em> this migration happens: testicular <em>development</em> requires ~98.6&deg;F (hence forming inside the warmer abdominal cavity first), while <em>sperm</em> development requires ~96.6&deg;F, about 2&deg;F cooler than core body temperature (hence finishing in the cooler extra-abdominal scrotum).</div>
+  </section>
+
+  <footer>
+    Built from the Nephrology/Urinary System, GI I &amp; II, Endocrine (pancreatic duct system and thyroid lymphatics), Male Reproductive, and Female Reproductive lecture decks (PAJ 5000 Anatomy, Class of 2028). The filtrate/urine, sperm, oocyte, and testicular descent sequences are drawn directly from each deck's own stated flow order; the intrahepatic bile-duct convergence (hepatic ducts &amp; cystic duct into the common bile duct) and the general lymph-to-venous-angle pathway follow standard gross anatomy where the lecture's own figures cover the fine detail in diagram form rather than a text list.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Guide mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
