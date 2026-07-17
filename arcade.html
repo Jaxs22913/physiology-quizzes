@@ -110,7 +110,7 @@
           ? exam.deckIds.map(function (id) { return deckCardHTML(findDeck(id)); }).join("")
           : '<div class="empty-state"><div class="big">🚧</div><p>Decks for this exam are coming soon.</p></div>';
         return (
-          '<details class="exam-section" open>' +
+          '<details class="exam-section">' +
             '<summary><span>' + exam.name + '</span></summary>' +
             '<div class="exam-content"><div class="deck-grid">' + decksHTML + '</div></div>' +
           '</details>'

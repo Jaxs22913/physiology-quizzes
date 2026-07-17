@@ -46,6 +46,17 @@
   <div id="empty-container"></div>
 
   <div id="session-ui" style="display:none">
+    <div class="study-toolbar">
+      <button type="button" class="study-tool-btn" id="shuffle-btn">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        Shuffle
+      </button>
+      <button type="button" class="study-tool-btn" id="continuous-btn">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span id="continuous-btn-label">Continuous</span>
+      </button>
+    </div>
+    <div class="continuous-label" id="continuous-label" style="display:none"><span class="dot"></span>Continuous review — looping the shuffled deck</div>
     <div class="session-progress">
       <div class="study-progress" id="study-progress"></div>
       <div class="progress-track"><div class="progress-fill" id="study-progress-fill"></div></div>
@@ -80,20 +91,48 @@
 
   var deck = findDeck(deckIdFromURL());
   var queue = [], qIdx = 0, flipped = false, revealed = false;
+  var dueEmptyMsg = null;
 
-  function showEmpty(msg) {
-    document.getElementById("empty-container").innerHTML =
-      '<div class="empty-state"><div class="big">🎉</div><p>' + msg + '</p></div>';
+  // Continuous mode: an ambient, unscored loop through the WHOLE deck
+  // (independent of the spaced-repetition due-queue above), auto-flipping
+  // and auto-advancing forever, reshuffling each time it completes a pass.
+  var continuousMode = false;
+  var continuousQueue = [];
+  var continuousIdx = 0;
+  var continuousTimer = null;
+  var CONTINUOUS_FRONT_MS = 2200;
+  var CONTINUOUS_BACK_MS = 2600;
+
+  function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
   }
 
-  function renderCard() {
-    var idx = queue[qIdx];
-    var pair = deck.cards[idx];
-    var pct = Math.round(qIdx / queue.length * 100);
-    document.getElementById("study-progress").innerHTML =
-      "<span>Card " + (qIdx + 1) + " of " + queue.length + "</span><span>" + pct + "% done</span>";
-    document.getElementById("study-progress-fill").style.width = pct + "%";
+  function showEmpty(msg, opts) {
+    opts = opts || {};
+    var offerContinuous = opts.offerContinuous && deck && deck.cards && deck.cards.length > 0;
+    document.getElementById("empty-container").innerHTML =
+      '<div class="empty-state"><div class="big">🎉</div><p>' + msg + '</p>' +
+      (offerContinuous
+        ? '<button type="button" class="btn ghost" id="empty-continuous-btn" style="margin:16px auto 0;max-width:240px;">&#9654; Continuous Review</button>'
+        : '') +
+      '</div>';
+    if (offerContinuous) {
+      document.getElementById("empty-continuous-btn").addEventListener("click", function () {
+        document.getElementById("empty-container").innerHTML = "";
+        document.getElementById("session-ui").style.display = "block";
+        document.getElementById("shuffle-btn").disabled = true;
+        startContinuous();
+      });
+    }
+  }
 
+  // Shared DOM paint step for whichever card (idx into deck.cards) is
+  // currently being shown, regardless of which queue/mode drove it here.
+  function paintPair(pair) {
     // Snap instantly to front-facing (no transition) BEFORE writing the new
     // card's text -- otherwise a card left showing its back (user rated
     // without flipping back first) animates its rotation *while already
@@ -111,11 +150,84 @@
     revealed = false;
   }
 
+  function renderCard() {
+    var idx = queue[qIdx];
+    var pair = deck.cards[idx];
+    var pct = Math.round(qIdx / queue.length * 100);
+    document.getElementById("study-progress").innerHTML =
+      "<span>Card " + (qIdx + 1) + " of " + queue.length + "</span><span>" + pct + "% done</span>";
+    document.getElementById("study-progress-fill").style.width = pct + "%";
+    paintPair(pair);
+  }
+
+  function renderContinuousCard() {
+    var idx = continuousQueue[continuousIdx];
+    var pair = deck.cards[idx];
+    document.getElementById("study-progress").innerHTML =
+      "<span>Card " + (continuousIdx + 1) + " of " + continuousQueue.length + "</span><span>&#8734; looping</span>";
+    document.getElementById("study-progress-fill").style.width =
+      Math.round((continuousIdx + 1) / continuousQueue.length * 100) + "%";
+    paintPair(pair);
+  }
+
+  function autoFlip() {
+    flipped = true;
+    document.getElementById("study-card").classList.add("flipped");
+    SOUNDS.flip();
+  }
+
+  function continuousTick() {
+    if (!continuousMode) return;
+    if (!flipped) {
+      autoFlip();
+      continuousTimer = setTimeout(continuousTick, CONTINUOUS_BACK_MS);
+    } else {
+      continuousIdx++;
+      if (continuousIdx >= continuousQueue.length) {
+        shuffleArray(continuousQueue);
+        continuousIdx = 0;
+      }
+      renderContinuousCard();
+      continuousTimer = setTimeout(continuousTick, CONTINUOUS_FRONT_MS);
+    }
+  }
+
+  function startContinuous() {
+    continuousMode = true;
+    continuousQueue = shuffleArray(deck.cards.map(function (_, i) { return i; }));
+    continuousIdx = 0;
+    clearTimeout(continuousTimer);
+    document.getElementById("continuous-btn").classList.add("active");
+    document.getElementById("continuous-btn-label").textContent = "Stop";
+    document.getElementById("continuous-label").style.display = "flex";
+    document.getElementById("shuffle-btn").disabled = true;
+    renderContinuousCard();
+    continuousTimer = setTimeout(continuousTick, CONTINUOUS_FRONT_MS);
+  }
+
+  function stopContinuous() {
+    continuousMode = false;
+    clearTimeout(continuousTimer);
+    continuousTimer = null;
+    document.getElementById("continuous-btn").classList.remove("active");
+    document.getElementById("continuous-btn-label").textContent = "Continuous";
+    document.getElementById("continuous-label").style.display = "none";
+    if (queue.length) {
+      document.getElementById("shuffle-btn").disabled = false;
+      renderCard();
+    } else {
+      document.getElementById("session-ui").style.display = "none";
+      showEmpty(dueEmptyMsg || "Nothing due right now.", { offerContinuous: true });
+    }
+  }
+
   function toggleCard() {
     flipped = !flipped;
     document.getElementById("study-card").classList.toggle("flipped", flipped);
     SOUNDS.flip();
-    if (!revealed) {
+    // Continuous mode is unscored -- a manual peek-ahead flip should never
+    // surface the know/don't-know rating row, unlike a normal due-session.
+    if (!revealed && !continuousMode) {
       revealed = true;
       document.getElementById("rating-row").style.visibility = "visible";
     }
@@ -128,7 +240,7 @@
   var animating = false;
 
   function rate(choice) {
-    if (!revealed || animating) return;
+    if (continuousMode || !revealed || animating) return;
     animating = true;
     var idx = queue[qIdx];
     var key = cardKey(deck.id, idx);
@@ -190,14 +302,27 @@
   document.addEventListener("keydown", function (e) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggleCard(); }
-    else if (e.key === "ArrowLeft" || e.key === "1") rate("dontknow");
-    else if (e.key === "ArrowRight" || e.key === "2") rate("know");
+    else if (!continuousMode && (e.key === "ArrowLeft" || e.key === "1")) rate("dontknow");
+    else if (!continuousMode && (e.key === "ArrowRight" || e.key === "2")) rate("know");
   });
 
   window.onFCGamepadButton = function (bi) {
+    if (continuousMode) { if (bi === 0) toggleCard(); return; }
     if (!revealed) { if (bi === 0) toggleCard(); }
     else { if (bi === 0) rate("know"); else if (bi === 1) rate("dontknow"); }
   };
+
+  document.getElementById("shuffle-btn").addEventListener("click", function () {
+    if (continuousMode || !queue.length) return;
+    shuffleArray(queue);
+    qIdx = 0;
+    renderCard();
+    showToast("Shuffled! 🔀");
+  });
+
+  document.getElementById("continuous-btn").addEventListener("click", function () {
+    if (continuousMode) stopContinuous(); else startContinuous();
+  });
 
   initHeader();
   if (!deck) {
@@ -205,7 +330,8 @@
   } else {
     queue = getDueIndexes(deck);
     if (!queue.length) {
-      showEmpty("Nothing due in " + deck.name + " right now.");
+      dueEmptyMsg = "Nothing due in " + deck.name + " right now.";
+      showEmpty(dueEmptyMsg, { offerContinuous: true });
     } else {
       document.getElementById("session-ui").style.display = "block";
       renderCard();

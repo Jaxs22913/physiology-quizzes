@@ -222,6 +222,25 @@ body {
 }
 .back-link:hover { color: var(--ink); transform: translateX(-2px); }
 
+.study-toolbar { display: flex; gap: 8px; margin-bottom: 14px; }
+.study-tool-btn {
+  flex: none; border: 1px solid var(--border); background: var(--card); color: var(--ink);
+  border-radius: 999px; padding: 8px 14px; font-weight: 700; font-size: 13px; cursor: pointer;
+  font-family: inherit; display: flex; align-items: center; gap: 6px; transition: filter .12s, border-color .12s, background .12s;
+}
+.study-tool-btn:hover { border-color: var(--accent); color: var(--accent); }
+.study-tool-btn svg { flex: none; }
+.study-tool-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.study-tool-btn.active:hover { color: #fff; filter: brightness(1.08); }
+.study-tool-btn:disabled { opacity: .4; cursor: not-allowed; }
+.study-tool-btn:disabled:hover { border-color: var(--border); color: var(--ink); }
+.continuous-label {
+  font-size: 12.5px; color: var(--accent); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .03em; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+}
+.continuous-label .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: continuous-pulse 1.4s ease-in-out infinite; }
+@keyframes continuous-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+
 .session-progress { margin-bottom: 16px; }
 .study-progress {
   font-size: 12.5px; color: var(--muted); font-weight: 700; margin-bottom: 8px;
