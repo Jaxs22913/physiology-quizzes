@@ -43,9 +43,9 @@
      the seasonal tints below already use. Wins over the plain `body {
      background: var(--bg); }` rule below by specificity. */
   :root[data-theme="light"] body {
-    background: linear-gradient(120deg, #f3f4f6, #eef1f7, #f6f2f5, #f3f4f6);
+    background: linear-gradient(120deg, #f3f4f6, #e6ecf7, #f7eef2, #f3f4f6);
     background-size: 300% 300%;
-    animation: bg-drift 55s ease-in-out infinite;
+    animation: bg-drift 16s ease-in-out infinite;
   }
   @keyframes bg-drift {
     0%, 100% { background-position: 0% 50%; }
@@ -57,27 +57,27 @@
      of the default above -- see [[pa-quizzes-seasonal-themes]]. */
   :root[data-theme="light"] body.vday-theme {
     --bg: #fbe7ee; --card: #fff8fa; --border: #f0cddb;
-    background: linear-gradient(120deg, #fbe7ee, #fdeef5, #f8e0ea, #fbe7ee);
+    background: linear-gradient(120deg, #fbe7ee, #fef0f7, #f5d3e0, #fbe7ee);
     background-size: 300% 300%;
-    animation: bg-drift 55s ease-in-out infinite;
+    animation: bg-drift 16s ease-in-out infinite;
   }
   :root[data-theme="light"] body.fall-theme {
     --bg: #fdf1e4; --card: #fffaf3; --border: #f0dcc0;
-    background: linear-gradient(120deg, #fdf1e4, #fdf6ec, #fbe9d6, #fdf1e4);
+    background: linear-gradient(120deg, #fdf1e4, #fef8ef, #f8dfc0, #fdf1e4);
     background-size: 300% 300%;
-    animation: bg-drift 55s ease-in-out infinite;
+    animation: bg-drift 16s ease-in-out infinite;
   }
   :root[data-theme="light"] body.stpatricks-theme {
     --bg: #d7f0dd; --card: #eefaf1; --border: #a9dab8;
-    background: linear-gradient(120deg, #d7f0dd, #e3f6e7, #cceed4, #d7f0dd);
+    background: linear-gradient(120deg, #d7f0dd, #e9f9ec, #bfe8ca, #d7f0dd);
     background-size: 300% 300%;
-    animation: bg-drift 55s ease-in-out infinite;
+    animation: bg-drift 16s ease-in-out infinite;
   }
   :root[data-theme="light"] body.xmas-theme {
     --bg: #faf3e3; --card: #fffdf7; --border: #ece0c4;
-    background: linear-gradient(120deg, #faf3e3, #fffaf0, #f5ecd6, #faf3e3);
+    background: linear-gradient(120deg, #faf3e3, #fffcf3, #f3e4c4, #faf3e3);
     background-size: 300% 300%;
-    animation: bg-drift 55s ease-in-out infinite;
+    animation: bg-drift 16s ease-in-out infinite;
   }
   @media (prefers-reduced-motion: reduce) {
     /* !important needed: the :root[data-theme=...]-scoped drift rules above
