@@ -538,7 +538,6 @@
        animates it filling in on page load. */
     .semester-progress { margin: 0 0 16px; }
     .semester-progress-track {
-      position: relative;
       height: 8px;
       background: var(--border);
       border-radius: 4px;
@@ -552,36 +551,11 @@
       border-radius: 4px;
       transition: width 0.8s ease;
     }
-    /* Final-week (remediation) marker -- a striped overlay pinned to the
-       track's tail end, width set by JS to match however long the last
-       week actually is. Sits in a later paint layer than the fill (DOM
-       order + no z-index needed since both are plain block-level children
-       of the relative-positioned track) at partial opacity, so it reads as
-       a "heads up, this stretch is different" preview while still ahead of
-       the fill, AND stays visible (as amber stripes over the solid blue)
-       once the fill actually reaches/passes it -- a plain z-index-behind
-       overlay would get fully hidden by the opaque fill right when it
-       matters most (during remediation week itself). */
-    .semester-progress-remediation {
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 0%;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(217, 119, 6, 0.4), rgba(217, 119, 6, 0.4) 4px,
-        transparent 4px, transparent 8px
-      );
-      pointer-events: none;
-    }
     .semester-progress-label {
       margin-top: 6px;
       font-size: 12.5px;
       color: var(--muted);
       text-align: center;
-    }
-    .semester-progress-label .remediation-tag {
-      color: #b45309;
-      font-weight: 700;
     }
     @media (prefers-reduced-motion: reduce) {
       #semester-progress-fill { transition: none; }
@@ -1302,7 +1276,7 @@
       <div class="semester" data-semester="summer-1-2026">
       <h2 class="semester-header">Summer Semester 1 - 2026</h2>
       <div class="semester-progress" id="semester-progress">
-        <div class="semester-progress-track"><i id="semester-progress-fill"></i><i id="semester-progress-remediation" class="semester-progress-remediation"></i></div>
+        <div class="semester-progress-track"><i id="semester-progress-fill"></i></div>
         <div class="semester-progress-label" id="semester-progress-label"></div>
       </div>
       <div class="tabs">
@@ -2409,9 +2383,8 @@
       const SEMESTER_END = new Date(2026, 7, 14, 23, 59, 59); // Aug 14, 2026
 
       const fill = document.getElementById("semester-progress-fill");
-      const remediation = document.getElementById("semester-progress-remediation");
       const label = document.getElementById("semester-progress-label");
-      if (fill && remediation && label) {
+      if (fill && label) {
         const now = new Date();
         const totalMs = SEMESTER_END - SEMESTER_START;
         const elapsedMs = now - SEMESTER_START;
@@ -2419,27 +2392,32 @@
         const dayMs = 24 * 60 * 60 * 1000;
         const TOTAL_WEEKS = Math.ceil(totalMs / (7 * dayMs));
         const weekNum = Math.max(1, Math.min(TOTAL_WEEKS, Math.floor(elapsedMs / (7 * dayMs)) + 1));
-        const daysLeft = Math.max(0, Math.ceil((SEMESTER_END - now) / dayMs));
-        // Final week of the semester is remediation week (retests/course
-        // remediation exams cluster in the last few EXAM_EVENTS entries) --
-        // marked as everything from the start of week TOTAL_WEEKS onward,
-        // the same 7-day-bucket boundary weekNum already uses, so the
-        // striped marker and the "Week N of TOTAL" label never disagree
-        // about where the last week starts.
-        const remediationStartMs = (TOTAL_WEEKS - 1) * 7 * dayMs;
-        const remediationPct = Math.max(0, Math.min(100, 100 - (remediationStartMs / totalMs) * 100));
-        const inRemediationWeek = weekNum === TOTAL_WEEKS && now >= SEMESTER_START && now <= SEMESTER_END;
+
+        // "Class days left" counts weekdays only (confirmed with the user
+        // 2026-07-17, "we only have 15 class days left (excluding
+        // weekends)") -- strictly after today through SEMESTER_END
+        // inclusive, so today itself is never counted as one of the days
+        // still remaining.
+        function countWeekdaysLeft(fromExclusive, toInclusive) {
+          let count = 0;
+          const d = new Date(fromExclusive.getFullYear(), fromExclusive.getMonth(), fromExclusive.getDate() + 1);
+          const end = new Date(toInclusive.getFullYear(), toInclusive.getMonth(), toInclusive.getDate());
+          while (d <= end) {
+            const dow = d.getDay();
+            if (dow !== 0 && dow !== 6) count++;
+            d.setDate(d.getDate() + 1);
+          }
+          return count;
+        }
+        const classDaysLeft = countWeekdaysLeft(now, SEMESTER_END);
 
         requestAnimationFrame(() => { fill.style.width = pct + "%"; });
-        remediation.style.width = remediationPct + "%";
         if (now < SEMESTER_START) {
           label.textContent = "Semester starts soon";
         } else if (now > SEMESTER_END) {
           label.textContent = "Semester complete!";
-        } else if (inRemediationWeek) {
-          label.innerHTML = `<span class="remediation-tag">Remediation week</span> · ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`;
         } else {
-          label.textContent = `Week ${weekNum} of ${TOTAL_WEEKS} · ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`;
+          label.textContent = `Week ${weekNum} of ${TOTAL_WEEKS} · ${classDaysLeft} class day${classDaysLeft === 1 ? "" : "s"} left`;
         }
       }
     })();
