@@ -86,6 +86,44 @@ var DEMO_DECKS = [
       ["Kidneys", "Retroperitoneal"],
       ["Ureters", "Retroperitoneal"]
     ]},
+  { id: "anatomy-abdominal-regions", name: "Abdominal Quadrants & Regions", color: "accent3",
+    icon: '<rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/>',
+    cards: [
+      ["Which abdominal quadrant holds most of the liver?", "The RUQ, with the left lobe reaching toward the epigastric region."],
+      ["Where is the gallbladder located?", "RUQ, tucked beneath the liver."],
+      ["Which quadrant contains most of the stomach's bulk?", "The LUQ, including the fundus and body."],
+      ["Where does the spleen sit relative to the ribs?", "LUQ, anterior to ribs 9–11."],
+      ["Where does the head of the pancreas lie?", "RUQ, cradled within the duodenal C-loop."],
+      ["Which region does the duodenum mainly occupy?", "Epigastric and umbilical regions — mostly retroperitoneal."],
+      ["Which region is the jejunum mostly found in?", "LUQ / umbilical region — the proximal 40% of the small intestine."],
+      ["Which quadrant is the ileum mostly found in?", "RLQ — the distal 60% of the small intestine."],
+      ["Where are the cecum and appendix located?", "RLQ, near McBurney's point."],
+      ["Which region holds the ascending colon?", "The right lumbar region (right flank)."],
+      ["Which flexure of the colon sits next to the liver?", "The hepatic (right colic) flexure, in the RUQ."],
+      ["Which region does the transverse colon cross?", "The umbilical region, running side to side."],
+      ["Which flexure of the colon sits next to the spleen?", "The splenic (left colic) flexure, in the LUQ."],
+      ["Which region holds the descending colon?", "The left lumbar region (left flank)."],
+      ["Where is the sigmoid colon located?", "LLQ, extending down into the pelvis."],
+      ["What two planes divide the abdomen into four quadrants?", "A midsagittal (vertical) plane and a transumbilical (horizontal) plane."],
+      ["What is another name for the hypogastric region?", "The pubic region — the lowest midline region."],
+      ["Which named region lies in the upper midline, over the stomach and pancreas?", "The epigastric region."]
+    ],
+    matchCards: [
+      ["Liver (bulk)", "RUQ"],
+      ["Gallbladder", "RUQ, beneath the liver"],
+      ["Stomach", "LUQ / epigastric region"],
+      ["Spleen", "LUQ"],
+      ["Pancreas (head)", "RUQ (duodenal C-loop)"],
+      ["Duodenum", "Epigastric / umbilical region"],
+      ["Jejunum", "LUQ / umbilical region"],
+      ["Ileum", "RLQ"],
+      ["Cecum", "RLQ"],
+      ["Appendix", "RLQ, McBurney's point"],
+      ["Ascending colon", "Right lumbar region"],
+      ["Transverse colon", "Umbilical region"],
+      ["Descending colon", "Left lumbar region"],
+      ["Sigmoid colon", "LLQ"]
+    ]},
   { id: "anatomy-appendicular-skeleton", name: "Appendicular Skeleton", color: "accent",
     icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
     cards: [
@@ -1459,7 +1497,7 @@ var DEMO_CLASSES = [
       "anatomy-integumentary", "anatomy-eye-ear", "anatomy-heart-vessels",
       "anatomy-vascular-lymphatics", "anatomy-pulmonary"
     ] },
-    { id: "exam3", name: "Exam 3", deckIds: ["anatomy-endocrine-glands", "anatomy-peritoneal"] },
+    { id: "exam3", name: "Exam 3", deckIds: ["anatomy-endocrine-glands", "anatomy-peritoneal", "anatomy-abdominal-regions"] },
     { id: "exam4", name: "Exam 4", deckIds: [
       "anatomy-appendicular-skeleton", "anatomy-axial-skeleton",
       "anatomy-appendicular-musculature", "anatomy-axial-musculature"
