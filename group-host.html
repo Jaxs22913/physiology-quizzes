@@ -25,13 +25,54 @@
     --acc:#4f46e5; --acc2:#4338ca; --good:#16a34a; --goodbg:#eafaf0;
     --bad:#dc2626; --badbg:#fdecec; --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06);
   }
+  /* Ambient background gradient drift (added 2026-07-17), light mode only --
+     this page has no dark --paper of its own (dark mode comes from theme.css's
+     body > .wrap invert filter instead), matching the seasonal tints' scope. */
+  :root[data-theme="light"] body {
+    background: linear-gradient(120deg, #f6f7fb, #f0f2f8, #f8f4f7, #f6f7fb);
+    background-size: 300% 300%;
+    animation: bg-drift 55s ease-in-out infinite;
+  }
+  @keyframes bg-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
   /* Seasonal light-mode tints (see theme.js for the date windows that add
      these body classes) -- explicitly scoped to [data-theme="light"] so
-     they never fire in dark mode. */
-  :root[data-theme="light"] body.vday-theme { --paper:#fbe7ee; --card:#fff8fa; --line:#f0cddb; }
-  :root[data-theme="light"] body.fall-theme { --paper:#fdf1e4; --card:#fffaf3; --line:#f0dcc0; }
-  :root[data-theme="light"] body.stpatricks-theme { --paper:#d7f0dd; --card:#eefaf1; --line:#a9dab8; }
-  :root[data-theme="light"] body.xmas-theme { --paper:#faf3e3; --card:#fffdf7; --line:#ece0c4; }
+     they never fire in dark mode. Each drifts with its own palette instead
+     of the default above -- see [[pa-quizzes-seasonal-themes]]. */
+  :root[data-theme="light"] body.vday-theme {
+    --paper:#fbe7ee; --card:#fff8fa; --line:#f0cddb;
+    background: linear-gradient(120deg, #fbe7ee, #fdeef5, #f8e0ea, #fbe7ee);
+    background-size: 300% 300%;
+    animation: bg-drift 55s ease-in-out infinite;
+  }
+  :root[data-theme="light"] body.fall-theme {
+    --paper:#fdf1e4; --card:#fffaf3; --line:#f0dcc0;
+    background: linear-gradient(120deg, #fdf1e4, #fdf6ec, #fbe9d6, #fdf1e4);
+    background-size: 300% 300%;
+    animation: bg-drift 55s ease-in-out infinite;
+  }
+  :root[data-theme="light"] body.stpatricks-theme {
+    --paper:#d7f0dd; --card:#eefaf1; --line:#a9dab8;
+    background: linear-gradient(120deg, #d7f0dd, #e3f6e7, #cceed4, #d7f0dd);
+    background-size: 300% 300%;
+    animation: bg-drift 55s ease-in-out infinite;
+  }
+  :root[data-theme="light"] body.xmas-theme {
+    --paper:#faf3e3; --card:#fffdf7; --line:#ece0c4;
+    background: linear-gradient(120deg, #faf3e3, #fffaf0, #f5ecd6, #faf3e3);
+    background-size: 300% 300%;
+    animation: bg-drift 55s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* !important needed: the :root[data-theme=...]-scoped drift rules above
+       are more specific than a plain class selector can match without it. */
+    body, body.vday-theme, body.fall-theme, body.stpatricks-theme, body.xmas-theme {
+      animation: none !important;
+      background-position: 0% 50% !important;
+    }
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
     font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;

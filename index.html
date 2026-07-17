@@ -637,7 +637,7 @@
       padding: 12px 14px;
       border-radius: 10px;
       border: 1px solid transparent;
-      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
     }
     a.quiz-link::before {
       content: "";
@@ -651,9 +651,14 @@
     a.quiz-link:hover {
       background: var(--accent-soft);
       border-color: var(--accent);
-      transform: translateX(2px);
+      transform: translate(2px, -2px);
+      box-shadow: var(--shadow-lift);
     }
     a.quiz-link:hover::before { transform: scale(1.6) rotate(-30deg); }
+    @media (prefers-reduced-motion: reduce) {
+      a.quiz-link, a.quiz-link::before { transition: none; }
+      a.quiz-link:hover { transform: none; }
+    }
     .score-badge {
       margin-left: auto;
       flex-shrink: 0;
