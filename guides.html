@@ -41,9 +41,15 @@
      guides.html has no dark --bg of its own (dark mode comes from theme.css's
      body > .wrap invert filter instead), matching the same light-only scope
      the seasonal tints below already use. Wins over the plain `body {
-     background: var(--bg); }` rule below by specificity. */
+     background: var(--bg); }` rule below by specificity.
+     Recolored 2026-07-17 (same day) to a warm parchment palette distinct
+     from the neutral gray the homepage/group pages use and from Arcade's
+     playful multi-hue version -- drifts between a warm ivory base, a soft
+     tint of this page's own --accent blue, and a soft tint of the amber
+     already used for "reference guide" cards below, evoking a
+     library/reading-lamp feel that fits a study-guide page specifically. */
   :root[data-theme="light"] body {
-    background: linear-gradient(120deg, #f3f4f6, #e6ecf7, #f7eef2, #f3f4f6);
+    background: linear-gradient(120deg, #f6f1e6, #eaf0fb, #fbecd2, #f6f1e6);
     background-size: 300% 300%;
     animation: bg-drift 16s ease-in-out infinite;
   }
