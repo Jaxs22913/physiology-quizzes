@@ -317,6 +317,20 @@ mark.search-hit-current {
   --card: #fff8fa;
   --border: #f0cddb;
 }
+/* Fall/Halloween window (Oct 17-31, see theme.js) -- homepage-only
+   light-mode warm tint, same .theme-class-scoped pattern as vday-theme. */
+:root[data-theme="light"] body.homepage.fall-theme {
+  --bg: #fdf1e4;
+  --card: #fffaf3;
+  --border: #f0dcc0;
+}
+/* St. Patrick's window (Mar 3-17, see theme.js) -- homepage-only
+   light-mode green tint, same .theme-class-scoped pattern as vday-theme. */
+:root[data-theme="light"] body.homepage.stpatricks-theme {
+  --bg: #d7f0dd;
+  --card: #eefaf1;
+  --border: #a9dab8;
+}
 :root[data-theme="dark"] body.homepage .edge-decor {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

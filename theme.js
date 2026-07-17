@@ -3127,3 +3127,209 @@ window.openPauseOverlay = function (opts) {
   }
   requestAnimationFrame(step);
 })();
+
+// Seasonal Fall/Halloween theme (added 2026-07-17) -- Oct 17-31. Same
+// pattern as the December snow / Valentine's hearts above: lives in
+// theme.js so every current and future page gets it automatically.
+// Tumbling autumn leaves behind all UI (z-index:-1), plus a homepage-only
+// light-mode warm tint gated on the same window via a body class.
+(function () {
+  var d = new Date();
+  var m = d.getMonth(), day = d.getDate();
+  if (!(m === 9 && day >= 17 && day <= 31)) return;
+
+  document.body.classList.add("fall-theme");
+
+  var canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;";
+  document.body.insertBefore(canvas, document.body.firstChild);
+  var ctx = canvas.getContext("2d");
+
+  var leaves = [];
+  var density = window.innerWidth < 700 ? 18 : 34;
+  var speedMul = 0.35;
+  var COLORS = ["#ea580c", "#c2410c", "#ca8a04", "#a16207", "#991b1b", "#b45309"];
+
+  function resize() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function makeLeaf(randomY) {
+    var s = 5 + Math.random() * 7;
+    return {
+      x: Math.random() * window.innerWidth,
+      y: randomY ? Math.random() * window.innerHeight : -10 - Math.random() * 40,
+      s: s,
+      speed: (0.3 + s * 0.05) * speedMul,
+      drift: Math.random() * Math.PI * 2,
+      driftSpeed: 0.008 + Math.random() * 0.014,
+      spin: Math.random() * Math.PI * 2,
+      spinSpeed: (Math.random() - 0.5) * 0.04,
+      opacity: 0.5 + Math.random() * 0.4,
+      color: COLORS[(Math.random() * COLORS.length) | 0]
+    };
+  }
+  for (var li = 0; li < density; li++) leaves.push(makeLeaf(true));
+
+  // Simple pointed leaf silhouette (two curves from tip to tip), drawn at
+  // (0,0) sized to `s`, transformed by the caller via translate/rotate.
+  function traceLeaf(s) {
+    ctx.beginPath();
+    ctx.moveTo(0, -s);
+    ctx.quadraticCurveTo(s * 0.9, -s * 0.3, 0, s);
+    ctx.quadraticCurveTo(-s * 0.9, -s * 0.3, 0, -s);
+    ctx.closePath();
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (var i = 0; i < leaves.length; i++) {
+      var l = leaves[i];
+      l.y += l.speed;
+      l.drift += l.driftSpeed;
+      l.spin += l.spinSpeed;
+      l.x += Math.sin(l.drift) * 1.1;
+
+      if (l.y > window.innerHeight + 20) { leaves[i] = makeLeaf(false); continue; }
+      if (l.x < -20) l.x = window.innerWidth + 20;
+      if (l.x > window.innerWidth + 20) l.x = -20;
+
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.spin);
+      ctx.globalAlpha = l.opacity;
+      ctx.fillStyle = l.color;
+      traceLeaf(l.s);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+
+// Seasonal St. Patrick's theme (added 2026-07-17) -- Mar 3-17. Same
+// pattern as the seasonal features above: lives in theme.js so every
+// current and future page gets it automatically. Falling four-leaf
+// clovers behind all UI (z-index:-1), plus a homepage-only light-mode
+// green tint gated on the same window via a body class.
+(function () {
+  var d = new Date();
+  var m = d.getMonth(), day = d.getDate();
+  if (!(m === 2 && day >= 3 && day <= 17)) return;
+
+  document.body.classList.add("stpatricks-theme");
+
+  var canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;";
+  document.body.insertBefore(canvas, document.body.firstChild);
+  var ctx = canvas.getContext("2d");
+
+  var clovers = [];
+  var density = window.innerWidth < 700 ? 16 : 30;
+  var speedMul = 0.35;
+  var COLORS = ["#16a34a", "#22c55e", "#15803d", "#4ade80", "#166534"];
+
+  function resize() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function makeClover(randomY) {
+    var s = 5 + Math.random() * 7;
+    return {
+      x: Math.random() * window.innerWidth,
+      y: randomY ? Math.random() * window.innerHeight : -10 - Math.random() * 40,
+      s: s,
+      speed: (0.3 + s * 0.05) * speedMul,
+      drift: Math.random() * Math.PI * 2,
+      driftSpeed: 0.008 + Math.random() * 0.014,
+      spin: Math.random() * Math.PI * 2,
+      spinSpeed: (Math.random() - 0.5) * 0.035,
+      opacity: 0.4 + Math.random() * 0.4,
+      color: COLORS[(Math.random() * COLORS.length) | 0]
+    };
+  }
+  for (var ci = 0; ci < density; ci++) clovers.push(makeClover(true));
+
+  // A single heart-shaped leaflet with its point at the local origin (0,0)
+  // and its rounded lobes/notch extending outward in -y -- reusing the
+  // same classic two-lobe bezier formula as the Valentine's heart, just
+  // re-anchored so the tip (not the notch) sits at (0,0).
+  function traceLeaflet(s) {
+    var w = s * 1.45, h = s * 1.1;
+    var top = h * 0.22;
+    var mid = (h + top) / 2;
+    ctx.moveTo(0, top - h);
+    ctx.bezierCurveTo(0, -h, -w / 2, -h, -w / 2, top - h);
+    ctx.bezierCurveTo(-w / 2, mid - h, 0, mid - h, 0, 0);
+    ctx.bezierCurveTo(0, mid - h, w / 2, mid - h, w / 2, top - h);
+    ctx.bezierCurveTo(w / 2, -h, 0, -h, 0, top - h);
+  }
+
+  // Four-leaf clover: four heart-shaped leaflets radiating from a shared
+  // center point (tips touching in the middle, lobes pointing outward),
+  // plus a short stem -- drawn at (0,0) sized to `s`, transformed by the
+  // caller via translate/rotate.
+  var CLOVER_ANGLES = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
+  function traceClover(s) {
+    ctx.beginPath();
+    for (var i = 0; i < CLOVER_ANGLES.length; i++) {
+      ctx.save();
+      ctx.rotate(CLOVER_ANGLES[i]);
+      traceLeaflet(s);
+      ctx.restore();
+    }
+    ctx.closePath();
+  }
+  function strokeCloverStem(s) {
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.1);
+    ctx.lineTo(0, s * 1.15);
+    ctx.lineWidth = Math.max(1, s * 0.16);
+    ctx.strokeStyle = "#14532d";
+    ctx.stroke();
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (var i = 0; i < clovers.length; i++) {
+      var c = clovers[i];
+      c.y += c.speed;
+      c.drift += c.driftSpeed;
+      c.spin += c.spinSpeed;
+      c.x += Math.sin(c.drift) * 1.1;
+
+      if (c.y > window.innerHeight + 20) { clovers[i] = makeClover(false); continue; }
+      if (c.x < -20) c.x = window.innerWidth + 20;
+      if (c.x > window.innerWidth + 20) c.x = -20;
+
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.spin);
+      ctx.globalAlpha = c.opacity;
+      ctx.fillStyle = c.color;
+      traceClover(c.s);
+      ctx.fill();
+      strokeCloverStem(c.s);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
