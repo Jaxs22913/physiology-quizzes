@@ -29,6 +29,9 @@
 :root[data-theme="light"] body.stpatricks-theme {
   --bg: #d7f0dd; --card: #eefaf1; --border: #a9dab8;
 }
+:root[data-theme="light"] body.xmas-theme {
+  --bg: #faf3e3; --card: #fffdf7; --border: #ece0c4;
+}
 * { box-sizing: border-box; }
 body {
   margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

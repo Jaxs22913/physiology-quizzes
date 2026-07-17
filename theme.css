@@ -331,6 +331,13 @@ mark.search-hit-current {
   --card: #eefaf1;
   --border: #a9dab8;
 }
+/* December window (see theme.js) -- homepage-only light-mode cream tint,
+   same .theme-class-scoped pattern as the other seasonal tints. */
+:root[data-theme="light"] body.homepage.xmas-theme {
+  --bg: #faf3e3;
+  --card: #fffdf7;
+  --border: #ece0c4;
+}
 :root[data-theme="dark"] body.homepage .edge-decor {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cpath d='M30,0 L30,45 L12,55 L48,75 L30,85 L30,120' fill='none' stroke='%2360a5fa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
