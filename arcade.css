@@ -22,20 +22,31 @@
    attribute selector beats a bare element selector). Each seasonal block
    below drifts with that season's own palette instead -- see
    [[pa-quizzes-seasonal-themes]].
-   Recolored 2026-07-17 (same day) to cycle through Arcade's own four mode
-   colors (--accent/2/3/4-soft -- the exact same blue/green/purple/gold
-   already used for the marquee lights and Study/Learn/Sprint/Match badges)
-   instead of the neutral gray the rest of the site uses, so it reads as
-   distinctly "Arcade" rather than a copy of the homepage's tint. Using the
-   var()s directly (not hardcoded hex) keeps this in sync automatically if
-   the mode palette ever changes. */
+   Recolored 2026-07-17 (same day, twice): first pass cycled through the
+   muted --accent/N-soft badge tints, but that read as barely different
+   from the rest of the site's neutral tint. Second pass (user: "more
+   pronounced and lively... think Vegas") blends the FULL-strength
+   --accent/2/3/4 colors themselves via color-mix() -- deep saturated glow
+   against black in dark mode, bold candy tones in light mode -- instead of
+   their pre-muted -soft counterparts, while still cycling through the same
+   four mode colors for consistency with the marquee lights/badges. */
 :root[data-theme="dark"] body {
-  background: linear-gradient(120deg, var(--accent-soft), var(--accent2-soft), var(--accent3-soft), var(--accent4-soft), var(--accent-soft));
+  background: linear-gradient(120deg,
+    color-mix(in srgb, var(--accent) 35%, black),
+    color-mix(in srgb, var(--accent2) 35%, black),
+    color-mix(in srgb, var(--accent3) 35%, black),
+    color-mix(in srgb, var(--accent4) 35%, black),
+    color-mix(in srgb, var(--accent) 35%, black));
   background-size: 400% 400%;
   animation: bg-drift 16s ease-in-out infinite;
 }
 :root[data-theme="light"] body {
-  background: linear-gradient(120deg, var(--accent-soft), var(--accent2-soft), var(--accent3-soft), var(--accent4-soft), var(--accent-soft));
+  background: linear-gradient(120deg,
+    color-mix(in srgb, var(--accent) 42%, white),
+    color-mix(in srgb, var(--accent2) 42%, white),
+    color-mix(in srgb, var(--accent3) 42%, white),
+    color-mix(in srgb, var(--accent4) 42%, white),
+    color-mix(in srgb, var(--accent) 42%, white));
   background-size: 400% 400%;
   animation: bg-drift 16s ease-in-out infinite;
 }
