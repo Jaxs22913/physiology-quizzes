@@ -266,7 +266,7 @@
     if (pct === 100) {
       playSound("podium");
       burstConfetti(70);
-    } else if (pct >= 90) {
+    } else if (pct >= 75) {
       playSound("complete");
       burstConfetti(30);
     } else {
