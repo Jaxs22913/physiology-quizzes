@@ -25,6 +25,12 @@
     --acc:#4f46e5; --acc2:#4338ca; --good:#16a34a; --goodbg:#eafaf0;
     --bad:#dc2626; --badbg:#fdecec; --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06);
   }
+  /* Seasonal light-mode tints (see theme.js for the date windows that add
+     these body classes) -- explicitly scoped to [data-theme="light"] so
+     they never fire in dark mode. */
+  :root[data-theme="light"] body.vday-theme { --paper:#fbe7ee; --card:#fff8fa; --line:#f0cddb; }
+  :root[data-theme="light"] body.fall-theme { --paper:#fdf1e4; --card:#fffaf3; --line:#f0dcc0; }
+  :root[data-theme="light"] body.stpatricks-theme { --paper:#d7f0dd; --card:#eefaf1; --line:#a9dab8; }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
     font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;

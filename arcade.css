@@ -16,6 +16,19 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
   --shadow-lift: 0 6px 14px rgba(0,0,0,0.35), 0 18px 36px rgba(0,0,0,0.4);
 }
+/* Seasonal light-mode tints (see theme.js for the date windows that add
+   these body classes) -- explicitly scoped to [data-theme="light"] so
+   they never fire in dark mode, same pattern as index.html's homepage
+   overrides in theme.css. */
+:root[data-theme="light"] body.vday-theme {
+  --bg: #fbe7ee; --card: #fff8fa; --border: #f0cddb;
+}
+:root[data-theme="light"] body.fall-theme {
+  --bg: #fdf1e4; --card: #fffaf3; --border: #f0dcc0;
+}
+:root[data-theme="light"] body.stpatricks-theme {
+  --bg: #d7f0dd; --card: #eefaf1; --border: #a9dab8;
+}
 * { box-sizing: border-box; }
 body {
   margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
