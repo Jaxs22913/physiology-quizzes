@@ -3553,17 +3553,26 @@ window.openPauseOverlay = function (opts) {
   // can't both own the same property on the same element without fighting
   // each other every frame: `pos` only ever gets `translate3d` from JS,
   // `ring` only ever gets the CSS `scale` pulse -- no overlap, no jank.
+  // Softened + given a trailing glide 2026-07-18 (same day again): "too
+  // static and not like its flowing and to harsh". Two separate fixes for
+  // two separate complaints -- "static" was the position snapping to the
+  // cursor instantly every frame with no lag, so `pos` now transitions its
+  // own transform (a CSS-eased glide the browser interpolates on every new
+  // JS-set target, producing a trailing/flowing follow instead of a rigid
+  // lock-on); "harsh" was the ring's edge being too sharp/bright, softened
+  // with more blur, lower opacity, and a wider color-to-transparent
+  // gradient band instead of a tight one.
   var glow = document.createElement("div");
   glow.setAttribute("aria-hidden", "true");
-  glow.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .5s ease;";
+  glow.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .6s ease;";
   var pos = document.createElement("div");
-  pos.style.cssText = "position:absolute;top:0;left:0;width:0;height:0;will-change:transform;";
+  pos.style.cssText = "position:absolute;top:0;left:0;width:0;height:0;will-change:transform;transition:transform .6s cubic-bezier(.16,.6,.2,1);";
   var ring = document.createElement("div");
   ring.style.cssText =
-    "position:absolute;top:0;left:0;width:260px;height:260px;margin:-130px 0 0 -130px;" +
-    "border-radius:50%;filter:blur(4px);mix-blend-mode:screen;opacity:0.35;" +
-    "animation:cursor-forcefield-pulse 4.5s ease-in-out infinite;" +
-    "background:radial-gradient(circle, transparent 0%, transparent 56%, " + c1 + " 65%, " + c2 + " 73%, transparent 84%);";
+    "position:absolute;top:0;left:0;width:300px;height:300px;margin:-150px 0 0 -150px;" +
+    "border-radius:50%;filter:blur(18px);mix-blend-mode:screen;opacity:0.22;" +
+    "animation:cursor-forcefield-pulse 6.5s ease-in-out infinite;" +
+    "background:radial-gradient(circle, transparent 0%, transparent 40%, " + c1 + " 60%, " + c2 + " 72%, transparent 88%);";
   pos.appendChild(ring);
   glow.appendChild(pos);
   document.body.insertBefore(glow, document.body.firstChild);
@@ -3571,7 +3580,7 @@ window.openPauseOverlay = function (opts) {
   if (!document.getElementById("cursor-forcefield-style")) {
     var styleTag = document.createElement("style");
     styleTag.id = "cursor-forcefield-style";
-    styleTag.textContent = "@keyframes cursor-forcefield-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}";
+    styleTag.textContent = "@keyframes cursor-forcefield-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}";
     document.head.appendChild(styleTag);
   }
 
