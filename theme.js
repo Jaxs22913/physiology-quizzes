@@ -3540,31 +3540,45 @@ window.openPauseOverlay = function (opts) {
   var c1 = isGroupPage ? "var(--acc, #4f46e5)" : "var(--accent, #2563eb)";
   var c2 = isGroupPage ? "var(--acc2, #4338ca)" : "var(--accent3, var(--accent, #2563eb))";
 
+  // Rebuilt 2026-07-18 (same day) into a "forcefield" ring after the first
+  // pass (a big soft-light blob) read as an unwanted color wash rather than
+  // something that felt deliberate ("looks bad... more like a forcefield,
+  // and subtle"). A ring reads immediately as an energy-shield boundary
+  // around the cursor instead of a blurry patch, and a transparent center
+  // means far less of the UI ever sits under strong color at all.
+  //
+  // Split into two nested elements because the positioning and the pulse
+  // both need `transform`, and a JS-driven inline transform (translate, set
+  // every mousemove) and a CSS @keyframes animation (scale, continuous)
+  // can't both own the same property on the same element without fighting
+  // each other every frame: `pos` only ever gets `translate3d` from JS,
+  // `ring` only ever gets the CSS `scale` pulse -- no overlap, no jank.
   var glow = document.createElement("div");
   glow.setAttribute("aria-hidden", "true");
   glow.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .5s ease;";
-  var blob = document.createElement("div");
-  // soft-light (not overlay) + a real opacity cap: overlay is a strong,
-  // contrast-boosting blend that made text sitting directly on the page
-  // background (no card behind it, e.g. the homepage tagline) hard to
-  // read even though the glow itself is correctly z-index:-1 (behind
-  // everything) -- mix-blend-mode only affects how *this* element
-  // composites with what's behind it, but content with no opaque card of
-  // its own has nothing to shield it from a strong blend. soft-light is a
-  // much gentler tint, and capping the blob's own opacity (not just the
-  // container's fade-in) keeps it a subtle wash instead of a saturated
-  // patch even right under the cursor.
-  blob.style.cssText =
-    "position:absolute;top:0;left:0;width:420px;height:420px;margin:-210px 0 0 -210px;" +
-    "border-radius:50%;filter:blur(70px);mix-blend-mode:soft-light;opacity:0.55;will-change:transform;" +
-    "background:radial-gradient(circle, " + c1 + " 0%, " + c2 + " 45%, transparent 72%);";
-  glow.appendChild(blob);
+  var pos = document.createElement("div");
+  pos.style.cssText = "position:absolute;top:0;left:0;width:0;height:0;will-change:transform;";
+  var ring = document.createElement("div");
+  ring.style.cssText =
+    "position:absolute;top:0;left:0;width:260px;height:260px;margin:-130px 0 0 -130px;" +
+    "border-radius:50%;filter:blur(4px);mix-blend-mode:screen;opacity:0.35;" +
+    "animation:cursor-forcefield-pulse 4.5s ease-in-out infinite;" +
+    "background:radial-gradient(circle, transparent 0%, transparent 56%, " + c1 + " 65%, " + c2 + " 73%, transparent 84%);";
+  pos.appendChild(ring);
+  glow.appendChild(pos);
   document.body.insertBefore(glow, document.body.firstChild);
+
+  if (!document.getElementById("cursor-forcefield-style")) {
+    var styleTag = document.createElement("style");
+    styleTag.id = "cursor-forcefield-style";
+    styleTag.textContent = "@keyframes cursor-forcefield-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}";
+    document.head.appendChild(styleTag);
+  }
 
   var raf = null, targetX = -9999, targetY = -9999;
   function applyPosition() {
     raf = null;
-    blob.style.transform = "translate3d(" + targetX + "px," + targetY + "px,0)";
+    pos.style.transform = "translate3d(" + targetX + "px," + targetY + "px,0)";
   }
   document.addEventListener("mousemove", function (e) {
     targetX = e.clientX;
