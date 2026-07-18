@@ -3540,60 +3540,47 @@ window.openPauseOverlay = function (opts) {
   var c1 = isGroupPage ? "var(--acc, #4f46e5)" : "var(--accent, #2563eb)";
   var c2 = isGroupPage ? "var(--acc2, #4338ca)" : "var(--accent3, var(--accent, #2563eb))";
 
-  // Rebuilt 2026-07-18 (same day) into a "forcefield" ring after the first
-  // pass (a big soft-light blob) read as an unwanted color wash rather than
-  // something that felt deliberate ("looks bad... more like a forcefield,
-  // and subtle"). A ring reads immediately as an energy-shield boundary
-  // around the cursor instead of a blurry patch, and a transparent center
-  // means far less of the UI ever sits under strong color at all.
-  //
-  // Split into two nested elements because the positioning and the pulse
-  // both need `transform`, and a JS-driven inline transform (translate, set
-  // every mousemove) and a CSS @keyframes animation (scale, continuous)
-  // can't both own the same property on the same element without fighting
-  // each other every frame: `pos` only ever gets `translate3d` from JS,
-  // `ring` only ever gets the CSS `scale` pulse -- no overlap, no jank.
-  // Softened + given a trailing glide 2026-07-18 (same day again): "too
-  // static and not like its flowing and to harsh". Two separate fixes for
-  // two separate complaints -- "static" was the position snapping to the
-  // cursor instantly every frame with no lag, so `pos` now transitions its
-  // own transform (a CSS-eased glide the browser interpolates on every new
-  // JS-set target, producing a trailing/flowing follow instead of a rigid
-  // lock-on); "harsh" was the ring's edge being too sharp/bright, softened
-  // with more blur, lower opacity, and a wider color-to-transparent
-  // gradient band instead of a tight one.
-  var glow = document.createElement("div");
-  glow.setAttribute("aria-hidden", "true");
-  glow.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .6s ease;";
-  var pos = document.createElement("div");
-  pos.style.cssText = "position:absolute;top:0;left:0;width:0;height:0;will-change:transform;transition:transform .6s cubic-bezier(.16,.6,.2,1);";
-  var ring = document.createElement("div");
-  ring.style.cssText =
-    "position:absolute;top:0;left:0;width:300px;height:300px;margin:-150px 0 0 -150px;" +
-    "border-radius:50%;filter:blur(18px);mix-blend-mode:screen;opacity:0.22;" +
-    "animation:cursor-forcefield-pulse 6.5s ease-in-out infinite;" +
-    "background:radial-gradient(circle, transparent 0%, transparent 40%, " + c1 + " 60%, " + c2 + " 72%, transparent 88%);";
-  pos.appendChild(ring);
-  glow.appendChild(pos);
-  document.body.insertBefore(glow, document.body.firstChild);
+  // Rebuilt again 2026-07-18 (third pass, same day) into a dissipating
+  // trail after the ring version "still looks bad" -- "what if we did
+  // trailing the cursor to dissipate." Instead of one persistent shape
+  // chasing the cursor, each mousemove (throttled to ~1 spawn per 40ms, not
+  // literally every event, both for performance and so the trail reads as
+  // a string of distinct puffs rather than a solid smear) drops a small
+  // glow "puff" at that exact point, which immediately starts expanding
+  // and fading via a CSS transition and removes itself from the DOM once
+  // that finishes -- a comet-tail of light that dissolves behind the
+  // cursor rather than a fixed shape glued to it.
+  var container = document.createElement("div");
+  container.setAttribute("aria-hidden", "true");
+  container.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;";
+  document.body.insertBefore(container, document.body.firstChild);
 
-  if (!document.getElementById("cursor-forcefield-style")) {
-    var styleTag = document.createElement("style");
-    styleTag.id = "cursor-forcefield-style";
-    styleTag.textContent = "@keyframes cursor-forcefield-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}";
-    document.head.appendChild(styleTag);
-  }
-
-  var raf = null, targetX = -9999, targetY = -9999;
-  function applyPosition() {
-    raf = null;
-    pos.style.transform = "translate3d(" + targetX + "px," + targetY + "px,0)";
+  var lastSpawn = 0;
+  function spawnPuff(x, y) {
+    var puff = document.createElement("div");
+    puff.style.cssText =
+      "position:absolute;top:0;left:0;width:70px;height:70px;margin:-35px 0 0 -35px;" +
+      "border-radius:50%;filter:blur(14px);mix-blend-mode:screen;opacity:0.28;" +
+      "background:radial-gradient(circle, " + c1 + " 0%, " + c2 + " 55%, transparent 78%);" +
+      "transform:translate3d(" + x + "px," + y + "px,0) scale(1);" +
+      "transition:opacity .9s ease-out, transform .9s ease-out;";
+    container.appendChild(puff);
+    // Two rAFs (not one) so the browser commits the starting frame above
+    // before the transitioned end-state is applied -- a single rAF can
+    // still land before that first paint on some engines, silently
+    // skipping the transition and just snapping to the end state.
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        puff.style.opacity = "0";
+        puff.style.transform = "translate3d(" + x + "px," + y + "px,0) scale(2.4)";
+      });
+    });
+    setTimeout(function () { puff.remove(); }, 950);
   }
   document.addEventListener("mousemove", function (e) {
-    targetX = e.clientX;
-    targetY = e.clientY;
-    glow.style.opacity = "1";
-    if (raf === null) raf = requestAnimationFrame(applyPosition);
+    var now = performance.now();
+    if (now - lastSpawn < 40) return;
+    lastSpawn = now;
+    spawnPuff(e.clientX, e.clientY);
   });
-  document.addEventListener("mouseleave", function () { glow.style.opacity = "0"; });
 })();
