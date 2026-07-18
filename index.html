@@ -343,12 +343,19 @@
        .btn-avatar-piece below just define their shared look/animation. */
     .guides-btn .gl-letter {
       display: inline-block;
-      transition: transform .5s cubic-bezier(.5,0,.75,0), opacity .5s;
+      position: relative;
+      transition: transform .55s cubic-bezier(.55,0,1,.45), opacity .4s ease-in .15s;
       transition-delay: calc(var(--i, 0) * 22ms);
     }
+    /* Letters actually drop clear of the button and fade fully away, rather
+       than sagging in place -- an earlier version only nudged them 18px and
+       left them at 12% opacity, which just piled the fading letters on top
+       of each other into an illegible smear instead of reading as letters
+       falling out. Opacity is delayed .15s so a letter is visibly still
+       falling before it disappears, instead of vanishing on the spot. */
     .guides-btn:hover .gl-letter {
-      transform: translate(var(--dx, 0px), 18px) rotate(var(--rot, 8deg));
-      opacity: .12;
+      transform: translate(var(--dx, 0px), 32px) rotate(var(--rot, 8deg));
+      opacity: 0;
     }
     .btn-burst-piece {
       position: fixed; z-index: 9999; pointer-events: none; border-radius: 50%;
