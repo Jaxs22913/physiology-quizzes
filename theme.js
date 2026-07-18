@@ -3500,3 +3500,77 @@ window.openPauseOverlay = function (opts) {
   }
   requestAnimationFrame(step);
 })();
+
+// Cursor-reactive background color glow (added 2026-07-18). A soft, blurred
+// radial glow that follows the cursor and shifts the page's background
+// colors underneath it via mix-blend-mode -- a much lighter alternative to
+// true pixel-displacement lens distortion (which would need an SVG
+// feDisplacementMap filter or WebGL/canvas, both heavier and overkill
+// here), while still reading as "the background reacts to your cursor."
+// Lives entirely behind real content (z-index:-1, appended as body's first
+// child same as the seasonal effects above, so it sits outside non-
+// homepage pages' `.wrap` and is unaffected by that element's dark-mode
+// invert filter) and is pointer-events:none, so it only ever touches the
+// background layer, never UI.
+//
+// Scoped to the same "major app-shell pages" as the ambient bg-drift
+// gradient (home, Arcade + 4 modes, guides, group-join/host) -- see
+// pa-quizzes-liveliness-features memory -- not the ~440 individual quiz
+// files, which don't have the drift gradient this is meant to sit on top
+// of. Skipped entirely on touch/coarse-pointer devices (no cursor to
+// follow) and when prefers-reduced-motion is set (checked once at load,
+// matching this file's other seasonal effects' check-once-on-load pattern
+// rather than a live-updating listener).
+(function () {
+  if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var isHomepage = document.body.classList.contains("homepage");
+  var isArcade = !!document.querySelector(".edge-decor circle");
+  var isGroupPage = /\/(group-join|group-host)\.html/.test(location.pathname);
+  var isGuides = /\/guides\.html/.test(location.pathname);
+  if (!isHomepage && !isArcade && !isGroupPage && !isGuides) return;
+
+  // group-join/host use their own --acc/--acc2 indigo pair (a distinct
+  // identity from home/Arcade/guides' --accent/--accent3 blue-purple
+  // naming) -- pick the right token pair per page rather than assuming one
+  // naming scheme works everywhere. guides.html has --accent but no
+  // --accent3, so its second stop falls back to --accent (a monochrome
+  // glow there), which is fine and still matches that page's own palette.
+  var c1 = isGroupPage ? "var(--acc, #4f46e5)" : "var(--accent, #2563eb)";
+  var c2 = isGroupPage ? "var(--acc2, #4338ca)" : "var(--accent3, var(--accent, #2563eb))";
+
+  var glow = document.createElement("div");
+  glow.setAttribute("aria-hidden", "true");
+  glow.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .5s ease;";
+  var blob = document.createElement("div");
+  // soft-light (not overlay) + a real opacity cap: overlay is a strong,
+  // contrast-boosting blend that made text sitting directly on the page
+  // background (no card behind it, e.g. the homepage tagline) hard to
+  // read even though the glow itself is correctly z-index:-1 (behind
+  // everything) -- mix-blend-mode only affects how *this* element
+  // composites with what's behind it, but content with no opaque card of
+  // its own has nothing to shield it from a strong blend. soft-light is a
+  // much gentler tint, and capping the blob's own opacity (not just the
+  // container's fade-in) keeps it a subtle wash instead of a saturated
+  // patch even right under the cursor.
+  blob.style.cssText =
+    "position:absolute;top:0;left:0;width:420px;height:420px;margin:-210px 0 0 -210px;" +
+    "border-radius:50%;filter:blur(70px);mix-blend-mode:soft-light;opacity:0.55;will-change:transform;" +
+    "background:radial-gradient(circle, " + c1 + " 0%, " + c2 + " 45%, transparent 72%);";
+  glow.appendChild(blob);
+  document.body.insertBefore(glow, document.body.firstChild);
+
+  var raf = null, targetX = -9999, targetY = -9999;
+  function applyPosition() {
+    raf = null;
+    blob.style.transform = "translate3d(" + targetX + "px," + targetY + "px,0)";
+  }
+  document.addEventListener("mousemove", function (e) {
+    targetX = e.clientX;
+    targetY = e.clientY;
+    glow.style.opacity = "1";
+    if (raf === null) raf = requestAnimationFrame(applyPosition);
+  });
+  document.addEventListener("mouseleave", function () { glow.style.opacity = "0"; });
+})();
