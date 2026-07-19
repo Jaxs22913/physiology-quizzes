@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulmonary Physiology — Quiz 4 (30 Questions)</title>
+<style>
+  :root{
+    --navy:#1e3a8a; --indigo:#2563eb; --gold:#93c5fd; --ice:#eaf1fe;
+    --ink:#20233a; --muted:#5b6178; --line:#dfe3f0;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Pulmonary Physiology — Quiz 4</h1>
+    <div class="sub">Ventilation, gas exchange &amp; transport · Class of 2028</div>
+    <span class="pill">30 questions &middot; Pulmonary Phys. I &amp; II</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">This quiz follows the same format as the master exams:
+      four choices, instant feedback, and a full explanation of every option so you learn from each answer.
+      It draws on the instructional objectives below.</p>
+    <div class="chips"><span class="chip">a — Mechanics of breathing</span><span class="chip">c — Lung volumes</span><span class="chip">c — Lung volumes & dead space</span><span class="chip">e — Respiratory membrane</span><span class="chip">e — Respiratory unit</span><span class="chip">h — Ventilation control</span><span class="chip">j — Pulmonary capillary dynamics</span><span class="chip">j — Pulmonary circulation</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+    
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 30</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "During exercise, pulmonary artery pressure rises only modestly despite a substantial increase in pulmonary blood flow, mainly because...", "opts": [["recruitment and distension of pulmonary vessels sharply lower pulmonary vascular resistance as flow increases", "Correct. As pulmonary blood flow rises during exercise, recruitment of previously closed capillaries and distension of already-open vessels sharply reduce pulmonary vascular resistance, which is why pulmonary artery pressure rises only modestly even as flow increases substantially."], ["pulmonary vascular resistance rises proportionally with flow, keeping pressure changes large", "Incorrect. Pulmonary vascular resistance actually falls (via recruitment/distension) as flow rises during exercise, which is precisely why the pressure increase stays modest rather than large."], ["the pulmonary circulation is entirely unaffected by changes in cardiac output", "Incorrect. Pulmonary blood flow does rise with cardiac output during exercise; it's the accompanying fall in pulmonary vascular resistance (via recruitment/distension) that keeps the pressure rise modest."], ["alveolar hypoxia during exercise causes widespread pulmonary vasodilation", "Incorrect. Exercise does not induce widespread alveolar hypoxia under normal conditions; the modest pressure rise despite higher flow is explained by recruitment/distension lowering resistance, not a hypoxia-driven vasodilation."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 46"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "Hypoxic pulmonary vasoconstriction — the lung's local vasoconstrictive response to alveolar hypoxia — serves the overall physiological purpose of...", "opts": [["diverting blood flow away from poorly ventilated alveoli toward better-ventilated regions, improving overall gas exchange", "Correct. By constricting vessels supplying poorly ventilated (hypoxic) alveoli, the lung redirects blood flow toward better-ventilated regions, improving the overall matching of ventilation to perfusion (V/Q matching) and thus overall gas exchange efficiency."], ["maximizing blood flow specifically to the poorly ventilated regions", "Incorrect. This is the opposite of the actual purpose; hypoxic pulmonary vasoconstriction diverts blood flow away from, not toward, poorly ventilated regions."], ["permanently damaging the hypoxic alveoli to prevent further gas exchange there", "Incorrect. Hypoxic pulmonary vasoconstriction is a protective, physiological (not damaging) regulatory response that optimizes V/Q matching, not a mechanism of alveolar damage."], ["having no effect on overall ventilation-perfusion matching", "Incorrect. This response specifically improves ventilation-perfusion matching by redirecting flow toward well-ventilated alveoli."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 43"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary capillary dynamics", "q": "Compared with systemic capillaries, pulmonary capillary hydrostatic pressure (about 7 mmHg) is considerably lower than plasma osmotic pressure (about 28 mmHg). This relationship is functionally important because it helps ensure that...", "opts": [["the alveoli normally remain relatively dry, favoring efficient gas exchange", "Correct. Because plasma osmotic pressure so strongly outweighs pulmonary capillary hydrostatic pressure, net Starling forces favor only a small, easily lymphatically-drained amount of filtration — keeping the alveolar-capillary interface thin and dry, which is essential for efficient gas diffusion."], ["fluid continuously and heavily floods the alveoli under normal conditions", "Incorrect. The relationship of these Starling forces is specifically calibrated to keep filtration minimal (net about +1 mmHg) and alveoli dry, not to heavily flood them under normal conditions."], ["the pulmonary capillaries never filter any fluid at all", "Incorrect. There is a small, continuous net filtration (about +1 mmHg outward) even under normal conditions; it's just efficiently cleared by lymphatics, not literally zero."], ["gas exchange is impaired due to constant interstitial fluid accumulation", "Incorrect. Under normal conditions, this Starling-force balance (plus lymphatic drainage) keeps the alveoli dry and gas exchange efficient, not impaired by fluid accumulation."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 48"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "The three-zone model of pulmonary blood flow describes how gravity, alveolar pressure, and vascular pressures interact to create regional differences in perfusion. This model helps explain why, in the upright lung, the...", "opts": [["apex (top) can have relatively reduced perfusion compared with regions lower in the lung", "Correct. The three-zone model illustrates how the relationship between alveolar pressure and pulmonary arterial/venous pressures varies by lung height, contributing to the observed pattern in which upper lung regions (apex) receive relatively less perfusion than lower regions, given gravity's effect on the low-pressure pulmonary vasculature."], ["apex and base always receive completely identical blood flow", "Incorrect. The three-zone model specifically explains why blood flow is NOT identical throughout the lung, with perfusion differing by height due to gravity and pressure relationships."], ["base of the lung receives no blood flow at all", "Incorrect. The base of the lung actually receives more (not zero) blood flow than the apex; the three-zone model helps explain this gravity-driven gradient, not an absence of flow at the base."], ["ventilation is affected by gravity while perfusion is not", "Incorrect. The three-zone model is specifically about gravity's effect on perfusion (blood flow) distribution, not a claim that perfusion is unaffected by gravity."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 45"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "Boyle's law, which underlies the pressure changes driving airflow into and out of the lungs, states that at a constant temperature, the pressure of a gas is...", "opts": [["inversely proportional to its volume", "Correct. Boyle's law states that, at constant temperature, gas pressure is inversely proportional to volume — so when the thoracic cavity (and thus lung volume) expands during inspiration, intra-alveolar pressure falls below atmospheric pressure, drawing air in; the reverse occurs during expiration."], ["directly proportional to its volume", "Incorrect. This is the opposite of Boyle's law, which describes an inverse (not direct) relationship between gas pressure and volume at constant temperature."], ["unrelated to its volume", "Incorrect. Boyle's law specifically describes a defined inverse relationship between pressure and volume, not an absence of relationship."], ["proportional to the square of its volume", "Incorrect. Boyle's law describes a simple inverse proportionality between pressure and volume, not a squared relationship."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 8"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "Dalton's law, relevant to how gases behave in the mixture of air, states that the total pressure of a gas mixture equals...", "opts": [["the sum of the partial pressures of each individual gas in the mixture", "Correct. Dalton's law states that the total pressure exerted by a mixture of gases equals the sum of the partial pressures each individual gas would exert if it alone occupied the same volume — the basis for calculating partial pressures like PO2 and PCO2 within atmospheric or alveolar air."], ["the partial pressure of only the most abundant gas in the mixture", "Incorrect. Dalton's law sums the partial pressures of all gases present, not just the single most abundant one."], ["the average, not the sum, of each gas's partial pressure", "Incorrect. Dalton's law specifically states total pressure is the sum, not the average, of the individual partial pressures."], ["a value entirely independent of the individual gases present", "Incorrect. Total pressure by Dalton's law is directly determined by (the sum of) the individual gases' partial pressures, not independent of them."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 9"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "Bronchiolar diameter, which helps regulate airway resistance, is controlled in part by the autonomic nervous system such that sympathetic stimulation typically causes...", "opts": [["bronchodilation", "Correct. Sympathetic stimulation (via beta-2 adrenergic receptors on bronchiolar smooth muscle) typically causes bronchodilation, widening the airways and reducing resistance — the opposite of parasympathetic stimulation, which causes bronchoconstriction."], ["bronchoconstriction", "Incorrect. Bronchoconstriction is the parasympathetic effect on bronchiolar smooth muscle; sympathetic stimulation instead causes bronchodilation."], ["no change in bronchiolar diameter", "Incorrect. Sympathetic stimulation has a clear, well-described effect on bronchiolar smooth muscle tone (bronchodilation), not an absence of effect."], ["contraction of the diaphragm specifically", "Incorrect. Diaphragmatic contraction is controlled by the phrenic nerve for inspiration, a separate mechanism from autonomic control of bronchiolar smooth muscle tone."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 11"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "Parasympathetic stimulation of the airways, in contrast to sympathetic stimulation, typically causes...", "opts": [["bronchoconstriction", "Correct. Parasympathetic stimulation (via muscarinic receptors on bronchiolar smooth muscle) causes bronchoconstriction, narrowing the airways and increasing resistance — the opposite effect of sympathetic stimulation, which causes bronchodilation."], ["bronchodilation", "Incorrect. Bronchodilation is the sympathetic effect; parasympathetic stimulation instead causes bronchoconstriction."], ["contraction of the external intercostal muscles", "Incorrect. External intercostal muscle contraction (aiding inspiration) is a separate somatic motor mechanism, not the described autonomic effect of parasympathetic stimulation on bronchiolar smooth muscle tone."], ["relaxation of the diaphragm", "Incorrect. Diaphragm relaxation relates to expiration mechanics via the phrenic nerve, a distinct mechanism from parasympathetic control of bronchiolar smooth muscle (bronchoconstriction)."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 11"}, {"topic": "Pulmonary Physiology", "io": "c — Lung volumes", "q": "Timed volumes, such as forced expiratory volume in 1 second (FEV1), are clinically useful measurements because, unlike a simple static lung volume, they capture...", "opts": [["how quickly air can be moved out of the lungs, reflecting airway resistance and lung mechanics over time", "Correct. Because timed volumes measure how much air is exhaled within a specific time frame (such as 1 second), they capture the dynamic rate of airflow — which is sensitive to airway resistance and the mechanical properties of the lung/chest wall — information a simple static volume measurement alone cannot provide."], ["only the total amount of air present in the lungs at any single instant", "Incorrect. This describes a static lung volume, which is exactly what a timed volume measurement goes beyond by adding the dimension of time (rate of airflow)."], ["nothing different from an untimed lung volume measurement", "Incorrect. Timed volumes specifically add the dynamic dimension of airflow rate over time, providing different (and clinically distinct) information from an untimed static volume."], ["only the composition of alveolar gas, not any volume or flow information", "Incorrect. Timed volumes measure volume of air moved over a defined time interval (a flow-rate concept), not alveolar gas composition."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 29"}, {"topic": "Pulmonary Physiology", "io": "c — Lung volumes & dead space", "q": "Physiological dead space differs from anatomic dead space in that physiological dead space also includes...", "opts": [["ventilated alveoli that receive little or no blood flow, in addition to the conducting airways", "Correct. While anatomic dead space refers only to the conducting airways (which never participate in gas exchange), physiological dead space is a broader concept that also includes any ventilated alveoli that are poorly or not perfused — air reaching them is 'wasted' just as if it never reached an alveolus at all."], ["only alveoli that are both well-ventilated and well-perfused", "Incorrect. Well-ventilated, well-perfused alveoli are functioning normally for gas exchange; they are the opposite of what counts toward dead space, which involves ventilation not matched by blood flow."], ["the entire alveolar volume, regardless of blood flow", "Incorrect. Physiological dead space specifically concerns only the portion of alveolar ventilation not matched by adequate blood flow, not the entire alveolar volume regardless of perfusion."], ["only the trachea and bronchi, identical to anatomic dead space", "Incorrect. This describes anatomic dead space alone; physiological dead space is the broader concept that also adds poorly perfused ventilated alveoli."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 34"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "The respiratory center's control of breathing is organized as a three-part system: the medullary rhythmicity area, the pneumotaxic center, and the...", "opts": [["apneustic center", "Correct. The classic three-part organization of the brainstem respiratory centers includes the medullary rhythmicity area (setting the basic breathing rhythm), the pneumotaxic center in the pons (limiting inspiration duration/rate), and the apneustic center (promoting deeper, more prolonged inspiration when unopposed by the pneumotaxic center)."], ["carotid body", "Incorrect. The carotid body is a peripheral chemoreceptor, not one of the three classic brainstem respiratory control centers, which are the medullary rhythmicity area, pneumotaxic center, and apneustic center."], ["cerebellum", "Incorrect. The cerebellum coordinates movement/balance broadly; it is not one of the three classic respiratory center components (medullary rhythmicity area, pneumotaxic center, apneustic center)."], ["hypothalamus", "Incorrect. The hypothalamus is involved in temperature and other autonomic regulation, not one of the three classic brainstem respiratory centers described here."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 88"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "The pneumotaxic center's main influence on the basic breathing rhythm is to...", "opts": [["limit the duration of inspiration, helping set breathing rate", "Correct. The pneumotaxic center in the pons sends signals that limit inspiration's duration, effectively controlling how quickly one breath transitions to the next and thereby helping set overall respiratory rate."], ["completely stop all breathing indefinitely", "Incorrect. The pneumotaxic center modulates the timing/rate of breathing (limiting inspiration duration); it does not stop breathing indefinitely."], ["increase tidal volume with no effect on timing", "Incorrect. The pneumotaxic center's described role is limiting inspiratory duration/timing (affecting rate), not primarily altering tidal volume."], ["control only expiratory muscle contraction, not inspiration", "Incorrect. The pneumotaxic center's described influence is specifically on limiting inspiration's duration, not isolated to expiratory muscle control."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 88"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "Carotid body glomus cells sense arterial oxygen levels through a specialized O2-sensing mechanism, allowing the peripheral chemoreceptors to detect...", "opts": [["a fall in arterial PO2, triggering increased ventilation", "Correct. Carotid body glomus cells are specialized to sense falling arterial PO2 (particularly once it drops substantially below normal), triggering an increase in ventilation via the peripheral chemoreceptor pathway — a backup oxygen-sensing drive to breathe, distinct from the dominant CO2/pH-based central drive."], ["a rise in arterial PO2, triggering decreased ventilation only", "Incorrect. The described glomus cell function is detecting falling (not rising) PO2, which triggers increased (not decreased) ventilation."], ["blood glucose levels exclusively, unrelated to oxygen", "Incorrect. Carotid body glomus cells are specifically O2-sensing (and also respond to CO2/pH); they are not blood glucose sensors."], ["core body temperature exclusively", "Incorrect. Carotid body glomus cells are specialized oxygen (and CO2/pH) sensors, not temperature sensors."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 95"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "Under conditions of moderate exercise, ventilation increases in close proportion to metabolic rate/CO2 production, such that arterial PCO2 typically...", "opts": [["stays remarkably close to its resting value, despite the large rise in ventilation and CO2 production", "Correct. During moderate exercise, the rise in ventilation is so well matched to the increase in metabolic CO2 production that arterial PCO2 is kept remarkably close to its normal resting value, rather than rising or falling significantly — a testament to the precision of ventilatory control."], ["rises dramatically and continuously throughout moderate exercise", "Incorrect. Well-matched ventilatory control during moderate exercise keeps arterial PCO2 close to resting levels, rather than allowing it to rise dramatically."], ["falls to dangerously low levels during any exercise intensity", "Incorrect. Arterial PCO2 is kept close to normal during moderate exercise through matched ventilatory control, not driven to dangerously low levels."], ["becomes completely unregulated once exercise begins", "Incorrect. Ventilatory control remains tightly regulated during moderate exercise, which is exactly why arterial PCO2 stays close to its resting value despite large increases in ventilation and metabolic rate."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 100"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "Immediately at the very onset of exercise (before metabolic byproducts like CO2 have had time to rise significantly), ventilation often increases abruptly, suggesting that this initial rise is driven partly by...", "opts": [["neural/anticipatory input (e.g., from motor cortex and joint/muscle receptors) rather than chemoreceptor feedback alone", "Correct. Because ventilation can rise abruptly at the very start of exercise — before arterial blood gases have meaningfully changed — this initial increase is thought to be driven substantially by neural (feedforward) signals from the motor cortex and receptors in joints/muscles, working alongside (and initially ahead of) the chemoreceptor feedback that sustains ventilation as exercise continues."], ["chemoreceptor detection of a large CO2 rise that occurs instantaneously", "Incorrect. A meaningful rise in arterial CO2 takes some time to develop after exercise begins; the immediate ventilatory increase at exercise onset is better explained by neural/anticipatory input rather than an instantaneous chemoreceptor-detected CO2 change."], ["a simultaneous, instantaneous drop in arterial PO2", "Incorrect. Arterial PO2 does not drop instantaneously and substantially at the very onset of moderate exercise; the abrupt initial ventilatory rise is attributed more to neural/anticipatory input."], ["complete cessation of central chemoreceptor activity", "Incorrect. Central chemoreceptor activity is not shut off at exercise onset; rather, neural/anticipatory input contributes to the immediate ventilatory rise, with chemoreceptor input becoming more influential as exercise continues."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 100"}, {"topic": "Pulmonary Physiology", "io": "c — Lung volumes", "q": "Expiratory reserve volume (ERV) is defined as the...", "opts": [["additional air that can be forcibly exhaled after a normal, quiet expiration", "Correct. Expiratory reserve volume is the extra volume of air that can still be forcibly exhaled after the end of a normal, quiet (tidal) expiration, representing part of the lung's reserve capacity beyond typical resting breathing."], ["air that remains in the lungs even after a maximal forced expiration", "Incorrect. Air remaining after maximal forced expiration is residual volume, not expiratory reserve volume, which is the additional air that CAN still be exhaled after a normal tidal expiration."], ["air moved in and out during normal, quiet breathing", "Incorrect. Air moved during normal quiet breathing is tidal volume; expiratory reserve volume is the additional air that can still be forcibly exhaled beyond that."], ["maximum air that can be inspired after a normal tidal inspiration", "Incorrect. That describes inspiratory reserve volume, not expiratory reserve volume, which instead concerns additional forced exhalation beyond normal tidal expiration."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 26"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "Because the pulmonary circulation operates at much lower pressure than the systemic circulation, the right ventricle (which generates pulmonary artery pressure) is correspondingly...", "opts": [["thinner-walled and generates less pressure than the left ventricle", "Correct. Since the pulmonary circulation's low resistance requires only a modest driving pressure (mean around 15 mmHg) to achieve the same flow as the systemic circulation, the right ventricle is thinner-walled and generates substantially less pressure than the thick-walled left ventricle, which must drive blood through the much higher-resistance systemic circuit."], ["thicker-walled and generates more pressure than the left ventricle", "Incorrect. This reverses the actual relationship; the low-pressure pulmonary circuit is served by the thinner-walled, lower-pressure-generating right ventricle, while the left ventricle is thicker-walled and generates higher pressure for the systemic circuit."], ["identical in wall thickness and pressure generation to the left ventricle", "Incorrect. The right and left ventricles differ substantially in wall thickness and pressure generation, matched to the very different resistances of the pulmonary versus systemic circuits."], ["irrelevant to pulmonary artery pressure, which is generated elsewhere", "Incorrect. The right ventricle is precisely what generates pulmonary artery pressure by pumping blood into the pulmonary circulation; it is not irrelevant to that pressure."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 39"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "The apneustic center, one of the classic three components of brainstem respiratory control alongside the medullary rhythmicity area and pneumotaxic center, tends to promote...", "opts": [["deeper, more prolonged inspiration when not opposed by the pneumotaxic center", "Correct. The apneustic center promotes strong, sustained inspiratory effort (deep, prolonged inspiration); under normal conditions, the pneumotaxic center limits/opposes this tendency, helping produce the normal rhythmic breathing pattern rather than prolonged inspiratory holds."], ["shorter, shallower inspiration under all conditions", "Incorrect. The apneustic center's tendency is toward deeper, more prolonged inspiration, not shorter/shallower breaths; it is the pneumotaxic center that limits inspiration's duration."], ["complete cessation of breathing (apnea) as its normal, unopposed function", "Incorrect. While unopposed apneustic center activity classically produces abnormal prolonged inspiratory gasps (apneusis) in experimental settings, its basic tendency is prolonging inspiration, not producing simple apnea as its normal function."], ["expiratory muscle contraction exclusively, with no effect on inspiration", "Incorrect. The apneustic center's described influence is specifically on promoting/prolonging inspiration, not an isolated effect on expiratory muscles."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 88"}, {"topic": "Pulmonary Physiology", "io": "c — Lung volumes", "q": "Total lung capacity (TLC) is defined as the sum of...", "opts": [["vital capacity and residual volume", "Correct. Total lung capacity equals vital capacity (the maximum air that can be voluntarily moved in and out) plus residual volume (the air that always remains in the lungs even after maximal forced expiration, and thus cannot be measured by simple spirometry)."], ["only tidal volume and inspiratory reserve volume", "Incorrect. This sum describes inspiratory capacity, not total lung capacity, which additionally requires adding expiratory reserve volume and residual volume (i.e., vital capacity plus residual volume)."], ["only functional residual capacity", "Incorrect. Functional residual capacity is just one component (expiratory reserve volume plus residual volume) of total lung capacity, not the entirety of it."], ["only residual volume", "Incorrect. Residual volume alone is just one part of total lung capacity; TLC also includes vital capacity (tidal volume, inspiratory reserve volume, and expiratory reserve volume)."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 28"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "According to the gas laws governing airflow, air moves from a region of...", "opts": [["higher pressure to lower pressure", "Correct. Like any fluid, air flows down its pressure gradient, from a region of higher pressure to one of lower pressure — which is why alveolar pressure must fall below atmospheric pressure during inspiration for air to flow into the lungs, and rise above atmospheric during expiration for air to flow out."], ["lower pressure to higher pressure", "Incorrect. This is the reverse of the actual physical principle; gases (like all fluids) flow from higher to lower pressure, not the other way around."], ["a region of any pressure to another region of identical pressure", "Incorrect. Airflow specifically requires a pressure difference (gradient); flow does not occur between regions of identical pressure."], ["low resistance to high resistance regardless of pressure", "Incorrect. Airflow direction is governed by the pressure gradient (high to low), not simply by resistance differences irrespective of pressure."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 12"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "During exercise, even though pulmonary blood flow can increase several-fold over resting levels, gas exchange typically remains efficient because...", "opts": [["recruitment/distension increase capillary transit time capacity and surface area, keeping diffusion adequate despite faster overall flow", "Correct. Recruitment of additional capillaries and distension of existing ones during exercise expand the total pulmonary capillary blood volume and surface area, which helps preserve adequate time and surface area for gas diffusion even as overall blood flow (and thus average flow velocity) increases substantially."], ["blood simply moves too fast for any gas exchange to occur at high flow", "Incorrect. Despite faster overall flow, the expanded capillary surface area/volume from recruitment and distension keeps gas exchange efficient during exercise, rather than gas exchange failing at high flow."], ["the respiratory membrane becomes dramatically thicker during exercise, slowing diffusion intentionally", "Incorrect. There is no described exercise-induced thickening of the respiratory membrane; efficient gas exchange during exercise instead relies on recruitment/distension increasing capillary surface area."], ["ventilation decreases proportionally to compensate for increased blood flow", "Incorrect. Ventilation increases (not decreases) during exercise, in proportion with the rise in metabolic demand and blood flow, rather than decreasing to compensate."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 63"}, {"topic": "Pulmonary Physiology", "io": "c — Lung volumes", "q": "Inspiratory reserve volume (IRV) is defined as the...", "opts": [["additional air that can be forcibly inhaled after a normal, quiet inspiration", "Correct. Inspiratory reserve volume is the extra volume of air that can still be forcibly inhaled beyond the end of a normal, quiet (tidal) inspiration, representing part of the lung's reserve capacity for deeper breathing when needed."], ["air that remains in the lungs after a maximal forced expiration", "Incorrect. Air remaining after maximal forced expiration is residual volume, not inspiratory reserve volume, which concerns additional forced inhalation beyond normal tidal inspiration."], ["air moved in and out during normal, quiet breathing", "Incorrect. Air moved during normal quiet breathing is tidal volume; inspiratory reserve volume is the additional air that can still be forcibly inhaled beyond that."], ["additional air that can be forcibly exhaled after a normal tidal expiration", "Incorrect. That describes expiratory reserve volume, not inspiratory reserve volume, which instead concerns additional forced inhalation beyond normal tidal inspiration."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 26"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "Central chemoreceptors in the brainstem are separated from arterial blood by the blood-brain barrier, which is relatively impermeable to hydrogen ions but freely permeable to...", "opts": [["carbon dioxide", "Correct. The blood-brain barrier is freely permeable to CO2 (but poorly permeable to H+ directly), so CO2 diffuses into the cerebrospinal fluid, where it combines with water to form carbonic acid and releases H+ locally — this is how central chemoreceptors indirectly sense arterial CO2 changes via a local drop in CSF pH, even though H+ itself cannot easily cross the barrier."], ["hydrogen ions directly, with no need for CO2 involvement", "Incorrect. This is essentially the reverse of the real relationship — H+ crosses the blood-brain barrier poorly, while CO2 crosses freely, which is exactly why central chemoreceptors rely on CO2 diffusion (not direct H+ diffusion) to sense the acid-base status of arterial blood indirectly."], ["glucose exclusively, unrelated to acid-base status", "Incorrect. While glucose does cross the blood-brain barrier via specific transporters for a separate purpose (fueling the brain), the central chemoreceptor mechanism described here concerns CO2's free permeability enabling indirect H+/pH sensing."], ["oxygen exclusively, with no role for CO2", "Incorrect. While oxygen does cross the blood-brain barrier, the central chemoreceptor's primary indirect sensing mechanism described here relies on CO2's free permeability, not oxygen."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 92"}, {"topic": "Pulmonary Physiology", "io": "e — Respiratory membrane", "q": "Fluid accumulating within the interstitial space of the respiratory membrane (as opposed to remaining confined to well-drained pulmonary capillaries) would primarily impair gas exchange by...", "opts": [["increasing the diffusion distance gases must travel across the respiratory membrane", "Correct. Because the respiratory membrane is normally extremely thin (about 0.2 micrometers) to favor rapid diffusion, any interstitial fluid accumulation adds extra distance gases must diffuse across, slowing gas exchange even though the total membrane surface area may be unchanged."], ["decreasing the total surface area available for gas exchange only, with no effect on diffusion distance", "Incorrect. While severe fluid accumulation can also affect functional surface area, its most direct described mechanism of impairment is increasing the diffusion distance across the now-thickened membrane."], ["having no meaningful effect on gas exchange efficiency", "Incorrect. Interstitial fluid accumulation is specifically described as impairing gas exchange, by increasing the diffusion distance across the respiratory membrane."], ["improving diffusion by adding a favorable fluid medium for gas transport", "Incorrect. Rather than improving diffusion, added interstitial fluid increases diffusion distance across the membrane, impairing rather than improving gas exchange efficiency."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 59"}, {"topic": "Pulmonary Physiology", "io": "h — Ventilation control", "q": "Peripheral chemoreceptors, in addition to sensing arterial PO2, also respond to blood pH, such that a fall in pH (acidosis) tends to...", "opts": [["stimulate an increase in ventilation via the peripheral chemoreceptors", "Correct. A fall in arterial pH (acidosis) stimulates peripheral chemoreceptors (in addition to central mechanisms), increasing ventilation — part of the respiratory system's broader role in helping compensate for acid-base disturbances by adjusting CO2 elimination."], ["stimulate a decrease in ventilation via the peripheral chemoreceptors", "Incorrect. Falling pH (acidosis) stimulates increased, not decreased, ventilation via peripheral chemoreceptors, helping to blow off CO2 as a compensatory response."], ["have no effect on peripheral chemoreceptor activity", "Incorrect. Peripheral chemoreceptors are described as responsive to blood pH changes, not indifferent to them."], ["only affect central, never peripheral, chemoreceptor activity", "Incorrect. While central chemoreceptors also respond to pH-related changes (indirectly via CO2), peripheral chemoreceptors are themselves described as directly responsive to blood pH as well."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 98"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "Emphysema and pulmonary fibrosis affect lung compliance in opposite directions: emphysema (which destroys elastic tissue) tends to make the lungs...", "opts": [["more compliant than normal (easier to inflate, but with reduced elastic recoil)", "Correct. Because emphysema destroys the lung's elastic connective tissue, the lungs become more compliant (easier to stretch/inflate) than normal — but this comes at the cost of reduced elastic recoil, which impairs the passive expiratory process that normally relies on that recoil."], ["less compliant than normal (stiffer, harder to inflate)", "Incorrect. This describes pulmonary fibrosis's effect (increased stiffness from excess fibrous tissue), essentially the opposite of emphysema, which instead makes the lungs more compliant due to elastic tissue destruction."], ["completely unaffected in their compliance", "Incorrect. Emphysema has a clear, well-described effect on compliance (increasing it) due to elastic tissue destruction, not an absence of effect."], ["identical in compliance to a lung with pulmonary fibrosis", "Incorrect. Emphysema and pulmonary fibrosis affect compliance in essentially opposite directions (increased versus decreased compliance, respectively), not identically."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 21"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "Because the pulmonary circulation must accept the entire cardiac output (all blood returning to the heart passes through the lungs before reaching the systemic circulation), the pulmonary vasculature's low resistance is functionally essential mainly to...", "opts": [["prevent the right ventricle from having to generate excessively high pressures to drive that full flow", "Correct. Because 100% of cardiac output must pass through the pulmonary circulation (unlike systemic organs, which receive only a fraction of cardiac output each), the pulmonary vasculature's low resistance is essential so the right ventricle does not need to generate the very high pressures that would otherwise be required to drive the full cardiac output through a high-resistance circuit."], ["reduce the total blood volume the lungs need to accept", "Incorrect. The pulmonary circulation's low resistance does not reduce the volume it accepts (still 100% of cardiac output); it instead keeps the pressure needed to drive that same full flow low."], ["allow the right ventricle to work harder than the left ventricle", "Incorrect. The pulmonary circulation's low resistance actually allows the right ventricle to work less (generate lower pressure), not harder, compared with the left ventricle facing the higher-resistance systemic circuit."], ["eliminate the need for the right ventricle altogether", "Incorrect. The right ventricle is still required to drive blood through the pulmonary circulation; low pulmonary resistance reduces the pressure it must generate, but does not eliminate the need for it."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 39"}, {"topic": "Pulmonary Physiology", "io": "e — Respiratory unit", "q": "The extremely large combined surface area of the roughly 300 million alveoli (comparable to a tennis court) is functionally important because it...", "opts": [["maximizes the total area available for simultaneous gas diffusion between air and blood", "Correct. Spreading gas exchange across an enormous combined alveolar surface area allows a large volume of O2 and CO2 to diffuse simultaneously across many alveoli at once, dramatically increasing the lung's overall capacity for gas exchange compared with a single large air sac of the same total volume."], ["reduces the total volume of air the lungs can hold", "Incorrect. A large surface area (achieved by subdividing into millions of small alveoli) does not reduce total lung air volume; it instead maximizes exchange area for a given lung volume."], ["has no meaningful effect on the rate of gas exchange", "Incorrect. Total surface area is a key determinant of diffusion rate (per Fick's law); the huge combined alveolar surface area meaningfully increases, not leaves unaffected, overall gas exchange capacity."], ["is important only for sound production during vocalization", "Incorrect. The large alveolar surface area's functional importance is for gas exchange, not vocalization, which involves separate laryngeal structures."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 57"}, {"topic": "Pulmonary Physiology", "io": "a — Mechanics of breathing", "q": "A decrease in lung volume (such as toward residual volume) tends to increase airway resistance mainly because...", "opts": [["smaller lung volumes exert less outward radial traction on airway walls, allowing them to narrow", "Correct. At smaller lung volumes, the surrounding lung tissue exerts less outward radial traction (tethering) on the airway walls, allowing the airways to narrow — and because resistance rises steeply as radius falls (resistance being inversely proportional to radius to the fourth power), even modest narrowing at low lung volumes produces a substantial rise in airway resistance."], ["smaller lung volumes always widen the airways, decreasing resistance", "Incorrect. This is the opposite of the actual relationship; smaller lung volumes reduce the outward traction that keeps airways open, narrowing them and increasing resistance."], ["airway resistance is completely independent of lung volume", "Incorrect. Airway resistance is clearly volume-dependent, rising as lung volume falls (and airway radial traction decreases)."], ["surfactant production stops entirely at low lung volumes", "Incorrect. The described mechanism linking low lung volume to increased airway resistance is reduced radial traction on airway walls, not a cessation of surfactant production."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 14"}, {"topic": "Pulmonary Physiology", "io": "j — Pulmonary circulation", "q": "Because pulmonary capillary pressure (about 7 mmHg) is so much lower than the roughly 25 mmHg plasma osmotic pressure gradient available to oppose it, small changes in either pulmonary capillary pressure or plasma osmotic pressure can meaningfully shift the...", "opts": [["net Starling filtration balance, affecting how much fluid filters into the pulmonary interstitium", "Correct. Because normal net filtration pressure across pulmonary capillaries is only about +1 mmHg — a small residual left over from much larger opposing outward and inward forces — relatively modest changes in capillary pressure or plasma osmotic pressure can proportionally shift this delicate balance considerably, affecting how much fluid filters into the interstitium and, ultimately, whether lymphatic drainage can keep pace."], ["total pulmonary blood flow, independent of any fluid-exchange consequences", "Incorrect. The described sensitivity concerns the Starling fluid-filtration balance specifically, not primarily a change in total pulmonary blood flow."], ["basic rhythm of breathing generated by the medullary rhythmicity area", "Incorrect. Pulmonary capillary/osmotic pressure changes affect the Starling fluid-filtration balance, not the brainstem's basic breathing rhythm generation."], ["diffusing capacity for carbon monoxide exclusively", "Incorrect. The described sensitivity is about the Starling fluid-filtration balance in the capillaries, not specifically about carbon monoxide diffusing capacity."]], "c": 0, "cite": "Pulmonary Physiology I & II, Slide 48"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function showFooterLogo(){ document.getElementById('quiz-footer-logo').style.display='flex'; }
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
+    return;
+  }
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology Comprehensive Master Exam — Class of 2028</title>
+<style>
+  :root{--ink:#161a24;--body:#2c3242;--muted:#6b7280;--line:#e5e7ef;--paper:#f6f7fb;
+    --card:#fff;--acc:#4f46e5;--acc2:#4338ca;--good:#16a34a;--goodbg:#eafaf0;
+    --bad:#dc2626;--badbg:#fdecec;--shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.06);
+    --exam-toolbar-accent:var(--acc)}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 16px/1.6 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 80px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+
+  /* intro */
+  .intro{padding:40px 34px;text-align:center}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+  .intro h1{font:800 clamp(28px,5vw,40px)/1.1 ui-sans-serif;color:var(--ink);margin:14px 0 6px;letter-spacing:-.02em}
+  .intro p{color:var(--body);max-width:52ch;margin:12px auto}
+  .stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-width:96px}
+  .stat b{display:block;font:800 22px/1 ui-sans-serif;color:var(--ink)}
+  .stat span{font-size:12.5px;color:var(--muted)}
+  .units{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 6px}
+  .chip{font:600 12px/1 ui-sans-serif;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--body);background:var(--paper)}
+  .btn{appearance:none;border:0;cursor:pointer;font:700 15px/1 ui-sans-serif;border-radius:12px;
+    padding:15px 26px;background:var(--acc);color:#fff;transition:transform .1s,background .15s}
+  .btn:hover{background:var(--acc2);transform:translateY(-1px)}
+  .btn.sec{background:#eceef6;color:var(--ink)}
+  .btn.sec:hover{background:#e2e5f0}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+  /* quiz header */
+  .qhead{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;row-gap:8px}
+  .prog{flex:1 1 140px;height:8px;background:#e7e9f2;border-radius:99px;overflow:hidden}
+  .prog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),#7c74f0);transition:width .3s}
+  .count{font:600 13px/1 ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .timerpill{font:600 13px/1 ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .restart-mini{appearance:none;border:0;cursor:pointer;font:600 12px/1 ui-sans-serif;border-radius:8px;
+    padding:8px 12px;background:#eceef6;color:var(--ink)}
+  .restart-mini:hover{background:#e2e5f0}
+  #resume-banner{background:#eef0fe;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0;text-align:left}
+  #resume-banner p.rk{margin:0 0 4px;font-weight:700;color:var(--acc);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  #resume-banner p.rt{margin:0 0 12px;font-size:14.5px;color:var(--ink)}
+  .shuffle-row{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);justify-content:center;margin:16px 0 0;cursor:pointer}
+
+  .qcard{padding:26px 28px}
+  .badge{display:inline-flex;gap:8px;align-items:center;font:700 11px/1 ui-sans-serif;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--acc);background:#eef0fe;border-radius:8px;padding:6px 10px;margin-bottom:14px}
+  .badge .io{color:var(--muted);font-weight:600;letter-spacing:.02em;text-transform:none}
+  .stem{font:600 19px/1.45 ui-sans-serif;color:var(--ink);margin:0 0 20px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;font:inherit;color:var(--body);
+    transition:border-color .12s,background .12s}
+  .opt:hover:not(.locked){border-color:#c3c7e8;background:#fafbff}
+  .opt .kx{flex:none;width:26px;height:26px;border-radius:7px;background:#eef0f7;color:var(--muted);
+    font:700 13px/26px ui-sans-serif;text-align:center}
+  .opt .ot{flex:1;padding-top:2px}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--acc);background:#eef0fe}
+  .opt.selected-exam .kx{background:var(--acc);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .kx{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .kx{background:var(--bad);color:#fff}
+  .opt .exp{display:none;margin-top:8px;font:400 13.5px/1.5 ui-sans-serif;color:#4b5162;
+    padding-top:8px;border-top:1px dashed #d7dae6}
+  .opt.reveal .exp{display:block}
+  .opt.correct .exp{color:#14683a}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer;background:#fff;
+  }
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .fb{font:700 14px/1 ui-sans-serif}
+  .fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+
+  /* results */
+  .res{padding:34px 30px}
+  .score{text-align:center;margin-bottom:8px}
+  .score .big{font:800 54px/1 ui-sans-serif;color:var(--ink)}
+  .score .pct{font:700 18px/1 ui-sans-serif;color:var(--acc);margin-top:6px}
+  .score .msg{color:var(--muted);margin-top:10px}
+  h2.sec{font:700 12px/1 ui-sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    margin:28px 0 12px;border-top:1px solid var(--line);padding-top:20px}
+  .unitblock{margin-bottom:16px}
+  .unitrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .unitrow b{font:700 15px/1.2 ui-sans-serif;color:var(--ink)}
+  .unitrow span{font:600 13px ui-sans-serif;color:var(--muted)}
+  .iorow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:6px 0}
+  .iorow .lbl{font-size:13.5px;color:var(--body)}
+  .iorow .lbl .co{color:var(--muted);font-weight:600;margin-right:6px}
+  .bar{grid-column:1/-1;height:6px;background:#edeef4;border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--acc)}
+  .iorow .frac{font:600 13px ui-sans-serif;color:var(--muted);white-space:nowrap}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:10px;padding:13px 15px;margin:10px 0;background:#fff}
+  .miss .q{font:600 14.5px/1.4 ui-sans-serif;color:var(--ink);margin-bottom:6px}
+  .miss .co{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .miss .line{font-size:13.5px;margin-top:5px}
+  .miss .you{color:var(--bad)} .miss .corr{color:var(--good)}
+  .miss .ex{font-size:13px;color:#4b5162;margin-top:6px}
+  .rescta{display:flex;gap:12px;justify-content:center;margin-top:26px}
+  @media (max-width:560px){.qcard,.res,.intro{padding:22px 18px}.stem{font-size:17.5px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-footer-logo" style="display:none;position:fixed;bottom:14px;left:0;right:0;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <div class="kicker">Physiology · Class of 2028</div>
+    <h1>Comprehensive Master Exam</h1>
+    <p>Seventy questions spanning all seven systems, each tied to a stated instructional objective.
+       You'll get an explanation for every option as you go, and a full breakdown by objective at the end.</p>
+    <div class="stats">
+      <div class="stat"><b>70</b><span>questions</span></div>
+      <div class="stat"><b>5</b><span>systems</span></div>
+      <div class="stat"><b>21</b><span>objectives</span></div>
+    </div>
+    <div class="units">
+      <span class="chip">Blood &amp; Hemostasis</span><span class="chip">Blood &amp; Immunology</span>
+      <span class="chip">GI Physiology</span><span class="chip">Metabolism, Nutrition &amp; Thermoregulation</span>
+      <span class="chip">Pulmonary Physiology</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted)">Conceptual physiology only · answer order is randomized · your results stay in this browser.</p>
+    <div id="resume-banner" style="display:none">
+      <p class="rk">Progress saved</p>
+      <p class="rt" id="resume-text"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <button class="btn" onclick="resumeExam()">Resume →</button>
+        <button class="btn sec" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label class="shuffle-row">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label class="shuffle-row">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label class="shuffle-row">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div style="margin-top:18px"><button class="btn" onclick="startExam()">Start the exam →</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" style="display:none">
+    <div class="qhead">
+      <button class="restart-mini" id="prevbtn" onclick="prevQ()" disabled>← Back</button>
+      <div class="prog"><i id="progbar"></i></div>
+      <div class="count" id="count"></div>
+      <span class="timerpill examctl-timer" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseExam()">&#10074;&#10074; Pause</button>
+      <button class="restart-mini" onclick="restartExam()">Restart</button>
+    </div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+    </div>
+    <div class="card qcard">
+      <div class="badge"><span id="bUnit"></span><span class="io" id="bIO"></span></div>
+      <p class="stem" id="stem"></p>
+      <div class="opts" id="opts"></div>
+      <div class="foot">
+        <span class="fb" id="fb"></span>
+        <button class="btn" id="next" onclick="nextQ()" disabled>Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card res" style="display:none"></section>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> ★</p>
+  </div>
+</div>
+
+<script>
+const Q = [{"n": 1, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Hematopoiesis", "stem": "Extramedullary hematopoiesis (EMH) refers to blood cell production occurring outside the bone marrow. In adults, pathologic EMH most often occurs in which organs?", "options": [{"t": "The liver and spleen", "e": "Correct. When adult hematopoietic stem cells are stimulated (e.g., by bone irradiation or certain anemias) to produce blood cells outside the marrow, this pathologic extramedullary hematopoiesis occurs mostly in the liver and spleen — the same organs that serve as the major hematopoietic sites earlier in fetal development."}, {"t": "The kidneys and lungs", "e": "Incorrect. The kidneys and lungs are not the described sites of extramedullary hematopoiesis; the liver and spleen are."}, {"t": "The thymus and tonsils", "e": "Incorrect. The thymus and tonsils are lymphoid organs but are not the sites described for pathologic EMH."}, {"t": "The skin and muscle", "e": "Incorrect. Extramedullary hematopoiesis in adults is described as occurring mostly in the liver and spleen, not skin or muscle."}], "correct": 0}, {"n": 2, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Hematopoiesis", "stem": "Across development, the major site of hematopoiesis shifts over time. During mid-gestation, blood cell production occurs mainly in the...", "options": [{"t": "liver (plus spleen and lymph nodes)", "e": "Correct. During the mid-trimester of gestation, hematopoiesis occurs mainly in the liver, along with contributions from the spleen and lymph nodes, before the bone marrow becomes the dominant site later in gestation and throughout postnatal life."}, {"t": "bone marrow exclusively", "e": "Incorrect. Bone marrow becomes the dominant hematopoietic site from the last month of gestation onward, but mid-gestation hematopoiesis occurs mainly in the liver."}, {"t": "yolk sac exclusively", "e": "Incorrect. The yolk sac is the site of the earliest embryonic hematopoiesis, before mid-gestation, when the liver becomes the primary site."}, {"t": "thymus exclusively", "e": "Incorrect. The thymus is central to T-lymphocyte maturation, not the mid-gestation site of general hematopoiesis, which is the liver."}], "correct": 0}, {"n": 3, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Red blood cells", "stem": "As red blood cells age over their lifespan, their metabolic enzymes gradually deplete, which leads to...", "options": [{"t": "increased cell fragility, causing rupture as cells squeeze through tight passages (often in the spleen)", "e": "Correct. Depletion of metabolic enzymes with age makes red blood cells progressively more fragile, so that many finally rupture while being forced through narrow passages, particularly within the spleen."}, {"t": "increased cell rigidity that improves oxygen delivery late in life", "e": "Incorrect. Enzyme depletion causes fragility and eventual rupture, not an improvement in oxygen delivery."}, {"t": "a compensatory increase in hemoglobin synthesis", "e": "Incorrect. Mature red blood cells lack the nuclear machinery for new hemoglobin synthesis; aging leads to fragility and eventual rupture, not increased synthesis."}, {"t": "no functional change until the cell is replaced", "e": "Incorrect. Enzyme depletion produces a real functional decline — increasing fragility — rather than the cell remaining unchanged until replacement."}], "correct": 0}, {"n": 4, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1a", "ioName": "Red blood cells", "stem": "When aged red blood cells finally rupture, the released hemoglobin is phagocytosed by macrophages located particularly in the...", "options": [{"t": "liver and spleen", "e": "Correct. Macrophages in the liver and spleen are the primary sites where hemoglobin released from ruptured red blood cells is phagocytosed and broken down."}, {"t": "kidney and bladder", "e": "Incorrect. The kidney and bladder are not the described sites of hemoglobin phagocytosis; that role belongs to macrophages in the liver and spleen."}, {"t": "lungs and heart", "e": "Incorrect. Hemoglobin phagocytosis after red cell rupture occurs in the liver and spleen, not the lungs or heart."}, {"t": "skin and subcutaneous tissue", "e": "Incorrect. The liver and spleen, not skin or subcutaneous tissue, are where this phagocytosis mainly occurs."}], "correct": 0}, {"n": 5, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1b", "ioName": "Platelets", "stem": "Normal circulating platelet count falls within which approximate range?", "options": [{"t": "150,000–450,000 per microliter of blood", "e": "Correct. Platelets normally circulate at a concentration of roughly 150,000 to 450,000 per microliter of blood."}, {"t": "4,000–11,000 per microliter of blood", "e": "Incorrect. That range describes the normal white blood cell count, not the platelet count."}, {"t": "4.5–6 million per microliter of blood", "e": "Incorrect. That range approximates the normal red blood cell count, not the platelet count."}, {"t": "1,000–5,000 per microliter of blood", "e": "Incorrect. This range is far too low for the normal platelet count, which is roughly 150,000–450,000/µL."}], "correct": 0}, {"n": 6, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1b", "ioName": "Platelets", "stem": "Platelets have a circulating half-life of about 8–12 days, after which they are cleared mainly by...", "options": [{"t": "tissue macrophages, mostly in the spleen", "e": "Correct. Platelets are eliminated from circulation mainly by tissue macrophages, particularly in the spleen — the same organ implicated in removing aged red blood cells."}, {"t": "renal filtration and excretion in urine", "e": "Incorrect. Platelets are too large to be renally filtered; they are cleared by tissue macrophages, mostly in the spleen."}, {"t": "digestion in the gastrointestinal tract", "e": "Incorrect. Platelet clearance occurs via splenic tissue macrophages, not GI digestion."}, {"t": "pulmonary capillary filtration", "e": "Incorrect. The spleen, via tissue macrophages, is the site described for platelet clearance, not the pulmonary capillaries."}], "correct": 0}, {"n": 7, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1b", "ioName": "Platelets", "stem": "Consistent with the spleen's role in removing platelets from circulation, splenectomy characteristically results in...", "options": [{"t": "an increase in circulating platelet count", "e": "Correct. Because the spleen normally removes platelets from the blood, removing the spleen (splenectomy) reduces this clearance and increases the circulating platelet count."}, {"t": "a decrease in circulating platelet count", "e": "Incorrect. Removing the organ responsible for platelet clearance would be expected to raise, not lower, circulating platelet count."}, {"t": "no change in platelet count, since the spleen has no role in platelet handling", "e": "Incorrect. The spleen is specifically described as removing platelets from the blood, so its removal does affect platelet count."}, {"t": "a decrease in red blood cell count only, with platelets unaffected", "e": "Incorrect. Splenectomy's described effect here is specifically on platelet count (an increase), not an isolated red cell effect."}], "correct": 0}, {"n": 8, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1c", "ioName": "Coagulation cascade", "stem": "The thrombin–thrombomodulin complex, formed when thrombin binds thrombomodulin on intact endothelium, activates a plasma protein called Protein C, which then acts to limit clotting by...", "options": [{"t": "inactivating activated Factors Va and VIIIa", "e": "Correct. Once activated by the thrombin–thrombomodulin complex, Protein C inactivates activated Factors Va and VIIIa, removing two key cofactors needed for efficient prothrombin and Factor X activation, thereby restraining further clot growth."}, {"t": "directly converting fibrinogen into fibrin", "e": "Incorrect. Converting fibrinogen to fibrin is thrombin's own procoagulant action, not the anticoagulant role of activated Protein C."}, {"t": "directly activating Factor XII to start the intrinsic pathway", "e": "Incorrect. Activated Protein C is an inhibitory (anticoagulant) protein; it does not initiate the intrinsic pathway by activating Factor XII."}, {"t": "stimulating additional platelet aggregation", "e": "Incorrect. Activated Protein C acts to limit coagulation by inactivating Va/VIIIa, not to stimulate further platelet aggregation."}], "correct": 0}, {"n": 9, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1c", "ioName": "Coagulation cascade", "stem": "Once a fibrin clot forms, fibrin fibers themselves help limit further clot growth by binding roughly what fraction of the thrombin present, localizing it within the clot?", "options": [{"t": "85–90%", "e": "Correct. Fibrin fibers bind an estimated 85–90% of the thrombin generated, sequestering it within the clot itself; this localizes thrombin's action and helps prevent it from diffusing into the general circulation and triggering widespread clotting."}, {"t": "About 10%", "e": "Incorrect. This understates fibrin's thrombin-binding capacity, which is estimated at 85–90%, not around 10%."}, {"t": "Essentially 0%, since fibrin does not bind thrombin", "e": "Incorrect. Fibrin fibers do bind a large majority (85–90%) of thrombin, which is a key mechanism limiting the spread of clotting."}, {"t": "100%, removing all thrombin from the circulation instantly", "e": "Incorrect. Fibrin binds a large majority, but not literally all (85–90%, not 100%), of the generated thrombin."}], "correct": 0}, {"n": 10, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1e", "ioName": "Vitamin K & bleeding physiology", "stem": "Vitamin K's essential role in coagulation is to serve as a cofactor for carboxylation of glutamic acid residues in prothrombin and Factors VII, IX, and X, and also in...", "options": [{"t": "Protein C", "e": "Correct. Vitamin K–dependent carboxylation is required not only for prothrombin and Factors VII, IX, and X but also for Protein C, one of the body's own natural anticoagulant proteins."}, {"t": "Factor XIII (fibrin-stabilizing factor)", "e": "Incorrect. Factor XIII's cross-linking activity does not depend on vitamin K-mediated carboxylation in the way prothrombin, VII, IX, X, and Protein C do."}, {"t": "Fibrinogen (Factor I)", "e": "Incorrect. Fibrinogen is not among the vitamin K-dependent carboxylated clotting factors; that group includes prothrombin, VII, IX, X, and Protein C."}, {"t": "Tissue factor (Factor III)", "e": "Incorrect. Tissue factor is not a vitamin K-dependent clotting factor requiring this carboxylation step."}], "correct": 0}, {"n": 11, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1e", "ioName": "Vitamin K & bleeding physiology", "stem": "During the carboxylation reaction it enables, vitamin K itself becomes oxidized and inactivated; it is then reactivated by...", "options": [{"t": "vitamin K epoxide reductase complex 1 (VKORC1)", "e": "Correct. The enzyme VKORC1 reduces the oxidized, inactive form of vitamin K back to its active form, allowing it to be reused for further carboxylation reactions."}, {"t": "thrombomodulin", "e": "Incorrect. Thrombomodulin's role is binding thrombin to help activate Protein C; it does not reactivate oxidized vitamin K."}, {"t": "antithrombin III", "e": "Incorrect. Antithrombin III neutralizes thrombin and other clotting factors; it plays no role in recycling oxidized vitamin K."}, {"t": "Factor XIII", "e": "Incorrect. Factor XIII cross-links fibrin; it is not involved in reactivating vitamin K."}], "correct": 0}, {"n": 12, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1d", "ioName": "Fibrinolysis", "stem": "Tissue plasminogen activator (tPA), which converts trapped plasminogen to plasmin over the days following clot formation, is a glycoprotein produced mainly by the...", "options": [{"t": "vascular endothelium", "e": "Correct. Human tPA is a glycoprotein produced mainly by vascular endothelial cells; released over several days after injury, it converts plasminogen trapped within the clot into active plasmin."}, {"t": "liver hepatocytes", "e": "Incorrect. tPA production is attributed mainly to vascular endothelial cells, not hepatocytes (though the liver does synthesize many other plasma proteins)."}, {"t": "platelets exclusively", "e": "Incorrect. tPA is described as being produced mainly by vascular endothelium, not platelets."}, {"t": "red blood cells", "e": "Incorrect. Red blood cells do not synthesize tPA; vascular endothelial cells are the main source."}], "correct": 0}, {"n": 13, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1d", "ioName": "Fibrinolysis", "stem": "Plasmin, the active protease that digests fibrin fibers during clot lysis, structurally resembles which other enzyme discussed in digestion?", "options": [{"t": "Trypsin", "e": "Correct. Plasmin is described as a protease resembling trypsin; like trypsin, it is generated from an inactive precursor (plasminogen) and then cleaves target proteins — in plasmin's case, fibrin fibers and several other clotting factors."}, {"t": "Pepsin", "e": "Incorrect. Plasmin's described structural resemblance is to trypsin, not pepsin."}, {"t": "Salivary amylase", "e": "Incorrect. Amylase is a carbohydrate-digesting enzyme, structurally and functionally unrelated to the protease plasmin."}, {"t": "Lactase", "e": "Incorrect. Lactase is a brush-border disaccharidase, not the protease plasmin resembles; plasmin resembles trypsin."}], "correct": 0}, {"n": 14, "unit": 1, "unitName": "Blood & Hemostasis", "io": "1c", "ioName": "Coagulation cascade", "stem": "In the standard table of clotting factors and their synonyms, Factor I, Factor II, Factor III, and Factor IV correspond respectively to...", "options": [{"t": "fibrinogen, prothrombin, tissue factor, and calcium ions", "e": "Correct. By convention, Factor I is fibrinogen, Factor II is prothrombin, Factor III is tissue factor (thromboplastin), and Factor IV is calcium ions — the numbering system used throughout the classic clotting factor table."}, {"t": "prothrombin, fibrinogen, calcium ions, and tissue factor", "e": "Incorrect. This reassigns the factors out of order; Factor I is fibrinogen and Factor II is prothrombin, not the reverse."}, {"t": "tissue factor, calcium ions, fibrinogen, and prothrombin", "e": "Incorrect. This does not match the standard numbering, where Factor I is fibrinogen, II is prothrombin, III is tissue factor, and IV is calcium."}, {"t": "calcium ions, tissue factor, prothrombin, and fibrinogen", "e": "Incorrect. This reverses the standard order entirely; Factor I is fibrinogen and Factor IV is calcium, not the other way around."}], "correct": 0}, {"n": 15, "unit": 2, "unitName": "Blood & Immunology", "io": "2a", "ioName": "Antigen presentation", "stem": "Antigen fragments presented by MHC I molecules are specifically recognized by...", "options": [{"t": "cytotoxic T-cells", "e": "Correct. MHC class I molecules present antigen fragments to cytotoxic T-cells, allowing them to identify and destroy infected or abnormal cells displaying those fragments, while MHC class II instead presents to helper T-cells."}, {"t": "helper T-cells", "e": "Incorrect. Helper T-cells recognize antigen presented by MHC class II molecules, not MHC class I, which presents to cytotoxic T-cells."}, {"t": "B-lymphocytes exclusively", "e": "Incorrect. B-lymphocytes recognize intact antigen directly via their surface antibodies; they do not require MHC I presentation the way T-cells do."}, {"t": "natural killer cells exclusively", "e": "Incorrect. NK cells are part of innate immunity and do not require MHC I-restricted antigen presentation the way cytotoxic T-cells do to recognize their targets."}], "correct": 0}, {"n": 16, "unit": 2, "unitName": "Blood & Immunology", "io": "2a", "ioName": "Antigen presentation", "stem": "MHC II molecules, in contrast to MHC I, present antigen fragments specifically to...", "options": [{"t": "helper T-cells", "e": "Correct. MHC class II molecules on antigen-presenting cells display antigen fragments to helper T-cells, which then coordinate and amplify the broader immune response; MHC I instead presents to cytotoxic T-cells."}, {"t": "cytotoxic T-cells", "e": "Incorrect. Cytotoxic T-cells recognize antigen via MHC class I, not MHC class II, which presents to helper T-cells."}, {"t": "neutrophils", "e": "Incorrect. Neutrophils are innate phagocytes and are not the described target of MHC II antigen presentation, which is helper T-cells."}, {"t": "red blood cells", "e": "Incorrect. Red blood cells play no role in antigen presentation or recognition; MHC II presents to helper T-cells."}], "correct": 0}, {"n": 17, "unit": 2, "unitName": "Blood & Immunology", "io": "2a", "ioName": "Antigen presentation", "stem": "Dendritic cells, macrophages, and B-lymphocytes are all capable antigen-presenting cells, but dendritic cells are considered the most potent because they are...", "options": [{"t": "located throughout tissues, positioned to efficiently capture and present antigen", "e": "Correct. Dendritic cells are distributed widely throughout the body's tissues, giving them an especially efficient positioning to encounter, capture, and present antigen to T-cells, making them the most potent of the antigen-presenting cell types."}, {"t": "the only antigen-presenting cell type that expresses MHC molecules", "e": "Incorrect. Macrophages and B-lymphocytes also express MHC molecules and present antigen; dendritic cells are distinguished by their potency and tissue distribution, not by being the sole MHC-expressing cell type."}, {"t": "incapable of migrating to lymphoid organs", "e": "Incorrect. Dendritic cells do migrate to lymphoid organs to present antigen to T-cells; this migratory capacity supports, rather than contradicts, their potency."}, {"t": "restricted to the bone marrow only", "e": "Incorrect. Dendritic cells are described as being located throughout tissues, not confined to the bone marrow."}], "correct": 0}, {"n": 18, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Cell-mediated immunity", "stem": "Cytotoxic (killer) T-cells destroy their target cells by secreting hole-forming proteins called...", "options": [{"t": "perforins", "e": "Correct. Killer T-cells secrete perforins, which form pores in the target cell's membrane, allowing cytotoxic substances to be released directly into the attacked cell — after which the killer T-cell can detach and move on to kill additional target cells."}, {"t": "opsonins", "e": "Incorrect. Opsonins (like antibodies and C3) mark pathogens for phagocytosis; they are not the pore-forming proteins killer T-cells use to kill target cells."}, {"t": "interferons", "e": "Incorrect. Interferons are antiviral signaling proteins; the pore-forming proteins released by killer T-cells are specifically called perforins."}, {"t": "thrombosthenin", "e": "Incorrect. Thrombosthenin is the platelet contractile protein involved in clot retraction, unrelated to killer T-cell cytotoxicity."}], "correct": 0}, {"n": 19, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Cell-mediated immunity", "stem": "After a killer T-cell releases perforins and cytotoxic substances into one target cell, it characteristically...", "options": [{"t": "detaches and moves on to kill additional target cells", "e": "Correct. Killer T-cells are not consumed in a single cytotoxic event; after destroying one target, they can detach and go on to kill additional cells bearing the same recognized antigen."}, {"t": "is itself destroyed along with the target cell every time", "e": "Incorrect. Killer T-cells are able to move on and kill additional cells after an attack, rather than being destroyed alongside every target."}, {"t": "converts into a helper T-cell", "e": "Incorrect. Killer (cytotoxic) T-cells retain their cytotoxic identity and continue killing additional targets; they do not convert into helper T-cells."}, {"t": "becomes permanently inactivated after one kill", "e": "Incorrect. Killer T-cells remain active and capable of killing multiple target cells in succession, not just one."}], "correct": 0}, {"n": 20, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Innate cellular defense", "stem": "Kupffer cells lining the liver sinusoids are so effective at filtering portal blood that they remove approximately what fraction of bacteria in a single pass?", "options": [{"t": "About 99%", "e": "Correct. Kupffer cells lining the liver sinusoids remove approximately 99% of bacteria present in portal blood in a single pass, making the liver an extremely effective filter given that portal blood carries organisms absorbed from the gut."}, {"t": "About 50%", "e": "Incorrect. This understates Kupffer cells' filtering efficiency, which removes approximately 99%, not around half, of bacteria in a single pass."}, {"t": "About 10%", "e": "Incorrect. Kupffer cells are far more effective than this, removing roughly 99% of portal blood bacteria in a single pass."}, {"t": "Essentially 0%, since Kupffer cells mainly process senescent red cells, not bacteria", "e": "Incorrect. Kupffer cells are highly effective bacterial filters, removing about 99% of portal blood bacteria in a single pass, in addition to other phagocytic roles."}], "correct": 0}, {"n": 21, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Innate cellular defense", "stem": "Within the spleen, macrophages residing specifically in the red pulp are important for removing...", "options": [{"t": "invading organisms, debris, and senescent blood cells and platelets", "e": "Correct. Macrophages in the red pulp of the spleen (along with those in lymph node sinuses) are richly exposed to circulating blood and are important for clearing invading organisms, cellular debris, and aged (senescent) blood cells and platelets."}, {"t": "only dietary lipids absorbed from the intestine", "e": "Incorrect. The red pulp macrophages' described role concerns clearing organisms/debris/senescent cells, not dietary lipid handling, which is a chylomicron/lymphatic process."}, {"t": "excess glucose during hyperglycemia", "e": "Incorrect. Glucose handling is not the described role of splenic red pulp macrophages, whose function is clearing organisms, debris, and senescent blood cells/platelets."}, {"t": "excess bile salts recycled from the intestine", "e": "Incorrect. Bile salt recycling occurs via enterohepatic circulation through the liver/ileum, not via splenic red pulp macrophages."}], "correct": 0}, {"n": 22, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Antibody structure & isotypes", "stem": "IgM, the earliest antibody class produced during an immune response, is structurally distinctive because it is composed of five paired heavy and light chains, giving it...", "options": [{"t": "10 antigen-binding sites", "e": "Correct. IgM's pentameric structure (five paired heavy and light chains) gives it 10 antigen-binding sites, more than any other immunoglobulin class, making it especially effective at agglutinating antigens early in an immune response."}, {"t": "2 antigen-binding sites, the same as IgG", "e": "Incorrect. IgG (a single Y-shaped unit) has 2 binding sites; IgM's pentameric structure instead gives it 10 binding sites."}, {"t": "4 antigen-binding sites, the same as IgA", "e": "Incorrect. IgA has 4 binding sites; IgM's five-paired-chain structure gives it more — 10 binding sites."}, {"t": "a single antigen-binding site", "e": "Incorrect. IgM's multimeric (five-paired-chain) structure gives it substantially more than one binding site — specifically 10."}], "correct": 0}, {"n": 23, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Antibody structure & isotypes", "stem": "IgG is the most abundant antibody isotype, accounting for approximately what fraction of all immunoglobulins?", "options": [{"t": "About 75%", "e": "Correct. IgG accounts for approximately 75% of all circulating immunoglobulins, consistent with its major role in long-term humoral immunity, while classes like IgA, IgD, and IgE make up smaller fractions."}, {"t": "About 10%", "e": "Incorrect. This understates IgG's dominance among immunoglobulin classes, which make up roughly 75% of the total, not around 10%."}, {"t": "About 95%", "e": "Incorrect. This overstates IgG's share; it accounts for roughly 75%, not nearly all, of total immunoglobulins."}, {"t": "About 25%", "e": "Incorrect. IgG's actual share of total immunoglobulins is closer to 75%, considerably more than 25%."}], "correct": 0}, {"n": 24, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Innate cellular defense", "stem": "Once a monocyte matures in the tissues into a macrophage, its diameter increases substantially — by roughly how much compared to its earlier form, reaching up to 60–80 micrometers?", "options": [{"t": "About 5-fold", "e": "Correct. Macrophages can reach roughly 5-fold the diameter of the monocyte they matured from, growing up to 60–80 micrometers — a size increase that accompanies their greater phagocytic capacity compared with neutrophils."}, {"t": "About 1.5-fold", "e": "Incorrect. This understates the size increase; macrophages can reach roughly 5-fold the diameter, not just 1.5-fold."}, {"t": "About 20-fold", "e": "Incorrect. This overstates the size increase, which is described as approximately 5-fold, reaching 60–80 micrometers."}, {"t": "There is no meaningful size change from monocyte to macrophage", "e": "Incorrect. Macrophages undergo a substantial size increase (about 5-fold) as monocytes mature into them in the tissues."}], "correct": 0}, {"n": 25, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Cell-mediated immunity", "stem": "Helper T-cells coordinate and amplify the immune response largely by secreting lymphokines, a group that includes several interleukins along with...", "options": [{"t": "granulocyte-monocyte colony-stimulating factor (GM-CSF) and interferon-gamma", "e": "Correct. In addition to interleukins (such as IL-2, IL-3, IL-4, IL-5, IL-6, IL-10, IL-11–13), helper T-cell lymphokines include GM-CSF and interferon-gamma — a broad signaling arsenal that the immune system is described as being 'almost paralyzed' without."}, {"t": "erythropoietin and thrombopoietin", "e": "Incorrect. EPO and thrombopoietin regulate red cell and platelet production; they are not part of the helper T-cell lymphokine repertoire, which includes GM-CSF and interferon-gamma."}, {"t": "gastrin and secretin", "e": "Incorrect. Gastrin and secretin are GI hormones, unrelated to the lymphokines (including GM-CSF and interferon-gamma) secreted by helper T-cells."}, {"t": "renin and aldosterone", "e": "Incorrect. Renin and aldosterone are part of blood-pressure regulation, not among the helper T-cell lymphokines, which include GM-CSF and interferon-gamma."}], "correct": 0}, {"n": 26, "unit": 2, "unitName": "Blood & Immunology", "io": "2b", "ioName": "Cell-mediated immunity", "stem": "Loss of helper T-cells, as occurs in advanced HIV infection, cripples immune defense so severely largely because helper T-cells...", "options": [{"t": "secrete the lymphokines that activate and coordinate nearly every other arm of the immune response", "e": "Correct. Because helper T-cells secrete the lymphokines that activate B-cells, cytotoxic T-cells, and macrophages, their loss leaves the immune system 'almost paralyzed,' unable to mount effective humoral or cell-mediated responses even though other immune cell types are still physically present."}, {"t": "are the only cells capable of phagocytosis", "e": "Incorrect. Phagocytosis is carried out by neutrophils and macrophages, not helper T-cells; helper T-cells' central importance lies in coordinating other immune cells via lymphokines."}, {"t": "directly produce all circulating antibodies themselves", "e": "Incorrect. Antibody production is B-lymphocytes'/plasma cells' role; helper T-cells instead provide the lymphokine signals that activate and coordinate B-cells and other immune cells."}, {"t": "are the sole source of complement proteins", "e": "Incorrect. Complement proteins are produced mainly by the liver, not by helper T-cells, whose central role is secreting coordinating lymphokines."}], "correct": 0}, {"n": 27, "unit": 2, "unitName": "Blood & Immunology", "io": "2c", "ioName": "Innate cellular defense", "stem": "Neutrophils and macrophages share three key motility properties that let them reach a site of infection: diapedesis, ameboid motion, and...", "options": [{"t": "chemotaxis", "e": "Correct. Alongside diapedesis (squeezing through capillary walls) and ameboid motion (crawling movement), chemotaxis — directed movement toward a chemical gradient released at the infection site — is the third property that lets neutrophils and macrophages reach an infection."}, {"t": "opsonization", "e": "Incorrect. Opsonization is the marking of a pathogen for phagocytosis, not a form of cellular motility like diapedesis, ameboid motion, or chemotaxis."}, {"t": "agglutination", "e": "Incorrect. Agglutination is an antibody-mediated clumping of antigens, not one of the three motility properties (diapedesis, ameboid motion, chemotaxis) shared by neutrophils and macrophages."}, {"t": "degranulation", "e": "Incorrect. Degranulation is the release of granule contents (e.g., by mast cells/basophils or activated neutrophils), not one of the three described motility properties."}], "correct": 0}, {"n": 28, "unit": 2, "unitName": "Blood & Immunology", "io": "2d", "ioName": "Antibody structure & isotypes", "stem": "IgD, one of the five antibody isotypes, is structurally similar to IgG in that it has how many antigen-binding sites?", "options": [{"t": "2", "e": "Correct. Like IgG, IgD has 2 antigen-binding sites — fewer than IgA's 4 or IgM's 10 — though IgD's specific physiological role is less prominent than IgG's role in long-term humoral immunity."}, {"t": "4", "e": "Incorrect. 4 binding sites describes IgA, not IgD, which has 2 binding sites, matching IgG."}, {"t": "10", "e": "Incorrect. 10 binding sites describes IgM's pentameric structure; IgD instead has 2 binding sites."}, {"t": "6", "e": "Incorrect. No major isotype discussed here has 6 binding sites; IgD specifically has 2, the same as IgG."}], "correct": 0}, {"n": 29, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI wall & regulation", "stem": "The GI tract wall is organized, from outer to inner, as serosa, longitudinal muscle, circular muscle, submucosa, and mucosa. The myenteric (Auerbach's) plexus lies specifically...", "options": [{"t": "between the longitudinal and circular muscle layers", "e": "Correct. The myenteric plexus sits between the longitudinal and circular smooth-muscle layers, which is why it primarily controls motility (contraction of those layers)."}, {"t": "within the mucosa itself, beneath the epithelial lining", "e": "Incorrect. That location describes structures near the submucosal plexus, not the myenteric plexus."}, {"t": "between the submucosa and the muscularis mucosae", "e": "Incorrect. That is where the submucosal (Meissner's) plexus lies, not the myenteric plexus."}, {"t": "outside the serosa, in the mesentery", "e": "Incorrect. The myenteric plexus is embedded in the muscle layers themselves, not outside the serosa."}], "correct": 0}, {"n": 30, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI wall & regulation", "stem": "Compared to the myenteric plexus, the submucosal (Meissner's) plexus is located in the mucosal/submucosal layer and is primarily concerned with...", "options": [{"t": "controlling the strength and rhythm of muscle contractions", "e": "Incorrect. Contraction strength/rhythm is chiefly the myenteric plexus's role, given its location between the muscle layers."}, {"t": "local control of secretion, absorption, and mucosal blood flow", "e": "Correct. Sitting within the mucosal/submucosal layer, the submucosal plexus is positioned to sense the local luminal environment and regulate secretion, absorption, and local blood flow."}, {"t": "relaying visceral pain sensation directly to the spinal cord", "e": "Incorrect. This is a sensory/CNS pathway description, not the defined local function of the submucosal plexus in these slides."}, {"t": "generating the basic electrical slow-wave rhythm", "e": "Incorrect. Slow waves arise from the interstitial cells of Cajal within the muscle layers, not from the submucosal plexus."}], "correct": 1}, {"n": 31, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI wall & regulation", "stem": "A GI signaling molecule that is released into the blood and acts on a distant target cell is classified as...", "options": [{"t": "a paracrine", "e": "Incorrect. A paracrine diffuses locally to a nearby target cell rather than traveling in the blood."}, {"t": "a neurocrine", "e": "Incorrect. A neurocrine is released from a neuron and diffuses to an adjacent target, not carried in the bloodstream."}, {"t": "an endocrine (hormone)", "e": "Correct. By definition, an endocrine signal is released into the blood to act on a distant target cell; all GI hormones are peptides released this way."}, {"t": "an autocrine", "e": "Incorrect. An autocrine acts back on the very cell that secreted it, not on a distant target via the blood."}], "correct": 2}, {"n": 32, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "GI wall & regulation", "stem": "Somatostatin, which is released by D cells and diffuses locally to inhibit neighboring gastrin-secreting G cells, is best classified as a...", "options": [{"t": "hormone (endocrine)", "e": "Incorrect. Endocrine signals travel through the blood to a distant target; somatostatin here acts locally by diffusion."}, {"t": "paracrine", "e": "Correct. Somatostatin is a peptide paracrine — released by D cells, it diffuses through the interstitium to act on neighboring cells (like G cells) rather than traveling through the blood."}, {"t": "neurocrine", "e": "Incorrect. A neurocrine is released from a nerve terminal; somatostatin here is released from an endocrine-type D cell, not a neuron."}, {"t": "exocrine", "e": "Incorrect. Exocrine secretion is released through a duct onto an epithelial surface, not diffused to a neighboring cell."}], "correct": 1}, {"n": 33, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Motility", "stem": "There are six named sphincters along the alimentary tract between segments. Which list correctly names all six?", "options": [{"t": "Upper esophageal, lower esophageal, pyloric, ileocecal, internal anal, external anal", "e": "Correct. The six sphincters listed are the UES, LES, pyloric sphincter, ileocecal valve/sphincter, and the internal and external anal sphincters."}, {"t": "Upper esophageal, lower esophageal, pyloric, cardiac, ileocecal, external anal", "e": "Incorrect. 'Cardiac sphincter' is not one of the six named sphincters listed; the internal anal sphincter is, and is omitted here."}, {"t": "Pyloric, ileocecal, internal anal, external anal, sphincter of Oddi, ampullary sphincter", "e": "Incorrect. The sphincter of Oddi and ampullary sphincter are biliary/pancreatic structures, not among the six GI-segment sphincters listed here."}, {"t": "Upper esophageal, lower esophageal, pyloric, ileocecal, internal anal only (five total)", "e": "Incorrect. There are six, not five — the external anal sphincter is also included."}], "correct": 0}, {"n": 34, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Motility", "stem": "The upper esophageal sphincter (UES) and lower esophageal sphincter (LES) serve distinct purposes: the UES mainly...", "options": [{"t": "prevents acid reflux from the stomach into the esophagus", "e": "Incorrect. Preventing acid reflux is the LES's job, not the UES's."}, {"t": "keeps air from entering the esophagus", "e": "Correct. The UES's main purpose is to keep air out of the esophagus (e.g., during breathing), while the LES's purpose is to prevent gastric acid reflux."}, {"t": "relaxes tonically at rest to allow constant food passage", "e": "Incorrect. Both sphincters are tonically contracted at rest and relax only transiently to allow a bolus through."}, {"t": "is regulated only by circulating hormones, not by nerves", "e": "Incorrect. Esophageal sphincter tone is neurally regulated (e.g., vagal/vagovagal reflexes), not purely hormonal."}], "correct": 1}, {"n": 35, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Motility", "stem": "During receptive relaxation of the LES and gastric fundus as a meal arrives, the transmitters mediating this relaxation are...", "options": [{"t": "acetylcholine and substance P", "e": "Incorrect. ACh and substance P are excitatory neurotransmitters that would promote contraction, not the inhibitory relaxation described here."}, {"t": "gastrin and histamine", "e": "Incorrect. Gastrin and histamine drive gastric acid secretion; they are not the transmitters of receptive relaxation."}, {"t": "nitric oxide and VIP, via an inhibitory vagovagal reflex", "e": "Correct. Receptive relaxation is mediated by a vagovagal reflex in which vagal input is inhibitory, using nitric oxide and VIP as the relaxing transmitters."}, {"t": "norepinephrine acting on alpha receptors", "e": "Incorrect. The described reflex is vagal (parasympathetic) and uses NO/VIP, not sympathetic norepinephrine."}], "correct": 2}, {"n": 36, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Motility", "stem": "Parasympathetic stimulation of GI smooth muscle is blocked by atropine because it acts through...", "options": [{"t": "nicotinic receptors on the smooth muscle cell", "e": "Incorrect. Nicotinic receptors are nAChR at autonomic ganglia; smooth muscle itself responds to ACh via muscarinic receptors, which atropine blocks."}, {"t": "muscarinic (M3) receptors on smooth muscle cells", "e": "Correct. Parasympathetic excitation of GI smooth muscle acts on M3 muscarinic receptors, which is exactly the receptor class that atropine (a muscarinic antagonist) blocks."}, {"t": "beta-adrenergic receptors on smooth muscle cells", "e": "Incorrect. Beta-adrenergic receptors respond to sympathetic input (norepinephrine/epinephrine), not parasympathetic ACh, and are not blocked by atropine."}, {"t": "VIP receptors on smooth muscle cells", "e": "Incorrect. VIP acts on its own receptors independent of the muscarinic pathway that atropine antagonizes."}], "correct": 1}, {"n": 37, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Motility", "stem": "Motilin, which drives the interdigestive migrating motor complex, is characteristically released...", "options": [{"t": "continuously at a fixed rate regardless of feeding state", "e": "Incorrect. Motilin release is cyclic, not constant."}, {"t": "cyclically about every 90 minutes during fasting, and is suppressed by a mixed meal", "e": "Correct. Motilin is released in a cyclic pattern roughly every 90 minutes during the fasting state; ingesting a mixed meal suppresses its release, while acid and fat in the duodenum can actually stimulate it."}, {"t": "only in direct response to a high-protein meal", "e": "Incorrect. A mixed meal suppresses, rather than triggers, motilin's cyclic release; it is a fasting-state signal."}, {"t": "exclusively by the pancreas in response to CCK", "e": "Incorrect. Motilin is a distinct GI hormone tied to the migrating motor complex, not a pancreatic response to CCK."}], "correct": 1}, {"n": 38, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Gastric secretion", "stem": "Unlike acid (HCl) secretion, gastrin release from G cells is characteristically...", "options": [{"t": "blocked by atropine, just like acid secretion", "e": "Incorrect. This describes acid secretion's dependence on cholinergic input; gastrin secretion itself is not blocked by atropine."}, {"t": "not blocked by atropine", "e": "Correct. A key distinguishing feature noted in these slides is that gastrin secretion is not blocked by atropine, even though direct parietal-cell acid secretion is."}, {"t": "entirely independent of luminal pH", "e": "Incorrect. Gastrin release is in fact suppressed as antral pH falls (via somatostatin), so it is pH-sensitive."}, {"t": "stimulated only by protein in the duodenum, never the stomach", "e": "Incorrect. Gastrin release is triggered by gastric distension and luminal protein/peptides in the stomach itself, particularly the antrum."}], "correct": 1}, {"n": 39, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Gastric secretion", "stem": "Besides the indirect somatostatin-mediated pathway, a falling gastric pH also inhibits acid output through a second mechanism, in which acid...", "options": [{"t": "has a direct suppressive effect on parietal cell secretion", "e": "Correct. In addition to stimulating somatostatin (which inhibits gastrin), acid has its own direct inhibitory effect on parietal cell secretion, giving two overlapping negative-feedback pathways."}, {"t": "directly stimulates chief cells to secrete more pepsinogen", "e": "Incorrect. This describes a stimulatory action unrelated to the inhibitory feedback on acid secretion being asked about."}, {"t": "converts inactive renin into its active form in the stomach", "e": "Incorrect. Renin is a kidney/juxtaglomerular enzyme, unrelated to gastric acid feedback."}, {"t": "is neutralized entirely before it can have any local effect", "e": "Incorrect. The point of this feedback is that acid itself, while still present, directly suppresses further parietal-cell secretion."}], "correct": 0}, {"n": 40, "unit": 3, "unitName": "GI Physiology", "io": "3a", "ioName": "Gastric secretion", "stem": "Histamine released from enterochromaffin-like (ECL) cells is trophic to the oxyntic (acid-secreting) mucosa, meaning it...", "options": [{"t": "stimulates DNA, RNA, and protein synthesis in cells such as parietal and chief cells", "e": "Correct. Beyond its acute secretory effect, histamine has a trophic action on the oxyntic mucosa — stimulating DNA, RNA, and protein synthesis in parietal cells, chief cells, and ECL cells themselves."}, {"t": "permanently destroys parietal cells after repeated stimulation", "e": "Incorrect. A trophic effect promotes growth/synthesis, the opposite of cell destruction."}, {"t": "converts chief cells into parietal cells over time", "e": "Incorrect. Trophic stimulation supports growth and synthesis within existing cell types; it does not convert one cell type into another."}, {"t": "has no effect on cells beyond acute acid secretion", "e": "Incorrect. This directly contradicts the trophic (growth-promoting) role described for histamine."}], "correct": 0}, {"n": 41, "unit": 3, "unitName": "GI Physiology", "io": "3b", "ioName": "Digestive enzymes / secretions", "stem": "Brunner's glands, found specifically in the duodenum, protect the mucosa from acidic chyme by secreting...", "options": [{"t": "an alkaline mucus", "e": "Correct. Brunner's glands are compound mucous glands located in the duodenum that secrete an alkaline mucus, helping neutralize acidic chyme as it leaves the stomach."}, {"t": "hydrochloric acid to continue chemical digestion", "e": "Incorrect. Brunner's glands secrete an alkaline (protective), not acidic, secretion."}, {"t": "bile salts to assist fat emulsification", "e": "Incorrect. Bile salts come from the liver/gallbladder, not from Brunner's glands."}, {"t": "intrinsic factor for vitamin B12 absorption", "e": "Incorrect. Intrinsic factor is a parietal-cell (gastric) product, not a Brunner's-gland secretion."}], "correct": 0}, {"n": 42, "unit": 3, "unitName": "GI Physiology", "io": "3g", "ioName": "Large intestine & defecation", "stem": "In the wall of the large intestine, the longitudinal smooth muscle is arranged into three distinct bands known as the...", "options": [{"t": "teniae coli", "e": "Correct. Unlike the rest of the GI tract, the colon's longitudinal muscle is concentrated into three longitudinal bands called the teniae coli, rather than forming a continuous layer."}, {"t": "haustra", "e": "Incorrect. Haustra are the sacculations (pouches) of the colon wall, not the longitudinal muscle bands themselves."}, {"t": "rugae", "e": "Incorrect. Rugae are gastric mucosal folds, not a colonic longitudinal-muscle structure."}, {"t": "plicae circulares", "e": "Incorrect. Plicae circulares are circular folds of the small intestine, unrelated to the colon's longitudinal muscle arrangement."}], "correct": 0}, {"n": 43, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Vitamin A is a lipid-soluble vitamin found only in animal products, though carotenes in plants serve as provitamin A. It is stored in the liver for approximately how long, and is needed for visual pigments, epithelial cell growth/maintenance, and reproduction?", "options": [{"t": "5–10 months", "e": "Correct. Vitamin A is stored in the liver for roughly 5–10 months, a substantial reserve consistent with its being a lipid-soluble (rather than water-soluble) vitamin, and it is required for visual pigments, epithelial cell growth/maintenance, and reproduction."}, {"t": "5–10 hours", "e": "Incorrect. This vastly understates vitamin A's hepatic storage duration, which is on the order of 5–10 months, not hours."}, {"t": "5–10 days", "e": "Incorrect. Vitamin A's storage duration in the liver is much longer than days — approximately 5–10 months."}, {"t": "It is not stored at all, being fully water-soluble", "e": "Incorrect. Vitamin A is lipid-soluble and is stored substantially in the liver (5–10 months), unlike a water-soluble vitamin that would not be stored this way."}], "correct": 0}, {"n": 44, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Thiamine (Vitamin B1) is required for decarboxylation of pyruvate and of intermediaries in the citric acid (Krebs) cycle. Without adequate thiamine, the body must draw...", "options": [{"t": "more energy from fat and ketone bodies", "e": "Correct. Because thiamine is needed for the decarboxylation steps that let pyruvate and citric acid cycle intermediates be oxidized for energy, thiamine deficiency forces the body to rely more heavily on fat and ketone bodies for energy instead."}, {"t": "exclusively on protein breakdown for energy", "e": "Incorrect. The described shift with thiamine deficiency is toward greater reliance on fat and ketone bodies, not specifically protein breakdown."}, {"t": "more energy from anaerobic glycolysis alone, with no other changes", "e": "Incorrect. The described consequence of thiamine deficiency is increased reliance on fat and ketone bodies for energy, not simply more anaerobic glycolysis."}, {"t": "no alternative energy source, since carbohydrate oxidation continues unaffected", "e": "Incorrect. Thiamine deficiency impairs the decarboxylation steps needed for carbohydrate oxidation via pyruvate/the citric acid cycle, which is exactly why the body shifts toward fat and ketone bodies for energy."}], "correct": 0}, {"n": 45, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Riboflavin (Vitamin B2) serves as a hydrogen carrier in oxidation reactions. Flavin adenine dinucleotide (FAD), derived from riboflavin, functions in the citric acid cycle by...", "options": [{"t": "oxidizing succinate to fumarate, becoming FADH2", "e": "Correct. FAD, a riboflavin-derived electron/hydrogen carrier, oxidizes succinate to fumarate within the citric acid cycle, becoming FADH2 in the process and contributing electrons to the electron transport chain."}, {"t": "decarboxylating pyruvate directly", "e": "Incorrect. Pyruvate decarboxylation depends on thiamine (Vitamin B1)-derived cofactors, not FAD; FAD's citric acid cycle role is oxidizing succinate to fumarate."}, {"t": "converting oxaloacetate directly to glucose", "e": "Incorrect. Oxaloacetate-to-glucose conversion is a gluconeogenesis step unrelated to FAD's specific citric acid cycle role of oxidizing succinate to fumarate."}, {"t": "synthesizing coenzyme A from pantothenic acid", "e": "Incorrect. Coenzyme A synthesis involves pantothenic acid (Vitamin B5), not FAD/riboflavin, whose citric acid cycle role is the succinate-to-fumarate oxidation."}], "correct": 0}, {"n": 46, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Niacin (Vitamin B3) functions as a component of nicotinamide adenine dinucleotide (NAD), essential for oxidation reactions, and can also be synthesized endogenously from...", "options": [{"t": "the amino acid tryptophan", "e": "Correct. Unlike most vitamins, niacin can be synthesized in the body from the amino acid tryptophan, supplementing dietary intake, in addition to its essential role as a component of NAD in oxidation reactions."}, {"t": "the amino acid glutamate exclusively", "e": "Incorrect. Niacin's endogenous synthesis pathway uses tryptophan, not glutamate."}, {"t": "cholesterol", "e": "Incorrect. Niacin is synthesized from the amino acid tryptophan, not from cholesterol."}, {"t": "glucose directly", "e": "Incorrect. Niacin's endogenous synthesis route is from the amino acid tryptophan, not directly from glucose."}], "correct": 0}, {"n": 47, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Pantothenic acid (Vitamin B5) is required for fat and carbohydrate metabolism chiefly because it is a structural part of...", "options": [{"t": "coenzyme A (CoA)", "e": "Correct. Pantothenic acid is a structural component of coenzyme A, the essential cofactor used throughout fat and carbohydrate metabolism (e.g., forming acetyl-CoA), which is why pantothenic acid is required for these pathways."}, {"t": "hemoglobin", "e": "Incorrect. Pantothenic acid's essential metabolic role is as a structural component of coenzyme A, unrelated to hemoglobin, whose synthesis instead depends on iron and other cofactors."}, {"t": "myelin", "e": "Incorrect. Pantothenic acid's described role is as a component of coenzyme A, not myelin, which depends on different lipid/protein components."}, {"t": "collagen", "e": "Incorrect. Collagen synthesis relies on vitamin C, among other factors; pantothenic acid's role in fat/carbohydrate metabolism is as a component of coenzyme A."}], "correct": 0}, {"n": 48, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Pyridoxine (Vitamin B6) supports carbohydrate metabolism as part of the enzyme glycogen phosphorylase, whose job is to...", "options": [{"t": "release glucose-1-phosphate from glycogen", "e": "Correct. Glycogen phosphorylase, which requires pyridoxine (B6) as a cofactor, catalyzes the release of glucose-1-phosphate from stored glycogen — the first step of glycogenolysis — and pyridoxine also serves as a coenzyme in amino acid transamination."}, {"t": "add glucose units onto a growing glycogen chain", "e": "Incorrect. Adding glucose units to build glycogen is glycogen synthase's job (glycogenesis); glycogen phosphorylase instead releases glucose-1-phosphate from glycogen (glycogenolysis)."}, {"t": "convert glucose-6-phosphate to glucose-1-phosphate", "e": "Incorrect. That interconversion is performed by phosphoglucomutase; glycogen phosphorylase's specific role is releasing glucose-1-phosphate directly from the glycogen chain."}, {"t": "synthesize glycogen from amino acids", "e": "Incorrect. Glycogen phosphorylase acts on existing glycogen to release glucose-1-phosphate; it does not synthesize glycogen from amino acids."}], "correct": 0}, {"n": 49, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4a", "ioName": "Vitamins", "stem": "Vitamin E, a lipid-soluble vitamin found in vegetable oils and fresh greens, mainly functions in the body as a(n)...", "options": [{"t": "antioxidant", "e": "Correct. Vitamin E's main physiological function is as an antioxidant, helping protect cell membranes and other structures from oxidative damage."}, {"t": "coenzyme in amino acid transamination", "e": "Incorrect. Coenzyme function in transamination is associated with pyridoxine (Vitamin B6), not vitamin E, whose main role is as an antioxidant."}, {"t": "essential cofactor for blood clotting", "e": "Incorrect. The clotting-related lipid-soluble vitamin is vitamin K, not vitamin E, whose main function is antioxidant activity."}, {"t": "structural component of coenzyme A", "e": "Incorrect. Coenzyme A's structural vitamin component is pantothenic acid (B5), not vitamin E, whose role is as an antioxidant."}], "correct": 0}, {"n": 50, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4g", "ioName": "Appetite regulation", "stem": "Hypothalamic appetite regulation involves two opposing neuron populations: POMC/CART neurons, which suppress appetite, and which opposing population that stimulates appetite?", "options": [{"t": "NPY/AGRP neurons", "e": "Correct. POMC/CART neurons in the hypothalamus suppress appetite (are anorexigenic), while NPY/AGRP neurons have the opposite, appetite-stimulating (orexigenic) effect — together forming a key hypothalamic circuit for long-term energy balance regulation."}, {"t": "leptin/ghrelin neurons", "e": "Incorrect. Leptin and ghrelin are circulating hormones that act on these hypothalamic neurons, not the name of a neuron population itself; the appetite-stimulating neuron population is NPY/AGRP."}, {"t": "POMC/CART neurons themselves, acting in both directions", "e": "Incorrect. POMC/CART is specifically the appetite-suppressing population; the opposing appetite-stimulating population is the distinct NPY/AGRP neuron group."}, {"t": "insulin/glucagon neurons", "e": "Incorrect. Insulin and glucagon are pancreatic hormones, not the name of the opposing hypothalamic neuron population, which is NPY/AGRP."}], "correct": 0}, {"n": 51, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4h", "ioName": "Energy balance", "stem": "In a lean 70-kg man, liver triglyceride stores represent a strikingly small energy reserve — about 450 kcal, or roughly what fraction of total body energy stores?", "options": [{"t": "About 0.3%", "e": "Correct. Despite the liver's central metabolic role, its triglyceride store (about 450 kcal) makes up only around 0.3% of total body energy reserves in a lean 70-kg man — dwarfed by adipose tissue's much larger fat stores."}, {"t": "About 30%", "e": "Incorrect. This vastly overstates the liver's triglyceride contribution to total body energy stores, which is only about 0.3%, not 30%."}, {"t": "About 3%", "e": "Incorrect. The liver's triglyceride energy contribution is smaller still, at approximately 0.3%, not 3%."}, {"t": "Nearly 100%, since the liver is the main energy storage organ", "e": "Incorrect. Adipose tissue, not the liver, holds the overwhelming majority of the body's stored energy; the liver's triglyceride contribution is only about 0.3%."}], "correct": 0}, {"n": 52, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4h", "ioName": "Energy balance", "stem": "In a typical American diet, the approximate percentage breakdown of daily energy intake by macronutrient is...", "options": [{"t": "about 45% carbohydrate, 40% fat, and 15% protein", "e": "Correct. A typical American diet derives roughly 45% of energy from carbohydrate, about 40% from fat, and about 15% from protein — even though fat provides more than twice the energy per gram (about 9 kcal/g) compared with carbohydrate or protein (about 4 kcal/g each)."}, {"t": "about 80% protein, 10% fat, and 10% carbohydrate", "e": "Incorrect. This does not reflect the typical American diet breakdown, which is closer to 45% carbohydrate, 40% fat, and 15% protein."}, {"t": "about 33% each of carbohydrate, fat, and protein", "e": "Incorrect. The typical breakdown is not an even three-way split; carbohydrate (~45%) and fat (~40%) each contribute more than protein (~15%)."}, {"t": "about 90% fat, 5% carbohydrate, and 5% protein", "e": "Incorrect. This overstates fat's share; the typical American diet is closer to 40% fat, with carbohydrate contributing the largest share at about 45%."}], "correct": 0}, {"n": 53, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4c", "ioName": "Protein metabolism", "stem": "In the oxidative deamination example where alanine is first transaminated to pyruvate (producing glutamate), the subsequent breakdown of that glutamate (glutamate + NAD+ + H2O) yields NADH, H+, ammonia, and...", "options": [{"t": "alpha-ketoglutarate", "e": "Correct. Oxidative deamination of glutamate (glutamate + NAD+ + H2O → NADH + H+ + NH3 + alpha-ketoglutarate) removes the amino group as ammonia while regenerating alpha-ketoglutarate, a citric acid cycle intermediate that can be used for energy or further metabolism."}, {"t": "oxaloacetate", "e": "Incorrect. The product of glutamate's oxidative deamination is specifically alpha-ketoglutarate, not oxaloacetate."}, {"t": "pyruvate", "e": "Incorrect. Pyruvate was the starting point before transamination to glutamate; the product of glutamate's own oxidative deamination is alpha-ketoglutarate."}, {"t": "acetyl-CoA", "e": "Incorrect. Glutamate's oxidative deamination directly yields alpha-ketoglutarate, not acetyl-CoA."}], "correct": 0}, {"n": 54, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4i", "ioName": "Thermoregulation", "stem": "The hypothalamic preoptic area of the anterior hypothalamus contains both heat-sensitive and cold-sensitive neurons, while skin and deep body temperature receptors mainly detect...", "options": [{"t": "cold and cool temperatures, functioning to prevent hypothermia", "e": "Correct. Peripheral (skin) and deep body temperature receptors are mainly tuned to detect cold and cool temperatures, serving primarily to help prevent hypothermia, while the hypothalamic preoptic area itself contains both heat- and cold-sensitive neurons for central temperature sensing."}, {"t": "only warm and hot temperatures, functioning to prevent hyperthermia", "e": "Incorrect. Peripheral receptors are described as mainly detecting cold/cool temperatures (to prevent hypothermia), not primarily warm/hot temperatures."}, {"t": "no temperature information at all, relying entirely on the hypothalamus", "e": "Incorrect. Skin and deep body receptors do detect temperature (mainly cold/cool) and relay this information centrally; they are not uninvolved in temperature detection."}, {"t": "blood glucose level rather than temperature", "e": "Incorrect. These are temperature receptors, detecting cold/cool temperature specifically, not blood glucose."}], "correct": 0}, {"n": 55, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4i", "ioName": "Thermoregulation", "stem": "The posterior hypothalamus, which receives input from the anterior hypothalamus and peripheral receptors, mainly serves to...", "options": [{"t": "integrate temperature signals and coordinate the appropriate heat-conserving or heat-losing responses", "e": "Correct. The posterior hypothalamus integrates temperature information relayed from the anterior hypothalamus (central heat/cold-sensitive neurons) and peripheral receptors, then coordinates the body's overall response — triggering heat-conserving mechanisms (like vasoconstriction, shivering) or heat-losing mechanisms as needed."}, {"t": "detect temperature directly with no input from any other brain region", "e": "Incorrect. The posterior hypothalamus's role is described as integrating input received from the anterior hypothalamus and peripheral receptors, not detecting temperature in isolation."}, {"t": "regulate hunger and satiety exclusively, with no thermoregulatory role", "e": "Incorrect. While hypothalamic nuclei do regulate appetite elsewhere, the posterior hypothalamus's role described here is specifically thermoregulatory integration and coordination."}, {"t": "control heart rate exclusively, unrelated to temperature", "e": "Incorrect. The posterior hypothalamus's described role centers on temperature regulation (integrating signals, coordinating heat-conserving/losing responses), not an isolated cardiac control function."}], "correct": 0}, {"n": 56, "unit": 4, "unitName": "Metabolism, Nutrition & Thermoregulation", "io": "4i", "ioName": "Thermoregulation", "stem": "The skin's effectiveness as a heat 'radiator' varies enormously with blood flow: heat conduction through the skin differs by approximately what factor between maximal vasodilation and maximal vasoconstriction?", "options": [{"t": "About 8-fold", "e": "Correct. Skin blood flow can vary so widely under sympathetic control that heat conduction through the skin differs by roughly an 8-fold factor between maximal vasodilation (high flow, high heat loss) and maximal vasoconstriction (low flow, heat conserved)."}, {"t": "About 1.5-fold", "e": "Incorrect. This understates the skin radiator system's dynamic range, which is roughly an 8-fold difference between maximal dilation and constriction."}, {"t": "About 50-fold", "e": "Incorrect. This overstates the effect; the described difference in heat conduction is approximately 8-fold, not 50-fold."}, {"t": "There is no meaningful difference regardless of vasodilation/constriction", "e": "Incorrect. Skin blood flow changes produce a substantial (roughly 8-fold) difference in heat conduction, not a negligible one."}], "correct": 0}, {"n": 57, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "Compared with the systemic circulation, the pulmonary circulation carries the same total blood flow (about 5 L/min) but with a much smaller pressure drop across it (about 12 mmHg) because pulmonary vascular resistance is approximately...", "options": [{"t": "1/7 that of the systemic circulation", "e": "Correct. Pulmonary vascular resistance is roughly one-seventh that of the systemic circulation, which is why the same cardiac output (about 5 L/min) can flow through the lungs with a much smaller pressure drop (about 12 mmHg) than across the systemic circuit."}, {"t": "7 times that of the systemic circulation", "e": "Incorrect. Pulmonary vascular resistance is much lower, not higher, than systemic resistance — about 1/7 of it, not 7-fold greater."}, {"t": "identical to that of the systemic circulation", "e": "Incorrect. Pulmonary vascular resistance is substantially lower (about 1/7) than systemic resistance, not identical to it, which is precisely why the pulmonary pressure drop is so much smaller for the same flow."}, {"t": "essentially zero, offering no resistance at all", "e": "Incorrect. The pulmonary circulation does have real resistance (producing the 12 mmHg pressure drop); it is much lower than systemic resistance (about 1/7), not zero."}], "correct": 0}, {"n": 58, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "Normal pulmonary artery pressures are considerably lower than systemic arterial pressures. Which set of values correctly approximates normal pulmonary artery systolic, diastolic, and mean pressures?", "options": [{"t": "Systolic 25 mmHg, diastolic 8 mmHg, mean 15 mmHg", "e": "Correct. Normal pulmonary artery pressure is approximately 25/8 mmHg (systolic/diastolic), with a mean around 15 mmHg — far lower than typical systemic arterial pressure, consistent with the pulmonary circuit's much lower vascular resistance."}, {"t": "Systolic 120 mmHg, diastolic 80 mmHg, mean 93 mmHg", "e": "Incorrect. These values describe normal systemic arterial pressure, not the much lower pulmonary artery pressure (approximately 25/8, mean 15 mmHg)."}, {"t": "Systolic 8 mmHg, diastolic 25 mmHg, mean 15 mmHg", "e": "Incorrect. This reverses systolic and diastolic; normal pulmonary artery pressure is 25 mmHg systolic and 8 mmHg diastolic, not the other way around."}, {"t": "Systolic 60 mmHg, diastolic 40 mmHg, mean 50 mmHg", "e": "Incorrect. These values overstate normal pulmonary artery pressure, which is approximately 25/8 mmHg with a mean of about 15 mmHg."}], "correct": 0}, {"n": 59, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "Within the pulmonary circulation, an increase in vascular pressure characteristically...", "options": [{"t": "decreases pulmonary vascular resistance", "e": "Correct. Unlike some other vascular beds, increasing pressure within the pulmonary circulation decreases pulmonary vascular resistance, largely because higher pressure recruits previously unperfused capillaries and distends already-open vessels, both of which lower overall resistance."}, {"t": "increases pulmonary vascular resistance", "e": "Incorrect. This is the reverse of the actual relationship — increasing pulmonary vascular pressure decreases, not increases, pulmonary vascular resistance."}, {"t": "has no effect on pulmonary vascular resistance", "e": "Incorrect. Pressure changes do measurably affect pulmonary vascular resistance (inversely), rather than having no effect."}, {"t": "only affects resistance in the systemic circulation, not the pulmonary circulation", "e": "Incorrect. This described pressure-resistance relationship is specifically a pulmonary circulation phenomenon, not a systemic one."}], "correct": 0}, {"n": 60, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "Two related mechanisms — recruitment (opening previously closed capillaries) and distension (widening of already-open vessels) — both act in the pulmonary circulation to...", "options": [{"t": "decrease pulmonary vascular resistance as pressure or flow increases", "e": "Correct. As pulmonary blood pressure or flow rises (such as during exercise), recruitment of previously unperfused capillaries and distension of already-open vessels both act to decrease overall pulmonary vascular resistance, allowing large increases in flow with only modest increases in pressure."}, {"t": "increase pulmonary vascular resistance as pressure or flow increases", "e": "Incorrect. Recruitment and distension both act to decrease, not increase, pulmonary vascular resistance as pressure/flow rises."}, {"t": "only occur in the systemic circulation, not the lungs", "e": "Incorrect. Recruitment and distension are specifically described as pulmonary circulation mechanisms for accommodating increased blood flow."}, {"t": "cause alveolar collapse", "e": "Incorrect. Recruitment and distension involve capillaries opening/widening to accommodate more flow with less resistance; they do not cause alveolar collapse."}], "correct": 0}, {"n": 61, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "Alveolar hypoxia (low oxygen within an alveolus) has a distinctive local effect on the pulmonary vasculature: it...", "options": [{"t": "decreases blood flow to that lung region, via localized vasoconstriction", "e": "Correct. Unlike most systemic vascular beds (where local hypoxia causes vasodilation), alveolar hypoxia in the lung triggers localized pulmonary vasoconstriction, decreasing blood flow to that poorly ventilated region — a mechanism that helps redirect blood flow toward better-ventilated alveoli, optimizing ventilation-perfusion matching."}, {"t": "increases blood flow to that lung region, via localized vasodilation", "e": "Incorrect. This describes the typical systemic vascular response to local hypoxia, which is opposite to the lung's actual response — alveolar hypoxia instead causes localized pulmonary vasoconstriction, decreasing flow to that region."}, {"t": "has no effect on local pulmonary blood flow", "e": "Incorrect. Alveolar hypoxia has a clear, well-described effect on local pulmonary blood flow — decreasing it via vasoconstriction."}, {"t": "only affects systemic, not pulmonary, blood vessels", "e": "Incorrect. This hypoxic vasoconstriction response is specifically a pulmonary vascular phenomenon, not a systemic one."}], "correct": 0}, {"n": 62, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary circulation", "stem": "In the upright lung, blood flow distribution is uneven, with the bottom (base) of the lung normally receiving...", "options": [{"t": "more perfusion than the top (apex), even though this same relative distribution persists during exercise", "e": "Correct. Due to the effects of gravity on the low-pressure pulmonary circulation, the base of the upright lung normally receives more blood flow than the apex; exercise increases total pulmonary blood flow, but the same relative base-greater-than-apex distribution pattern is maintained."}, {"t": "less perfusion than the top (apex) under all conditions", "e": "Incorrect. This reverses the actual gravity-driven distribution; the base of the lung normally receives more, not less, perfusion than the apex."}, {"t": "exactly equal perfusion compared with the top (apex)", "e": "Incorrect. Blood flow distribution in the upright lung is not equal between apex and base; the base receives more perfusion, largely due to gravity's effect on the low-pressure pulmonary vasculature."}, {"t": "perfusion that reverses (becomes apex-dominant) during exercise", "e": "Incorrect. Exercise increases total pulmonary blood flow but preserves the same relative base-greater-than-apex distribution, rather than reversing it."}], "correct": 0}, {"n": 63, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary capillary dynamics", "stem": "Applying Starling forces to the pulmonary capillaries: outward (filtration-favoring) forces include capillary hydrostatic pressure (about 7 mmHg), negative interstitial pressure (about 8 mmHg), and interstitial osmotic pressure (about 14 mmHg), which together are nearly, but not completely, balanced by the main inward force of...", "options": [{"t": "plasma (colloid) osmotic pressure, about 28 mmHg", "e": "Correct. Plasma osmotic pressure (about 28 mmHg) is the dominant inward (fluid-retaining) force, nearly balancing the roughly 29 mmHg of combined outward forces, leaving a small net filtration pressure of about +1 mmHg that drives a slow, continuous, and normally well-drained outward fluid movement."}, {"t": "pulmonary arterial pressure, about 15 mmHg", "e": "Incorrect. Mean pulmonary arterial pressure (about 15 mmHg) is an upstream driving pressure for blood flow, not the inward Starling force balancing capillary filtration, which is plasma osmotic pressure (about 28 mmHg)."}, {"t": "alveolar gas pressure, about 0 mmHg (atmospheric)", "e": "Incorrect. Alveolar gas pressure is not one of the Starling forces governing pulmonary capillary fluid exchange; the balancing inward force is plasma osmotic pressure."}, {"t": "central venous pressure, about 2 mmHg", "e": "Incorrect. Central venous pressure is not the inward force balancing pulmonary capillary filtration in this Starling-force accounting; that role belongs to plasma osmotic pressure (about 28 mmHg)."}], "correct": 0}, {"n": 64, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary capillary dynamics", "stem": "Because the net Starling filtration pressure across pulmonary capillaries is slightly positive (about +1 mmHg), fluid continuously (but slowly) filters out of the capillaries. Under normal conditions, this fluid is prevented from accumulating and flooding the alveoli mainly because...", "options": [{"t": "the lymphatic system continuously drains it, maintaining a negative pleural/interstitial pressure", "e": "Correct. The pulmonary lymphatic system continuously drains the small, ongoing capillary filtrate, maintaining a negative interstitial/pleural pressure that keeps the alveoli dry and helps hold the lung expanded against the chest wall — fluid only accumulates pathologically when production outpaces this drainage."}, {"t": "filtration is actually zero under normal conditions, so no drainage is needed", "e": "Incorrect. Net filtration pressure is slightly positive (about +1 mmHg), so there is continuous filtration; it is lymphatic drainage, not zero filtration, that prevents fluid accumulation."}, {"t": "surfactant chemically absorbs the excess fluid", "e": "Incorrect. Surfactant's role is lowering alveolar surface tension, not absorbing interstitial fluid; the lymphatic system is responsible for draining the continuous capillary filtrate."}, {"t": "the alveolar epithelium actively pumps fluid back into the capillaries", "e": "Incorrect. Fluid clearance from the interstitium relies mainly on lymphatic drainage, not an active pumping mechanism by the alveolar epithelium reversing filtration."}], "correct": 0}, {"n": 65, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5j", "ioName": "Pulmonary capillary dynamics", "stem": "A thin layer of mucoid fluid lies between the parietal and visceral pleura. This layer's main functional purpose is to...", "options": [{"t": "reduce friction between the lung and chest wall as they slide against each other during ventilation", "e": "Correct. The thin mucoid fluid film between the parietal and visceral pleural layers lubricates the interface, minimizing friction as the lung surface slides against the chest wall with each breath."}, {"t": "actively transport oxygen between the lung and chest wall", "e": "Incorrect. This pleural fluid layer functions to reduce mechanical friction during breathing; it is not a gas-transport medium between lung and chest wall."}, {"t": "digest inhaled particulate matter", "e": "Incorrect. Digestion of inhaled particles is a function of alveolar macrophages, not the lubricating mucoid fluid between the pleural layers."}, {"t": "generate the negative intrapleural pressure by itself, independent of the lymphatics", "e": "Incorrect. Negative intrapleural pressure is maintained by continuous lymphatic drainage of the small net capillary filtrate, not generated by the lubricating fluid layer itself."}], "correct": 0}, {"n": 66, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5e", "ioName": "Respiratory unit", "stem": "Alveoli composing the respiratory unit have walls specialized for gas exchange, with an average alveolar diameter of approximately...", "options": [{"t": "0.2 mm", "e": "Correct. The roughly 300 million alveoli in the two lungs average about 0.2 mm in diameter, a small size that (together with their thin walls) maximizes the total surface area available for efficient gas exchange."}, {"t": "2 mm", "e": "Incorrect. This overstates average alveolar diameter, which is closer to 0.2 mm, ten times smaller."}, {"t": "20 mm", "e": "Incorrect. This vastly overstates alveolar diameter; alveoli average roughly 0.2 mm, not 20 mm."}, {"t": "0.02 mm", "e": "Incorrect. This understates average alveolar diameter, which is closer to 0.2 mm, not 0.02 mm."}], "correct": 0}, {"n": 67, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5f", "ioName": "Gas exchange terminology", "stem": "In blood-gas terminology, the partial pressure of a gas (such as O2) specifically represents...", "options": [{"t": "the driving force for diffusion, determined by that gas's percentage in the mixture", "e": "Correct. Partial pressure reflects a specific gas's proportional contribution to total pressure (depending on its percentage in the gas mixture) and serves as the driving force for its diffusion — distinct from 'saturation' (percent of hemoglobin binding sites occupied) or 'content' (absolute quantity of gas carried per volume of blood)."}, {"t": "the absolute quantity of gas dissolved in a given volume of blood", "e": "Incorrect. Absolute quantity of gas per volume of blood is 'content,' not 'partial pressure,' which instead reflects the gas's proportional contribution to total pressure and drives diffusion."}, {"t": "the percentage of hemoglobin binding sites occupied by that gas", "e": "Incorrect. Percentage of hemoglobin binding sites occupied is 'saturation,' a distinct concept from partial pressure, which is the diffusion-driving proportional pressure of the gas."}, {"t": "a fixed value that never changes regardless of gas composition", "e": "Incorrect. Partial pressure specifically depends on and varies with a gas's percentage within the overall mixture; it is not a fixed, unchanging value."}], "correct": 0}, {"n": 68, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5f", "ioName": "Gas exchange terminology", "stem": "Unlike hemoglobin 'saturation' (a percentage with no units), oxygen 'content' in blood is expressed as...", "options": [{"t": "an absolute quantity, such as mL of O2 per unit volume of blood", "e": "Correct. 'Content' refers to the absolute quantity of oxygen actually carried in a given volume of blood (e.g., mL O2 per 100 mL blood), in contrast to 'saturation,' which is simply the percentage of hemoglobin binding sites occupied by oxygen, independent of how much hemoglobin is actually present."}, {"t": "a unitless percentage, identical to saturation", "e": "Incorrect. Content is expressed as an absolute quantity (e.g., mL O2 per volume of blood), not as the unitless percentage that defines saturation."}, {"t": "the driving pressure for diffusion, identical to partial pressure", "e": "Incorrect. Content (absolute quantity carried) is distinct from partial pressure (the diffusion-driving proportional pressure); they are different concepts entirely."}, {"t": "always identical to arterial PO2 regardless of hemoglobin level", "e": "Incorrect. Oxygen content depends heavily on hemoglobin concentration (and saturation), not solely on PO2 — two people with the same PO2 but different hemoglobin levels would have different oxygen content."}], "correct": 0}, {"n": 69, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5g", "ioName": "Ventilation-perfusion", "stem": "A ventilation-perfusion (V/Q) ratio of zero at a given lung region specifically describes a situation in which that region has...", "options": [{"t": "blood flow but no ventilation (a shunt-like state)", "e": "Correct. A V/Q ratio of zero describes a region receiving blood flow (perfusion) but no ventilation at all — functioning like a right-to-left shunt, since blood passing through cannot pick up oxygen or release CO2 there."}, {"t": "ventilation but no blood flow (dead space)", "e": "Incorrect. Ventilation with no blood flow describes a very high (approaching infinite), not zero, V/Q ratio — this is the dead-space extreme, the opposite of V/Q = 0."}, {"t": "perfectly matched ventilation and perfusion", "e": "Incorrect. A V/Q ratio of zero represents a severe mismatch (perfusion with no ventilation at all), not the well-matched (V/Q near 0.8) normal state."}, {"t": "neither ventilation nor perfusion at all", "e": "Incorrect. A V/Q of zero specifically means perfusion (blood flow) is occurring without ventilation, not a complete absence of both."}], "correct": 0}, {"n": 70, "unit": 5, "unitName": "Pulmonary Physiology", "io": "5g", "ioName": "Ventilation-perfusion", "stem": "A ventilation-perfusion (V/Q) ratio approaching infinity at a given lung region specifically describes a region with...", "options": [{"t": "ventilation but no blood flow (physiological dead space)", "e": "Correct. A very high (approaching infinite) V/Q ratio describes a region that is being ventilated but receives no blood flow, functioning as physiological dead space — air reaches the alveolus, but there is no blood present to exchange gas with."}, {"t": "blood flow but no ventilation (shunt)", "e": "Incorrect. Blood flow with no ventilation describes a V/Q ratio of zero (a shunt-like state), the opposite extreme from a very high (near-infinite) V/Q ratio, which reflects ventilation without blood flow."}, {"t": "perfectly matched ventilation and perfusion", "e": "Incorrect. A near-infinite V/Q ratio represents a severe mismatch (ventilation with essentially no blood flow), not the well-matched normal state."}, {"t": "maximal gas exchange efficiency", "e": "Incorrect. A region with ventilation but no blood flow cannot exchange any gas at all, making it the opposite of efficient — this is wasted (dead space) ventilation."}], "correct": 0}];
+const UNIT_ORDER = ["Blood & Hemostasis","Blood & Immunology","GI Physiology","Metabolism, Nutrition & Thermoregulation","Pulmonary Physiology"];
+let order=[], cur=0, answered=[], chosen=[], score=0;
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(pos,ci){ return !!(crossedOut[pos] && crossedOut[pos].has(ci)); }
+function toggleCross(pos,ci){
+  if(!crossedOut[pos]) crossedOut[pos] = new Set();
+  const s = crossedOut[pos];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ---- timer ----
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseExam(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function showFooterLogo(){ const el=document.getElementById('quiz-footer-logo'); if(el) el.style.display='flex'; }
+
+// ---- progress persistence ----
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  try{ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+    localStorage.setItem(PKEY, JSON.stringify({cur, score, answered, chosen, order, timerMs: currentElapsedMs(),
+    examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }catch(e){}
+}
+function clearProgress(){ try{ localStorage.removeItem(PKEY); }catch(e){} }
+function loadProgress(){ try{ return JSON.parse(localStorage.getItem(PKEY)); }catch(e){ return null; } }
+function markCompleted(finalScore, total, timeMs){ try{ localStorage.setItem(CKEY, JSON.stringify({score:finalScore, total, timeMs})); }catch(e){} }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const prevCK=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(prevCK,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function restartExam(){
+  if(!confirm('Restart the exam from question 1? Your current progress will be cleared.')) return;
+  startExam();
+}
+
+function applyExamModeUI(){
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  if (examMode) window.startExamModeTour();
+}
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order=Q.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffle(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? Q.length*60000 : 0;
+  cur=0; score=0; answered=Q.map(()=>false); chosen=Q.map(()=>-1);
+  flagged=new Set(); autoSubmitTriggered=false; crossedOut={};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('intro').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  render();
+}
+
+function resumeExam(){
+  const saved=loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===Q.length) ? saved.order : Q.map((_,i)=>i);
+  cur = saved.cur||0; score = saved.score||0;
+  answered = saved.answered || Q.map(()=>false);
+  chosen = saved.chosen || Q.map(()=>-1);
+  timerAccumMs = saved.timerMs||0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs||0;
+  flagged = new Set(saved.flagged||[]); autoSubmitTriggered=false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('intro').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showFooterLogo();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved=loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.cur+1)+' of '+Q.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function render(){
+  const qi=order[cur]; const q=Q[qi];
+  document.getElementById('count').textContent=`Question ${cur+1} of ${Q.length}`;
+  document.getElementById('progbar').style.width=((cur)/Q.length*100)+'%';
+  document.getElementById('bUnit').textContent=q.unitName;
+  document.getElementById('bIO').textContent='IO '+q.io+' · '+q.ioName;
+  document.getElementById('stem').textContent=q.stem;
+  document.getElementById('fb').textContent='';
+  document.getElementById('fb').className='fb';
+  const next=document.getElementById('next');
+  const prev=document.getElementById('prevbtn'); if(prev) prev.disabled=(cur===0);
+  const box=document.getElementById('opts'); box.innerHTML='';
+  const letters=['A','B','C','D'];
+  const locked = !examMode && answered[qi];
+  q.options.forEach((o,i)=>{
+    const el=document.createElement('button');
+    el.className='opt'; el.type='button';
+    el.innerHTML=`<span class="kx">${letters[i]}</span><span class="ot optlabel">${o.t}<span class="exp">${o.e}</span></span>`;
+    el.onclick=()=>choose(i);
+    if(!locked){
+      if(isCrossed(cur,i)) el.classList.add('crossed');
+      const x=document.createElement('span');
+      x.className='cross-toggle';
+      x.title='Cross out this choice';
+      x.innerHTML='&#10005;';
+      x.onclick=(e)=>{ e.stopPropagation(); toggleCross(cur,i); render(); };
+      el.appendChild(x);
+    }
+    box.appendChild(el);
+  });
+
+  if(examMode){
+    // no feedback until submit; free navigation; selection can be changed
+    const flagbtn=document.getElementById('flagbtn');
+    flagbtn.classList.toggle('flagged', flagged.has(qi));
+    flagbtn.innerHTML = flagged.has(qi) ? '&#9873; Flagged' : '&#9873; Flag';
+    const navbadge=document.getElementById('navbadge');
+    const left=Q.length-answered.filter(Boolean).length;
+    navbadge.textContent = left>0 ? ' · '+left+' left' : '';
+    if(chosen[qi]>=0){
+      const els=document.querySelectorAll('#opts .opt');
+      if(els[chosen[qi]]) els[chosen[qi]].classList.add('selected-exam');
+    }
+    next.textContent = (cur===Q.length-1)?'Submit exam →':'Next →';
+    next.disabled=false;
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+
+  next.textContent = (cur===Q.length-1)?'See results →':'Next →';
+  if(answered[qi]){
+    // previously-answered question reached via Back: render read-only, no re-answer, no score change
+    const sel=chosen[qi];
+    const els=document.querySelectorAll('#opts .opt');
+    els.forEach((el,k)=>{
+      el.classList.add('locked','reveal');
+      el.onclick=null;
+      if(k===q.correct) el.classList.add('correct');
+      else if(k===sel) el.classList.add('wrong');
+    });
+    const ok=(sel===q.correct);
+    const fb=document.getElementById('fb');
+    fb.textContent = ok?'Correct':'Not quite';
+    fb.className='fb '+(ok?'ok':'no');
+    next.disabled=false;
+  } else {
+    next.disabled=true;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function choose(i){
+  const qi=order[cur]; const q=Q[qi];
+  if(examMode){
+    chosen[qi]=i; answered[qi]=true;
+    saveProgress();
+    render();
+    return;
+  }
+  if(answered[qi]) return;
+  answered[qi]=true; chosen[qi]=i;
+  const els=document.querySelectorAll('#opts .opt');
+  els.forEach((el,k)=>{
+    el.classList.add('locked','reveal');
+    el.onclick=null;
+    if(k===q.correct) el.classList.add('correct');
+    else if(k===i) el.classList.add('wrong');
+  });
+  const ok=(i===q.correct); if(ok) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(ok);
+  const fb=document.getElementById('fb');
+  fb.textContent = ok?'Correct':'Not quite';
+  fb.className='fb '+(ok?'ok':'no');
+  document.getElementById('next').disabled=false;
+  saveProgress();
+}
+function prevQ(){
+  if(cur===0) return;
+  cur--;
+  saveProgress();
+  render();
+}
+function nextQ(){
+  if(examMode){
+    if(cur<Q.length-1){cur++; saveProgress(); render();}
+    else submitExam();
+    return;
+  }
+  if(cur<Q.length-1){cur++; saveProgress(); render();}
+  else showResults();
+}
+
+function toggleFlag(){
+  const qi=order[cur];
+  if(flagged.has(qi)) flagged.delete(qi); else flagged.add(qi);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: Q.length,
+    current: cur,
+    getStatus: function(i){ const qi=order[i]; return { answered: answered[qi], flagged: flagged.has(qi) }; },
+    onJump: function(i){ cur=i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = Q.length - answered.filter(Boolean).length;
+    if(unanswered>0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+function examReviewHTML(){
+  let out='';
+  order.forEach((qi,i)=>{
+    const q=Q[qi];
+    const sel=chosen[qi];
+    const ok=(sel===q.correct);
+    const yours = sel>=0 ? q.options[sel].t : '(not answered)';
+    const corr = q.options[q.correct].t;
+    out+=`<div class="miss"${ok?' style="border-left-color:var(--good)"':''}>
+      <div class="co">${q.unitName} · IO ${q.io}</div>
+      <div class="q">Q${i+1}. ${q.stem}</div>
+      <div class="line ${ok?'corr':'you'}">Your answer: ${yours}</div>
+      ${ok?'':`<div class="line corr">Correct: ${corr}</div>`}
+      <div class="ex">${q.options[q.correct].e}</div></div>`;
+  });
+  return `<h2 class="sec">Full review — every question (${order.length})</h2>${out}`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode){
+    score = Q.reduce((acc,q,qi)=> acc + (chosen[qi]===q.correct?1:0), 0);
+  }
+  clearProgress();
+  markCompleted(score, Q.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(score/Q.length*100);
+  // tally by io
+  const io={}, unitAgg={};
+  Q.forEach((q,qi)=>{
+    const ok=chosen[qi]===q.correct;
+    if(!io[q.io]) io[q.io]={name:q.ioName,unit:q.unitName,c:0,t:0};
+    io[q.io].t++; if(ok) io[q.io].c++;
+    if(!unitAgg[q.unitName]) unitAgg[q.unitName]={c:0,t:0};
+    unitAgg[q.unitName].t++; if(ok) unitAgg[q.unitName].c++;
+  });
+  let msg = pct>=85?'Excellent command of the material.'
+          : pct>=70?'Solid — review the misses below to close the gaps.'
+          : pct>=55?'A reasonable base; focus on the weaker objectives below.'
+          : 'Worth another pass — use the objective breakdown to target study.';
+  let html=`<div class="score"><div class="big">${score}<span style="font-size:26px;color:var(--muted)">/${Q.length}</span></div>
+    <div class="pct">${pct}%</div><div class="msg">${msg}</div><div class="msg" style="font-size:13px;margin-top:2px">Time: ${fmtTime(finalMs)}</div></div>`;
+
+  html+=`<h2 class="sec">Performance by objective</h2>`;
+  UNIT_ORDER.forEach(un=>{
+    const ios=Object.entries(io).filter(([k,v])=>v.unit===un).sort((a,b)=>a[0].localeCompare(b[0]));
+    if(!ios.length) return;
+    const ua=unitAgg[un];
+    html+=`<div class="unitblock"><div class="unitrow"><b>${un}</b><span>${ua.c}/${ua.t}</span></div>`;
+    ios.forEach(([code,v])=>{
+      const p=Math.round(v.c/v.t*100);
+      html+=`<div class="iorow"><div class="lbl"><span class="co">${code}</span>${v.name}</div>
+        <div class="frac">${v.c}/${v.t}</div>
+        <div class="bar"><i style="width:${p}%;background:${p>=67?'var(--good)':p>=34?'var(--acc)':'var(--bad)'}"></i></div></div>`;
+    });
+    html+=`</div>`;
+  });
+
+  if(examMode){
+    html += examReviewHTML();
+  } else {
+    const missed=Q.map((q,qi)=>({q,qi})).filter(x=>chosen[x.qi]!==x.q.correct);
+    html+=`<h2 class="sec">Review — missed questions (${missed.length})</h2>`;
+    if(!missed.length) html+=`<p style="color:var(--muted)">None — a clean sweep.</p>`;
+    missed.forEach(({q,qi})=>{
+      const yours = chosen[qi]>=0 ? q.options[chosen[qi]].t : '(no answer)';
+      const corr = q.options[q.correct].t;
+      html+=`<div class="miss"><div class="co">${q.unitName} · IO ${q.io}</div>
+        <div class="q">${q.stem}</div>
+        <div class="line you">Your answer: ${yours}</div>
+        <div class="line corr">Correct: ${corr}</div>
+        <div class="ex">${q.options[q.correct].e}</div></div>`;
+    });
+  }
+
+  html+=`<div class="rescta"><button class="btn" onclick="startExam()">Retake exam</button>
+    <button class="btn sec" onclick="reviewToTop()">Back to top</button>
+    <a class="btn sec" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">← Back to Homepage</a></div>`;
+  const r=document.getElementById('results'); r.innerHTML=html; r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  document.getElementById('progbar').style.width='100%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+function reviewToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+// keyboard: 1-4 / A-D select, Enter/→ next, ← back
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  const qi=order[cur];
+  if(examMode){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<Q[qi].options.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(!answered[qi]){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<Q[qi].options.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){
+    e.preventDefault(); nextQ();
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
