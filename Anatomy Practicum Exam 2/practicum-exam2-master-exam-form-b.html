@@ -109,6 +109,14 @@
   .mistake-note{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px;font-style:italic}
   .hidden{display:none}
 </style>
+<style>
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: #14b8a6; }
+  }
+</style>
 </head>
 <body>
 <div id="pull-refresh">
@@ -117,6 +125,17 @@
   </svg>
 </div>
 
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 18px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:70px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
 <div class="wrap">
   <section id="start" class="card">
     <div class="eyebrow">Anatomy Practicum &middot; Anatomy Practicum Exam 2 &middot; Comprehensive Master Exam</div>
