@@ -1774,6 +1774,75 @@ var DEMO_DECKS = [
       ["Normal thyroid palpability", "Often not palpable"],
       ["Lymph node vs. muscle/artery", "Roll the structure to differentiate"],
       ["Conductive hearing loss (Weber)", "Lateralizes to affected ear"]
+    ]},
+  { id: "pd1-pelvic-exam", name: "Pelvic Exam (Female Genitalia)", color: "accent2",
+    icon: '<path d="M12 21c-4-3-8-6.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 4.5-4 8-8 11z"/>',
+    cards: [
+      ["What is the mons pubis?", "Hair-covered fat pad over the symphysis pubis, inverted-triangle hair pattern."],
+      ["What are Bartholin's glands also called, and where are they located?", "Greater vestibular glands, located at the 5 and 7 o'clock positions."],
+      ["What are Skene's glands?", "Periurethral glands with openings on either side of the urethral meatus."],
+      ["What is the vestibule?", "The fossa medial to the labia minora, containing the urethral meatus and introitus."],
+      ["What is the perineum?", "The area between the vaginal introitus and the anus."],
+      ["Where does the vagina lie anatomically?", "Between the bladder and the rectum."],
+      ["What are vaginal fornices?", "Pockets formed by the folded vaginal wall surrounding the cervix."],
+      ["What is the Pouch of Douglas, and how is it accessed clinically?", "The retrouterine peritoneal cul-de-sac, reachable on rectal exam."],
+      ["What shape is the external cervical os in a nulliparous woman versus after childbirth?", "Round before childbirth; slit-like after vaginal delivery."],
+      ["Why should a full bladder be avoided before the pelvic exam?", "It compromises the bimanual exam, impedes organ palpation, and causes discomfort."],
+      ["Why is water-soluble (not gel) lubricant used for speculum insertion?", "Gel lubricant interferes with Pap smear cytology results."],
+      ["At what angle and along which wall is the closed speculum inserted?", "A 45-degree downward angle, along the posterior vaginal wall."],
+      ["When is the closed speculum rotated from vertical to horizontal?", "Only once the full length of the speculum is inserted."],
+      ["What two structures are specifically palpated during the rectovaginal exam?", "The rectovaginal septum and the posterior fornix."],
+      ["What is checked while withdrawing the rectal finger at the end of the rectovaginal exam?", "Sphincter tone."],
+      ["What is a normal finding when assessing cervical/fornix movement on bimanual exam?", "1-2 cm of movement without pain."]
+    ],
+    matchCards: [
+      ["Mons pubis", "Fat pad over the symphysis pubis"],
+      ["Labia majora", "Rounded folds of adipose/connective tissue"],
+      ["Labia minora", "Thin, pink-red folds forming the prepuce"],
+      ["Bartholin's glands", "Greater vestibular glands (5 & 7 o'clock)"],
+      ["Skene's glands", "Periurethral glands near urethral meatus"],
+      ["Introitus", "Vaginal opening"],
+      ["Fornix", "Vaginal wall pocket around the cervix"],
+      ["Fundus", "Domed superior area of the uterine body"],
+      ["Pouch of Douglas", "Retrouterine peritoneal cul-de-sac"],
+      ["Fimbriated ends", "Fan-like distal ends of the fallopian tubes"],
+      ["Rugae", "Vaginal mucosal folds (absent pre-puberty/post-menopause)"],
+      ["ThinPrep vs. conventional Pap", "Differ only in slide preparation method"]
+    ]},
+  { id: "pd1-breast-exam", name: "Breast Examination", color: "accent3",
+    icon: '<circle cx="9" cy="12" r="6"/><circle cx="17" cy="12" r="6"/><circle cx="9" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/>',
+    cards: [
+      ["Between which ribs does the breast lie?", "The 2nd and 6th rib."],
+      ["What proportion of the breast lies superficial to the pectoral muscle?", "2/3 (with 1/3 superficial to the serratus anterior)."],
+      ["What is Cooper's ligament?", "The suspensory ligament connecting skin to breast fascia."],
+      ["Which artery branches supply the medial breast quadrant?", "Perforating branches of the internal thoracic artery and anterior intercostal branches."],
+      ["Which artery branches supply the lateral breast quadrants?", "Pectoral branches of the thoracoacromial artery and the external mammary branch of the lateral thoracic artery."],
+      ["What percentage of breast lymphatic drainage empties into the axillary nodes?", "Approximately 75%."],
+      ["Where do the medial portions of the breast primarily drain lymphatically?", "Internal mammary (parasternal) lymph nodes."],
+      ["Which axillary node group drains most of the breast tissue?", "Pectoral (anterior) nodes, at the lower border of pectoralis major."],
+      ["Which axillary node group is most frequently palpable?", "Central nodes, high in the axilla."],
+      ["What are Montgomery tubercles?", "Small rounded elevations on the areola marking sebaceous glands."],
+      ["What is the tail of Spence?", "A breast tissue segment extending into the axilla."],
+      ["What nipple finding is a normal variant, versus one concerning for cancer?", "Inversion can be normal; retraction (new change) is concerning for cancer."],
+      ["What skin/nipple condition presents with rash and discharge on breast inspection?", "Paget's disease."],
+      ["Why is the sitting position used for breast inspection?", "It exaggerates dimpling or retraction."],
+      ["What breast palpation pattern and finger pads are used?", "A systematic vertical-strip pattern using the 2nd, 3rd, and 4th finger pads."],
+      ["What three pressure levels are applied during breast palpation?", "Light, medium, and deep pressure."],
+      ["What technique should breast implant patients use for self-exam?", "Press firmly inward at the implant edges to feel the ribs beneath."]
+    ],
+    matchCards: [
+      ["Cooper's ligament", "Suspensory ligament, skin to breast fascia"],
+      ["Pectoral (anterior) nodes", "Drain most breast tissue"],
+      ["Subscapular (posterior) nodes", "Lateral scapular border"],
+      ["Central nodes", "Most frequently palpable axillary group"],
+      ["Montgomery tubercles", "Areolar sebaceous gland elevations"],
+      ["Tail of Spence", "Breast tissue extending into axilla"],
+      ["Colostrum", "Thick yellow nipple discharge, late pregnancy"],
+      ["Paget's disease", "Nipple rash/discharge condition"],
+      ["Nipple retraction", "New change, concerning for cancer"],
+      ["Nipple inversion", "Can be a normal variant"],
+      ["Breast palpation fingers", "2nd, 3rd, 4th finger pads"],
+      ["Breast lymphatic drainage to axilla", "~75%"]
     ]},];
 
 function findDeck(id) { return DEMO_DECKS.find(function (d) { return d.id === id; }); }
@@ -1828,7 +1897,7 @@ var DEMO_CLASSES = [
       "pd1-lung-thorax-exam", "pd1-skin-hair-nail-exam", "pd1-eye-exam",
       "pd1-general-survey-vitals", "pd1-cardio-pv-exam", "pd1-hent-exam"
     ] },
-    { id: "exam3", name: "Exam 3", deckIds: [] }
+    { id: "exam3", name: "Exam 3", deckIds: ["pd1-pelvic-exam", "pd1-breast-exam"] }
   ]}
 ];
 
