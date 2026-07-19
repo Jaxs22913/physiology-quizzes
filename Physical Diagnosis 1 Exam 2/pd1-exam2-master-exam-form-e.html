@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<!--
+  Human Nutrition Quiz — Set 1 (CAM/Nutrition Exam 1)
+  Source: Prof. Allen's "Human Nutrition 2026" lecture deck (PAJ 5508)
+  Single self-contained file. Retrofitted from the site's Anatomy-family quiz engine.
+-->
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path {
+    animation: ekg-sweep 0.9s linear infinite;
+  }
+  @keyframes ekg-sweep {
+    0% { stroke-dashoffset: 420; }
+    100% { stroke-dashoffset: -420; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PD1 Exam 2 Comprehensive Master Exam — Form E</title>
+<style>
+  :root{
+    --ink:#20232b;
+    --ink-soft:#4b5162;
+    --paper:#eef0f7;
+    --paper-2:#f8f9fc;
+    --line:#d7dae6;
+    --oxblood:#7a2e3f;
+    --oxblood-soft:#9c4558;
+    --brass:#2f6690;
+    --teal:#5c8a72;
+    --teal-deep:#2f5245;
+    --correct:#2f6d4f;
+    --correct-bg:#e7f1ea;
+    --wrong:#a2323f;
+    --wrong-bg:#f6e7e8;
+    --shadow:0 12px 30px rgba(32,35,43,.12);
+    --exam-toolbar-accent:var(--oxblood);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% -5%, rgba(194,121,58,.10), transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(63,122,92,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Masthead */
+  header.mast{
+    border-top:3px solid var(--oxblood);
+    border-bottom:1px solid var(--line);
+    padding:22px 0 18px;
+    margin-bottom:26px;
+  }
+  .eyebrow{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.02;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;color:var(--ink-soft);margin-top:12px;
+    letter-spacing:.02em;
+  }
+
+  .card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 24px;
+  }
+
+  /* Intro */
+  .intro h2{
+    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
+  }
+  .intro p{margin:0 0 14px;color:var(--ink-soft);}
+  .obj-list{
+    list-style:none;padding:0;margin:16px 0 6px;
+    display:grid;gap:8px;
+  }
+  .obj-list li{
+    display:flex;gap:12px;align-items:baseline;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13.5px;color:var(--ink);
+    padding:9px 12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .obj-list .n{
+    font-weight:700;color:var(--oxblood);
+    font-size:12px;min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;font-size:15px;
+    border:none;border-radius:10px;
+    padding:13px 26px;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    letter-spacing:.02em;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn-primary{
+    background:var(--oxblood);color:#fdf6ee;
+    box-shadow:0 6px 16px rgba(124,33,48,.28);
+  }
+  .btn-primary:hover{background:var(--oxblood-soft);}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
+
+  /* Progress bar */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:14px;margin-bottom:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
+  .score{
+    font-size:13px;font-weight:700;color:var(--teal-deep);
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 12px;border-radius:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
+
+  .topic-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    display:inline-block;text-transform:uppercase;
+    letter-spacing:.16em;font-size:10.5px;font-weight:700;
+    color:var(--teal);margin-bottom:12px;
+  }
+  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
+
+  .choices{display:grid;gap:11px;}
+  .choice{
+    display:flex;gap:13px;align-items:flex-start;
+    text-align:left;width:100%;
+    background:var(--paper-2);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;cursor:pointer;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
+  .choice:disabled{cursor:default;}
+  .choice .key{
+    font-weight:700;color:var(--oxblood);
+    min-width:22px;font-size:14px;
+    border-right:1px solid var(--line);padding-right:11px;
+  }
+  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
+  .choice.correct .key{color:var(--correct);}
+  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
+  .choice.wrong .key{color:var(--wrong);}
+  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
+  .choice.selected-exam .key{color:var(--teal);}
+  .choice.dim{opacity:.62;}
+  .optlabel{flex:1}
+  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{
+    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
+  }
+  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
+  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
+
+  .feedback{
+    margin-top:20px;border-radius:10px;padding:16px 18px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    border:1px solid var(--line);background:var(--paper);
+    display:none;
+  }
+  .feedback.show{display:block;animation:rise .28s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
+  .verdict.right{color:var(--correct);}
+  .verdict.miss{color:var(--wrong);}
+  .feedback p{margin:0 0 9px;color:var(--ink);}
+  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
+  .feedback .src{
+    margin-top:10px;font-size:12px;color:var(--ink-soft);
+    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+
+  /* Results */
+  .results{text-align:center;}
+  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
+  .bigscore{
+    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
+    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
+  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
+
+  .bd-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
+    margin:34px 0 12px;text-align:left;
+  }
+  .bd-row{
+    display:flex;align-items:center;gap:12px;margin:0 0 9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
+  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
+  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
+
+  .missed-wrap{margin-top:34px;text-align:left;}
+  .missed-item{
+    border:1px solid var(--line);border-left:3px solid var(--wrong);
+    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
+  }
+  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
+  .missed-item .ma{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
+  }
+  .missed-item .ma.yours{color:var(--wrong);}
+  .missed-item .ma.right{color:var(--correct);font-weight:600;}
+  .missed-item .mexp{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
+  }
+  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
+  .perfect{
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
+    color:var(--correct);background:var(--correct-bg);
+    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
+  }
+  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
+  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
+
+  footer{
+    text-align:center;margin-top:40px;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+  .hidden{display:none;}
+
+  @media (max-width:520px){
+    .wrap{padding:18px 14px 60px;}
+    .card{padding:20px 16px;}
+    .qtext{font-size:18px;}
+    .bd-name{flex-basis:50%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<style>
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #60a5fa; }
+  }
+</style>
+<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
+</div>
+
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header class="mast">
+    <p class="eyebrow">PAJ 5300 &middot; Physical Diagnosis 1 &middot; Exam 2 Comprehensive</p>
+    <h1>PD1 Exam 2 Master Exam<span class="sys">Form E</span></h1>
+    <p class="sub">60 questions cumulative across all 9 Exam 2 topics &middot; Anus &amp; Rectum, Male GU &amp; Prostate, Abdominal, Lung &amp; Thorax, Skin/Hair/Nail, Eye, General Survey &amp; Vitals, Cardiovascular &amp; PV, HENT</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="card intro">
+    <h2>Before you begin</h2>
+    <p>This 60-question comprehensive exam draws from all 9 Physical Diagnosis 1 Exam 2 topics: Anus &amp; Rectum, Male GU &amp; Prostate, Abdominal Exam, Lung &amp; Thorax Exam, Skin/Hair/Nail Exam, Eye Exam, General Survey &amp; Vital Signs, Cardiovascular &amp; Peripheral Vascular Exam, and HENT. This is Form E of 5 &mdash; each form is a genuinely distinct, non-overlapping set of questions drawn from the validated topic-quiz question pools, so no question repeats across the 5 forms.</p><p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
+    <ul class="obj-list">
+      <li><span class="n">1</span><span>Demonstrate comprehensive recall across all 9 PD1 Exam 2 physical exam topics.</span></li>
+      <li><span class="n">2</span><span>Apply correct technique, landmarks, and terminology across multiple organ systems.</span></li>
+      <li><span class="n">3</span><span>Distinguish normal from abnormal physical exam findings across systems.</span></li>
+      <li><span class="n">4</span><span>Identify the correct exam sequence and maneuvers for each system covered.</span></li>
+    </ul>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
+      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <div class="start-row">
+          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
+      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
+        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+      </div>
+    </div>
+    <button id="startBtn" class="btn btn-primary">Start the exam</button>
+    
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="status">
+      <span class="qcount" id="qcount">Question 1 of 20</span>
+      <span class="score" id="timerpill">00:00</span>
+      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
+      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div id="examtoolbar" class="examtoolbar hidden">
+      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
+      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
+      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
+    </div>
+
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <h2 class="qtext" id="qtext">Question text</h2>
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback" id="feedback">
+      <p class="verdict" id="verdict"></p>
+      <p id="fbCorrect"></p>
+      <p class="why" id="fbWhy"></p>
+      <p class="src" id="fbSrc"></p>
+    </div>
+
+    <div class="nav-row">
+      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
+      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card results hidden">
+    <h2>Exam complete</h2>
+    <div class="bigscore" id="finalScore">0 / 20</div>
+    <div class="pct" id="finalPct">0%</div>
+    <div class="pct" id="finalTime"></div>
+    <div class="verdict-line" id="finalVerdict"></div>
+
+    <div class="bd-title">Breakdown by topic</div>
+    <div id="breakdown"></div>
+
+    <div class="missed-wrap" id="missedWrap">
+      <div class="bd-title">Review &mdash; missed questions</div>
+      <div id="missedList"></div>
+    </div>
+
+    <div class="actions">
+      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
+      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    Built from Prof. Allen's <em>Human Nutrition 2026</em> lecture deck &middot; PAJ 5508 &middot; for study use.
+  </footer>
+  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — 20 items, from Prof. Allen's "Human Nutrition 2026"
+   lecture deck (PAJ 5508). Set 1 of 2.
+   answer = index (0-3) of correct choice.
+   ============================================================ */
+const QUESTIONS = [
+  {
+    "topic": "Blood pressure technique",
+    "q": "Blood pressure should not be assessed on an arm with an IV line, an AV fistula for hemodialysis, a brachial artery bruit, or...",
+    "choices": [
+      "a radical mastectomy/lymph node dissection on that side, or lymphedema",
+      "a normal, healthy arm with no history",
+      "an arm with well-manicured nails",
+      "there are no contraindicated sites for BP cuff placement"
+    ],
+    "answer": 0,
+    "correct": "BP should be avoided on an arm with an IV line, AV fistula, brachial artery bruit, prior radical mastectomy/lymph node dissection on that side, lymphedema, thrombophlebitis, or recent fracture/trauma, all of which can either be harmed by cuff pressure or produce an inaccurate reading.",
+    "why": "A normal, healthy arm with no relevant history is exactly the type of arm appropriate for BP measurement, not a contraindication. Nail appearance is not a listed contraindication for BP measurement on that arm. Several specific contraindicated conditions are explicitly listed for BP cuff placement on a given arm.",
+    "src": "General Survey & Vital Signs lecture, Slide 52"
+  },
+  {
+    "topic": "Pulse Palpation Technique",
+    "q": "Epitrochlear lymph nodes are palpated in which location?",
+    "choices": [
+      "In the groove between the biceps and triceps muscles, about 3 cm above the medial epicondyle, with the elbow flexed ~90 degrees",
+      "Directly over the antecubital crease",
+      "In the axilla with the arm fully abducted",
+      "Along the anterior wrist crease"
+    ],
+    "answer": 0,
+    "correct": "This is the correct technique and location for palpating epitrochlear nodes.",
+    "why": "The antecubital crease is where the brachial pulse is felt, not the epitrochlear node location, which is about 3 cm above the medial epicondyle. The axilla is where axillary nodes are palpated, not epitrochlear nodes. This is not the location for epitrochlear node palpation.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 45"
+  },
+  {
+    "topic": "Thyroid Palpation",
+    "q": "During the posterior thyroid exam, what maneuver helps the examiner feel the isthmus?",
+    "choices": [
+      "Place fingers below the cricoid cartilage and ask the patient to swallow",
+      "Ask the patient to hold their breath while pressing above the thyroid cartilage",
+      "Have the patient hyperextend the neck while the examiner auscultates",
+      "No specific maneuver is needed; the isthmus is always easily palpable at rest"
+    ],
+    "answer": 0,
+    "correct": "Placing fingers below the cricoid cartilage while the patient swallows allows the examiner to feel the isthmus move under the fingers.",
+    "why": "The described maneuver uses swallowing, not breath-holding, with finger placement below the cricoid cartilage. Auscultation is not the described technique for feeling the isthmus; palpation during swallowing is used. The swallowing maneuver is specifically used to help identify the isthmus, and a normal thyroid is often not palpable at rest.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 63"
+  },
+  {
+    "topic": "History",
+    "q": "Documenting current medications (e.g., anticoagulants) is relevant before the anorectal exam mainly because...",
+    "choices": [
+      "anticoagulant use increases bleeding risk and can affect interpretation of minor bleeding on exam",
+      "medications never affect physical exam findings",
+      "it is only relevant to the cardiac exam",
+      "it replaces the need for the physical exam"
+    ],
+    "answer": 0,
+    "correct": "Patients on anticoagulants (or antiplatelet agents) have an increased bleeding tendency, which is important both for safety during the exam and for correctly interpreting any minor bleeding noted, since it may be exaggerated by the medication rather than reflecting more significant pathology.",
+    "why": "Medications like anticoagulants can meaningfully affect bleeding risk/findings, so this option is incorrect. While anticoagulant use is very relevant to cardiac history, it is also directly relevant to the anorectal exam given bleeding risk. Medication history informs interpretation and safety but does not replace the need for the physical exam itself.",
+    "src": "Anus and Rectum Examination lecture, Slide 4"
+  },
+  {
+    "topic": "History",
+    "q": "A thorough male GU history establishes context that helps the examiner...",
+    "choices": [
+      "focus the subsequent physical exam on the most relevant findings and differential considerations",
+      "skip the physical exam entirely if the history is normal",
+      "avoid the need for patient consent",
+      "is irrelevant to the physical exam findings"
+    ],
+    "answer": 0,
+    "correct": "A focused history (urinary symptoms, discharge, pain, sexual function) helps the examiner anticipate what to look for on exam and narrows the relevant differential before physical examination even begins.",
+    "why": "A history, even if reassuring, does not replace the need to perform the physical exam. History-taking does not substitute for or eliminate the separate need for patient consent to examination. The history is explicitly meant to inform and focus the subsequent physical exam, not be irrelevant to it.",
+    "src": "Male GU and Prostate Examination lecture, Slide 4"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "Regarding kidney palpability on exam, a key teaching point is that...",
+    "choices": [
+      "kidneys are generally non-palpable, though the right kidney (being lower than the left) may be felt in a thin patient",
+      "both kidneys are easily palpable in all patients",
+      "the left kidney is more often palpable than the right",
+      "kidney palpation requires no particular technique"
+    ],
+    "answer": 0,
+    "correct": "Kidneys are generally not palpable on exam; however, because the right kidney sits somewhat lower than the left (due to the liver above it), it may occasionally be felt in a thin patient using proper technique.",
+    "why": "This is the reverse of the taught point — kidneys are generally NOT palpable, with the right occasionally felt only in thin patients. It is the right kidney (being lower) that may occasionally be palpable in a thin patient, not the left. The material specifically notes that technique is important to detect an enlarged kidney, contradicting this option.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 47"
+  },
+  {
+    "topic": "Percussion technique",
+    "q": "Direct versus indirect percussion, as distinguished in this lecture, differ primarily in that indirect percussion...",
+    "choices": [
+      "uses a pleximeter finger (placed on the chest) struck by the plexor finger of the other hand",
+      "never involves the examiner's hands at all",
+      "is performed only over the abdomen, never the chest",
+      "requires no comparison between sides"
+    ],
+    "answer": 0,
+    "correct": "Indirect percussion, the standard technique used clinically, involves placing the pleximeter (a finger of the non-dominant hand) firmly against the chest wall and striking it with the plexor (a finger of the dominant hand), in contrast to direct percussion, which strikes the chest wall directly.",
+    "why": "Indirect percussion specifically involves both of the examiner's hands (pleximeter and plexor fingers), not an absence of hand involvement. Indirect percussion technique is used over the chest in this context (as well as the abdomen elsewhere), not exclusively the abdomen. The technique explicitly calls for comparing side to side systematically, not omitting comparison.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 36"
+  },
+  {
+    "topic": "Nail exam",
+    "q": "When inspecting and palpating the proximal and lateral nail folds, the examiner screens for redness, swelling, pain, exudate, and...",
+    "choices": [
+      "warts, cysts, or tumors",
+      "blood pressure",
+      "heart murmurs",
+      "bowel sounds"
+    ],
+    "answer": 0,
+    "correct": "The nail fold assessment specifically screens for redness, swelling, pain, exudate, and growths such as warts, cysts, or tumors.",
+    "why": "Blood pressure is a separate vital sign, not part of the nail fold assessment. Heart murmurs are assessed by cardiac auscultation, unrelated to nail fold assessment. Bowel sounds are unrelated to nail fold assessment, which focuses on local findings.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 23"
+  },
+  {
+    "topic": "Alignment/EOM",
+    "q": "During extraocular movement testing, the examiner observes for any deviation of gaze, nystagmus, and...",
+    "choices": [
+      "lid lag",
+      "pupil color",
+      "visual acuity numbers",
+      "hearing thresholds"
+    ],
+    "answer": 0,
+    "correct": "In addition to gaze deviation and nystagmus, the examiner watches for lid lag (a delay of the upper eyelid following the eye's movement) during extraocular movement testing.",
+    "why": "Pupil color is not the finding assessed during EOM testing; the examiner watches for gaze deviation, nystagmus, and lid lag. Visual acuity is tested separately with an eye chart, not observed during the EOM gaze test. Hearing is unrelated to extraocular movement testing.",
+    "src": "Physical Examination of the Eye lecture, Slide 28"
+  },
+  {
+    "topic": "Blood pressure technique",
+    "q": "To estimate the systolic pressure before formal auscultatory BP assessment, the examiner palpates the radial artery, inflates the cuff until the pulse disappears, notes that pressure, and then...",
+    "choices": [
+      "adds 30 mmHg to that reading to determine the target inflation value for the actual BP assessment",
+      "subtracts 30 mmHg from that reading",
+      "uses that exact reading with no adjustment as the target inflation value",
+      "disregards the palpated reading entirely"
+    ],
+    "answer": 0,
+    "correct": "Adding 30 mmHg to the palpated pulse-obliteration pressure gives a target inflation value that ensures the cuff is inflated well above the true systolic pressure during the actual auscultatory measurement, helping avoid missing the systolic reading due to an auscultatory gap.",
+    "why": "The technique specifically adds (not subtracts) 30 mmHg to establish an adequately high target inflation value. A 30 mmHg addition is specifically made to that reading, not used as-is without adjustment. The palpated pulse-obliteration pressure is specifically used (plus 30 mmHg) to set the target inflation value, not disregarded.",
+    "src": "General Survey & Vital Signs lecture, Slide 53"
+  },
+  {
+    "topic": "Pulse Palpation Technique",
+    "q": "Are epitrochlear nodes typically palpable in healthy individuals?",
+    "choices": [
+      "No, they are usually not palpable in healthy individuals",
+      "Yes, they are always palpable and up to 3 cm is normal",
+      "Yes, but only in pediatric patients",
+      "Only palpable in patients with high BMI"
+    ],
+    "answer": 0,
+    "correct": "The lecture states epitrochlear nodes are usually not palpable in healthy people.",
+    "why": "The lecture specifically states these nodes are usually NOT palpable in healthy individuals. The lecture does not qualify this by age; it states they are usually not palpable in healthy individuals generally. Palpability of epitrochlear nodes is not linked to BMI in the lecture; they are simply usually not palpable when healthy.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 45"
+  },
+  {
+    "topic": "Cervical Lymph Nodes",
+    "q": "How many groups of cervical lymph nodes are described in the lecture?",
+    "choices": [
+      "10 groups",
+      "5 groups",
+      "3 groups",
+      "15 groups"
+    ],
+    "answer": 0,
+    "correct": "The lecture lists 10 cervical lymph node groups, including occipital, pre-auricular, posterior auricular, tonsillar, submandibular, submental, superficial cervical, posterior cervical, deep cervical, and supraclavicular.",
+    "why": "The lecture specifically lists 10 distinct cervical lymph node groups, not 5. This undercounts the 10 groups specifically listed in the lecture. This overcounts; the lecture lists exactly 10 cervical lymph node groups.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 64"
+  },
+  {
+    "topic": "Special techniques",
+    "q": "Evaluating for rectal prolapse, a special finding sometimes assessed during this exam, is best done by...",
+    "choices": [
+      "asking the patient to bear down/strain and observing for protrusion of rectal tissue",
+      "auscultating the abdomen",
+      "measuring blood pressure",
+      "palpating the thyroid"
+    ],
+    "answer": 0,
+    "correct": "Rectal prolapse (full-thickness protrusion of the rectum through the anus) is best elicited by asking the patient to bear down or strain, which increases intra-abdominal pressure and can reveal the prolapse if present.",
+    "why": "Auscultation assesses bowel sounds, not structural prolapse; straining/bearing down is the technique used to reveal rectal prolapse. Blood pressure measurement is unrelated to assessing for rectal prolapse. Thyroid palpation is unrelated to assessing for rectal prolapse.",
+    "src": "Anus and Rectum Examination lecture, Slide 12"
+  },
+  {
+    "topic": "Abnormal findings",
+    "q": "An enlarged, tender prostate on DRE, especially with systemic symptoms like fever, is most consistent with...",
+    "choices": [
+      "acute prostatitis",
+      "a normal prostate exam finding",
+      "testicular torsion",
+      "a hydrocele"
+    ],
+    "answer": 0,
+    "correct": "An acutely tender, often boggy/enlarged prostate accompanied by systemic symptoms like fever is classic for acute prostatitis, an infectious/inflammatory process, in contrast to the typically non-tender enlargement of BPH or the hard nodularity of malignancy.",
+    "why": "Tenderness with systemic symptoms like fever is an abnormal finding pointing toward acute prostatitis, not a normal exam. Torsion is a scrotal/testicular emergency, not a prostate finding; a tender, feverish prostate presentation points toward prostatitis. A hydrocele is a scrotal fluid collection, unrelated to prostate tenderness/fever, which suggests prostatitis.",
+    "src": "Male GU and Prostate Examination lecture, Slide 8"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "The bimanual kidney 'capture' technique involves pushing the left hand upward under the flank while, at the peak of inspiration, the right hand...",
+    "choices": [
+      "presses firmly and deeply downward to trap the kidney between both hands",
+      "is removed from the abdomen entirely",
+      "percusses over the kidney instead",
+      "auscultates for renal bruits"
+    ],
+    "answer": 0,
+    "correct": "At the peak of inspiration (when the kidney has descended as far as it will), the right hand presses firmly and deeply downward, attempting to 'capture' the kidney between the two hands before it is released as the patient exhales.",
+    "why": "The right hand remains actively pressing during this maneuver; it is not removed at the peak of inspiration. This is a palpation technique (capture maneuver), not a percussion technique. Auscultation for renal artery bruits is a separate, earlier auscultation step, not part of this bimanual capture palpation technique.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 48"
+  },
+  {
+    "topic": "Risk factors",
+    "q": "Screening tests referenced in the past medical history section for pulmonary conditions include skin testing, chest X-ray, and...",
+    "choices": [
+      "pulmonary function tests (PFTs)",
+      "echocardiogram exclusively",
+      "colonoscopy",
+      "visual field testing"
+    ],
+    "answer": 0,
+    "correct": "The past medical history/testing section references skin testing (e.g., for TB), chest X-ray (CXR), and pulmonary function tests (PFTs) as relevant prior workup to ask about.",
+    "why": "While cardiac history is related, the specifically listed pulmonary-relevant tests are skin testing, CXR, and PFTs, not echocardiogram. Colonoscopy is a GI screening test, unrelated to the pulmonary history/testing section. Visual field testing is an ophthalmologic test, unrelated to the pulmonary history section.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 24"
+  },
+  {
+    "topic": "Equipment/prep",
+    "q": "Equipment useful for the skin exam includes a light source, ruler, and optionally a magnifying lens or...",
+    "choices": [
+      "dermoscope/dermatoscope",
+      "a stethoscope exclusively",
+      "an otoscope",
+      "no equipment is ever needed"
+    ],
+    "answer": 0,
+    "correct": "A dermoscope (or dermatoscope), which provides magnification with cross-polarized or unpolarized light, is an optional but increasingly common piece of equipment for the skin exam, alongside a light source, ruler, and magnifying lens.",
+    "why": "While a stethoscope is general exam equipment, the specifically listed optional skin-exam tool is a dermoscope, not a stethoscope. An otoscope is used for ear examination, not listed as skin-exam equipment. Specific equipment (light source, ruler, magnifying lens, dermoscope) is explicitly listed as useful for this exam.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 24"
+  },
+  {
+    "topic": "Alignment/EOM",
+    "q": "During convergence testing, as the examiner's finger moves inward toward the bridge of the nose, the eyes should normally follow the finger until it is within approximately...",
+    "choices": [
+      "5 to 8 cm of the nose",
+      "50 to 80 cm of the nose",
+      "0 cm (touching the nose) in every normal patient",
+      "there is no normal range for convergence"
+    ],
+    "answer": 0,
+    "correct": "Normal convergence allows the eyes to track the approaching finger until it comes within approximately 5-8 cm of the nose before convergence typically breaks down.",
+    "why": "This distance is far greater than the normal convergence range, which is approximately 5-8 cm. Normal convergence is typically maintained to within about 5-8 cm, not necessarily all the way to actually touching the nose. A specific normal range (approximately 5-8 cm) is explicitly taught for convergence testing.",
+    "src": "Physical Examination of the Eye lecture, Slide 30"
+  },
+  {
+    "topic": "Blood pressure technique",
+    "q": "The auscultatory gap, a period of silence between the systolic and diastolic Korotkoff sounds, can cause errors including...",
+    "choices": [
+      "underestimating the true systolic pressure and overestimating the true diastolic pressure",
+      "overestimating both systolic and diastolic pressure equally",
+      "having no effect on BP readings at all",
+      "only affecting heart rate measurement, not blood pressure"
+    ],
+    "answer": 0,
+    "correct": "If unrecognized, the auscultatory gap can cause the examiner to record a systolic pressure lower than the true value (if the cuff wasn't inflated high enough to hear the first Korotkoff sound before the gap) and a diastolic pressure higher than the true value, which is why the palpated-pressure-plus-30-mmHg technique is used to avoid this error.",
+    "why": "The auscultatory gap specifically causes underestimation of systolic and overestimation of diastolic, not equal overestimation of both. The auscultatory gap is explicitly described as a source of measurement error, not something without effect. The auscultatory gap specifically affects blood pressure (systolic/diastolic) measurement, not heart rate.",
+    "src": "General Survey & Vital Signs lecture, Slide 54"
+  },
+  {
+    "topic": "Abnormal Findings & Capillary Refill",
+    "q": "Pulsus parvus, referring to weak pulses, is classically seen in which condition?",
+    "choices": [
+      "Atherosclerotic peripheral vascular disease",
+      "Aortic regurgitation",
+      "Anxiety-induced tachycardia",
+      "Normal healthy aging alone"
+    ],
+    "answer": 0,
+    "correct": "Pulsus parvus (weak pulses) is classically associated with atherosclerotic PVD.",
+    "why": "Aortic regurgitation classically produces a bounding, not weak, pulse (pulsus bisferiens/water-hammer pulse), not pulsus parvus. Anxiety-related tachycardia is not the classic cause of pulsus parvus described in the lecture. Pulsus parvus specifically reflects atherosclerotic PVD, not a normal aging finding.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 34"
+  },
+  {
+    "topic": "Cervical Lymph Nodes",
+    "q": "What technique should be used to palpate cervical lymph nodes?",
+    "choices": [
+      "Use the pads of the index and middle fingers in gentle circular motions",
+      "Use the thumb pressed firmly in a straight line",
+      "Use the whole palm pressed flat against the neck",
+      "Percuss the neck with a reflex hammer"
+    ],
+    "answer": 0,
+    "correct": "Cervical node palpation uses the finger pads (index and middle) in gentle circles.",
+    "why": "The lecture specifically describes using the index/middle finger pads in gentle circles, not the thumb pressed firmly in a line. The described technique uses finger pads in gentle circular motion, not a flat palm. Percussion with a reflex hammer is not the technique used for lymph node palpation.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 65"
+  },
+  {
+    "topic": "Positioning",
+    "q": "Ensuring the patient is comfortable and adequately draped before beginning the anorectal exam should occur...",
+    "choices": [
+      "before the exam begins, as part of preparing the patient",
+      "only after the DRE is already complete",
+      "only if the patient specifically requests it",
+      "it is not a relevant consideration for this exam"
+    ],
+    "answer": 0,
+    "correct": "Patient comfort and appropriate draping should be established before starting the exam, as part of the preparatory steps alongside positioning and explaining the exam.",
+    "why": "Comfort and draping should be addressed before beginning, not after the exam is already finished. Ensuring comfort/draping is a standard preparatory step for every patient, not something contingent on a specific request. Patient comfort and draping are explicitly emphasized as important preparatory considerations for this sensitive exam.",
+    "src": "Anus and Rectum Examination lecture, Slide 6"
+  },
+  {
+    "topic": "Prostate cancer",
+    "q": "Because prostate cancer risk and screening recommendations can vary by individual factors, a thorough approach to counseling should account for...",
+    "choices": [
+      "the patient's age, race, and family history alongside a discussion of screening benefits/risks",
+      "only the patient's age, ignoring all other factors",
+      "a strictly identical recommendation for every single patient",
+      "ignoring family history entirely"
+    ],
+    "answer": 0,
+    "correct": "Individualized counseling considers age, race (e.g., higher incidence in African American men), and family history alongside a balanced discussion of the benefits and limitations of screening tools like PSA, rather than a one-size-fits-all recommendation.",
+    "why": "While age matters, thorough counseling also accounts for race and family history, not age in isolation. Individualized factors (age, race, family history) are meant to shape the discussion, not produce one identical recommendation for everyone. Family history is a relevant risk factor that should be part of a thorough counseling discussion, not ignored.",
+    "src": "Male GU and Prostate Examination lecture, Slide 10"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "CVA (costovertebral angle) tenderness is assessed by...",
+    "choices": [
+      "placing a palm against the costovertebral angle and delivering a sharp blow to that hand with a fist, then asking about tenderness",
+      "deep palpation with both hands simultaneously on both flanks",
+      "auscultation with the diaphragm over the costovertebral angle",
+      "light palpation only, without any percussion component"
+    ],
+    "answer": 0,
+    "correct": "With the patient sitting and the examiner standing behind, the examiner places a palm flat against the costovertebral angle and strikes that hand with the other fist (a fist percussion technique), then asks the patient about any resulting tenderness — repeated on both sides.",
+    "why": "CVA tenderness assessment specifically uses fist percussion over the palm at the costovertebral angle, not simultaneous bimanual flank palpation. CVA tenderness is assessed by fist percussion technique, not auscultation. The technique specifically involves a percussive element (fist strike on the palm), not light palpation alone.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 51"
+  },
+  {
+    "topic": "Summary/normal findings",
+    "q": "Among the normal findings summarized for inspection of the chest are symmetry and...",
+    "choices": [
+      "absence of retraction or accessory muscle use",
+      "prominent use of accessory muscles",
+      "visible intercostal retractions",
+      "marked asymmetry of the chest wall"
+    ],
+    "answer": 0,
+    "correct": "Normal inspection findings include chest wall symmetry and the absence of retractions or accessory muscle use during breathing, both of which would suggest increased work of breathing if present.",
+    "why": "Prominent accessory muscle use is an abnormal finding suggesting respiratory distress, not part of the normal-findings summary. Visible retractions are an abnormal finding; the normal summary specifically notes their absence. Symmetry (not asymmetry) is the normal expected inspection finding.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 58"
+  },
+  {
+    "topic": "Equipment/prep",
+    "q": "Regarding glove use during the skin exam, the general practice is that gloves are...",
+    "choices": [
+      "generally not used except for palpation of wounds/open lesions",
+      "required for every single skin exam without exception",
+      "never used under any circumstance",
+      "only used for hair inspection"
+    ],
+    "answer": 0,
+    "correct": "Gloves are generally not required for a routine skin exam but should be used when palpating wounds or open lesions, consistent with standard precautions for potential body fluid contact.",
+    "why": "Gloves are specifically noted as generally not needed for routine skin exam, with the exception of wounds/open lesions. Gloves are used specifically when palpating wounds or open lesions, not never under any circumstance. Glove use is tied to wound/open lesion palpation, not specifically hair inspection.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 24"
+  },
+  {
+    "topic": "Ophthalmoscope technique",
+    "q": "When using the ophthalmoscope, the correct hand/eye pairing is to...",
+    "choices": [
+      "hold the scope in the right hand and use the right eye to examine the patient's right eye (and left hand/left eye for the patient's left eye)",
+      "always use the right hand and right eye regardless of which patient eye is examined",
+      "always use the left hand and left eye regardless of which patient eye is examined",
+      "it does not matter which hand/eye combination is used"
+    ],
+    "answer": 0,
+    "correct": "Proper ophthalmoscope technique matches the examiner's hand and eye to the same side as the patient's eye being examined — right hand/right eye for the patient's right eye, left hand/left eye for the patient's left eye — which avoids bumping noses and allows a natural viewing angle.",
+    "why": "The hand/eye used should match the side of the patient's eye being examined (right for right, left for left), not always the right side regardless. The hand/eye used should match the side of the patient's eye being examined, not always the left side regardless. A specific same-side hand/eye pairing is explicitly taught as correct technique, not an arbitrary choice.",
+    "src": "Physical Examination of the Eye lecture, Slide 32"
+  },
+  {
+    "topic": "Blood pressure technique",
+    "q": "During blood pressure auscultation, the first Korotkoff sound heard marks the systolic pressure, while the disappearance of sound marks...",
+    "choices": [
+      "the diastolic pressure",
+      "a second systolic reading",
+      "the pulse pressure directly",
+      "nothing of clinical significance"
+    ],
+    "answer": 0,
+    "correct": "As the cuff slowly deflates, the first Korotkoff sound heard marks the systolic pressure, and the point where the sound disappears marks the diastolic pressure.",
+    "why": "The disappearance of sound marks diastolic pressure, not a second systolic reading. Pulse pressure is calculated afterward (systolic minus diastolic); the disappearance of sound itself specifically marks the diastolic pressure. The disappearance of sound is a specifically meaningful marker (diastolic pressure), not clinically insignificant.",
+    "src": "General Survey & Vital Signs lecture, Slide 56"
+  },
+  {
+    "topic": "Abnormal Findings & Capillary Refill",
+    "q": "Pulsus tardus, referring to sluggish pulses, typically occurs in which settings?",
+    "choices": [
+      "Aortic stenosis or low cardiac output",
+      "Hyperthyroidism",
+      "Fever",
+      "Dehydration alone"
+    ],
+    "answer": 0,
+    "correct": "Pulsus tardus (a slow-rising, sluggish pulse) is classically seen with aortic stenosis or states of low cardiac output.",
+    "why": "Hyperthyroidism typically causes a hyperdynamic, bounding pulse, not the sluggish pulsus tardus. Fever typically increases heart rate but is not the classic cause of pulsus tardus described in the lecture. Dehydration is not the classic described cause of pulsus tardus; aortic stenosis and low cardiac output are.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 34"
+  },
+  {
+    "topic": "Cervical Lymph Nodes",
+    "q": "When a lymph node is palpated, what maneuver helps differentiate it from a muscle or artery?",
+    "choices": [
+      "Roll the node up-down and side-to-side",
+      "Auscultate over the node with a stethoscope",
+      "Ask the patient to cough forcefully",
+      "Apply ice to the area and observe the response"
+    ],
+    "answer": 0,
+    "correct": "Rolling the node in multiple directions (up-down, side-to-side) under the fingers helps distinguish a discrete lymph node from a muscle band or pulsatile artery.",
+    "why": "Auscultation is not the described differentiation technique; rolling the structure between the fingers is used. Coughing is not the described maneuver for differentiating a node from muscle or artery; rolling the structure is. Applying ice is not part of the described lymph node palpation technique.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 66"
+  },
+  {
+    "topic": "Technique",
+    "q": "Before the anorectal exam begins, explaining the steps of the exam to the patient primarily serves to...",
+    "choices": [
+      "reduce patient anxiety and improve cooperation, given the sensitive nature of the exam",
+      "replace the need for proper positioning",
+      "eliminate the need for draping",
+      "speed up the exam by skipping inspection"
+    ],
+    "answer": 0,
+    "correct": "Because the anorectal exam is a sensitive, potentially anxiety-provoking exam, clearly explaining each step beforehand helps the patient feel informed and reduces apprehension, improving cooperation.",
+    "why": "Explaining the exam does not substitute for correct positioning (left lateral, hips/knees flexed); both are separately necessary. Explanation and draping serve different purposes (patient understanding vs. privacy/comfort) and are not substitutes for one another. Explaining the exam to the patient does not change the required sequence (inspection before DRE); it is a communication step, not a shortcut.",
+    "src": "Anus and Rectum Examination lecture, Slide 5"
+  },
+  {
+    "topic": "History",
+    "q": "Urinary incontinence, one of the screened history items, refers to...",
+    "choices": [
+      "involuntary loss of urine",
+      "complete inability to urinate at all",
+      "excessive thirst",
+      "blood in the urine"
+    ],
+    "answer": 0,
+    "correct": "Urinary incontinence refers to the involuntary loss of urine, an important symptom to screen for as part of the lower urinary tract/GU history.",
+    "why": "Complete inability to urinate describes urinary retention, a distinct issue from incontinence, which is involuntary leakage. Excessive thirst (polydipsia) is unrelated to urinary incontinence, which specifically means involuntary urine loss. Blood in the urine is hematuria, a distinct finding from incontinence, which refers to involuntary urine loss.",
+    "src": "Male GU and Prostate Examination lecture, Slide 4"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "The bladder is generally examinable on physical exam only when...",
+    "choices": [
+      "it is distended above the symphysis pubis",
+      "it is completely empty",
+      "the patient is standing only",
+      "never, under any circumstances"
+    ],
+    "answer": 0,
+    "correct": "The bladder is usually not palpable/percussible unless it is distended, at which point it rises above the symphysis pubis and can be assessed for a round, smooth dome, tenderness, and the height it reaches (via percussion for dullness).",
+    "why": "An empty bladder is generally not examinable; it is specifically a distended bladder, rising above the symphysis pubis, that becomes assessable on exam. Position is not the determining factor described; bladder examinability specifically depends on distension above the symphysis pubis. A distended bladder can, in fact, be examined (dome shape, tenderness, percussion height), contrary to this option.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 53"
+  },
+  {
+    "topic": "Anatomy",
+    "q": "Regarding lobar anatomy, the right lung is divided into upper, middle, and lower lobes, while the left lung has only...",
+    "choices": [
+      "upper and lower lobes (with the lingular segment of the upper lobe)",
+      "a single lobe with no further division",
+      "four lobes, one more than the right lung",
+      "upper, middle, and lower lobes, identical to the right lung"
+    ],
+    "answer": 0,
+    "correct": "Unlike the right lung's three lobes, the left lung has only upper and lower lobes; the lingular segment of the left upper lobe is analogous in position to the right middle lobe.",
+    "why": "The left lung does have two lobes (upper and lower), not just a single undivided lobe. The left lung has fewer lobes than the right (two versus three), not more. This describes the right lung's lobar anatomy; the left lung has only upper and lower lobes, not a middle lobe.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 5"
+  },
+  {
+    "topic": "Equipment/prep",
+    "q": "Before beginning the skin exam, the patient should be undressed and covered with a gown open in the back, and should also remove...",
+    "choices": [
+      "makeup, nail polish, or other cosmetics",
+      "nothing; cosmetics do not need to be removed",
+      "only their shoes",
+      "only jewelry, but makeup and nail polish may remain"
+    ],
+    "answer": 0,
+    "correct": "Patient preparation includes removing makeup, nail polish, or other cosmetics that could obscure or mimic skin/nail findings, along with being gowned appropriately and considering a chaperone.",
+    "why": "Removing cosmetics (makeup, nail polish) is explicitly recommended, since they can obscure or mimic true findings. While full-body assessment requires undressing generally, the specific noted preparation items are cosmetics (makeup, nail polish), not simply shoes. The specific recommendation is to remove makeup and nail polish, not simply jewelry while leaving cosmetics on.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 25"
+  },
+  {
+    "topic": "Ophthalmoscope technique",
+    "q": "Before beginning the ophthalmoscopic exam, the examiner should darken the room, adjust the scope's light size/brightness, and turn the diopter dial to...",
+    "choices": [
+      "0 diopter",
+      "+20 diopters",
+      "-20 diopters",
+      "there is no starting diopter setting"
+    ],
+    "answer": 0,
+    "correct": "The ophthalmoscope is initially set to 0 diopter before beginning the exam; if the examiner wears glasses, they should remove them and adjust the diopter setting to accommodate their own vision instead.",
+    "why": "The exam starts at 0 diopter, not +20; diopter is adjusted as needed for focus during the exam (e.g., around +10 to +12 for anterior structures). The exam starts at 0 diopter, not -20; the examiner adjusts as needed depending on their own vision and the specific structure being examined. A specific starting point (0 diopter) is explicitly part of the setup technique.",
+    "src": "Physical Examination of the Eye lecture, Slide 32"
+  },
+  {
+    "topic": "BMI/height/weight",
+    "q": "According to the BMI classification table, a BMI of 18.5-24.9 kg/m2 is classified as...",
+    "choices": [
+      "Normal",
+      "Underweight",
+      "Overweight",
+      "Obesity Class I"
+    ],
+    "answer": 0,
+    "correct": "A BMI of 18.5-24.9 kg/m2 is classified as normal weight; under 18.5 is underweight, 25.0-29.9 is overweight, and 30 or above is classified into obesity classes I, II, and III (extreme obesity, >40).",
+    "why": "Underweight is classified as BMI under 18.5 kg/m2, not the 18.5-24.9 range, which is normal. Overweight is classified as BMI 25.0-29.9 kg/m2, not the 18.5-24.9 range, which is normal. Obesity Class I is classified as BMI 30.0-34.9 kg/m2, not the 18.5-24.9 range, which is normal.",
+    "src": "General Survey & Vital Signs lecture, Slide 21"
+  },
+  {
+    "topic": "Cardiac Anatomy",
+    "q": "Which great vessel is the largest blood vessel in the human body, originating from the left ventricle and arching to the level of the sternal angle?",
+    "choices": [
+      "Aorta",
+      "Pulmonary artery",
+      "Superior vena cava",
+      "Inferior vena cava"
+    ],
+    "answer": 0,
+    "correct": "The aorta is the body's largest vessel, originating from the LV and arching at the sternal angle before descending posteriorly and to the left.",
+    "why": "The pulmonary artery carries deoxygenated blood to the lungs and is smaller than the aorta. The superior vena cava drains venous blood from the upper body into the right atrium; it does not arise from the left ventricle. The inferior vena cava drains venous blood from the lower body into the right atrium.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 7"
+  },
+  {
+    "topic": "Head, Face & Scalp",
+    "q": "During scalp inspection, which findings should be noted, similar to the skin exam?",
+    "choices": [
+      "Lesions and dandruff",
+      "Only hair color",
+      "Only skull circumference",
+      "Only sensation to light touch"
+    ],
+    "answer": 0,
+    "correct": "The scalp is inspected for lesions and dandruff, similar to a general skin exam.",
+    "why": "Hair color is assessed under hair inspection separately; scalp inspection specifically focuses on lesions and dandruff. Skull circumference/contour is part of head inspection, not scalp-specific inspection. Sensory testing is a neurologic exam element, not part of scalp inspection.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 13"
+  },
+  {
+    "topic": "DRE technique",
+    "q": "Adequate lubrication of the gloved finger before the DRE is important chiefly to...",
+    "choices": [
+      "minimize patient discomfort and reduce the risk of mucosal trauma during insertion",
+      "improve the examiner's ability to detect masses",
+      "disinfect the anal canal",
+      "eliminate the need for the patient to squeeze the sphincter"
+    ],
+    "answer": 0,
+    "correct": "The anal canal and rectal mucosa are sensitive tissue; adequate lubrication reduces friction, minimizing patient discomfort and the risk of causing mucosal trauma during finger insertion.",
+    "why": "Lubrication primarily reduces friction/discomfort; the ability to detect masses relates to careful systematic palpation technique, not the lubricant itself. Lubricant is not a disinfectant; its purpose is reducing friction and discomfort during insertion. Sphincter tone assessment (squeeze) is still performed regardless of lubrication; lubrication doesn't replace that assessment step.",
+    "src": "Anus and Rectum Examination lecture, Slide 8"
+  },
+  {
+    "topic": "Patient comfort/technique",
+    "q": "If a patient refuses the genital examination, the examiner's most appropriate next step is to...",
+    "choices": [
+      "discuss the patient's reasons for refusal respectfully, without forcing the exam",
+      "perform the exam despite the refusal since it's medically indicated",
+      "end the entire clinical encounter immediately",
+      "document the refusal and never discuss it further"
+    ],
+    "answer": 0,
+    "correct": "Respecting patient autonomy means discussing the reasons for refusal and addressing concerns where possible, without proceeding with the exam against the patient's wishes.",
+    "why": "A competent patient's refusal must be respected regardless of medical indication; the exam should not be forced. Declining this specific exam component doesn't necessitate ending the whole encounter; a respectful discussion is the appropriate next step. While documentation is appropriate, discussing the patient's reasons for refusal is also part of the recommended approach, not simply noting it and moving on.",
+    "src": "Male GU and Prostate Examination lecture, Slide 5"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "A distended bladder, when examined, should have a dome that feels...",
+    "choices": [
+      "round and smooth",
+      "irregular and nodular",
+      "stony-hard",
+      "it cannot be assessed by touch at all"
+    ],
+    "answer": 0,
+    "correct": "A distended bladder's dome should feel round and smooth on palpation; the examiner also checks for tenderness and percusses to assess how high it rises above the symphysis pubis (as an area of dullness).",
+    "why": "An irregular, nodular texture would be an abnormal finding; a distended bladder's dome should normally feel round and smooth. A stony-hard texture is not the expected normal finding for a distended bladder, which should feel round and smooth. A distended bladder's dome shape/consistency can and should be assessed by palpation, contrary to this option.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 53"
+  },
+  {
+    "topic": "Anatomy",
+    "q": "The minor (horizontal) fissure specifically divides which lobes?",
+    "choices": [
+      "the right upper and middle lobes",
+      "the left upper and lower lobes",
+      "the right middle and lower lobes",
+      "there is no minor fissure in normal anatomy"
+    ],
+    "answer": 0,
+    "correct": "The minor (horizontal) fissure divides the right upper lobe from the right middle lobe; the major (oblique) fissures separate the upper/middle lobes from the lower lobes on each side.",
+    "why": "The left lung's lobes are separated by an oblique fissure, not the minor/horizontal fissure, which is specific to the right upper/middle lobe division. The right middle and lower lobes are separated by the major (oblique) fissure, not the minor fissure, which separates upper from middle. The minor (horizontal) fissure is a real, normal anatomic structure specifically dividing the right upper and middle lobes.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 5"
+  },
+  {
+    "topic": "Equipment/prep",
+    "q": "The recommended patient positioning for the skin exam in this PD I course is...",
+    "choices": [
+      "seated/standing",
+      "supine/prone exclusively, as taught in this course",
+      "lithotomy position",
+      "Trendelenburg position"
+    ],
+    "answer": 0,
+    "correct": "While supine/prone positioning is preferred by some providers, the seated/standing position is specifically the method used and taught in this PD I course.",
+    "why": "While supine/prone is an alternative preferred by some providers, seated/standing is specifically the method used in this course. Lithotomy position is not the recommended positioning for the general skin exam; seated/standing is used in this course. Trendelenburg position is not the recommended positioning for the skin exam; seated/standing is used in this course.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 26"
+  },
+  {
+    "topic": "Ophthalmoscope technique",
+    "q": "To begin the ophthalmoscopic exam, the patient looks up over the examiner's shoulder while the examiner starts approximately how far away, at what angle?",
+    "choices": [
+      "15 inches away, at a 20-degree angle lateral to the patient's line of vision",
+      "1 inch away, directly in front of the patient's line of vision",
+      "5 feet away, directly behind the patient",
+      "there is no specific starting distance or angle"
+    ],
+    "answer": 0,
+    "correct": "The examiner starts approximately 15 inches away from the patient, positioned at about a 20-degree angle lateral to the patient's line of vision, shining the light onto the pupil to note the red reflex before moving closer.",
+    "why": "The exam starts from a greater distance (about 15 inches) at an angled position (20 degrees lateral), not 1 inch directly in front. The starting position is approximately 15 inches away at a 20-degree lateral angle, not 5 feet away or behind the patient. A specific starting distance (15 inches) and angle (20 degrees lateral) are explicitly taught for this technique.",
+    "src": "Physical Examination of the Eye lecture, Slide 33"
+  },
+  {
+    "topic": "BMI/height/weight",
+    "q": "According to the BMI classification table, 'Extreme obesity' (Obesity Class III) corresponds to a BMI of...",
+    "choices": [
+      "greater than 40 kg/m2",
+      "less than 18.5 kg/m2",
+      "25.0-29.9 kg/m2",
+      "18.5-24.9 kg/m2"
+    ],
+    "answer": 0,
+    "correct": "Extreme obesity (Obesity Class III) is classified as BMI greater than 40 kg/m2, the highest category on the classification table.",
+    "why": "This range describes underweight, not extreme obesity, which is above 40 kg/m2. This range describes overweight, not extreme obesity, which is above 40 kg/m2. This range describes normal weight, not extreme obesity, which is above 40 kg/m2.",
+    "src": "General Survey & Vital Signs lecture, Slide 21"
+  },
+  {
+    "topic": "Cardiac Anatomy",
+    "q": "The superior and inferior venae cavae drain venous blood from the body into which chamber?",
+    "choices": [
+      "Right atrium",
+      "Left atrium",
+      "Right ventricle",
+      "Aorta"
+    ],
+    "answer": 0,
+    "correct": "Both venae cavae empty venous blood into the right atrium along its medial border.",
+    "why": "The left atrium receives oxygenated blood from the pulmonary veins, not the venae cavae. The venae cavae empty into the right atrium, which then passes blood to the right ventricle. The aorta carries oxygenated blood away from the left ventricle, not venous return.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 7"
+  },
+  {
+    "topic": "Head, Face & Scalp",
+    "q": "During hair inspection, which of the following should be assessed?",
+    "choices": [
+      "Color, distribution, texture, hair loss, and nits",
+      "Only length of hair",
+      "Only presence of gray hair",
+      "Only scalp temperature"
+    ],
+    "answer": 0,
+    "correct": "These are the specific hair inspection findings listed in the lecture.",
+    "why": "Hair length alone is not the focus; color, distribution, texture, hair loss, and nits are the listed findings. Graying alone is not the listed finding; the lecture lists a broader set of hair characteristics. Scalp temperature is not a listed hair inspection finding.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 13"
+  },
+  {
+    "topic": "Abnormal findings",
+    "q": "A rectal malignancy detected on DRE would most classically feel like...",
+    "choices": [
+      "a firm, fixed, irregular mass distinct from the smooth surrounding mucosa",
+      "a soft, mobile, symmetric swelling identical to surrounding tissue",
+      "a normal finding present in most healthy adults",
+      "something detectable only by auscultation, not palpation"
+    ],
+    "answer": 0,
+    "correct": "A rectal malignancy classically presents as a firm, often fixed (non-mobile), irregular mass that feels distinctly different from the smooth, pliable surrounding rectal mucosa.",
+    "why": "This description lacks the firmness/irregularity/fixation typical of malignancy; a soft, mobile, symmetric swelling is less concerning for cancer. A firm, irregular, fixed mass is an abnormal finding warranting further workup, not a normal variant. Rectal masses are detected by palpation during the DRE, not by auscultation, which is not part of the anorectal exam technique.",
+    "src": "Anus and Rectum Examination lecture, Slide 11"
+  },
+  {
+    "topic": "Technique",
+    "q": "Palpating the epididymis as a distinct step from palpating the testis itself is important because the epididymis is normally...",
+    "choices": [
+      "a separate, comma-shaped structure posterior to the testis, distinguishable on exam from the testis itself",
+      "identical in location and consistency to the testis, requiring no separate assessment",
+      "located anterior to the testis",
+      "not a normal structure present in healthy men"
+    ],
+    "answer": 0,
+    "correct": "The epididymis is a distinct, comma-shaped structure that sits posterior to the testis; palpating it separately allows the examiner to distinguish epididymal findings (often more likely benign/infectious, e.g., epididymitis or a spermatocele) from testicular findings (which carry more concern for malignancy when nodular).",
+    "why": "The epididymis is anatomically distinct (posterior to the testis) and is deliberately assessed separately, not identical to or indistinguishable from the testis. The epididymis is located posterior to the testis, not anterior. The epididymis is a normal anatomic structure present in every healthy male, not an abnormal finding.",
+    "src": "Male GU and Prostate Examination lecture, Slide 6"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "To assess the aortic pulsation, the examiner presses firmly deep in the upper abdomen...",
+    "choices": [
+      "slightly to the left of the midline",
+      "far to the right upper quadrant",
+      "only along the costal margins",
+      "only in the pelvis"
+    ],
+    "answer": 0,
+    "correct": "The aorta is identified by pressing firmly and deeply in the upper abdomen, slightly to the left of the midline, where its pulsation can typically be felt.",
+    "why": "Aortic pulsation is assessed slightly left of the midline (reflecting the aorta's actual anatomic position), not far to the right upper quadrant. Aortic assessment is performed in the upper abdominal midline area (slightly left), not along the costal margins specifically. Aortic pulsation is assessed in the upper abdomen, not the pelvis.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 54"
+  },
+  {
+    "topic": "Anatomy",
+    "q": "Comparing the right and left main-stem bronchi, the right main-stem bronchus is characteristically...",
+    "choices": [
+      "shorter, wider, and more straight (vertical) than the left",
+      "longer, narrower, and more angled than the left",
+      "identical in length, width, and angle to the left",
+      "absent entirely, with a single shared bronchus"
+    ],
+    "answer": 0,
+    "correct": "The right main-stem bronchus is shorter, wider, and takes a more straight/vertical course compared with the left, which is why aspirated foreign material more often lodges in the right lung.",
+    "why": "This describes the left main-stem bronchus's relative characteristics, not the right, which is shorter, wider, and straighter. The right and left main-stem bronchi differ meaningfully in these characteristics; they are not identical. Both right and left main-stem bronchi are distinct, real anatomic structures, not absent or fused into one.",
+    "src": "The Physical Exam of the Lungs lecture, Slide 5"
+  },
+  {
+    "topic": "Exam sequence",
+    "q": "When examining the hair and scalp, the examiner begins by standing in front of the patient and...",
+    "choices": [
+      "separating the hair with fingers or a cotton-tipped applicator to visualize the scalp",
+      "immediately cutting a hair sample",
+      "only inspecting from behind the patient",
+      "skipping direct scalp visualization entirely"
+    ],
+    "answer": 0,
+    "correct": "Scalp examination begins with the examiner standing in front of the patient and using fingers or a cotton-tipped applicator to part/separate the hair, allowing direct visualization of the scalp for lesions, dandruff, nits, etc.",
+    "why": "Cutting a hair sample is not part of the described technique; the examiner separates the hair to visualize the scalp. The examiner begins by standing in front of the patient, not behind, for this part of the exam. Direct scalp visualization (by separating the hair) is the explicit point of this technique, not something skipped.",
+    "src": "Physical Examination of the Skin, Hair, and Nails lecture, Slide 27"
+  },
+  {
+    "topic": "Ophthalmoscope technique",
+    "q": "When beginning the ophthalmoscopic exam from 15 inches away, the examiner shines the light onto the pupil and notes the...",
+    "choices": [
+      "red reflex",
+      "visual acuity number",
+      "pupil color exclusively, unrelated to any reflex",
+      "nothing in particular at this step"
+    ],
+    "answer": 0,
+    "correct": "From the initial starting position, the examiner shines the light onto the pupil and notes the red reflex — a reflection off the vascular retina that should appear as a consistent reddish-orange glow; its absence or asymmetry can be an important abnormal finding.",
+    "why": "Visual acuity is tested separately with an eye chart, not assessed via the ophthalmoscope's initial red reflex check. The specific finding noted at this step is the red reflex (a reflection phenomenon), not simply describing pupil color in isolation. The red reflex is a specific, meaningful finding explicitly noted at this early step of the ophthalmoscopic exam.",
+    "src": "Physical Examination of the Eye lecture, Slide 33"
+  },
+  {
+    "topic": "BMI/height/weight",
+    "q": "When measuring weight as part of the general survey, proper technique includes having the patient remove shoes/heavy clothing, zeroing/taring the scale, and ensuring the patient is...",
+    "choices": [
+      "not supported by a wall or holding objects such as a cane",
+      "wearing their heaviest coat for warmth",
+      "leaning firmly against a wall for stability",
+      "holding onto a cane or other object for balance"
+    ],
+    "answer": 0,
+    "correct": "For an accurate weight measurement, the patient should stand unsupported (not leaning on a wall) and without holding assistive objects like a cane, in addition to removing shoes and heavy clothing and using a zeroed/tared scale.",
+    "why": "Heavy clothing should be removed, not worn, for an accurate weight measurement. The patient should not be supported by a wall, as this would artificially lower the measured weight. The patient should not be holding objects like a cane during weight measurement, as this could affect accuracy.",
+    "src": "General Survey & Vital Signs lecture, Slide 20"
+  },
+  {
+    "topic": "Cardiac Anatomy",
+    "q": "The mediastinum, the central compartment of the thoracic cavity housing the heart and great vessels, is bounded anteriorly by which structure?",
+    "choices": [
+      "Sternum",
+      "Vertebral bodies",
+      "Diaphragm",
+      "Clavicles"
+    ],
+    "answer": 0,
+    "correct": "The mediastinum is bounded by the sternum anteriorly and the vertebral bodies posteriorly.",
+    "why": "The vertebral bodies bound the mediastinum posteriorly, not anteriorly. The diaphragm forms the inferior boundary of the thoracic cavity, not the anterior boundary of the mediastinum. The clavicles are not a boundary of the mediastinum.",
+    "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 3"
+  },
+  {
+    "topic": "Head, Face & Scalp",
+    "q": "What is the recommended general approach when examining the head, ears, nose, and throat region?",
+    "choices": [
+      "Be thorough, systematic, and gentle; use look, smell, listen, and feel, without fearing necessary discomfort",
+      "Move as quickly as possible to minimize patient discomfort",
+      "Avoid causing any discomfort under any circumstance, even if required for exam completeness",
+      "Rely on inspection alone; palpation is unnecessary for this region"
+    ],
+    "answer": 0,
+    "correct": "The lecture's general approach emphasizes thoroughness, system, gentleness, using multiple senses, and not avoiding necessary discomfort.",
+    "why": "The lecture emphasizes being thorough and systematic, not rushing through the exam. The lecture explicitly states not to fear causing discomfort when it is required for the exam. The general approach explicitly includes palpation (feel) along with inspection and other senses.",
+    "src": "Physical Examination Head, Ears, Nose, Throat (HENT) lecture, Slide 5"
+  },
+  {
+    "topic": "Positioning",
+    "q": "If the anorectal exam is being performed in conjunction with a pelvic exam on a female patient, the most practical combined positioning is...",
+    "choices": [
+      "lithotomy position",
+      "standing bent at the waist",
+      "prone with legs extended",
+      "left lateral position only, never combined with pelvic exam"
+    ],
+    "answer": 0,
+    "correct": "When the anorectal exam accompanies a pelvic exam, the lithotomy position allows both exams to be performed efficiently in the same setup without needing to reposition the patient.",
+    "why": "Standing bent-over positioning is not the practical combined position described for pairing with a pelvic exam; lithotomy is used instead. Prone positioning is not used for a combined pelvic/anorectal exam; lithotomy is the practical shared position. While left lateral is the standard anorectal-only position, when combined with a pelvic exam, lithotomy is used instead for practicality.",
+    "src": "Anus and Rectum Examination lecture, Slide 12"
+  },
+  {
+    "topic": "Abnormal findings",
+    "q": "Acute epididymitis classically presents with...",
+    "choices": [
+      "gradual onset of scrotal pain and tenderness localized to the epididymis, often with associated swelling",
+      "sudden onset with a high-riding testis and absent cremasteric reflex",
+      "a painless nodule with no tenderness",
+      "complete absence of any palpable abnormality"
+    ],
+    "answer": 0,
+    "correct": "Epididymitis typically presents with a more gradual onset of pain and tenderness localized to the epididymis (posterior to the testis), often with associated swelling and sometimes fever, in contrast to the sudden, severe pain of testicular torsion.",
+    "why": "This presentation is classic for testicular torsion, not epididymitis, which more typically has a gradual onset localized to the epididymis. A painless nodule raises concern for testicular malignancy; epididymitis is characteristically painful/tender, not painless. Epididymitis produces a palpable, tender, often swollen epididymis, not an absence of findings.",
+    "src": "Male GU and Prostate Examination lecture, Slide 6"
+  },
+  {
+    "topic": "Spleen/kidney/other",
+    "q": "In patients over 50 years old, assessing aortic width by pressing deeply with one hand on each side of the aorta, a normal aortic width should not exceed approximately...",
+    "choices": [
+      "3.0 cm",
+      "10.0 cm",
+      "0.5 cm",
+      "there is no defined normal width"
+    ],
+    "answer": 0,
+    "correct": "In patients over 50, aortic width is specifically assessed because of increased risk of aneurysm with age; a normal aorta should measure no more than about 3.0 cm wide, with wider measurements raising concern for an abdominal aortic aneurysm.",
+    "why": "This width would be markedly abnormal and concerning; the normal upper limit taught here is about 3.0 cm, not 10.0 cm. This understates normal aortic width; the taught normal upper limit is about 3.0 cm, not 0.5 cm. A specific normal width limit (about 3.0 cm) is explicitly taught for this assessment, not left undefined.",
+    "src": "Physical Examination of the Abdomen lecture, Slide 54"
+  }
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const state = { i:0, score:0, answered:false, missed:[] };
+let order = QUESTIONS.map((_,i)=>i);
+let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
+let flagged = new Set();
+let examResponses = {};
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
+// button. It's a plain <span>, not a nested <button>, and stops
+// propagation so tapping it never also selects that choice -- crossing
+// out is purely a visual aid (still fully clickable as your answer).
+function addCrossToggle(b,i){
+  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const e=document.getElementById('timerpill'); if(!e) return;
+  if(examMode && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    e.textContent = fmtTime(remain);
+    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    e.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+
+const el = id => document.getElementById(id);
+const intro = el('intro'), quiz = el('quiz'), results = el('results');
+
+function applyExamModeUI(){
+  el('score').classList.toggle('hidden', examMode);
+  el('examtoolbar').classList.toggle('hidden', !examMode);
+  el('timerpill').classList.add('examctl-timer');
+  if (examMode) window.startExamModeTour();
+}
+
+el('flagbtn').addEventListener('click', toggleFlag);
+el('navbtn').addEventListener('click', openNav);
+el('examtoolbarSubmit').addEventListener('click', () => submitExam());
+el('pausebtn').addEventListener('click', pauseQuiz);
+
+el('startBtn').addEventListener('click', () => {
+  clearProgress();
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  intro.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('nextBtn').addEventListener('click', () => {
+  if(examMode){
+    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else { submitExam(); }
+    return;
+  }
+  state.i++;saveProgress();
+  if (state.i >= QUESTIONS.length){ finish(); }
+  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.i === 0) return;
+  state.i--;saveProgress();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+el('retryBtn').addEventListener('click', () => {
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  results.classList.add('hidden');
+  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){
+  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
+  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
+}
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  state.i = saved.i; state.score = saved.score;
+  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  el("resume-banner").classList.add("hidden");
+  intro.classList.add("hidden");
+  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("resumeBtn").addEventListener("click", resumeQuiz);
+el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
+el("midRestartBtn").addEventListener("click", () => {
+  if(!confirm("Restart this quiz from the beginning?")) return;
+  clearProgress();
+  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
+  order = QUESTIONS.map((_,i)=>i);
+  if(el('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
+  el("resume-banner").classList.remove("hidden");
+})();
+
+function render(){
+  const item = QUESTIONS[order[state.i]];
+  const total = QUESTIONS.length;
+
+  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
+  el('bar').style.width = `${(state.i/total)*100}%`;
+  el('topicTag').textContent = item.topic;
+  el('qtext').textContent = item.q;
+  el('prevBtn').disabled = (state.i === 0);
+  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
+
+  const letters = ['A','B','C','D'];
+  const box = el('choices');
+  box.innerHTML = '';
+
+  if (examMode){
+    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
+    const priorResp = examResponses[state.i];
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+      b.addEventListener('click', () => select(idx));
+      addCrossToggle(b, idx);
+      box.appendChild(b);
+    });
+    el('feedback').classList.remove('show');
+    el('nextBtn').classList.remove('hidden');
+    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
+    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    return;
+  }
+
+  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
+
+  if (state.i < answeredCount()){
+    state.answered = true;
+    const chosen = missedEntry ? missedEntry.chosen : item.answer;
+    const right = !missedEntry;
+
+    item.choices.forEach((c, idx) => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.disabled = true;
+      if (idx === item.answer) b.classList.add('correct');
+      else if (idx === chosen) b.classList.add('wrong');
+      else b.classList.add('dim');
+      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
+      box.appendChild(b);
+    });
+
+    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+    const verdict = el('verdict');
+    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+    el('fbWhy').textContent = item.why;
+    el('fbSrc').textContent = `Source: ${item.src}`;
+    el('feedback').classList.add('show');
+    el('nextBtn').classList.remove('hidden');
+    return;
+  }
+
+  state.answered = false;
+  el('score').textContent = `Score: ${state.score} / ${state.i}`;
+  item.choices.forEach((c, idx) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
+    b.addEventListener('click', () => select(idx));
+    addCrossToggle(b, idx);
+    box.appendChild(b);
+  });
+
+  const fb = el('feedback');
+  fb.classList.remove('show');
+  el('nextBtn').classList.add('hidden');
+}
+function answeredCount(){ return state.score + state.missed.length; }
+
+function select(idx){
+  const item = QUESTIONS[order[state.i]];
+  if (examMode){
+    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+    saveProgress();
+    render();
+    return;
+  }
+  if (state.answered) return;
+  state.answered = true;
+  const buttons = el('choices').querySelectorAll('.choice');
+  const letters = ['A','B','C','D'];
+
+  buttons.forEach((b,i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const right = idx === item.answer;
+  if (right){ state.score++; }
+  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
+  if (!right) { state.missed.push({ item, chosen: idx }); }
+
+  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
+
+  const verdict = el('verdict');
+  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
+  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
+
+  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
+  el('fbWhy').textContent = item.why;
+  el('fbSrc').textContent = `Source: ${item.src}`;
+
+  el('feedback').classList.add('show');
+  el('nextBtn').classList.remove('hidden');
+  saveProgress();
+}
+
+function toggleFlag(){
+  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  saveProgress();
+  render();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: state.i,
+    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
+    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: () => submitExam()
+  });
+}
+
+function submitExam(auto){
+  if (!auto){
+    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
+    if (unanswered > 0){
+      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  finish();
+}
+
+function finish(){
+  stopTimerInterval();
+  const finalMs = currentElapsedMs();
+  if (examMode){
+    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
+    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
+  }
+  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
+  quiz.classList.add('hidden');
+  results.classList.remove('hidden');
+  el('bar').style.width = '100%';
+  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
+  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((state.score/total)*100);
+  el('finalScore').textContent = `${state.score} / ${total}`;
+  el('finalPct').textContent = `${pct}%`;
+  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
+
+  let msg;
+  if (pct >= 90) msg = 'Excellent — you have strong command of human nutrition fundamentals.';
+  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
+  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
+  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
+  el('finalVerdict').textContent = msg;
+
+  /* breakdown by topic */
+  const topics = {};
+  QUESTIONS.forEach(q => {
+    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
+    topics[q.topic].total++;
+  });
+  // count correct = total - missed per topic
+  const missedByTopic = {};
+  state.missed.forEach(m => {
+    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
+  });
+  Object.keys(topics).forEach(t => {
+    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
+  });
+
+  const bd = el('breakdown');
+  bd.innerHTML = '';
+  Object.keys(topics).forEach(t => {
+    const {correct,total:tt} = topics[t];
+    const p = Math.round((correct/tt)*100);
+    const row = document.createElement('div');
+    row.className = 'bd-row';
+    row.innerHTML = `
+      <span class="bd-name">${t}</span>
+      <span class="bd-bar"><i style="width:${p}%"></i></span>
+      <span class="bd-frac">${correct}/${tt}</span>`;
+    bd.appendChild(row);
+  });
+
+  if (examMode){
+    const list = el('missedList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    order.forEach((qi, i) => {
+      const item = QUESTIONS[qi];
+      const r = examResponses[i];
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
+      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
+      div.innerHTML = `
+        <p class="mq">Q${i+1}. ${item.q}</p>
+        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
+        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    saveReview();
+    return;
+  }
+
+  /* missed review */
+  const wrap = el('missedWrap');
+  const list = el('missedList');
+  const letters = ['A','B','C','D'];
+  if (state.missed.length === 0){
+    list.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'perfect';
+    p.textContent = 'Perfect score — no missed questions to review. Well done.';
+    wrap.replaceChildren(p);
+  } else {
+    list.innerHTML = '';
+    state.missed.forEach(m => {
+      const item = m.item;
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `
+        <p class="mq">${item.q}</p>
+        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
+        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
+        <p class="mexp">${item.correct} ${item.why}</p>
+        <p class="msrc">Source: ${item.src}</p>`;
+      list.appendChild(div);
+    });
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(quiz.classList.contains('hidden')) return;
+  const k = e.key;
+  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(examMode){
+    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
+    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+    return;
+  }
+  if(!state.answered){
+    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+    const i = map[k.toLowerCase()];
+    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
+      e.preventDefault();
+      select(i);
+    }
+  } else {
+    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
+  }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      function showSWUpdateBanner() {
+        if (document.getElementById("sw-update-banner")) return;
+        const bar = document.createElement("div");
+        bar.id = "sw-update-banner";
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+        bar.querySelector("button").addEventListener("click", () => location.reload());
+        document.body.prepend(bar);
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) showSWUpdateBanner();
+      });
+      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+    }
+  </script>
+</body>
+</html>
