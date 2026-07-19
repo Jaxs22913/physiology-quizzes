@@ -609,6 +609,7 @@
 
     .tabs {
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
       background: var(--bg);
       border: 1px solid var(--border);
@@ -623,17 +624,15 @@
       margin: 0 0 20px;
     }
     .tab-btn {
-      flex: 1;
-      /* Without this, a flex item's default min-width:auto floors it at its
-         own min-content size (the widest unbreakable chunk of its text,
-         after wrapping) -- with 6 tabs now sharing one row, the SUM of
-         those floors can exceed .tabs' own width even though each button's
-         own text wraps and fits within its individual box, pushing the
-         whole row (and the last tab, "CAM/Nutrition") past the card's right
-         edge instead of shrinking further. min-width: 0 lets flex-shrink
-         actually shrink each tab below its content's natural minimum,
-         wrapping harder if it has to, so the row itself never overflows. */
-      min-width: 0;
+      /* With 7+ tabs now, cramming them all onto one row (the old
+         flex:1;min-width:0 approach) squished each button to an unreadably
+         narrow sliver. .tabs now has flex-wrap: wrap (above), so instead
+         each tab gets a real target width and just flows onto a second row
+         once a row's tabs no longer fit -- e.g. 4 on top, 3 below -- rather
+         than shrinking forever. flex-basis 140px is what flex-grow expands
+         from to fill leftover row space evenly; flex-shrink still lets a
+         tab narrow a bit before wrapping kicks in. */
+      flex: 1 1 140px;
       background: none;
       border: none;
       border-radius: 8px;
@@ -1175,12 +1174,10 @@
 
          min-width: 45% is re-asserted here for the same reason: the
          earlier @media(max-width:640px) block (near the top of the file)
-         also sets it, but the later, unconditional min-width: 0 added to
-         the base .tab-btn rule (added to fix the CAM/Nutrition tab
-         overflowing the whole row off the card at desktop widths) comes
+         also sets it, but the base .tab-btn rule's flex: 1 1 140px comes
          after that first media block in source order and would otherwise
-         win at mobile widths too, collapsing the intended 2-per-row mobile
-         grid back into 6 unreadably narrow slivers. */
+         win at mobile widths too, loosening the intended exact 2-per-row
+         mobile grid into a wrap point that varies with label length. */
       .tab-btn {
         -webkit-hyphens: auto;
         hyphens: auto;
