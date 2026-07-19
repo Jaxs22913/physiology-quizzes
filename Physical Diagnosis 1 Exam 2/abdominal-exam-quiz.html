@@ -455,40 +455,40 @@ const QUESTIONS = [
     "topic": "Exam order",
     "q": "The 'new order' of the abdominal exam sequence taught in lecture is...",
     "choices": [
-      "Inspection, Auscultation, Percussion, Palpation",
       "Palpation, Percussion, Auscultation, Inspection",
+      "Auscultation, Inspection, Palpation, Percussion",
       "Inspection, Palpation, Percussion, Auscultation",
-      "Auscultation, Inspection, Palpation, Percussion"
+      "Inspection, Auscultation, Percussion, Palpation"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The taught sequence is inspection first, then auscultation, then percussion, then palpation — auscultation is deliberately performed before percussion/palpation so that bowel sounds aren't artificially altered by prior manipulation of the abdomen.",
-    "why": "This reverses the correct order; inspection comes first and auscultation must precede percussion/palpation. Auscultation should occur before percussion and palpation, not last, to avoid altering bowel sounds. Inspection is performed first, before auscultation, not after it.",
+    "why": "This reverses the correct order; inspection comes first and auscultation must precede percussion/palpation. Inspection is performed first, before auscultation, not after it. Auscultation should occur before percussion and palpation, not last, to avoid altering bowel sounds.",
     "src": "Physical Examination of the Abdomen lecture, Slide 8"
   },
   {
     "topic": "Exam order",
     "q": "Auscultation is performed before percussion and palpation in the abdominal exam specifically because...",
     "choices": [
-      "percussing or palpating first can alter bowel sound activity, giving a misleading auscultation result",
-      "percussion and palpation are not part of the abdominal exam",
       "auscultation is faster and saves time",
-      "patients tolerate auscultation better when performed last"
+      "patients tolerate auscultation better when performed last",
+      "percussion and palpation are not part of the abdominal exam",
+      "percussing or palpating first can alter bowel sound activity, giving a misleading auscultation result"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Mechanically stimulating the bowel via percussion or palpation can transiently increase peristalsis/bowel sounds, so auscultation is performed first to get an accurate baseline assessment of bowel activity.",
-    "why": "Percussion and palpation are both standard parts of the abdominal exam; they are simply performed after auscultation, not omitted. The reason for this specific ordering is to avoid altering bowel sounds, not simply a matter of speed. Auscultation is performed early (second, after inspection), not last, precisely to get an unaltered assessment of bowel sounds.",
+    "why": "The reason for this specific ordering is to avoid altering bowel sounds, not simply a matter of speed. Auscultation is performed early (second, after inspection), not last, precisely to get an unaltered assessment of bowel sounds. Percussion and palpation are both standard parts of the abdominal exam; they are simply performed after auscultation, not omitted.",
     "src": "Physical Examination of the Abdomen lecture, Slide 16"
   },
   {
     "topic": "Inspection",
     "q": "Purple striae noted on abdominal inspection can be associated with...",
     "choices": [
-      "liver disease and dilated veins (caput medusae)",
       "a completely normal finding in all patients",
       "only recent weight loss with no other significance",
-      "normal aging with no clinical correlation"
+      "normal aging with no clinical correlation",
+      "liver disease and dilated veins (caput medusae)"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Purple striae are associated with conditions like liver disease and can accompany the dilated periumbilical veins known as caput medusae, both of which may be visible on abdominal inspection.",
     "why": "Purple striae is a notable finding associated with underlying conditions like liver disease, not a universal normal variant. While striae generally relate to skin stretching, purple striae specifically are associated with conditions like liver disease/Cushing syndrome, not simply weight loss. Purple striae carry a specific clinical association (for example, liver disease), not simply an aging change without significance.",
     "src": "Physical Examination of the Abdomen lecture, Slide 13"
@@ -498,55 +498,55 @@ const QUESTIONS = [
     "q": "On abdominal inspection, a pulsation visible in the epigastrium is most likely to represent...",
     "choices": [
       "normal aortic pulsation, which can be visible in thin patients",
-      "always an abnormal finding requiring immediate intervention",
       "a sign of active bowel obstruction",
+      "always an abnormal finding requiring immediate intervention",
       "never a normal finding"
     ],
     "answer": 0,
     "correct": "Aortic pulsation may be normally visible in the epigastrium, particularly in thin patients, and is a recognized normal inspection finding distinct from abnormal peristaltic waves seen in obstruction.",
-    "why": "A visible epigastric pulsation can be a normal finding (aortic pulsation), especially in thin patients, not automatically abnormal. Visible peristalsis (not simple pulsation) is the finding associated with obstruction; a pulsation in the epigastrium is more typically normal aortic pulsation. Aortic pulsation is explicitly noted as potentially visible normally in thin patients.",
+    "why": "Visible peristalsis (not simple pulsation) is the finding associated with obstruction; a pulsation in the epigastrium is more typically normal aortic pulsation. A visible epigastric pulsation can be a normal finding (aortic pulsation), especially in thin patients, not automatically abnormal. Aortic pulsation is explicitly noted as potentially visible normally in thin patients.",
     "src": "Physical Examination of the Abdomen lecture, Slide 12"
   },
   {
     "topic": "Auscultation",
     "q": "Normal bowel sounds are described as clicks and gurgles occurring at a rate of approximately...",
     "choices": [
-      "5 to 34 per minute",
       "1 to 2 per hour",
-      "100 to 200 per minute",
-      "exactly 10 per minute, with no variation"
+      "5 to 34 per minute",
+      "exactly 10 per minute, with no variation",
+      "100 to 200 per minute"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Normal bowel sounds (clicks and gurgles) occur at a rate of roughly 5 to 34 per minute, a fairly wide normal range.",
-    "why": "This rate is far too infrequent for normal bowel sounds, which occur multiple times per minute (5–34/min). This rate is far too frequent; normal bowel sounds occur at roughly 5–34 per minute, not 100–200. Normal bowel sounds fall within a range (5–34/min), not a single fixed exact value.",
+    "why": "This rate is far too infrequent for normal bowel sounds, which occur multiple times per minute (5–34/min). Normal bowel sounds fall within a range (5–34/min), not a single fixed exact value. This rate is far too frequent; normal bowel sounds occur at roughly 5–34 per minute, not 100–200.",
     "src": "Physical Examination of the Abdomen lecture, Slide 20"
   },
   {
     "topic": "Auscultation",
     "q": "Borborygmi refers to...",
     "choices": [
-      "prolonged gurgles of hyperperistalsis, informally known as 'stomach growling'",
-      "complete absence of bowel sounds",
+      "a friction rub heard over the liver",
       "a vascular bruit heard over the aorta",
-      "a friction rub heard over the liver"
+      "prolonged gurgles of hyperperistalsis, informally known as 'stomach growling'",
+      "complete absence of bowel sounds"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Borborygmi are prolonged, loud gurgling sounds reflecting hyperperistalsis — what's commonly called 'stomach growling.'",
-    "why": "Absence of bowel sounds is a distinct finding (documented as 'absent'), not what borborygmi refers to, which describes loud hyperperistaltic gurgles. A bruit is a vascular sound heard with the diaphragm over arteries; borborygmi are bowel sounds, an entirely different phenomenon. A friction rub is a distinct grating sound over the liver/spleen; borborygmi refers to loud bowel gurgling sounds.",
+    "why": "A friction rub is a distinct grating sound over the liver/spleen; borborygmi refers to loud bowel gurgling sounds. A bruit is a vascular sound heard with the diaphragm over arteries; borborygmi are bowel sounds, an entirely different phenomenon. Absence of bowel sounds is a distinct finding (documented as 'absent'), not what borborygmi refers to, which describes loud hyperperistaltic gurgles.",
     "src": "Physical Examination of the Abdomen lecture, Slide 17"
   },
   {
     "topic": "Auscultation",
     "q": "If bowel sounds appear absent on initial listening, the examiner should...",
     "choices": [
-      "listen for one full minute in each quadrant before documenting them as truly absent",
       "immediately document 'absent' after a few seconds of silence",
-      "skip auscultation of the remaining quadrants",
-      "switch immediately to percussion instead"
+      "listen for one full minute in each quadrant before documenting them as truly absent",
+      "switch immediately to percussion instead",
+      "skip auscultation of the remaining quadrants"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Bowel sounds can be intermittent, so the examiner must listen for a full minute in each of the four quadrants before concluding and documenting that bowel sounds are truly absent.",
-    "why": "A brief period of silence is not sufficient; a full minute of listening per quadrant is required before documenting sounds as absent. All four quadrants should be assessed, each for a full minute if silent, not skipped. The correct response to apparent silence is prolonged listening (one full minute per quadrant), not abandoning auscultation for percussion.",
+    "why": "A brief period of silence is not sufficient; a full minute of listening per quadrant is required before documenting sounds as absent. The correct response to apparent silence is prolonged listening (one full minute per quadrant), not abandoning auscultation for percussion. All four quadrants should be assessed, each for a full minute if silent, not skipped.",
     "src": "Physical Examination of the Abdomen lecture, Slide 20"
   },
   {
@@ -555,54 +555,54 @@ const QUESTIONS = [
     "choices": [
       "absent, normoactive, hyperactive, hypoactive",
       "loud, soft, medium, silent",
-      "only present or absent, with no other categories",
-      "mild, moderate, severe, critical"
+      "mild, moderate, severe, critical",
+      "only present or absent, with no other categories"
     ],
     "answer": 0,
     "correct": "Bowel sound findings are documented using one of four standard categories: absent, normoactive, hyperactive, or hypoactive.",
-    "why": "These are not the standard documented categories; the correct terms are absent, normoactive, hyperactive, and hypoactive. There are four categories (absent, normoactive, hyperactive, hypoactive), not simply a binary present/absent. These are not the standard bowel sound documentation categories used in this exam.",
+    "why": "These are not the standard documented categories; the correct terms are absent, normoactive, hyperactive, and hypoactive. These are not the standard bowel sound documentation categories used in this exam. There are four categories (absent, normoactive, hyperactive, hypoactive), not simply a binary present/absent.",
     "src": "Physical Examination of the Abdomen lecture, Slide 20"
   },
   {
     "topic": "Auscultation",
     "q": "When listening for vascular bruits over the aorta, renal, iliac, and femoral arteries, the examiner should use...",
     "choices": [
-      "the diaphragm of the stethoscope",
       "the bell of the stethoscope",
-      "no stethoscope at all, only palpation",
-      "the stethoscope tubing pressed directly on skin"
+      "the diaphragm of the stethoscope",
+      "the stethoscope tubing pressed directly on skin",
+      "no stethoscope at all, only palpation"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Bruits are best heard using the diaphragm of the stethoscope over the aorta, renal arteries, iliac arteries, and femoral arteries.",
-    "why": "The diaphragm, not the bell, is specifically indicated for listening for bruits over these vascular areas. Auscultation with a stethoscope (diaphragm) is required to detect bruits; palpation alone cannot assess this vascular sound. The diaphragm chestpiece, not the tubing, is used to auscultate for bruits.",
+    "why": "The diaphragm, not the bell, is specifically indicated for listening for bruits over these vascular areas. The diaphragm chestpiece, not the tubing, is used to auscultate for bruits. Auscultation with a stethoscope (diaphragm) is required to detect bruits; palpation alone cannot assess this vascular sound.",
     "src": "Physical Examination of the Abdomen lecture, Slide 21"
   },
   {
     "topic": "Auscultation",
     "q": "A friction rub heard over the liver or spleen is a rare finding that indicates...",
     "choices": [
-      "inflammation of the peritoneal surface of that organ",
-      "normal bowel activity",
+      "dehydration",
       "a normal vascular sound",
-      "dehydration"
+      "normal bowel activity",
+      "inflammation of the peritoneal surface of that organ"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "A friction rub is a grating sound heard with respiration over the liver or spleen, indicating inflammation of that organ's peritoneal surface — a rare but clinically significant finding.",
-    "why": "A friction rub is an abnormal grating sound indicating peritoneal inflammation, not a description of normal bowel activity. A friction rub is not a vascular sound (that would be a bruit or venous hum); it specifically indicates peritoneal surface inflammation. A friction rub indicates peritoneal inflammation of the underlying organ, not a marker of dehydration.",
+    "why": "A friction rub indicates peritoneal inflammation of the underlying organ, not a marker of dehydration. A friction rub is not a vascular sound (that would be a bruit or venous hum); it specifically indicates peritoneal surface inflammation. A friction rub is an abnormal grating sound indicating peritoneal inflammation, not a description of normal bowel activity.",
     "src": "Physical Examination of the Abdomen lecture, Slide 23"
   },
   {
     "topic": "Auscultation",
     "q": "A venous hum, heard over the epigastrium or umbilicus as a soft humming sound in both systole and diastole, indicates...",
     "choices": [
-      "increased collateral circulation between the portal and systemic venous systems, as in hepatic cirrhosis",
-      "a normal finding in all healthy adults",
       "acute appendicitis",
-      "normal peristalsis"
+      "increased collateral circulation between the portal and systemic venous systems, as in hepatic cirrhosis",
+      "normal peristalsis",
+      "a normal finding in all healthy adults"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "A venous hum reflects increased collateral blood flow between the portal and systemic venous systems, classically associated with hepatic cirrhosis and portal hypertension.",
-    "why": "A venous hum is an abnormal finding associated with a specific underlying process (portal-systemic collateral flow, for example, in cirrhosis), not a universal normal finding. A venous hum reflects portal-systemic collateral circulation (for example, cirrhosis), unrelated to appendicitis. A venous hum is a vascular sound distinct from peristaltic bowel sounds, and reflects abnormal collateral venous flow, not normal peristalsis.",
+    "why": "A venous hum reflects portal-systemic collateral circulation (for example, cirrhosis), unrelated to appendicitis. A venous hum is a vascular sound distinct from peristaltic bowel sounds, and reflects abnormal collateral venous flow, not normal peristalsis. A venous hum is an abnormal finding associated with a specific underlying process (portal-systemic collateral flow, for example, in cirrhosis), not a universal normal finding.",
     "src": "Physical Examination of the Abdomen lecture, Slide 24"
   },
   {
@@ -611,24 +611,24 @@ const QUESTIONS = [
     "choices": [
       "gas within hollow organs",
       "solid organs exclusively",
-      "fluid collections exclusively",
-      "dense muscle tissue"
+      "dense muscle tissue",
+      "fluid collections exclusively"
     ],
     "answer": 0,
     "correct": "Tympany (a hollow, drum-like percussion note) predominates over most of the abdomen because gas within the hollow GI (gastrointestinal) organs is the most common underlying content, in contrast to dullness, which occurs over fluid, feces, or solid organs.",
-    "why": "Solid organs (and fluid/feces) produce dullness on percussion, not tympany, which reflects gas in hollow organs. Fluid produces dullness on percussion, not tympany, which reflects gas. Dense tissue would tend toward dullness, not tympany, which specifically reflects gas-filled hollow structures.",
+    "why": "Solid organs (and fluid/feces) produce dullness on percussion, not tympany, which reflects gas in hollow organs. Dense tissue would tend toward dullness, not tympany, which specifically reflects gas-filled hollow structures. Fluid produces dullness on percussion, not tympany, which reflects gas.",
     "src": "Physical Examination of the Abdomen lecture, Slide 25"
   },
   {
     "topic": "Percussion",
     "q": "If an area of unexpected dullness is discovered during abdominal percussion, the examiner should...",
     "choices": [
-      "percuss around the area to define its extent, considering an underlying mass or enlarged organ",
       "ignore it since dullness is always a normal finding",
+      "percuss around the area to define its extent, considering an underlying mass or enlarged organ",
       "immediately stop the exam",
       "switch immediately to auscultation only"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Unexpected dullness should prompt the examiner to percuss around the area to map its borders/extent, helping determine whether it reflects an underlying mass or organomegaly.",
     "why": "Dullness in an unexpected location is a finding that should be further characterized, not dismissed as automatically normal. Further percussion to map the area's extent is the appropriate next step, not stopping the exam. Continued percussion to define the dull area's borders is the appropriate technique, not switching exclusively to auscultation.",
     "src": "Physical Examination of the Abdomen lecture, Slide 25"
@@ -637,12 +637,12 @@ const QUESTIONS = [
     "topic": "Percussion",
     "q": "To measure the vertical span of liver dullness in the right midclavicular line, the examiner starts percussing below the umbilicus and moves upward to find...",
     "choices": [
-      "the lower border of liver dullness",
       "the upper border of liver dullness",
       "the splenic percussion sign",
-      "CVA (costovertebral angle) tenderness"
+      "CVA (costovertebral angle) tenderness",
+      "the lower border of liver dullness"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Starting below the umbilicus and percussing upward (from tympany toward dullness) identifies the lower border of liver dullness, which is then combined with the separately-determined upper border to calculate liver span.",
     "why": "The upper border is found by starting at the nipple line and percussing downward (from lung resonance toward liver dullness), not by starting below the umbilicus. The splenic percussion sign is a separate technique assessed in the left anterior axillary line, unrelated to this lower-border liver percussion technique. CVA (costovertebral angle) tenderness is assessed via fist percussion over the costovertebral angle, a completely different technique from measuring liver span.",
     "src": "Physical Examination of the Abdomen lecture, Slide 26"
@@ -651,182 +651,182 @@ const QUESTIONS = [
     "topic": "Percussion",
     "q": "To identify the upper border of liver dullness in the midclavicular line, the examiner starts at the nipple line and percusses...",
     "choices": [
+      "only over the left side of the abdomen",
       "downward, from lung resonance toward liver dullness",
-      "upward, from the umbilicus toward the nipple",
       "side to side across the abdomen",
-      "only over the left side of the abdomen"
+      "upward, from the umbilicus toward the nipple"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "The upper border of liver dullness is found by starting at the nipple line (over resonant lung tissue) and percussing downward until the note changes from resonance to dullness, marking the upper liver border.",
-    "why": "This describes the technique for finding the lower border of liver dullness, not the upper border, which is found by percussing downward from the nipple line. Liver span measurement uses a vertical (up/down) percussion technique in the midclavicular line, not a side-to-side approach. Liver percussion is performed on the patient's right side (where the liver is located), not the left.",
+    "why": "Liver percussion is performed on the patient's right side (where the liver is located), not the left. Liver span measurement uses a vertical (up/down) percussion technique in the midclavicular line, not a side-to-side approach. This describes the technique for finding the lower border of liver dullness, not the upper border, which is found by percussing downward from the nipple line.",
     "src": "Physical Examination of the Abdomen lecture, Slide 26"
   },
   {
     "topic": "Percussion",
     "q": "Percussion for the spleen along the left costal margin (Traube's space) should normally reveal a change from tympany to dullness occurring...",
     "choices": [
-      "between the anterior axillary line and mid-axillary line",
-      "only at the midclavicular line",
       "only at the midline of the abdomen",
-      "it should remain tympanic everywhere, with no area of dullness"
+      "only at the midclavicular line",
+      "it should remain tympanic everywhere, with no area of dullness",
+      "between the anterior axillary line and mid-axillary line"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "In a normal-sized spleen, the percussion note changes from tympany to dullness within the expected zone between the anterior axillary line and mid-axillary line; dullness extending beyond this zone suggests splenomegaly.",
-    "why": "The midclavicular line is used for liver span assessment, not the expected zone for normal splenic dullness, which is between the anterior and mid-axillary lines. Splenic percussion is performed along the left costal margin/axillary lines, not the abdominal midline. A normal spleen does produce a defined zone of dullness (between the anterior and mid-axillary lines); the abnormal finding would be dullness extending well beyond this zone.",
+    "why": "Splenic percussion is performed along the left costal margin/axillary lines, not the abdominal midline. The midclavicular line is used for liver span assessment, not the expected zone for normal splenic dullness, which is between the anterior and mid-axillary lines. A normal spleen does produce a defined zone of dullness (between the anterior and mid-axillary lines); the abnormal finding would be dullness extending well beyond this zone.",
     "src": "Physical Examination of the Abdomen lecture, Slide 29"
   },
   {
     "topic": "Percussion",
     "q": "The splenic percussion sign is performed by percussing the left anterior axillary line in the lowest intercostal space and asking the patient to take a deep breath. A normal (negative) result shows...",
     "choices": [
-      "no change in the percussion note during inhalation",
-      "a change from tympany to dullness during inhalation",
       "complete absence of any percussion note",
-      "a loud bruit heard instead of a percussion note"
+      "no change in the percussion note during inhalation",
+      "a loud bruit heard instead of a percussion note",
+      "a change from tympany to dullness during inhalation"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "In a normal (negative) splenic percussion sign, the percussion note in this area does not change from tympany to dullness during inhalation; a change to dullness with inspiration (positive sign) suggests splenic enlargement.",
-    "why": "This describes a positive (abnormal) splenic percussion sign suggesting splenomegaly, not the normal/negative result, which shows no change. A percussion note (typically tympany, unchanged with inspiration) is still present in the normal result; absence of any note is not the described normal finding. This technique concerns percussion notes (tympany versus dullness), not auscultated bruits, which are a separate vascular finding.",
+    "why": "A percussion note (typically tympany, unchanged with inspiration) is still present in the normal result; absence of any note is not the described normal finding. This technique concerns percussion notes (tympany versus dullness), not auscultated bruits, which are a separate vascular finding. This describes a positive (abnormal) splenic percussion sign suggesting splenomegaly, not the normal/negative result, which shows no change.",
     "src": "Physical Examination of the Abdomen lecture, Slide 29"
   },
   {
     "topic": "Palpation technique",
     "q": "Light palpation of the abdomen is performed to a depth of approximately...",
     "choices": [
-      "less than 1 cm",
-      "3 to 4 cm",
       "5 to 10 cm",
-      "there is no defined depth for light palpation"
+      "less than 1 cm",
+      "there is no defined depth for light palpation",
+      "3 to 4 cm"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Light palpation is a superficial technique, pressing to a depth of less than 1 cm, used to identify tenderness, muscular resistance, and superficial organs/masses before deeper palpation.",
-    "why": "Pressing 3-4 cm describes deep palpation, not light palpation, which is superficial (under 1 cm). This depth is far greater than either light or deep palpation technique; light palpation is under 1 cm. Light palpation has a specifically defined depth (under 1 cm), not an undefined one.",
+    "why": "This depth is far greater than either light or deep palpation technique; light palpation is under 1 cm. Light palpation has a specifically defined depth (under 1 cm), not an undefined one. Pressing 3-4 cm describes deep palpation, not light palpation, which is superficial (under 1 cm).",
     "src": "Physical Examination of the Abdomen lecture, Slide 35"
   },
   {
     "topic": "Palpation technique",
     "q": "During light palpation, the examiner's technique should involve...",
     "choices": [
-      "a horizontal hand plane, fingers together, using a light gentle dipping motion, barely raising the hand off the skin",
-      "a vertical hand plane with fingers spread apart",
+      "pressing firmly, 3-4 cm deep",
       "using only the fingertips individually, not the whole hand",
-      "pressing firmly, 3-4 cm deep"
+      "a vertical hand plane with fingers spread apart",
+      "a horizontal hand plane, fingers together, using a light gentle dipping motion, barely raising the hand off the skin"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Light palpation technique specifically calls for the hand held in a horizontal plane with fingers together, using a light, gentle dipping motion, barely lifting the hand off the skin between presses.",
-    "why": "The described technique uses a horizontal hand plane with fingers together, not a vertical plane with spread fingers. The technique described uses the hand with fingers together in a horizontal plane, not isolated individual fingertip pressure. Firm, 3-4 cm deep pressing describes deep palpation, not the light, superficial technique described here.",
+    "why": "Firm, 3-4 cm deep pressing describes deep palpation, not the light, superficial technique described here. The technique described uses the hand with fingers together in a horizontal plane, not isolated individual fingertip pressure. The described technique uses a horizontal hand plane with fingers together, not a vertical plane with spread fingers.",
     "src": "Physical Examination of the Abdomen lecture, Slide 35"
   },
   {
     "topic": "Palpation technique",
     "q": "During both light and deep palpation, any area of known tenderness should be examined...",
     "choices": [
-      "last, after all other areas have been assessed",
       "first, before any other area",
-      "only if the patient specifically requests it",
-      "with the same technique regardless of order"
+      "last, after all other areas have been assessed",
+      "with the same technique regardless of order",
+      "only if the patient specifically requests it"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "To avoid causing pain that could make the patient guard and complicate the rest of the exam, the area of known/suspected tenderness should always be palpated last.",
-    "why": "This is the reverse of the correct approach; the tender area should be examined last, not first, to avoid inducing guarding that would interfere with assessing the rest of the abdomen. The tender area should still be examined (just last), not skipped or made contingent on patient request. While technique itself may not change, the specific sequencing point being tested is that the tender area is examined last, not simply 'the same regardless of order.'",
+    "why": "This is the reverse of the correct approach; the tender area should be examined last, not first, to avoid inducing guarding that would interfere with assessing the rest of the abdomen. While technique itself may not change, the specific sequencing point being tested is that the tender area is examined last, not simply 'the same regardless of order.' The tender area should still be examined (just last), not skipped or made contingent on patient request.",
     "src": "Physical Examination of the Abdomen lecture, Slide 35"
   },
   {
     "topic": "Palpation technique",
     "q": "Deep palpation of the abdomen, performed with two hands using the palmar surfaces of the fingers, presses to a depth of approximately...",
     "choices": [
-      "3 to 4 cm",
-      "less than 1 cm",
       "10 cm or more",
-      "deep palpation uses no measurable depth target"
+      "3 to 4 cm",
+      "deep palpation uses no measurable depth target",
+      "less than 1 cm"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Deep palpation presses to a depth of about 3 to 4 cm using the palmar surfaces of the fingers, typically bimanually, in all four quadrants, to better assess for masses or organomegaly beyond what light palpation can detect.",
-    "why": "Under 1 cm describes light palpation, not deep palpation, which presses more deeply (3-4 cm). This depth is greater than the technique calls for; deep palpation presses about 3-4 cm, not 10 cm or more. Deep palpation has a specific target depth (3-4 cm), not an undefined one.",
+    "why": "This depth is greater than the technique calls for; deep palpation presses about 3-4 cm, not 10 cm or more. Deep palpation has a specific target depth (3-4 cm), not an undefined one. Under 1 cm describes light palpation, not deep palpation, which presses more deeply (3-4 cm).",
     "src": "Physical Examination of the Abdomen lecture, Slide 37"
   },
   {
     "topic": "Liver palpation",
     "q": "When palpating the liver using the standard bimanual technique, the examiner's left hand is used to...",
     "choices": [
-      "lift gently under the patient's right flank",
-      "press directly on the right upper quadrant to feel for the liver edge",
       "percuss the liver span",
-      "auscultate for bowel sounds"
+      "press directly on the right upper quadrant to feel for the liver edge",
+      "auscultate for bowel sounds",
+      "lift gently under the patient's right flank"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "In the standard bimanual liver palpation technique, the left hand is placed under the patient's right flank and gently lifts upward, while the right hand palpates the abdomen searching for the liver edge as the patient breathes deeply.",
-    "why": "Feeling for the liver edge with pressure on the right upper quadrant is the right hand's role; the left hand's role is lifting under the right flank. Percussing liver span is a separate percussion technique, not the role of the left hand during bimanual liver palpation. Auscultation is a separate step performed earlier in the exam sequence, not the left hand's role during liver palpation.",
+    "why": "Percussing liver span is a separate percussion technique, not the role of the left hand during bimanual liver palpation. Feeling for the liver edge with pressure on the right upper quadrant is the right hand's role; the left hand's role is lifting under the right flank. Auscultation is a separate step performed earlier in the exam sequence, not the left hand's role during liver palpation.",
     "src": "Physical Examination of the Abdomen lecture, Slide 40"
   },
   {
     "topic": "Liver palpation",
     "q": "During bimanual liver palpation, the patient is asked to take a deep breath while the examiner...",
     "choices": [
-      "presses gently inward and upward with the right hand, feeling for the liver edge as it descends with inspiration",
+      "asks the patient to hold their breath before palpating",
       "releases all pressure entirely",
-      "moves the right hand to the left upper quadrant instead",
-      "asks the patient to hold their breath before palpating"
+      "presses gently inward and upward with the right hand, feeling for the liver edge as it descends with inspiration",
+      "moves the right hand to the left upper quadrant instead"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "As the diaphragm descends with a deep breath, the liver moves downward; the examiner presses gently inward and upward with the right hand at that moment to feel the liver edge slide against the fingertips.",
-    "why": "The examiner maintains gentle inward/upward pressure during the breath, rather than releasing all pressure, in order to feel the liver edge as it descends. The right hand stays over the right abdomen (where the liver is), not the left upper quadrant, during liver palpation. The patient is asked to take a deep breath (not hold it beforehand) so the liver descends and can be felt against the palpating hand.",
+    "why": "The patient is asked to take a deep breath (not hold it beforehand) so the liver descends and can be felt against the palpating hand. The examiner maintains gentle inward/upward pressure during the breath, rather than releasing all pressure, in order to feel the liver edge as it descends. The right hand stays over the right abdomen (where the liver is), not the left upper quadrant, during liver palpation.",
     "src": "Physical Examination of the Abdomen lecture, Slide 40"
   },
   {
     "topic": "Liver palpation",
     "q": "If the liver edge is not felt on the first attempt at its expected location, the examiner should...",
     "choices": [
-      "move the right hand upward and repeat, continuing until the liver edge is felt or the right costal margin is reached",
+      "stop the abdominal exam entirely",
       "immediately conclude the liver is absent",
-      "move to the left side of the abdomen instead",
-      "stop the abdominal exam entirely"
+      "move the right hand upward and repeat, continuing until the liver edge is felt or the right costal margin is reached",
+      "move to the left side of the abdomen instead"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "If the liver edge isn't felt initially, the examiner systematically moves the palpating hand upward and repeats the maneuver, continuing until either the liver edge is felt or the right costal margin is reached.",
-    "why": "Not feeling the edge on the first attempt doesn't mean the liver is absent; the examiner should systematically continue moving upward and repeating before drawing conclusions. The liver is on the patient's right side; if the edge isn't initially felt, the examiner continues the systematic search on the right, not switches to the left. Not immediately feeling the liver edge is a normal part of the technique requiring systematic repositioning, not a reason to stop the exam.",
+    "why": "Not immediately feeling the liver edge is a normal part of the technique requiring systematic repositioning, not a reason to stop the exam. Not feeling the edge on the first attempt doesn't mean the liver is absent; the examiner should systematically continue moving upward and repeating before drawing conclusions. The liver is on the patient's right side; if the edge isn't initially felt, the examiner continues the systematic search on the right, not switches to the left.",
     "src": "Physical Examination of the Abdomen lecture, Slide 41"
   },
   {
     "topic": "Liver palpation",
     "q": "The 'hooking technique' for liver palpation involves the examiner...",
     "choices": [
-      "standing to the right, facing the patient's feet, and hooking both hands' fingers under the right costal margin",
       "standing to the patient's left, facing the patient's head",
+      "pressing straight down without hooking the fingers",
       "using only one hand, never both",
-      "pressing straight down without hooking the fingers"
+      "standing to the right, facing the patient's feet, and hooking both hands' fingers under the right costal margin"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "In the hooking technique, the examiner stands to the patient's right, facing toward the patient's feet, and hooks the fingers of both hands under the right costal margin, asking the patient to take a deep breath while palpating for the liver edge.",
-    "why": "The hooking technique specifically has the examiner positioned to the right, facing the patient's feet, not the left facing the head. The hooking technique uses both hands hooked under the costal margin, not a single hand. The defining feature of this technique is 'hooking' the fingers under the costal margin, not simply pressing straight down.",
+    "why": "The hooking technique specifically has the examiner positioned to the right, facing the patient's feet, not the left facing the head. The defining feature of this technique is 'hooking' the fingers under the costal margin, not simply pressing straight down. The hooking technique uses both hands hooked under the costal margin, not a single hand.",
     "src": "Physical Examination of the Abdomen lecture, Slide 43"
   },
   {
     "topic": "Spleen/kidney/other",
     "q": "A key teaching point about the normal spleen on physical exam is that it is...",
     "choices": [
-      "usually not palpable",
-      "always easily palpable in every patient",
+      "percussed using the midclavicular line, like the liver",
       "located in the right upper quadrant",
-      "percussed using the midclavicular line, like the liver"
+      "always easily palpable in every patient",
+      "usually not palpable"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "In a normal, healthy adult, the spleen is usually not palpable; feeling a spleen tip generally raises suspicion for splenomegaly.",
-    "why": "This is the opposite of the taught point — the normal spleen is usually NOT palpable, not easily felt in every patient. The spleen is located in the left upper quadrant, not the right. Splenic percussion uses the left costal margin/axillary lines (Traube's space), not the midclavicular line used for liver span.",
+    "why": "Splenic percussion uses the left costal margin/axillary lines (Traube's space), not the midclavicular line used for liver span. The spleen is located in the left upper quadrant, not the right. This is the opposite of the taught point — the normal spleen is usually NOT palpable, not easily felt in every patient.",
     "src": "Physical Examination of the Abdomen lecture, Slide 45"
   },
   {
     "topic": "Spleen/kidney/other",
     "q": "During spleen palpation, the examiner tries to feel the tip of the spleen touch the fingertips specifically...",
     "choices": [
-      "during inhalation, as the spleen descends with the diaphragm",
       "during exhalation only",
-      "only when the patient is standing",
-      "it cannot be felt under any circumstances"
+      "it cannot be felt under any circumstances",
+      "during inhalation, as the spleen descends with the diaphragm",
+      "only when the patient is standing"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Similar to liver palpation, the spleen (when enlarged enough to be palpable) is felt touching the examiner's fingertips during inhalation, as it descends along with diaphragmatic movement.",
-    "why": "The spleen descends and becomes potentially palpable during inhalation, not exhalation. Spleen palpation technique described here does not require standing; it is performed with appropriate hand positioning while the patient breathes deeply. While the normal spleen is usually not palpable, the technique described specifically aims to feel the tip during inhalation if it is enlarged enough.",
+    "why": "The spleen descends and becomes potentially palpable during inhalation, not exhalation. While the normal spleen is usually not palpable, the technique described specifically aims to feel the tip during inhalation if it is enlarged enough. Spleen palpation technique described here does not require standing; it is performed with appropriate hand positioning while the patient breathes deeply.",
     "src": "Physical Examination of the Abdomen lecture, Slide 45"
   },
   {
@@ -848,27 +848,27 @@ const QUESTIONS = [
     "q": "The bimanual kidney 'capture' technique involves pushing the left hand upward under the flank while, at the peak of inspiration, the right hand...",
     "choices": [
       "presses firmly and deeply downward to trap the kidney between both hands",
-      "is removed from the abdomen entirely",
       "percusses over the kidney instead",
-      "auscultates for renal bruits"
+      "auscultates for renal bruits",
+      "is removed from the abdomen entirely"
     ],
     "answer": 0,
     "correct": "At the peak of inspiration (when the kidney has descended as far as it will), the right hand presses firmly and deeply downward, attempting to 'capture' the kidney between the two hands before it is released as the patient exhales.",
-    "why": "The right hand remains actively pressing during this maneuver; it is not removed at the peak of inspiration. This is a palpation technique (capture maneuver), not a percussion technique. Auscultation for renal artery bruits is a separate, earlier auscultation step, not part of this bimanual capture palpation technique.",
+    "why": "This is a palpation technique (capture maneuver), not a percussion technique. Auscultation for renal artery bruits is a separate, earlier auscultation step, not part of this bimanual capture palpation technique. The right hand remains actively pressing during this maneuver; it is not removed at the peak of inspiration.",
     "src": "Physical Examination of the Abdomen lecture, Slide 48"
   },
   {
     "topic": "Spleen/kidney/other",
     "q": "CVA (costovertebral angle) tenderness is assessed by...",
     "choices": [
+      "light palpation only, without any percussion component",
       "placing a palm against the costovertebral angle and delivering a sharp blow to that hand with a fist, then asking about tenderness",
       "deep palpation with both hands simultaneously on both flanks",
-      "auscultation with the diaphragm over the costovertebral angle",
-      "light palpation only, without any percussion component"
+      "auscultation with the diaphragm over the costovertebral angle"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "With the patient sitting and the examiner standing behind, the examiner places a palm flat against the costovertebral angle and strikes that hand with the other fist (a fist percussion technique), then asks the patient about any resulting tenderness — repeated on both sides.",
-    "why": "CVA (costovertebral angle) tenderness assessment specifically uses fist percussion over the palm at the costovertebral angle, not simultaneous bimanual flank palpation. CVA (costovertebral angle) tenderness is assessed by fist percussion technique, not auscultation. The technique specifically involves a percussive element (fist strike on the palm), not light palpation alone.",
+    "why": "The technique specifically involves a percussive element (fist strike on the palm), not light palpation alone. CVA (costovertebral angle) tenderness assessment specifically uses fist percussion over the palm at the costovertebral angle, not simultaneous bimanual flank palpation. CVA (costovertebral angle) tenderness is assessed by fist percussion technique, not auscultation.",
     "src": "Physical Examination of the Abdomen lecture, Slide 51"
   }
 ];

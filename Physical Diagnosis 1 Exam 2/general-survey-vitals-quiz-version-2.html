@@ -455,14 +455,14 @@ const QUESTIONS = [
     "topic": "BMI (body mass index)/height/weight",
     "q": "According to the BMI (body mass index) classification table, a BMI (body mass index) of 18.5-24.9 kg/m2 is classified as...",
     "choices": [
-      "Normal",
       "Underweight",
-      "Overweight",
-      "Obesity Class I"
+      "Normal",
+      "Obesity Class I",
+      "Overweight"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "A BMI (body mass index) of 18.5-24.9 kg/m2 is classified as normal weight; under 18.5 is underweight, 25.0-29.9 is overweight, and 30 or above is classified into obesity classes I, II, and III (extreme obesity, >40).",
-    "why": "Underweight is classified as BMI (body mass index) under 18.5 kg/m2, not the 18.5-24.9 range, which is normal. Overweight is classified as BMI (body mass index) 25.0-29.9 kg/m2, not the 18.5-24.9 range, which is normal. Obesity Class I is classified as BMI (body mass index) 30.0-34.9 kg/m2, not the 18.5-24.9 range, which is normal.",
+    "why": "Underweight is classified as BMI (body mass index) under 18.5 kg/m2, not the 18.5-24.9 range, which is normal. Obesity Class I is classified as BMI (body mass index) 30.0-34.9 kg/m2, not the 18.5-24.9 range, which is normal. Overweight is classified as BMI (body mass index) 25.0-29.9 kg/m2, not the 18.5-24.9 range, which is normal.",
     "src": "General Survey & Vital Signs lecture, Slide 21"
   },
   {
@@ -470,13 +470,13 @@ const QUESTIONS = [
     "q": "According to the BMI (body mass index) classification table, 'Extreme obesity' (Obesity Class III) corresponds to a BMI (body mass index) of...",
     "choices": [
       "greater than 40 kg/m2",
-      "less than 18.5 kg/m2",
+      "18.5-24.9 kg/m2",
       "25.0-29.9 kg/m2",
-      "18.5-24.9 kg/m2"
+      "less than 18.5 kg/m2"
     ],
     "answer": 0,
     "correct": "Extreme obesity (Obesity Class III) is classified as BMI (body mass index) greater than 40 kg/m2, the highest category on the classification table.",
-    "why": "This range describes underweight, not extreme obesity, which is above 40 kg/m2. This range describes overweight, not extreme obesity, which is above 40 kg/m2. This range describes normal weight, not extreme obesity, which is above 40 kg/m2.",
+    "why": "This range describes normal weight, not extreme obesity, which is above 40 kg/m2. This range describes overweight, not extreme obesity, which is above 40 kg/m2. This range describes underweight, not extreme obesity, which is above 40 kg/m2.",
     "src": "General Survey & Vital Signs lecture, Slide 21"
   },
   {
@@ -499,12 +499,12 @@ const QUESTIONS = [
     "choices": [
       "in line with the hips",
       "crossed at the ankles",
-      "wide apart, well beyond hip width",
-      "it does not matter how the feet are positioned"
+      "it does not matter how the feet are positioned",
+      "wide apart, well beyond hip width"
     ],
     "answer": 0,
     "correct": "Proper height measurement technique has the patient stand tall with the head midline, knees straight, and feet positioned in line with the hips, measuring to the nearest 1 mm.",
-    "why": "Crossed ankles would not provide the stable, standard standing posture needed; feet should be in line with the hips. The described proper positioning is feet in line with the hips, not wide apart beyond hip width. A specific foot position (in line with the hips) is part of the proper height measurement technique.",
+    "why": "Crossed ankles would not provide the stable, standard standing posture needed; feet should be in line with the hips. A specific foot position (in line with the hips) is part of the proper height measurement technique. The described proper positioning is feet in line with the hips, not wide apart beyond hip width.",
     "src": "General Survey & Vital Signs lecture, Slide 20"
   },
   {
@@ -512,111 +512,111 @@ const QUESTIONS = [
     "q": "According to the blood pressure classification table, a reading with systolic 125 mmHg and diastolic 75 mmHg would be classified as...",
     "choices": [
       "Elevated",
+      "Stage 2 Hypertension",
       "Normal",
-      "Stage 1 Hypertension",
-      "Stage 2 Hypertension"
+      "Stage 1 Hypertension"
     ],
     "answer": 0,
     "correct": "A systolic of 120-129 mmHg with a diastolic under 80 mmHg is classified as 'Elevated' blood pressure — higher than normal (systolic under 120 and diastolic under 80) but not yet meeting the threshold for Stage 1 hypertension.",
-    "why": "Normal blood pressure requires systolic under 120 mmHg; a systolic of 125 falls into the Elevated category instead. Stage 1 hypertension requires systolic 130-139 or diastolic 80-89 mmHg; a reading of 125/75 falls short of these thresholds and is instead classified as Elevated. Stage 2 hypertension requires systolic ≥140 or diastolic ≥90 mmHg, far higher than this reading, which is classified as Elevated.",
+    "why": "Stage 2 hypertension requires systolic ≥140 or diastolic ≥90 mmHg, far higher than this reading, which is classified as Elevated. Normal blood pressure requires systolic under 120 mmHg; a systolic of 125 falls into the Elevated category instead. Stage 1 hypertension requires systolic 130-139 or diastolic 80-89 mmHg; a reading of 125/75 falls short of these thresholds and is instead classified as Elevated.",
     "src": "General Survey & Vital Signs lecture, Slide 59"
   },
   {
     "topic": "BP (blood pressure) classification",
     "q": "According to the blood pressure classification table, Stage 2 hypertension is defined as a systolic of 140 mmHg or greater, or a diastolic of...",
     "choices": [
-      "90 mmHg or greater",
       "50 mmHg or lower",
+      "there is no diastolic criterion for Stage 2 hypertension",
       "70-79 mmHg",
-      "there is no diastolic criterion for Stage 2 hypertension"
+      "90 mmHg or greater"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Stage 2 hypertension is defined as systolic ≥140 mmHg OR diastolic ≥90 mmHg — meeting either threshold alone is sufficient for this classification.",
-    "why": "A low diastolic reading does not define Stage 2 hypertension, which requires an elevated diastolic (≥90 mmHg) or elevated systolic. This diastolic range is below the Stage 2 threshold (≥90 mmHg); it would not meet criteria for Stage 2 hypertension on diastolic grounds alone. A specific diastolic criterion (≥90 mmHg) is part of the Stage 2 hypertension definition, alongside the systolic criterion.",
+    "why": "A low diastolic reading does not define Stage 2 hypertension, which requires an elevated diastolic (≥90 mmHg) or elevated systolic. A specific diastolic criterion (≥90 mmHg) is part of the Stage 2 hypertension definition, alongside the systolic criterion. This diastolic range is below the Stage 2 threshold (≥90 mmHg); it would not meet criteria for Stage 2 hypertension on diastolic grounds alone.",
     "src": "General Survey & Vital Signs lecture, Slide 59"
   },
   {
     "topic": "BP (blood pressure) classification",
     "q": "Normal blood pressure, per the classification table, requires a systolic under 120 mmHg and a diastolic...",
     "choices": [
-      "under 80 mmHg",
-      "over 90 mmHg",
+      "there is no diastolic requirement for normal BP (blood pressure)",
       "between 80-89 mmHg",
-      "there is no diastolic requirement for normal BP (blood pressure)"
+      "under 80 mmHg",
+      "over 90 mmHg"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Normal blood pressure is defined as systolic under 120 mmHg AND diastolic under 80 mmHg — both criteria must be met for a 'Normal' classification.",
-    "why": "A diastolic over 90 mmHg would meet Stage 2 hypertension criteria, not normal, which requires diastolic under 80 mmHg. This diastolic range falls within Stage 1 hypertension criteria, not normal, which requires diastolic under 80 mmHg. A specific diastolic threshold (under 80 mmHg) is part of the normal BP (blood pressure) definition, alongside the systolic threshold.",
+    "why": "A specific diastolic threshold (under 80 mmHg) is part of the normal BP (blood pressure) definition, alongside the systolic threshold. This diastolic range falls within Stage 1 hypertension criteria, not normal, which requires diastolic under 80 mmHg. A diastolic over 90 mmHg would meet Stage 2 hypertension criteria, not normal, which requires diastolic under 80 mmHg.",
     "src": "General Survey & Vital Signs lecture, Slide 59"
   },
   {
     "topic": "Blood pressure technique",
     "q": "During cuff deflation for BP (blood pressure) measurement, the recommended deflation rate while listening for Korotkoff sounds is approximately...",
     "choices": [
-      "2-3 mmHg per second",
-      "50 mmHg per second",
+      "there is no recommended deflation rate",
       "0.1 mmHg per second",
-      "there is no recommended deflation rate"
+      "50 mmHg per second",
+      "2-3 mmHg per second"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The cuff should be deflated slowly, at a rate of approximately 2-3 mmHg per second, while listening for Korotkoff sounds — deflating too quickly risks missing the precise systolic/diastolic transition points.",
-    "why": "This deflation rate is far too fast and would risk missing the precise Korotkoff sound transitions; the recommended rate is 2-3 mmHg per second. This rate is far too slow, prolonging the measurement unnecessarily and potentially causing patient discomfort; the recommended rate is 2-3 mmHg per second. A specific recommended deflation rate (2-3 mmHg/second) is explicitly taught.",
+    "why": "A specific recommended deflation rate (2-3 mmHg/second) is explicitly taught. This rate is far too slow, prolonging the measurement unnecessarily and potentially causing patient discomfort; the recommended rate is 2-3 mmHg per second. This deflation rate is far too fast and would risk missing the precise Korotkoff sound transitions; the recommended rate is 2-3 mmHg per second.",
     "src": "General Survey & Vital Signs lecture, Slide 56"
   },
   {
     "topic": "Blood pressure technique",
     "q": "If blood pressure readings differ by more than 5 mmHg between the two arms, the recommended approach is to...",
     "choices": [
-      "repeat the readings",
-      "ignore the discrepancy entirely",
+      "immediately refer to a cardiologist without repeating",
       "only ever measure BP (blood pressure) on one arm from that point forward",
-      "immediately refer to a cardiologist without repeating"
+      "repeat the readings",
+      "ignore the discrepancy entirely"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "A minor difference between arms is expected, but if the difference exceeds 5 mmHg, the readings should be repeated to confirm accuracy, waiting at least 1 minute between measurements and averaging the results.",
-    "why": "A difference greater than 5 mmHg between arms should prompt repeating the readings, not being ignored. The recommended response to a significant inter-arm difference is repeating the measurements, not permanently restricting to one arm without further verification. The first recommended step is repeating the readings to confirm the finding, not an immediate referral without re-verification.",
+    "why": "The first recommended step is repeating the readings to confirm the finding, not an immediate referral without re-verification. The recommended response to a significant inter-arm difference is repeating the measurements, not permanently restricting to one arm without further verification. A difference greater than 5 mmHg between arms should prompt repeating the readings, not being ignored.",
     "src": "General Survey & Vital Signs lecture, Slide 58"
   },
   {
     "topic": "Blood pressure technique",
     "q": "When repeating blood pressure readings, the examiner should wait at least how long between measurements, and should expect that...",
     "choices": [
-      "1 minute; the first reading will usually be the highest",
       "1 second; readings are always identical",
+      "there is no recommended wait time or expected pattern",
       "24 hours; the last reading will usually be the highest",
-      "there is no recommended wait time or expected pattern"
+      "1 minute; the first reading will usually be the highest"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "At least 1 minute should elapse between repeated BP (blood pressure) measurements, and it's expected that the first reading will usually be the highest (readings tend to decrease slightly with repeated measurement as the patient relaxes), with the readings then averaged.",
-    "why": "A full minute (not 1 second) should elapse between readings, and some variation between readings — not identical results — is expected, with the first typically highest. Only about 1 minute, not 24 hours, needs to elapse between readings within the same encounter, and it's the first reading (not the last) that is typically highest. A specific wait time (at least 1 minute) and an expected pattern (first reading highest) are both explicitly taught.",
+    "why": "A full minute (not 1 second) should elapse between readings, and some variation between readings — not identical results — is expected, with the first typically highest. A specific wait time (at least 1 minute) and an expected pattern (first reading highest) are both explicitly taught. Only about 1 minute, not 24 hours, needs to elapse between readings within the same encounter, and it's the first reading (not the last) that is typically highest.",
     "src": "General Survey & Vital Signs lecture, Slide 58"
   },
   {
     "topic": "Blood pressure technique",
     "q": "Improper technique effects on blood pressure include an unsupported arm, crossed legs, an arm positioned below heart level, and a talking patient, all of which produce a reading that is...",
     "choices": [
-      "artificially high",
       "artificially low",
-      "unaffected by any of these factors",
-      "only affecting heart rate, not blood pressure"
+      "artificially high",
+      "only affecting heart rate, not blood pressure",
+      "unaffected by any of these factors"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Each of these technique errors — an unsupported arm, crossed legs, an arm below heart level, or a talking patient — is specifically listed as producing an artificially high blood pressure reading.",
-    "why": "These specific errors are listed as producing artificially high readings, not low ones. Each of these factors is explicitly listed as producing measurement error (artificially high readings), not having no effect. These factors specifically affect blood pressure measurement accuracy, as described, not heart rate.",
+    "why": "These specific errors are listed as producing artificially high readings, not low ones. These factors specifically affect blood pressure measurement accuracy, as described, not heart rate. Each of these factors is explicitly listed as producing measurement error (artificially high readings), not having no effect.",
     "src": "General Survey & Vital Signs lecture, Slide 60"
   },
   {
     "topic": "Blood pressure technique",
     "q": "Slow or repetitive cuff inflation during BP (blood pressure) measurement can cause inaccurate readings due to...",
     "choices": [
+      "increased patient comfort",
       "venous congestion",
-      "improved arterial flow",
       "no effect on reading accuracy",
-      "increased patient comfort"
+      "improved arterial flow"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Slow or repeatedly inflating and deflating the cuff can cause venous congestion in the arm, which distorts the pressure readings and leads to inaccuracy.",
-    "why": "The described effect is problematic venous congestion causing inaccuracy, not an improvement in arterial flow. Slow/repetitive inflation is specifically listed as a cause of inaccurate readings (via venous congestion), not something without effect. This technique error is associated with inaccuracy, not specifically increased comfort.",
+    "why": "This technique error is associated with inaccuracy, not specifically increased comfort. Slow/repetitive inflation is specifically listed as a cause of inaccurate readings (via venous congestion), not something without effect. The described effect is problematic venous congestion causing inaccuracy, not an improvement in arterial flow.",
     "src": "General Survey & Vital Signs lecture, Slide 60"
   },
   {
@@ -624,25 +624,25 @@ const QUESTIONS = [
     "q": "Among the factors that can transiently elevate blood pressure readings are pain, anxiety, a full bladder, recent exercise, and...",
     "choices": [
       "cold temperature/chilling",
-      "recent eating",
       "alcohol consumption",
+      "recent eating",
       "volume depletion"
     ],
     "answer": 0,
     "correct": "Cold temperature or chilling is listed alongside pain, anxiety, a full bladder, recent exercise, sleep deprivation, and recent smoking/caffeine intake as a factor that can transiently elevate blood pressure readings.",
-    "why": "Recent eating is listed as a factor that can lower, not elevate, blood pressure readings. Alcohol is listed as a factor that can lower, not elevate, blood pressure readings. Volume depletion is listed as a factor that can lower, not elevate, blood pressure readings.",
+    "why": "Alcohol is listed as a factor that can lower, not elevate, blood pressure readings. Recent eating is listed as a factor that can lower, not elevate, blood pressure readings. Volume depletion is listed as a factor that can lower, not elevate, blood pressure readings.",
     "src": "General Survey & Vital Signs lecture, Slide 61"
   },
   {
     "topic": "Blood pressure technique",
     "q": "Among the factors that can transiently lower blood pressure readings are recent eating, alcohol, volume depletion, and...",
     "choices": [
-      "autonomic failure",
       "pain",
       "anxiety",
+      "autonomic failure",
       "recent smoking"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Autonomic failure (which can impair normal vasoconstrictive compensation) is listed alongside recent eating, alcohol, and volume depletion as a factor that can lower blood pressure, along with conditions like multiple system atrophy causing orthostatic hypotension.",
     "why": "Pain is listed as a factor that elevates, not lowers, blood pressure. Anxiety is listed as a factor that elevates, not lowers, blood pressure. Recent smoking is listed as a factor that elevates, not lowers, blood pressure.",
     "src": "General Survey & Vital Signs lecture, Slide 62"
@@ -651,12 +651,12 @@ const QUESTIONS = [
     "topic": "Orthostatic vitals",
     "q": "Orthostatic vital sign measurement ('tilts') involves measuring heart rate and blood pressure in which sequence of positions?",
     "choices": [
-      "Supine, sitting, then standing",
       "Standing, sitting, then supine only",
       "Only standing, with no other position",
-      "Prone, then supine only"
+      "Prone, then supine only",
+      "Supine, sitting, then standing"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Orthostatic vitals are measured sequentially in the supine, sitting, and then standing positions, evaluated immediately and again at one and three minutes after each position change.",
     "why": "The standard sequence progresses from supine to sitting to standing, not the reverse order. Orthostatic assessment specifically requires comparing multiple positions (supine, sitting, standing), not standing alone. The sequence used is supine, sitting, then standing — not prone, and not limited to just two positions.",
     "src": "General Survey & Vital Signs lecture, Slide 63"
@@ -665,28 +665,28 @@ const QUESTIONS = [
     "topic": "Orthostatic vitals",
     "q": "Orthostatic hypotension is defined by specific changes upon standing, including a pulse rise greater than 10-20 bpm, and a fall of systolic blood pressure greater than...",
     "choices": [
-      "20 mmHg",
       "2 mmHg",
-      "100 mmHg",
-      "there is no systolic threshold for orthostatic hypotension"
+      "there is no systolic threshold for orthostatic hypotension",
+      "20 mmHg",
+      "100 mmHg"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Orthostatic hypotension is defined by a pulse rise of more than 10-20 bpm, a systolic BP (blood pressure) fall of more than 20 mmHg, and/or a diastolic BP (blood pressure) fall of more than 10 mmHg upon standing.",
-    "why": "This threshold is far too small to define orthostatic hypotension, which requires a systolic fall greater than 20 mmHg. This threshold is far larger than the defined criterion for orthostatic hypotension, which is a systolic fall greater than 20 mmHg. A specific systolic BP (blood pressure) fall threshold (greater than 20 mmHg) is explicitly part of the orthostatic hypotension definition.",
+    "why": "This threshold is far too small to define orthostatic hypotension, which requires a systolic fall greater than 20 mmHg. A specific systolic BP (blood pressure) fall threshold (greater than 20 mmHg) is explicitly part of the orthostatic hypotension definition. This threshold is far larger than the defined criterion for orthostatic hypotension, which is a systolic fall greater than 20 mmHg.",
     "src": "General Survey & Vital Signs lecture, Slide 63"
   },
   {
     "topic": "Orthostatic vitals",
     "q": "Normal orthostatic variation (not meeting criteria for orthostatic hypotension) can include up to a 10 bpm rise in heart rate and a systolic pressure change of approximately...",
     "choices": [
-      "10-15 mmHg rise or fall",
-      "100 mmHg rise or fall",
+      "there is no defined range for normal orthostatic variation",
       "0 mmHg change only, with zero tolerance",
-      "there is no defined range for normal orthostatic variation"
+      "100 mmHg rise or fall",
+      "10-15 mmHg rise or fall"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Normal orthostatic variation can include up to a 10 bpm heart rate rise and a systolic pressure change of about 10-15 mmHg (rise or fall), along with up to a 5 mmHg diastolic change — all considered within normal limits, distinct from the more pronounced changes defining orthostatic hypotension.",
-    "why": "This change is far larger than what's considered normal orthostatic variation, which is about 10-15 mmHg. Some normal variation (about 10-15 mmHg) is expected and considered normal, not a strict zero-change requirement. A specific normal variation range (10-15 mmHg systolic) is explicitly taught.",
+    "why": "A specific normal variation range (10-15 mmHg systolic) is explicitly taught. Some normal variation (about 10-15 mmHg) is expected and considered normal, not a strict zero-change requirement. This change is far larger than what's considered normal orthostatic variation, which is about 10-15 mmHg.",
     "src": "General Survey & Vital Signs lecture, Slide 63"
   },
   {
@@ -694,27 +694,27 @@ const QUESTIONS = [
     "q": "Pulse oximetry works by passing small beams of light through the skin to the blood and estimating oxygen saturation based on...",
     "choices": [
       "differences in light absorption between oxygenated and deoxygenated blood",
+      "measuring skin temperature",
       "direct chemical analysis of a blood sample",
-      "sound wave reflection, like ultrasound",
-      "measuring skin temperature"
+      "sound wave reflection, like ultrasound"
     ],
     "answer": 0,
     "correct": "Pulse oximetry estimates blood oxygen saturation by measuring differences in how oxygenated versus deoxygenated hemoglobin absorb specific wavelengths of light passed through the tissue.",
-    "why": "Pulse oximetry is a noninvasive, light-based technique; it does not involve direct chemical analysis of a drawn blood sample. Pulse oximetry uses light absorption, not sound wave reflection (which is the basis of ultrasound, a different technology). Pulse oximetry measures light absorption related to blood oxygenation, not skin temperature.",
+    "why": "Pulse oximetry measures light absorption related to blood oxygenation, not skin temperature. Pulse oximetry is a noninvasive, light-based technique; it does not involve direct chemical analysis of a drawn blood sample. Pulse oximetry uses light absorption, not sound wave reflection (which is the basis of ultrasound, a different technology).",
     "src": "General Survey & Vital Signs lecture, Slide 64"
   },
   {
     "topic": "Pulse oximetry",
     "q": "A pulse oximetry sensor can typically be placed on the...",
     "choices": [
+      "only the abdomen",
       "finger, earlobe, or toe",
       "only the forehead, with no other sites possible",
-      "only the abdomen",
       "nowhere on the body; it requires a blood draw"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Pulse oximetry sensors are commonly placed on the finger, earlobe, or toe — sites with adequate blood flow and thin enough tissue for the light-based measurement to work effectively.",
-    "why": "While forehead sensors exist in some settings, the specifically listed common sites here are the finger, earlobe, and toe. The abdomen is not a typical pulse oximetry sensor site; finger, earlobe, and toe are the listed locations. Pulse oximetry is specifically a noninvasive, skin-surface technique (finger/earlobe/toe), not one requiring a blood draw.",
+    "why": "The abdomen is not a typical pulse oximetry sensor site; finger, earlobe, and toe are the listed locations. While forehead sensors exist in some settings, the specifically listed common sites here are the finger, earlobe, and toe. Pulse oximetry is specifically a noninvasive, skin-surface technique (finger/earlobe/toe), not one requiring a blood draw.",
     "src": "General Survey & Vital Signs lecture, Slide 64"
   },
   {
@@ -722,41 +722,41 @@ const QUESTIONS = [
     "q": "A regular pulse rate greater than 100 bpm (sinus tachycardia) can be caused by fever, anemia, dehydration, hyperthyroidism, or...",
     "choices": [
       "certain drugs",
-      "hypothyroidism",
       "being a highly trained athlete",
+      "hypothyroidism",
       "third-degree heart block"
     ],
     "answer": 0,
     "correct": "Among the listed potential causes of sinus tachycardia (regular pulse >100 bpm) are fever, anemia, dehydration, hyperthyroidism, and certain drugs, reflecting a range of physiologic states that can increase heart rate.",
-    "why": "Hypothyroidism is instead listed as a potential cause of sinus bradycardia (slow rate), not tachycardia. Athletic conditioning is listed as a cause of sinus bradycardia (slow rate), not tachycardia. Third-degree heart block is listed as a cause of a slow rate (bradycardia), not tachycardia.",
+    "why": "Athletic conditioning is listed as a cause of sinus bradycardia (slow rate), not tachycardia. Hypothyroidism is instead listed as a potential cause of sinus bradycardia (slow rate), not tachycardia. Third-degree heart block is listed as a cause of a slow rate (bradycardia), not tachycardia.",
     "src": "General Survey & Vital Signs lecture, Slide 40"
   },
   {
     "topic": "Pulses",
     "q": "A regular pulse rate less than 60 bpm (sinus bradycardia or low heart block) can be seen in trained athletes, hypothyroidism, or...",
     "choices": [
-      "third-degree heart block",
-      "fever",
+      "hyperthyroidism",
       "dehydration",
-      "hyperthyroidism"
+      "third-degree heart block",
+      "fever"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Third-degree (complete) heart block is listed alongside athletic conditioning and hypothyroidism as a cause of a slow, regular pulse rate (bradycardia).",
-    "why": "Fever is listed as a cause of tachycardia (fast rate), not bradycardia. Dehydration is listed as a cause of tachycardia (fast rate), not bradycardia. Hyperthyroidism is listed as a cause of tachycardia (fast rate), not bradycardia.",
+    "why": "Hyperthyroidism is listed as a cause of tachycardia (fast rate), not bradycardia. Dehydration is listed as a cause of tachycardia (fast rate), not bradycardia. Fever is listed as a cause of tachycardia (fast rate), not bradycardia.",
     "src": "General Survey & Vital Signs lecture, Slide 40"
   },
   {
     "topic": "Pulses",
     "q": "An 'irregularly irregular' pulse pattern, as distinguished from a 'regularly irregular' pattern, raises particular concern for...",
     "choices": [
-      "atrial fibrillation or frequent premature ventricular contractions (PVCs)",
-      "a completely normal finding requiring no further evaluation",
       "bigeminy/trigeminy specifically",
-      "Mobitz I AV (atrioventricular) block specifically"
+      "Mobitz I AV (atrioventricular) block specifically",
+      "a completely normal finding requiring no further evaluation",
+      "atrial fibrillation or frequent premature ventricular contractions (PVCs)"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "An irregularly irregular pulse (with no predictable pattern to the irregularity) raises concern for atrial fibrillation or frequent PVCs, in contrast to a regularly irregular pattern (a predictable repeating irregularity), which suggests something like bigeminy/trigeminy or Mobitz I AV (atrioventricular) block.",
-    "why": "An irregularly irregular pulse is a notable abnormal finding raising concern for specific arrhythmias, not something to dismiss as normal. Bigeminy/trigeminy is associated with a regularly (not irregularly) irregular pattern; the irregularly irregular pattern raises concern for atrial fibrillation/frequent PVCs. Mobitz I AV (atrioventricular) block is associated with a regularly (not irregularly) irregular pattern; the irregularly irregular pattern raises concern for atrial fibrillation/frequent PVCs.",
+    "why": "Bigeminy/trigeminy is associated with a regularly (not irregularly) irregular pattern; the irregularly irregular pattern raises concern for atrial fibrillation/frequent PVCs. Mobitz I AV (atrioventricular) block is associated with a regularly (not irregularly) irregular pattern; the irregularly irregular pattern raises concern for atrial fibrillation/frequent PVCs. An irregularly irregular pulse is a notable abnormal finding raising concern for specific arrhythmias, not something to dismiss as normal.",
     "src": "General Survey & Vital Signs lecture, Slide 41"
   },
   {
@@ -778,25 +778,25 @@ const QUESTIONS = [
     "q": "Tachypnea refers to abnormally fast breathing, while bradypnea refers to...",
     "choices": [
       "abnormally slow breathing",
+      "exaggerated, deep, rapid, or labored breathing",
       "abnormally fast breathing, identical to tachypnea",
-      "temporary cessation of breathing",
-      "exaggerated, deep, rapid, or labored breathing"
+      "temporary cessation of breathing"
     ],
     "answer": 0,
     "correct": "Bradypnea specifically refers to abnormally slow breathing, the opposite of tachypnea (abnormally fast breathing).",
-    "why": "Bradypnea and tachypnea are opposite findings (slow versus fast breathing), not identical terms. Temporary cessation of breathing is apnea, a distinct term from bradypnea, which refers to abnormally slow (but still present) breathing. This describes hyperpnea, not bradypnea, which refers to abnormally slow breathing.",
+    "why": "This describes hyperpnea, not bradypnea, which refers to abnormally slow breathing. Bradypnea and tachypnea are opposite findings (slow versus fast breathing), not identical terms. Temporary cessation of breathing is apnea, a distinct term from bradypnea, which refers to abnormally slow (but still present) breathing.",
     "src": "General Survey & Vital Signs lecture, Slide 45"
   },
   {
     "topic": "Respirations",
     "q": "Hyperpnea, described as exaggerated deep, rapid, or labored breathing, most commonly occurs after exercise but could also occur with...",
     "choices": [
-      "aspirin overdose",
       "a completely normal, resting state with no exertion or illness",
       "hypothyroidism exclusively",
+      "aspirin overdose",
       "deep sleep"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Beyond its common occurrence after exercise, hyperpnea is specifically noted as a possible finding with aspirin (salicylate) overdose, which can stimulate the respiratory center.",
     "why": "Hyperpnea specifically describes an exaggerated breathing pattern associated with exercise or conditions like aspirin overdose, not simply a normal resting state. Hypothyroidism is not the specifically listed association here; aspirin overdose is the noted example alongside exercise. Hyperpnea describes exaggerated, labored breathing, not a finding associated with deep sleep.",
     "src": "General Survey & Vital Signs lecture, Slide 45"
@@ -806,69 +806,69 @@ const QUESTIONS = [
     "q": "Apnea is defined as...",
     "choices": [
       "a temporary cessation of breathing",
-      "abnormally fast breathing",
       "permanently normal breathing with no interruption",
+      "abnormally fast breathing",
       "deep, labored breathing"
     ],
     "answer": 0,
     "correct": "Apnea refers to a temporary cessation of breathing, distinct from bradypnea (slow but continuing breathing) or hypopnea (shallow/infrequent/slow breathing).",
-    "why": "Abnormally fast breathing is tachypnea, not apnea, which refers to a temporary cessation of breathing altogether. Apnea specifically describes an interruption (temporary cessation) of breathing, not uninterrupted normal breathing. Deep, labored breathing is hyperpnea, not apnea, which refers to a temporary cessation of breathing.",
+    "why": "Apnea specifically describes an interruption (temporary cessation) of breathing, not uninterrupted normal breathing. Abnormally fast breathing is tachypnea, not apnea, which refers to a temporary cessation of breathing altogether. Deep, labored breathing is hyperpnea, not apnea, which refers to a temporary cessation of breathing.",
     "src": "General Survey & Vital Signs lecture, Slide 45"
   },
   {
     "topic": "Temperature",
     "q": "Pyrexia (fever) can result from infection as well as several non-infectious causes, including ovulation, thyroid storm, drug effects, and...",
     "choices": [
-      "environmental factors",
-      "nothing besides infection causes fever",
       "only viral infections, never bacterial",
-      "hypothyroidism exclusively"
+      "environmental factors",
+      "hypothyroidism exclusively",
+      "nothing besides infection causes fever"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Beyond infection, pyrexia can arise from non-infectious causes including ovulation, thyroid storm, iatrogenic drug effects, and environmental factors (for example, heat exposure).",
-    "why": "Multiple non-infectious causes of pyrexia are explicitly listed (ovulation, thyroid storm, drug effects, environment), not infection alone. This option incorrectly narrows fever's cause to viral infection specifically; the material lists both infectious and several distinct non-infectious causes. Hypothyroidism is not listed among the non-infectious causes of pyrexia here; thyroid storm (a hyperthyroid crisis) is the thyroid-related cause listed instead.",
+    "why": "This option incorrectly narrows fever's cause to viral infection specifically; the material lists both infectious and several distinct non-infectious causes. Hypothyroidism is not listed among the non-infectious causes of pyrexia here; thyroid storm (a hyperthyroid crisis) is the thyroid-related cause listed instead. Multiple non-infectious causes of pyrexia are explicitly listed (ovulation, thyroid storm, drug effects, environment), not infection alone.",
     "src": "General Survey & Vital Signs lecture, Slide 30"
   },
   {
     "topic": "Temperature",
     "q": "To convert a Celsius temperature to Fahrenheit, the formula used is Tf = (9/5) × Tc + 32; using this formula, a temperature of 38°C converts to approximately...",
     "choices": [
-      "100.4°F",
+      "70°F",
       "38°F",
       "212°F",
-      "70°F"
+      "100.4°F"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Applying Tf = (9/5) × 38 + 32 gives approximately 100.4°F, a temperature considered close to febrile range, compared with normal body temperature of 37°C (98.6°F).",
-    "why": "This simply restates the Celsius number without converting; applying the actual formula gives approximately 100.4°F. 212°F is the boiling point of water (100°C), not the correct conversion of 38°C, which is approximately 100.4°F. This does not match the correct conversion formula result; 38°C converts to approximately 100.4°F.",
+    "why": "This does not match the correct conversion formula result; 38°C converts to approximately 100.4°F. This simply restates the Celsius number without converting; applying the actual formula gives approximately 100.4°F. 212°F is the boiling point of water (100°C), not the correct conversion of 38°C, which is approximately 100.4°F.",
     "src": "General Survey & Vital Signs lecture, Slide 31"
   },
   {
     "topic": "General survey",
     "q": "When introducing oneself to a patient at the start of an encounter, the two identifying factors specifically recommended for confirming patient identity are the patient's name and...",
     "choices": [
-      "date of birth",
       "insurance ID number",
+      "social security number",
       "home address only",
-      "social security number"
+      "date of birth"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The two recommended identifying factors for confirming patient identity are the patient's name and date of birth, standard practice for accurate identification before providing care.",
-    "why": "The two specifically recommended identifiers are name and date of birth, not insurance ID number. Home address is not the specifically recommended second identifier; date of birth is. Social security number is not the specifically recommended second identifier; date of birth is.",
+    "why": "The two specifically recommended identifiers are name and date of birth, not insurance ID number. Social security number is not the specifically recommended second identifier; date of birth is. Home address is not the specifically recommended second identifier; date of birth is.",
     "src": "General Survey & Vital Signs lecture, Slide 5"
   },
   {
     "topic": "General survey",
     "q": "Constitutional symptoms, screened for early in the history, commonly include fatigue, weakness, fever/chills/night sweats, and...",
     "choices": [
-      "weight change (intentional versus unintentional)",
-      "only symptoms related to a single organ system",
       "visual acuity change exclusively",
-      "nothing beyond fatigue"
+      "weight change (intentional versus unintentional)",
+      "nothing beyond fatigue",
+      "only symptoms related to a single organ system"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Constitutional symptoms — which broadly affect overall health, vitality, and strength — commonly include fatigue, weakness, fever/chills/night sweats, and weight change, with intentional versus unintentional weight change being an important distinction to clarify.",
-    "why": "Constitutional symptoms are specifically broad, systemic symptoms affecting overall health, not confined to a single organ system. Visual acuity is a specific eye-related finding, not one of the general constitutional symptoms listed here (fatigue, weakness, fever/chills/night sweats, weight change). The constitutional symptom checklist extends well beyond fatigue alone to include weakness, fever/chills/night sweats, and weight change.",
+    "why": "Visual acuity is a specific eye-related finding, not one of the general constitutional symptoms listed here (fatigue, weakness, fever/chills/night sweats, weight change). The constitutional symptom checklist extends well beyond fatigue alone to include weakness, fever/chills/night sweats, and weight change. Constitutional symptoms are specifically broad, systemic symptoms affecting overall health, not confined to a single organ system.",
     "src": "General Survey & Vital Signs lecture, Slide 6"
   }
 ];

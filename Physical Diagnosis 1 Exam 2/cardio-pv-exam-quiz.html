@@ -455,12 +455,12 @@ const QUESTIONS = [
     "topic": "Cardiac Anatomy",
     "q": "Which structure separates the right ventricle from the left ventricle?",
     "choices": [
-      "Interventricular septum",
       "Chordae tendineae",
       "Papillary muscles",
+      "Interventricular septum",
       "Interatrial septum"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "The interventricular septum is the muscular wall separating the right and left ventricles.",
     "why": "Chordae tendineae are fibrous bands anchoring the AV (atrioventricular) valve leaflets to the papillary muscles, not a septal wall. Papillary muscles anchor the AV (atrioventricular) valves within the ventricles; they do not separate the ventricles. The interatrial septum separates the right and left atria, not the ventricles.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 4"
@@ -469,40 +469,40 @@ const QUESTIONS = [
     "topic": "Cardiac Anatomy",
     "q": "What is the primary role of the papillary muscles and chordae tendineae together?",
     "choices": [
-      "Anchoring the AV (atrioventricular) valve leaflets to prevent them from inverting/leaking during ventricular contraction",
+      "Separating the ventricles from the great vessels",
       "Generating the electrical impulse that initiates each heartbeat",
-      "Regulating flow from the left atrium into the left ventricle",
-      "Separating the ventricles from the great vessels"
+      "Anchoring the AV (atrioventricular) valve leaflets to prevent them from inverting/leaking during ventricular contraction",
+      "Regulating flow from the left atrium into the left ventricle"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Papillary muscles anchor via chordae tendineae to prevent AV (atrioventricular) valve leaflets from prolapsing into the atria during systole.",
-    "why": "That is the role of the SA (sinoatrial) and AV (atrioventricular) nodes, not the papillary muscles/chordae tendineae. That is the function of the mitral valve leaflets themselves, not the papillary muscle/chordae apparatus's primary role. The semilunar valves separate the ventricles from the great vessels, not the papillary muscles.",
+    "why": "The semilunar valves separate the ventricles from the great vessels, not the papillary muscles. That is the role of the SA (sinoatrial) and AV (atrioventricular) nodes, not the papillary muscles/chordae tendineae. That is the function of the mitral valve leaflets themselves, not the papillary muscle/chordae apparatus's primary role.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 4"
   },
   {
     "topic": "Cardiac Anatomy",
     "q": "Which valve regulates blood flow from the left atrium into the left ventricle?",
     "choices": [
-      "Mitral valve",
-      "Tricuspid valve",
       "Pulmonic valve",
-      "Aortic valve"
+      "Aortic valve",
+      "Mitral valve",
+      "Tricuspid valve"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "The mitral valve sits between the left atrium and left ventricle and regulates this flow.",
-    "why": "The tricuspid valve is between the right atrium and right ventricle. The pulmonic valve is at the exit of the right ventricle into the pulmonary artery. The aortic valve is between the left ventricle and the aorta, not between the left atrium and ventricle.",
+    "why": "The pulmonic valve is at the exit of the right ventricle into the pulmonary artery. The aortic valve is between the left ventricle and the aorta, not between the left atrium and ventricle. The tricuspid valve is between the right atrium and right ventricle.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 5"
   },
   {
     "topic": "Conduction & Cardiac Output",
     "q": "SA (sinoatrial) node normally generates impulses at what rate?",
     "choices": [
-      "60–100 times per minute",
       "40–60 times per minute",
       "100–160 times per minute",
-      "20–40 times per minute"
+      "20–40 times per minute",
+      "60–100 times per minute"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The SA (sinoatrial) node is the heart's natural pacemaker, generating impulses at a rate of 60–100 beats per minute.",
     "why": "This slower range is more typical of a junctional/AV (atrioventricular) nodal escape rhythm, not the SA (sinoatrial) node's intrinsic rate. This is too fast for the normal resting SA (sinoatrial) node rate. This is characteristic of a ventricular escape rhythm, not the SA (sinoatrial) node.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 9"
@@ -511,42 +511,42 @@ const QUESTIONS = [
     "topic": "Conduction & Cardiac Output",
     "q": "Which node delays the electrical impulse low in the atrial septum before it continues down the bundle of His?",
     "choices": [
-      "AV (atrioventricular) node",
-      "SA (sinoatrial) node",
       "Bundle of His",
+      "SA (sinoatrial) node",
+      "AV (atrioventricular) node",
       "Purkinje fibers"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "The AV (atrioventricular) node delays the impulse, allowing the ventricles time to fill, before conduction continues down the bundle of His.",
-    "why": "The SA (sinoatrial) node is the impulse's origin, not the site of the AV (atrioventricular) delay. The bundle of His conducts the impulse after the AV (atrioventricular) delay; it does not itself generate the delay. Purkinje fibers rapidly distribute the impulse to the ventricular myocardium after the delay, not before.",
+    "why": "The bundle of His conducts the impulse after the AV (atrioventricular) delay; it does not itself generate the delay. The SA (sinoatrial) node is the impulse's origin, not the site of the AV (atrioventricular) delay. Purkinje fibers rapidly distribute the impulse to the ventricular myocardium after the delay, not before.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 9"
   },
   {
     "topic": "Conduction & Cardiac Output",
     "q": "Cardiac output is best defined as:",
     "choices": [
+      "The percentage of ventricular volume ejected per beat",
       "The volume of blood ejected from each ventricle in one minute, equal to heart rate times stroke volume",
       "The volume of blood ejected with each heartbeat",
-      "The percentage of ventricular volume ejected per beat",
       "The pressure the ventricle must overcome to eject blood"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Cardiac output = heart rate × stroke volume, representing the volume ejected per minute.",
-    "why": "That describes stroke volume, not cardiac output. That describes ejection fraction, not cardiac output. That describes afterload, not cardiac output.",
+    "why": "That describes ejection fraction, not cardiac output. That describes stroke volume, not cardiac output. That describes afterload, not cardiac output.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 10"
   },
   {
     "topic": "Cardiac Cycle & Heart Sounds",
     "q": "The closure of the AV (atrioventricular) valves (mitral and tricuspid) at the start of systole generates which heart sound?",
     "choices": [
-      "S1",
+      "S4",
       "S2",
-      "S3",
-      "S4"
+      "S1",
+      "S3"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "S1 is generated by closure of the AV (atrioventricular) valves (mitral and tricuspid) marking the start of systole.",
-    "why": "S2 is generated by closure of the semilunar (aortic and pulmonic) valves at the end of systole, not AV (atrioventricular) valve closure. S3 is an extra diastolic sound, not the sound of AV (atrioventricular) valve closure. S4 is an extra diastolic sound related to atrial contraction, not AV (atrioventricular) valve closure.",
+    "why": "S4 is an extra diastolic sound related to atrial contraction, not AV (atrioventricular) valve closure. S2 is generated by closure of the semilunar (aortic and pulmonic) valves at the end of systole, not AV (atrioventricular) valve closure. S3 is an extra diastolic sound, not the sound of AV (atrioventricular) valve closure.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 12"
   },
   {
@@ -554,13 +554,13 @@ const QUESTIONS = [
     "q": "The closure of the semilunar valves (aortic and pulmonic) at the end of ventricular contraction generates which heart sound?",
     "choices": [
       "S2",
+      "S4",
       "S1",
-      "S3",
-      "S4"
+      "S3"
     ],
     "answer": 0,
     "correct": "S2 is generated by closure of the semilunar valves, marking the end of systole and the start of diastole.",
-    "why": "S1 is generated by AV (atrioventricular) valve closure at the start of systole, not semilunar valve closure. S3 is an extra sound heard in early diastole after S2, not the sound of semilunar valve closure itself. S4 occurs late in diastole related to atrial contraction, not semilunar valve closure.",
+    "why": "S4 occurs late in diastole related to atrial contraction, not semilunar valve closure. S1 is generated by AV (atrioventricular) valve closure at the start of systole, not semilunar valve closure. S3 is an extra sound heard in early diastole after S2, not the sound of semilunar valve closure itself.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 12"
   },
   {
@@ -568,39 +568,39 @@ const QUESTIONS = [
     "q": "During systole on the left side of the heart, which valve is open and which is closed?",
     "choices": [
       "Aortic valve open; mitral valve closed",
-      "Aortic valve closed; mitral valve open",
       "Both aortic and mitral valves open",
-      "Both aortic and mitral valves closed"
+      "Both aortic and mitral valves closed",
+      "Aortic valve closed; mitral valve open"
     ],
     "answer": 0,
     "correct": "During systole the aortic valve opens to allow ejection into the aorta while the mitral valve closes to prevent regurgitation into the left atrium.",
-    "why": "This describes diastole on the left side, not systole. Both valves are never simultaneously open on the same side; the mitral must close before the aortic opens. The aortic valve must be open during systole to allow ejection of blood into the aorta.",
+    "why": "Both valves are never simultaneously open on the same side; the mitral must close before the aortic opens. The aortic valve must be open during systole to allow ejection of blood into the aorta. This describes diastole on the left side, not systole.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 14"
   },
   {
     "topic": "Pulse Pressure & Stethoscope",
     "q": "Pulse pressure is defined as:",
     "choices": [
-      "The difference between systolic and diastolic pressure",
-      "The average pressure throughout the cardiac cycle",
       "The peak pressure generated during systole alone",
-      "The pressure drop across the aortic valve"
+      "The pressure drop across the aortic valve",
+      "The difference between systolic and diastolic pressure",
+      "The average pressure throughout the cardiac cycle"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Pulse pressure is the difference between the highest (systolic) and lowest (diastolic) arterial pressures.",
-    "why": "That describes mean arterial pressure, not pulse pressure. Pulse pressure requires both the systolic and diastolic values, not systolic pressure alone. Pulse pressure is not defined as a pressure gradient across a valve.",
+    "why": "Pulse pressure requires both the systolic and diastolic values, not systolic pressure alone. Pulse pressure is not defined as a pressure gradient across a valve. That describes mean arterial pressure, not pulse pressure.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 16"
   },
   {
     "topic": "Pulse Pressure & Stethoscope",
     "q": "For a blood pressure of 120/80 mm Hg, what is the pulse pressure, and is it within the normal range?",
     "choices": [
-      "40 mm Hg, which is within the normal 30–40 mm Hg range",
       "80 mm Hg, which is abnormally high",
+      "40 mm Hg, which is within the normal 30–40 mm Hg range",
       "120 mm Hg, which is abnormally high",
       "20 mm Hg, which is abnormally low"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "120 − 80 = 40 mm Hg, which falls within the normal pulse pressure range of 30–40 mm Hg.",
     "why": "Pulse pressure is systolic minus diastolic (120 − 80 = 40), not the diastolic value itself. Pulse pressure is not the systolic value alone; it is the difference between systolic and diastolic pressures. The correct calculation is 120 − 80 = 40 mm Hg, not 20 mm Hg.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 16"
@@ -609,26 +609,26 @@ const QUESTIONS = [
     "topic": "Pulse Pressure & Stethoscope",
     "q": "On the Littmann Cardiology IV stethoscope, the bell side (light pressure) is best used for which findings?",
     "choices": [
-      "Heart murmurs, S3/S4 heart sounds, and bruits",
+      "Only carotid bruits",
       "Normal heartbeats, breath sounds, and bowel sounds",
       "Only pediatric heart sounds",
-      "Only carotid bruits"
+      "Heart murmurs, S3/S4 heart sounds, and bruits"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The bell, used with light pressure, best transmits low-frequency sounds such as murmurs, S3/S4, and bruits.",
-    "why": "These higher-frequency sounds are best heard with the diaphragm, not the bell. The bell's low-frequency use applies broadly to murmurs, S3/S4, and bruits, not solely pediatric sounds. While useful for bruits, the bell is also used for murmurs and S3/S4, not exclusively carotid bruits.",
+    "why": "While useful for bruits, the bell is also used for murmurs and S3/S4, not exclusively carotid bruits. These higher-frequency sounds are best heard with the diaphragm, not the bell. The bell's low-frequency use applies broadly to murmurs, S3/S4, and bruits, not solely pediatric sounds.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 17"
   },
   {
     "topic": "Cardiac History",
     "q": "Which of the following is listed as a concerning cardiac symptom to ask about during history taking?",
     "choices": [
-      "Syncope (fainting)",
       "Joint stiffness",
       "Photophobia",
-      "Tinnitus"
+      "Tinnitus",
+      "Syncope (fainting)"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Syncope is listed among the concerning cardiac symptoms to elicit in the history.",
     "why": "Joint stiffness is a musculoskeletal complaint, not one of the listed concerning cardiac symptoms. Photophobia relates to eye/neurologic complaints, not the listed cardiac symptoms. Tinnitus relates to ear/audiologic complaints, not the listed concerning cardiac symptoms.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 19"
@@ -637,84 +637,84 @@ const QUESTIONS = [
     "topic": "Cardiac History",
     "q": "Which social history element is specifically relevant to concerning cardiac history?",
     "choices": [
-      "Smoking or smoke exposure",
-      "Occupation as a teacher",
       "Recent travel history",
-      "Dietary preference for vegetarianism"
+      "Smoking or smoke exposure",
+      "Dietary preference for vegetarianism",
+      "Occupation as a teacher"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Smoking/smoke exposure is specifically listed as a relevant social history element for cardiac risk.",
-    "why": "Occupation as a teacher is not among the cardiac-relevant social history elements listed. Recent travel is not listed as a cardiac-specific social history element in this lecture. Vegetarian diet alone is not listed as a specific cardiac history risk element here.",
+    "why": "Recent travel is not listed as a cardiac-specific social history element in this lecture. Vegetarian diet alone is not listed as a specific cardiac history risk element here. Occupation as a teacher is not among the cardiac-relevant social history elements listed.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 19"
   },
   {
     "topic": "Cardiac Exam Technique",
     "q": "For the cardiac examination, how should the patient be positioned?",
     "choices": [
-      "Supine with the head elevated 30 degrees",
       "Fully upright and seated",
-      "Prone with the head turned to one side",
-      "Flat supine with no head elevation"
+      "Supine with the head elevated 30 degrees",
+      "Flat supine with no head elevation",
+      "Prone with the head turned to one side"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "The patient is placed supine with the head of the bed elevated 30 degrees for the cardiac exam.",
-    "why": "The lecture specifies supine with 30-degree head elevation, not fully upright seating. Prone positioning is used for an alternative popliteal pulse technique, not the general cardiac exam. The head should specifically be elevated 30 degrees, not left flat.",
+    "why": "The lecture specifies supine with 30-degree head elevation, not fully upright seating. The head should specifically be elevated 30 degrees, not left flat. Prone positioning is used for an alternative popliteal pulse technique, not the general cardiac exam.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 22"
   },
   {
     "topic": "Cardiac Exam Technique",
     "q": "If you are right-handed, where should you stand for best access to the heart during the cardiac exam?",
     "choices": [
+      "At the foot of the bed",
       "On the patient's right side",
       "On the patient's left side",
-      "At the foot of the bed",
       "Behind the patient's head"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "A right-handed examiner should stand on the patient's right side for best access.",
-    "why": "This is the correct position for a left-handed examiner, not a right-handed one. Standing at the foot of the bed does not provide the described optimal access for the cardiac exam. This position is not described as optimal for the cardiac exam.",
+    "why": "Standing at the foot of the bed does not provide the described optimal access for the cardiac exam. This is the correct position for a left-handed examiner, not a right-handed one. This position is not described as optimal for the cardiac exam.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 22"
   },
   {
     "topic": "Cardiac Exam Technique",
     "q": "When auscultating for carotid bruits, why must you ask the patient to stop breathing for about 10 seconds?",
     "choices": [
-      "To eliminate breath sounds that could obscure a subtle bruit",
-      "To increase blood flow velocity through the carotid artery",
       "To allow palpation of both carotids simultaneously",
-      "To lower the patient's blood pressure before auscultation"
+      "To lower the patient's blood pressure before auscultation",
+      "To increase blood flow velocity through the carotid artery",
+      "To eliminate breath sounds that could obscure a subtle bruit"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Holding breath removes tracheal/breath sound interference so a faint carotid bruit can be heard clearly.",
-    "why": "Breath-holding is done for auscultation clarity, not to intentionally alter carotid flow velocity. Both carotids should never be palpated simultaneously regardless of breath-holding; this is unrelated to why breath is held. Breath-holding for 10 seconds is not performed to lower blood pressure.",
+    "why": "Both carotids should never be palpated simultaneously regardless of breath-holding; this is unrelated to why breath is held. Breath-holding for 10 seconds is not performed to lower blood pressure. Breath-holding is done for auscultation clarity, not to intentionally alter carotid flow velocity.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 24"
   },
   {
     "topic": "Cardiac Exam Technique",
     "q": "Where should the stethoscope be placed to auscultate for carotid bruits?",
     "choices": [
-      "Near the upper end of the thyroid cartilage, below the angle of the jaw",
       "Directly over the sternal notch",
-      "At the angle of the mandible only, never lower",
-      "Over the midclavicular line at the fifth intercostal space"
+      "Near the upper end of the thyroid cartilage, below the angle of the jaw",
+      "Over the midclavicular line at the fifth intercostal space",
+      "At the angle of the mandible only, never lower"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "This location overlies the carotid bifurcation and reduces confusion with a transmitted cardiac murmur.",
-    "why": "The sternal notch is not the described location for carotid bruit auscultation. While bruits can sometimes only be heard over the mastoid process in some patients, the primary described location is near the thyroid cartilage below the jaw angle, not exclusively the mandibular angle. That location is the mitral auscultation area of the precordium, not the carotid bruit location.",
+    "why": "The sternal notch is not the described location for carotid bruit auscultation. That location is the mitral auscultation area of the precordium, not the carotid bruit location. While bruits can sometimes only be heard over the mastoid process in some patients, the primary described location is near the thyroid cartilage below the jaw angle, not exclusively the mandibular angle.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 24"
   },
   {
     "topic": "PV (peripheral vascular) Anatomy",
     "q": "Which layer of an artery is where atherosclerosis characteristically forms?",
     "choices": [
-      "Intima",
-      "Media",
+      "Vasa vasorum",
       "Adventitia",
-      "Vasa vasorum"
+      "Intima",
+      "Media"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "The intima, the single continuous endothelial lining, is where atherosclerosis characteristically forms.",
-    "why": "The media is smooth muscle with elastic properties; atherosclerosis specifically forms in the intima, not the media. The adventitia is the outermost connective tissue layer; it is not the characteristic site of atherosclerosis formation. The vasa vasorum are small vessels supplying the arterial wall itself, not the layer where atherosclerosis forms.",
+    "why": "The vasa vasorum are small vessels supplying the arterial wall itself, not the layer where atherosclerosis forms. The adventitia is the outermost connective tissue layer; it is not the characteristic site of atherosclerosis formation. The media is smooth muscle with elastic properties; atherosclerosis specifically forms in the intima, not the media.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 32"
   },
   {
@@ -722,95 +722,95 @@ const QUESTIONS = [
     "q": "Which arterial layer consists of smooth muscle with elastic properties that accommodate blood pressure and flow?",
     "choices": [
       "Media",
-      "Intima",
       "Adventitia",
-      "Endothelium alone"
+      "Endothelium alone",
+      "Intima"
     ],
     "answer": 0,
     "correct": "The media contains smooth muscle with elastin, accommodating pressure and flow changes.",
-    "why": "The intima is the innermost endothelial lining, not the smooth muscle layer. The adventitia is the outer connective tissue layer, not the smooth muscle/elastic layer. The endothelium alone forms part of the intima; the smooth muscle/elastic layer described is the media.",
+    "why": "The adventitia is the outer connective tissue layer, not the smooth muscle/elastic layer. The endothelium alone forms part of the intima; the smooth muscle/elastic layer described is the media. The intima is the innermost endothelial lining, not the smooth muscle layer.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 32"
   },
   {
     "topic": "PV (peripheral vascular) Anatomy",
     "q": "Arterioles are best described as:",
     "choices": [
-      "Resistance vessels whose smooth muscle tone significantly determines systemic vascular resistance",
-      "Highly elastic, large-diameter vessels like the aorta",
       "Vessels with an endothelial lining but no media, facilitating gas diffusion",
-      "Vessels that primarily transport lymph fluid"
+      "Vessels that primarily transport lymph fluid",
+      "Highly elastic, large-diameter vessels like the aorta",
+      "Resistance vessels whose smooth muscle tone significantly determines systemic vascular resistance"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "Arterioles are resistance vessels, and their smooth muscle tone is a major determinant of systemic vascular resistance.",
-    "why": "Large elastic vessels like the aorta are distinct from arterioles, which are small resistance vessels. That description applies to capillaries, not arterioles. Arterioles carry blood, not lymph fluid; lymphatic vessels transport lymph.",
+    "why": "That description applies to capillaries, not arterioles. Arterioles carry blood, not lymph fluid; lymphatic vessels transport lymph. Large elastic vessels like the aorta are distinct from arterioles, which are small resistance vessels.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 33"
   },
   {
     "topic": "PV (peripheral vascular) History & Components",
     "q": "Which of the following should be asked about when taking a peripheral vascular history?",
     "choices": [
-      "Skin color, temperature, and symptoms provoked by exertion",
+      "Bowel habits and stool consistency",
       "Visual acuity and eye pain",
-      "Hearing loss and tinnitus",
-      "Bowel habits and stool consistency"
+      "Skin color, temperature, and symptoms provoked by exertion",
+      "Hearing loss and tinnitus"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "These are specifically listed elements to ask about when assessing peripheral vascular history.",
-    "why": "These are ophthalmologic history elements, not peripheral vascular history elements. These are otologic history elements, not peripheral vascular history elements. These are gastrointestinal history elements, not peripheral vascular history elements.",
+    "why": "These are gastrointestinal history elements, not peripheral vascular history elements. These are ophthalmologic history elements, not peripheral vascular history elements. These are otologic history elements, not peripheral vascular history elements.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 38"
   },
   {
     "topic": "PV (peripheral vascular) History & Components",
     "q": "During inspection of the lower extremities, what must be ensured regarding patient positioning and privacy?",
     "choices": [
+      "No draping is necessary if the exam room door is closed",
       "The patient is supine and appropriately draped, with external genitalia covered",
-      "The patient stands fully unclothed for best visualization",
       "The patient remains fully clothed throughout inspection",
-      "No draping is necessary if the exam room door is closed"
+      "The patient stands fully unclothed for best visualization"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "Lower extremity inspection requires supine positioning with appropriate draping and coverage of the external genitalia.",
-    "why": "The lecture specifies supine positioning with appropriate draping, not standing unclothed. Adequate exposure is needed for inspection while maintaining draping/privacy, not remaining fully clothed. Proper draping and covering the external genitalia is required regardless of room privacy.",
+    "why": "Proper draping and covering the external genitalia is required regardless of room privacy. Adequate exposure is needed for inspection while maintaining draping/privacy, not remaining fully clothed. The lecture specifies supine positioning with appropriate draping, not standing unclothed.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 40"
   },
   {
     "topic": "PV (peripheral vascular) History & Components",
     "q": "When inspecting the extremities, which features should be noted?",
     "choices": [
-      "Size, symmetry, swelling, venous pattern, skin color/texture, temperature, hair growth, ulcerations, and nail beds",
-      "Only the presence or absence of a palpable pulse",
       "Only muscle strength grading",
-      "Only the patient's reported pain level"
+      "Only the presence or absence of a palpable pulse",
+      "Only the patient's reported pain level",
+      "Size, symmetry, swelling, venous pattern, skin color/texture, temperature, hair growth, ulcerations, and nail beds"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "All of these features should be systematically noted during extremity inspection.",
-    "why": "Inspection is a distinct step from pulse palpation and includes many visual features, not pulse presence alone. Muscle strength grading is a neurologic/musculoskeletal exam component, not part of this vascular inspection. Inspection is an objective visual assessment of multiple physical features, not a subjective pain report.",
+    "why": "Muscle strength grading is a neurologic/musculoskeletal exam component, not part of this vascular inspection. Inspection is a distinct step from pulse palpation and includes many visual features, not pulse presence alone. Inspection is an objective visual assessment of multiple physical features, not a subjective pain report.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 40"
   },
   {
     "topic": "Pulse Palpation Technique",
     "q": "Where should the radial pulse be palpated?",
     "choices": [
-      "With the finger pads on the flexor surface of the lateral wrist, with the wrist partially flexed",
+      "Behind and below the medial malleolus",
       "On the extensor surface of the dorsal wrist",
       "Just medial to the biceps tendon at the antecubital crease",
-      "Behind and below the medial malleolus"
+      "With the finger pads on the flexor surface of the lateral wrist, with the wrist partially flexed"
     ],
-    "answer": 0,
+    "answer": 3,
     "correct": "The radial pulse is palpated with finger pads on the flexor surface of the lateral wrist; partial wrist flexion may aid palpation.",
-    "why": "The radial pulse is palpated on the flexor (volar), not extensor, surface of the wrist. That location describes the brachial pulse, not the radial pulse. That location describes the posterior tibial pulse, not the radial pulse.",
+    "why": "That location describes the posterior tibial pulse, not the radial pulse. The radial pulse is palpated on the flexor (volar), not extensor, surface of the wrist. That location describes the brachial pulse, not the radial pulse.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 43"
   },
   {
     "topic": "Pulse Palpation Technique",
     "q": "Where is the brachial pulse palpated?",
     "choices": [
-      "Just medial to the biceps tendon at the antecubital crease, with the elbow slightly flexed",
       "On the flexor surface of the lateral wrist",
+      "Just medial to the biceps tendon at the antecubital crease, with the elbow slightly flexed",
       "Midway between the anterior superior iliac spine and the symphysis pubis",
       "Lateral to the extensor tendon of the great toe"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "The brachial pulse is felt just medial to the biceps tendon at the antecubital crease with the elbow slightly flexed.",
     "why": "That location describes the radial pulse, not the brachial pulse. That location describes the femoral pulse, not the brachial pulse. That location describes the dorsalis pedis pulse, not the brachial pulse.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 44"
@@ -819,56 +819,56 @@ const QUESTIONS = [
     "topic": "Pulse Palpation Technique",
     "q": "Epitrochlear lymph nodes are palpated in which location?",
     "choices": [
+      "Along the anterior wrist crease",
       "In the groove between the biceps and triceps muscles, about 3 cm above the medial epicondyle, with the elbow flexed ~90 degrees",
       "Directly over the antecubital crease",
-      "In the axilla with the arm fully abducted",
-      "Along the anterior wrist crease"
+      "In the axilla with the arm fully abducted"
     ],
-    "answer": 0,
+    "answer": 1,
     "correct": "This is the correct technique and location for palpating epitrochlear nodes.",
-    "why": "The antecubital crease is where the brachial pulse is felt, not the epitrochlear node location, which is about 3 cm above the medial epicondyle. The axilla is where axillary nodes are palpated, not epitrochlear nodes. This is not the location for epitrochlear node palpation.",
+    "why": "This is not the location for epitrochlear node palpation. The antecubital crease is where the brachial pulse is felt, not the epitrochlear node location, which is about 3 cm above the medial epicondyle. The axilla is where axillary nodes are palpated, not epitrochlear nodes.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 45"
   },
   {
     "topic": "Pulse Palpation Technique",
     "q": "Are epitrochlear nodes typically palpable in healthy individuals?",
     "choices": [
-      "No, they are usually not palpable in healthy individuals",
-      "Yes, they are always palpable and up to 3 cm is normal",
       "Yes, but only in pediatric patients",
-      "Only palpable in patients with high BMI (body mass index)"
+      "Only palpable in patients with high BMI (body mass index)",
+      "No, they are usually not palpable in healthy individuals",
+      "Yes, they are always palpable and up to 3 cm is normal"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "The lecture states epitrochlear nodes are usually not palpable in healthy people.",
-    "why": "The lecture specifically states these nodes are usually NOT palpable in healthy individuals. The lecture does not qualify this by age; it states they are usually not palpable in healthy individuals generally. Palpability of epitrochlear nodes is not linked to BMI (body mass index) in the lecture; they are simply usually not palpable when healthy.",
+    "why": "The lecture does not qualify this by age; it states they are usually not palpable in healthy individuals generally. Palpability of epitrochlear nodes is not linked to BMI (body mass index) in the lecture; they are simply usually not palpable when healthy. The lecture specifically states these nodes are usually NOT palpable in healthy individuals.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 45"
   },
   {
     "topic": "Abnormal Findings & Capillary Refill",
     "q": "Pulsus parvus, referring to weak pulses, is classically seen in which condition?",
     "choices": [
-      "Atherosclerotic peripheral vascular disease",
       "Aortic regurgitation",
-      "Anxiety-induced tachycardia",
-      "Normal healthy aging alone"
+      "Normal healthy aging alone",
+      "Atherosclerotic peripheral vascular disease",
+      "Anxiety-induced tachycardia"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Pulsus parvus (weak pulses) is classically associated with atherosclerotic PVD (peripheral vascular disease).",
-    "why": "Aortic regurgitation classically produces a bounding, not weak, pulse (pulsus bisferiens/water-hammer pulse), not pulsus parvus. Anxiety-related tachycardia is not the classic cause of pulsus parvus described in the lecture. Pulsus parvus specifically reflects atherosclerotic PVD (peripheral vascular disease), not a normal aging finding.",
+    "why": "Aortic regurgitation classically produces a bounding, not weak, pulse (pulsus bisferiens/water-hammer pulse), not pulsus parvus. Pulsus parvus specifically reflects atherosclerotic PVD (peripheral vascular disease), not a normal aging finding. Anxiety-related tachycardia is not the classic cause of pulsus parvus described in the lecture.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 34"
   },
   {
     "topic": "Abnormal Findings & Capillary Refill",
     "q": "Pulsus tardus, referring to sluggish pulses, typically occurs in which settings?",
     "choices": [
-      "Aortic stenosis or low cardiac output",
-      "Hyperthyroidism",
       "Fever",
+      "Hyperthyroidism",
+      "Aortic stenosis or low cardiac output",
       "Dehydration alone"
     ],
-    "answer": 0,
+    "answer": 2,
     "correct": "Pulsus tardus (a slow-rising, sluggish pulse) is classically seen with aortic stenosis or states of low cardiac output.",
-    "why": "Hyperthyroidism typically causes a hyperdynamic, bounding pulse, not the sluggish pulsus tardus. Fever typically increases heart rate but is not the classic cause of pulsus tardus described in the lecture. Dehydration is not the classic described cause of pulsus tardus; aortic stenosis and low cardiac output are.",
+    "why": "Fever typically increases heart rate but is not the classic cause of pulsus tardus described in the lecture. Hyperthyroidism typically causes a hyperdynamic, bounding pulse, not the sluggish pulsus tardus. Dehydration is not the classic described cause of pulsus tardus; aortic stenosis and low cardiac output are.",
     "src": "Cardiovascular and Peripheral Vascular Examination lecture, Slide 34"
   }
 ];
