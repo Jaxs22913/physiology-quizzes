@@ -34,15 +34,40 @@ def topic_html(topic):
     label = topic["label"]
     tag = topic.get("tag", "")
     tag_html = f'<span class="tag">{tag}</span>' if tag else ""
-    rows_html = "\n".join(
-        f'          <tr><td class="h">{term}</td><td>{fact}</td></tr>'
-        for term, fact in topic["rows"]
-    )
+    cols = topic.get("cols")
+    if cols:
+        # multi-column mode: rows are tuples matching len(cols), or a dict
+        # {"group": "..."} for a full-width group-header row (matches the
+        # site's existing multi-column reference-table style, e.g. the
+        # Anatomy Exam 3 Hormones page).
+        ncols = len(cols)
+        head_cells = "".join(
+            f'<th class="term">{c}</th>' if i == 0 else f'<th>{c}</th>'
+            for i, c in enumerate(cols)
+        )
+        row_parts = []
+        for r in topic["rows"]:
+            if isinstance(r, dict) and "group" in r:
+                row_parts.append(f'          <tr><td class="grp" colspan="{ncols}">{r["group"]}</td></tr>')
+            else:
+                cells = "".join(
+                    f'<td class="h">{v}</td>' if i == 0 else f'<td>{v}</td>'
+                    for i, v in enumerate(r)
+                )
+                row_parts.append(f'          <tr>{cells}</tr>')
+        rows_html = "\n".join(row_parts)
+        head_html = f'<thead><tr>{head_cells}</tr></thead>'
+    else:
+        rows_html = "\n".join(
+            f'          <tr><td class="h">{term}</td><td>{fact}</td></tr>'
+            for term, fact in topic["rows"]
+        )
+        head_html = f"<thead><tr><th class=\"term\">{topic.get('col1', 'Term')}</th><th>{topic.get('col2', 'What you need to know')}</th></tr></thead>"
     return f"""  <section class="topic" id="{tid}" style="--acc:{acc};--acc-bg:{acc_bg};--acc-zebra:{acc_zebra};--acc-ink:{acc_ink}">
     <div class="shead"><span class="dot" style="background:{acc}"></span><h2>{label}{tag_html}</h2></div>
     <div class="scroll">
       <table>
-        <thead><tr><th class="term">{topic.get('col1', 'Term')}</th><th>{topic.get('col2', 'What you need to know')}</th></tr></thead>
+        {head_html}
         <tbody>
 {rows_html}
         </tbody>

@@ -30,6 +30,34 @@ topics = [
 5-8 rows per topic is a good density — enough to be genuinely useful, not so much that it
 stops being a "cram" sheet.
 
+### Multi-column mode (e.g. muscle Origin/Insertion/Action/Innervation tables)
+
+Some content doesn't fit a 2-column term→fact shape — e.g. a muscle reference table where
+every row needs Action/Insertion/Innervation as separate columns. Give the topic `cols`
+instead of the default, and make `rows` entries tuples matching `cols` length (or a
+`{"group": "..."}` dict for a full-width group-header row, matching how the source Pearson
+muscle tables group by e.g. "GLUTEAL GROUP" / "FLEXORS" / "EXTENSORS"):
+
+```python
+{
+    "id": "appendicular-musculature",
+    "label": "Appendicular Musculature — Muscle Reference",
+    "color": "#9c3b3b",
+    "cols": ["Muscle", "Action", "Insertion", "Innervation"],
+    "rows": [
+        {"group": "GLUTEAL GROUP"},
+        ("Gluteus maximus", "Extension and lateral rotation at hip; ...", "Iliotibial tract and gluteal tuberosity of femur", "Inferior gluteal nerve (L5-S2)"),
+        ...
+    ],
+}
+```
+
+This was built 2026-07-20 for Anatomy Exam 4's Appendicular/Axial Musculature topics (144
+muscles total, action/insertion/innervation transcribed verbatim from the source PPT's own
+embedded O/I/A/N table images — see "Sourcing O/I/A/N tables" below). Falls back to the
+original 2-column term/fact rendering automatically when `cols` is omitted, so existing
+cram sheets are unaffected.
+
 ## Usage
 
 ```python
@@ -63,6 +91,19 @@ only compress what's already in the guide, and preserve exact numbers/names/year
 When building several cram sheets at once, this is a good candidate for parallel subagents (one
 per exam, each reading its own guide and returning condensed JSON in the schema above) — see
 the extraction approach used to build the initial 12 for reference.
+
+## Sourcing Origin/Insertion/Action/Innervation-style tables
+
+For anatomy content, this kind of granular per-item reference table (muscles, but the same
+applies to nerves/vessels/etc.) usually already exists in the source lecture PPT — but often
+as a **screenshot/image of a textbook table**, not a native PowerPoint table object. `python-pptx`
+text extraction (`shape.has_text_frame`) will silently miss these entirely; check
+`shape.has_table` too, and if neither picks up the table content, extract the slide's picture
+shape(s) as image files (`shape.image.blob`, see [[new-content-full-build-policy]]'s figure-
+extraction snippet) and view them directly with the Read tool to transcribe the data by hand.
+Verify the "Table N.N" slide title pattern (or similar) to find exactly which slides have these
+tables before transcribing anything, and always view the actual image rather than guessing from
+adjacent bullet-point slides, which are usually an incomplete summary of the same data.
 
 ## After building or regenerating any cram sheet
 

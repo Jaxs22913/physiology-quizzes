@@ -57,6 +57,8 @@
   tbody tr:last-child td{border-bottom:0}
   td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
   tbody tr:nth-child(even){background:var(--acc-zebra)}
+  td.grp{background:var(--acc-bg);font:700 11.5px/1.3 ui-sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--acc-ink,var(--ink))}
+  tbody tr:has(td.grp){background:none}
 
   footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 
@@ -118,12 +120,12 @@
   <header class="hero">
     <div class="kicker">Anatomy Exam 4 · Class of 2028</div>
     <h1>Anatomy Exam 4 Cram Sheet</h1>
-    <p class="sub">Appendicular Skeleton, Axial Skeleton, Appendicular Musculature, and Axial Musculature, condensed to the highest-yield facts.</p>
+    <p class="sub">Appendicular Skeleton, Axial Skeleton, and full muscle-by-muscle Action/Insertion/Innervation reference for the Appendicular and Axial Musculature.</p>
     <div class="toc">
       <a href="#appendicular-skeleton" style="color:#224a6c"><span class="dot" style="background:#2c5f8a"></span>Appendicular Skeleton</a>
       <a href="#axial-skeleton" style="color:#473a6c"><span class="dot" style="background:#5b4a8a"></span>Axial Skeleton</a>
-      <a href="#appendicular-musculature" style="color:#7a2e2e"><span class="dot" style="background:#9c3b3b"></span>Appendicular Musculature</a>
-      <a href="#axial-musculature" style="color:#8d4f17"><span class="dot" style="background:#b5651d"></span>Axial Musculature</a>
+      <a href="#appendicular-musculature" style="color:#7a2e2e"><span class="dot" style="background:#9c3b3b"></span>Appendicular Musculature — Muscle Reference</a>
+      <a href="#axial-musculature" style="color:#8d4f17"><span class="dot" style="background:#b5651d"></span>Axial Musculature — Muscle Reference</a>
     </div>
     <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
       replacement for the full study guide — it assumes you've already learned the material and just need
@@ -135,7 +137,7 @@
     <div class="shead"><span class="dot" style="background:#2c5f8a"></span><h2>Appendicular Skeleton</h2></div>
     <div class="scroll">
       <table>
-        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <thead><tr><th class="term">Term</th><th>What you need to know</th></tr></thead>
         <tbody>
           <tr><td class="h">Pectoral girdle</td><td>Only 2 bones: clavicle (S-shaped; medial/sternal end → manubrium, lateral/acromial end → scapula's acromion; conoid tubercle near acromial end, costal tuberosity near sternal end) + scapula. Trades stability for mobility.</td></tr>
           <tr><td class="h">Scapula landmarks</td><td>Scapular spine divides supraspinous fossa (above) from infraspinous fossa (below) and continues laterally into the acromion (AC joint). Coracoid process hooks forward anteriorly; glenoid cavity (lateral) articulates with the humeral head.</td></tr>
@@ -154,7 +156,7 @@
     <div class="shead"><span class="dot" style="background:#5b4a8a"></span><h2>Axial Skeleton</h2></div>
     <div class="scroll">
       <table>
-        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <thead><tr><th class="term">Term</th><th>What you need to know</th></tr></thead>
         <tbody>
           <tr><td class="h">Bone tissue types</td><td>Compact bone = dense outer shell, bears most mechanical load; spongy/trabecular bone = interior lattice, concentrated near long-bone ends. Medullary cavity = central marrow space. Periosteum wraps the external surface (blood supply, tendon/ligament attachment). Osteon = compact bone's unit: concentric lamellae around a central canal, linked by perforating canals; interstitial lamellae fill gaps between osteons.</td></tr>
           <tr><td class="h">Bone classes & growth</td><td>4 shapes: long (humerus), short (wrist/ankle only), flat (cranium), sesamoid (patella). Growth: primary ossification center in diaphysis (fetal) → secondary centers in epiphyses (postnatal) → epiphyseal plate (hyaline cartilage; zones: resting, proliferative, hypertrophic, calcification) drives longitudinal growth until it ossifies and fuses the epiphysis to the diaphysis.</td></tr>
@@ -170,46 +172,203 @@
   </section>
 
   <section class="topic" id="appendicular-musculature" style="--acc:#9c3b3b;--acc-bg:#f1e4e4;--acc-zebra:#f8f1f1;--acc-ink:#7a2e2e">
-    <div class="shead"><span class="dot" style="background:#9c3b3b"></span><h2>Appendicular Musculature</h2></div>
+    <div class="shead"><span class="dot" style="background:#9c3b3b"></span><h2>Appendicular Musculature — Muscle Reference</h2></div>
     <div class="scroll">
       <table>
-        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <thead><tr><th class="term">Muscle</th><th>Action</th><th>Insertion</th><th>Innervation</th></tr></thead>
         <tbody>
-          <tr><td class="h">Axial vs. appendicular muscle</td><td>Axial muscles position the head/vertebral column and move the rib cage; appendicular muscles stabilize/move the limbs and girdles, absorb shock during locomotion, and reinforce joints. Action line crossing a joint: anterior = flexor, posterior = extensor, medial = adductor/medial rotator, lateral = abductor/lateral rotator.</td></tr>
-          <tr><td class="h">Scapula positioners</td><td>Trapezius, rhomboid major/minor, levator scapulae, serratus anterior, pectoralis minor, subclavius. Trapezius has the broadest range (elevate/depress/rotate scapula-clavicle, extend neck). Serratus anterior protracts the shoulder and rotates the scapula (glenoid faces up); innervated by the long thoracic nerve — a lesion causes a 'winged scapula.'</td></tr>
-          <tr><td class="h">Arm movers</td><td>Pectoralis major: flexion, adduction, medial rotation. Deltoid: abduction. Coracobrachialis: adduction. Latissimus dorsi: extension, adduction, medial rotation.</td></tr>
-          <tr><td class="h">Rotator cuff</td><td>Supraspinatus: abduction. Infraspinatus: lateral rotation. Teres minor: adduction + lateral rotation. Subscapularis: medial rotation. All four stabilize the humeral head within the glenoid cavity.</td></tr>
-          <tr><td class="h">Elbow & forearm movers</td><td>Elbow flexors — biceps brachii, brachialis, brachioradialis — all originate on the humerus. Elbow extensor triceps brachii (all 3 heads insert on the olecranon). Opposing pronator/supinator pair: pronator teres/pronator quadratus vs. supinator.</td></tr>
-          <tr><td class="h">Wrist & hand muscles</td><td>Wrist flexors: flexor carpi radialis, flexor carpi ulnaris, palmaris longus. Extensors: extensor carpi radialis longus/brevis, extensor carpi ulnaris (radial = abduct, ulnar = adduct). Extrinsic hand muscles (forearm origin, strength/crude control) vs. intrinsic (within hand, fine control: thenar/hypothenar, lumbricals, interossei).</td></tr>
-          <tr><td class="h">Thigh movers (4 groups)</td><td>Gluteal group: gluteus maximus (hip extension), gluteus medius/minimus + tensor fasciae latae (abduction). Lateral rotator group: piriformis, obturators, gemelli, quadratus femoris (lateral rotation, abduction). Adductor group: adductor brevis/longus/magnus, pectineus, gracilis. Iliopsoas group: iliacus + psoas major, the primary hip flexors.</td></tr>
-          <tr><td class="h">Knee movers</td><td>Quadriceps femoris (vastus lateralis/medialis/intermedius + rectus femoris, which also flexes the hip): extends the leg. Hamstrings (biceps femoris, semimembranosus, semitendinosus): flex the leg, extend the hip. Sartorius flexes hip + knee; with gracilis and semitendinosus forms the pes anserine at the medial tibia.</td></tr>
-          <tr><td class="h">Leg & foot movers</td><td>Tibialis anterior: dorsiflexion. Gastrocnemius/soleus (converge on calcaneal/Achilles tendon): plantarflexion. Tibialis posterior: plantarflexion + inversion. Fibularis longus/brevis: eversion. Intrinsic foot muscles mirror the hand's fine-control layout.</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES THAT POSITION THE PECTORAL GIRDLE</td></tr>
+          <tr><td class="h">Levator scapulae</td><td>Elevates scapula</td><td>Vertebral border of scapula near superior angle and medial end of scapular spine</td><td>Cervical nerves C3-C4 and dorsal scapular nerve (C5)</td></tr>
+          <tr><td class="h">Pectoralis minor</td><td>Depresses and protracts shoulder; rotates scapula so glenoid cavity moves inferiorly (downward rotation); elevates ribs if scapula is stationary</td><td>Coracoid process of scapula</td><td>Medial pectoral nerve (C8, T1)</td></tr>
+          <tr><td class="h">Rhomboid major</td><td>Adducts and performs downward rotation of the scapula</td><td>Vertebral border of scapula from spine to inferior angle</td><td>Dorsal scapular nerve (C5)</td></tr>
+          <tr><td class="h">Rhomboid minor</td><td>As above</td><td>Vertebral border of scapula</td><td>As above</td></tr>
+          <tr><td class="h">Serratus anterior</td><td>Protracts shoulder; rotates scapula so glenoid cavity moves superiorly (upward rotation)</td><td>Anterior surface of vertebral border of scapula</td><td>Long thoracic nerve (C5-C7)</td></tr>
+          <tr><td class="h">Subclavius</td><td>Depresses and protracts shoulder</td><td>Clavicle (inferior border of middle 1/3)</td><td>Nerve to subclavius (C5-C6)</td></tr>
+          <tr><td class="h">Trapezius</td><td>Depends on active region and state of other muscles; may elevate, retract, depress, or rotate scapula upward and/or clavicle; can also extend neck when position of shoulder is fixed</td><td>Clavicle and scapula (acromion and scapular spine)</td><td>Accessory nerve (N XI)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES THAT MOVE THE ARM</td></tr>
+          <tr><td class="h">Coracobrachialis</td><td>Adduction and flexion at shoulder</td><td>Medial margin of shaft of humerus</td><td>Musculocutaneous nerve (C5-C7)</td></tr>
+          <tr><td class="h">Deltoid</td><td>Whole muscle: abduction of shoulder; anterior part: flexion and medial rotation of humerus; posterior part: extension and lateral rotation of humerus</td><td>Deltoid tuberosity of humerus</td><td>Axillary nerve (C5-C6)</td></tr>
+          <tr><td class="h">Supraspinatus</td><td>Abduction at shoulder</td><td>Greater tubercle of humerus</td><td>Suprascapular nerve (C5)</td></tr>
+          <tr><td class="h">Infraspinatus</td><td>Lateral rotation at shoulder</td><td>Greater tubercle of humerus</td><td>Suprascapular nerve (C5-C6)</td></tr>
+          <tr><td class="h">Subscapularis</td><td>Medial rotation at shoulder</td><td>Lesser tubercle of humerus</td><td>Subscapular nerve (C5-C6)</td></tr>
+          <tr><td class="h">Teres major</td><td>Extension and medial rotation at shoulder</td><td>Medial lip of intertubercular sulcus of humerus</td><td>Lower subscapular nerve (C5-C6)</td></tr>
+          <tr><td class="h">Teres minor</td><td>Lateral rotation and adduction at shoulder</td><td>Greater tubercle of humerus</td><td>Axillary nerve (C5)</td></tr>
+          <tr><td class="h">Triceps brachii (long head)</td><td>Extension at elbow (see Table 11.3 for full triceps entry)</td><td>See Table 11.3</td><td>See Table 11.3</td></tr>
+          <tr><td class="h">Biceps brachii</td><td>Flexion at elbow (see Table 11.3 for full biceps entry)</td><td>See Table 11.3</td><td>See Table 11.3</td></tr>
+          <tr><td class="h">Latissimus dorsi</td><td>Extension, adduction, and medial rotation at shoulder</td><td>Floor of intertubercular sulcus of humerus</td><td>Thoracodorsal nerve (C6-C8)</td></tr>
+          <tr><td class="h">Pectoralis major</td><td>Flexion, adduction, and medial rotation at shoulder</td><td>Crest of greater tubercle and lateral lip of intertubercular sulcus of humerus</td><td>Pectoral nerves (C5-T1)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE ELBOW — FLEXORS</td></tr>
+          <tr><td class="h">Biceps brachii</td><td>Flexion at elbow and shoulder; supination</td><td>Radial tuberosity</td><td>Musculocutaneous nerve (C5-C6)</td></tr>
+          <tr><td class="h">Brachialis</td><td>Flexion at elbow</td><td>Ulnar tuberosity and coronoid process</td><td>Musculocutaneous and radial nerve (C7-C8)</td></tr>
+          <tr><td class="h">Brachioradialis</td><td>Flexion at elbow</td><td>Lateral aspect of styloid process of radius</td><td>Radial nerve (C6-C8)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE ELBOW — EXTENSORS</td></tr>
+          <tr><td class="h">Anconeus</td><td>Extension at elbow</td><td>Lateral margin of olecranon and ulnar shaft</td><td>Radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Triceps brachii — lateral head</td><td>Extension at elbow</td><td>Olecranon of ulna</td><td>Radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Triceps brachii — long head</td><td>Extension at elbow, plus extension and adduction at shoulder</td><td>Olecranon of ulna</td><td>Radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Triceps brachii — medial head</td><td>Extension at elbow</td><td>Olecranon of ulna</td><td>Radial nerve (C6-C8)</td></tr>
+          <tr><td class="grp" colspan="4">PRONATORS / SUPINATORS</td></tr>
+          <tr><td class="h">Pronator quadratus</td><td>Pronates forearm and hand by medial rotation of radius at radioulnar joints</td><td>Anterolateral surface of distal portion of radius</td><td>Median nerve (C8-T1)</td></tr>
+          <tr><td class="h">Pronator teres</td><td>As above, plus flexion at elbow</td><td>Middle of lateral surface of radius</td><td>Median nerve (C6-C7)</td></tr>
+          <tr><td class="h">Supinator</td><td>Supinates forearm and hand by lateral rotation of radius at radioulnar joints</td><td>Anterolateral surface of radius distal to the radial tuberosity</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE WRIST — FLEXORS</td></tr>
+          <tr><td class="h">Flexor carpi radialis</td><td>Flexion and abduction at wrist</td><td>Bases of second and third metacarpal bones</td><td>Median nerve (C6-C7)</td></tr>
+          <tr><td class="h">Flexor carpi ulnaris</td><td>Flexion and adduction at wrist</td><td>Pisiform, hamate, and base of fifth metacarpal bone</td><td>Ulnar nerve (C8-T1)</td></tr>
+          <tr><td class="h">Palmaris longus</td><td>Flexion at wrist</td><td>Palmar aponeurosis and flexor retinaculum</td><td>Median nerve (C6-C7)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE WRIST — EXTENSORS</td></tr>
+          <tr><td class="h">Extensor carpi radialis longus</td><td>Extension and abduction at wrist</td><td>Base of second metacarpal bone</td><td>Radial nerve (C6-C7)</td></tr>
+          <tr><td class="h">Extensor carpi radialis brevis</td><td>As above</td><td>Base of third metacarpal bone</td><td>As above</td></tr>
+          <tr><td class="h">Extensor carpi ulnaris</td><td>Extension and adduction at wrist</td><td>Base of fifth metacarpal bone</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES THAT MOVE THE HAND AND FINGERS</td></tr>
+          <tr><td class="h">Abductor pollicis longus</td><td>Abduction at joints of thumb and wrist</td><td>Lateral margin of first metacarpal bone and trapezium</td><td>Deep radial nerve (C6-C7)</td></tr>
+          <tr><td class="h">Extensor digitorum</td><td>Extension at finger joints and wrist</td><td>Posterior surfaces of the phalanges, digits 2-5</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Extensor pollicis brevis</td><td>Extension at joints of thumb; abduction at wrist</td><td>Base of proximal phalanx of thumb</td><td>Deep radial nerve (C6-C7)</td></tr>
+          <tr><td class="h">Extensor pollicis longus</td><td>As above</td><td>Base of distal phalanx of thumb</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Extensor indicis</td><td>Extension and adduction at joints of index finger</td><td>Posterior surface of proximal phalanx of index finger, with tendon of extensor digitorum</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Extensor digiti minimi</td><td>Extension at joints of little finger; extension at wrist</td><td>Posterior surface of proximal phalanx of little finger</td><td>Deep radial nerve (C6-C8)</td></tr>
+          <tr><td class="h">Flexor digitorum superficialis</td><td>Flexion at proximal interphalangeal, metacarpophalangeal, and wrist joints</td><td>Bases of middle phalanges of digits 2-5</td><td>Median nerve (C7-T1)</td></tr>
+          <tr><td class="h">Flexor digitorum profundus</td><td>Flexion at distal interphalangeal joints, and to a lesser degree proximal interphalangeal joints and wrist</td><td>Bases of distal phalanges of digits 2-5</td><td>Anterior interosseous branch of median nerve and ulnar nerve (C8-T1)</td></tr>
+          <tr><td class="h">Flexor pollicis longus</td><td>Flexion at joints of thumb</td><td>Base of distal phalanx of thumb</td><td>Median nerve (C8-T1)</td></tr>
+          <tr><td class="grp" colspan="4">INTRINSIC MUSCLES OF THE HAND</td></tr>
+          <tr><td class="h">Adductor pollicis</td><td>Adduction of thumb</td><td>Proximal phalanx of thumb</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="h">Opponens pollicis</td><td>Opposition of thumb</td><td>First metacarpal bone</td><td>Median nerve (C6-C7)</td></tr>
+          <tr><td class="h">Palmaris brevis</td><td>Moves skin on medial border toward midline of palm</td><td>Skin of medial border of hand</td><td>Ulnar nerve, superficial branch (C8)</td></tr>
+          <tr><td class="h">Abductor digiti minimi (hand)</td><td>Abduction of little finger and flexion at its metacarpophalangeal joint</td><td>Proximal phalanx of little finger</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="h">Abductor pollicis brevis</td><td>Abduction of thumb</td><td>Radial side of base of proximal phalanx of thumb</td><td>Median nerve (C6-C7)</td></tr>
+          <tr><td class="h">Flexor pollicis brevis</td><td>Flexion and adduction of thumb</td><td>Radial and ulnar sides of proximal phalanx of thumb</td><td>Branches of median and ulnar nerves</td></tr>
+          <tr><td class="h">Flexor digiti minimi brevis (hand)</td><td>Flexion at fifth metacarpophalangeal joint</td><td>Proximal phalanx of little finger</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="h">Opponens digiti minimi</td><td>Flexion at metacarpophalangeal joint; brings digit into opposition with thumb</td><td>Fifth metacarpal bone</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="h">Lumbricals (4, hand)</td><td>Flexion at metacarpophalangeal joints; extension at proximal and distal interphalangeal joints</td><td>Tendons of extensor digitorum to digits 2-5</td><td>No. 1 & 2 by median nerve; no. 3 & 4 by ulnar nerve, deep branch</td></tr>
+          <tr><td class="h">Dorsal interossei (4, hand)</td><td>Abduction at metacarpophalangeal joints of digits 2-4; flexion at metacarpophalangeal joints; extension at interphalangeal joints</td><td>Bases of proximal phalanges of digits 2-4</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="h">Palmar interossei (4, hand)</td><td>Adduction at metacarpophalangeal joints of digits 2, 4, 5; flexion at metacarpophalangeal joints; extension at interphalangeal joints</td><td>Bases of proximal phalanges of digits 2, 4, 5</td><td>Ulnar nerve, deep branch (C8-T1)</td></tr>
+          <tr><td class="grp" colspan="4">GLUTEAL GROUP</td></tr>
+          <tr><td class="h">Gluteus maximus</td><td>Extension and lateral rotation at hip; helps stabilize the extended knee; abduction at hip (superior fibers only)</td><td>Iliotibial tract and gluteal tuberosity of femur</td><td>Inferior gluteal nerve (L5-S2)</td></tr>
+          <tr><td class="h">Gluteus medius</td><td>Abduction and medial rotation at hip</td><td>Greater trochanter of femur</td><td>Superior gluteal nerve (L4-S1)</td></tr>
+          <tr><td class="h">Gluteus minimus</td><td>As above</td><td>Greater trochanter of femur</td><td>As above</td></tr>
+          <tr><td class="h">Tensor fasciae latae</td><td>Abduction and medial rotation at hip; extension and lateral rotation at knee; tenses fasciae latae</td><td>Iliotibial tract</td><td>Superior gluteal nerve (L4-S1)</td></tr>
+          <tr><td class="grp" colspan="4">LATERAL ROTATOR GROUP</td></tr>
+          <tr><td class="h">Obturators (externus and internus)</td><td>Lateral rotation and abduction of hip</td><td>Trochanteric fossa of femur (externus); medial surface of greater trochanter (internus)</td><td>Obturator nerve (externus, L3-L4) and nerve from sacral plexus (internus, L5-S2)</td></tr>
+          <tr><td class="h">Piriformis</td><td>As above</td><td>Greater trochanter of femur</td><td>Branches of sacral nerves (S1-S2)</td></tr>
+          <tr><td class="h">Gemelli (superior and inferior)</td><td>As above</td><td>Medial surface of greater trochanter via tendon of obturator internus</td><td>Nerves to obturator internus and quadratus femoris</td></tr>
+          <tr><td class="h">Quadratus femoris</td><td>Lateral rotation of hip</td><td>Intertrochanteric crest of femur</td><td>Special nerves from sacral plexus (L4-S1)</td></tr>
+          <tr><td class="grp" colspan="4">ADDUCTOR GROUP</td></tr>
+          <tr><td class="h">Adductor brevis</td><td>Adduction and flexion at hip</td><td>Linea aspera of femur</td><td>Obturator nerve (L3-L4)</td></tr>
+          <tr><td class="h">Adductor longus</td><td>Adduction, flexion, and medial rotation at hip</td><td>Linea aspera of femur</td><td>Obturator nerve (L3-L4)</td></tr>
+          <tr><td class="h">Adductor magnus</td><td>Whole muscle produces adduction at hip; anterior part produces flexion and medial rotation; posterior part produces extension</td><td>Linea aspera and adductor tubercle of femur</td><td>Obturator and sciatic nerves</td></tr>
+          <tr><td class="h">Pectineus</td><td>Flexion and adduction at hip</td><td>Pectineal line inferior to lesser trochanter of femur</td><td>Femoral nerve (L2-L4)</td></tr>
+          <tr><td class="h">Gracilis</td><td>Flexion and medial rotation at knee; adduction and medial rotation at hip</td><td>Medial surface of tibia inferior to medial condyle</td><td>Obturator nerve (L3-L4)</td></tr>
+          <tr><td class="grp" colspan="4">ILIOPSOAS GROUP</td></tr>
+          <tr><td class="h">Iliacus</td><td>Flexion at hip and/or lumbar intervertebral joints</td><td>Femur distal to lesser trochanter; tendon fused with that of psoas major</td><td>Femoral nerve (L2-L3)</td></tr>
+          <tr><td class="h">Psoas major</td><td>As above</td><td>Lesser trochanter in company with iliacus</td><td>Branches of the lumbar plexus (L2-L3)</td></tr>
+          <tr><td class="grp" colspan="4">FLEXORS OF THE KNEE</td></tr>
+          <tr><td class="h">Biceps femoris</td><td>Flexion at knee; extension and lateral rotation at hip</td><td>Head of fibula, lateral condyle of tibia</td><td>Sciatic nerve; tibial portion (S1-S3, long head) and common fibular branch (L5-S2, short head)</td></tr>
+          <tr><td class="h">Semimembranosus</td><td>Flexion at knee; extension and medial rotation at hip</td><td>Posterior surface of medial condyle of tibia</td><td>Sciatic nerve, tibial portion (L5-S2)</td></tr>
+          <tr><td class="h">Semitendinosus</td><td>As above</td><td>Proximal, medial surface of tibia near insertion of gracilis</td><td>As above</td></tr>
+          <tr><td class="h">Sartorius</td><td>Flexion at knee; abduction, flexion, and lateral rotation at hip</td><td>Medial surface of tibia near tibial tuberosity</td><td>Femoral nerve (L2-L3)</td></tr>
+          <tr><td class="h">Popliteus</td><td>Medial rotation of tibia (or lateral rotation of femur) at knee; flexion at knee</td><td>Posterior surface of proximal tibial shaft</td><td>Tibial nerve (L4-S1)</td></tr>
+          <tr><td class="grp" colspan="4">EXTENSORS OF THE KNEE (QUADRICEPS)</td></tr>
+          <tr><td class="h">Rectus femoris</td><td>Extension at knee; flexion at hip</td><td>Tibial tuberosity via quadriceps tendon, patella, and patellar ligament</td><td>Femoral nerve (L2-L4)</td></tr>
+          <tr><td class="h">Vastus intermedius</td><td>Extension at knee</td><td>As above</td><td>As above</td></tr>
+          <tr><td class="h">Vastus lateralis</td><td>As above</td><td>As above</td><td>As above</td></tr>
+          <tr><td class="h">Vastus medialis</td><td>As above</td><td>As above</td><td>As above</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE ANKLE — DORSIFLEXORS</td></tr>
+          <tr><td class="h">Tibialis anterior</td><td>Dorsiflexion at ankle; inversion of foot</td><td>Base of first metatarsal bone and medial cuneiform</td><td>Deep fibular nerve (L4-S1)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE ANKLE — PLANTAR FLEXORS</td></tr>
+          <tr><td class="h">Gastrocnemius</td><td>Plantar flexion at ankle; flexion at knee</td><td>Calcaneus via calcaneal (Achilles) tendon</td><td>Tibial nerve (S1-S2)</td></tr>
+          <tr><td class="h">Fibularis brevis</td><td>Eversion of foot and plantar flexion at ankle</td><td>Base of fifth metatarsal bone</td><td>Superficial fibular nerve (L4-S1)</td></tr>
+          <tr><td class="h">Fibularis longus</td><td>Eversion of foot and plantar flexion at ankle; supports longitudinal and transverse arches</td><td>Base of first metatarsal bone and medial cuneiform</td><td>Superficial fibular nerve (L4-S1)</td></tr>
+          <tr><td class="h">Plantaris</td><td>Plantar flexion at ankle; flexion at knee</td><td>Posterior portion of calcaneus</td><td>Tibial nerve (L4-S1)</td></tr>
+          <tr><td class="h">Soleus</td><td>Plantar flexion at ankle; postural muscle when standing</td><td>Calcaneus via calcaneal (Achilles) tendon (with gastrocnemius)</td><td>Sciatic nerve, tibial branch (S1-S2)</td></tr>
+          <tr><td class="h">Tibialis posterior</td><td>Inversion of foot; plantar flexion at ankle</td><td>Navicular, all three cuneiforms, cuboid, second, third, and fourth metatarsal bones</td><td>Tibial nerve</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE TOES — DIGITAL FLEXORS</td></tr>
+          <tr><td class="h">Flexor digitorum longus</td><td>Flexion of joints of toes 2-5; plantar flexes ankle</td><td>Inferior surface of distal phalanges, toes 2-5</td><td>Tibial nerve branch (L5-S1)</td></tr>
+          <tr><td class="h">Flexor hallucis longus</td><td>Flexion at joints of great toe; plantar flexes ankle</td><td>Inferior surface, distal phalanx of great toe</td><td>Tibial nerve branch (L5-S1)</td></tr>
+          <tr><td class="grp" colspan="4">ACTION AT THE TOES — DIGITAL EXTENSORS</td></tr>
+          <tr><td class="h">Extensor digitorum longus</td><td>Extension of toes 2-5; dorsiflexes ankle</td><td>Superior surfaces of phalanges, toes 2-5</td><td>Deep fibular nerve (L5-S1)</td></tr>
+          <tr><td class="h">Extensor hallucis longus</td><td>Extension at joints of great toe; dorsiflexes ankle</td><td>Superior surface, distal phalanx of great toe</td><td>Deep fibular nerve (L5-S1)</td></tr>
+          <tr><td class="grp" colspan="4">INTRINSIC MUSCLES OF THE FOOT</td></tr>
+          <tr><td class="h">Extensor digitorum brevis</td><td>Extension at metatarsophalangeal joints of toes 1-4</td><td>Dorsal surface of toes 1-4</td><td>Deep fibular nerve (S1, S2)</td></tr>
+          <tr><td class="h">Abductor hallucis</td><td>Abduction at metatarsophalangeal joint of great toe</td><td>Medial side of proximal phalanx of great toe</td><td>Medial plantar nerve (S2, S3)</td></tr>
+          <tr><td class="h">Flexor digitorum brevis</td><td>Flexion of proximal interphalangeal joints of toes 2-5</td><td>Sides of middle phalanges, toes 2-5</td><td>Medial plantar nerve (S2, S3)</td></tr>
+          <tr><td class="h">Abductor digiti minimi (foot)</td><td>Abduction and flexion at metatarsophalangeal joint of toe 5</td><td>Lateral side of proximal phalanx, toe 5</td><td>Lateral plantar nerve (S2, S3)</td></tr>
+          <tr><td class="h">Quadratus plantae</td><td>Flexion at joints of toes 2-5</td><td>Tendon of flexor digitorum longus</td><td>Lateral plantar nerve (S2, S3)</td></tr>
+          <tr><td class="h">Lumbricals (4, foot)</td><td>Flexion at metatarsophalangeal joints; extension at interphalangeal joints of toes 2-5</td><td>Insertions of extensor digitorum longus</td><td>Medial plantar nerve (1), lateral plantar nerve (2-4)</td></tr>
+          <tr><td class="h">Flexor hallucis brevis</td><td>Flexion at metatarsophalangeal joint of great toe</td><td>Proximal phalanx of great toe</td><td>Medial plantar nerve (L4-S5)</td></tr>
+          <tr><td class="h">Adductor hallucis</td><td>Adduction and flexion at metatarsophalangeal joint of great toe</td><td>As above (proximal phalanx of great toe)</td><td>Lateral plantar nerve (S1-S2)</td></tr>
+          <tr><td class="h">Flexor digiti minimi brevis (foot)</td><td>Flexion at metatarsophalangeal joint of toe 5</td><td>Lateral side of proximal phalanx of toe 5</td><td>Lateral plantar nerve (as above)</td></tr>
+          <tr><td class="h">Dorsal interossei (4, foot)</td><td>Abduction at metatarsophalangeal joints of toes 3 and 4; flexion of metatarsophalangeal joints and extension at interphalangeal joints of toes 2-4</td><td>Medial and lateral sides of toe 2; lateral sides of toes 3 and 4</td><td>Lateral plantar nerve (as above)</td></tr>
+          <tr><td class="h">Plantar interossei (3, foot)</td><td>Adduction of metatarsophalangeal joints of toes 3-5; flexion of metatarsophalangeal joints and extension at interphalangeal joints</td><td>Medial sides of toes 3-5</td><td>Lateral plantar nerve (as above)</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section class="topic" id="axial-musculature" style="--acc:#b5651d;--acc-bg:#f5e9df;--acc-zebra:#faf4ef;--acc-ink:#8d4f17">
-    <div class="shead"><span class="dot" style="background:#b5651d"></span><h2>Axial Musculature</h2></div>
+    <div class="shead"><span class="dot" style="background:#b5651d"></span><h2>Axial Musculature — Muscle Reference</h2></div>
     <div class="scroll">
       <table>
-        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <thead><tr><th class="term">Muscle</th><th>Action</th><th>Insertion</th><th>Innervation</th></tr></thead>
         <tbody>
-          <tr><td class="h">Muscle coverings & NMJ</td><td>Epimysium (whole muscle) → perimysium (fascicles) → endomysium (individual fiber/sarcolemma). At the neuromuscular junction: motor neuron releases acetylcholine (ACh) across the synaptic cleft → binds nicotinic receptors on the motor end plate → triggers contraction → terminated by acetylcholinesterase. Schwann cells cap/support the junction.</td></tr>
-          <tr><td class="h">Facial expression muscles</td><td>All innervated by CN VII (facial nerve). Mouth: orbicularis oris, zygomaticus major/minor, buccinator, risorius, mentalis, depressor labii inferioris/anguli oris, levator labii superioris. Eyes: orbicularis oculi, corrugator supercilii, levator palpebrae superioris (exception — innervated by CN III; dysfunction → ptosis). Nose: procerus, nasalis. Scalp: occipitofrontalis, temporoparietalis. Neck: platysma.</td></tr>
-          <tr><td class="h">Muscles of mastication</td><td>Masseter, temporalis, medial pterygoid close/elevate the jaw; lateral pterygoid is the lone jaw-opener. All four innervated by the mandibular branch of CN V. Temporalis inserts on the coronoid process; masseter inserts on the mandibular angle.</td></tr>
-          <tr><td class="h">Extra-ocular & tongue/neck</td><td>'LR6 SO4 3': lateral rectus (abduction) = CN VI, superior oblique (rotates eye down and out) = CN IV, remaining 4 (medial/superior/inferior rectus, inferior oblique) = CN III. Tongue muscles = CN XII except palatoglossus (CN X). Sternocleidomastoid (CN XI): bilateral = neck flexion, unilateral = rotates head to opposite side.</td></tr>
-          <tr><td class="h">Swallowing musculature</td><td>Infrahyoid/suprahyoid muscles (omohyoid, sternohyoid, sternothyroid, thyrohyoid, digastric, mylohyoid) position the hyoid and larynx. Pharyngeal constrictors = CN X; laryngeal elevators = CN IX & X; palatal muscles = CN V & X.</td></tr>
-          <tr><td class="h">Back muscles</td><td>Extrinsic (appendicular, attach limb to trunk): superficial layer (trapezius, latissimus dorsi, levator scapulae, rhomboids) + intermediate layer (serratus posterior superior/inferior, for ventilation). Intrinsic (true deep back, act as a functional group): intermediate erector spinae — spinalis, longissimus, iliocostalis (medial→lateral) — extends the column; deep layer (multifidus, rotatores, interspinales, intertransversarii) fine-tunes extension/rotation/lateral flexion. Anteriorly: longus capitis/colli (neck flex/rotate), quadratus lumborum (lateral flexion).</td></tr>
-          <tr><td class="h">Ventilation & abdominal wall</td><td>External intercostals elevate ribs (inhalation) vs. internal intercostals depress them (exhalation); scalenes elevate, transversus thoracis depresses. Diaphragm (phrenic nerves, C3–C5): contracts/flattens/descends → inhalation, relaxes/rises → exhalation. Abdominal wall: external oblique, internal oblique, transversus abdominis compress the abdomen (obliques also depress ribs, laterally flex trunk); rectus abdominis (linea alba, tendinous inscriptions) flexes the column and depresses the ribs.</td></tr>
-          <tr><td class="h">Pelvic floor</td><td>Innervation S2–S4; individual muscles indistinguishable clinically, so dysfunction is worked up by imaging. Urogenital triangle (anterior): superficial transverse perineal, ischiocavernosus, bulbospongiosus, deep transverse perineal, external urethral sphincter. Anal triangle (posterior): levator ani (iliococcygeus + pubococcygeus), coccygeus, obturator internus, external anal sphincter. Levator ani + coccygeus form the pelvic diaphragm.</td></tr>
+          <tr><td class="grp" colspan="4">MOUTH</td></tr>
+          <tr><td class="h">Buccinator</td><td>Compresses cheeks</td><td>Blends into fibers of orbicularis oris</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Depressor labii inferioris</td><td>Depresses and helps evert lower lip</td><td>Skin of lower lip</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Levator labii superioris</td><td>Elevates and everts upper lip</td><td>Orbicularis oris</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Mentalis</td><td>Elevates, everts, and protrudes lower lip</td><td>Skin of chin</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Orbicularis oris</td><td>Compresses, purses lips</td><td>Lips</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Risorius</td><td>Draws corner of mouth laterally</td><td>Angle of mouth</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Levator anguli oris</td><td>Raises corner of mouth</td><td>Skin at angle of mouth</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Depressor anguli oris</td><td>Depresses and draws corner of mouth laterally</td><td>Skin at angle of mouth</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Zygomaticus major</td><td>Elevates corner of mouth and draws it laterally</td><td>Angle of mouth</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Zygomaticus minor</td><td>Elevates upper lip</td><td>Upper lip</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="grp" colspan="4">EYE</td></tr>
+          <tr><td class="h">Corrugator supercilii</td><td>Pulls skin inferiorly and medially; wrinkles brow</td><td>Eyebrow</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Levator palpebrae superioris</td><td>Elevates upper eyelid</td><td>Upper eyelid</td><td>Oculomotor nerve (N III) — unusual innervation for a facial-expression-table muscle since it originates with the extra-ocular muscles</td></tr>
+          <tr><td class="h">Orbicularis oculi</td><td>Closes eye</td><td>Skin around eyelids</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="grp" colspan="4">NOSE</td></tr>
+          <tr><td class="h">Procerus</td><td>Moves nose, changes position/shape of nostrils; draws medial angle of eyebrows inferiorly</td><td>Aponeurosis at bridge of nose and skin of forehead</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Nasalis</td><td>Compresses bridge, depresses tip of nose; elevates corners of nostrils</td><td>Bridge of nose</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="grp" colspan="4">SCALP (EPICRANIUM)</td></tr>
+          <tr><td class="h">Occipitofrontalis — frontal belly</td><td>Raises eyebrows, wrinkles forehead</td><td>Skin of eyebrow and bridge of nose</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Occipitofrontalis — occipital belly</td><td>Tenses and retracts scalp</td><td>Epicranial aponeurosis</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Temporoparietalis</td><td>Tenses scalp, moves auricle of ear</td><td>Epicranial aponeurosis</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="grp" colspan="4">NECK (FACIAL EXPRESSION)</td></tr>
+          <tr><td class="h">Platysma</td><td>Tenses skin of neck, depresses mandible</td><td>Mandible and skin of cheek</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES OF MASTICATION</td></tr>
+          <tr><td class="h">Masseter</td><td>Elevates mandible and closes jaws; assists in protracting/retracting mandible and moving it side to side</td><td>Lateral surface and angle of mandibular ramus</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="h">Temporalis</td><td>Elevates mandible and closes jaws; assists in retracting and moving mandible side to side</td><td>Coronoid process of mandible and anterior border of mandibular ramus</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="h">Medial pterygoid</td><td>Elevates the mandible and closes the jaws, or moves mandible side to side</td><td>Medial surface of mandibular ramus</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="h">Lateral pterygoid</td><td>Opens jaws, protrudes mandible, or moves mandible side to side</td><td>Anterior part of the neck of the mandibular condyle</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="grp" colspan="4">ANTERIOR MUSCLES OF THE NECK</td></tr>
+          <tr><td class="h">Digastric — anterior belly</td><td>Depresses mandible (opens mouth) and/or elevates larynx</td><td>Hyoid bone</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="h">Digastric — posterior belly</td><td>As above</td><td>Hyoid bone</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Geniohyoid</td><td>Depresses mandible / elevates larynx; retracts hyoid bone</td><td>Hyoid bone</td><td>Cervical nerve C1 via hypoglossal nerve (N XII)</td></tr>
+          <tr><td class="h">Mylohyoid</td><td>Elevates floor of mouth, elevates hyoid bone, and/or depresses mandible</td><td>Median connective tissue band (raphe) to hyoid bone</td><td>Trigeminal nerve (N V), mandibular branch</td></tr>
+          <tr><td class="h">Omohyoid</td><td>Depresses hyoid bone and larynx</td><td>Hyoid bone</td><td>Cervical spinal nerves C2-C3</td></tr>
+          <tr><td class="h">Sternohyoid</td><td>As above</td><td>Hyoid bone</td><td>Cervical spinal nerves C1-C3</td></tr>
+          <tr><td class="h">Sternothyroid</td><td>As above</td><td>Thyroid cartilage of larynx</td><td>Cervical spinal nerves C1-C3</td></tr>
+          <tr><td class="h">Stylohyoid</td><td>Elevates larynx</td><td>Hyoid bone</td><td>Facial nerve (N VII)</td></tr>
+          <tr><td class="h">Thyrohyoid</td><td>Elevates larynx, depresses hyoid bone</td><td>Hyoid bone</td><td>Cervical spinal nerves C1-C2 via hypoglossal nerve (N XII)</td></tr>
+          <tr><td class="h">Sternocleidomastoid</td><td>Together: flex the neck; alone: bends neck toward shoulder on that side and turns face to the opposite side</td><td>Mastoid region of skull and lateral portion of superior nuchal line</td><td>Accessory nerve (N XI) and cervical spinal nerves (C2-C3)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES OF THE PERINEUM — UROGENITAL TRIANGLE, SUPERFICIAL</td></tr>
+          <tr><td class="h">Bulbospongiosus (male)</td><td>Compresses base, stiffens penis, ejects urine or semen</td><td>Corpus spongiosum, perineal membrane, and corpus cavernosum</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="h">Bulbospongiosus (female)</td><td>Compresses and stiffens clitoris, narrows vaginal opening</td><td>Bulb of vestibule, perineal membrane, body of clitoris, corpus cavernosum</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="h">Ischiocavernosus</td><td>Compresses and stiffens penis or clitoris, helping maintain erection</td><td>Corpus cavernosum of penis or clitoris (also ischiopubic ramus in females)</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="h">Superficial transverse perineal</td><td>Stabilizes central tendon of perineum</td><td>Central tendon of perineum</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES OF THE PERINEUM — UROGENITAL TRIANGLE, DEEP</td></tr>
+          <tr><td class="h">Deep transverse perineal</td><td>As above (stabilizes central tendon)</td><td>Median raphe of urogenital diaphragm</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="h">External urethral sphincter (male)</td><td>Closes urethra; compresses prostate and bulbo-urethral glands</td><td>Median raphe at base of penis; inner fibers encircle urethra</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="h">External urethral sphincter (female)</td><td>Closes urethra; compresses vagina and greater vestibular glands</td><td>Median raphe; inner fibers encircle urethra</td><td>Pudendal nerve, perineal branch (S2-S4)</td></tr>
+          <tr><td class="grp" colspan="4">MUSCLES OF THE PELVIC DIAPHRAGM — ANAL TRIANGLE</td></tr>
+          <tr><td class="h">Coccygeus</td><td>Flexes coccygeal joints; elevates and supports pelvic floor</td><td>Lateral, inferior borders of the sacrum and coccyx</td><td>Inferior sacral nerves (S4-S5)</td></tr>
+          <tr><td class="h">Levator ani — iliococcygeus</td><td>Tenses floor of pelvis, supports pelvic organs, flexes coccygeal joints, elevates and retracts anus</td><td>Coccyx and median raphe</td><td>Pudendal nerve (S2-S4)</td></tr>
+          <tr><td class="h">Levator ani — pubococcygeus</td><td>As above</td><td>Coccyx and median raphe</td><td>Pudendal nerve (S2-S4)</td></tr>
+          <tr><td class="h">External anal sphincter</td><td>Closes anal opening</td><td>Encircles anal opening</td><td>Pudendal nerve; hemorrhoidal branch (S2-S4)</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <footer>
-    Condensed from the Anatomy Exam 4 Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    Condensed from the Anatomy Exam 4 Guide (Class of 2028). Musculature tables transcribed verbatim from the source lecture deck's own Action/Insertion/Innervation tables. For the full explanation and figures behind any of these, see the full guide.
     <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
     <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
   </footer>
