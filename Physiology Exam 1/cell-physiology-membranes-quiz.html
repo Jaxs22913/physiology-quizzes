@@ -191,8 +191,12 @@
       Shuffle question order
     </label>
     <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
-      <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
-      Exam Mode (no feedback until you submit, flag &amp; jump between questions)
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
     </label>
     <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
@@ -245,7 +249,7 @@
 const QUESTIONS = [{"topic": "Physiology & Homeostasis", "io": "Physiology & Homeostasis", "q": "What is the fundamental principle Claude Bernard articulated with the concept of the \"milieu interieur\"?", "opts": [["Disease is the study of disordered body function", ""], ["Cells reproduce via mitosis", ""], ["Genes control all cellular behavior", ""], ["The function of the whole body is much more than the sum of its parts", "Homeostasis is the maintenance of a stable \"milieu interieur,\" and Bernard's fundamental principle is that the function of the whole body is much more than the sum of its parts."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 7"}, {"topic": "Physiology & Homeostasis", "io": "Physiology & Homeostasis", "q": "What is pathophysiology?", "opts": [["The study of disordered body function (disease), the basis for clinical medicine", "Pathophysiology is the study of disordered body function (i.e., disease), and it forms the basis for clinical medicine."], ["The study of feedback control only", ""], ["The study of genetics", ""], ["The study of normal cell organelles", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 4"}, {"topic": "Levels of Organization", "io": "Levels of Organization", "q": "Approximately how many cells make up the human body?", "opts": [["~35 to 40 trillion", "Cells are the basic structural and functional unit of the body, numbering approximately 35 to 40 trillion."], ["~1 million", ""], ["~100 trillion", ""], ["~35 to 40 billion", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 5"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "The baroreceptor reflex response to hemorrhage (increased sympathetic activity, increased heart rate, vasoconstriction to restore arterial pressure) is an example of what kind of control?", "opts": [["Negative feedback, promoting stability", "The baroreceptor reflex's response to hemorrhage/decreased arterial pressure is negative feedback, which promotes stability by counteracting the change."], ["Feed-forward control", ""], ["Positive feedback", ""], ["No feedback at all", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 11"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "Cardiopulmonary reflexes that anticipate an upcoming change in blood pressure (rather than responding after the fact) are examples of what kind of control?", "opts": [["Positive feedback", ""], ["Feed-forward control", "Feed-forward control anticipates change, as with cardiopulmonary reflexes, in contrast to feedback control which responds after a change has occurred."], ["Negative feedback", ""], ["Genomic control", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 13"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "Hemorrhagic shock and the depolarization phase of the action potential are both classic physiological examples of what type of feedback?", "opts": [["No feedback", ""], ["Feed-forward control", ""], ["Negative feedback", ""], ["Positive feedback", "Both hemorrhagic shock (a dangerous, self-amplifying cycle) and the action potential's rapid depolarization are examples of positive feedback, where the response amplifies the initial change."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 16"}, {"topic": "Physiological Variability", "io": "Physiological Variability", "q": "Which of the following is most precisely, tightly controlled in the body?", "opts": [["Plasma [H+] concentration", "Some variables, like plasma [H+] concentration (~3-5 x 10^-8 moles/L), are precisely controlled, while others like blood pressure, blood flow, and metabolic rate vary more with sex, age, body size, and circadian rhythms."], ["Blood flow", ""], ["Blood pressure", ""], ["Metabolic rate", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 17"}, {"topic": "Cell Composition", "io": "Cell Composition", "q": "What percentage of cell mass is typically composed of water?", "opts": [["2-95%", ""], ["1-6%", ""], ["70-85%", "Water makes up 70-85% of cell mass, with proteins at 10-20%, lipids at 2-95% (highly variable by cell type), and carbohydrates at 1-6%."], ["10-20%", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 19"}, {"topic": "Endoplasmic Reticulum", "io": "Endoplasmic Reticulum", "q": "What distinguishes rough (granular) ER from smooth ER?", "opts": [["Rough ER is found only in the nucleus", ""], ["They are functionally identical", ""], ["Rough ER has ribosomes on its outer surface and processes newly synthesized proteins; smooth ER is the site of lipid synthesis", "Rough (granular) ER has ribosomes covering its outer surface and extrudes/processes newly synthesized proteins into its matrix, while smooth ER is the site of lipid synthesis (phospholipids, cholesterol)."], ["Rough ER is the site of lipid synthesis; smooth ER has ribosomes", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 23"}, {"topic": "Golgi Apparatus", "io": "Golgi Apparatus", "q": "What happens to substances after they arrive at the Golgi apparatus from the smooth ER?", "opts": [["They are used to form new DNA", ""], ["They are processed (phosphorylated, glycosylated), then concentrated, sorted, and packaged for secretion", "The Golgi apparatus receives transport vesicles from the smooth ER and processes substances (phosphorylation, glycosylation) before concentrating, sorting, and packaging them for secretion."], ["They are degraded by lysosomal enzymes", ""], ["They are immediately released into the nucleus", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 26"}, {"topic": "Secretion", "io": "Secretion", "q": "What is the difference between constitutive and stimulated secretion?", "opts": [["Only stimulated secretion involves the Golgi apparatus", ""], ["They are the same process", ""], ["Constitutive secretion requires a trigger; stimulated secretion happens randomly", ""], ["Constitutive secretion happens randomly; stimulated secretion requires a trigger", "Constitutive secretion happens randomly (continuously), while stimulated secretion requires a specific trigger before secretory vesicles release their contents."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 28"}, {"topic": "Lysosomes", "io": "Lysosomes", "q": "What do lysosomes contain, and what is their primary function?", "opts": [["DNA polymerase, for replication", ""], ["Hydrolytic enzymes (acid hydrolases) such as phosphatases, nucleases, proteases, and lysozymes, for digesting material", "Lysosomes are vesicular organelles formed from budding Golgi that contain hydrolytic acid hydrolases (phosphatases, nucleases, proteases, lipid-degrading enzymes, lysozymes) and fuse with endocytotic vesicles to digest their contents."], ["Oxidases, for detoxifying alcohol", ""], ["Ribosomes, for protein synthesis", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 30"}, {"topic": "Peroxisomes", "io": "Peroxisomes", "q": "How do peroxisomes differ from lysosomes?", "opts": [["Peroxisomes only exist in muscle cells", ""], ["Peroxisomes are formed by self-replication and contain oxidases (rather than acid hydrolases) to oxidize potentially poisonous substances like alcohol", "Peroxisomes are physically similar to lysosomes but differ in two ways: they are formed by self-replication and contain oxidases rather than acid hydrolases, functioning to oxidize substances like alcohol that might otherwise be poisonous."], ["Peroxisomes are larger and contain DNA", ""], ["Peroxisomes have no membrane", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 31"}, {"topic": "Autophagy", "io": "Autophagy", "q": "What is the function of autophagy?", "opts": [["Replicating DNA before mitosis", ""], ["A housekeeping process for degrading and recycling obsolete organelles and large protein aggregates, important for tissue development and cell survival when nutrients are scarce", "Autophagy is a housekeeping process that degrades and recycles obsolete organelles and large protein aggregates, important for tissue development and cell survival during nutrient scarcity."], ["Synthesizing new proteins", ""], ["Transporting ions across the membrane", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 32"}, {"topic": "Mitochondria", "io": "Mitochondria", "q": "What is the primary function of mitochondria?", "opts": [["Extraction of energy from nutrients", "The primary function of mitochondria is the extraction of energy from nutrients (ATP production)."], ["DNA storage", ""], ["Lipid synthesis", ""], ["Protein synthesis", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 33"}, {"topic": "Cytoskeleton", "io": "Cytoskeleton", "q": "Which cytoskeletal element is composed of heterodimers of alpha and beta tubulin, making up spindle fibers and the core of the axoneme structure?", "opts": [["Microtubules", "Microtubules are heterodimers of alpha and beta tubulin, forming spindle fibers and the core axoneme structure of cilia/flagella; intermediate filaments are cell-specific fibrillar monomers, thin filaments are F-actin, and thick filaments are myosin."], ["Thick filaments (myosin)", ""], ["Intermediate filaments", ""], ["Thin filaments (F-actin)", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 35"}, {"topic": "The Nucleus", "io": "The Nucleus", "q": "What is the approximate functional diameter of a nuclear pore, and what is its approximate molecular weight permeability limit?", "opts": [["100 nm diameter, unlimited MW", ""], ["~1 nm diameter, no permeability", ""], ["~9 nm functional diameter, permeable to molecules up to ~44,000 MW", "Nuclear pores are 100 nm in diameter structurally, but their functional diameter is about 9 nm, selectively permeable to molecules up to about 44,000 MW."], ["9 nm diameter, permeable to all proteins", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 37"}, {"topic": "Chromatin & Nucleolus", "io": "Chromatin & Nucleolus", "q": "What is the function of the nucleolus?", "opts": [["It is the site of ATP production", ""], ["It stores condensed DNA (chromatin)", ""], ["It regulates ion channels", ""], ["It contains RNA and proteins and functions to form the granular subunits of ribosomes", "The nucleolus (one or more per nucleus, not membrane-delimited) contains RNA and proteins and functions to form the granular subunits of ribosomes; chromatin (condensed DNA) is found separately in the nucleoplasm."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 38"}, {"topic": "Receptor-Mediated Endocytosis", "io": "Receptor-Mediated Endocytosis", "q": "Where do molecules concentrate before receptor-mediated endocytosis proceeds?", "opts": [["Clathrin-coated pits on the cell surface", "In receptor-mediated endocytosis, molecules attach to cell-surface receptors concentrated in clathrin-coated pits; receptor binding induces invagination, and the process is ATP-dependent, involving actin and myosin."], ["Golgi apparatus", ""], ["Peroxisomes", ""], ["The nucleolus", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 39"}, {"topic": "ATP Production", "io": "ATP Production", "q": "According to the three-step overview of ATP production, what is the maximum number of ATP molecules formed per molecule of glucose degraded?", "opts": [["100", ""], ["2", ""], ["10", ""], ["38", "A maximum of 38 molecules of ATP are formed per molecule of glucose degraded, following the conversion to glucose/amino acids/fatty acids, processing into Acetyl-CoA, and reaction with O2."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 41"}, {"topic": "Ameboid Locomotion", "io": "Ameboid Locomotion", "q": "What drives forward movement during ameboid locomotion?", "opts": [["Passive diffusion only", ""], ["Continual endocytosis at the tail and exocytosis at the leading edge, with forward movement from ATP-dependent interaction of actin and myosin", "Ameboid locomotion involves continual endocytosis at the \"tail\" and exocytosis at the leading edge (pseudopodium), with forward movement resulting from ATP-dependent interaction of actin and myosin."], ["Osmotic pressure alone", ""], ["DNA replication", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 43"}, {"topic": "Cilia", "io": "Cilia", "q": "What is the key functional difference between motile cilia and non-motile (primary) cilia?", "opts": [["Motile cilia require no ATP", ""], ["Motile cilia produce whiplike movements (e.g., respiratory airways, fallopian tubes); non-motile cilia occur singly per cell and serve as sensory antennae", "Motile cilia produce whiplike movements mainly on surfaces like the respiratory airways and fallopian tubes (requiring ATP and Ca2+), while non-motile (primary) cilia generally occur as a single cilium per cell and serve as sensory antennae."], ["Non-motile cilia are found only in muscle", ""], ["There is no functional difference", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 45"}, {"topic": "Genetic Control", "io": "Genetic Control", "q": "What are the three types of RNA involved in protein synthesis discussed in this lecture, and what is the role of mRNA specifically?", "opts": [["mRNA, tRNA, rRNA — mRNA is complementary to the DNA coding strand and organized into codons that each code for one amino acid", "Messenger RNA (mRNA) is complementary in sequence to the DNA coding strand and organized in codons (triplet bases), with each codon coding for one amino acid (except AUG, the start codon specific for methionine)."], ["mRNA directly forms proteins without translation", ""], ["mRNA is identical to the DNA coding strand", ""], ["Only tRNA is involved", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 89"}, {"topic": "Transfer RNA", "io": "Transfer RNA", "q": "How does tRNA recognize which amino acid to deliver during translation?", "opts": [["By binding directly to DNA", ""], ["By random chance", ""], ["Each tRNA combines with one amino acid and recognizes a specific mRNA codon via a complementary anticodon", "Each transfer RNA (tRNA) acts as a carrier molecule, combining with one specific amino acid and recognizing a specific codon via a complementary anticodon on the tRNA molecule."], ["tRNA does not interact with mRNA", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 91"}, {"topic": "Genomics & Proteomics", "io": "Genomics & Proteomics", "q": "Approximately how genetically identical are humans at the genome level, according to this lecture?", "opts": [["100% identical with no variation", ""], ["99.8% identical at the genome level, 99.999% identical in coding regions", "Humans are approximately 99.8% identical at the genome level and 99.999% identical in the coding regions, despite having an estimated 25,000-30,000 genes."], ["50% identical", ""], ["75% identical", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 95"}, {"topic": "Cell Cycle", "io": "Cell Cycle", "q": "What are the three phases of interphase (which makes up more than 95% of the cell life cycle)?", "opts": [["Prophase, metaphase, anaphase", ""], ["Mitosis, cytokinesis, apoptosis", ""], ["Transcription, translation, replication", ""], ["G1 phase, S phase (DNA synthesis), and G2 phase", "Interphase (>95% of the cell cycle) consists of the G1 phase, S phase (DNA synthesis), and G2 phase, distinct from the M phase (mitosis and cytokinesis)."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 97"}, {"topic": "DNA Replication", "io": "DNA Replication", "q": "What forms on the lagging strand during DNA replication (S phase)?", "opts": [["Clathrin-coated pits", ""], ["Ribosomal subunits", ""], ["Okazaki fragments", "During S phase, DNA replication involves formation of Okazaki fragments on the lagging strand, with \"new\" DNA proofread by DNA polymerase and gaps filled by DNA ligase."], ["Only continuous new DNA with no fragments", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 99"}, {"topic": "DNA Repair & Mutations", "io": "DNA Repair & Mutations", "q": "What is the role of DNA ligase in DNA repair?", "opts": [["It unwinds the DNA double helix", ""], ["It replaces mismatches (cut out by DNA polymerase during proofreading) with complementary nucleotides", "After DNA polymerase \"proofreads\" new DNA and cuts out mismatches, DNA ligase replaces the mismatches with complementary nucleotides; a mistake during transcription resulting in an abnormal protein is called a mutation."], ["It forms ribosomes", ""], ["It transcribes mRNA", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 101"}, {"topic": "Cell Differentiation", "io": "Cell Differentiation", "q": "What is the basis for cell differentiation, according to this lecture?", "opts": [["Loss of genes as cells proliferate", ""], ["Selective repression/expression of specific genes (not loss of genes), often via one part of the body inducing effects on another", "Cell differentiation results not from the loss of genes but from the selective repression/expression of specific genes, with development occurring in large part through \"inductions\" — one part of the body affecting another."], ["Increased mitochondrial number", ""], ["Random mutation only", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 106"}, {"topic": "Control of Cell Growth", "io": "Control of Cell Growth", "q": "Which tissues are described as having rapid rates of cell growth/turnover?", "opts": [["Cardiac muscle only", ""], ["Neurons and striated muscle", ""], ["Bone marrow, skin, and intestinal epithelia", "Bone marrow, skin, and intestinal epithelia show rapid cell growth, while smooth muscle, neurons, and striated muscle grow slowly or never; growth factors, contact inhibition, and negative-feedback cellular secretions determine growth rate."], ["None — all tissues grow at the same rate", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 105"}];
 const LTR = ["A","B","C","D"];
 let order=[], idx=0, score=0, answers=[];
-let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -282,7 +286,7 @@ function fmtTime(ms){
 }
 function updateTimerDisplay(){
   const el=document.getElementById('timerpill'); if(!el) return;
-  if(examMode && hardCutoff){
+  if(deferFeedback && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
     el.textContent = fmtTime(remain);
     el.classList.toggle('danger', remain <= cutoffMs*0.2);
@@ -299,14 +303,14 @@ function pauseQuiz(){
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
 function applyExamModeUI(){
-  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
-  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
   document.getElementById('timerpill').classList.add('examctl-timer');
-  if (examMode) window.startExamModeTour();
+  if (flagNav) window.startExamModeTour();
 }
 
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
@@ -318,8 +322,9 @@ function startExam(){
   document.getElementById('resultsfoot').style.display='none';
   order = QUESTIONS.map((_,i)=>i);
   if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
   cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
   idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
   flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
@@ -337,7 +342,7 @@ function resumeQuiz(){
   order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
   idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
-  examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
   flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
@@ -367,10 +372,12 @@ function renderQ(){
   document.getElementById('qtext').textContent = q.q;
   document.getElementById('prevbtn').disabled = (idx===0);
 
-  if(examMode){
+  if(flagNav){
     document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
     document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
     document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
     const wrap=document.getElementById('opts'); wrap.innerHTML='';
     q.opts.forEach((o,i)=>{
       const b=document.createElement('button');
@@ -408,7 +415,7 @@ function renderQ(){
 
 function choose(sel){
   const q = QUESTIONS[order[idx]];
-  if(examMode){
+  if(deferFeedback){
     answers[idx]=sel;
     saveProgress();
     renderQ();
@@ -487,13 +494,8 @@ function submitExam(auto){
 }
 
 function nextQ(){
-  if(examMode){
-    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else submitExam();
-    return;
-  }
   if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
-  else showResults();
+  else submitExam();
 }
 function examReviewHTML(){
   let out = '';
@@ -514,7 +516,7 @@ function examReviewHTML(){
 function showResults(){
   stopTimerInterval();
   const finalMs=currentElapsedMs();
-  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
   clearProgress();
   markCompleted(score, QUESTIONS.length, finalMs);
   document.getElementById('quiz').style.display='none';
@@ -549,7 +551,7 @@ function showResults(){
     }
   });
   const missCount=QUESTIONS.length-score;
-  const missBlock = examMode ? examReviewHTML() : missCount===0
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
     ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
     : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
   const r=document.getElementById('results');
@@ -580,9 +582,9 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('quiz').style.display==='none') return;
   const k=e.key;
   if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
-  if(examMode){
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
     if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
-    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
     const i=map[k.toLowerCase()];
     if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
