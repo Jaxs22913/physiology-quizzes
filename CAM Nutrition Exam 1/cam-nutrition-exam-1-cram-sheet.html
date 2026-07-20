@@ -57,6 +57,8 @@
   tbody tr:last-child td{border-bottom:0}
   td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
   tbody tr:nth-child(even){background:var(--acc-zebra)}
+  td.grp{background:var(--acc-bg);font:700 11.5px/1.3 ui-sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--acc-ink,var(--ink))}
+  tbody tr:has(td.grp){background:none}
 
   footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 
@@ -118,12 +120,14 @@
   <header class="hero">
     <div class="kicker">CAM/Nutrition Exam 1 · Class of 2028</div>
     <h1>CAM/Nutrition Exam 1 Cram Sheet</h1>
-    <p class="sub">Human Nutrition, Macronutrients/Micronutrients/Water, Special Topics in Nutrition, and Weight Control, condensed to the highest-yield facts.</p>
+    <p class="sub">Human Nutrition, Macronutrients/Micronutrients/Water, Special Topics in Nutrition, Weight Control, Pregnancy &amp; Breastfeeding, and Food Allergies &amp; Intolerances, condensed to the highest-yield facts.</p>
     <div class="toc">
       <a href="#human-nutrition" style="color:#2f5637"><span class="dot" style="background:#3c6e47"></span>Human Nutrition</a>
       <a href="#macro-micro" style="color:#22565e"><span class="dot" style="background:#2c6e78"></span>Macronutrients, Micronutrients, and Trace Minerals in Human Health</a>
       <a href="#special-topics" style="color:#975725"><span class="dot" style="background:#c1702f"></span>Special Topics in Nutrition</a>
       <a href="#weight-control" style="color:#6c2e43"><span class="dot" style="background:#8a3b56"></span>Weight Control</a>
+      <a href="#pregnancy-breastfeeding" style="color:#5f3a7a"><span class="dot" style="background:#7a4a9c"></span>Pregnancy & Breastfeeding</a>
+      <a href="#allergies-intolerances" style="color:#7d4023"><span class="dot" style="background:#a0522d"></span>Food Allergies & Intolerances</a>
     </div>
     <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
       replacement for the full study guide — it assumes you've already learned the material and just need
@@ -199,6 +203,44 @@
           <tr><td class="h">Weight-loss medications</td><td>Orlistat inhibits intestinal lipase (~30% less fat digestion). Phentermine = appetite suppressant. Liraglutide slows gastric emptying/↑satiety. Semaglutide = GLP-1 agonist. Medication candidacy: BMI ≥30, or ≥27 with an obesity-related comorbidity.</td></tr>
           <tr><td class="h">Bariatric surgery options</td><td>Candidacy: BMI ≥40, or ≥35 with a comorbidity. Gastric bypass = greatest weight loss but highest deficiency risk (reroutes intestine). Sleeve gastrectomy removes 80–85% of the stomach, irreversible. Adjustable banding = lowest deficiency risk and reversible, but least weight loss. Ileal transposition = best glycemic control.</td></tr>
           <tr><td class="h">Underweight & food insecurity</td><td>Underweight = BMI <18.5. Very-low-calorie diet (400–800 kcal/day, medically supervised) is for BMI ≥40 patients who've failed other approaches. 44.2 million people lived in food-insecure US households in 2022; resources include WIC, Summer EBT, and school meal programs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="pregnancy-breastfeeding" style="--acc:#7a4a9c;--acc-bg:#ece6f1;--acc-zebra:#f6f2f8;--acc-ink:#5f3a7a">
+    <div class="shead"><span class="dot" style="background:#7a4a9c"></span><h2>Pregnancy & Breastfeeding</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Folic acid dosing</td><td>Preconception: 0.4 mg/day (no NTD history) or 4 mg/day (prior affected pregnancy). During pregnancy: 0.6 mg/day.</td></tr>
+          <tr><td class="h">Organogenesis</td><td>Weeks 3-8 of embryonic development — most critical window; maternal hyperglycemia here raises congenital malformation risk.</td></tr>
+          <tr><td class="h">Macronutrients</td><td>Protein 1.1 g/kg/day (~71 g, ~20% kcal). Fat 20-35% kcal (<10% saturated). Carbs min 175 g/day (~50% kcal), fiber 28 g/day.</td></tr>
+          <tr><td class="h">Key micronutrients</td><td>Iron 27 mg/day. Omega-3 200-300 mg/day. Calcium 1,000 mg/day. Vitamin D 600 IU. Iodine 220 mcg. Choline 450 mg. Vitamin A 770 mcg (excess is teratogenic).</td></tr>
+          <tr><td class="h">Caloric needs by trimester</td><td>1st: no increase. 2nd: +340 kcal/day. 3rd: +450 kcal/day. Total weight gain 25-35 lb (1-5 lb 1st tri, ~1 lb/week after).</td></tr>
+          <tr><td class="h">Food safety</td><td>Avoid high-mercury fish (shark, swordfish, king mackerel, marlin, tilefish, bigeye tuna); 2-3 servings/week low-mercury fish instead. Caffeine <200 mg/day. Avoid unpasteurized dairy/juice, raw sprouts, undercooked meat.</td></tr>
+          <tr><td class="h">Physiology of lactation</td><td>Prolactin → milk production. Oxytocin → let-down (ejection) reflex. Breastmilk stages: colostrum → transitional → mature; foremilk (watery, first) vs. hindmilk (creamy, later). IgA ~90% of mature milk's immunoglobulins.</td></tr>
+          <tr><td class="h">Breastfeeding nutrition</td><td>+500 kcal/day, 70 g/day protein, 1,000 mg calcium, 500 mcg folic acid, 120 mg vitamin C, ~3-4 L water. AAP/WHO: exclusive breastfeeding to 6 months. Cow's milk not before 12 months.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="allergies-intolerances" style="--acc:#a0522d;--acc-bg:#f2e7e2;--acc-zebra:#f8f3f0;--acc-ink:#7d4023">
+    <div class="shead"><span class="dot" style="background:#a0522d"></span><h2>Food Allergies & Intolerances</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Allergy vs. intolerance</td><td>Food allergy = adverse reaction involving an immune response. Food intolerance = adverse reaction with no immune involvement (e.g. lactase deficiency).</td></tr>
+          <tr><td class="h">IgE vs. non-IgE reactions</td><td>IgE-mediated (early onset): soon after ingestion, often violent, can be anaphylaxis. Non-IgE-mediated (late onset): later, subtler (diarrhea, eczema, colitis).</td></tr>
+          <tr><td class="h">Diagnosis steps</td><td>History → physical exam → elimination diet (1-2 wk) → food challenge (only if anaphylaxis isn't a risk) → blood test → skin test.</td></tr>
+          <tr><td class="h">GI conditions & meds</td><td>GERD/heartburn — avoid acidic/spicy/carbonated, small low-fat meals. Ulcers — H. pylori/NSAIDs; PPIs (omeprazole) inhibit H+ secretion, H2 blockers (famotidine) block histamine's acid-stimulating effect. IBS — low-FODMAP diet.</td></tr>
+          <tr><td class="h">Celiac disease</td><td>Immune-mediated reaction to gluten (wheat/rye/barley) in genetically predisposed people; flattens villi, impairs absorption; ~1% of US population. Treatment: eliminate gluten.</td></tr>
+          <tr><td class="h">Nonceliac gluten sensitivity</td><td>Gluten-triggered symptoms (GI distress, fatigue, headache, joint pain) without villi damage — same elimination treatment as celiac despite the different mechanism.</td></tr>
+          <tr><td class="h">Epidemiology & prevention</td><td>Childhood food allergies rose 50% (1997-2011). Hygiene hypothesis: under-exposure to antigens may sensitize the immune system to food proteins instead. 2019 AAP: early peanut introduction (4-6 mo) reduces peanut allergy risk.</td></tr>
+          <tr><td class="h">Allergen labeling & outcomes</td><td>2006 law mandates labeling of 8 major allergens: milk, egg, fish, shellfish, peanut, tree nut, wheat, soy. ~80% of young children outgrow food allergies by age 3.</td></tr>
         </tbody>
       </table>
     </div>

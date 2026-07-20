@@ -992,6 +992,82 @@ var DEMO_DECKS = [
       ["Bariatric surgery BMI criteria", "≥40, or ≥35 with comorbidity"],
       ["Underweight BMI", "<18.5"]
     ]},
+  { id: "cam-pregnancy-breastfeeding", name: "Pregnancy & Breastfeeding", color: "accent",
+    icon: "<path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/>",
+    cards: [
+      ["What preconception folic acid dose is recommended with no history of a neural tube defect?", "0.4 mg/day."],
+      ["What preconception folic acid dose is recommended with a history of a previous pregnancy affected by a neural tube defect?", "4 mg/day."],
+      ["During what weeks of embryonic development does organogenesis occur?", "Weeks 3-8."],
+      ["Why is maternal hyperglycemia during weeks 3-8 especially concerning?", "It's the period of organogenesis, and excess glucose crossing the placenta can disrupt normal embryonic development."],
+      ["What is the protein RDA during pregnancy?", "1.1 g/kg/day, about 71 g/day."],
+      ["What percentage of daily calories should fat comprise during pregnancy?", "20-35%."],
+      ["What is the minimum daily carbohydrate requirement during pregnancy?", "175 g/day."],
+      ["What is the iron RDA during pregnancy?", "27 mg/day."],
+      ["What is the omega-3 fatty acid RDA during pregnancy?", "200-300 mg/day."],
+      ["What is the calcium RDA during pregnancy?", "1,000 mg/day."],
+      ["How many additional kcal/day are recommended in the second trimester?", "+340 kcal/day."],
+      ["How many additional kcal/day are recommended in the third trimester?", "+450 kcal/day."],
+      ["What is the typical total recommended weight gain during pregnancy?", "25-35 pounds."],
+      ["Which hormone promotes breastmilk production?", "Prolactin."],
+      ["Which hormone promotes the breastfeeding let-down reflex?", "Oxytocin."],
+      ["What is the first type of breastmilk produced after birth?", "Colostrum."],
+      ["Which immunoglobulin makes up about 90% of mature breastmilk's antibodies?", "IgA."],
+      ["How many additional kcal/day are recommended while breastfeeding?", "+500 kcal/day."],
+      ["Before what age should cow's milk not be used in infant feeding?", "12 months."],
+      ["What is ACOG's recommended daily caffeine limit during pregnancy?", "Less than 200 mg/day."]
+    ],
+    matchCards: [
+      ["Prolactin", "Stimulates milk production"],
+      ["Oxytocin", "Triggers the let-down reflex"],
+      ["Colostrum", "First, antibody-rich premilk"],
+      ["Foremilk", "Watery milk released first"],
+      ["Hindmilk", "Creamier milk released later in a feed"],
+      ["Pica", "Craving non-food substances"],
+      ["Small for gestational age (SGA)", "Fetal weight <10th percentile"],
+      ["Macrosomic (LGA)", "Fetal weight >90th percentile"],
+      ["Low birth weight", "<2,500 grams"],
+      ["Organogenesis", "Weeks 3-8, major organs form"],
+      ["WIC", "Nutrition assistance for low-income women, infants & children"],
+      ["Interpregnancy interval", "Recommended 18 months between pregnancies"],
+      ["Android obesity risk in pregnancy", "Gestational diabetes, hypertensive disorders"]
+    ]},
+  { id: "cam-food-allergies-intolerances", name: "Food Allergies & Intolerances", color: "accent2",
+    icon: "<path d=\"M12 2L2 7l10 5 10-5-10-5z\"/><path d=\"M2 17l10 5 10-5\"/><path d=\"M2 12l10 5 10-5\"/>",
+    cards: [
+      ["How does the lecture define a food allergy?", "An adverse reaction to food that involves an immune response."],
+      ["How does the lecture define a food intolerance?", "An adverse reaction to food that does not involve an immune response."],
+      ["When do IgE-mediated (early onset) food allergy reactions typically present?", "Soon after ingestion, and often more violently."],
+      ["When do non-IgE-mediated (late onset) food allergy reactions typically present?", "Later, with more subtle symptoms."],
+      ["What is typically the first step in diagnosing a food allergy?", "An elimination diet, starting with low-allergy foods."],
+      ["Under what condition is a food challenge (reintroducing a suspected allergen) performed?", "Only if anaphylaxis is not a possible consequence."],
+      ["What is the mechanism of proton pump inhibitors (PPIs) like omeprazole?", "Inhibit gastric cells' ability to secrete hydrogen ions, reducing acid production."],
+      ["What is the mechanism of H2 blockers like famotidine?", "Impede histamine's stimulating effect on acid-producing stomach cells."],
+      ["What dietary pattern is recommended for managing irritable bowel syndrome (IBS)?", "A low-FODMAP dietary pattern."],
+      ["What happens to intestinal villi in untreated celiac disease?", "They flatten, limiting nutrient absorption."],
+      ["Approximately what percentage of the US population has celiac disease?", "About 1%."],
+      ["How does nonceliac gluten sensitivity differ from celiac disease?", "It causes gluten-triggered symptoms without intestinal villi damage."],
+      ["By what percentage did childhood food allergies rise from 1997 to 2011?", "50%."],
+      ["What is the hygiene hypothesis, as applied to food allergy risk?", "Under-exposure to antigens from a very clean environment may lead the immune system to become sensitized to harmless food proteins instead."],
+      ["What did the 2006 Food Allergen Labeling and Consumer Protection Act require?", "Manufacturers must clearly identify the 8 major food allergens on product labels."],
+      ["What did the 2019 AAP guidance find about early peanut introduction?", "Introducing peanut protein between 4 and 6 months of age reduces the risk of peanut allergy."],
+      ["What percentage of young children outgrow food allergies before age 3?", "About 80%."],
+      ["What enzyme deficiency causes lactose intolerance?", "Lactase deficiency."]
+    ],
+    matchCards: [
+      ["Food allergy", "Immune-mediated adverse reaction"],
+      ["Food intolerance", "Non-immune adverse reaction"],
+      ["IgE-mediated reaction", "Early onset, can be severe"],
+      ["Non-IgE-mediated reaction", "Late onset, more subtle"],
+      ["Elimination diet", "First step in allergy diagnosis"],
+      ["GERD", "Recurrent, serious form of heartburn"],
+      ["H. pylori", "Common cause of peptic ulcers"],
+      ["Low-FODMAP diet", "Dietary management for IBS"],
+      ["Celiac disease", "Immune reaction to gluten that damages villi"],
+      ["Nonceliac gluten sensitivity", "Gluten symptoms without villi damage"],
+      ["Hygiene hypothesis", "Under-exposure to antigens raises allergy risk"],
+      ["Lactase deficiency", "Underlies lactose intolerance"],
+      ["Anaphylaxis warning signs", "Difficulty breathing, low blood pressure, rapid heart rate"]
+    ]},
   { id: "physio-cellphys-membranes", name: "Cell Physiology & Membranes", color: "accent",
     icon: '<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2z"/>',
     cards: [
@@ -2921,7 +2997,8 @@ var DEMO_CLASSES = [
   { id: "cam-nutrition", name: "CAM/Nutrition", exams: [
     { id: "exam1", name: "Exam 1", deckIds: [
       "cam-human-nutrition", "cam-macro-micro-water",
-      "cam-special-topics", "cam-weight-control"
+      "cam-special-topics", "cam-weight-control",
+      "cam-pregnancy-breastfeeding", "cam-food-allergies-intolerances"
     ] }
   ]},
   { id: "physical-diagnosis", name: "Physical Diagnosis 1", exams: [
