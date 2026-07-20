@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physical Diagnosis 1 Exam 2</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#b5433d;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physical Diagnosis 1 Exam 2 · Class of 2028</div>
+    <h1>Physical Diagnosis 1 Exam 2 Cram Sheet</h1>
+    <p class="sub">All 9 Exam 2 exam topics — Anus &amp; Rectum, Male GU (genitourinary) &amp; Prostate, Abdominal, Lung &amp; Thorax, Skin/Hair/Nail, Eye, General Survey &amp; Vital Signs, Cardiovascular &amp; Peripheral Vascular, and HENT — condensed to the highest-yield technique and findings.</p>
+    <div class="toc">
+      <a href="#anus-rectum" style="color:#8d3430"><span class="dot" style="background:#b5433d"></span>Anus & Rectum Examination</a>
+      <a href="#male-gu" style="color:#975f24"><span class="dot" style="background:#c17a2e"></span>Male GU (genitourinary) & Prostate Examination</a>
+      <a href="#abdominal" style="color:#817021"><span class="dot" style="background:#a68f2a"></span>Abdominal Examination</a>
+      <a href="#lung-thorax" style="color:#3a7940"><span class="dot" style="background:#4a9b52"></span>Lung & Thorax Examination</a>
+      <a href="#skin-hair-nail" style="color:#257b69"><span class="dot" style="background:#2f9e86"></span>Skin, Hair & Nail Examination</a>
+      <a href="#eye" style="color:#256381"><span class="dot" style="background:#2f7fa6"></span>Eye Examination</a>
+      <a href="#gen-survey" style="color:#314a8d"><span class="dot" style="background:#3f5fb5"></span>General Survey & Vital Signs</a>
+      <a href="#cardio-pv" style="color:#5f3e8d"><span class="dot" style="background:#7a4fb5"></span>Cardiovascular & PV (peripheral vascular) Examination</a>
+      <a href="#hent" style="color:#8d3970"><span class="dot" style="background:#b5498f"></span>HENT (Head, Ears, Nose, Throat) Examination</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="pd1-exam2-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="anus-rectum" style="--acc:#b5433d;--acc-bg:#f5e5e4;--acc-zebra:#faf2f1;--acc-ink:#8d3430">
+    <div class="shead"><span class="dot" style="background:#b5433d"></span><h2>Anus & Rectum Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">History</td><td>Key questions: hematochezia (bloody stool), pain on defecation, any anal/perianal lesions.</td></tr>
+          <tr><td class="h">Positioning</td><td>Side-lying (left lateral) position, hips and knees partially flexed, patient appropriately draped throughout.</td></tr>
+          <tr><td class="h">Exam sequence</td><td>Fixed order: inspect sacrococcygeal/perianal areas → inspect the anus → perform the DRE (digital rectal examination).</td></tr>
+          <tr><td class="h">Inspection</td><td>Note lesions, ulcers, inflammation, rashes, excoriations, skin breakdown, and any masses or tenderness; palpate any abnormal area found on inspection.</td></tr>
+          <tr><td class="h">DRE technique</td><td>Lubricate gloved index finger → insert into anal canal → have patient squeeze sphincter (assesses tone) → palpate rectal surface circumferentially.</td></tr>
+          <tr><td class="h">Abnormal findings</td><td>Hemorrhoids, anal fissures/warts, sphincter tightness or laxity (via squeeze maneuver), perianal abscess, and malignancy.</td></tr>
+          <tr><td class="h">Special maneuvers</td><td>Prostatic exam palpates the prostate's posterior surface anteriorly during the DRE; rectovaginal exam is performed in the lithotomy position.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="male-gu" style="--acc:#c17a2e;--acc-bg:#f6ece2;--acc-zebra:#fbf6f0;--acc-ink:#975f24">
+    <div class="shead"><span class="dot" style="background:#c17a2e"></span><h2>Male GU (genitourinary) & Prostate Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">History</td><td>Lower urinary tract symptoms, urinary incontinence, penile discharge/lesions, scrotal/testicular pain-swelling-lesions, erectile dysfunction, and painful/irregular/curved erections.</td></tr>
+          <tr><td class="h">Patient comfort</td><td>If an erection occurs during exam: calmly explain it's a normal physiologic response, complete the exam, stay composed. If the patient refuses, discuss their reasons rather than proceeding.</td></tr>
+          <tr><td class="h">Draping/exposure</td><td>Expose only the area being examined (gown over chest/abdomen, drape at mid-thigh), gloves always worn; review sexual maturity rating in younger patients.</td></tr>
+          <tr><td class="h">Exam sequence</td><td>Inspect penis/urethral meatus/scrotum → palpate the shaft → assess groin hernias (with/without Valsalva) → palpate epididymis and each testis → examine spermatic cord.</td></tr>
+          <tr><td class="h">Hernia evaluation</td><td>Inguinal/femoral hernias assessed by inspection and palpation, performed both without and with Valsalva.</td></tr>
+          <tr><td class="h">Transillumination</td><td>Used to assess scrotal contents, for example to identify a hydrocele.</td></tr>
+          <tr><td class="h">Prostate/prostate cancer</td><td>Prostate's posterior surface palpated via the anterior rectal wall during DRE. Most frequently diagnosed cancer in US men, rare before age 40, higher incidence in African American men; screened with PSA (prostate-specific antigen).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="abdominal" style="--acc:#a68f2a;--acc-bg:#f3efe1;--acc-zebra:#f9f7f0;--acc-ink:#817021">
+    <div class="shead"><span class="dot" style="background:#a68f2a"></span><h2>Abdominal Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Exam order</td><td>The abdomen is the exception to standard body-region order: Inspection → Auscultation → Percussion → Palpation (IAPerPal) — auscultation goes first so bowel sounds aren't artificially altered.</td></tr>
+          <tr><td class="h">Exam tips</td><td>Empty bladder, warm hands/stethoscope, examine the painful area last ("one finger" localization), watch the patient's face, trim nails.</td></tr>
+          <tr><td class="h">Inspection</td><td>Skin changes, umbilicus, scars, striae, dilated veins, contour (flat/round/protuberant/scaphoid), symmetry, visible organs/peristalsis; a visible aortic pulsation in the epigastrium can be normal.</td></tr>
+          <tr><td class="h">Auscultation</td><td>Diaphragm, all 4 quadrants, ≥1 minute if sounds seem absent. Normal bowel sounds 5–34/min. Bruit (vascular turbulence), friction rub (peritoneal inflammation), venous hum (portal-systemic collaterals, e.g. cirrhosis).</td></tr>
+          <tr><td class="h">Percussion</td><td>Tympany over gas/hollow organs, dullness over fluid/feces/solid organs. Liver span via percussion from below umbilicus upward + nipple line downward. Positive splenic percussion sign (tympany→dullness with deep inspiration, Traube's space) suggests splenomegaly.</td></tr>
+          <tr><td class="h">Palpation</td><td>Light (<1cm, tenderness/masses) then deep (two-handed, 3–4cm, all 4 quadrants). Liver via bimanual or hooking technique; spleen usually not palpable; kidney capture technique (right more often felt); CVA tenderness via fist-on-palm strike; aorta normal ≤3.0cm, assessed bimanually if age >50.</td></tr>
+          <tr><td class="h">Wall vs. intra-abdominal mass</td><td>Have the patient tense abdominal muscles (raise head/shoulders): a wall mass stays palpable, an intra-abdominal mass becomes obscured by the contraction.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="lung-thorax" style="--acc:#4a9b52;--acc-bg:#e6f1e7;--acc-zebra:#f2f8f3;--acc-ink:#3a7940">
+    <div class="shead"><span class="dot" style="background:#4a9b52"></span><h2>Lung & Thorax Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Angle of Louis</td><td>Sternal angle landmark: continuous with the 2nd rib (counts ribs/interspaces), marks tracheal bifurcation into main bronchi, and the upper border of the atria. Right lung has 3 lobes; left has 2 lobes plus a lingular segment.</td></tr>
+          <tr><td class="h">Inspection</td><td>Shape/symmetry, A/P diameter, scoliosis/kyphosis/tracheal displacement, pectus deformities, cyanosis, nail beds, breath odor, respiratory rate/pattern.</td></tr>
+          <tr><td class="h">Palpation</td><td>Tenderness, pulsations/bulges/crepitus, chest excursion, tactile fremitus, tracheal position. Chest expansion technique: hands at 10th rib, thumbs meeting at midline, watch symmetric thumb separation on deep inhalation.</td></tr>
+          <tr><td class="h">Percussion & diaphragmatic excursion</td><td>Percuss superior→inferior, side to side, 4–5cm intervals. Diaphragmatic excursion: mark level on held exhalation, then again after deep inhale-hold; normal 3–5.5cm (up to 7–8cm if well-conditioned), often higher on right (liver).</td></tr>
+          <tr><td class="h">Decreased excursion causes</td><td>Pleural effusion, atelectasis, emphysema, pain, ascites.</td></tr>
+          <tr><td class="h">Breath sounds</td><td>Vesicular: inspiration>expiration, soft, low pitch (most fields). Bronchovesicular: inspiration=expiration, intermediate. Bronchial/tracheal: expiration>inspiration, loud, high pitch.</td></tr>
+          <tr><td class="h">Voice sounds</td><td>Bronchophony (louder "99"), egophony ("E"→"A"), whispered pectoriloquy (whispered words heard clearly) — all suggest consolidation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="skin-hair-nail" style="--acc:#2f9e86;--acc-bg:#e2f1ee;--acc-zebra:#f0f8f7;--acc-ink:#257b69">
+    <div class="shead"><span class="dot" style="background:#2f9e86"></span><h2>Skin, Hair & Nail Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Skin layers</td><td>Epidermis (most superficial), dermis (glands, hair follicles, nerve terminals), subcutaneous tissue.</td></tr>
+          <tr><td class="h">Skin color</td><td>Melanin (brownish, genetics/sun), hemoglobin (bright red oxyhemoglobin vs. darker bluish deoxyhemoglobin), carotene (yellow, subcutaneous fat), bilirubin (yellow-brown, heme breakdown).</td></tr>
+          <tr><td class="h">Glands & hair</td><td>Sebaceous glands everywhere except palms/soles; eccrine sweat glands widely distributed; apocrine glands primarily axillary/groin. Vellus hair = fine/lightly pigmented; terminal hair = coarse/pigmented.</td></tr>
+          <tr><td class="h">History</td><td>Hair loss, rashes, growths, sores, lumps/bumps, dryness, itching, changes (especially moles changing size/shape/color/sensation); family history of skin cancers and atopic conditions.</td></tr>
+          <tr><td class="h">Exam technique</td><td>Skin: inspect color/uniformity/thickness/lesions, palpate moisture/texture/temperature/turgor/mobility. Hair: inspect color/distribution/quantity, palpate texture. Nails: inspect pigmentation/length/ridging/pitting, palpate texture/firmness/adherence.</td></tr>
+          <tr><td class="h">Nail landmarks</td><td>Normal nail base angle (proximal nail fold to nail plate) is 160 degrees; the lunula is the white half-moon at the proximal nail bed.</td></tr>
+          <tr><td class="h">Draping</td><td>Patient undressed and gowned open in back, makeup/nail polish removed; uncover only the area being examined at a time, recover with gown when finished.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="eye" style="--acc:#2f7fa6;--acc-bg:#e2edf3;--acc-zebra:#f0f6f9;--acc-ink:#256381">
+    <div class="shead"><span class="dot" style="background:#2f7fa6"></span><h2>Eye Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Extraocular muscles</td><td>Superior rectus (CN III, elevation), inferior rectus (CN III, depression), medial rectus (CN III, adduction), lateral rectus (CN VI, abduction), superior oblique (CN IV, intorsion & depression), inferior oblique (CN III, extorsion & elevation).</td></tr>
+          <tr><td class="h">Vision testing</td><td>Always test visual acuity before any test shining light directly into the eye. Acuity recorded as chart distance / distance a normal eye reads that line (e.g., 20/40). Visual fields by confrontation (monocular finger-wiggle) screens visual pathway lesions; color vision via pseudoisochromatic plates.</td></tr>
+          <tr><td class="h">External exam</td><td>Inspect palpebral fissures, eyebrows/lashes/lids, lacrimal apparatus, conjunctiva/sclera, cornea (oblique lighting), iris, pupils (size/shape/symmetry in dim light; small <3mm, large >5mm).</td></tr>
+          <tr><td class="h">Pupillary reactions</td><td>Direct (constriction in illuminated eye), consensual (constriction in opposite eye), near reaction (constriction with convergence; checked if light reaction impaired).</td></tr>
+          <tr><td class="h">Alignment & motility</td><td>Corneal light reflection assesses ocular alignment (should fall slightly medial of pupil center). Extraocular movements tested in an "H" pattern through 6 cardinal gaze positions, pausing at extremes to check for nystagmus.</td></tr>
+          <tr><td class="h">Ophthalmoscopic exam</td><td>Darken room, use same-side hand/eye as the eye examined, check red reflex from ~15 inches before moving in; adjust diopters to focus; inspect optic disc (margins/color/cup size) and retina (arteries lighter/smaller, veins darker/larger, AV crossings, macula/fovea).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="gen-survey" style="--acc:#3f5fb5;--acc-bg:#e4e9f5;--acc-zebra:#f2f4fa;--acc-ink:#314a8d">
+    <div class="shead"><span class="dot" style="background:#3f5fb5"></span><h2>General Survey & Vital Signs</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Patient identity</td><td>Confirm with 2 identifiers: name and date of birth.</td></tr>
+          <tr><td class="h">Pain assessment</td><td>OPQRST (onset, palliative/provocative, quality, radiation, severity, timing). Acute pain typically <3–6 months; chronic typically >3–6 months or recurrent. Nociceptive = tissue damage; neuropathic = nervous system damage/disease. Always ask the patient what their personal "10" is.</td></tr>
+          <tr><td class="h">General survey</td><td>Initial overall impression on entering the room: apparent state of health, discomfort/distress, skin color, dress, grooming, affect, posture/gait, body habitus.</td></tr>
+          <tr><td class="h">Temperature</td><td>Varies by site (oral, rectal, tympanic, temporal); diurnal variation exists.</td></tr>
+          <tr><td class="h">Pulse</td><td>Normal adult heart rate 60–100 bpm; auscultate carotid before palpating. Palpate 8+ pulse locations. Never palpate both carotids simultaneously — risk of decreased cerebral blood flow and syncope.</td></tr>
+          <tr><td class="h">Respirations</td><td>Normal adult rate 12–20/min; count discreetly (e.g., while appearing to palpate the pulse).</td></tr>
+          <tr><td class="h">Blood pressure</td><td>Cuff ~2.5cm above antecubital crease. Palpatory systolic estimate (inflate until radial pulse disappears, add ~30 mmHg) avoids missing an auscultatory gap; deflate at 2–3 mmHg/sec. Orthostatic vitals: BP/HR supine, then again standing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="cardio-pv" style="--acc:#7a4fb5;--acc-bg:#ece6f5;--acc-zebra:#f6f3fa;--acc-ink:#5f3e8d">
+    <div class="shead"><span class="dot" style="background:#7a4fb5"></span><h2>Cardiovascular & PV (peripheral vascular) Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Conduction & output</td><td>SA node = natural pacemaker (60–100 bpm); AV node delays the impulse before the bundle of His/Purkinje fibers. Cardiac output = heart rate × stroke volume; stroke volume depends on preload, contractility, afterload. Normal ejection fraction ≈60%.</td></tr>
+          <tr><td class="h">Heart sounds</td><td>S1 = mitral/tricuspid (AV) valve closure, best heard at apex (mitral) and LLSB (tricuspid). S2 = aortic/pulmonic (semilunar) valve closure, best heard R 2nd ICS (aortic) and L 2nd–3rd ICS (pulmonic). Pulse pressure = systolic − diastolic, normal 30–40 mmHg.</td></tr>
+          <tr><td class="h">Carotid safety</td><td>Always auscultate for carotid bruits before palpating — palpating an artery with an undetected bruit risks dislodging plaque and causing stroke. Never palpate both carotids simultaneously.</td></tr>
+          <tr><td class="h">Precordium palpation</td><td>Heaves felt with palms/fingers flat, thrills with the ball of the hand, at aortic/pulmonic/Erb's point/tricuspid/mitral areas. Normal PMI (point of maximal impulse): 5th ICS, left MCL, ~2.5cm, brisk gentle tap.</td></tr>
+          <tr><td class="h">Peripheral vascular anatomy</td><td>Arterial layers: intima (atherosclerosis site), media (smooth muscle/elastin), adventitia. Arterioles are resistance vessels controlling systemic vascular resistance. Veins hold up to 2/3 of circulating blood volume.</td></tr>
+          <tr><td class="h">Abnormal pulses</td><td>Pulsus parvus = weak pulse, seen in atherosclerotic PVD (peripheral vascular disease). Pulsus tardus = sluggish pulse, seen in aortic stenosis or low cardiac output.</td></tr>
+          <tr><td class="h">Capillary refill</td><td>Normal ≤2–3 seconds. Epitrochlear nodes are usually not palpable when healthy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="hent" style="--acc:#b5498f;--acc-bg:#f5e6ef;--acc-zebra:#faf2f7;--acc-ink:#8d3970">
+    <div class="shead"><span class="dot" style="background:#b5498f"></span><h2>HENT (Head, Ears, Nose, Throat) Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Exam sequence</td><td>HENT (like most body regions) uses the standard order: Inspection → Palpation → Percussion → Auscultation (IPalPerA) — unlike the abdomen's IAPerPal exception.</td></tr>
+          <tr><td class="h">Head/face inspection</td><td>Size/shape/contour, lesions/dandruff, color/distribution/texture, asymmetry/expression/edema.</td></tr>
+          <tr><td class="h">Ear exam</td><td>TM (tympanic membrane) landmarks: pars flaccida (small, loose, above malleus), pars tensa, umbo, cone of light. Otoscope technique: pull auricle up, back, slightly away to straighten canal; brace hand against patient's head; insert gently, angled down and forward.</td></tr>
+          <tr><td class="h">Auditory testing</td><td>Whispered voice (2 ft behind patient, occlude untested ear; normal 3/6 correct). Weber (tuning fork on vertex; normal heard midline). Rinne (mastoid/bone then near canal/air; normal air>bone).</td></tr>
+          <tr><td class="h">Weber/Rinne interpretation</td><td>Weber lateralizes to the affected ear in conductive loss, and to the unaffected ear in sensorineural loss. Rinne shows bone ≥ air conduction in conductive loss.</td></tr>
+          <tr><td class="h">Nose & oral cavity</td><td>Nasal: inspect deformities/polyps/turbinates/mucosa/septum; palpate frontal/maxillary sinuses; transilluminate (decreased glow = fluid-filled sinus). Oral: Stensen's duct (parotid, buccal mucosa) vs. Wharton's duct (submandibular, floor of mouth); "ah" checks symmetric soft palate/uvula rise.</td></tr>
+          <tr><td class="h">Neck & thyroid</td><td>Inspect symmetry, masses, gland enlargement, visible nodes, tracheal midline position. Palpate trachea (compare distance to SCM bilaterally) and thyroid (anterior or posterior approach with swallow); normal thyroid often not palpable. 10 cervical lymph node groups; roll a palpable node to differentiate from muscle/artery.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physical Diagnosis 1 Exam 2 Study Guide (Class of 2028). For the full technique walkthroughs, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

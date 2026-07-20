@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physiology Exam 4</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#1f6f8b;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physiology Exam 4 · Class of 2028</div>
+    <h1>Physiology Exam 4 Cram Sheet</h1>
+    <p class="sub">Endocrine &amp; Renal Physiology — Endocrine I&ndash;III (pituitary/thyroid, adrenal/pancreas/calcium, reproduction) and Renal I&ndash;II (GFR, tubular reabsorption, RAAS, acid-base), condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#l-lecture-1-endocrine-physiology-i" style="color:#18576c"><span class="dot" style="background:#1f6f8b"></span>Endocrine Physiology I</a>
+      <a href="#l-lecture-2-endocrine-physiology-ii" style="color:#8d4f23"><span class="dot" style="background:#b5652d"></span>Endocrine Physiology II</a>
+      <a href="#l-lecture-3-endocrine-physiology-iii" style="color:#7e3153"><span class="dot" style="background:#a13f6b"></span>Endocrine Physiology III</a>
+      <a href="#l-lecture-4-renal-i" style="color:#255f3e"><span class="dot" style="background:#2f7a4f"></span>Renal I</a>
+      <a href="#l-lecture-5-renal-ii" style="color:#3a3e89"><span class="dot" style="background:#4a4fb0"></span>Renal II</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="physiology-exam-4-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="l-lecture-1-endocrine-physiology-i" style="--acc:#1f6f8b;--acc-bg:#e0ebef;--acc-zebra:#eff5f7;--acc-ink:#18576c">
+    <div class="shead"><span class="dot" style="background:#1f6f8b"></span><h2>Endocrine Physiology I</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Hormone classes</td><td>Peptides/proteins (3–200 aa): water-soluble, stored in vesicles, exocytosed, bind membrane receptors, fast (GH, ACTH, TSH, FSH/LH, ADH, oxytocin, insulin/glucagon, PTH). Steroids: cholesterol-derived, lipid-soluble, made on demand, bind intracellular receptors (cortisol, aldosterone, sex steroids, vitamin D). Tyrosine derivatives split: thyroid hormone (T3/T4) lipid-soluble/nuclear; catecholamines water-soluble/membrane.</td></tr>
+          <tr><td class="h">Feedback control</td><td>Negative feedback is dominant (cortisol inhibits CRH + ACTH). Positive feedback is rare/self-limited (estrogen surge → LH surge; oxytocin in labor). Cyclic variation overlays both (cortisol circadian rhythm, menstrual cycle).</td></tr>
+          <tr><td class="h">Anterior vs. posterior pituitary</td><td>Adenohypophysis (from Rathke's pouch) synthesizes its own hormones — GH, ACTH, TSH, prolactin, FSH, LH — under hypothalamic releasing/inhibiting hormones delivered via portal blood. Neurohypophysis is neural tissue that only stores/releases ADH and oxytocin, which are made in the hypothalamus and delivered by axons.</td></tr>
+          <tr><td class="h">Hypothalamic releasing hormones</td><td>GHRH → GH; somatostatin (GHIH) inhibits GH and TSH. TRH → TSH (and prolactin). CRH → ACTH. GnRH → FSH/LH. Dopamine (PIH) tonically inhibits prolactin — the one hormone under default inhibition rather than stimulation.</td></tr>
+          <tr><td class="h">Growth hormone</td><td>Anabolic for protein (↑ amino acid transport/synthesis), mobilizes fat, and is "diabetogenic" (↓ glucose uptake by muscle/fat, ↑ hepatic gluconeogenesis). Growth effects mostly indirect via liver IGF-1. Stimulated by sleep, exercise, stress, hypoglycemia, ghrelin; inhibited by ↑ glucose/FFA, obesity, aging. Falls with age (~6 → ~1.6 ng/mL).</td></tr>
+          <tr><td class="h">ADH and oxytocin</td><td>ADH (supraoptic nucleus): 9-aa peptide, acts on collecting duct (aquaporin insertion) and vasculature (vasoconstriction); released by ↑ osmolality or ↓ blood volume/pressure. Oxytocin (paraventricular nucleus): 9-aa peptide, causes milk let-down and uterine contraction; classic positive-feedback hormone.</td></tr>
+          <tr><td class="h">Thyroid hormone synthesis</td><td>NIS traps iodide → pendrin moves it into colloid → peroxidase organifies it onto thyroglobulin (MIT/DIT → T4/T3), stored extracellularly in colloid. TSH triggers pinocytosis/proteolysis, releasing ~90% T4/10% T3. T3 acts faster (6–12h) and more potently than T4 (2–3 days, t½ ~6–7 days). ~99% protein-bound (TBG); only free hormone is active. Raises BMR, O2 use, heart rate/cardiac output.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="l-lecture-2-endocrine-physiology-ii" style="--acc:#b5652d;--acc-bg:#f5e9e2;--acc-zebra:#faf4f0;--acc-ink:#8d4f23">
+    <div class="shead"><span class="dot" style="background:#b5652d"></span><h2>Endocrine Physiology II</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Adrenal cortex zones</td><td>"GFR → Salt, Sugar, Sex": zona Glomerulosa → aldosterone (~15%), zona Fasciculata → cortisol (fasciculata + reticularis ~75%, under ACTH), zona Reticularis → androgens (DHEA, androstenedione, ~10%). All synthesized from cholesterol via the rate-limiting, ACTH-stimulated step cholesterol → pregnenolone.</td></tr>
+          <tr><td class="h">Aldosterone</td><td>Made in zona glomerulosa; acts on collecting-duct principal cells (basolateral Na+/K+-ATPase, apical ENaC, ROMK) → ↑ Na+ reabsorption, ↑ K+/H+ secretion. Driven mainly by ↑ plasma K+ and angiotensin II; suppressed by ↑ ECF volume; ACTH only permissive.</td></tr>
+          <tr><td class="h">Cortisol</td><td>Made in zona fasciculata, ~90% bound to CBG. ↑ gluconeogenesis and blood glucose ("adrenal diabetes"), ↓ protein everywhere except the liver, mobilizes fat, anti-inflammatory/immunosuppressive. HPA axis (CRH → ACTH → cortisol, negative feedback) with circadian peak ~6–8 AM. 11β-HSD2 inactivates cortisol → cortisone to protect the mineralocorticoid receptor (licorice blocks it → apparent mineralocorticoid excess).</td></tr>
+          <tr><td class="h">Adrenal medulla</td><td>Modified sympathetic tissue — chromaffin cells act like postganglionic neurons without axons, driven directly by preganglionic sympathetic fibers. Secretes epinephrine (~80%) and norepinephrine, reinforcing fight-or-flight: ↑ HR/contractility, ↑ blood glucose, ↑ lipolysis, bronchodilation.</td></tr>
+          <tr><td class="h">Insulin</td><td>Beta cells (~60% of islet), t½ 6 min; C-peptide marks endogenous production. Glucose → GLUT2 → glucokinase → ↑ ATP → closes K+ channel → depolarization → Ca2+ influx → exocytosis (sulfonylureas act at this same K+ channel). ↑ glucose uptake via GLUT4 (muscle/fat) and glycogen/fat/protein synthesis; brain glucose entry (GLUT1) is insulin-independent.</td></tr>
+          <tr><td class="h">Glucagon and somatostatin</td><td>Glucagon (alpha cells, ~25%) → ↑ glycogenolysis and gluconeogenesis, opposing insulin; stimulated by hypoglycemia, amino acids, fasting/exercise. Somatostatin (delta cells, ~10%) is a paracrine brake inhibiting both insulin and glucagon (also the hypothalamic GH-inhibiting hormone).</td></tr>
+          <tr><td class="h">Calcium regulation</td><td>PTH (chief cells, sensing low Ca2+ via CaSR) raises plasma Ca2+: bone resorption (via osteoblasts → osteoclasts, which have no PTH receptor), ↑ renal Ca2+ reabsorption + ↓ phosphate reabsorption, and stimulates 1α-hydroxylase. Vitamin D activation: skin → liver (25-OH) → kidney (1,25-OH, PTH-driven) → ↑ gut Ca2+/phosphate absorption. Calcitonin (parafollicular C cells) is released by high Ca2+ and inhibits osteoclasts — a minor, transient opponent of PTH.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="l-lecture-3-endocrine-physiology-iii" style="--acc:#a13f6b;--acc-bg:#f2e4ea;--acc-zebra:#f8f2f5;--acc-ink:#7e3153">
+    <div class="shead"><span class="dot" style="background:#a13f6b"></span><h2>Endocrine Physiology III</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Male HPG axis</td><td>Pulsatile GnRH (every 1–3h) is essential — continuous GnRH shuts the axis down. LH → Leydig cells → testosterone; FSH → Sertoli cells → support spermatogenesis + secrete inhibin (selectively suppresses FSH). Testosterone feeds back negatively on hypothalamus/pituitary.</td></tr>
+          <tr><td class="h">Testosterone vs. DHT</td><td>Testosterone (~98% bound to albumin/SHBG) drives internal ducts, muscle, and libido. Converted to DHT by 5α-reductase in target tissues; DHT drives external genitalia, testicular descent, prostate, and male-pattern hair/balding. Puberty: voice deepening, body/facial hair, ↑ muscle/bone, ↑ RBCs, eventual epiphyseal closure.</td></tr>
+          <tr><td class="h">Spermatogenesis</td><td>Continuous from puberty (up to ~120 million sperm/day), taking ~64–74 days. Spermatogonia (mitosis) → primary spermatocyte → meiosis I → 2 secondary spermatocytes → meiosis II → 4 haploid spermatids → spermiogenesis → spermatozoa. One primary spermatocyte yields 4 sperm, vs. one oocyte yielding a single ovum.</td></tr>
+          <tr><td class="h">Two-cell estrogen model</td><td>LH acts on theca cells to make androgens (theca lacks aromatase); FSH induces aromatase in granulosa cells, which convert those androgens to estrogen — both gonadotropins are required. In the luteal phase, the corpus luteum makes so much progesterone that it predominates over conversion.</td></tr>
+          <tr><td class="h">Menstrual cycle</td><td>Follicular phase: rising estrogen = negative feedback, rebuilds proliferative endometrium. Pre-ovulatory estrogen peak flips to positive feedback → LH surge → ovulation (~day 14). Luteal phase: corpus luteum makes estrogen + progesterone (secretory endometrium), suppressing the axis. No pregnancy → corpus luteum dies (~day 26) → menses (~40 mL blood).</td></tr>
+          <tr><td class="h">Pregnancy hormones</td><td>Fertilization occurs in the ampulla; blastocyst reaches the uterus in ~3–5 days, implants ~1–3 days later. hCG (syncytiotrophoblast) rescues the corpus luteum, peaking ~10–12 weeks (basis of pregnancy testing); the placenta then makes rising estrogen and progesterone to term. Progesterone quiets the uterus; estrogen enlarges the uterus/breasts and softens the pelvis.</td></tr>
+          <tr><td class="h">Parturition and lactation</td><td>Rising estrogen:progesterone ratio + more uterine oxytocin receptors + fetal cortisol/prostaglandins + cervical stretch (positive feedback via oxytocin) drive labor (dilation → expulsion → placental delivery → involution). Postpartum, falling estrogen/progesterone unblock prolactin, which drives milk synthesis via suckling-triggered bursts; oxytocin drives let-down; suckling suppresses GnRH (and ovulation).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="l-lecture-4-renal-i" style="--acc:#2f7a4f;--acc-bg:#e2ece6;--acc-zebra:#f0f6f3;--acc-ink:#255f3e">
+    <div class="shead"><span class="dot" style="background:#2f7a4f"></span><h2>Renal I</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Bladder innervation</td><td>Parasympathetic pelvic nerves (S2–S4) contract the detrusor to empty ("P = Pee") and carry stretch afferents. Sympathetic hypogastric nerves (L1–L2) relax the detrusor/tighten the neck to store. Somatic pudendal nerve controls the voluntary external sphincter.</td></tr>
+          <tr><td class="h">Micturition reflex</td><td>Stretch receptors → pelvic afferents → sacral cord → parasympathetic efferents → detrusor contraction (bladder pressure 40–60 mmHg); the reflex is self-regenerative. Pons facilitates, cerebral cortex mainly inhibits, until voiding is convenient. Normal residual urine 5–10 mL.</td></tr>
+          <tr><td class="h">Glomerular filtration barrier</td><td>Fenestrated endothelium (negatively charged glycocalyx) + basement membrane (negative proteoglycans) + podocyte foot processes/filtration slits. Blocks by both size and negative charge — albumin (~6 nm) is smaller than the ~8 nm pores but is electrostatically repelled. Filters ~180 L/day.</td></tr>
+          <tr><td class="h">GFR and clearance</td><td>GFR ≈ 125 mL/min (≈180 L/day). Clearance C = (U × V)/P. Inulin is the gold standard (freely filtered, not reabsorbed/secreted); creatinine clearance slightly overestimates true GFR (minor tubular secretion) but is the practical clinical marker. Filtration fraction = GFR/renal plasma flow ≈ 125/650 ≈ 0.2. GFR ~10% lower in women, declines with age.</td></tr>
+          <tr><td class="h">Starling forces / GFR equation</td><td>GFR = Kf × (PG − PB − πG + πB). PG ≈ 60 mmHg favors filtration; PB ≈ 18 mmHg and πG ≈ 32 mmHg oppose it; net filtration pressure ≈ 10 mmHg outward. PG is the main lever the body regulates.</td></tr>
+          <tr><td class="h">Afferent vs. efferent arterioles</td><td>↑ afferent resistance → ↓ PG, ↓ renal blood flow, ↓ GFR. ↑ efferent resistance → ↑ PG and ↑ GFR while renal blood flow still falls — the mechanism angiotensin II uses to preserve GFR under low perfusion. Over-constricting the efferent eventually drops GFR too (via ↑ filtration fraction/πG).</td></tr>
+          <tr><td class="h">Autoregulation</td><td>Myogenic mechanism: ↑ arterial pressure stretches the afferent arteriole → reflex constriction. Tubuloglomerular feedback: macula densa senses NaCl delivery — high GFR → more NaCl → adenosine/ATP constrict the afferent; low GFR → renin → angiotensin II preserves GFR. Together these hold GFR/RBF nearly constant over ~80–180 mmHg; kidneys receive ~22% of cardiac output.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="l-lecture-5-renal-ii" style="--acc:#4a4fb0;--acc-bg:#e6e6f4;--acc-zebra:#f2f3f9;--acc-ink:#3a3e89">
+    <div class="shead"><span class="dot" style="background:#4a4fb0"></span><h2>Renal II</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Nephron segments</td><td>Proximal tubule reabsorbs ~65% of filtered Na+/water/glucose/amino acids/HCO3−. Thin descending limb is water-permeable (concentrates filtrate). Thick ascending limb = "diluting segment" (Na-K-2Cl transporter, water-impermeable, loads the medulla with salt). Early distal tubule holds the macula densa and is the major site of Ca2+ reabsorption (PTH-enhanced). Late distal/collecting duct: ADH-controlled water permeability, aldosterone-controlled Na+/K+.</td></tr>
+          <tr><td class="h">ADH mechanism</td><td>Made in supraoptic/paraventricular nuclei; released by ↑ plasma osmolality (osmoreceptors) or ↓ blood volume/pressure (baroreceptors). Binds V2 receptors on collecting-duct principal cells → inserts aquaporin-2 → water reabsorption → concentrated urine. No ADH → duct stays impermeable → dilute urine.</td></tr>
+          <tr><td class="h">Kidney hormone mnemonic</td><td>ADH Adds water; Aldosterone Adds sodium (↑ Na+ reabsorption/↑ K+ secretion via Na+/K+-ATPase, ENaC, ROMK, driven by angiotensin II + high K+); Angiotensin II Assists Na+/water retention (plus efferent constriction, preserving GFR); ANP Allows Na+/water to leave (natriuresis, opposes RAAS); PTH Preserves calcium, Tosses phosphate.</td></tr>
+          <tr><td class="h">RAAS cascade</td><td>Low perfusion pressure, low NaCl delivery (macula densa), or sympathetic β1 stimulation → JG cells release renin → angiotensinogen (liver) → angiotensin I → (ACE, lungs) → angiotensin II → efferent constriction + ↑ Na+ reabsorption + ↑ ADH + ↑ thirst + aldosterone release → Na+/water retention → ↑ blood volume and pressure.</td></tr>
+          <tr><td class="h">Countercurrent multiplier</td><td>Single effect: the water-impermeable ascending limb actively pumps NaCl out, making the interstitium ~200 mOsm more concentrated. Fluid displacement: the water-permeable descending limb loses water into that salty interstitium. Repeating these steps multiplies the gradient from ~300 mOsm (cortex) to ~1200 mOsm (deep medulla/papilla); the vasa recta act as a countercurrent exchanger that preserves the gradient.</td></tr>
+          <tr><td class="h">Sodium reabsorption distribution</td><td>Proximal tubule ~65%, thick ascending limb ~25%, distal tubule ~5%, collecting duct ~3% — the small but hormonally (aldosterone) fine-tuned fraction. All powered by the basolateral Na+/K+-ATPase, which keeps intracellular Na+ low and the cell interior negative (~−70 mV).</td></tr>
+          <tr><td class="h">Acid–base handling</td><td>Proximal tubule reabsorbs ~80–90% of filtered HCO3− (requires carbonic anhydrase). Type A intercalated cells (collecting duct) secrete H+ via H+-ATPase/H+-K+-ATPase and generate new HCO3−; type B cells secrete HCO3−. Ammonium buffer (NH3 + H+ → NH4+) excretes acid and regenerates bicarbonate — key for handling a chronic acid load.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physiology Exam 4 Study Guide (PAJ 5000 Graduate Physiology, Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

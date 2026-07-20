@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Anatomy Exam 1</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#2f7d5c;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 1 · Class of 2028</div>
+    <h1>Anatomy Exam 1 Cram Sheet</h1>
+    <p class="sub">Intro to Anatomy, Histology, Brain and ANS, Nervous Tissue &amp; Cerebral Blood Flow, Spinal Cord &amp; Sensory Receptors, and Peripheral/Cranial Nerves, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#intro-anatomy" style="color:#256248"><span class="dot" style="background:#2f7d5c"></span>Introduction to Anatomy & Anatomical Terminology</a>
+      <a href="#histology" style="color:#613c92"><span class="dot" style="background:#7c4dbb"></span>Histology</a>
+      <a href="#brain-ans" style="color:#97350b"><span class="dot" style="background:#c1440e"></span>Brain and ANS</a>
+      <a href="#nervous-tissue-cbf" style="color:#184a83"><span class="dot" style="background:#1f5fa8"></span>Nervous Tissue & Cerebral Blood Flow</a>
+      <a href="#spinal-cord-sensory" style="color:#891e3a"><span class="dot" style="background:#b0264a"></span>Spinal Cord and Sensory Receptors</a>
+      <a href="#peripheral-cranial-nerves" style="color:#906909"><span class="dot" style="background:#b8860b"></span>Peripheral and Cranial Nerves</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="anatomy-exam-1-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="intro-anatomy" style="--acc:#2f7d5c;--acc-bg:#e2ede8;--acc-zebra:#f0f6f4;--acc-ink:#256248">
+    <div class="shead"><span class="dot" style="background:#2f7d5c"></span><h2>Introduction to Anatomy & Anatomical Terminology</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Levels of organization</td><td>Chemical → cellular → tissue → organ → organ system → organism, each level built on the one below. Systemic anatomy studies by functional system; regional anatomy studies all structures in one area together.</td></tr>
+          <tr><td class="h">Terms of relationship & laterality</td><td>Anterior/ventral vs. posterior/dorsal; superior/cranial vs. inferior/caudal; medial vs. lateral; proximal vs. distal; superficial vs. deep; ipsilateral vs. contralateral — all referenced to standard anatomical position.</td></tr>
+          <tr><td class="h">Anatomical planes</td><td>Sagittal = left/right (midsagittal splits exactly in half; parasagittal = any other sagittal cut). Frontal/coronal = anterior/posterior. Transverse/horizontal/axial = superior/inferior.</td></tr>
+          <tr><td class="h">Terms of movement</td><td>Flexion (↓ joint angle) vs. extension (↑); abduction (away from midline) vs. adduction (toward); medial/lateral rotation; pronation (palm down) vs. supination (palm up); inversion (sole medial) vs. eversion (sole lateral); elevation/depression, protraction/retraction.</td></tr>
+          <tr><td class="h">Body cavities</td><td>Dorsal cavity = cranial cavity (brain) + vertebral canal (spinal cord), continuous. Ventral cavity = thoracic (paired pleural cavities + mediastinum with pericardial cavity, great vessels, trachea, esophagus) + abdominopelvic (no wall dividing abdominal/pelvic portions).</td></tr>
+          <tr><td class="h">Serous membranes</td><td>Parietal layer lines the cavity wall, visceral layer covers the organ, with serous fluid between reducing friction. Named by site: pleura (lungs), pericardium (heart), peritoneum (abdominal organs).</td></tr>
+          <tr><td class="h">Nine abdominal regions</td><td>Superior row: right hypochondriac, epigastric, left hypochondriac. Middle row: right lumbar, umbilical, left lumbar. Inferior row: right iliac, hypogastric, left iliac — set by two horizontal and two vertical lines.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="histology" style="--acc:#7c4dbb;--acc-bg:#ede6f5;--acc-zebra:#f6f3fa;--acc-ink:#613c92">
+    <div class="shead"><span class="dot" style="background:#7c4dbb"></span><h2>Histology</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Four primary tissue types</td><td>Epithelial, connective, muscle, and nervous tissue — all body structures are built from these four.</td></tr>
+          <tr><td class="h">Epithelial tissue classification</td><td>Classified by cell shape (squamous/cuboidal/columnar) × layering (simple/stratified/pseudostratified). Transitional epithelium is a special stretchy stratified type (bladder). Functions: protection (stratified squamous), secretion (glandular), absorption (simple columnar w/ microvilli), filtration (simple squamous).</td></tr>
+          <tr><td class="h">Connective tissue composition & types</td><td>Ground substance + fibers (collagen = tensile strength, elastic = stretch/recoil, reticular = supportive mesh), made by fibroblasts. Categories: loose (areolar, adipose, reticular), dense (regular = tendons/ligaments, irregular = dermis, elastic = large arteries), supportive (cartilage, bone), fluid (blood — plasma matrix).</td></tr>
+          <tr><td class="h">Muscle tissue types</td><td>Skeletal (striated, voluntary, multinucleate); cardiac (striated, involuntary, branching, intercalated discs); smooth (non-striated, involuntary, spindle-shaped uninucleate, hollow organs/vessels).</td></tr>
+          <tr><td class="h">Cartilage types</td><td>Hyaline (most common, glassy — articular surfaces, respiratory rings); fibrocartilage (highest tensile strength — intervertebral discs, menisci); elastic (flexible — external ear, epiglottis). All avascular.</td></tr>
+          <tr><td class="h">Bone tissue & osteon histology</td><td>Compact bone = dense outer shell; spongy/trabecular bone = marrow-filled lattice at long-bone ends. Osteon: central Haversian canal (vessels/nerves) surrounded by concentric lamellae, osteocytes in lacunae connected by canaliculi; perforating (Volkmann's) canals run perpendicular, linking osteons to periosteum.</td></tr>
+          <tr><td class="h">Epiphyseal growth plate zones</td><td>Resting (anchors plate) → proliferative (rapid division) → hypertrophic (chondrocytes enlarge, matrix calcifies) → calcification (cells die, replaced by bone). Ossifies fully at growth's end, leaving the epiphyseal line.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="brain-ans" style="--acc:#c1440e;--acc-bg:#f6e5dd;--acc-zebra:#fbf2ee;--acc-ink:#97350b">
+    <div class="shead"><span class="dot" style="background:#c1440e"></span><h2>Brain and ANS</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Cerebral lobes</td><td>Frontal (voluntary motor, executive function, personality), parietal (somatosensory, spatial awareness), temporal (auditory, memory, language), occipital (vision) — divided by the central and lateral sulci; gyri (ridges)/sulci (grooves) increase cortical surface area.</td></tr>
+          <tr><td class="h">Gray/white matter & basal nuclei</td><td>Gray matter (unmyelinated cell bodies) forms the outer cortex; white matter (myelinated axons) fills the interior. Basal nuclei (caudate, putamen, globus pallidus) = gray-matter islands modulating voluntary movement. Limbic system (hippocampus, amygdala, cingulate gyrus) governs emotion and memory.</td></tr>
+          <tr><td class="h">Diencephalon</td><td>Thalamus = sensory relay to cortex (except smell). Hypothalamus = homeostasis master regulator (temperature, hunger, thirst, circadian rhythm) plus controls the pituitary. Epithalamus = pineal gland (melatonin).</td></tr>
+          <tr><td class="h">Brainstem & cerebellum</td><td>Midbrain (cerebral peduncles, superior/inferior colliculi); pons (relays cerebrum ↔ cerebellum, respiratory rhythm); medulla (cardiovascular/respiratory centers, decussation of the pyramids). Cerebellum coordinates fine motor movement, posture, and balance.</td></tr>
+          <tr><td class="h">Cranial meninges</td><td>Dura mater (outer, periosteal + meningeal layers form dural venous sinuses; folds = falx cerebri, tentorium cerebelli) → arachnoid mater (web-like, defines subarachnoid space) → pia mater (innermost, follows every gyrus/sulcus).</td></tr>
+          <tr><td class="h">Ventricles, CSF & blood-brain barrier</td><td>CSF path: lateral ventricles → interventricular foramina (of Monro) → third ventricle → cerebral aqueduct → fourth ventricle → subarachnoid space; made by choroid plexus, reabsorbed via arachnoid granulations into dural sinuses. BBB = endothelial tight junctions + astrocyte end-feet, blocking large/hydrophilic molecules.</td></tr>
+          <tr><td class="h">Autonomic nervous system</td><td>Sympathetic: thoracolumbar (T1–L2) outflow, short preganglionic/long postganglionic fibers (chain ganglia) — rapid, widespread. Parasympathetic: craniosacral (cranial nerve nuclei + S2–S4) outflow, long preganglionic/short postganglionic — localized. Enteric NS (myenteric = motility, submucosal = secretion) self-coordinates; sympathetic inhibits GI activity, parasympathetic (vagal) stimulates it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="nervous-tissue-cbf" style="--acc:#1f5fa8;--acc-bg:#e0e9f3;--acc-zebra:#eff4f9;--acc-ink:#184a83">
+    <div class="shead"><span class="dot" style="background:#1f5fa8"></span><h2>Nervous Tissue & Cerebral Blood Flow</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Neuron structure</td><td>Cell body (soma, nucleus) → dendrites (receive input) → axon (arises from axon hillock, the action-potential trigger zone) → axon terminals; often myelin-insulated. CNS = brain + spinal cord; PNS = nerves/ganglia outside the CNS.</td></tr>
+          <tr><td class="h">Neuron classification</td><td>Functional: sensory/afferent (toward CNS), motor/efferent (away from CNS), interneuron (within CNS). Structural: multipolar (1 axon, many dendrites — most CNS/motor neurons), bipolar (1 axon, 1 dendrite — retina), unipolar/pseudounipolar (1 process splits into peripheral/central branches — sensory, dorsal root ganglia).</td></tr>
+          <tr><td class="h">CNS neuroglia</td><td>Astrocytes (most abundant — support neurons, help form the BBB, regulate extracellular environment); oligodendrocytes (myelinate segments of multiple CNS axons); microglia (CNS's resident immune cells); ependymal cells (line ventricles, help produce/circulate CSF).</td></tr>
+          <tr><td class="h">PNS neuroglia & conduction</td><td>Schwann cells (each myelinates one segment of one PNS axon) and satellite cells (support ganglion cell bodies). Nodes of Ranvier interrupt myelin, enabling saltatory conduction (faster than unmyelinated conduction). At a synapse, the presynaptic terminal releases neurotransmitter across the cleft to excite/inhibit the postsynaptic cell.</td></tr>
+          <tr><td class="h">Cerebral arterial supply</td><td>Internal carotid arteries → anterior circulation (most of the cerebrum). Paired vertebral arteries ascend and join → single basilar artery → posterior circulation (brainstem, cerebellum, occipital lobes).</td></tr>
+          <tr><td class="h">Circle of Willis</td><td>Internal carotids give rise to anterior cerebral arteries (linked by the anterior communicating artery) and middle cerebral arteries (largest, most of the lateral cerebral surface); basilar artery terminates in posterior cerebral arteries, each linked to its carotid by a posterior communicating artery — a collateral loop preserving perfusion.</td></tr>
+          <tr><td class="h">Venous drainage</td><td>Cerebral veins empty into dural venous sinuses (between the two dura layers): superior sagittal, inferior sagittal, straight, and paired transverse/sigmoid sinuses → drain into the internal jugular veins.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="spinal-cord-sensory" style="--acc:#b0264a;--acc-bg:#f4e1e6;--acc-zebra:#f9f0f2;--acc-ink:#891e3a">
+    <div class="shead"><span class="dot" style="background:#b0264a"></span><h2>Spinal Cord and Sensory Receptors</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Spinal cord terminal anatomy</td><td>Cord runs foramen magnum → about L1–L2, tapering into the conus medullaris; the filum terminale anchors it to the coccyx, surrounded by descending lumbar/sacral roots = cauda equina. Cervical enlargement (upper limb) and lumbosacral enlargement (lower limb) mark thicker regions.</td></tr>
+          <tr><td class="h">Gray matter organization</td><td>Dorsal (posterior) horns = sensory input; ventral (anterior) horns = motor neuron cell bodies; lateral horns (only at T1–L2) = intermediolateral gray horn, sympathetic preganglionic cell bodies. Rami communicantes: white ramus (myelinated preganglionic, to chain ganglion) and gray ramus (unmyelinated postganglionic, rejoins spinal nerve).</td></tr>
+          <tr><td class="h">Ascending (sensory) tracts</td><td>Dorsal columns (fasciculus gracilis/cuneatus) — fine touch, vibration, conscious proprioception, ipsilateral until the medulla. Spinothalamic tracts — pain, temperature, crude touch, cross near entry level. Spinocerebellar tracts — unconscious proprioception to the cerebellum.</td></tr>
+          <tr><td class="h">Descending (motor) tracts</td><td>Corticospinal tracts carry voluntary motor commands: lateral corticospinal tract (majority, already crossed at the medulla's pyramidal decussation) controls limb muscles; anterior corticospinal tract (crosses at its level of exit) controls axial/trunk muscles.</td></tr>
+          <tr><td class="h">Spinal cord blood supply</td><td>One anterior spinal artery plus paired posterior spinal arteries, reinforced by segmental radicular arteries — the largest, the artery of Adamkiewicz, is clinically important in aortic surgery.</td></tr>
+          <tr><td class="h">General sense receptor categories</td><td>Mechanoreceptors (physical deformation), thermoreceptors (warm/cool, free nerve endings), nociceptors (tissue damage/pain, mostly free nerve endings), chemoreceptors (chemical concentration — carotid/aortic bodies; also underlie olfaction/CN I and gustation/CN VII, IX, X).</td></tr>
+          <tr><td class="h">Mechanoreceptor subtypes</td><td>Meissner corpuscles (light touch, fine discrimination — fingertips); Pacinian corpuscles (deep pressure/vibration — deep dermis/hypodermis); Merkel discs (sustained light touch/pressure); Ruffini endings (skin stretch).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="peripheral-cranial-nerves" style="--acc:#b8860b;--acc-bg:#f5eedd;--acc-zebra:#faf7ee;--acc-ink:#906909">
+    <div class="shead"><span class="dot" style="background:#b8860b"></span><h2>Peripheral and Cranial Nerves</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Spinal nerve formation</td><td>31 pairs (8 cervical, 12 thoracic, 5 lumbar, 5 sacral, 1 coccygeal): dorsal root (sensory, cell bodies in the dorsal root ganglion) + ventral root (motor) unite, then split into a dorsal ramus (deep back) and a larger ventral ramus (body wall/limbs).</td></tr>
+          <tr><td class="h">Nerve plexuses</td><td>Cervical (C1–C4, phrenic nerve); brachial (C5–T1 → median, ulnar, radial, musculocutaneous, axillary nerves); lumbar (L1–L4 → femoral, obturator); sacral (L4–S4 → sciatic, the body's largest nerve) — lumbar and sacral often grouped as the lumbosacral plexus.</td></tr>
+          <tr><td class="h">Reflex arc</td><td>Receptor → sensory neuron → integration center (spinal cord) → (± interneuron) → motor neuron → effector. Monosynaptic (patellar/stretch reflex) = sensory neuron synapses directly on the motor neuron, fastest. Polysynaptic (withdrawal reflex) = one or more interneurons, can recruit the opposite limb.</td></tr>
+          <tr><td class="h">Cranial nerves I–IV</td><td>I Olfactory (cribriform plate — smell); II Optic (optic canal — vision); III Oculomotor (superior orbital fissure — most eye movements, eyelid elevation, pupillary constriction/lens accommodation); IV Trochlear (superior orbital fissure — superior oblique).</td></tr>
+          <tr><td class="h">Cranial nerves V–VIII</td><td>V Trigeminal (V1/V2: superior orbital fissure/foramen rotundum, V3: foramen ovale — facial sensation, mastication muscles via V3); VI Abducens (superior orbital fissure — lateral rectus); VII Facial (internal acoustic meatus → stylomastoid foramen — facial expression, anterior 2/3 tongue taste, lacrimal/salivary glands); VIII Vestibulocochlear (internal acoustic meatus — hearing & balance).</td></tr>
+          <tr><td class="h">Cranial nerves IX–XII</td><td>IX Glossopharyngeal (jugular foramen — posterior tongue/pharynx taste-sensation, stylopharyngeus, carotid body/sinus reflex input); X Vagus (jugular foramen — parasympathetic to thoracic/abdominal viscera, pharyngeal/laryngeal muscles); XI Accessory (jugular foramen — sternocleidomastoid & trapezius); XII Hypoglossal (hypoglossal canal — tongue muscles).</td></tr>
+          <tr><td class="h">CN III & IX clinical highlights</td><td>CN III carries parasympathetic fibers via the ciliary ganglion for pupillary constriction and lens accommodation, beyond its motor role. CN IX gives a carotid sinus/carotid body branch carrying baroreceptor/chemoreceptor input for blood pressure and breathing reflexes, beyond its taste/motor roles.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Anatomy Exam 1 Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

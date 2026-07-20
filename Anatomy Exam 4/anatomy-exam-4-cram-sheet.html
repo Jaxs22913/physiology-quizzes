@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Anatomy Exam 4</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#2c5f8a;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 4 · Class of 2028</div>
+    <h1>Anatomy Exam 4 Cram Sheet</h1>
+    <p class="sub">Appendicular Skeleton, Axial Skeleton, Appendicular Musculature, and Axial Musculature, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#appendicular-skeleton" style="color:#224a6c"><span class="dot" style="background:#2c5f8a"></span>Appendicular Skeleton</a>
+      <a href="#axial-skeleton" style="color:#473a6c"><span class="dot" style="background:#5b4a8a"></span>Axial Skeleton</a>
+      <a href="#appendicular-musculature" style="color:#7a2e2e"><span class="dot" style="background:#9c3b3b"></span>Appendicular Musculature</a>
+      <a href="#axial-musculature" style="color:#8d4f17"><span class="dot" style="background:#b5651d"></span>Axial Musculature</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="anatomy-exam-4-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="appendicular-skeleton" style="--acc:#2c5f8a;--acc-bg:#e1e9ef;--acc-zebra:#f0f4f7;--acc-ink:#224a6c">
+    <div class="shead"><span class="dot" style="background:#2c5f8a"></span><h2>Appendicular Skeleton</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Pectoral girdle</td><td>Only 2 bones: clavicle (S-shaped; medial/sternal end → manubrium, lateral/acromial end → scapula's acromion; conoid tubercle near acromial end, costal tuberosity near sternal end) + scapula. Trades stability for mobility.</td></tr>
+          <tr><td class="h">Scapula landmarks</td><td>Scapular spine divides supraspinous fossa (above) from infraspinous fossa (below) and continues laterally into the acromion (AC joint). Coracoid process hooks forward anteriorly; glenoid cavity (lateral) articulates with the humeral head.</td></tr>
+          <tr><td class="h">Humerus</td><td>Head → glenoid cavity; greater/lesser tubercles flank head (rotator-cuff attachment); deltoid tuberosity on shaft. Distally: capitulum (articulates with radius) + trochlea (articulates with ulna); coronoid & olecranon fossae accommodate the ulna in flexion/extension.</td></tr>
+          <tr><td class="h">Radius & ulna</td><td>Ulna is medial, forms most of elbow via trochlear notch (olecranon posterior + coronoid process anterior). Radius is lateral; radial head rotates against capitulum/radial notch; radial tuberosity = biceps brachii insertion; distal radius carries the ulnar notch. Interosseous membrane binds the two shafts.</td></tr>
+          <tr><td class="h">Hand bones</td><td>8 carpals (proximal row: scaphoid, lunate, triquetrum, pisiform; distal row: trapezium, trapezoid, capitate, hamate) → 5 metacarpals (1=thumb through 5=pinky) → phalanges: 3 per finger (digits 2–5), only 2 for the thumb (no middle phalanx).</td></tr>
+          <tr><td class="h">Pelvic girdle</td><td>2 coxal bones, each fusing ilium (superior wing) + ischium (posteroinferior, sit bone) + pubis (anteroinferior, pubic symphysis) at the acetabulum (receives femoral head). Landmarks: AIIS, lesser sciatic notch, obturator foramen, arcuate line, auricular surface (sacroiliac joint). Female pelvis is wider/shallower with larger outlet (childbirth adaptation).</td></tr>
+          <tr><td class="h">Femur & patella</td><td>Femur = longest/strongest bone; head → acetabulum via the femoral neck; greater/lesser trochanters (muscle attachment) joined anteriorly by the intertrochanteric line; distal medial/lateral condyles form the knee joint with the tibia. Patella = sesamoid bone within the quadriceps tendon, apex points inferiorly toward the tibial tuberosity.</td></tr>
+          <tr><td class="h">Tibia, fibula & foot</td><td>Tibia is medial, weight-bearing, with tibial tuberosity (patellar ligament) and medial malleolus. Fibula is lateral, non-weight-bearing, forms the lateral malleolus; interosseous membrane connects the two shafts. Foot mirrors the hand: 7 tarsals (including calcaneus, the heel bone), 5 metatarsals, phalanges 2 (great toe) / 3 (other toes).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="axial-skeleton" style="--acc:#5b4a8a;--acc-bg:#e8e6ef;--acc-zebra:#f4f2f7;--acc-ink:#473a6c">
+    <div class="shead"><span class="dot" style="background:#5b4a8a"></span><h2>Axial Skeleton</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Bone tissue types</td><td>Compact bone = dense outer shell, bears most mechanical load; spongy/trabecular bone = interior lattice, concentrated near long-bone ends. Medullary cavity = central marrow space. Periosteum wraps the external surface (blood supply, tendon/ligament attachment). Osteon = compact bone's unit: concentric lamellae around a central canal, linked by perforating canals; interstitial lamellae fill gaps between osteons.</td></tr>
+          <tr><td class="h">Bone classes & growth</td><td>4 shapes: long (humerus), short (wrist/ankle only), flat (cranium), sesamoid (patella). Growth: primary ossification center in diaphysis (fetal) → secondary centers in epiphyses (postnatal) → epiphyseal plate (hyaline cartilage; zones: resting, proliferative, hypertrophic, calcification) drives longitudinal growth until it ossifies and fuses the epiphysis to the diaphysis.</td></tr>
+          <tr><td class="h">Skull overview</td><td>29 named bones: 14 facial + 8 cranial + 7 associated (hyoid, ossicles) → 80 axial + 126 appendicular = 206 total adult bones. Sutures: sagittal (between parietals), coronal (frontal–parietals), lambdoid (occipital–parietals). 3 cranial fossae: anterior (frontal lobes), middle (sella turcica/sphenoid), posterior (cerebellum, foramen magnum).</td></tr>
+          <tr><td class="h">Key cranial bones</td><td>Occipital: foramen magnum + occipital condyles (articulate with atlas/C1). Frontal: supra-orbital foramen. Temporal: houses middle/inner ear, stylomastoid foramen (CN VII exit). Sphenoid: sella turcica (houses pituitary), foramen ovale/spinosum (CN V branches). Ethmoid: crista galli (falx cerebri anchor), cribriform plate (CN I fibers).</td></tr>
+          <tr><td class="h">Cranial foramina</td><td>Foramen magnum → spinal cord, vertebral arteries, CN XI. Optic canal → CN II. Superior orbital fissure → CN III, IV, V1, VI. Foramen rotundum → V2. Foramen ovale → V3. Foramen spinosum → middle meningeal artery. Stylomastoid foramen → CN VII. Jugular foramen (temporal + occipital) → CN IX, X, XI + internal jugular vein.</td></tr>
+          <tr><td class="h">Facial bones & mandible</td><td>Maxillae = upper jaw + maxillary sinuses (1 of 4 paranasal sinuses, with frontal/sphenoidal/ethmoid). Vomer + ethmoid's perpendicular plate = bony nasal septum. Mandible = only mobile skull bone; condylar process → TMJ; coronoid process = muscle attachment; mental foramen = nerve exit. Hyoid is suspended by ligaments only (no bony articulation), anchors tongue/larynx muscles. Fontanelles (e.g. anterior) = unossified gaps allowing birth compression and brain growth.</td></tr>
+          <tr><td class="h">Vertebral column overview</td><td>26 bones: 7 cervical + 12 thoracic + 5 lumbar + sacrum (5 fused) + coccyx (3–5 fused). 4 alternating curves: thoracic & sacral = primary (prenatal); cervical & lumbar = secondary (postnatal). Typical vertebra: body + vertebral arch (pedicles/laminae) enclosing the vertebral foramen; spinous + transverse processes; superior/inferior articular processes.</td></tr>
+          <tr><td class="h">Regional vertebrae & thorax</td><td>Cervical (C1–C7): transverse foramen + bifid spinous process (except C7). C1/atlas: no body, articulates with occipital condyles ('yes'). C2/axis: dens pivots inside atlas ('no'). C7: long palpable spinous process. Thoracic (T1–T12): costal facets for ribs. Lumbar (L1–L5): largest, thickest bodies. Ribs: true 1–7 (direct to sternum), false 8–10 (indirect, vertebrochondral) & 11–12 (floating). Sternum: manubrium + body + xiphoid process.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="appendicular-musculature" style="--acc:#9c3b3b;--acc-bg:#f1e4e4;--acc-zebra:#f8f1f1;--acc-ink:#7a2e2e">
+    <div class="shead"><span class="dot" style="background:#9c3b3b"></span><h2>Appendicular Musculature</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Axial vs. appendicular muscle</td><td>Axial muscles position the head/vertebral column and move the rib cage; appendicular muscles stabilize/move the limbs and girdles, absorb shock during locomotion, and reinforce joints. Action line crossing a joint: anterior = flexor, posterior = extensor, medial = adductor/medial rotator, lateral = abductor/lateral rotator.</td></tr>
+          <tr><td class="h">Scapula positioners</td><td>Trapezius, rhomboid major/minor, levator scapulae, serratus anterior, pectoralis minor, subclavius. Trapezius has the broadest range (elevate/depress/rotate scapula-clavicle, extend neck). Serratus anterior protracts the shoulder and rotates the scapula (glenoid faces up); innervated by the long thoracic nerve — a lesion causes a 'winged scapula.'</td></tr>
+          <tr><td class="h">Arm movers</td><td>Pectoralis major: flexion, adduction, medial rotation. Deltoid: abduction. Coracobrachialis: adduction. Latissimus dorsi: extension, adduction, medial rotation.</td></tr>
+          <tr><td class="h">Rotator cuff</td><td>Supraspinatus: abduction. Infraspinatus: lateral rotation. Teres minor: adduction + lateral rotation. Subscapularis: medial rotation. All four stabilize the humeral head within the glenoid cavity.</td></tr>
+          <tr><td class="h">Elbow & forearm movers</td><td>Elbow flexors — biceps brachii, brachialis, brachioradialis — all originate on the humerus. Elbow extensor triceps brachii (all 3 heads insert on the olecranon). Opposing pronator/supinator pair: pronator teres/pronator quadratus vs. supinator.</td></tr>
+          <tr><td class="h">Wrist & hand muscles</td><td>Wrist flexors: flexor carpi radialis, flexor carpi ulnaris, palmaris longus. Extensors: extensor carpi radialis longus/brevis, extensor carpi ulnaris (radial = abduct, ulnar = adduct). Extrinsic hand muscles (forearm origin, strength/crude control) vs. intrinsic (within hand, fine control: thenar/hypothenar, lumbricals, interossei).</td></tr>
+          <tr><td class="h">Thigh movers (4 groups)</td><td>Gluteal group: gluteus maximus (hip extension), gluteus medius/minimus + tensor fasciae latae (abduction). Lateral rotator group: piriformis, obturators, gemelli, quadratus femoris (lateral rotation, abduction). Adductor group: adductor brevis/longus/magnus, pectineus, gracilis. Iliopsoas group: iliacus + psoas major, the primary hip flexors.</td></tr>
+          <tr><td class="h">Knee movers</td><td>Quadriceps femoris (vastus lateralis/medialis/intermedius + rectus femoris, which also flexes the hip): extends the leg. Hamstrings (biceps femoris, semimembranosus, semitendinosus): flex the leg, extend the hip. Sartorius flexes hip + knee; with gracilis and semitendinosus forms the pes anserine at the medial tibia.</td></tr>
+          <tr><td class="h">Leg & foot movers</td><td>Tibialis anterior: dorsiflexion. Gastrocnemius/soleus (converge on calcaneal/Achilles tendon): plantarflexion. Tibialis posterior: plantarflexion + inversion. Fibularis longus/brevis: eversion. Intrinsic foot muscles mirror the hand's fine-control layout.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="axial-musculature" style="--acc:#b5651d;--acc-bg:#f5e9df;--acc-zebra:#faf4ef;--acc-ink:#8d4f17">
+    <div class="shead"><span class="dot" style="background:#b5651d"></span><h2>Axial Musculature</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Muscle coverings & NMJ</td><td>Epimysium (whole muscle) → perimysium (fascicles) → endomysium (individual fiber/sarcolemma). At the neuromuscular junction: motor neuron releases acetylcholine (ACh) across the synaptic cleft → binds nicotinic receptors on the motor end plate → triggers contraction → terminated by acetylcholinesterase. Schwann cells cap/support the junction.</td></tr>
+          <tr><td class="h">Facial expression muscles</td><td>All innervated by CN VII (facial nerve). Mouth: orbicularis oris, zygomaticus major/minor, buccinator, risorius, mentalis, depressor labii inferioris/anguli oris, levator labii superioris. Eyes: orbicularis oculi, corrugator supercilii, levator palpebrae superioris (exception — innervated by CN III; dysfunction → ptosis). Nose: procerus, nasalis. Scalp: occipitofrontalis, temporoparietalis. Neck: platysma.</td></tr>
+          <tr><td class="h">Muscles of mastication</td><td>Masseter, temporalis, medial pterygoid close/elevate the jaw; lateral pterygoid is the lone jaw-opener. All four innervated by the mandibular branch of CN V. Temporalis inserts on the coronoid process; masseter inserts on the mandibular angle.</td></tr>
+          <tr><td class="h">Extra-ocular & tongue/neck</td><td>'LR6 SO4 3': lateral rectus (abduction) = CN VI, superior oblique (rotates eye down and out) = CN IV, remaining 4 (medial/superior/inferior rectus, inferior oblique) = CN III. Tongue muscles = CN XII except palatoglossus (CN X). Sternocleidomastoid (CN XI): bilateral = neck flexion, unilateral = rotates head to opposite side.</td></tr>
+          <tr><td class="h">Swallowing musculature</td><td>Infrahyoid/suprahyoid muscles (omohyoid, sternohyoid, sternothyroid, thyrohyoid, digastric, mylohyoid) position the hyoid and larynx. Pharyngeal constrictors = CN X; laryngeal elevators = CN IX & X; palatal muscles = CN V & X.</td></tr>
+          <tr><td class="h">Back muscles</td><td>Extrinsic (appendicular, attach limb to trunk): superficial layer (trapezius, latissimus dorsi, levator scapulae, rhomboids) + intermediate layer (serratus posterior superior/inferior, for ventilation). Intrinsic (true deep back, act as a functional group): intermediate erector spinae — spinalis, longissimus, iliocostalis (medial→lateral) — extends the column; deep layer (multifidus, rotatores, interspinales, intertransversarii) fine-tunes extension/rotation/lateral flexion. Anteriorly: longus capitis/colli (neck flex/rotate), quadratus lumborum (lateral flexion).</td></tr>
+          <tr><td class="h">Ventilation & abdominal wall</td><td>External intercostals elevate ribs (inhalation) vs. internal intercostals depress them (exhalation); scalenes elevate, transversus thoracis depresses. Diaphragm (phrenic nerves, C3–C5): contracts/flattens/descends → inhalation, relaxes/rises → exhalation. Abdominal wall: external oblique, internal oblique, transversus abdominis compress the abdomen (obliques also depress ribs, laterally flex trunk); rectus abdominis (linea alba, tendinous inscriptions) flexes the column and depresses the ribs.</td></tr>
+          <tr><td class="h">Pelvic floor</td><td>Innervation S2–S4; individual muscles indistinguishable clinically, so dysfunction is worked up by imaging. Urogenital triangle (anterior): superficial transverse perineal, ischiocavernosus, bulbospongiosus, deep transverse perineal, external urethral sphincter. Anal triangle (posterior): levator ani (iliococcygeus + pubococcygeus), coccygeus, obturator internus, external anal sphincter. Levator ani + coccygeus form the pelvic diaphragm.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Anatomy Exam 4 Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

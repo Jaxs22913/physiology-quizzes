@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physiology Exam 2</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#b8860b;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physiology Exam 2 · Class of 2028</div>
+    <h1>Physiology Exam 2 Cram Sheet</h1>
+    <p class="sub">Hearing/Taste/Smell, Cardiac Physiology, Circulatory Physiology I &amp; II, and Physiology of Vision, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#hearing-taste-smell" style="color:#906909"><span class="dot" style="background:#b8860b"></span>The Sense of Hearing, Taste, and Smell</a>
+      <a href="#cardiac" style="color:#962031"><span class="dot" style="background:#c0293f"></span>Cardiac Physiology</a>
+      <a href="#circ1" style="color:#1f4e81"><span class="dot" style="background:#2864a6"></span>Circulatory Physiology I</a>
+      <a href="#circ2" style="color:#186c57"><span class="dot" style="background:#1f8a70"></span>Circulatory Physiology II</a>
+      <a href="#vision" style="color:#53317d"><span class="dot" style="background:#6a3fa0"></span>Physiology of Vision</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="physiology-exam-2-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="hearing-taste-smell" style="--acc:#b8860b;--acc-bg:#f5eedd;--acc-zebra:#faf7ee;--acc-ink:#906909">
+    <div class="shead"><span class="dot" style="background:#b8860b"></span><h2>The Sense of Hearing, Taste, and Smell</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Tympanic membrane & ossicles</td><td>Tympanic membrane's area ~17× larger than the oval window, concentrating force to overcome the air-to-fluid impedance mismatch; sound passes through the ossicular chain (malleus, incus, stapes). Attenuation reflex (stapedius + tensor tympani; stapedius = smallest skeletal muscle) dampens loud sound by 30–40 dB, especially low frequencies.</td></tr>
+          <tr><td class="h">Cochlea & place principle</td><td>Organ of Corti sits on the basilar membrane in the scala media; stereocilia shear against the tectorial membrane, depolarizing (one direction) or hyperpolarizing (other) hair cells. Inner hair cells carry ~90% of the signal despite being outnumbered 3–4:1 by outer cells. Place principle: stiff base resonates to high frequency, flexible apex to low frequency — position encodes pitch, displacement encodes loudness.</td></tr>
+          <tr><td class="h">Decibels & central auditory pathway</td><td>Decibels are logarithmic (10× energy = 10 dB) to span the ear's huge intensity range. Auditory cortex is tonotopically mapped; destroying it abolishes pattern discrimination though basic detection may persist. Localization: lateral superior olivary nuclei compare interaural intensity, medial nuclei compare interaural timing.</td></tr>
+          <tr><td class="h">Taste qualities & thresholds</td><td>Five basic qualities: sweet, sour, salty, bitter, umami (rest is smell). Sour = H+ (~2 mM), salty = Na+ (~10 mM), sweet = sucrose (~20 mM), umami = glutamate (<10 mM), bitter = alkaloids (quinine ~0.008 mM, strychnine ~0.0001 mM) — bitter's extreme sensitivity, especially in infants, is a poison-detection mechanism. Salty/sweet/sour/umami depolarize via external ion entry; bitter uniquely triggers internal Ca2+ release.</td></tr>
+          <tr><td class="h">Taste anatomy & pathway</td><td>Circumvallate (posterior, ~50% of buds), foliate (lateral, ~25%), fungiform (anterior, ~25%) papillae hold taste buds; filiform papillae are purely tactile. CN VII (anterior 2/3), CN IX (posterior 1/3), CN X (posterior mouth) → solitary nucleus → thalamus → cortex.</td></tr>
+          <tr><td class="h">Olfactory transduction</td><td>Odorant binds cilia receptor → G-protein → adenylyl cyclase → cAMP → opens Na+ channels → depolarization (same second-messenger logic as phototransduction). ~1,000 olfactory receptor genes but only ~400 encode working receptors; combinatorial activation pattern (not one receptor per smell) encodes odor identity. Must be volatile + water-soluble + lipid-soluble to be smelled. CN I is the only cranial nerve dedicated solely to smell.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="cardiac" style="--acc:#c0293f;--acc-bg:#f6e1e4;--acc-zebra:#fbf0f2;--acc-ink:#962031">
+    <div class="shead"><span class="dot" style="background:#c0293f"></span><h2>Cardiac Physiology</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Syncytium & action potential</td><td>Atrial/ventricular muscle are separate syncytia (gap junctions at intercalated disks), insulated from each other except via the conduction system. Cardiac AP plateau ~200 ms (vs 1–5 ms skeletal) from ↓K+ and ↑Ca2+ conductance; long absolute refractory period (0.25–0.30 s in ventricles) makes tetany impossible.</td></tr>
+          <tr><td class="h">EC coupling (CACR)</td><td>Calcium-activated calcium release: Ca2+ entry through T-tubule L-type channels triggers the ryanodine receptor to release far more Ca2+ from the SR — unlike skeletal muscle's purely voltage-triggered release — so ventricular contraction strength depends on extracellular Ca2+.</td></tr>
+          <tr><td class="h">Cardiac cycle & stroke volume</td><td>Systole (isovolumic contraction, ejection) / diastole (isovolumic relaxation, rapid inflow, diastasis, atrial systole). S1 = A-V valve closure, S2 = semilunar valve closure; papillary muscles prevent leaflet backflow, don't aid closure. EF = SV/EDV. Preload ∝ EDV, afterload ∝ mean arterial pressure, contractility (↑ by HR, sympathetics, glycosides, Ca2+) together set SV. Frank-Starling: ↑venous return → stronger contraction, independent of innervation.</td></tr>
+          <tr><td class="h">Conduction system rates</td><td>SA node paces fastest (70–80/min) vs AV node (40–60/min) vs Purkinje (15–40/min); SA node's unstable resting potential (−55 to −60 mV) inactivates fast Na+ channels, relying on a slow funny Na+ current (phase 4) plus L-type Na+/Ca2+ current (phase 0). AV node = single largest delay (~0.09 s), letting atria finish emptying. Purkinje conducts fast (2–4 m/s vs 0.2–0.5 m/s in the node); QRS ≈ 0.06 s.</td></tr>
+          <tr><td class="h">Autonomic control</td><td>Sympathetic → beta-1 receptors → +chronotropic/+dromotropic/+inotropic (norepinephrine ↑Na+/Ca2+ permeability, more positive resting potential). Parasympathetic (vagal) → muscarinic receptors → decreases all three (acetylcholine hyperpolarizes SA node via ↑K+ permeability, can transiently halt conduction → ventricular escape). Resting vagal tone keeps HR below the SA node's intrinsic rate; atropine or vagotomy unmasks a faster rate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="circ1" style="--acc:#2864a6;--acc-bg:#e1e9f3;--acc-zebra:#f0f4f9;--acc-ink:#1f4e81">
+    <div class="shead"><span class="dot" style="background:#2864a6"></span><h2>Circulatory Physiology I</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Blood volume distribution</td><td>~84% of ~5 L blood volume sits in the systemic circulation; veins/venules hold ~60–64% as a low-pressure reservoir. Capillaries have ~1000× the aorta's total cross-sectional area → slowest flow velocity, allowing time for exchange. Pressure falls from ~100 mmHg (large arteries) to ~0 (right atrium); the single largest drop is across the arteriolar-capillary junction (arterioles = main resistance site).</td></tr>
+          <tr><td class="h">Flow, resistance, Poiseuille</td><td>Q = ΔP/R. Conductance ∝ r⁴ (Poiseuille's law), so halving a vessel's radius causes a 16-fold rise in resistance — the basis of arteriolar vasomotor control. In a parallel arrangement (peripheral circulation), total resistance is lower than any single vessel's, enabling independent organ flow regulation.</td></tr>
+          <tr><td class="h">Venous capacitance & pulse pressure</td><td>Veins are ~8× more distensible and ~24× more capacitant than arteries, making them an effective reservoir; venoconstriction shifts stored blood to the arterial side and raises cardiac output. Pulse pressure = systolic − diastolic (e.g., 120−80 = 40 mmHg), measured clinically via Korotkoff sounds; it dampens progressively in smaller peripheral arteries.</td></tr>
+          <tr><td class="h">Capillary exchange</td><td>6–7 nm intercellular slit pores; lipid-soluble gases (O2, CO2) cross the membrane directly, lipid-insoluble solutes (water, ions, glucose) cross via clefts — permeability falls steeply with size (water ≈1.0, albumin ≈0.0001). Starling forces: capillary hydrostatic P + interstitial colloid osmotic P push fluid out; plasma colloid osmotic P (~75% from albumin) + interstitial fluid P pull it in. Net ~13 mmHg outward filtration (arteriolar end), ~7 mmHg inward reabsorption (venous end); ~90% of filtrate is reabsorbed, ~10% returned via lymphatics.</td></tr>
+          <tr><td class="h">Lymphatics</td><td>Accessory route returning the ~10% of filtered fluid capillaries don't reabsorb; also central to fat absorption and immune surveillance. One-way flap valves (overlapping endothelial cells) plus pumping (smooth muscle contraction, external compression, arterial pulsation) drive lymph toward the great veins.</td></tr>
+          <tr><td class="h">Local blood flow control</td><td>Vasodilator theory (active tissue releases adenosine, CO2, lactic acid, K+, H+ → local dilation) plus oxygen demand theory (falling local O2 triggers dilation) together produce autoregulation. Myogenic mechanism (Laplace's law: wall tension ∝ pressure × radius/wall thickness): rising pressure stretches the wall → reflexive constriction limiting flow rise. Long-term regulation = angiogenesis (VEGF, FGF from ischemic tissue) — more powerful than acute mechanisms. Vasomotor center (VMC) sets baseline sympathetic vasoconstrictor tone via norepinephrine.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="circ2" style="--acc:#1f8a70;--acc-bg:#e0efeb;--acc-zebra:#eff7f5;--acc-ink:#186c57">
+    <div class="shead"><span class="dot" style="background:#1f8a70"></span><h2>Circulatory Physiology II</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Renal-body fluid mechanism</td><td>Long-term BP control is dominated by the kidneys: ↑extracellular fluid volume → ↑arterial pressure → pressure natriuresis/diuresis (↑salt/water excretion) returns volume and pressure to normal. This high-gain negative feedback means changing total peripheral resistance alone cannot permanently shift arterial pressure — only shifting the renal function curve itself does; equilibrium = intersection of the renal output curve and the salt/water intake line.</td></tr>
+          <tr><td class="h">Renin-angiotensin system</td><td>Falling pressure → renin (from afferent arteriolar smooth muscle) cleaves angiotensinogen (liver) → angiotensin I → ACE (pulmonary endothelium) → angiotensin II: potent vasoconstrictor that also promotes renal Na+/water retention and shifts the renal function curve rightward — a critical buffer during hemorrhage. Angiotensin II, aldosterone, sympathetics, and endothelin suppress renal excretion (↑pressure); ANP, nitric oxide, and dopamine enhance it (↓pressure).</td></tr>
+          <tr><td class="h">Venous return & cardiac output</td><td>Venous return and cardiac output must always be equal; venous return largely controls cardiac output (Frank-Starling law). SA node stretch raises rate 10–15%; the Bainbridge reflex (atrial stretch → vasomotor center → sympathetic/vagal output) raises it further. Venous return depends on right atrial pressure (impeding force), mean systemic filling pressure (~7 mmHg equilibrium, raised by ↑blood volume or sympathetic venoconstriction), and resistance to venous return (~⅔ venous, ⅓ arteriolar).</td></tr>
+          <tr><td class="h">Baroreceptor reflex</td><td>Arterial baroreceptors (carotid sinus, aortic arch) fire more as pressure rises, inhibiting the vasoconstrictor center and activating the vagal center to lower pressure — most sensitive around 100 mmHg. They reset with sustained pressure changes and so contribute nothing to true long-term control.</td></tr>
+          <tr><td class="h">Chemoreceptors & CNS ischemic response</td><td>Carotid/aortic body chemoreceptors, silent above 80 mmHg, fire with O2 lack, CO2 excess, or acidosis, exciting the vasomotor center once pressure has already fallen substantially. The CNS ischemic response (falling cerebral flow → CO2 accumulation) is one of the most powerful sympathetic activators in the body, an emergency mechanism to preserve brain perfusion.</td></tr>
+          <tr><td class="h">Coronary flow</td><td>Normal coronary flow ~225 mL/min (~4–5% of cardiac output); squeezed during systole by muscle compression and occurs mainly in diastole. Governed almost entirely by local metabolic factors (oxygen chief among them) rather than nerves — just like skeletal muscle.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="vision" style="--acc:#6a3fa0;--acc-bg:#eae4f2;--acc-zebra:#f5f2f8;--acc-ink:#53317d">
+    <div class="shead"><span class="dot" style="background:#6a3fa0"></span><h2>Physiology of Vision</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Refraction & accommodation</td><td>~⅔ of the eye's total refractive power (~59 diopters) comes from the fixed corneal curvature; underwater vision blurs badly because water's refractive index nearly matches the cornea's. The lens supplies adjustable power (20 → up to 34 diopters); parasympathetic ciliary muscle contraction releases zonule (suspensory fiber) tension, letting the lens round up = accommodation.</td></tr>
+          <tr><td class="h">Presbyopia</td><td>Age-related loss of accommodation from denaturation of lens proteins that stiffens the lens; accommodation range falls from ~14 diopters in childhood to near 0 by age 70.</td></tr>
+          <tr><td class="h">Intraocular fluid</td><td>Aqueous humor (secreted by the ciliary body, drains via the trabecular meshwork into the canal of Schlemm) sets intraocular pressure (~15 mmHg normal); chronic elevation compresses optic nerve axons — central risk factor for glaucoma. Vitreous humor fills the posterior chamber and, unlike aqueous, does not continuously recycle.</td></tr>
+          <tr><td class="h">Rods vs. cones</td><td>~100 million rods/retina: achromatic, highly sensitive, saturate in daylight, built for scotopic (night) vision. ~3 million cones: trichromatic (red/green/blue photopsins), less sensitive, capable of fine acuity and color, built for photopic (day) vision. Fovea centralis has cones only, wired 1:1 to bipolar cells → the eye's sharpest vision.</td></tr>
+          <tr><td class="h">Phototransduction</td><td>Photon absorption flips retinal 11-cis → all-trans within rhodopsin, splitting it and activating a cascade that closes Na+/Ca2+ channels → hyperpolarization (opposite polarity from most sensory transduction). Retinal is regenerated from vitamin A; deficiency causes night blindness (nyctalopia), a leading cause of preventable childhood blindness.</td></tr>
+          <tr><td class="h">Retinal processing</td><td>Horizontal cells provide inhibitory lateral feedback that sharpens contrast; amacrine cells (~30 types) detect onset, offset, or motion. Ganglion cells alone fire true action potentials, continuously at a spontaneous baseline, with information carried as rate changes. P cells (parvocellular LGN) = small, color/detail-sensitive, slow; M cells (magnocellular LGN) = large, fast, motion-sensitive. ~1 million ganglion axons converge at the optic disc, creating each eye's blind spot (no photoreceptors there).</td></tr>
+          <tr><td class="h">Visual pathway</td><td>At the optic chiasm, nasal retinal fibers cross while temporal fibers stay uncrossed, so each hemisphere receives the corresponding half-field from both eyes. The lateral geniculate nucleus keeps the two eyes' inputs segregated by layer (lost in the visual cortex, whose ocular-dominance columns compare both eyes). Beyond the LGN, projections reach the pretectal nuclei (pupillary light reflex, accommodation), superior colliculus (rapid eye movements), and suprachiasmatic nucleus (circadian rhythm); a shared ~104° visual field enables stereoscopic depth perception.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physiology Exam 2 Study Guide (PAJ 5000 Graduate Physiology, Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physiology Exam 3</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#b91c1c;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physiology Exam 3 · Class of 2028</div>
+    <h1>Physiology Exam 3 Cram Sheet</h1>
+    <p class="sub">All 7 systems condensed to their one-glance recap facts — Hemostasis, Immunology, GI, Metabolism &amp; the Liver, Nutrition &amp; Thermoregulation, and Respiration I &amp; II.</p>
+    <div class="toc">
+      <a href="#s1" style="color:#901616"><span class="dot" style="background:#b91c1c"></span>Blood & Hemostasis</a>
+      <a href="#s2" style="color:#0a736a"><span class="dot" style="background:#0d9488"></span>Blood & Immunology</a>
+      <a href="#s3" style="color:#117f3a"><span class="dot" style="background:#16a34a"></span>Gastrointestinal Physiology</a>
+      <a href="#s4" style="color:#a95d05"><span class="dot" style="background:#d97706"></span>Metabolism & the Liver</a>
+      <a href="#s5" style="color:#612db9"><span class="dot" style="background:#7c3aed"></span>Nutrition, Energetics & Thermoregulation</a>
+      <a href="#s6" style="color:#1d4db7"><span class="dot" style="background:#2563eb"></span>Respiration I — Ventilation & Gas Exchange</a>
+      <a href="#s7" style="color:#02679b"><span class="dot" style="background:#0284c7"></span>Respiration II — Gas Transport & Control</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="physiology-exam-3-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="s1" style="--acc:#b91c1c;--acc-bg:#f5dfdf;--acc-zebra:#faefef;--acc-ink:#901616">
+    <div class="shead"><span class="dot" style="background:#b91c1c"></span><h2>Blood & Hemostasis</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Blood's three jobs</td><td>Transport (O₂, nutrients, waste), regulation (pH, temperature), protection (immunity, clotting).</td></tr>
+          <tr><td class="h">Hematocrit vs. hemoglobin</td><td>Hematocrit = % red cells (~40–45%). Hemoglobin = carrier protein (~15 g/dL); sets oxygen-carrying capacity.</td></tr>
+          <tr><td class="h">Hematopoiesis</td><td>All lines from marrow stem cells; EPO (kidney) drives red cells via negative feedback; needs iron, B₁₂, folate.</td></tr>
+          <tr><td class="h">Coagulation</td><td>Spasm → platelet plug → cascade. Extrinsic + intrinsic → factor X → thrombin → fibrin (XIII cross-links). Ca²⁺ & vitamin K required; antithrombin restrains.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s2" style="--acc:#0d9488;--acc-bg:#ddf0ee;--acc-zebra:#eef8f7;--acc-ink:#0a736a">
+    <div class="shead"><span class="dot" style="background:#0d9488"></span><h2>Blood & Immunology</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">White cells</td><td>Neutrophils (first responders), macrophages (eat + present), eosinophils (parasites), basophils/mast (histamine), lymphocytes (specific + memory). Exit via diapedesis, home in by chemotaxis.</td></tr>
+          <tr><td class="h">Lymphatic ↔ immune</td><td>Lymphatics return leaked fluid and filter it through nodes (antigen checkpoints); spleen filters blood; lymphocytes recirculate. Blocked drainage → edema.</td></tr>
+          <tr><td class="h">Immune functions</td><td>Innate: barriers, phagocytes, complement (tag/recruit/lyse). Acquired: antibodies (neutralize, agglutinate, opsonize) and cytotoxic T-cells; memory persists.</td></tr>
+          <tr><td class="h">Innate vs. acquired + allergy</td><td>Innate = fast/general; acquired = specific/remembered (2nd response bigger). Allergy = IgE-coated mast cells releasing histamine on re-exposure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s3" style="--acc:#16a34a;--acc-bg:#def2e6;--acc-zebra:#eff9f2;--acc-ink:#117f3a">
+    <div class="shead"><span class="dot" style="background:#16a34a"></span><h2>Gastrointestinal Physiology</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Motility & hormones</td><td>Enteric NS + slow waves. Peristalsis pushes, segmentation mixes. Gastrin (acid+motility), secretin (bicarbonate for acid), CCK (bile+enzymes for fat).</td></tr>
+          <tr><td class="h">Enzymes</td><td>Carbs: amylase → disaccharidases. Protein: pepsin (acid) → proteases/peptidases. Fat: bile + lipase. Proteases secreted as zymogens.</td></tr>
+          <tr><td class="h">Bile & pancreas</td><td>Liver makes bile; gallbladder stores/concentrates; CCK releases it; amphipathic bile salts emulsify fat; recycled in ileum. Pancreas: bicarbonate (secretin) + enzymes (CCK).</td></tr>
+          <tr><td class="h">Liver</td><td>First-pass via portal vein: glucose buffer, detox, urea, bile, plasma proteins, storage, Kupffer filtering.</td></tr>
+          <tr><td class="h">Absorption</td><td>Villi/microvilli surface. Sugars & amino acids: Na⁺-coupled → blood → liver. Fat: micelles → chylomicrons → lymph → blood.</td></tr>
+          <tr><td class="h">Defecation</td><td>Gastrocolic reflex → mass movement. Internal sphincter (involuntary) relaxes; external sphincter (voluntary) allows delay.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s4" style="--acc:#d97706;--acc-bg:#faecdc;--acc-zebra:#fcf5ee;--acc-ink:#a95d05">
+    <div class="shead"><span class="dot" style="background:#d97706"></span><h2>Metabolism & the Liver</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Liver functions</td><td>Glucose buffer, detox + urea, bile, plasma proteins, storage; first-pass via portal vein.</td></tr>
+          <tr><td class="h">Glucose</td><td>Glycolysis (2 ATP, no O₂) → citric acid cycle → oxidative phosphorylation (most ATP, needs O₂). Insulin lowers, glucagon raises; gluconeogenesis feeds the glucose-dependent brain.</td></tr>
+          <tr><td class="h">Lipids</td><td>Beta-oxidation → acetyl-CoA; fasting → ketones. Transport: chylomicrons (diet), VLDL (liver out), LDL (to tissues), HDL (back to liver).</td></tr>
+          <tr><td class="h">Protein</td><td>Amino-acid pool; deamination/transamination frees the skeleton; urea cycle disposes nitrogen. Last-resort fuel. GH anabolic, cortisol catabolic.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s5" style="--acc:#7c3aed;--acc-bg:#ede3fc;--acc-zebra:#f6f1fe;--acc-ink:#612db9">
+    <div class="shead"><span class="dot" style="background:#7c3aed"></span><h2>Nutrition, Energetics & Thermoregulation</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Energy balance</td><td>In vs. out; surplus stored as fat. Carbs/protein 4 kcal/g, fat 9. Stores: fat (huge) > glycogen (~1 day) > glucose (minutes). Starvation: glycogen → fat → protein. Hypothalamus + ghrelin/leptin set appetite.</td></tr>
+          <tr><td class="h">Temperature</td><td>Hypothalamic set point ≈ 37 °C. Cold: vasoconstrict + shiver. Hot: vasodilate + sweat (evaporation cools). Loss: radiation, conduction, convection, evaporation. Fever = raised set point.</td></tr>
+          <tr><td class="h">Metabolic rate</td><td>BMR = largest slice (measured rested/fasting). + activity + thermic effect of food. ↑ thyroid, sympathetic, body size; ↓ with age. RQ: 1.0 carb, 0.7 fat.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s6" style="--acc:#2563eb;--acc-bg:#e0e9fc;--acc-zebra:#f0f4fe;--acc-ink:#1d4db7">
+    <div class="shead"><span class="dot" style="background:#2563eb"></span><h2>Respiration I — Ventilation & Gas Exchange</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Muscles</td><td>Diaphragm (phrenic nerve) for quiet breathing; accessory muscles for forced. Contract → volume ↑ → pressure ↓ → air in (Boyle's law).</td></tr>
+          <tr><td class="h">Compliance/elasticity</td><td>Compliance = ease of inflation; elastic recoil pulls inward; negative intrapleural pressure holds lungs open; pneumothorax → collapse.</td></tr>
+          <tr><td class="h">Volumes/capacities</td><td>Tidal + IRV + ERV + residual. Residual can't be exhaled (spirometry misses it). VC = movable air; TLC = everything.</td></tr>
+          <tr><td class="h">Surfactant</td><td>Lowers surface tension (most in small alveoli) → raises compliance, prevents collapse (Laplace).</td></tr>
+          <tr><td class="h">Gas exchange / membrane</td><td>Diffusion down partial-pressure gradients; O₂ in, CO₂ out; complete with safety margin. Fast because area is huge and membrane thin; CO₂ crosses easily (soluble).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="s7" style="--acc:#0284c7;--acc-bg:#dceef7;--acc-zebra:#edf6fb;--acc-ink:#02679b">
+    <div class="shead"><span class="dot" style="background:#0284c7"></span><h2>Respiration II — Gas Transport & Control</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Control centers</td><td>Medulla makes the rhythm; pons refines it. Central chemoreceptors sense CO₂/H⁺ (main driver); peripheral sense low O₂ (backup). Hering-Breuer guards over-inflation.</td></tr>
+          <tr><td class="h">O₂ transport</td><td>~98% on hemoglobin. S-curve: flat top loads in lungs, steep middle unloads at tissues. Right shift (CO₂, acid, heat, BPG) unloads more; left shift (cold, CO, fetal Hb) holds tighter.</td></tr>
+          <tr><td class="h">CO₂ transport</td><td>~70% bicarbonate (carbonic anhydrase), ~23% carbamino-Hb, ~7% dissolved. Chloride shift maintains charge.</td></tr>
+          <tr><td class="h">Breathing & pH</td><td>CO₂ + H₂O ⇌ H⁺ + HCO₃⁻. Hyperventilation → alkalosis; hypoventilation → acidosis. Lungs fast, kidneys slow/thorough.</td></tr>
+          <tr><td class="h">Tissue exchange</td><td>Low tissue PO₂ → O₂ diffuses out; high tissue PCO₂ → CO₂ diffuses in; right-shifted curve boosts unloading in active tissue.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physiology Exam 3 Field Guide (PAJ 5000 Graduate Physiology, Class of 2028). Every fact here is pulled from that guide's own one-glance recap tables &mdash; for the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physiology Exam 1</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#2c5f8a;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physiology Exam 1 · Class of 2028</div>
+    <h1>Physiology Exam 1 Cram Sheet</h1>
+    <p class="sub">Cell Physiology &amp; Membranes, Membrane Potentials &amp; Action Potentials, Nervous System Sensory &amp; Motor divisions, and Central Nervous System Function, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#cellphys" style="color:#224a6c"><span class="dot" style="background:#2c5f8a"></span>Cell Physiology and Cell Membranes</a>
+      <a href="#membrane-ap" style="color:#8d4218"><span class="dot" style="background:#b5541f"></span>Cell Membrane Potentials and Action Potentials</a>
+      <a href="#sensory" style="color:#53317d"><span class="dot" style="background:#6a3fa0"></span>Nervous System: Intro and Sensory</a>
+      <a href="#motor" style="color:#185f3b"><span class="dot" style="background:#1f7a4c"></span>Nervous System: Motor</a>
+      <a href="#cns-function" style="color:#811f31"><span class="dot" style="background:#a5283f"></span>Central Nervous System Function</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="physiology-exam-1-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="cellphys" style="--acc:#2c5f8a;--acc-bg:#e1e9ef;--acc-zebra:#f0f4f7;--acc-ink:#224a6c">
+    <div class="shead"><span class="dot" style="background:#2c5f8a"></span><h2>Cell Physiology and Cell Membranes</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Homeostasis & feedback</td><td>Stable internal environment (Bernard's milieu interieur) regulated at every level, gene to organ system. Negative feedback (baroreceptor reflex) promotes stability; positive feedback (hemorrhagic shock, AP depolarization) amplifies change rather than opposing it.</td></tr>
+          <tr><td class="h">Organelles</td><td>Rough ER (ribosome-studded) processes/folds proteins; smooth ER synthesizes lipids. Golgi packages secretion (constitutive or stimulated); lysosomes (acid hydrolases) digest endocytosed material, peroxisomes (oxidases) detoxify. Mitochondria yield up to 38 ATP per glucose; nucleus communicates via pores (~9 nm, permeable up to ~44,000 MW).</td></tr>
+          <tr><td class="h">Genetic information flow</td><td>Transcription: DNA → mRNA codons (AUG = start, UAA/UAG/UGA = stop). Translation: tRNA anticodons match codons at ribosomes (polyribosomes translate one strand together). S phase replicates DNA bidirectionally via Okazaki fragments (polymerase proofreads, ligase seals); mitosis (M phase) segregates chromosomes — interphase is >95% of the cell cycle.</td></tr>
+          <tr><td class="h">Membrane transport routes</td><td>Simple diffusion: lipid-soluble, no protein/energy needed. Facilitated diffusion: water-soluble via channel/carrier, Vmax set by transporter conformational-change speed, not transporter number. Aquaporins move water extremely fast (a red blood cell exchanges its volume ~100×/sec in capillaries); channel ion selectivity comes from dehydration chemistry (carbonyl oxygens dehydrate K+, glutamate residues dehydrate Na+).</td></tr>
+          <tr><td class="h">Active transport</td><td>Primary: Na+-K+ ATPase pumps 3 Na+ out/2 K+ in per cycle, using ~1/5 of a typical cell's energy budget (up to 2/3 of a neuron's); blocking it (ouabain) swells/bursts the cell. Secondary active transport harnesses another ion's gradient (usually Na+) — symporters move solute the same direction, antiporters the opposite direction.</td></tr>
+          <tr><td class="h">Osmosis & tonicity</td><td>Osmolarity depends on particle number, not mass (150 mM NaCl = 300 mOsm/L, since it dissociates into two particles). Tonicity ≠ osmolarity: 300 mOsm/L urea is isosmotic but not isotonic since urea is permeant and drags water in, swelling/bursting the cell. Steady-state volume is set by impermeant particles (Na+, K+, proteins); permeant solutes (urea, glycerol) cause only transient shifts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="membrane-ap" style="--acc:#b5541f;--acc-bg:#f5e7e0;--acc-zebra:#faf3ef;--acc-ink:#8d4218">
+    <div class="shead"><span class="dot" style="background:#b5541f"></span><h2>Cell Membrane Potentials and Action Potentials</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Resting membrane potential</td><td>Sits near EK because K+ leak channels outnumber Na+ leak channels ~100:1. Driving force VDF = Vm − Eion (positive VDF drives ion out, negative drives in). ↑Extracellular K+ depolarizes toward threshold (↑excitability); ↓plasma Ca2+ makes threshold more negative (↑excitability) — the basis of hypocalcemic tetany.</td></tr>
+          <tr><td class="h">Action potential</td><td>All-or-none, non-summating, propagates without decrement via voltage-gated channels. Upstroke: ↑Na+ permeability (Vm→ENa); downstroke: Na+ inactivates while ↑K+ permeability (Vm→EK) — depolarization both activates and inactivates Na+ channels but only ever activates K+ channels. Absolute refractory (Na+ inactivated) + relative refractory periods cap firing rate; myelination concentrates channels at nodes of Ranvier for fast saltatory conduction. Information is coded entirely by frequency.</td></tr>
+          <tr><td class="h">Synapses: EPSP/IPSP & NMJ</td><td>Cation channels (Na+/K+/Ca2+, ~0 mV equilibrium) → EPSP (depolarizing); Cl−/K+ channels → IPSP (hyperpolarizing). Both are graded, decaying, non-refractory electrotonic potentials that summate temporally/spatially. At the NMJ: AP → voltage-gated Ca2+ influx → ~125 ACh vesicles exocytosed → endplate potential → terminated by acetylcholinesterase.</td></tr>
+          <tr><td class="h">Excitation-contraction coupling</td><td>AP travels down the T-tubule to the triad; the T-tubule's DHP receptor senses voltage and directly opens the SR's ryanodine receptor (voltage-activated calcium release, Ca2+ drawn solely from the SR). Ca2+ binds troponin C → tropomyosin shifts off actin → myosin cross-bridge cycling (ATP binding detaches head, hydrolysis cocks it, ADP/Pi release = power stroke). No ATP means no detachment — rigor mortis.</td></tr>
+          <tr><td class="h">Sarcomere & fiber types</td><td>Z disc to Z disc; thick (myosin)/thin (actin + troponin/tropomyosin) filaments plus titin (prevents overstretch, centers thick filaments). Type 1 (slow, oxidative, high myoglobin/mitochondria) recruited first per the size principle; Type 2 (fast, glycolytic) recruited when more force is needed. Force graded by multiple-fiber summation (recruitment) and frequency summation (up to fused tetanus).</td></tr>
+          <tr><td class="h">Smooth muscle</td><td>No troponin — Ca2+ binds calmodulin, activating myosin light chain kinase (MLCK) to phosphorylate the myosin regulatory light chain (myosin-based, not actin-based). Ca2+ enters via membrane channels (Ca2+ action potentials) in addition to SR release. Unitary/visceral (electrically coupled, often spontaneous, e.g. gut/vessels) vs. multiunit (discrete, command-only, e.g. iris); the latch state sustains force at remarkably low energy cost.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="sensory" style="--acc:#6a3fa0;--acc-bg:#eae4f2;--acc-zebra:#f5f2f8;--acc-ink:#53317d">
+    <div class="shead"><span class="dot" style="background:#6a3fa0"></span><h2>Nervous System: Intro and Sensory</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Receptors & transduction</td><td>Labeled line principle: each receptor responds to a narrow stimulus range with a direct, dedicated line to the brain. Stimulus → change in membrane permeability → graded receptor potential → true AP only once it reaches the axon's voltage-gated Na+ channels. Larger stimuli give larger receptor potentials/higher AP frequency, compressed at high intensity; most receptors adapt to sustained stimuli, so they're tuned to detect change.</td></tr>
+          <tr><td class="h">Neuronal pool circuits</td><td>Divergence amplifies a signal to many targets or splits it into multiple tracts at once; convergence sums input from multiple sources onto one neuron. Reciprocal inhibition coordinates antagonist muscle pairs; reverberatory circuits use positive feedback to sustain a brief input as a prolonged output, until synaptic fatigue shuts it down.</td></tr>
+          <tr><td class="h">Neurotransmitters</td><td>Small-molecule, rapid transmitters mediate acute responses: glutamate is the dominant excitatory transmitter (>90% of CNS synapses, synthesized on demand, no vesicles); GABA and glycine are the major inhibitory transmitters. Neuropeptides act more slowly but produce longer-lasting changes in receptor number and synapse size/number.</td></tr>
+          <tr><td class="h">Somatosensory pathways</td><td>Dorsal column-medial lemniscal system: large, fast (30–110 m/s) myelinated A-beta fibers, decussates in the medulla, high spatial fidelity (touch/vibration/position/pressure), sharpened by lateral inhibition. Anterolateral system: smaller/slower A-delta/C fibers, decussates in the spinal cord, low spatial fidelity but broad modalities (pain, temperature, crude touch, itch).</td></tr>
+          <tr><td class="h">Pain pathways</td><td>Fast, sharp first pain: A-delta fibers, glutamate, neospinothalamic tract, precise localization. Slow, aching second pain: C fibers, Substance P, paleospinothalamic tract, diffuse termination in the brainstem reticular formation. Nociceptors never adapt; bradykinin is the principal mediator. Gate theory: A-beta tactile input suppresses pain transmission (basis of massage/TENS); referred pain arises from visceral-cutaneous afferent convergence on the same dorsal horn neuron.</td></tr>
+          <tr><td class="h">Cerebral blood flow, CSF & BBB</td><td>Brain relies almost exclusively on glucose (~2 min reserve); flow is autoregulated ~60–150 mmHg, driven by ↑CO2/H+ vasodilation and astrocytic Ca2+ waves releasing vasodilatory prostaglandins. CSF is produced by the choroid plexus (~500 mL/day). The blood-brain barrier is built from tight junctions unique to brain capillaries, reinforced by astrocyte end-feet, with selective glucose/amino acid transport.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="motor" style="--acc:#1f7a4c;--acc-bg:#e0ece6;--acc-zebra:#eff6f2;--acc-ink:#185f3b">
+    <div class="shead"><span class="dot" style="background:#1f7a4c"></span><h2>Nervous System: Motor</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Motor neurons & motor unit</td><td>Alpha motor neurons innervate extrafusal fibers (force-generating); a motor unit = one alpha neuron plus its fibers. Gamma motor neurons innervate the intrafusal fibers of the muscle spindle, adjusting its sensitivity. Inhibitory Renshaw cells receive an excitatory collateral from an alpha neuron and feed back onto it and its motor pool — negative feedback.</td></tr>
+          <tr><td class="h">Muscle sensors</td><td>Muscle spindle (muscle belly) senses length/rate of change: nuclear bag fibers + Type Ia afferents sense dynamic change; nuclear chain fibers + Type II afferents sense static length. Golgi tendon organ (tendon) senses tension via Type Ib afferents across the full physiologic range, not just at extremes.</td></tr>
+          <tr><td class="h">Spinal reflexes</td><td>Stretch reflex: spindle stretch → Type Ia monosynaptically excites the alpha motor neuron → contraction (patellar reflex) plus antagonist inhibition; alpha-gamma coactivation keeps the spindle loaded during shortening. Golgi tendon organ mediates disynaptic autogenic inhibition at high tension. Polysynaptic flexor withdrawal pairs with the crossed-extensor reflex 0.2–0.5 sec later in the opposite limb.</td></tr>
+          <tr><td class="h">Motor pathways</td><td>Corticospinal tract (from motor/supplementary motor/somatosensory cortex, fastest fibers from giant Betz cells) crosses in the medulla to become the lateral corticospinal tract — the direct pathway for discrete movement. Indirect pathways: red nucleus (rubrospinal, fine but less discrete), basal ganglia, brainstem/cerebellum. Pontine reticular nuclei excite antigravity muscles; medullary reticular nuclei inhibit them.</td></tr>
+          <tr><td class="h">Vestibular apparatus</td><td>Macula of the utricle/saccule (statoconia-weighted hair cells) senses linear acceleration/head tilt. Three semicircular ducts (one per spatial plane, crista ampullaris within each ampulla) sense angular/rotational acceleration via endolymph inertia lagging behind duct rotation.</td></tr>
+          <tr><td class="h">Cerebellum & basal ganglia</td><td>Cerebellum coordinates/times movement without initiating it: vermis = axial movement, intermediate zone = distal limbs, lateral zone = planning/timing (with premotor cortex/basal ganglia). Deep nuclear cells fire an excitatory burst then inhibition to prevent overshoot; the inferior olivary complex compares intended vs. actual movement, adjusting climbing fiber input to Purkinje cells (motor learning). Basal ganglia (striatum = caudate + putamen, globus pallidus, substantia nigra, subthalamus): caudate circuit leans cognitive, putamen circuit leans execution.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="cns-function" style="--acc:#a5283f;--acc-bg:#f2e1e4;--acc-zebra:#f9f0f2;--acc-ink:#811f31">
+    <div class="shead"><span class="dot" style="background:#a5283f"></span><h2>Central Nervous System Function</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Autonomic ganglia & transmitters</td><td>Every preganglionic fiber, sympathetic or parasympathetic, releases acetylcholine. Sympathetic ganglia sit near the spinal cord (short pre-/long postganglionic — rapid, widespread activation); parasympathetic ganglia sit within the target organ (long pre-/short postganglionic — localized effects). Nearly all postganglionic sympathetic fibers are adrenergic (norepinephrine, except sweat glands/a few vessels, which stay cholinergic); all postganglionic parasympathetic fibers are cholinergic.</td></tr>
+          <tr><td class="h">Receptor pharmacology</td><td>Acetylcholine acts on nicotinic (ligand-gated channels, ganglia + NMJ) and muscarinic (G-protein coupled, parasympathetic targets) receptors. Norepinephrine/epinephrine act on alpha (vasoconstriction) and beta-1 (↑HR/contractility)/beta-2 (bronchodilation, skeletal-muscle vasodilation) receptors — NE favors alpha, Epi hits alpha and beta about equally. Adrenal medulla releases ~80% epinephrine/20% norepinephrine, with effects lasting 5–10× longer than direct nerve stimulation; hypothalamus-triggered mass discharge = fight-or-flight.</td></tr>
+          <tr><td class="h">Cerebral cortex & language</td><td>Every cortical area has a dedicated thalamic relay except olfaction. In the dominant hemisphere (left, ~95% of people): Wernicke's area handles verbal comprehension/symbolism, Broca's area controls the motor coordination of speech. Communication flow: primary sensory area → Wernicke's area (interpretation) → arcuate fasciculus → Broca's area (word formation) → motor cortex (articulation); the prefrontal association area supports sequential thought and holding multiple items in mind.</td></tr>
+          <tr><td class="h">Memory</td><td>Immediate (sec–min): presynaptic Ca2+ accumulation/facilitation. Short-term (days–weeks): transient synaptic change. Long-term (years–lifetime): structural increase in vesicular release area via newly synthesized proteins. Habituation reflects declining active presynaptic Ca2+ channels; consolidation is blocked by shock/anesthesia, enhanced by rehearsal. Hippocampus damage → anterograde amnesia (can't form new memories); thalamus damage → retrograde amnesia (can't recall old ones).</td></tr>
+          <tr><td class="h">Limbic system & hypothalamus</td><td>Amygdala handles fear/threat detection/emotional learning; cingulate gyrus integrates emotion with cognition/attention. The hypothalamus (the limbic system's major output) governs vegetative function (arterial pressure, temperature, fluid volume, endocrine secretion) — lateral nucleus = eating/rage, ventromedial = satiety, periventricular = fear; its suprachiasmatic nucleus is the body's circadian master clock. Behavior organizes around reward (medial forebrain bundle) vs. punishment (central gray); punishment always takes precedence.</td></tr>
+          <tr><td class="h">Brainstem arousal</td><td>The bulboreticular facilitatory area broadly excites the cortex (itself driven by peripheral/pain signals and cortical feedback), counterbalanced by the reticular inhibitory area — together keeping the cortex awake and responsive.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physiology Exam 1 Study Guide (PAJ 5000 Graduate Physiology, Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

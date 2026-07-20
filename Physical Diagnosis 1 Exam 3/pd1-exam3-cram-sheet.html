@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Physical Diagnosis 1 Exam 3</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#a83a5c;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Physical Diagnosis 1 Exam 3 · Class of 2028</div>
+    <h1>Physical Diagnosis 1 Exam 3 Cram Sheet</h1>
+    <p class="sub">Pelvic Exam (Female Genitalia) and Breast Examination, condensed to the highest-yield technique and findings.</p>
+    <div class="toc">
+      <a href="#pelvic-exam" style="color:#832d48"><span class="dot" style="background:#a83a5c"></span>Pelvic Exam (Female Genitalia)</a>
+      <a href="#breast-exam" style="color:#255f53"><span class="dot" style="background:#2f7a6b"></span>Breast Examination</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="pd1-exam3-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="pelvic-exam" style="--acc:#a83a5c;--acc-bg:#f3e3e8;--acc-zebra:#f9f1f4;--acc-ink:#832d48">
+    <div class="shead"><span class="dot" style="background:#a83a5c"></span><h2>Pelvic Exam (Female Genitalia)</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">External genital landmarks</td><td>Mons pubis (hair-covered fat pad, inverted-triangle pattern) → labia majora → labia minora (forms anterior prepuce) → vestibule (urethral meatus, introitus). Skene's glands flank the urethral meatus; Bartholin's (greater vestibular) glands open at 5 and 7 o'clock; perineum spans introitus to anus.</td></tr>
+          <tr><td class="h">Internal structures</td><td>Vagina runs between bladder and rectum (rugae absent in children/post-menopause; fornices surround cervix). Uterus angles forward over the bladder; external os is round (nulliparous) or slit-like (post-childbirth). Ovaries suspend at the ASIS level; Pouch of Douglas is the retrouterine cul-de-sac, palpable on rectal exam.</td></tr>
+          <tr><td class="h">Exam prep & positioning</td><td>Empty the bladder first — a full bladder impairs bimanual palpation and causes discomfort. Elevate head/shoulders to relax the abdomen, keep arms at the sides (never overhead, which tenses the abdomen), depress the drape midline for eye contact, and narrate each step before proceeding.</td></tr>
+          <tr><td class="h">Equipment pearls</td><td>Correctly sized speculum, good lighting (pen light if no speculum light adapter), and water-soluble lubricant only — gel lubricant interferes with Pap smear cytology. Pap kit: cotton swab, spatula, brush, glass slide, fixative spray.</td></tr>
+          <tr><td class="h">External inspection & Bartholin's palpation</td><td>Assess Tanner staging and inspect for inflammation, ulceration, or discharge; retract labia to expose structures. Palpate Bartholin's glands with index finger internal (posterior introitus) and thumb external, at the 5 and 7 o'clock positions.</td></tr>
+          <tr><td class="h">Speculum insertion & cervical inspection</td><td>Enlarge the introitus with two-finger downward pressure posteriorly; insert the closed speculum at a 45° downward angle along the posterior wall, then rotate to horizontal once fully inserted. Open the speculum and "cup" the cervix into view to inspect os color, position, and pathology.</td></tr>
+          <tr><td class="h">Pap smear collection</td><td>Cotton swab samples the endocervix (rolled and painted on the slide), spatula scrapes the squamocolumnar junction in a full circle, and the cervical brush is rotated within the os.</td></tr>
+          <tr><td class="h">Bimanual exam</td><td>Palpate the cervix and fornices — normal is 1-2cm of movement without pain. "Grasp" the uterus between the abdominal and pelvic hands; palpate each ovary via the corresponding fornix plus the abdominal hand.</td></tr>
+          <tr><td class="h">Rectovaginal exam</td><td>Change to a new outer glove; index finger in the vagina, middle finger in the anus (patient bears down) to palpate the rectovaginal septum and posterior fornix, and assess sphincter tone on withdrawal.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="breast-exam" style="--acc:#2f7a6b;--acc-bg:#e2ecea;--acc-zebra:#f0f6f5;--acc-ink:#255f53">
+    <div class="shead"><span class="dot" style="background:#2f7a6b"></span><h2>Breast Examination</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Breast anatomy</td><td>Spans the 2nd–6th rib, 2/3 superficial to pectoral muscle and 1/3 superficial to serratus anterior. Glandular tissue forms lobes around the nipple, each with its own duct dilating at the areola during lactation. Cooper's ligament suspends skin from breast fascia; adipose surrounds the glandular tissue superficially and deeply.</td></tr>
+          <tr><td class="h">Vascular supply</td><td>Medial quadrants: internal thoracic artery perforators + anterior intercostal artery branches. Lateral quadrants: thoracoacromial (pectoral branches) + lateral thoracic artery (external mammary branch).</td></tr>
+          <tr><td class="h">Lymphatic drainage</td><td>~75% of breast lymph empties into axillary nodes. Medial portions drain to internal mammary (parasternal) nodes; some vessels cross to the contralateral breast; inferior lymphatics can reach subdiaphragmatic/abdominal/hepatic pathways.</td></tr>
+          <tr><td class="h">Axillary node groups</td><td>Pectoral (anterior, drains most breast tissue), subscapular (posterior), lateral (upper humerus), central (high in axilla, most frequently palpable), and infra-/supraclavicular (receive from central nodes).</td></tr>
+          <tr><td class="h">Tanner staging (breast)</td><td>1: nipple elevation only, no bud. 2: breast bud — round mound, wider areola. 3: further enlargement, areola/breast still confluent. 4: areola/nipple form a secondary mound above the breast. 5: nipple projects alone as areola recedes to breast contour.</td></tr>
+          <tr><td class="h">Pregnancy & aging changes</td><td>Pregnancy: enlargement (glandular hyperplasia, increased vascularity), increased nodularity, darkened/enlarged nipples-areolae, late colostrum (thick yellow discharge). Aging: overall size diminishes, glandular tissue atrophies and is replaced by adipose, ducts become palpable as firm strands.</td></tr>
+          <tr><td class="h">Inspection technique</td><td>Sitting position (exaggerates dimpling/retraction): static (arms at sides) then dynamic (arms overhead, hands on hips, lean forward if pendulous). Note color (redness = cancer/inflammation), thickening (cancer), size/symmetry (mild asymmetry normal), contour, and masses; nipple inversion can be normal, but retraction is concerning for cancer, and rash/discharge suggests Paget's disease.</td></tr>
+          <tr><td class="h">Palpation technique</td><td>Supine, pillow under the ipsilateral shoulder, arm over/behind the head to spread the breast evenly. Use finger pads of fingers 2-4 in a vertical-strip pattern with light, medium, and deep pressure to assess consistency, tenderness, nodules, and mobility; in implant patients, press firmly at the implant edges to feel the ribs beneath.</td></tr>
+          <tr><td class="h">Axillary node palpation</td><td>Systematically palpate pectoral, subscapular, lateral, central, and infra-/supraclavicular groups, assessing size, consistency, mobility, and tenderness.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Physical Diagnosis 1 Exam 3 Study Guide (Class of 2028). For the full technique walkthroughs, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

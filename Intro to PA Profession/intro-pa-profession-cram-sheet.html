@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Intro to PA Profession</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#9c4221;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Intro to PA Profession · Class of 2028</div>
+    <h1>Intro to PA Profession Cram Sheet</h1>
+    <p class="sub">History of the profession, PA organizations, certification &amp; licensure, teamwork, clinical practice, professionalism, and difficult-conversation frameworks, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#history" style="color:#7a331a"><span class="dot" style="background:#9c4221"></span>History of the PA Profession</a>
+      <a href="#orgs" style="color:#18576c"><span class="dot" style="background:#1f6f8b"></span>PA Organizations</a>
+      <a href="#profpractice" style="color:#533b78"><span class="dot" style="background:#6b4c9a"></span>Professional Practice for Physician Assistants</a>
+      <a href="#teamwork" style="color:#896626"><span class="dot" style="background:#b08331"></span>Health Care is Teamwork</a>
+      <a href="#clinical" style="color:#246247"><span class="dot" style="background:#2e7d5b"></span>PAs and Clinical Practice</a>
+      <a href="#professionalism" style="color:#7e304d"><span class="dot" style="background:#a13d63"></span>Professionalism</a>
+      <a href="#difficult" style="color:#962c22"><span class="dot" style="background:#c0392b"></span>Having Difficult Conversations in Health Care</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="intro-pa-profession-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="history" style="--acc:#9c4221;--acc-bg:#f1e5e0;--acc-zebra:#f8f2ef;--acc-ink:#7a331a">
+    <div class="shead"><span class="dot" style="background:#9c4221"></span><h2>History of the PA Profession</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">5 stages of development</td><td>Mnemonic "I Implement Every Important Maturation" → Ideology, Implementation, Evaluation, Incorporation, Maturation. Implementation era (frameworks, licensure, accreditation) ran 1966–1972; Evaluation stage produced HMO research showing a 76% "substitutability factor."</td></tr>
+          <tr><td class="h">Dr. Eugene Stead</td><td>"Father of the profession"; Chair of Medicine at Duke. Had used a fast-track, competency-based physician model at Emory in the 1940s to staff Grady Hospital; founded the first PA program at Duke in 1965 with 4 former Navy corpsmen (2-year program).</td></tr>
+          <tr><td class="h">Dr. Charles Hudson</td><td>NBME president; first introduced the PA "concept" in a 1961 speech to the AMA House of Delegates (published JAMA 1961). Envisioned corpsmen given 2–3 yrs college training as technical "externs" who would not make medical judgments.</td></tr>
+          <tr><td class="h">4 Pillars of the profession</td><td>(1) Professional association, (2) Educational organization, (3) National certification, (4) Program accreditation.</td></tr>
+          <tr><td class="h">Key founding years</td><td>1965 Duke's first PA program (same year Medicare & Medicaid created) · 1972 APAP founded (now PAEA) · 1973 first cert exam (NBME) & first AAPA meeting (Wichita Falls, TX) · 1974 NCCPA formed · 1975 first PANCE.</td></tr>
+          <tr><td class="h">2020s milestones</td><td>2021 AAPA HOD changes name to Physician Associate; Hayley Arceneaux = first PA in space · 2023 NCCPA launches PANRE-LA · End of 2025: 201,038 PAs certified · 2026: 330 accredited entry-level programs · Licensure Compact adopted by 16 states.</td></tr>
+          <tr><td class="h">PA History Society (PAHx)</td><td>Founded 2001; mission = share the history of the PA profession and show its societal impact; based at the Stead Center (NC), website pahx.org. Collections: oral histories, biographies, illustrated timeline, videos, photos, memorabilia.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="orgs" style="--acc:#1f6f8b;--acc-bg:#e0ebef;--acc-zebra:#eff5f7;--acc-ink:#18576c">
+    <div class="shead"><span class="dot" style="background:#1f6f8b"></span><h2>PA Organizations</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">4 pillars organizations</td><td>ARC-PA (accreditation) · PAEA (education) · NCCPA (certification) · AAPA (professional association).</td></tr>
+          <tr><td class="h">ARC-PA</td><td>Created 2001; publishes Accreditation Standards for PA Education (6th edition, 9/2025); 322 accredited programs. Up to 30 Commissioners (2/3 PAs; remainder up to 6 physicians, 2 deans, 2 public). Also accredits Clinical Postgraduate Programs and Post-Professional PA Doctoral Programs (PPDP).</td></tr>
+          <tr><td class="h">PAEA</td><td>Represents PA educational programs; mission = advance excellence in PA education. Administers CASPA (central application) and assessment tools PACKRAT, End-of-Rotation & End-of-Curriculum exams.</td></tr>
+          <tr><td class="h">NCCPA</td><td>The only nationally recognized certifying body for PAs; established 1974; confers the PA-C designation. Administers PANCE, PANRE, PANRE-LA and 12 CAQs. Board: reps from AAPA/PAEA/FSMB + 7 PA directors-at-large, 2 public, 5 physician directors.</td></tr>
+          <tr><td class="h">AAPA</td><td>Vision: PAs transforming health through patient-centered, team-based practice. 74,000+ members. House of Delegates (HOD) = policy-making body: 58 chapters, 27 specialty orgs, 15 caucuses, Student Academy (22 delegates). Student membership = $75 for entire enrollment.</td></tr>
+          <tr><td class="h">SAAAPA (Student Academy of AAPA)</td><td>Comprised of AAPA student members; Student President sits on the AAPA Board of Directors. Largest single delegation in HOD at 22. Runs the National Medical Challenge Bowl (NSU Jax won 2012).</td></tr>
+          <tr><td class="h">PAF & FAPA</td><td>PAF (Physician Associate/Assistant Foundation): mission = empower PAs to improve health through philanthropy; funds Impact Grants, Global Outreach, scholarships. FAPA (Florida Academy of Physician Associates): only FL PA org, established 1974; student membership $60.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="profpractice" style="--acc:#6b4c9a;--acc-bg:#eae6f1;--acc-zebra:#f5f2f8;--acc-ink:#533b78">
+    <div class="shead"><span class="dot" style="background:#6b4c9a"></span><h2>Professional Practice for Physician Assistants</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">PANCE</td><td>360 MCQs, six 60-min blocks of 60 questions, 6-hour exam day, 45 min total break time; ≥20% surgical content, ≤2% legal/ethical; covers 7 knowledge/skill areas + 13 disease/disorder categories. Eligible up to 6 years / 6 attempts (grads on/after 1/1/2003), retake limited to once per 90 days or 3×/year.</td></tr>
+          <tr><td class="h">Recertification</td><td>CME: 100 hrs per 2-year cycle (≥50 Category I). Exam recert every 10 years via PANRE (Pearson VUE, 5 hrs, no reference material) or PANRE-LA (25 questions quarterly × 12 quarters, scored instantly).</td></tr>
+          <tr><td class="h">Florida licensure</td><td>Regulated by Medical Practice Act 458.347 (Osteopathic 459.022), FS 456, FAC 64B8-30. License valid 2 years; requires 100 hrs CME/2 yrs or current NCCPA certification — continued NCCPA certification itself is not required to practice.</td></tr>
+          <tr><td class="h">Credentialing vs. privileging vs. scope</td><td>Credentialing (mandated by Joint Commission & NCQA) = primary-source verification of education/training. Privileging = demonstrated ability for specific tasks, granted at the institution, renewed annually. Scope of practice set at credentialing via Medicare regs + federal/state law + hospital bylaws.</td></tr>
+          <tr><td class="h">7 PA competency domains</td><td>Mnemonic "Knowledgeable Interpersonal People Interact Professionally, Practicing for Society": Knowledge for Practice, Interpersonal & Communication Skills, Person-Centered Care, Interprofessional Collaboration, Professionalism & Ethics, Practice-Based Learning & QI, Society & Population Health. Last revised 2021.</td></tr>
+          <tr><td class="h">Reimbursement</td><td>PAs generally reimbursed at 85% of physician fee. "Incident-to" billing pays 100% of physician fee (many restrictions). First-assistant surgery = 13.6% of primary surgeon fee. Since 2022, Medicare allows direct reimbursement to PAs if state law allows.</td></tr>
+          <tr><td class="h">Optimal Team Practice (OTP)</td><td>Passed by AAPA HOD in 2017; primary goal = remove burdensome administrative constraints. Eliminates the legal requirement for a specific PA-physician relationship, creates a separate majority-PA board, and authorizes direct payment from all public/private insurers.</td></tr>
+          <tr><td class="h">EMTALA (1986)</td><td>Hospitals must provide a medical screening exam (MSE) to anyone requesting emergency care. PAs can perform the MSE, certify false labor, and certify a stable patient may be transferred; an unstable transfer requires physician consult & signature.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="teamwork" style="--acc:#b08331;--acc-bg:#f4eee2;--acc-zebra:#f9f6f1;--acc-ink:#896626">
+    <div class="shead"><span class="dot" style="background:#b08331"></span><h2>Health Care is Teamwork</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Interprofessional Collaboration (IPC)</td><td>WHO definition: multiple health professionals working together with patients, families, caregivers, and communities to deliver the highest-quality care. Benefits: reduces mortality, improves patient compliance, decreases professional burnout.</td></tr>
+          <tr><td class="h">Barriers to IPC</td><td>Communication breakdown · hierarchical power structures · role confusion/scope-of-practice issues · organizational constraints · time & resources · cultural & attitudinal barriers · structural & systemic barriers · patient-related factors.</td></tr>
+          <tr><td class="h">4 tenets of patient-centered care</td><td>Dignity & Respect · Information Sharing · Participation · Collaboration.</td></tr>
+          <tr><td class="h">Advanced-practice nursing roles</td><td>CRNA = RN + experience + master's, administers anesthesia (~$223K). CNM = RN + master's, labor/delivery & well-woman care. APRN/NP = RN + certificate/master's/doctorate, board exam required in FL, most specialize.</td></tr>
+          <tr><td class="h">Therapy/rehab providers</td><td>PT = doctoral degree, licensed, rehab/modalities. OT = master's, licensed, ADLs & independence. Speech-Language Pathologist = master's, licensed. Audiologist = doctorate, licensed, hearing & balance.</td></tr>
+          <tr><td class="h">Pharmacy team</td><td>Pharmacist = PharmD, regulated by State Board of Pharmacy, growing trend toward prescribing (varies by state). Pharmacy Technician = OJT/certificate, national certification exam.</td></tr>
+          <tr><td class="h">Social work credentials</td><td>Social Worker = bachelor's (direct practice) or master's (clinical); LCSW specifically denotes training in psychotherapy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="clinical" style="--acc:#2e7d5b;--acc-bg:#e2ede8;--acc-zebra:#f0f6f4;--acc-ink:#246247">
+    <div class="shead"><span class="dot" style="background:#2e7d5b"></span><h2>PAs and Clinical Practice</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Where PAs practice</td><td>"Anywhere there are physicians": primary care · hospital inpatient & Emergency Departments · surgical specialties · medical specialty care · federal government · uniformed services.</td></tr>
+          <tr><td class="h">5 C's of primary care</td><td>Comprehensive (full range of services) · Continuous (care throughout the years) · Coordinated (with specialists) · Accessible (first point of contact, timely) · Patient-centered (attentive to satisfaction).</td></tr>
+          <tr><td class="h">Primary-care fields</td><td>Family medicine, internal medicine, and pediatrics; lecture also asks students to distinguish primary vs. secondary vs. tertiary care.</td></tr>
+          <tr><td class="h">Specialization</td><td>PAs specialize across both surgical and medical fields; hospitalist practice is cited as a growing role.</td></tr>
+          <tr><td class="h">Alternative career roles</td><td>Beyond direct clinical care: administration, education, research, industry, and leadership.</td></tr>
+          <tr><td class="h">Credentialing</td><td>Detailed credentialing/privileging/scope breakdown is covered in Lecture 3 (Professional Practice) — primary-source verification, institution-granted privileges.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="professionalism" style="--acc:#a13d63;--acc-bg:#f2e4e9;--acc-zebra:#f8f1f4;--acc-ink:#7e304d">
+    <div class="shead"><span class="dot" style="background:#a13d63"></span><h2>Professionalism</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">What is professionalism?</td><td>Not one quality but a combination that takes time to perfect; per PAEA, a top-10 noncognitive attribute. Qualities: responsible, ethical, accountable, integrity, honesty, excellence, lifelong learning, self-regulating, service, communication, team-oriented, time management, critical thinking.</td></tr>
+          <tr><td class="h">Dress standards</td><td>PA school: no artificial nails, hair out of patient space, badge above the waist, closed-toe shoes. Professional clinical dress: collared shirt tucked in + belt (men); no cleavage, hems below fingertips, heels ≤2" (women); closed-toe/back shoes only.</td></tr>
+          <tr><td class="h">Communication norms</td><td>Casual/informal with students; formal with faculty/staff (address as "Dr."/"Professor," arrive ≥15 min early — "early is on time, on time is late, late is unacceptable"). Never share patient info on social media (HIPAA violation).</td></tr>
+          <tr><td class="h">4 competency domains of professionalism</td><td>Toward the Patient (respect, compassion, integrity, HIPAA) · Toward Other Professionals (teamwork) · Toward the Public (accountability, ethics) · Toward Oneself (self-regulation = the hallmark, lifelong learning, self-assessment).</td></tr>
+          <tr><td class="h">Intellectual honesty</td><td>Being honest when acquiring, analyzing, and transmitting information/ideas — stating the truth whether easy or hard, regardless of personal belief; decisions based on facts.</td></tr>
+          <tr><td class="h">Academic integrity (ICAI)</td><td>Commitment, even in adversity, to six values: honesty, trust, fairness, respect, responsibility, courage. NSU violations: cheating, plagiarism (including AI), fabrication, multiple submissions, misrepresentation, bribery, forgery, falsification.</td></tr>
+          <tr><td class="h">Collaboration rules</td><td>Allowed for simulations and small groups. Not allowed for written/computerized exams, OSCEs, or written assignments.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="difficult" style="--acc:#c0392b;--acc-bg:#f6e3e1;--acc-zebra:#fbf1f0;--acc-ink:#962c22">
+    <div class="shead"><span class="dot" style="background:#c0392b"></span><h2>Having Difficult Conversations in Health Care</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">NURSE</td><td>For strong emotion in the moment: Name · Understand (legitimize) · Respect · Support · Explore.</td></tr>
+          <tr><td class="h">SPIKES</td><td>For delivering unexpected/serious/complex news: Setting · Perception · Invitation · Knowledge · Emotions · Strategy/Summary. Use a warning statement before delivering news, pause/allow silence after, then respond to emotion with NURSE before continuing.</td></tr>
+          <tr><td class="h">CUS</td><td>For an immediate patient-safety concern, in the moment: Concerned · Uncomfortable · Safety issue (escalating). If not acknowledged, escalate immediately via chain of command.</td></tr>
+          <tr><td class="h">DESC</td><td>For recurring interpersonal conflict, addressed privately after the moment: Describe · Express · Suggest · Consequences.</td></tr>
+          <tr><td class="h">SHARE</td><td>For preference-sensitive shared decision-making (AHRQ 5-step). Clinician brings medical expertise, patient brings expertise on goals/values/circumstances — neither alone is sufficient; document the SDM process.</td></tr>
+          <tr><td class="h">3 communication channels</td><td>Verbal content (the words) · paralanguage (tone/pace/volume) · nonverbal behavior (expression/posture/silence). Incongruence (words ≠ behavior) should be approached with curiosity, not assumption.</td></tr>
+          <tr><td class="h">Setting the tone</td><td>With patients: confirm preferred name, ensure privacy, ask what they already understand, avoid premature reassurance. With support systems: get explicit permission before including others, use a professional interpreter (never family for medical interpretation).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Intro to PA Profession Master Guide (Class of 2028). For the full explanation, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Anatomy Exam 2</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#b0355c;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 2 · Class of 2028</div>
+    <h1>Anatomy Exam 2 Cram Sheet</h1>
+    <p class="sub">Integumentary System, Eye and Ear Anatomy, Heart and Great Vessels, Arteries/Veins/Lymphatics, and Pulmonary Anatomy, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#integumentary" style="color:#892948"><span class="dot" style="background:#b0355c"></span>The Integumentary System</a>
+      <a href="#eye-ear" style="color:#255070"><span class="dot" style="background:#2f6690"></span>Eye and Ear Anatomy</a>
+      <a href="#heart-vessels" style="color:#962c22"><span class="dot" style="background:#c0392b"></span>Anatomy of the Heart and Great Vessels</a>
+      <a href="#vascular-lymphatics" style="color:#185f48"><span class="dot" style="background:#1f7a5c"></span>Arteries, Veins & Lymphatic Systems</a>
+      <a href="#pulmonary" style="color:#906909"><span class="dot" style="background:#b8860b"></span>Pulmonary Anatomy / Respiratory System</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="anatomy-exam-2-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="integumentary" style="--acc:#b0355c;--acc-bg:#f4e3e8;--acc-zebra:#f9f1f4;--acc-ink:#892948">
+    <div class="shead"><span class="dot" style="background:#b0355c"></span><h2>The Integumentary System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Epidermal layers</td><td>Deep → superficial: stratum basale (germinativum, mitotic stem cells + melanocytes) → spinosum (desmosomes, Langerhans cells) → granulosum (keratohyalin granules) → lucidum (thick/glabrous skin only — palms, soles) → corneum (dead, keratinized, flakes off).</td></tr>
+          <tr><td class="h">Skin color pigments</td><td>Melanin (melanocytes in stratum basale, UV protection) + carotene (diet-derived yellow-orange, stratum corneum/subcutaneous fat) + hemoglobin (dermal vessels, pink/red hue) combine to determine skin tone.</td></tr>
+          <tr><td class="h">Dermis: papillary vs. reticular</td><td>Papillary layer = superficial, loose areolar connective tissue, forms dermal papillae, rich in capillary loops and Meissner corpuscles. Reticular layer = deeper, thicker, dense irregular connective tissue; gives skin its structural strength/elasticity.</td></tr>
+          <tr><td class="h">Subcutaneous tissue & fascia</td><td>Hypodermis (superficial fascia) = areolar + adipose, insulation/cushioning, Pacinian corpuscles at its deep margin. Retinacula cutis anchor dermis to deep fascia, which wraps muscles into fascial planes/compartments.</td></tr>
+          <tr><td class="h">Sweat & other accessory structures</td><td>Eccrine glands = widespread, primary thermoregulatory sweat glands. Apocrine glands = confined to axillae/groin, active at puberty. Sebaceous glands (holocrine) secrete sebum into hair follicles. Arrector pili muscle on hair follicle produces goosebumps.</td></tr>
+          <tr><td class="h">Burn classification by depth</td><td>1st-degree = epidermis only (e.g., sunburn, no blistering). 2nd-degree = extends into dermis (painful, blistering). 3rd-degree = full-thickness skin destruction, often painless centrally from nerve destruction; frequently needs grafting.</td></tr>
+          <tr><td class="h">Stretch marks vs. tension lines</td><td>Striae = tearing of dermal collagen/elastic fibers when skin stretches faster than the reticular layer can remodel. Langer's lines = predominant collagen fiber orientation in reticular dermis; incisions parallel to them scar less.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="eye-ear" style="--acc:#2f6690;--acc-bg:#e2eaef;--acc-zebra:#f0f4f7;--acc-ink:#255070">
+    <div class="shead"><span class="dot" style="background:#2f6690"></span><h2>Eye and Ear Anatomy</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Eye's three tunics</td><td>Fibrous tunic = sclera (opaque, posterior) + cornea (transparent, refracts light). Vascular tunic (uvea) = choroid (nourishes retina) + ciliary body (aqueous humor, accommodation) + iris (pupil diameter). Neural tunic = retina.</td></tr>
+          <tr><td class="h">Eye chambers/humors</td><td>Anterior cavity (aqueous humor) splits into anterior chamber (cornea–iris) and posterior chamber (iris–lens). Posterior/vitreous cavity (behind lens) holds gel-like vitreous humor, maintaining eyeball shape.</td></tr>
+          <tr><td class="h">Extrinsic eye muscle innervation</td><td>"LR6 SO4 3" rule: lateral rectus by CN VI, superior oblique by CN IV, remaining four extrinsic muscles (superior/inferior/medial rectus, inferior oblique) by CN III.</td></tr>
+          <tr><td class="h">Retina: rods, cones, optic disc</td><td>Rods = dim-light/peripheral vision, no color. Cones = 3 subtypes, color vision + acuity, concentrated at cone-only fovea centralis (sharpest vision). Optic disc = ganglion axons exit as optic nerve, no photoreceptors → blind spot.</td></tr>
+          <tr><td class="h">Visual pathway</td><td>Retina ganglion cells → optic nerve (CN II) → optic chiasm (nasal/medial fibers cross, temporal/lateral stay uncrossed) → optic tract → lateral geniculate nucleus (thalamus) → optic radiations → primary visual cortex (occipital lobe).</td></tr>
+          <tr><td class="h">Ear regions & ossicles</td><td>External ear (auricle + meatus) → tympanic membrane → middle ear (air-filled, ossicles malleus–incus–stapes, stapes footplate at oval window; Eustachian tube to nasopharynx) → inner ear (bony labyrinth/perilymph housing membranous labyrinth/endolymph).</td></tr>
+          <tr><td class="h">Cochlea & vestibular complex</td><td>Scala vestibuli + scala tympani (perilymph) sandwich scala media/cochlear duct (endolymph, organ of Corti). Utricle/saccule detect linear acceleration/tilt via otoliths; semicircular canals/ducts (3 planes) detect angular acceleration via ampullae.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="heart-vessels" style="--acc:#c0392b;--acc-bg:#f6e3e1;--acc-zebra:#fbf1f0;--acc-ink:#962c22">
+    <div class="shead"><span class="dot" style="background:#c0392b"></span><h2>Anatomy of the Heart and Great Vessels</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Pericardium layers</td><td>Fibrous pericardium (tough outer sac, anchors heart) + serous pericardium (parietal layer lining fibrous sac, visceral layer/epicardium on heart surface) with pericardial cavity/fluid between them.</td></tr>
+          <tr><td class="h">Heart wall layers</td><td>Epicardium (= visceral pericardium) → myocardium (contractile cardiac muscle, reinforced by fibrous skeleton anchoring valves and electrically insulating atria from ventricles) → endocardium (lines chambers/valves).</td></tr>
+          <tr><td class="h">Chambers & valves</td><td>RA (from venae cavae + coronary sinus) and LA (from pulmonary veins) receive; RV (→pulmonary trunk) and LV (most muscular, →aorta) pump. AV valves (tricuspid/mitral) held by chordae tendineae + papillary muscles; semilunar valves (pulmonary/aortic) need no chordae — cusps fill and snap shut.</td></tr>
+          <tr><td class="h">Conduction system</td><td>SA node (right atrium, intrinsic pacemaker) → spreads across atria → AV node (delays signal) → AV bundle (bundle of His) → right/left bundle branches → Purkinje fibers. AV valve closure = S1; semilunar valve closure = S2.</td></tr>
+          <tr><td class="h">Coronary vessels</td><td>Left coronary artery → anterior interventricular (LAD, anterior septum + LV) + circumflex. Right coronary artery → posterior interventricular + marginal branches, typically supplies SA/AV nodes. Cardiac veins drain via coronary sinus into RA.</td></tr>
+          <tr><td class="h">Aorta: 4 parts</td><td>Ascending aorta (coronary arteries only) → aortic arch (brachiocephalic trunk, left common carotid, left subclavian) → thoracic (descending) aorta → abdominal aorta (celiac trunk, superior mesenteric, inferior mesenteric, renal/gonadal) → paired common iliac arteries.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="vascular-lymphatics" style="--acc:#1f7a5c;--acc-bg:#e0ece8;--acc-zebra:#eff6f4;--acc-ink:#185f48">
+    <div class="shead"><span class="dot" style="background:#1f7a5c"></span><h2>Arteries, Veins & Lymphatic Systems</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Vessel wall layers</td><td>Tunica intima (endothelium + thin connective tissue) → tunica media (smooth muscle + elastic fibers, thickest layer in arteries, drives vasoconstriction/dilation) → tunica externa/adventitia (anchoring connective tissue).</td></tr>
+          <tr><td class="h">Artery types & capillaries</td><td>Elastic (conducting) arteries = large, near heart, recoil between beats. Muscular (distributing) arteries = most named arteries, regulate regional flow. Arterioles = smallest, primary resistance vessels. Capillaries = single endothelial layer, only site of exchange.</td></tr>
+          <tr><td class="h">Veins & venous return</td><td>Veins have thinner tunica media and larger lumens than arteries, with one-way venous valves (especially in limbs). Venous return is assisted by the skeletal muscle pump and the respiratory pump.</td></tr>
+          <tr><td class="h">Major venous convergence</td><td>Brachiocephalic veins (head/neck/upper limb drainage) join to form the SVC; lower-body drainage converges as the IVC. The azygos system (azygos + hemiazygos + accessory hemiazygos) is a collateral pathway into the SVC if the IVC is obstructed.</td></tr>
+          <tr><td class="h">Blood composition</td><td>Plasma ≈ 55% of volume (water, electrolytes, plasma proteins: albumin, globulins, clotting factors). Formed elements ≈ 45%: RBCs (erythrocytes, most numerous, carry O2 via hemoglobin), WBCs (leukocytes), platelets (clotting).</td></tr>
+          <tr><td class="h">Lymphatic drainage pathway</td><td>Blind-ended lymphatic capillaries (highly permeable) → valved lymphatic vessels → filter through lymph nodes → lymphatic trunks. Thoracic duct drains below-diaphragm + left-body-above into left IJ/subclavian junction; right lymphatic duct drains right upper body into the right-sided junction.</td></tr>
+          <tr><td class="h">Key lymphoid organs</td><td>Spleen filters blood and mounts immune responses to blood-borne pathogens. Thymus is the site of T-lymphocyte maturation. Tonsils guard the pharyngeal entrance to the airway/digestive tract.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="pulmonary" style="--acc:#b8860b;--acc-bg:#f5eedd;--acc-zebra:#faf7ee;--acc-ink:#906909">
+    <div class="shead"><span class="dot" style="background:#b8860b"></span><h2>Pulmonary Anatomy / Respiratory System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Pharynx regions vs. larynx</td><td>Nasopharynx (adenoid, auditory tube opening) → oropharynx (palatine + lingual tonsils, shared air/food) → laryngopharynx (shared, continues to larynx/esophagus). Larynx itself is a dedicated, cartilage-built airway carrying only air.</td></tr>
+          <tr><td class="h">Laryngeal cartilage framework</td><td>Unpaired: thyroid cartilage (laryngeal prominence), cricoid cartilage (only complete cartilage ring in airway), epiglottis (elastic, folds over inlet during swallowing, vallecula anterior to it). Paired: arytenoid cartilages (anchor/rotate vocal folds), plus corniculate and cuneiform.</td></tr>
+          <tr><td class="h">Vocal folds & glottis</td><td>True vocal folds vibrate to produce sound as air passes between them; vestibular (false) vocal folds sit above and are protective, not phonatory. Glottis = vocal folds + rima glottidis (the space between them).</td></tr>
+          <tr><td class="h">Trachea structure</td><td>≈15–20 C-shaped hyaline cartilage rings, open posteriorly where trachealis muscle spans the gap (lets esophagus bulge during swallowing); lined by ciliated pseudostratified respiratory epithelium continuing the mucociliary escalator.</td></tr>
+          <tr><td class="h">Lung lobes & bronchial branching</td><td>Right lung: 3 lobes (oblique + horizontal fissures). Left lung: 2 lobes (single oblique fissure, cardiac notch, lingula). Primary (main) bronchi → secondary/lobar bronchi (3 right, 2 left) → tertiary/segmental bronchi, each supplying a bronchopulmonary segment.</td></tr>
+          <tr><td class="h">Conducting vs. respiratory zone</td><td>Conducting zone (trachea → terminal bronchioles) moves air, no gas exchange. Respiratory zone (respiratory bronchioles → alveolar ducts → alveoli) is where gas exchange occurs, via thin type I pneumocytes and surfactant-secreting type II pneumocytes.</td></tr>
+          <tr><td class="h">Diaphragm hiatuses</td><td>Caval opening at T8 (inferior vena cava); esophageal hiatus at T10 (esophagus + vagus nerves); aortic hiatus at T12 (aorta, thoracic duct, azygos vein) — mnemonic: vertebral level matches each structure's letter count (vena cava=8, esophagus=10, aortic=12).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Anatomy Exam 2 Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

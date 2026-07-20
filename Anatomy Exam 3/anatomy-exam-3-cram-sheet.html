@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Anatomy Exam 3</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#3f7d4e;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Anatomy Exam 3 · Class of 2028</div>
+    <h1>Anatomy Exam 3 Cram Sheet</h1>
+    <p class="sub">Gastrointestinal, Endocrine, Male &amp; Female Reproductive, and Urinary/Nephrology, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#gi" style="color:#31623d"><span class="dot" style="background:#3f7d4e"></span>Gastrointestinal System I & II</a>
+      <a href="#endo" style="color:#906909"><span class="dot" style="background:#b8860b"></span>Endocrine System</a>
+      <a href="#male" style="color:#255770"><span class="dot" style="background:#2f6f8f"></span>Male Reproductive System</a>
+      <a href="#fem" style="color:#7e2e49"><span class="dot" style="background:#a23b5e"></span>Female Reproductive System</a>
+      <a href="#neph" style="color:#5f3e7f"><span class="dot" style="background:#7a4fa3"></span>Nephrology / Urinary System</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="anatomy-exam-3-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="gi" style="--acc:#3f7d4e;--acc-bg:#e4ede6;--acc-zebra:#f2f6f3;--acc-ink:#31623d">
+    <div class="shead"><span class="dot" style="background:#3f7d4e"></span><h2>Gastrointestinal System I & II</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Abdominal quadrants, regions & peritoneum</td><td>RUQ = liver, gallbladder, right kidney, hepatic flexure; LUQ = stomach, spleen, left liver, pancreas tail, left kidney; RLQ = cecum/appendix/terminal ileum; LLQ = sigmoid/descending colon. Parietal peritoneum (walls, sharp pain) vs visceral (organs, dull/referred pain); greater & lesser sac connect via the omental foramen of Winslow. Intraperitoneal organs: stomach, spleen, liver, jejunum, ileum, transverse/sigmoid colon, cecum, appendix. Retroperitoneal (SAD PUCKER): suprarenals, aorta/IVC, duodenum, pancreas, ureters, ascending/descending colon, kidneys, distal esophagus, rectum.</td></tr>
+          <tr><td class="h">GI wall tunics & glands</td><td>Mucosa (epithelium + lamina propria + muscularis mucosae; stratified squamous in mouth/esophagus/anal canal, simple columnar stomach→colon) → submucosa (Meissner plexus) → muscularis externa (inner circular + outer longitudinal, Auerbach plexus between) → serosa (intraperitoneal) or adventitia (retroperitoneal). Amplifiers: rugae (stomach, temporary) and plicae circulares (small intestine, permanent). Esophagus muscle = skeletal superiorly → mixed → smooth inferiorly, no serosa in thorax. Salivary glands: parotid (Stensen's duct), submandibular (most saliva, Wharton's duct), sublingual (smallest).</td></tr>
+          <tr><td class="h">Stomach regions & relations</td><td>Cardia (esophageal opening) → fundus (superior dome, under left diaphragm) → body → pyloric antrum/canal → pyloric sphincter into duodenum. Lesser curvature (right, lesser omentum + left gastric artery) vs greater curvature (left, greater omentum). Intraperitoneal; posterior 'stomach bed' via the lesser sac = pancreas, spleen, left kidney/adrenal, splenic artery; anterior relations = left liver lobe, diaphragm, abdominal wall.</td></tr>
+          <tr><td class="h">Spleen</td><td>Largest lymphatic organ; intraperitoneal, LUQ, against ribs 9–11. White pulp = lymphatic/immune tissue; red pulp = filters blood, removes old red blood cells. Gastrosplenic ligament (short gastric vessels) connects it to the stomach; splenorenal ligament (splenic vessels + pancreatic tail) connects it to the left kidney; hilum abuts the pancreatic tail.</td></tr>
+          <tr><td class="h">Small intestine (duodenum/jejunum/ileum)</td><td>Duodenum (~25 cm, C-shaped, mostly retroperitoneal): superior part/cap (intraperitoneal) → descending (major duodenal papilla = bile + pancreatic duct via ampulla of Vater; minor papilla) → horizontal (crossed anteriorly by SMA/SMV) → ascending, ending at the duodenojejunal flexure (ligament of Treitz). Jejunum (proximal ~40%, LUQ, intraperitoneal): thicker wall, taller plicae circulares, longer vasa recta, fewer arcades. Ileum (distal ~60%, RLQ, intraperitoneal): thinner wall, shorter plicae, prominent Peyer's patches, ends at the ileocecal valve.</td></tr>
+          <tr><td class="h">Large intestine</td><td>Cecum/appendix (RLQ, intraperitoneal) → ascending colon (retroperitoneal) → right/hepatic flexure → transverse colon (intraperitoneal, most mobile) → left/splenic flexure → descending colon (retroperitoneal, narrowest) → sigmoid colon (intraperitoneal, S-shaped) → rectum (retroperitoneal) → anal canal (internal anal sphincter = smooth/involuntary; external = skeletal/voluntary). Markers: teniae coli (3 longitudinal bands), haustra (sacculations), omental appendices (fat tags); no villi, <10% of absorption.</td></tr>
+          <tr><td class="h">Pancreas</td><td>Secondarily retroperitoneal, mixed exocrine/endocrine gland at ~L1–L2. Head sits in the duodenal C-loop with the uncinate process hooking posterior to the SMA/SMV → neck (anterior to SMV) → body (crosses aorta/left kidney) → tail (reaches splenic hilum, intraperitoneal within the splenorenal ligament). Main pancreatic duct (of Wirsung) joins the common bile duct at the ampulla of Vater; accessory duct (of Santorini) drains the minor papilla. Common bile duct runs through the head — head pathology causes obstructive jaundice.</td></tr>
+          <tr><td class="h">Liver lobes, ligaments & blood supply</td><td>Largest gland, intraperitoneal RUQ, covered by Glisson's capsule (posterior bare area lacks peritoneum). Four lobes: right (largest); left (falciform ligament divides right/left); quadrate (inferior, between gallbladder and ligamentum teres); caudate (posterior, between IVC and ligamentum venosum). Peritoneal ligaments: falciform, ligamentum teres (umbilical vein remnant), coronary, right/left triangular. Triple blood supply: hepatic portal vein (~75%, nutrient-rich), hepatic artery (~25%, oxygen), hepatic veins (outflow to IVC).</td></tr>
+          <tr><td class="h">Biliary tree & portal vein</td><td>Bile flow: right + left hepatic ducts → common hepatic duct → (+ cystic duct from gallbladder) → common bile duct → passes behind duodenum 1 and through the pancreatic head → joins the main pancreatic duct at the ampulla of Vater → major duodenal papilla (sphincter of Oddi). Triangle of Calot (cystic duct, common hepatic duct, liver edge) marks the cystic artery. Portal vein forms posterior to the pancreatic neck from the union of the splenic vein (+ IMV) and SMV; ascends in the hepatoduodenal ligament as the portal triad (vein posterior, artery + bile duct anterior).</td></tr>
+          <tr><td class="h">Aorta, IVC & lymph drainage</td><td>Abdominal aorta: aortic hiatus (T12) → celiac trunk (T12, foregut: left gastric, splenic, common hepatic) → SMA (L1, midgut) → IMA (L3, hindgut) → bifurcation (L4). IVC forms at L5 from the common iliac veins, pierces the diaphragm at the caval hiatus (T8); left renal vein is longer, crossing the aorta and receiving the left gonadal + left suprarenal veins. GI lymph follows the three unpaired arteries (celiac/superior mesenteric/inferior mesenteric pre-aortic nodes) → cisterna chyli (L1–L2) → thoracic duct → left venous angle.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="endo" style="--acc:#b8860b;--acc-bg:#f5eedd;--acc-zebra:#faf7ee;--acc-ink:#906909">
+    <div class="shead"><span class="dot" style="background:#b8860b"></span><h2>Endocrine System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Endocrine organs overview</td><td>Primary (pure) endocrine organs: pituitary, hypothalamus, pineal, thyroid, parathyroids, thymus, adrenals, pancreatic islets, gonads. Organs with secondary endocrine tissue: heart (ANP/BNP), kidney (erythropoietin, calcitriol, renin), adipose (leptin, resistin), digestive tract (gut hormones). Course focus: thyroid, parathyroids, pituitary, pancreas, adrenals.</td></tr>
+          <tr><td class="h">Pituitary gross anatomy</td><td>Sits in the hypophyseal fossa of the sella turcica (sphenoid), attached to the hypothalamus by the infundibulum. Diaphragma sellae separates it superiorly from the optic chiasm; cavernous sinuses lie laterally; sphenoid sinus inferiorly; dorsum sellae posteriorly. Anterior lobe (adenohypophysis) receives hypophyseal portal blood (superior hypophyseal artery → capillary plexus → portal veins); posterior lobe (neurohypophysis) receives direct arterial blood (inferior hypophyseal artery).</td></tr>
+          <tr><td class="h">Pituitary histology</td><td>Anterior pituitary (pars distalis): cords of cells with sinusoids — chromophobes (~50%, pale, no granules) and chromophils (~50%): acidophils (~10%, reddish, GH & prolactin) and basophils (~40%, bluish, TSH/ACTH/FSH/LH). Posterior pituitary (pars nervosa): unmyelinated axons, pituicytes (glia), Herring bodies (stored ADH/oxytocin) — no true secretory cell bodies.</td></tr>
+          <tr><td class="h">Thyroid gross anatomy & blood supply</td><td>Anterior neck at C5–T1; two lobes joined by an isthmus over tracheal rings 2–3, wrapped in pretracheal fascia (moves with swallowing). Medial relations: larynx, trachea, pharynx, esophagus, external & recurrent laryngeal nerves; posterolateral: carotid sheath. Arterial: superior thyroid artery (external carotid) + inferior thyroid artery (thyrocervical trunk) ± thyroidea ima. Venous: superior/middle thyroid veins → internal jugular vein; inferior thyroid vein → brachiocephalic.</td></tr>
+          <tr><td class="h">Thyroid & parathyroid histology</td><td>Thyroid: spherical follicles lined by simple cuboidal follicular cells around a central colloid (stores thyroglobulin); parafollicular (C) cells lie between follicles and secrete calcitonin. Parathyroid: cords of chief (principal) cells (slightly eosinophilic) plus larger, strongly eosinophilic oxyphil cells (function unclear); adipocytes increase with age. Parathyroids sit on the posterior thyroid surface (usually four glands), supplied mainly by the inferior thyroid artery.</td></tr>
+          <tr><td class="h">Endocrine pancreas</td><td>Islets of Langerhans (~1% of pancreas, surrounded by exocrine acini): α cells (glucagon), β cells (insulin), δ cells (somatostatin), F/PP cells (pancreatic polypeptide). Gross: retroperitoneal, epigastric/LUQ at T12–L3; head in the duodenal C-loop, body crosses the left kidney, tail reaches the splenic hilum. Highly vascular (fenestrated capillaries); arterial supply from the pancreaticoduodenal arteries (GDA & SMA) and splenic artery branches; venous drainage to the portal system.</td></tr>
+          <tr><td class="h">Adrenal glands</td><td>Retroperitoneal, cap the superior pole of each kidney within the renal fascia; right gland pyramidal (relates to liver/IVC), left semilunar (relates to stomach, pancreas, spleen). Triple arterial supply: superior suprarenal (inferior phrenic), middle suprarenal (aorta), inferior suprarenal (renal artery); venous — right → IVC, left → left renal vein. Cortex zones outside-in: zona glomerulosa, zona fasciculata (radial columns of lipid-laden cells), zona reticularis (meshwork); medulla has chromaffin cells (modified sympathetic neurons) around a central vein.</td></tr>
+          <tr><td class="h">Calcium-regulating hormone sources</td><td>Parathyroid hormone (PTH) — chief cells of the parathyroid — raises Ca²⁺. Calcitriol (active vitamin D) — final activation step occurs in the kidney — raises Ca²⁺. Calcitonin — parafollicular (C) cells of the thyroid — lowers Ca²⁺, minor role in adults.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="male" style="--acc:#2f6f8f;--acc-bg:#e2ebef;--acc-zebra:#f0f5f7;--acc-ink:#255770">
+    <div class="shead"><span class="dot" style="background:#2f6f8f"></span><h2>Male Reproductive System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Embryologic development</td><td>SRY gene drives testis formation; Sertoli cells secrete anti-Müllerian hormone (AMH) → regression of the paramesonephric (Müllerian) ducts; Leydig cells secrete testosterone → mesonephric (Wolffian) ducts persist and form the epididymis, ductus deferens, seminal vesicles, ejaculatory duct. DHT drives the prostate, penis, and scrotum from the urogenital sinus/external genitalia. Gubernaculum testis anchors the testis and, as the body grows, draws it through the inguinal canal into the scrotum by birth; ductus deferens + vessels + nerves bundle as the spermatic cord.</td></tr>
+          <tr><td class="h">Pelvic floor & perineal muscles</td><td>Pelvic diaphragm = levator ani (puborectalis — sling around the anorectal junction for continence; pubococcygeus; iliococcygeus) + coccygeus (ischial spine → coccyx/sacrum). Perineal muscles for the male tract: bulbospongiosus and ischiocavernosus (contribute to erection/ejaculation) and the external urethral sphincter in the deep perineal pouch.</td></tr>
+          <tr><td class="h">Blood supply to pelvis & male organs</td><td>Testicular arteries arise directly from the abdominal aorta (below the renals), reflecting the testes' abdominal origin; travel in the spermatic cord. Internal pudendal artery (from internal iliac) supplies the perineum/external genitalia — gives the deep & dorsal penile arteries and artery to the bulb. Scrotum: anterior via external pudendal (femoral), posterior via internal pudendal. Venous: pampiniform plexus (counter-current heat exchange) → testicular vein — right → IVC, left → left renal vein (basis for left-sided varicocele).</td></tr>
+          <tr><td class="h">Nerve supply</td><td>Pudendal nerve (S2–S4) — somatic; motor to the pelvic floor/perineal muscles and external urethral sphincter, sensory to the external genitalia via the dorsal nerve of the penis. Pelvic splanchnic nerves (S2–S4, parasympathetic) drive erection. Hypogastric/sympathetic fibers (T11–L2) drive emission/ejaculation and close the internal urethral sphincter. Ilioinguinal & genitofemoral nerves — sensory to the scrotum/groin; genital branch supplies the cremaster (cremasteric reflex).</td></tr>
+          <tr><td class="h">Testes structure & histology</td><td>Each testis ~5×3×2.5 cm in the scrotum; tunica albuginea (fibrous capsule) sends septa dividing it into lobules, converging at the mediastinum testis; tunica vaginalis (serous, peritoneal derivative) reduces friction. Seminiferous tubules (site of spermatogenesis) contain germ cells and Sertoli (nurse) cells (blood–testis barrier); interstitial Leydig cells lie between tubules and make testosterone. Duct route inside the testis: seminiferous tubules → straight tubules → rete testis (mediastinum) → efferent ductules → epididymis.</td></tr>
+          <tr><td class="h">Epididymis & accessory glands</td><td>Epididymis (head, body, tail on the posterior testis) matures/stores sperm (~2-week transit); its tail becomes the ductus deferens. Accessory glands: seminal vesicles (60% of semen — fructose, prostaglandins, clotting factors), prostate (20–30% — weakly acidic, anticoagulant enzymes), bulbourethral/Cowper's glands (5% — alkaline lubricating mucus).</td></tr>
+          <tr><td class="h">Penis structure</td><td>Root, body (shaft), glans. Three erectile columns: paired dorsal corpora cavernosa (each ends as a crus on the ischial ramus, contains the deep artery) and a single ventral corpus spongiosum (surrounds the spongy urethra, expands as the bulb and glans).</td></tr>
+          <tr><td class="h">Semen pathway & urethra</td><td>Seminiferous tubules → straight tubules → rete testis → efferent ductules → epididymis (head→body→tail) → ductus deferens → ampulla (+ seminal vesicle duct) → ejaculatory duct → urethra. Male urethra (~18–20 cm) has three parts: prostatic (through the prostate, receives ejaculatory ducts) → membranous (shortest, through the urogenital diaphragm, external urethral sphincter) → spongy/penile (longest, within the corpus spongiosum, receives bulbourethral ducts) → external urethral orifice.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="fem" style="--acc:#a23b5e;--acc-bg:#f2e4e8;--acc-zebra:#f8f1f4;--acc-ink:#7e2e49">
+    <div class="shead"><span class="dot" style="background:#a23b5e"></span><h2>Female Reproductive System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Embryologic development</td><td>Default (no AMH/testosterone) pathway: paramesonephric (Müllerian) ducts persist, arise from coelomic epithelium (~week 6), fuse in the midline into the uterovaginal primordium. Unfused cranial portions → fallopian tubes; fused caudal portions → uterus, cervix, upper ~1/3 of the vagina. Lower vagina derives from the urogenital sinus; mesonephric (Wolffian) ducts regress.</td></tr>
+          <tr><td class="h">Perineum triangles</td><td>Diamond-shaped perineum bounded by the pubic symphysis (anterior), ischial tuberosities (lateral), coccyx (posterior). A line between the ischial tuberosities divides it into the anterior/urogenital triangle (urethral & vaginal orifices, external genitalia, urogenital diaphragm) and the posterior/anal triangle (anus, ischioanal fossae).</td></tr>
+          <tr><td class="h">Ligaments & peritoneal pouches</td><td>Broad ligament drapes the uterus/tubes/ovaries, subdivided into mesovarium (ovary), mesosalpinx (tube), mesometrium (uterus). Ovarian ligament (ovary→uterus); suspensory ligament of the ovary (ovary→pelvic wall, carries the ovarian vessels); round ligament (uterus→inguinal canal→labia majora, gubernaculum remnant); cardinal/transverse cervical ligaments (cervix→pelvic wall, carry the uterine vessels); uterosacral ligaments (cervix→sacrum). Pouches: vesicouterine (bladder–uterus) and rectouterine/of Douglas (uterus–rectum, lowest point of the peritoneal cavity).</td></tr>
+          <tr><td class="h">Pelvic floor muscles</td><td>Same pelvic diaphragm as the male: levator ani (puborectalis, pubococcygeus, iliococcygeus) + coccygeus, plus a female-specific pubovaginalis slip encircling the vagina. Perineal muscles around the vagina: bulbospongiosus, external urethral sphincter, urethrovaginal sphincter.</td></tr>
+          <tr><td class="h">Blood supply</td><td>Ovarian arteries from the abdominal aorta (below the renals), travel in the suspensory ligament. Uterine artery from the internal iliac, runs in the cardinal ligament and crosses over the ureter ('water under the bridge'); anastomoses with ovarian/vaginal arteries. Vaginal artery from the internal iliac/uterine; internal pudendal artery (internal iliac) supplies the perineum/clitoris/external genitalia. Venous: uterine/vaginal/pampiniform plexuses → internal iliac veins; right ovarian vein → IVC, left → left renal vein.</td></tr>
+          <tr><td class="h">Nerve supply</td><td>Pudendal nerve (S2–S4) — somatic to the perineum, external genitalia, and pelvic floor/perineal muscles including the external urethral & anal sphincters. Pelvic splanchnic nerves (S2–S4, parasympathetic) drive clitoral erection. Sympathetics (T10–L2, via the hypogastric plexus) supply the uterus/ovaries; ovarian afferents travel with the ovarian vessels back to T10–T11. Pain above the pelvic pain line travels with sympathetics; below it (lower vagina, perineum) travels with the pudendal nerve.</td></tr>
+          <tr><td class="h">Ovaries & uterine tubes</td><td>Ovaries lie against the lateral pelvic wall, posterior to the broad ligament, anchored by the ovarian and suspensory ligaments; not covered by peritoneum (germinal epithelium instead). Uterine tubes lie in the free superior edge of the broad ligament; parts = infundibulum (fimbriae) → ampulla (widest, fertilization site) → isthmus → intramural/uterine part; the tube does not physically attach to the ovary.</td></tr>
+          <tr><td class="h">Uterus & vagina</td><td>Uterus lies between the bladder (anterior) and rectum (posterior); anteverted (at the cervix–vagina junction) and anteflexed (at the body–cervix junction). Regions: fundus (above the tube entrances), body, isthmus, cervix (internal & external os); supported by the levator ani, cardinal, uterosacral, round, and broad ligaments. Vagina ~10 cm, cervix to vestibule, posterior to the urethra/bladder, anterior to the rectum; fornices surround the cervix.</td></tr>
+          <tr><td class="h">External genitalia & breast</td><td>Vulva: mons pubis, labia majora (homologous to the scrotum), labia minora, clitoris (erectile, homologous to the penis), vestibule (urethral + vaginal orifices), greater vestibular/Bartholin glands (homologous to bulbourethral glands). Breast: glandular lobes → lactiferous ducts → nipple; supported by Cooper's (suspensory) ligaments; overlies pectoralis major/serratus anterior (ribs 2–6); lymph drains mainly to the axillary nodes.</td></tr>
+          <tr><td class="h">Histology & peritoneal coverings</td><td>Ovary surface: simple cuboidal 'germinal' epithelium over a tunica albuginea (not true peritoneum). Uterine tube: simple columnar with ciliated + secretory cells. Endometrium: simple columnar with glands — stratum functionalis (sheds) + stratum basalis (regenerates); myometrium = thick smooth muscle; perimetrium = serosa continuous with the broad ligament (uterus is intraperitoneal). Cervix/vagina: nonkeratinized stratified squamous; the cervical canal itself is simple columnar (transformation zone). Peritoneal pouches: vesicouterine (anterior), rectouterine of Douglas (posterior, lowest point).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="neph" style="--acc:#7a4fa3;--acc-bg:#ece6f2;--acc-zebra:#f6f3f9;--acc-ink:#5f3e7f">
+    <div class="shead"><span class="dot" style="background:#7a4fa3"></span><h2>Nephrology / Urinary System</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Urinary system organs</td><td>Kidneys (primary organs) filter blood into urine and also regulate blood pressure, electrolytes, and pH, and produce erythropoietin and calcitriol. Ureters carry urine from kidney to bladder; bladder stores urine; urethra conducts urine out of the body. Micturition = the act of urination.</td></tr>
+          <tr><td class="h">Kidney gross anatomy & coverings</td><td>Bean-shaped, retroperitoneal, ~11 cm; right T12–L3 (pushed down by the liver), left T10/11–L2. Hilum (concave medial border) transmits the renal artery, vein, pelvis, nerves, and lymphatics into the fat-filled renal sinus. Coverings deep→superficial: fibrous (renal) capsule → perinephric fat → renal fascia → paranephric fat → peritoneum.</td></tr>
+          <tr><td class="h">Kidney internal structure</td><td>Coronal section, external→internal: renal cortex (outer, with renal columns dipping between pyramids) → renal medulla arranged as 8–15 renal pyramids (base at the cortex, apex = renal papilla) → papillae drain into minor calyces → major calyces → renal pelvis → ureter.</td></tr>
+          <tr><td class="h">Renal blood flow</td><td>Arterial: renal artery → segmental → interlobar (between pyramids) → arcuate (over pyramid bases) → interlobular (cortical radiate) → afferent arteriole → glomerulus. Second capillary bed: glomerulus → efferent arteriole → peritubular capillaries (cortical tubules) or vasa recta (juxtamedullary loops). Venous (reverse, no 'segmental' vein): vasa recta/peritubular → interlobular → arcuate → interlobar → renal vein → IVC.</td></tr>
+          <tr><td class="h">Nephron parts & filtrate pathway</td><td>Renal corpuscle = glomerulus + glomerular (Bowman's) capsule (the filter). Renal tubule in order: proximal convoluted tubule (PCT, simple cuboidal, brush border) → nephron loop (loop of Henle: descending thick→thin, ascending thin→thick) → distal convoluted tubule (DCT, contacts the afferent arteriole) → collecting tubule/duct (receives filtrate from multiple nephrons; the fluid becomes 'urine' here).</td></tr>
+          <tr><td class="h">Nephron types & juxtaglomerular apparatus</td><td>Cortical nephrons (~85%): peripheral cortex, short loops, peritubular capillaries. Juxtamedullary nephrons (~15%): near the corticomedullary junction, long loops into the medulla, vasa recta, concentrate urine. Juxtaglomerular apparatus (JGA) = where the DCT contacts the afferent arteriole: macula densa (DCT cells) senses NaCl/flow; juxtaglomerular (granular) cells (afferent arteriole smooth muscle) contain renin; nearby oxygen-sensing cells produce erythropoietin.</td></tr>
+          <tr><td class="h">Ureter, bladder & urethra relationships</td><td>Kidneys: right below the liver; left relates to the stomach/spleen/pancreas/left colic flexure; adrenals cap the superior poles; left renal vein crosses anterior to the aorta under the SMA. Ureters (~25 cm, retroperitoneal) descend on the psoas, cross the pelvic brim at the common iliac vessels, and enter the posterolateral bladder — three stone sites: UPJ, iliac crossing, UVJ; the ureter passes inferior to the gonadal vessels. Bladder is subperitoneal (only the superior surface is peritonealized); median umbilical ligament = urachal remnant; in females the uterus lies posterosuperior, in males the rectum lies posterosuperior with the prostate inferior. Urethra: female ~3–4 cm, male ~18–20 cm (prostatic/membranous/spongy).</td></tr>
+          <tr><td class="h">Histology of the urinary system</td><td>Glomerular capillaries: fenestrated endothelium. Filtration membrane = fenestration + basement membrane + podocytes (filtration slits, negatively charged glycocalyx) — a size/charge barrier. Bowman's capsule: parietal layer simple squamous, visceral layer podocytes. PCT: simple cuboidal with a brush border; thin loop of Henle: simple squamous; DCT/collecting duct: simple cuboidal (principal & intercalated cells). Ureter/bladder/proximal urethra: transitional epithelium (urothelium); muscle = detrusor (bladder), inner longitudinal + outer circular (ureter).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the Anatomy Exam 3 Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

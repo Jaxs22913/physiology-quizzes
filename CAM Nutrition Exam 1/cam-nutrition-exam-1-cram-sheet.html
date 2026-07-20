@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — CAM/Nutrition Exam 1</title>
+<style>
+  :root{
+    --ink:#161a24;--body:#2b3140;--muted:#6b7280;--line:#e4e7ef;--paper:#f6f7fb;--card:#fff;
+    --primary:#3c6e47;
+    --shadow:0 1px 2px rgba(20,22,40,.05),0 10px 30px rgba(20,22,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);
+    font:400 15.5px/1.55 ui-sans-serif,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  header.hero{margin-bottom:8px}
+  .kicker{font:700 12px/1 ui-sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--primary)}
+  h1{font:800 clamp(26px,4.4vw,36px)/1.1 ui-sans-serif;color:var(--ink);letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{color:var(--body);max-width:72ch}
+  .note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;
+    padding:12px 15px;margin:16px 0 26px;font-size:13.8px;color:#495064;box-shadow:var(--shadow)}
+  .note b{color:var(--ink)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+  .toc a{font:700 13px ui-sans-serif;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+  .toc a:hover{border-color:currentColor}
+  .toc .dot{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:5px}
+
+  section.topic{margin:36px 0;scroll-margin-top:16px}
+  .shead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  h2{font:800 21px/1.2 ui-sans-serif;color:var(--ink);margin:0}
+  h2 .tag{font:600 12.5px/1 ui-sans-serif;color:var(--muted);margin-left:8px}
+  .shead .dot{width:12px;height:12px;border-radius:3px;flex:none}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.8px}
+  thead th{position:sticky;top:0;text-align:left;font:700 12px/1.3 ui-sans-serif;letter-spacing:.03em;
+    text-transform:uppercase;color:#374151;padding:11px 13px;border-bottom:2px solid var(--line);z-index:1;
+    background:var(--acc-bg)}
+  th.term{width:28%}
+  td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.h{font-weight:700;color:var(--acc-ink,var(--ink))}
+  tbody tr:nth-child(even){background:var(--acc-zebra)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media print{
+    @page{size:landscape;margin:12mm}
+    body{background:#fff;font-size:10.5px}
+    .wrap{padding:0;max-width:none}
+    .scroll{overflow:visible;box-shadow:none;border:1px solid #bbb;break-inside:auto}
+    table{min-width:0}
+    thead th{position:static}
+    section.topic{break-inside:avoid}
+    .note{box-shadow:none}
+  }
+  @media (max-width:560px){.wrap{padding:6px 12px 60px}}
+
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .logo-mark-ink { stroke: #1f2937; }
+  .logo-mark-accent { stroke: var(--primary); }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark-ink { stroke: #e5e7eb; }
+    .logo-mark-accent { stroke: var(--primary); }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="logo-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="logo-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="logo-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div class="guide-back-bar">
+  <a href="#" class="guide-back-link" onclick="event.preventDefault(); window.guideGoBack();">&larr; Back</a>
+</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">CAM/Nutrition Exam 1 · Class of 2028</div>
+    <h1>CAM/Nutrition Exam 1 Cram Sheet</h1>
+    <p class="sub">Human Nutrition, Macronutrients/Micronutrients/Water, Special Topics in Nutrition, and Weight Control, condensed to the highest-yield facts.</p>
+    <div class="toc">
+      <a href="#human-nutrition" style="color:#2f5637"><span class="dot" style="background:#3c6e47"></span>Human Nutrition</a>
+      <a href="#macro-micro" style="color:#22565e"><span class="dot" style="background:#2c6e78"></span>Macronutrients, Micronutrients, and Trace Minerals in Human Health</a>
+      <a href="#special-topics" style="color:#975725"><span class="dot" style="background:#c1702f"></span>Special Topics in Nutrition</a>
+      <a href="#weight-control" style="color:#6c2e43"><span class="dot" style="background:#8a3b56"></span>Weight Control</a>
+    </div>
+    <div class="note"><b>How to use this:</b> this is a condensed, night-before-the-exam reference, not a
+      replacement for the full study guide — it assumes you've already learned the material and just need
+      the highest-yield facts at a glance. If a term feels unfamiliar, go back to the
+      <a href="cam-nutrition-exam-1-study-guide.html" style="color:inherit">full guide</a> for the explanation.</div>
+  </header>
+
+  <section class="topic" id="human-nutrition" style="--acc:#3c6e47;--acc-bg:#e4ebe5;--acc-zebra:#f1f5f2;--acc-ink:#2f5637">
+    <div class="shead"><span class="dot" style="background:#3c6e47"></span><h2>Human Nutrition</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Essential nutrient (3 criteria)</td><td>A specific biological function is identified → omitting it causes decline in that function → replacing it restores normal function. 6 nutrient classes: carbohydrate, protein, lipid, vitamin, mineral, water.</td></tr>
+          <tr><td class="h">kcal/g factors</td><td>Carbohydrate 4 kcal/g, protein 4 kcal/g, fat 9 kcal/g, alcohol 7 kcal/g (alcohol is calorie-yielding but not a nutrient — no essential function).</td></tr>
+          <tr><td class="h">Macro vs. micronutrients</td><td>Macronutrients (carbohydrate, protein, lipid) needed in gram quantities and provide calories. Micronutrients (vitamins, minerals) needed in mg/mcg quantities and provide 0 calories.</td></tr>
+          <tr><td class="h">Key metric conversions</td><td>1 lb = 454 g; 1 kg = 1000 g = 2.2 lb; 1 L = 1000 mL; 1 tsp ≈ 5 mL; 1 cup ≈ 240 mL; 4 g sugar ≈ 1 tsp; 6 g salt ≈ 1 tsp.</td></tr>
+          <tr><td class="h">BMI classification</td><td>18.5–24.9 healthy; 25–29.9 overweight; 30–34.9 Class 1 obesity; 35–39.9 Class 2; ≥40 Class 3. 2018 CDC: 26% normal weight, 72.5% overweight (BMI ≥25), 41% obese (BMI ≥30).</td></tr>
+          <tr><td class="h">Standard American Diet (NHANES 2018)</td><td>Protein 15.8% kcal (range 10–35%), carbohydrate 46.7% kcal (range 45–65%), fat 35.8% kcal (range 20–35%, slightly above top of range) — carb/protein sit low, fat sits high.</td></tr>
+          <tr><td class="h">Nutrient density vs. energy density</td><td>Nutrient-dense = large nutrient amount per calorie (fat-free milk, vegetable soup). Energy density = kcal per gram of food weight: very low <0.6 kcal/g, low 0.6–1.5, medium 1.5–4, high >4 kcal/g.</td></tr>
+          <tr><td class="h">Dietary Guidelines limits</td><td>Saturated fat <10% kcal, added sugars <10% kcal, sodium <2,300 mg/day, alcohol ≤1 drink/day women / ≤2 drinks/day men. 2020 label update added a separate Added Sugars line.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="macro-micro" style="--acc:#2c6e78;--acc-bg:#e1ebec;--acc-zebra:#f0f5f6;--acc-ink:#22565e">
+    <div class="shead"><span class="dot" style="background:#2c6e78"></span><h2>Macronutrients, Micronutrients, and Trace Minerals in Human Health</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Carbohydrate RDA & glycemic index</td><td>RDA 130 g/day adults (45–65% kcal); glucose is the preferred fuel (red blood cells use ONLY glucose). Glycemic index ranks how fast a carb raises blood glucose. Added-sugar limits: FNB upper limit 25% of kcal; AHA ~100 kcal/day (24 g, 6 tsp) women, 150 kcal/day (36 g, 9 tsp) men.</td></tr>
+          <tr><td class="h">Fiber types</td><td>Insoluble/nonfermentable (cellulose, lignin — whole grains, bran) ↑ fecal bulk, ↓ transit time. Soluble/viscous (pectin, gums, psyllium) is fermented by colonic bacteria and reduces cholesterol absorption. >60 g/day fiber requires extra fluid and may impair mineral absorption.</td></tr>
+          <tr><td class="h">Fatty acid types</td><td>Saturated: no double bonds, solid, animal fat. Monounsaturated: 1 double bond (oleic acid, omega-9), liquid, olive/canola oil. Polyunsaturated: omega-3 (first double bond 3 carbons from omega end — ALA, DHA, EPA) vs. omega-6 (6 carbons from omega end — linoleic acid); both essential, must come from diet.</td></tr>
+          <tr><td class="h">Lipoproteins & CVD fat targets</td><td>Chylomicron/VLDL carry triglyceride; LDL carries cholesterol to cells ("bad"); HDL returns cholesterol to liver ("good," highest protein content, most dense). Fat 20–35% of kcal, saturated fat <7–10% (AHA); no formal dietary cholesterol limit.</td></tr>
+          <tr><td class="h">Protein balance & malnutrition</td><td>RDA ≈0.8 g/kg healthy body weight (10–15% kcal; UL ~35%/170 g). Positive balance = net gain (growth/pregnancy), negative = net loss (illness/starvation), equilibrium = intake matches breakdown. Kwashiorkor: protein-deficient, edema masks wasting, 60–80% normal weight-for-age. Marasmus: protein AND calorie-deficient, <60% normal weight-for-age, rapid onset, no edema.</td></tr>
+          <tr><td class="h">Vitamin solubility & toxicity</td><td>Fat-soluble (A, D, E, K) absorbed with dietary fat, not readily excreted — A/D/E can accumulate to toxicity (A most common). Water-soluble (B-complex, C) generally excreted in urine, except B6 and B12 which store in the liver. Vegan diets risk deficiency of B12, D, calcium, iron, zinc, and omega-3s.</td></tr>
+          <tr><td class="h">Minerals: major vs. trace</td><td>Major (larger amounts): calcium (~1200 g body content), phosphorus, magnesium, sulfur, sodium/potassium/chloride. Trace (small amounts): iron, zinc, selenium, iodine, copper, fluoride, chromium, manganese, molybdenum. Classified by quantity, not clinical importance; toxicity is mostly a supplement problem.</td></tr>
+          <tr><td class="h">Water & electrolyte targets</td><td>Body water 50–70% of weight. Fluid targets: ~2.2 L/day (9 cups) women, ~3 L/day (13 cups) men. Sodium AI 1,500 mg/day, DV/UL 2,300 mg/day. Potassium AI/DV 4,700 mg/day. DASH diet (high K⁺/Ca²⁺/Mg²⁺, low fat/sodium) lowers systolic BP 8–14 points — the single biggest non-drug intervention listed besides weight loss.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="special-topics" style="--acc:#c1702f;--acc-bg:#f6ebe2;--acc-zebra:#fbf5f0;--acc-ink:#975725">
+    <div class="shead"><span class="dot" style="background:#c1702f"></span><h2>Special Topics in Nutrition</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Malnutrition etiologies & diagnosis</td><td>3 types: starvation-related (simple), chronic disease-related, acute disease/injury-related (stress starvation). ASPEN diagnosis requires 2 of 6 criteria. 20–50% of hospitalized US adults are malnourished; only 5–8% are diagnosed. Significant weight loss = 2% in 1 week, 5% in 30 days, 7.5% in 3 months, or 10% in 6 months; %loss = (UBW − current weight) ÷ UBW.</td></tr>
+          <tr><td class="h">Malnutrition lab markers</td><td>Albumin: half-life 3 weeks. Prealbumin: 3 days. Retinol binding protein: 12 hours (most sensitive to acute change). Transferrin: 8–10 days. All are confounded by inflammation, liver/renal disease, and hydration — use to trend response, not to diagnose alone.</td></tr>
+          <tr><td class="h">Enteral vs. parenteral nutrition</td><td>Guiding principle: "if the gut works, use it." Enteral is more physiologic, lower risk, cheaper, can meet 100% of needs. Parenteral reserved for ileus/intolerance, obstruction, hemodynamic instability, severe malabsorption, major GI bleed, or gut-rest surgery. PPN has limited osmolarity/calories; TPN (central line into SVC) delivers full calorie/protein/micronutrient needs.</td></tr>
+          <tr><td class="h">Refeeding syndrome</td><td>Feeding a severely malnourished patient shifts catabolism → anabolism (dextrose → insulin), driving electrolytes intracellularly: hypophosphatemia, hypokalemia, hypomagnesemia (arrhythmia risk). Give thiamine (B1) before any dextrose, continue 5–7 days, to prevent Wernicke's/Korsakoff. Start at ~50% of estimated kcal needs and advance gradually over about a week.</td></tr>
+          <tr><td class="h">Nutrition by disease state</td><td>CKD 3–5: restrict sodium, phosphorus, potassium, protein; add fluid restriction at CKD 4–5. Chronic liver disease: increase (don't restrict) protein, favor plant/dairy sources, sodium 1,500–2,000 mg/day if ascites present. Diabetes: favor complex over refined carbs; plate method = ½ nonstarchy vegetables, ¼ carbohydrate, ¼ protein.</td></tr>
+          <tr><td class="h">Specialized nutrition support timing</td><td>Consider SNS after >5–7 days of inadequate intake in adults (3–5 days children, 1–3 days infants). Not obligatory in futile-care/end-of-life situations — no evidence enteral feeding helps dementia patients; residents have a federally protected right to informed decisions about feeding tube placement.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="topic" id="weight-control" style="--acc:#8a3b56;--acc-bg:#efe4e7;--acc-zebra:#f7f1f3;--acc-ink:#6c2e43">
+    <div class="shead"><span class="dot" style="background:#8a3b56"></span><h2>Weight Control</h2></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="term">Topic</th><th>One-glance facts</th></tr></thead>
+        <tbody>
+          <tr><td class="h">Energy balance components</td><td>BMR 60–80% of total daily needs (lean body mass is the biggest driver), physical activity 15–30%, thermic effect of food (TEF) 8–15% (highest for protein). ~3,500 kcal ≈ 1 lb of weight change. Adaptive thermogenesis = nonvoluntary heat production (fidgeting, shivering, brown fat).</td></tr>
+          <tr><td class="h">BMI categories (WHO)</td><td>Underweight <18.5 (severe <16.00, moderate 16.00–16.99, mild 17.00–18.49); normal 18.50–24.99; overweight (pre-obese) ≥25.00 (25.00–29.99); obese Class I 30.00–34.99, Class II 35.00–39.99, Class III ≥40.00.</td></tr>
+          <tr><td class="h">Fat distribution: android vs. gynoid</td><td>Android ("apple," waist >40" men / >35" women): visceral, near the liver, driven by testosterone/alcohol — linked to insulin resistance, fatty liver, T2DM, high lipids, heart disease. Gynoid ("pear," hips/thighs): driven by estrogen/progesterone, lower risk. Acceptable body fat: women 23–31% (obese >35%), men 13–21% (obese >25%).</td></tr>
+          <tr><td class="h">Weight-loss plan design</td><td>Weight-loss triad: calorie restriction + physical activity + behavior modification. Target 1–2 lb/week loss (~500 kcal/day deficit); maintenance period after losing 10% of body weight before further loss. Crash diets are the primary cause of regain. Average calorie needs: women 1,800–2,400 kcal/day, men 2,400–3,200 kcal/day.</td></tr>
+          <tr><td class="h">Weight-loss medications</td><td>Orlistat inhibits intestinal lipase (~30% less fat digestion). Phentermine = appetite suppressant. Liraglutide slows gastric emptying/↑satiety. Semaglutide = GLP-1 agonist. Medication candidacy: BMI ≥30, or ≥27 with an obesity-related comorbidity.</td></tr>
+          <tr><td class="h">Bariatric surgery options</td><td>Candidacy: BMI ≥40, or ≥35 with a comorbidity. Gastric bypass = greatest weight loss but highest deficiency risk (reroutes intestine). Sleeve gastrectomy removes 80–85% of the stomach, irreversible. Adjustable banding = lowest deficiency risk and reversible, but least weight loss. Ileal transposition = best glycemic control.</td></tr>
+          <tr><td class="h">Underweight & food insecurity</td><td>Underweight = BMI <18.5. Very-low-calorie diet (400–800 kcal/day, medically supervised) is for BMI ≥40 patients who've failed other approaches. 44.2 million people lived in food-insecure US households in 2022; resources include WIC, Summer EBT, and school meal programs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Condensed from the CAM/Nutrition Exam 1 Study Guide (Class of 2028). For the full explanation and figures behind any of these, see the full guide.
+    <p style="text-align:center;margin-top:26px;"><a href="../index.html" style="color:inherit;font-weight:700;text-decoration:none;">&larr; Back to Homepage</a></p>
+    <p style="text-align:center;font-size:13px;font-style:italic;">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Cram sheet mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  const indicator = document.getElementById("pull-refresh");
+  const path = indicator.querySelector("path");
+  const pathLength = 420, threshold = 70, maxPull = 90;
+  let startY = 0, pulling = false, refreshing = false;
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
