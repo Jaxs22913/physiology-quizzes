@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Anatomy Integration Exam - Peripheral and Cranial Nerves (Set 1)
-  Single self-contained file. To publish on GitHub Pages, save as index.html.
-  All questions are drawn only from the uploaded lecture material.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -13,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #5b3a8e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #c1440e; }
   }
 </style>
 
@@ -52,415 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peripheral &amp; Cranial Nerves — Anatomy Exam 1</title>
+<title>Peripheral & Cranial Nerves — Anatomy Exam 1</title>
 <style>
   :root{
-    --ink:#132635;
-    --ink-soft:#48607a;
-    --paper:#eef4f8;
-    --paper-2:#f9fcfd;
-    --line:#c9dbe6;
-    --oxblood:#1f6f5c;
-    --oxblood-soft:#2e6a92;
-    --brass:#c1440e;
-    --teal:#5b3a8e;
-    --teal-deep:#0b5a54;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(19,38,53,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#185748; --indigo:#5b3a8e; --gold:#c1440e; --ice:#d6c9e9;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Masthead */
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  /* Intro */
-  .intro h2{
-    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
-  }
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{
-    list-style:none;padding:0;margin:16px 0 6px;
-    display:grid;gap:8px;
-  }
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{
-    font-weight:700;color:var(--oxblood);
-    font-size:12px;min-width:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;
-    border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{
-    background:var(--oxblood);color:#fdf6ee;
-    box-shadow:0 6px 16px rgba(27,79,114,.28);
-  }
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  /* Progress bar */
-  .status{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:14px;margin-bottom:14px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{
-    font-size:13px;font-weight:700;color:var(--teal-deep);
-    background:var(--paper);border:1px solid var(--line);
-    padding:6px 12px;border-radius:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    display:inline-block;text-transform:uppercase;
-    letter-spacing:.16em;font-size:10.5px;font-weight:700;
-    color:var(--teal);margin-bottom:12px;
-  }
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
-  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
-  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;
-    text-align:left;width:100%;
-    background:var(--paper-2);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;cursor:pointer;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{
-    font-weight:700;color:var(--oxblood);
-    min-width:22px;font-size:14px;
-    border-right:1px solid var(--line);padding-right:11px;
-  }
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{
-    margin-top:20px;border-radius:10px;padding:16px 18px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    border:1px solid var(--line);background:var(--paper);
-    display:none;
-  }
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{
-    margin-top:10px;font-size:12px;color:var(--ink-soft);
-    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  /* Results */
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{
-    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
-    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{
-    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
-    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
-    margin:34px 0 12px;text-align:left;
-  }
-  .bd-row{
-    display:flex;align-items:center;gap:12px;margin:0 0 9px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{
-    border:1px solid var(--line);border-left:3px solid var(--wrong);
-    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
-  }
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
-  }
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
-    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    color:var(--correct);background:var(--correct-bg);
-    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
-  }
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{
-    text-align:center;margin-top:40px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
-    letter-spacing:.03em;
-  }
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;}
-  }
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
-    <h1>Anatomy Integration Exam<span class="sys">Peripheral &amp; Cranial Nerves</span></h1>
-    <p class="sub">Spinal Nerve Plexuses &amp; Reflexes &middot; The 12 Cranial Nerves</p>
+  <header>
+    <h1>Anatomy Integration ExamPeripheral & Cranial Nerves</h1>
+    <div class="sub">Spinal Nerve Plexuses & Reflexes · The 12 Cranial Nerves</div>
+    <span class="pill">30 questions</span>
   </header>
 
-  <!-- INTRO -->
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>This exam covers the Peripheral &amp; Cranial Nerves lecture, spanning the organization of the peripheral nervous system (spinal nerve branches, the four nerve plexuses, reflex arcs) and the anatomical divisions, foramina, and courses of all 12 cranial nerves. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
-    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Describe the organization of the peripheral nervous system, including spinal nerve branches, plexuses, and reflex arcs.</span></li>
-      <li><span class="n">2</span><span>Describe the anatomical divisions and organization of the cranial nerves.</span></li>
-      <li><span class="n">3</span><span>Discuss the location and courses of the 12 cranial nerves, including their foramina and innervation targets.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Describe the organization of the peripheral nervous system, including spinal nerve branches, plexuses, and reflex arcs.</span><span class="chip">Describe the anatomical divisions and organization of the cranial nerves.</span><span class="chip">Discuss the location and courses of the 12 cranial nerves, including their foramina and innervation targets.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=peripheral-cranial-nerves" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 60</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
-
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
+  </div>
 
   <!-- RESULTS -->
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 60</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Built from the Peripheral &amp; Cranial Nerves lecture &middot; PAJ 5000 Anatomy &middot; for study use. (Set 1)
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 30 items, drawn only from the peripheral and cranial nerves lecture (Set 1).
-   answer = index (0-3) of correct choice.
-   ============================================================ */
-const QUESTIONS = [{"topic": "Spinal Nerves", "q": "What two branches do all spinal nerves form?", "choices": ["Superior and inferior rami", "Only a single ventral ramus", "Dorsal (posterior) ramus and ventral (anterior) ramus", "White ramus and gray ramus only"], "answer": 2, "correct": "All spinal nerves form two branches: the dorsal (posterior) ramus and the ventral (anterior) ramus.", "why": "White and gray rami are additional branches present only in spinal nerves T1-L2, not the two branches formed by all spinal nerves; spinal nerves form two (not just one) primary branches; and superior/inferior is not the terminology used for the primary spinal nerve branches.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "q": "Which spinal nerves have two additional branches (white and gray rami), and what are these rami collectively called?", "choices": ["Spinal nerves S1 to S5; collectively called the sacral plexus", "Spinal nerves C1 to C5; collectively called the cervical plexus", "Spinal nerves T1 to L2; collectively called rami communicantes", "All spinal nerves have these additional branches"], "answer": 2, "correct": "Spinal nerves T1 to L2 have two additional branches — the white ramus and gray ramus — which are collectively called rami communicantes.", "why": "C1-C5 forms the cervical plexus, a different structure from the white/gray rami; not all spinal nerves have these additional rami, only the T1-L2 range associated with sympathetic outflow; and S1-S5 contributes to the sacral plexus, not the white/gray rami communicantes.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "q": "What are white and gray rami associated with, in the autonomic nervous system?", "choices": ["The autonomic ganglion of the parasympathetic division", "The autonomic ganglion of the sympathetic division", "The enteric nervous system exclusively", "No association with the ANS"], "answer": 1, "correct": "White and gray rami are associated with the autonomic ganglion of the sympathetic division within the autonomic nervous system.", "why": "The parasympathetic division uses cranial nerve outflow and sacral splanchnic nerves, not the white/gray rami communicantes, which are specifically a sympathetic-associated structure; they are not associated with the enteric nervous system, a separate ANS division; and they do have a clear, described ANS association (sympathetic), not none at all.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "q": "What are dermatomes?", "choices": ["A classification of reflex arcs", "A type of cranial nerve branch", "Regions of muscle supplied by a given spinal nerve", "Specific regions of the skin supplied by a given spinal nerve"], "answer": 3, "correct": "Spinal nerves supply specific regions of the skin known as dermatomes.", "why": "Regions of muscle (not skin) supplied by a spinal nerve would instead be described by a myotome, a related but distinct concept; dermatomes are a spinal nerve concept, not a cranial nerve branch; and they are a skin-territory mapping concept, not a reflex arc classification.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Motor Commands", "q": "In the distribution of motor fibers within a spinal nerve, what do the white ramus (preganglionic) and gray ramus (postganglionic) carry?", "choices": ["White ramus carries postganglionic fibers; gray ramus carries preganglionic fibers", "Both rami carry identical somatic motor fibers", "Neither ramus is involved in sympathetic motor pathways", "White ramus carries preganglionic sympathetic fibers to the sympathetic ganglion; gray ramus carries postganglionic fibers back to the spinal nerve"], "answer": 3, "correct": "The white ramus carries preganglionic fibers to the sympathetic ganglion, while the gray ramus carries postganglionic fibers back to the spinal nerve for distribution to smooth muscles, glands, and visceral organs.", "why": "Reversing the pre/postganglionic fiber assignment contradicts the material's stated white/gray ramus roles; the two rami carry distinct sympathetic (not somatic) fiber types, not identical somatic motor fibers; and both rami are specifically involved in the sympathetic motor pathway, not uninvolved.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 5"}, {"topic": "Sensory Information", "q": "In the distribution of sensory fibers within a spinal nerve, what information does the dorsal ramus carry versus the ventral ramus?", "choices": ["Dorsal ramus carries sensory information from exteroceptors/proprioceptors/interoceptors of the back; ventral ramus carries the same from the body wall and limbs", "Both rami carry identical sensory information from the same body region", "Neither ramus carries sensory information, only motor", "Dorsal ramus carries only visceral sensory information; ventral ramus carries only somatic sensory information"], "answer": 0, "correct": "The dorsal ramus carries sensory information from exteroceptors, proprioceptors, and interoceptors of the back, while the ventral ramus carries sensory information from exteroceptors, proprioceptors, and interoceptors of the body wall and limbs.", "why": "Both rami carry a mix of somatic and visceral sensory information, not an exclusive division between the two; the two rami cover different body regions (back versus body wall/limbs), not identical ones; and both rami do carry sensory information, in addition to their motor roles.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 6"}, {"topic": "Nerve Plexuses", "q": "What is a nerve plexus, and what are the four major nerve plexuses?", "choices": ["A single unbranched nerve; the radial, ulnar, median, and femoral nerves", "Only two plexuses exist: cervical and lumbar", "A type of ganglion found only in the cranial nerves", "An interwoven network of nerves (\"plexus\" means \"to braid\"); the cervical, brachial, lumbar, and sacral plexuses"], "answer": 3, "correct": "A nerve plexus is an interwoven network of nerves (\"plexus\" meaning \"to braid\"); there are four nerve plexuses — cervical, brachial, lumbar, and sacral (the lumbar and sacral are sometimes combined into the lumbosacral plexus).", "why": "The radial, ulnar, median, and femoral nerves are individual peripheral nerves that arise from plexuses, not plexuses themselves; nerve plexuses are a peripheral spinal nerve structure, not a cranial nerve ganglion type; and there are four (not two) major plexuses described.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 8"}, {"topic": "Cervical Plexus", "q": "What spinal nerve levels form the cervical plexus, and what does it innervate?", "choices": ["C5-T1; innervates the muscles of the upper limb", "C1-C5; innervates the muscles of the neck and the diaphragm", "T12-L4; innervates the pelvic girdle", "L4-S4; innervates the lower limb"], "answer": 1, "correct": "The cervical plexus (C1-C5) innervates the muscles of the neck and the diaphragm.", "why": "C5-T1 forms the brachial plexus (upper limb), not the cervical plexus; T12-L4 forms the lumbar plexus (pelvic girdle/anterior thigh), a different plexus; and L4-S4 forms the sacral plexus (lower limb), also distinct from the cervical plexus.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Cervical Plexus", "q": "Which nerve, arising from the cervical plexus, innervates the diaphragm?", "choices": ["Great auricular nerve", "Ansa cervicalis", "Lesser occipital nerve", "Phrenic nerve (originating mainly from C4, with contributions from C3 and C5)"], "answer": 3, "correct": "The phrenic nerve, which provides sensory information from and motor innervation to the diaphragm, originates from C4 with minor contributions from C3 and C5.", "why": "The ansa cervicalis instead innervates the extrinsic laryngeal muscles, not the diaphragm; the lesser occipital nerve provides sensory innervation to the neck/posterior scalp skin, unrelated to the diaphragm; and the great auricular nerve provides sensory innervation to the neck/ear region skin, also unrelated to diaphragm innervation.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Cervical Plexus", "q": "Which nerve of the cervical plexus innervates five of the extrinsic laryngeal muscles, traveling with fibers from CN XII?", "choices": ["Phrenic nerve", "Transverse cervical nerve", "Ansa cervicalis", "Great auricular nerve"], "answer": 2, "correct": "The ansa cervicalis originates from branches of C1-C3 (and sometimes C4) and travels inferiorly with fibers from cranial nerve XII, innervating five of the extrinsic laryngeal muscles.", "why": "The phrenic nerve innervates the diaphragm, not the laryngeal muscles; the great auricular nerve provides sensory innervation to skin near the ear/neck, unrelated to laryngeal muscles; and the transverse cervical nerve provides sensory innervation to the anterior triangle of the neck's skin, also unrelated to the laryngeal muscles.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Cervical Plexus", "q": "What sensory territory does the great auricular nerve cover?", "choices": ["Skin over the parotid gland, posterior aspect of the ear, and skin of the neck", "Skin of the neck and shoulder only", "Skin of the anterior triangle of the neck only", "Motor innervation to the rhomboids"], "answer": 0, "correct": "The great auricular nerve arises from C2 and C3, crosses anteriorly to the sternocleidomastoid, and travels toward the parotid gland; it receives sensory information from the skin over the gland, the posterior aspect of the ear, and skin of the neck.", "why": "Skin of the anterior triangle of the neck alone describes the transverse cervical nerve's territory, not the great auricular nerve's; skin of the neck and shoulder alone describes the supraclavicular nerve's territory, a different nerve; and the great auricular nerve is a sensory (not motor) nerve, so it doesn't innervate the rhomboids.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Brachial Plexus", "q": "What spinal nerve levels form the brachial plexus, and what does it innervate?", "choices": ["T12-L4; innervates the pelvic girdle and anterior thigh", "L4-S4; innervates the pelvic girdle and lower limb", "C5-T1; innervates the muscles of the pectoral girdles and upper limbs", "C1-C5; innervates the neck and diaphragm"], "answer": 2, "correct": "The brachial plexus (C5-T1) innervates the muscles of the pectoral girdles and upper limbs.", "why": "C1-C5 forms the cervical plexus, a different plexus supplying the neck and diaphragm; T12-L4 forms the lumbar plexus, supplying the pelvic girdle and anterior thigh; and L4-S4 forms the sacral plexus, a different plexus supplying the lower limb.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Brachial Plexus", "q": "What is the correct organizational sequence of the brachial plexus, from the spinal cord outward?", "choices": ["Nerves → cords → divisions → trunks → roots", "Ventral rami (roots) → trunks (superior/middle/inferior) → divisions (anterior/posterior) → cords (posterior/lateral/medial) → nerves", "Divisions → cords → roots → trunks → nerves", "Trunks → roots → nerves → cords → divisions"], "answer": 1, "correct": "The brachial plexus is organized, from the spinal cord outward, as ventral rami (roots), then trunks (superior, middle, inferior), then divisions (anterior and posterior), then cords (posterior, lateral, medial), and finally nerves.", "why": "Reversing the entire sequence (nerves to roots) inverts the actual proximal-to-distal organization; the other scrambled sequences also misorder the roots-trunks-divisions-cords-nerves progression described in the material.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 14"}, {"topic": "Brachial Plexus", "q": "Which four nerves are given as examples of nerves formed by the brachial plexus?", "choices": ["Femoral, obturator, sciatic, and pudendal nerves", "Radial, ulnar, median, and musculocutaneous nerves", "Phrenic, ansa cervicalis, lesser occipital, and great auricular nerves", "Iliohypogastric, ilio-inguinal, genitofemoral, and lateral femoral cutaneous nerves"], "answer": 1, "correct": "The brachial plexus forms nerves including the radial, ulnar, median, and musculocutaneous nerves.", "why": "Femoral/obturator/sciatic/pudendal nerves arise from the lumbar and sacral plexuses, not the brachial plexus; phrenic/ansa cervicalis/lesser occipital/great auricular nerves arise from the cervical plexus, a different plexus; and iliohypogastric/ilio-inguinal/genitofemoral/lateral femoral cutaneous nerves arise from the lumbar plexus, also distinct from the brachial plexus.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 15"}, {"topic": "Lumbosacral Plexus", "q": "What spinal levels make up the lumbar plexus and sacral plexus respectively, and what does the combined lumbosacral plexus innervate?", "choices": ["Lumbar plexus (T12-L4) and sacral plexus (L4-S4); together innervate the muscles of the pelvic girdle and lower limbs", "Only a single combined plexus exists, with no separate lumbar/sacral levels", "Lumbar plexus (C5-T1) and sacral plexus (C1-C5); together innervate the upper limb", "Lumbar plexus (L4-S4) and sacral plexus (T12-L4); together innervate the neck"], "answer": 0, "correct": "The lumbar plexus (T12-L4) and sacral plexus (L4-S4) together make up the lumbosacral plexus, which innervates the muscles of the pelvic girdle and lower limbs.", "why": "C5-T1 and C1-C5 describe the brachial and cervical plexus levels respectively, not the lumbar/sacral plexus; reversing the lumbar and sacral level ranges contradicts the material's stated spans; and the lumbar and sacral plexuses are each distinct components that can combine into the lumbosacral plexus, not a single plexus lacking these separate levels.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Lumbar Plexus", "q": "What do the iliohypogastric and ilio-inguinal nerves innervate?", "choices": ["The gracilis, obturator externus, and adductor magnus", "The quadriceps, sartorius, and iliopsoas", "The external oblique, internal oblique, and transverse abdominis", "The gluteus medius and minimus"], "answer": 2, "correct": "The iliohypogastric nerve and ilio-inguinal nerve both innervate the external oblique, internal oblique, and transverse abdominis.", "why": "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus are innervated by the obturator nerve, also distinct; and the gluteus medius and minimus are innervated by the superior gluteal nerve, a sacral plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 17"}, {"topic": "Lumbar Plexus", "q": "What does the femoral nerve innervate?", "choices": ["External and internal oblique, and transverse abdominis", "Gracilis, obturator externus, and adductor magnus", "Quadriceps, sartorius, pectineus, and iliopsoas", "Gluteus maximus"], "answer": 2, "correct": "The femoral nerve innervates the quadriceps, sartorius, pectineus, and iliopsoas.", "why": "The gracilis, obturator externus, and adductor magnus are instead innervated by the obturator nerve, a different lumbar plexus nerve; the external/internal oblique and transverse abdominis are innervated by the iliohypogastric and ilio-inguinal nerves, also distinct; and the gluteus maximus is innervated by the inferior gluteal nerve, a sacral plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Lumbar Plexus", "q": "What does the obturator nerve innervate?", "choices": ["Gluteus minimus, gluteus medius, and tensor fasciae latae", "Semimembranosus, semitendinosus, and adductor magnus", "Quadriceps, sartorius, and iliopsoas", "Gracilis, obturator externus, and adductor magnus"], "answer": 3, "correct": "The obturator nerve innervates the gracilis, obturator externus, and adductor magnus.", "why": "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the semimembranosus, semitendinosus, and adductor magnus are innervated by the sciatic nerve, a sacral plexus nerve; and the gluteus minimus, medius, and tensor fasciae latae are innervated by the superior gluteal nerve, also a sacral plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Lumbar Plexus", "q": "What sensory territory does the genitofemoral nerve cover?", "choices": ["Skin of the anteromedial surface of the thigh and external genitals", "Skin of the neck and shoulder", "Skin of the anterior, lateral, and posterior thigh", "Skin of the perineum and posterior thigh"], "answer": 0, "correct": "The genitofemoral nerve provides sensory information from the skin of the anteromedial surface of the thigh and the external genitals.", "why": "Skin of the anterior, lateral, and posterior thigh instead describes the lateral femoral cutaneous nerve's territory, a different lumbar plexus nerve; skin of the perineum and posterior thigh describes the posterior femoral cutaneous nerve, a sacral plexus nerve; and skin of the neck and shoulder describes the supraclavicular nerve, a cervical plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Sacral Plexus", "q": "What does the superior gluteal nerve innervate, versus the inferior gluteal nerve?", "choices": ["Neither nerve innervates gluteal muscles", "Both nerves innervate the same muscles", "Superior gluteal: gluteus minimus, gluteus medius, and tensor fasciae latae; Inferior gluteal: gluteus maximus", "Superior gluteal: gluteus maximus; Inferior gluteal: gluteus minimus, medius, and tensor fasciae latae"], "answer": 2, "correct": "The superior gluteal nerve innervates the gluteus minimus, gluteus medius, and tensor fasciae latae, while the inferior gluteal nerve innervates the gluteus maximus.", "why": "Reversing which nerve innervates which gluteal muscles contradicts the material's stated assignments; the two nerves innervate distinct, non-overlapping gluteal muscles, not the same ones; and both nerves are specifically named for their gluteal muscle innervation, so claiming neither innervates gluteal muscles is incorrect.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "q": "What does the sciatic nerve innervate, per the material's listed muscles?", "choices": ["Gluteus medius and minimus", "Gracilis, obturator externus, and adductor magnus", "Semimembranosus, semitendinosus, and adductor magnus", "Quadriceps, sartorius, and iliopsoas"], "answer": 2, "correct": "The sciatic nerve innervates the semimembranosus, semitendinosus, and adductor magnus.", "why": "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus (via a different route) are innervated by the obturator nerve; and gluteus medius/minimus are innervated by the superior gluteal nerve, not the sciatic nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "q": "What does the pudendal nerve innervate?", "choices": ["The diaphragm", "The quadriceps and sartorius", "The perineum, external anal sphincter, and urethral sphincter", "The gluteus maximus only"], "answer": 2, "correct": "The pudendal nerve innervates the perineum, external anal sphincter, and urethral sphincter.", "why": "The quadriceps and sartorius are innervated by the femoral nerve, a lumbar plexus nerve, not the pudendal nerve; the gluteus maximus is innervated by the inferior gluteal nerve, a different sacral plexus nerve; and the diaphragm is innervated by the phrenic nerve, a cervical plexus nerve, unrelated to the pudendal nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "q": "What sensory territory does the posterior femoral cutaneous nerve cover?", "choices": ["The anterior, lateral, and posterior thigh", "The perineum, posterior thigh, and posterior leg", "The neck and posterior head", "The anteromedial thigh and external genitals"], "answer": 1, "correct": "The posterior femoral cutaneous nerve provides sensory information from the perineum, posterior thigh, and posterior leg.", "why": "The anterior, lateral, and posterior thigh describes the lateral femoral cutaneous nerve's territory, a lumbar plexus nerve; the anteromedial thigh and external genitals describes the genitofemoral nerve's territory, also a lumbar plexus nerve; and the neck and posterior head describes the lesser occipital nerve, a cervical plexus nerve.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Reflexes", "q": "What is a reflex, and what is a reflex arc?", "choices": ["A reflex arc begins at a motor neuron and ends at a sensory receptor", "A reflex and reflex arc are the same thing with different names", "A reflex is a voluntary motor response; a reflex arc is the neural wiring of multiple reflexes combined", "A reflex is an immediate involuntary motor response; a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector"], "answer": 3, "correct": "A reflex is an immediate involuntary motor response, and a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector.", "why": "A reflex is specifically involuntary, not voluntary, distinguishing it from consciously controlled movement; a reflex arc describes a single reflex's circuitry, not multiple reflexes combined; and while related, \"reflex\" (the response) and \"reflex arc\" (the wiring) are distinct concepts, not identical; and the reflex arc begins at a sensory receptor and ends at an effector, not the reverse direction.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 22"}, {"topic": "Reflexes", "q": "What is the correct pathway of a reflex arc, in order?", "choices": ["Activation of a motor neuron → information processing → activation of a sensory receptor → response by the effector → relay to the CNS", "Information processing → response by the effector → activation of a sensory receptor → relay to the CNS → activation of a motor neuron", "Activation of a sensory receptor → relay of information to the CNS → information processing → activation of a motor neuron → response by the effector", "Response by the effector → activation of a sensory receptor → relay to the CNS → information processing → activation of a motor neuron"], "answer": 2, "correct": "The reflex arc pathway is: activation of a sensory receptor, relay of information to the CNS, information processing, activation of a motor neuron, and response by the effector.", "why": "The other sequences scramble this order, placing motor neuron activation or effector response before the sensory receptor is even activated — but a reflex arc must begin with sensory receptor activation and end with the effector response, following the correct sequential order given in the material.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 23"}, {"topic": "Reflexes", "q": "Reflexes are classified according to which four criteria, per the material?", "choices": ["Only their development (innate or acquired)", "Development (innate/acquired), site of processing (spinal/cranial), nature of motor response (somatic/visceral/autonomic), and complexity (monosynaptic/polysynaptic)", "Only the muscle group involved", "Only their complexity (monosynaptic or polysynaptic)"], "answer": 1, "correct": "Reflexes are classified according to their development (innate or acquired), the site where information is processed (spinal or cranial/cerebral), the nature of the resulting motor response (somatic, visceral, or autonomic), and the complexity of the neural circuit (monosynaptic or polysynaptic).", "why": "Development alone is only one of four classification criteria, not the sole one; complexity alone is also only one of the four criteria; and the material describes four distinct classification schemes, not a single \"muscle group involved\" criterion.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 24"}, {"topic": "Reflexes", "q": "What is the difference between monosynaptic and polysynaptic spinal reflexes?", "choices": ["Monosynaptic involves a single segment of the spinal cord; polysynaptic integrates motor output from several spinal segments", "Monosynaptic integrates several spinal segments; polysynaptic involves only a single segment", "Both types involve identical numbers of spinal segments", "Neither type involves the spinal cord"], "answer": 0, "correct": "Monosynaptic spinal reflexes involve a single segment of the spinal cord, while polysynaptic reflexes integrate motor output from several spinal segments.", "why": "Reversing the definitions contradicts the material's stated meanings; the two reflex types involve different numbers of spinal segments, not identical ones; and spinal reflexes by definition involve the spinal cord as the processing site (as opposed to cranial reflexes).", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 25"}, {"topic": "Reflexes", "q": "What is the stretch reflex (e.g., the patellar reflex), and what is its pathway?", "choices": ["A reflex that requires conscious processing in the cerebral cortex", "A stimulus compresses a muscle, activating a motor neuron directly with no sensory component", "A stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts", "A reflex that only occurs in the upper limb, never the lower limb"], "answer": 2, "correct": "In a stretch reflex, a stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts — the patellar reflex is a classic example, controlled by muscle spindles in the quadriceps femoris.", "why": "The stimulus stretches (not compresses) the muscle, and it does involve a sensory neuron component, not a purely direct motor activation; the patellar reflex specifically involves the lower limb (quadriceps), showing this reflex type isn't upper-limb-exclusive; and it is a spinal reflex, processed in the spinal cord, not requiring conscious cerebral cortex processing.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 26"}, {"topic": "Reflexes", "q": "What role do higher centers play in reflexes, per the material?", "choices": ["Enhance or suppress spinal reflexes, and modify information carried in descending tracts of the spinal cord", "Are the sole site of reflex processing, replacing the spinal cord entirely", "Have no influence on spinal reflexes whatsoever", "Only affect cranial reflexes, never spinal reflexes"], "answer": 0, "correct": "Higher centers can enhance or suppress spinal reflexes and modify information carried in the descending tracts of the spinal cord.", "why": "Higher centers do have a described influence on spinal reflexes, so claiming no influence is incorrect; they modulate (not replace) spinal cord reflex processing, working alongside the spinal cord rather than substituting for it entirely; and their described influence includes spinal reflexes specifically, not being limited only to cranial reflexes.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 29"}, {"topic": "Peripheral Nervous System Organization", "q": "What structures make up a peripheral nerve, and how does the anatomy relate to the nerve plexuses previously described?", "choices": ["Bundled axons (organized similarly to bundled muscle fibers), which combine within plexuses to form the named peripheral nerves like the radial, femoral, and sciatic nerves", "Only cell bodies, with no axons present", "A structure found exclusively within the CNS", "A single unmyelinated axon with no connective tissue covering"], "answer": 0, "correct": "A peripheral nerve consists of bundled axons, and within nerve plexuses, fibers from multiple spinal nerve roots combine and reorganize to form the named peripheral nerves (such as the radial, femoral, and sciatic nerves) that emerge from each plexus.", "why": "Peripheral nerves have connective tissue coverings (similar in principle to muscle fiber bundling), not a single bare axon; peripheral nerves are composed of many axons, not cell bodies alone (which cluster in ganglia instead); and peripheral nerves are a PNS (not CNS) structure by definition.", "src": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 7"}];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "Spinal Nerves", "io": "Spinal Nerves", "q": "What two branches do all spinal nerves form?", "opts": [["Superior and inferior rami", "White and gray rami are additional branches present only in spinal nerves T1-L2, not the two branches formed by all spinal nerves; spinal nerves form two (not just one) primary branches; and superior/inferior is not the terminology used for the primary spinal nerve branches."], ["Only a single ventral ramus", "White and gray rami are additional branches present only in spinal nerves T1-L2, not the two branches formed by all spinal nerves; spinal nerves form two (not just one) primary branches; and superior/inferior is not the terminology used for the primary spinal nerve branches."], ["Dorsal (posterior) ramus and ventral (anterior) ramus", "All spinal nerves form two branches: the dorsal (posterior) ramus and the ventral (anterior) ramus."], ["White ramus and gray ramus only", "White and gray rami are additional branches present only in spinal nerves T1-L2, not the two branches formed by all spinal nerves; spinal nerves form two (not just one) primary branches; and superior/inferior is not the terminology used for the primary spinal nerve branches."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "io": "Spinal Nerves", "q": "Which spinal nerves have two additional branches (white and gray rami), and what are these rami collectively called?", "opts": [["Spinal nerves S1 to S5; collectively called the sacral plexus", "C1-C5 forms the cervical plexus, a different structure from the white/gray rami; not all spinal nerves have these additional rami, only the T1-L2 range associated with sympathetic outflow; and S1-S5 contributes to the sacral plexus, not the white/gray rami communicantes."], ["Spinal nerves C1 to C5; collectively called the cervical plexus", "C1-C5 forms the cervical plexus, a different structure from the white/gray rami; not all spinal nerves have these additional rami, only the T1-L2 range associated with sympathetic outflow; and S1-S5 contributes to the sacral plexus, not the white/gray rami communicantes."], ["Spinal nerves T1 to L2; collectively called rami communicantes", "Spinal nerves T1 to L2 have two additional branches — the white ramus and gray ramus — which are collectively called rami communicantes."], ["All spinal nerves have these additional branches", "C1-C5 forms the cervical plexus, a different structure from the white/gray rami; not all spinal nerves have these additional rami, only the T1-L2 range associated with sympathetic outflow; and S1-S5 contributes to the sacral plexus, not the white/gray rami communicantes."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "io": "Spinal Nerves", "q": "What are white and gray rami associated with, in the autonomic nervous system?", "opts": [["The autonomic ganglion of the parasympathetic division", "The parasympathetic division uses cranial nerve outflow and sacral splanchnic nerves, not the white/gray rami communicantes, which are specifically a sympathetic-associated structure; they are not associated with the enteric nervous system, a separate ANS division; and they do have a clear, described ANS association (sympathetic), not none at all."], ["The autonomic ganglion of the sympathetic division", "White and gray rami are associated with the autonomic ganglion of the sympathetic division within the autonomic nervous system."], ["The enteric nervous system exclusively", "The parasympathetic division uses cranial nerve outflow and sacral splanchnic nerves, not the white/gray rami communicantes, which are specifically a sympathetic-associated structure; they are not associated with the enteric nervous system, a separate ANS division; and they do have a clear, described ANS association (sympathetic), not none at all."], ["No association with the ANS", "The parasympathetic division uses cranial nerve outflow and sacral splanchnic nerves, not the white/gray rami communicantes, which are specifically a sympathetic-associated structure; they are not associated with the enteric nervous system, a separate ANS division; and they do have a clear, described ANS association (sympathetic), not none at all."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Spinal Nerves", "io": "Spinal Nerves", "q": "What are dermatomes?", "opts": [["A classification of reflex arcs", "Regions of muscle (not skin) supplied by a spinal nerve would instead be described by a myotome, a related but distinct concept; dermatomes are a spinal nerve concept, not a cranial nerve branch; and they are a skin-territory mapping concept, not a reflex arc classification."], ["A type of cranial nerve branch", "Regions of muscle (not skin) supplied by a spinal nerve would instead be described by a myotome, a related but distinct concept; dermatomes are a spinal nerve concept, not a cranial nerve branch; and they are a skin-territory mapping concept, not a reflex arc classification."], ["Regions of muscle supplied by a given spinal nerve", "Regions of muscle (not skin) supplied by a spinal nerve would instead be described by a myotome, a related but distinct concept; dermatomes are a spinal nerve concept, not a cranial nerve branch; and they are a skin-territory mapping concept, not a reflex arc classification."], ["Specific regions of the skin supplied by a given spinal nerve", "Spinal nerves supply specific regions of the skin known as dermatomes."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 3"}, {"topic": "Motor Commands", "io": "Motor Commands", "q": "In the distribution of motor fibers within a spinal nerve, what do the white ramus (preganglionic) and gray ramus (postganglionic) carry?", "opts": [["White ramus carries postganglionic fibers; gray ramus carries preganglionic fibers", "Reversing the pre/postganglionic fiber assignment contradicts the material's stated white/gray ramus roles; the two rami carry distinct sympathetic (not somatic) fiber types, not identical somatic motor fibers; and both rami are specifically involved in the sympathetic motor pathway, not uninvolved."], ["Both rami carry identical somatic motor fibers", "Reversing the pre/postganglionic fiber assignment contradicts the material's stated white/gray ramus roles; the two rami carry distinct sympathetic (not somatic) fiber types, not identical somatic motor fibers; and both rami are specifically involved in the sympathetic motor pathway, not uninvolved."], ["Neither ramus is involved in sympathetic motor pathways", "Reversing the pre/postganglionic fiber assignment contradicts the material's stated white/gray ramus roles; the two rami carry distinct sympathetic (not somatic) fiber types, not identical somatic motor fibers; and both rami are specifically involved in the sympathetic motor pathway, not uninvolved."], ["White ramus carries preganglionic sympathetic fibers to the sympathetic ganglion; gray ramus carries postganglionic fibers back to the spinal nerve", "The white ramus carries preganglionic fibers to the sympathetic ganglion, while the gray ramus carries postganglionic fibers back to the spinal nerve for distribution to smooth muscles, glands, and visceral organs."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 5"}, {"topic": "Sensory Information", "io": "Sensory Information", "q": "In the distribution of sensory fibers within a spinal nerve, what information does the dorsal ramus carry versus the ventral ramus?", "opts": [["Dorsal ramus carries sensory information from exteroceptors/proprioceptors/interoceptors of the back; ventral ramus carries the same from the body wall and limbs", "The dorsal ramus carries sensory information from exteroceptors, proprioceptors, and interoceptors of the back, while the ventral ramus carries sensory information from exteroceptors, proprioceptors, and interoceptors of the body wall and limbs."], ["Both rami carry identical sensory information from the same body region", "Both rami carry a mix of somatic and visceral sensory information, not an exclusive division between the two; the two rami cover different body regions (back versus body wall/limbs), not identical ones; and both rami do carry sensory information, in addition to their motor roles."], ["Neither ramus carries sensory information, only motor", "Both rami carry a mix of somatic and visceral sensory information, not an exclusive division between the two; the two rami cover different body regions (back versus body wall/limbs), not identical ones; and both rami do carry sensory information, in addition to their motor roles."], ["Dorsal ramus carries only visceral sensory information; ventral ramus carries only somatic sensory information", "Both rami carry a mix of somatic and visceral sensory information, not an exclusive division between the two; the two rami cover different body regions (back versus body wall/limbs), not identical ones; and both rami do carry sensory information, in addition to their motor roles."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 6"}, {"topic": "Nerve Plexuses", "io": "Nerve Plexuses", "q": "What is a nerve plexus, and what are the four major nerve plexuses?", "opts": [["A single unbranched nerve; the radial, ulnar, median, and femoral nerves", "The radial, ulnar, median, and femoral nerves are individual peripheral nerves that arise from plexuses, not plexuses themselves; nerve plexuses are a peripheral spinal nerve structure, not a cranial nerve ganglion type; and there are four (not two) major plexuses described."], ["Only two plexuses exist: cervical and lumbar", "The radial, ulnar, median, and femoral nerves are individual peripheral nerves that arise from plexuses, not plexuses themselves; nerve plexuses are a peripheral spinal nerve structure, not a cranial nerve ganglion type; and there are four (not two) major plexuses described."], ["A type of ganglion found only in the cranial nerves", "The radial, ulnar, median, and femoral nerves are individual peripheral nerves that arise from plexuses, not plexuses themselves; nerve plexuses are a peripheral spinal nerve structure, not a cranial nerve ganglion type; and there are four (not two) major plexuses described."], ["An interwoven network of nerves (\"plexus\" means \"to braid\"); the cervical, brachial, lumbar, and sacral plexuses", "A nerve plexus is an interwoven network of nerves (\"plexus\" meaning \"to braid\"); there are four nerve plexuses — cervical, brachial, lumbar, and sacral (the lumbar and sacral are sometimes combined into the lumbosacral plexus)."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 8"}, {"topic": "Cervical Plexus", "io": "Cervical Plexus", "q": "What spinal nerve levels form the cervical plexus, and what does it innervate?", "opts": [["C5-T1; innervates the muscles of the upper limb", "C5-T1 forms the brachial plexus (upper limb), not the cervical plexus; T12-L4 forms the lumbar plexus (pelvic girdle/anterior thigh), a different plexus; and L4-S4 forms the sacral plexus (lower limb), also distinct from the cervical plexus."], ["C1-C5; innervates the muscles of the neck and the diaphragm", "The cervical plexus (C1-C5) innervates the muscles of the neck and the diaphragm."], ["T12-L4; innervates the pelvic girdle", "C5-T1 forms the brachial plexus (upper limb), not the cervical plexus; T12-L4 forms the lumbar plexus (pelvic girdle/anterior thigh), a different plexus; and L4-S4 forms the sacral plexus (lower limb), also distinct from the cervical plexus."], ["L4-S4; innervates the lower limb", "C5-T1 forms the brachial plexus (upper limb), not the cervical plexus; T12-L4 forms the lumbar plexus (pelvic girdle/anterior thigh), a different plexus; and L4-S4 forms the sacral plexus (lower limb), also distinct from the cervical plexus."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Cervical Plexus", "io": "Cervical Plexus", "q": "Which nerve, arising from the cervical plexus, innervates the diaphragm?", "opts": [["Great auricular nerve", "The ansa cervicalis instead innervates the extrinsic laryngeal muscles, not the diaphragm; the lesser occipital nerve provides sensory innervation to the neck/posterior scalp skin, unrelated to the diaphragm; and the great auricular nerve provides sensory innervation to the neck/ear region skin, also unrelated to diaphragm innervation."], ["Ansa cervicalis", "The ansa cervicalis instead innervates the extrinsic laryngeal muscles, not the diaphragm; the lesser occipital nerve provides sensory innervation to the neck/posterior scalp skin, unrelated to the diaphragm; and the great auricular nerve provides sensory innervation to the neck/ear region skin, also unrelated to diaphragm innervation."], ["Lesser occipital nerve", "The ansa cervicalis instead innervates the extrinsic laryngeal muscles, not the diaphragm; the lesser occipital nerve provides sensory innervation to the neck/posterior scalp skin, unrelated to the diaphragm; and the great auricular nerve provides sensory innervation to the neck/ear region skin, also unrelated to diaphragm innervation."], ["Phrenic nerve (originating mainly from C4, with contributions from C3 and C5)", "The phrenic nerve, which provides sensory information from and motor innervation to the diaphragm, originates from C4 with minor contributions from C3 and C5."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Cervical Plexus", "io": "Cervical Plexus", "q": "Which nerve of the cervical plexus innervates five of the extrinsic laryngeal muscles, traveling with fibers from CN XII?", "opts": [["Phrenic nerve", "The phrenic nerve innervates the diaphragm, not the laryngeal muscles; the great auricular nerve provides sensory innervation to skin near the ear/neck, unrelated to laryngeal muscles; and the transverse cervical nerve provides sensory innervation to the anterior triangle of the neck's skin, also unrelated to the laryngeal muscles."], ["Transverse cervical nerve", "The phrenic nerve innervates the diaphragm, not the laryngeal muscles; the great auricular nerve provides sensory innervation to skin near the ear/neck, unrelated to laryngeal muscles; and the transverse cervical nerve provides sensory innervation to the anterior triangle of the neck's skin, also unrelated to the laryngeal muscles."], ["Ansa cervicalis", "The ansa cervicalis originates from branches of C1-C3 (and sometimes C4) and travels inferiorly with fibers from cranial nerve XII, innervating five of the extrinsic laryngeal muscles."], ["Great auricular nerve", "The phrenic nerve innervates the diaphragm, not the laryngeal muscles; the great auricular nerve provides sensory innervation to skin near the ear/neck, unrelated to laryngeal muscles; and the transverse cervical nerve provides sensory innervation to the anterior triangle of the neck's skin, also unrelated to the laryngeal muscles."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Cervical Plexus", "io": "Cervical Plexus", "q": "What sensory territory does the great auricular nerve cover?", "opts": [["Skin over the parotid gland, posterior aspect of the ear, and skin of the neck", "The great auricular nerve arises from C2 and C3, crosses anteriorly to the sternocleidomastoid, and travels toward the parotid gland; it receives sensory information from the skin over the gland, the posterior aspect of the ear, and skin of the neck."], ["Skin of the neck and shoulder only", "Skin of the anterior triangle of the neck alone describes the transverse cervical nerve's territory, not the great auricular nerve's; skin of the neck and shoulder alone describes the supraclavicular nerve's territory, a different nerve; and the great auricular nerve is a sensory (not motor) nerve, so it doesn't innervate the rhomboids."], ["Skin of the anterior triangle of the neck only", "Skin of the anterior triangle of the neck alone describes the transverse cervical nerve's territory, not the great auricular nerve's; skin of the neck and shoulder alone describes the supraclavicular nerve's territory, a different nerve; and the great auricular nerve is a sensory (not motor) nerve, so it doesn't innervate the rhomboids."], ["Motor innervation to the rhomboids", "Skin of the anterior triangle of the neck alone describes the transverse cervical nerve's territory, not the great auricular nerve's; skin of the neck and shoulder alone describes the supraclavicular nerve's territory, a different nerve; and the great auricular nerve is a sensory (not motor) nerve, so it doesn't innervate the rhomboids."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 13"}, {"topic": "Brachial Plexus", "io": "Brachial Plexus", "q": "What spinal nerve levels form the brachial plexus, and what does it innervate?", "opts": [["T12-L4; innervates the pelvic girdle and anterior thigh", "C1-C5 forms the cervical plexus, a different plexus supplying the neck and diaphragm; T12-L4 forms the lumbar plexus, supplying the pelvic girdle and anterior thigh; and L4-S4 forms the sacral plexus, a different plexus supplying the lower limb."], ["L4-S4; innervates the pelvic girdle and lower limb", "C1-C5 forms the cervical plexus, a different plexus supplying the neck and diaphragm; T12-L4 forms the lumbar plexus, supplying the pelvic girdle and anterior thigh; and L4-S4 forms the sacral plexus, a different plexus supplying the lower limb."], ["C5-T1; innervates the muscles of the pectoral girdles and upper limbs", "The brachial plexus (C5-T1) innervates the muscles of the pectoral girdles and upper limbs."], ["C1-C5; innervates the neck and diaphragm", "C1-C5 forms the cervical plexus, a different plexus supplying the neck and diaphragm; T12-L4 forms the lumbar plexus, supplying the pelvic girdle and anterior thigh; and L4-S4 forms the sacral plexus, a different plexus supplying the lower limb."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Brachial Plexus", "io": "Brachial Plexus", "q": "What is the correct organizational sequence of the brachial plexus, from the spinal cord outward?", "opts": [["Nerves → cords → divisions → trunks → roots", "Reversing the entire sequence (nerves to roots) inverts the actual proximal-to-distal organization; the other scrambled sequences also misorder the roots-trunks-divisions-cords-nerves progression described in the material."], ["Ventral rami (roots) → trunks (superior/middle/inferior) → divisions (anterior/posterior) → cords (posterior/lateral/medial) → nerves", "The brachial plexus is organized, from the spinal cord outward, as ventral rami (roots), then trunks (superior, middle, inferior), then divisions (anterior and posterior), then cords (posterior, lateral, medial), and finally nerves."], ["Divisions → cords → roots → trunks → nerves", "Reversing the entire sequence (nerves to roots) inverts the actual proximal-to-distal organization; the other scrambled sequences also misorder the roots-trunks-divisions-cords-nerves progression described in the material."], ["Trunks → roots → nerves → cords → divisions", "Reversing the entire sequence (nerves to roots) inverts the actual proximal-to-distal organization; the other scrambled sequences also misorder the roots-trunks-divisions-cords-nerves progression described in the material."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 14"}, {"topic": "Brachial Plexus", "io": "Brachial Plexus", "q": "Which four nerves are given as examples of nerves formed by the brachial plexus?", "opts": [["Femoral, obturator, sciatic, and pudendal nerves", "Femoral/obturator/sciatic/pudendal nerves arise from the lumbar and sacral plexuses, not the brachial plexus; phrenic/ansa cervicalis/lesser occipital/great auricular nerves arise from the cervical plexus, a different plexus; and iliohypogastric/ilio-inguinal/genitofemoral/lateral femoral cutaneous nerves arise from the lumbar plexus, also distinct from the brachial plexus."], ["Radial, ulnar, median, and musculocutaneous nerves", "The brachial plexus forms nerves including the radial, ulnar, median, and musculocutaneous nerves."], ["Phrenic, ansa cervicalis, lesser occipital, and great auricular nerves", "Femoral/obturator/sciatic/pudendal nerves arise from the lumbar and sacral plexuses, not the brachial plexus; phrenic/ansa cervicalis/lesser occipital/great auricular nerves arise from the cervical plexus, a different plexus; and iliohypogastric/ilio-inguinal/genitofemoral/lateral femoral cutaneous nerves arise from the lumbar plexus, also distinct from the brachial plexus."], ["Iliohypogastric, ilio-inguinal, genitofemoral, and lateral femoral cutaneous nerves", "Femoral/obturator/sciatic/pudendal nerves arise from the lumbar and sacral plexuses, not the brachial plexus; phrenic/ansa cervicalis/lesser occipital/great auricular nerves arise from the cervical plexus, a different plexus; and iliohypogastric/ilio-inguinal/genitofemoral/lateral femoral cutaneous nerves arise from the lumbar plexus, also distinct from the brachial plexus."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 15"}, {"topic": "Lumbosacral Plexus", "io": "Lumbosacral Plexus", "q": "What spinal levels make up the lumbar plexus and sacral plexus respectively, and what does the combined lumbosacral plexus innervate?", "opts": [["Lumbar plexus (T12-L4) and sacral plexus (L4-S4); together innervate the muscles of the pelvic girdle and lower limbs", "The lumbar plexus (T12-L4) and sacral plexus (L4-S4) together make up the lumbosacral plexus, which innervates the muscles of the pelvic girdle and lower limbs."], ["Only a single combined plexus exists, with no separate lumbar/sacral levels", "C5-T1 and C1-C5 describe the brachial and cervical plexus levels respectively, not the lumbar/sacral plexus; reversing the lumbar and sacral level ranges contradicts the material's stated spans; and the lumbar and sacral plexuses are each distinct components that can combine into the lumbosacral plexus, not a single plexus lacking these separate levels."], ["Lumbar plexus (C5-T1) and sacral plexus (C1-C5); together innervate the upper limb", "C5-T1 and C1-C5 describe the brachial and cervical plexus levels respectively, not the lumbar/sacral plexus; reversing the lumbar and sacral level ranges contradicts the material's stated spans; and the lumbar and sacral plexuses are each distinct components that can combine into the lumbosacral plexus, not a single plexus lacking these separate levels."], ["Lumbar plexus (L4-S4) and sacral plexus (T12-L4); together innervate the neck", "C5-T1 and C1-C5 describe the brachial and cervical plexus levels respectively, not the lumbar/sacral plexus; reversing the lumbar and sacral level ranges contradicts the material's stated spans; and the lumbar and sacral plexuses are each distinct components that can combine into the lumbosacral plexus, not a single plexus lacking these separate levels."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 9"}, {"topic": "Lumbar Plexus", "io": "Lumbar Plexus", "q": "What do the iliohypogastric and ilio-inguinal nerves innervate?", "opts": [["The gracilis, obturator externus, and adductor magnus", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus are innervated by the obturator nerve, also distinct; and the gluteus medius and minimus are innervated by the superior gluteal nerve, a sacral plexus nerve."], ["The quadriceps, sartorius, and iliopsoas", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus are innervated by the obturator nerve, also distinct; and the gluteus medius and minimus are innervated by the superior gluteal nerve, a sacral plexus nerve."], ["The external oblique, internal oblique, and transverse abdominis", "The iliohypogastric nerve and ilio-inguinal nerve both innervate the external oblique, internal oblique, and transverse abdominis."], ["The gluteus medius and minimus", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus are innervated by the obturator nerve, also distinct; and the gluteus medius and minimus are innervated by the superior gluteal nerve, a sacral plexus nerve."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 17"}, {"topic": "Lumbar Plexus", "io": "Lumbar Plexus", "q": "What does the femoral nerve innervate?", "opts": [["External and internal oblique, and transverse abdominis", "The gracilis, obturator externus, and adductor magnus are instead innervated by the obturator nerve, a different lumbar plexus nerve; the external/internal oblique and transverse abdominis are innervated by the iliohypogastric and ilio-inguinal nerves, also distinct; and the gluteus maximus is innervated by the inferior gluteal nerve, a sacral plexus nerve."], ["Gracilis, obturator externus, and adductor magnus", "The gracilis, obturator externus, and adductor magnus are instead innervated by the obturator nerve, a different lumbar plexus nerve; the external/internal oblique and transverse abdominis are innervated by the iliohypogastric and ilio-inguinal nerves, also distinct; and the gluteus maximus is innervated by the inferior gluteal nerve, a sacral plexus nerve."], ["Quadriceps, sartorius, pectineus, and iliopsoas", "The femoral nerve innervates the quadriceps, sartorius, pectineus, and iliopsoas."], ["Gluteus maximus", "The gracilis, obturator externus, and adductor magnus are instead innervated by the obturator nerve, a different lumbar plexus nerve; the external/internal oblique and transverse abdominis are innervated by the iliohypogastric and ilio-inguinal nerves, also distinct; and the gluteus maximus is innervated by the inferior gluteal nerve, a sacral plexus nerve."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Lumbar Plexus", "io": "Lumbar Plexus", "q": "What does the obturator nerve innervate?", "opts": [["Gluteus minimus, gluteus medius, and tensor fasciae latae", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the semimembranosus, semitendinosus, and adductor magnus are innervated by the sciatic nerve, a sacral plexus nerve; and the gluteus minimus, medius, and tensor fasciae latae are innervated by the superior gluteal nerve, also a sacral plexus nerve."], ["Semimembranosus, semitendinosus, and adductor magnus", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the semimembranosus, semitendinosus, and adductor magnus are innervated by the sciatic nerve, a sacral plexus nerve; and the gluteus minimus, medius, and tensor fasciae latae are innervated by the superior gluteal nerve, also a sacral plexus nerve."], ["Quadriceps, sartorius, and iliopsoas", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a different lumbar plexus nerve; the semimembranosus, semitendinosus, and adductor magnus are innervated by the sciatic nerve, a sacral plexus nerve; and the gluteus minimus, medius, and tensor fasciae latae are innervated by the superior gluteal nerve, also a sacral plexus nerve."], ["Gracilis, obturator externus, and adductor magnus", "The obturator nerve innervates the gracilis, obturator externus, and adductor magnus."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Lumbar Plexus", "io": "Lumbar Plexus", "q": "What sensory territory does the genitofemoral nerve cover?", "opts": [["Skin of the anteromedial surface of the thigh and external genitals", "The genitofemoral nerve provides sensory information from the skin of the anteromedial surface of the thigh and the external genitals."], ["Skin of the neck and shoulder", "Skin of the anterior, lateral, and posterior thigh instead describes the lateral femoral cutaneous nerve's territory, a different lumbar plexus nerve; skin of the perineum and posterior thigh describes the posterior femoral cutaneous nerve, a sacral plexus nerve; and skin of the neck and shoulder describes the supraclavicular nerve, a cervical plexus nerve."], ["Skin of the anterior, lateral, and posterior thigh", "Skin of the anterior, lateral, and posterior thigh instead describes the lateral femoral cutaneous nerve's territory, a different lumbar plexus nerve; skin of the perineum and posterior thigh describes the posterior femoral cutaneous nerve, a sacral plexus nerve; and skin of the neck and shoulder describes the supraclavicular nerve, a cervical plexus nerve."], ["Skin of the perineum and posterior thigh", "Skin of the anterior, lateral, and posterior thigh instead describes the lateral femoral cutaneous nerve's territory, a different lumbar plexus nerve; skin of the perineum and posterior thigh describes the posterior femoral cutaneous nerve, a sacral plexus nerve; and skin of the neck and shoulder describes the supraclavicular nerve, a cervical plexus nerve."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 18"}, {"topic": "Sacral Plexus", "io": "Sacral Plexus", "q": "What does the superior gluteal nerve innervate, versus the inferior gluteal nerve?", "opts": [["Neither nerve innervates gluteal muscles", "Reversing which nerve innervates which gluteal muscles contradicts the material's stated assignments; the two nerves innervate distinct, non-overlapping gluteal muscles, not the same ones; and both nerves are specifically named for their gluteal muscle innervation, so claiming neither innervates gluteal muscles is incorrect."], ["Both nerves innervate the same muscles", "Reversing which nerve innervates which gluteal muscles contradicts the material's stated assignments; the two nerves innervate distinct, non-overlapping gluteal muscles, not the same ones; and both nerves are specifically named for their gluteal muscle innervation, so claiming neither innervates gluteal muscles is incorrect."], ["Superior gluteal: gluteus minimus, gluteus medius, and tensor fasciae latae; Inferior gluteal: gluteus maximus", "The superior gluteal nerve innervates the gluteus minimus, gluteus medius, and tensor fasciae latae, while the inferior gluteal nerve innervates the gluteus maximus."], ["Superior gluteal: gluteus maximus; Inferior gluteal: gluteus minimus, medius, and tensor fasciae latae", "Reversing which nerve innervates which gluteal muscles contradicts the material's stated assignments; the two nerves innervate distinct, non-overlapping gluteal muscles, not the same ones; and both nerves are specifically named for their gluteal muscle innervation, so claiming neither innervates gluteal muscles is incorrect."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "io": "Sacral Plexus", "q": "What does the sciatic nerve innervate, per the material's listed muscles?", "opts": [["Gluteus medius and minimus", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus (via a different route) are innervated by the obturator nerve; and gluteus medius/minimus are innervated by the superior gluteal nerve, not the sciatic nerve."], ["Gracilis, obturator externus, and adductor magnus", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus (via a different route) are innervated by the obturator nerve; and gluteus medius/minimus are innervated by the superior gluteal nerve, not the sciatic nerve."], ["Semimembranosus, semitendinosus, and adductor magnus", "The sciatic nerve innervates the semimembranosus, semitendinosus, and adductor magnus."], ["Quadriceps, sartorius, and iliopsoas", "The quadriceps, sartorius, and iliopsoas are instead innervated by the femoral nerve, a lumbar plexus nerve; the gracilis, obturator externus, and adductor magnus (via a different route) are innervated by the obturator nerve; and gluteus medius/minimus are innervated by the superior gluteal nerve, not the sciatic nerve."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "io": "Sacral Plexus", "q": "What does the pudendal nerve innervate?", "opts": [["The diaphragm", "The quadriceps and sartorius are innervated by the femoral nerve, a lumbar plexus nerve, not the pudendal nerve; the gluteus maximus is innervated by the inferior gluteal nerve, a different sacral plexus nerve; and the diaphragm is innervated by the phrenic nerve, a cervical plexus nerve, unrelated to the pudendal nerve."], ["The quadriceps and sartorius", "The quadriceps and sartorius are innervated by the femoral nerve, a lumbar plexus nerve, not the pudendal nerve; the gluteus maximus is innervated by the inferior gluteal nerve, a different sacral plexus nerve; and the diaphragm is innervated by the phrenic nerve, a cervical plexus nerve, unrelated to the pudendal nerve."], ["The perineum, external anal sphincter, and urethral sphincter", "The pudendal nerve innervates the perineum, external anal sphincter, and urethral sphincter."], ["The gluteus maximus only", "The quadriceps and sartorius are innervated by the femoral nerve, a lumbar plexus nerve, not the pudendal nerve; the gluteus maximus is innervated by the inferior gluteal nerve, a different sacral plexus nerve; and the diaphragm is innervated by the phrenic nerve, a cervical plexus nerve, unrelated to the pudendal nerve."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Sacral Plexus", "io": "Sacral Plexus", "q": "What sensory territory does the posterior femoral cutaneous nerve cover?", "opts": [["The anterior, lateral, and posterior thigh", "The anterior, lateral, and posterior thigh describes the lateral femoral cutaneous nerve's territory, a lumbar plexus nerve; the anteromedial thigh and external genitals describes the genitofemoral nerve's territory, also a lumbar plexus nerve; and the neck and posterior head describes the lesser occipital nerve, a cervical plexus nerve."], ["The perineum, posterior thigh, and posterior leg", "The posterior femoral cutaneous nerve provides sensory information from the perineum, posterior thigh, and posterior leg."], ["The neck and posterior head", "The anterior, lateral, and posterior thigh describes the lateral femoral cutaneous nerve's territory, a lumbar plexus nerve; the anteromedial thigh and external genitals describes the genitofemoral nerve's territory, also a lumbar plexus nerve; and the neck and posterior head describes the lesser occipital nerve, a cervical plexus nerve."], ["The anteromedial thigh and external genitals", "The anterior, lateral, and posterior thigh describes the lateral femoral cutaneous nerve's territory, a lumbar plexus nerve; the anteromedial thigh and external genitals describes the genitofemoral nerve's territory, also a lumbar plexus nerve; and the neck and posterior head describes the lesser occipital nerve, a cervical plexus nerve."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 19"}, {"topic": "Reflexes", "io": "Reflexes", "q": "What is a reflex, and what is a reflex arc?", "opts": [["A reflex arc begins at a motor neuron and ends at a sensory receptor", "A reflex is specifically involuntary, not voluntary, distinguishing it from consciously controlled movement; a reflex arc describes a single reflex's circuitry, not multiple reflexes combined; and while related, \"reflex\" (the response) and \"reflex arc\" (the wiring) are distinct concepts, not identical; and the reflex arc begins at a sensory receptor and ends at an effector, not the reverse direction."], ["A reflex and reflex arc are the same thing with different names", "A reflex is specifically involuntary, not voluntary, distinguishing it from consciously controlled movement; a reflex arc describes a single reflex's circuitry, not multiple reflexes combined; and while related, \"reflex\" (the response) and \"reflex arc\" (the wiring) are distinct concepts, not identical; and the reflex arc begins at a sensory receptor and ends at an effector, not the reverse direction."], ["A reflex is a voluntary motor response; a reflex arc is the neural wiring of multiple reflexes combined", "A reflex is specifically involuntary, not voluntary, distinguishing it from consciously controlled movement; a reflex arc describes a single reflex's circuitry, not multiple reflexes combined; and while related, \"reflex\" (the response) and \"reflex arc\" (the wiring) are distinct concepts, not identical; and the reflex arc begins at a sensory receptor and ends at an effector, not the reverse direction."], ["A reflex is an immediate involuntary motor response; a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector", "A reflex is an immediate involuntary motor response, and a reflex arc is the neural \"wiring\" of a single reflex, beginning at a sensory receptor and ending at a peripheral effector."]], "c": 3, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 22"}, {"topic": "Reflexes", "io": "Reflexes", "q": "What is the correct pathway of a reflex arc, in order?", "opts": [["Activation of a motor neuron → information processing → activation of a sensory receptor → response by the effector → relay to the CNS", "The other sequences scramble this order, placing motor neuron activation or effector response before the sensory receptor is even activated — but a reflex arc must begin with sensory receptor activation and end with the effector response, following the correct sequential order given in the material."], ["Information processing → response by the effector → activation of a sensory receptor → relay to the CNS → activation of a motor neuron", "The other sequences scramble this order, placing motor neuron activation or effector response before the sensory receptor is even activated — but a reflex arc must begin with sensory receptor activation and end with the effector response, following the correct sequential order given in the material."], ["Activation of a sensory receptor → relay of information to the CNS → information processing → activation of a motor neuron → response by the effector", "The reflex arc pathway is: activation of a sensory receptor, relay of information to the CNS, information processing, activation of a motor neuron, and response by the effector."], ["Response by the effector → activation of a sensory receptor → relay to the CNS → information processing → activation of a motor neuron", "The other sequences scramble this order, placing motor neuron activation or effector response before the sensory receptor is even activated — but a reflex arc must begin with sensory receptor activation and end with the effector response, following the correct sequential order given in the material."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 23"}, {"topic": "Reflexes", "io": "Reflexes", "q": "Reflexes are classified according to which four criteria, per the material?", "opts": [["Only their development (innate or acquired)", "Development alone is only one of four classification criteria, not the sole one; complexity alone is also only one of the four criteria; and the material describes four distinct classification schemes, not a single \"muscle group involved\" criterion."], ["Development (innate/acquired), site of processing (spinal/cranial), nature of motor response (somatic/visceral/autonomic), and complexity (monosynaptic/polysynaptic)", "Reflexes are classified according to their development (innate or acquired), the site where information is processed (spinal or cranial/cerebral), the nature of the resulting motor response (somatic, visceral, or autonomic), and the complexity of the neural circuit (monosynaptic or polysynaptic)."], ["Only the muscle group involved", "Development alone is only one of four classification criteria, not the sole one; complexity alone is also only one of the four criteria; and the material describes four distinct classification schemes, not a single \"muscle group involved\" criterion."], ["Only their complexity (monosynaptic or polysynaptic)", "Development alone is only one of four classification criteria, not the sole one; complexity alone is also only one of the four criteria; and the material describes four distinct classification schemes, not a single \"muscle group involved\" criterion."]], "c": 1, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 24"}, {"topic": "Reflexes", "io": "Reflexes", "q": "What is the difference between monosynaptic and polysynaptic spinal reflexes?", "opts": [["Monosynaptic involves a single segment of the spinal cord; polysynaptic integrates motor output from several spinal segments", "Monosynaptic spinal reflexes involve a single segment of the spinal cord, while polysynaptic reflexes integrate motor output from several spinal segments."], ["Monosynaptic integrates several spinal segments; polysynaptic involves only a single segment", "Reversing the definitions contradicts the material's stated meanings; the two reflex types involve different numbers of spinal segments, not identical ones; and spinal reflexes by definition involve the spinal cord as the processing site (as opposed to cranial reflexes)."], ["Both types involve identical numbers of spinal segments", "Reversing the definitions contradicts the material's stated meanings; the two reflex types involve different numbers of spinal segments, not identical ones; and spinal reflexes by definition involve the spinal cord as the processing site (as opposed to cranial reflexes)."], ["Neither type involves the spinal cord", "Reversing the definitions contradicts the material's stated meanings; the two reflex types involve different numbers of spinal segments, not identical ones; and spinal reflexes by definition involve the spinal cord as the processing site (as opposed to cranial reflexes)."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 25"}, {"topic": "Reflexes", "io": "Reflexes", "q": "What is the stretch reflex (e.g., the patellar reflex), and what is its pathway?", "opts": [["A reflex that requires conscious processing in the cerebral cortex", "The stimulus stretches (not compresses) the muscle, and it does involve a sensory neuron component, not a purely direct motor activation; the patellar reflex specifically involves the lower limb (quadriceps), showing this reflex type isn't upper-limb-exclusive; and it is a spinal reflex, processed in the spinal cord, not requiring conscious cerebral cortex processing."], ["A stimulus compresses a muscle, activating a motor neuron directly with no sensory component", "The stimulus stretches (not compresses) the muscle, and it does involve a sensory neuron component, not a purely direct motor activation; the patellar reflex specifically involves the lower limb (quadriceps), showing this reflex type isn't upper-limb-exclusive; and it is a spinal reflex, processed in the spinal cord, not requiring conscious cerebral cortex processing."], ["A stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts", "In a stretch reflex, a stimulus stretches a muscle, activating a sensory neuron; information is processed in the spinal cord, motor neurons are activated, and the muscle (effector) contracts — the patellar reflex is a classic example, controlled by muscle spindles in the quadriceps femoris."], ["A reflex that only occurs in the upper limb, never the lower limb", "The stimulus stretches (not compresses) the muscle, and it does involve a sensory neuron component, not a purely direct motor activation; the patellar reflex specifically involves the lower limb (quadriceps), showing this reflex type isn't upper-limb-exclusive; and it is a spinal reflex, processed in the spinal cord, not requiring conscious cerebral cortex processing."]], "c": 2, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 26"}, {"topic": "Reflexes", "io": "Reflexes", "q": "What role do higher centers play in reflexes, per the material?", "opts": [["Enhance or suppress spinal reflexes, and modify information carried in descending tracts of the spinal cord", "Higher centers can enhance or suppress spinal reflexes and modify information carried in the descending tracts of the spinal cord."], ["Are the sole site of reflex processing, replacing the spinal cord entirely", "Higher centers do have a described influence on spinal reflexes, so claiming no influence is incorrect; they modulate (not replace) spinal cord reflex processing, working alongside the spinal cord rather than substituting for it entirely; and their described influence includes spinal reflexes specifically, not being limited only to cranial reflexes."], ["Have no influence on spinal reflexes whatsoever", "Higher centers do have a described influence on spinal reflexes, so claiming no influence is incorrect; they modulate (not replace) spinal cord reflex processing, working alongside the spinal cord rather than substituting for it entirely; and their described influence includes spinal reflexes specifically, not being limited only to cranial reflexes."], ["Only affect cranial reflexes, never spinal reflexes", "Higher centers do have a described influence on spinal reflexes, so claiming no influence is incorrect; they modulate (not replace) spinal cord reflex processing, working alongside the spinal cord rather than substituting for it entirely; and their described influence includes spinal reflexes specifically, not being limited only to cranial reflexes."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 29"}, {"topic": "Peripheral Nervous System Organization", "io": "Peripheral Nervous System Organization", "q": "What structures make up a peripheral nerve, and how does the anatomy relate to the nerve plexuses previously described?", "opts": [["Bundled axons (organized similarly to bundled muscle fibers), which combine within plexuses to form the named peripheral nerves like the radial, femoral, and sciatic nerves", "A peripheral nerve consists of bundled axons, and within nerve plexuses, fibers from multiple spinal nerve roots combine and reorganize to form the named peripheral nerves (such as the radial, femoral, and sciatic nerves) that emerge from each plexus."], ["Only cell bodies, with no axons present", "Peripheral nerves have connective tissue coverings (similar in principle to muscle fiber bundling), not a single bare axon; peripheral nerves are composed of many axons, not cell bodies alone (which cluster in ganglia instead); and peripheral nerves are a PNS (not CNS) structure by definition."], ["A structure found exclusively within the CNS", "Peripheral nerves have connective tissue coverings (similar in principle to muscle fiber bundling), not a single bare axon; peripheral nerves are composed of many axons, not cell bodies alone (which cluster in ganglia instead); and peripheral nerves are a PNS (not CNS) structure by definition."], ["A single unmyelinated axon with no connective tissue covering", "Peripheral nerves have connective tissue coverings (similar in principle to muscle fiber bundling), not a single bare axon; peripheral nerves are composed of many axons, not cell bodies alone (which cluster in ganglia instead); and peripheral nerves are a PNS (not CNS) structure by definition."]], "c": 0, "cite": "6. Peripheral and Cranial Nerves 2026.pptx, Slide 7"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -469,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -500,436 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  // Optional per-question image (item.img) -- purely additive, every
-  // existing quiz's questions simply omit this field and render exactly
-  // as before via the hidden default state.
-  if (item.img) {
-    el('qImg').src = item.img;
-    el('qImg').alt = item.imgAlt || '';
-    el('qImgCaption').textContent = item.imgCaption || '';
-    el('qFig').classList.remove('hidden');
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
   } else {
-    el('qFig').classList.add('hidden');
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
   }
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
-    });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
-    return;
-  }
-
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
-  });
-
-  const fb = el('feedback');
-  fb.classList.remove('show');
-  el('nextBtn').classList.add('hidden');
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  /* breakdown by topic */
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  // count correct = total - missed per topic
-  const missedByTopic = {};
-  state.missed.forEach(m => {
-    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
-  });
-  Object.keys(topics).forEach(t => {
-    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
-  });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  /* missed review */
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -977,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>

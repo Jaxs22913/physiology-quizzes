@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Physiology Comprehensive Master Exam — Form A
-  Single self-contained file. To publish on GitHub Pages, save as index.html.
-  All questions are drawn only from the uploaded lecture material.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -13,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #1f6b4a; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #c68a1f; }
   }
 </style>
 
@@ -52,415 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Physiology Comprehensive Master Exam — Form A</title>
 <style>
   :root{
-    --ink:#132635;
-    --ink-soft:#48607a;
-    --paper:#eef4f8;
-    --paper-2:#f9fcfd;
-    --line:#c9dbe6;
-    --oxblood:#2c4a7c;
-    --oxblood-soft:#2e6a92;
-    --brass:#c68a1f;
-    --teal:#1f6b4a;
-    --teal-deep:#0b5a54;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(19,38,53,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#243d65; --indigo:#1f6b4a; --gold:#c68a1f; --ice:#94e0bf;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Masthead */
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  /* Intro */
-  .intro h2{
-    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
-  }
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{
-    list-style:none;padding:0;margin:16px 0 6px;
-    display:grid;gap:8px;
-  }
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{
-    font-weight:700;color:var(--oxblood);
-    font-size:12px;min-width:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;
-    border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{
-    background:var(--oxblood);color:#fdf6ee;
-    box-shadow:0 6px 16px rgba(27,79,114,.28);
-  }
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  /* Progress bar */
-  .status{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:14px;margin-bottom:14px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{
-    font-size:13px;font-weight:700;color:var(--teal-deep);
-    background:var(--paper);border:1px solid var(--line);
-    padding:6px 12px;border-radius:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    display:inline-block;text-transform:uppercase;
-    letter-spacing:.16em;font-size:10.5px;font-weight:700;
-    color:var(--teal);margin-bottom:12px;
-  }
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
-  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
-  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;
-    text-align:left;width:100%;
-    background:var(--paper-2);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;cursor:pointer;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{
-    font-weight:700;color:var(--oxblood);
-    min-width:22px;font-size:14px;
-    border-right:1px solid var(--line);padding-right:11px;
-  }
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{
-    margin-top:20px;border-radius:10px;padding:16px 18px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    border:1px solid var(--line);background:var(--paper);
-    display:none;
-  }
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{
-    margin-top:10px;font-size:12px;color:var(--ink-soft);
-    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  /* Results */
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{
-    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
-    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{
-    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
-    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
-    margin:34px 0 12px;text-align:left;
-  }
-  .bd-row{
-    display:flex;align-items:center;gap:12px;margin:0 0 9px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{
-    border:1px solid var(--line);border-left:3px solid var(--wrong);
-    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
-  }
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
-  }
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
-    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    color:var(--correct);background:var(--correct-bg);
-    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
-  }
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{
-    text-align:center;margin-top:40px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
-    letter-spacing:.03em;
-  }
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;}
-  }
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
-    <h1>Physiology Comprehensive Master Exam<span class="sys">Form A</span></h1>
-    <p class="sub">Cell Physiology &amp; Membranes &middot; Membrane Potentials &amp; Action Potentials &middot; Nervous System: Sensory &amp; Motor &middot; CNS Function</p>
+  <header>
+    <h1>Physiology Comprehensive Master ExamForm A</h1>
+    <div class="sub">Cell Physiology & Membranes · Membrane Potentials & Action Potentials · Nervous System: Sensory & Motor · CNS Function</div>
+    <span class="pill">60 questions</span>
   </header>
 
-  <!-- INTRO -->
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>This comprehensive master exam draws cumulatively across all five Physiology Exam 1 topics — Cell Physiology and Cell Membranes, Cell Membrane Potentials and Action Potentials, Nervous System: Intro and Sensory, Nervous System: Motor, and Central Nervous System Function. Each of the five forms (A–E) contains 60 genuinely distinct questions, evenly distributed across all five topics, drawn from the same validated question banks as the individual topic quizzes.</p>
-    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span></li>
-      <li><span class="n">2</span><span>Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span></li>
-      <li><span class="n">3</span><span>Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=physiology-master-a" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 60</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
-
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
+  </div>
 
   <!-- RESULTS -->
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 60</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Comprehensive master exam covering all Physiology Exam 1 topics &middot; PAJ 5000 Physiology &middot; for study use. (Form A)
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 60 items, drawn cumulatively from all five Physiology Exam 1 topics, cumulative (Form A).
-   answer = index (0-3) of correct choice.
-   ============================================================ */
-const QUESTIONS = [{"topic": "Physiology & Homeostasis", "q": "What is the fundamental principle Claude Bernard articulated with the concept of the \"milieu interieur\"?", "choices": ["The function of the whole body is much more than the sum of its parts", "Genes control all cellular behavior", "Cells reproduce via mitosis", "Disease is the study of disordered body function"], "answer": 0, "correct": "Homeostasis is the maintenance of a stable \"milieu interieur,\" and Bernard's fundamental principle is that the function of the whole body is much more than the sum of its parts.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 7"}, {"topic": "Physiology & Homeostasis", "q": "What is pathophysiology?", "choices": ["The study of feedback control only", "The study of genetics", "The study of normal cell organelles", "The study of disordered body function (disease), the basis for clinical medicine"], "answer": 3, "correct": "Pathophysiology is the study of disordered body function (i.e., disease), and it forms the basis for clinical medicine.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 4"}, {"topic": "Levels of Organization", "q": "Approximately how many cells make up the human body?", "choices": ["~35 to 40 trillion", "~35 to 40 billion", "~100 trillion", "~1 million"], "answer": 0, "correct": "Cells are the basic structural and functional unit of the body, numbering approximately 35 to 40 trillion.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 5"}, {"topic": "Feedback Control", "q": "The baroreceptor reflex response to hemorrhage (increased sympathetic activity, increased heart rate, vasoconstriction to restore arterial pressure) is an example of what kind of control?", "choices": ["Negative feedback, promoting stability", "Positive feedback", "No feedback at all", "Feed-forward control"], "answer": 0, "correct": "The baroreceptor reflex's response to hemorrhage/decreased arterial pressure is negative feedback, which promotes stability by counteracting the change.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 11"}, {"topic": "Feedback Control", "q": "Cardiopulmonary reflexes that anticipate an upcoming change in blood pressure (rather than responding after the fact) are examples of what kind of control?", "choices": ["Negative feedback", "Feed-forward control", "Positive feedback", "Genomic control"], "answer": 1, "correct": "Feed-forward control anticipates change, as with cardiopulmonary reflexes, in contrast to feedback control which responds after a change has occurred.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 13"}, {"topic": "Feedback Control", "q": "Hemorrhagic shock and the depolarization phase of the action potential are both classic physiological examples of what type of feedback?", "choices": ["No feedback", "Negative feedback", "Positive feedback", "Feed-forward control"], "answer": 2, "correct": "Both hemorrhagic shock (a dangerous, self-amplifying cycle) and the action potential's rapid depolarization are examples of positive feedback, where the response amplifies the initial change.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 16"}, {"topic": "Physiological Variability", "q": "Which of the following is most precisely, tightly controlled in the body?", "choices": ["Plasma [H+] concentration", "Blood pressure", "Blood flow", "Metabolic rate"], "answer": 0, "correct": "Some variables, like plasma [H+] concentration (~3-5 x 10^-8 moles/L), are precisely controlled, while others like blood pressure, blood flow, and metabolic rate vary more with sex, age, body size, and circadian rhythms.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 17"}, {"topic": "Cell Composition", "q": "What percentage of cell mass is typically composed of water?", "choices": ["70-85%", "10-20%", "2-95%", "1-6%"], "answer": 0, "correct": "Water makes up 70-85% of cell mass, with proteins at 10-20%, lipids at 2-95% (highly variable by cell type), and carbohydrates at 1-6%.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 19"}, {"topic": "Endoplasmic Reticulum", "q": "What distinguishes rough (granular) ER from smooth ER?", "choices": ["They are functionally identical", "Rough ER has ribosomes on its outer surface and processes newly synthesized proteins; smooth ER is the site of lipid synthesis", "Rough ER is the site of lipid synthesis; smooth ER has ribosomes", "Rough ER is found only in the nucleus"], "answer": 1, "correct": "Rough (granular) ER has ribosomes covering its outer surface and extrudes/processes newly synthesized proteins into its matrix, while smooth ER is the site of lipid synthesis (phospholipids, cholesterol).", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 23"}, {"topic": "Golgi Apparatus", "q": "What happens to substances after they arrive at the Golgi apparatus from the smooth ER?", "choices": ["They are degraded by lysosomal enzymes", "They are processed (phosphorylated, glycosylated), then concentrated, sorted, and packaged for secretion", "They are immediately released into the nucleus", "They are used to form new DNA"], "answer": 1, "correct": "The Golgi apparatus receives transport vesicles from the smooth ER and processes substances (phosphorylation, glycosylation) before concentrating, sorting, and packaging them for secretion.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 26"}, {"topic": "Secretion", "q": "What is the difference between constitutive and stimulated secretion?", "choices": ["Constitutive secretion requires a trigger; stimulated secretion happens randomly", "Constitutive secretion happens randomly; stimulated secretion requires a trigger", "They are the same process", "Only stimulated secretion involves the Golgi apparatus"], "answer": 1, "correct": "Constitutive secretion happens randomly (continuously), while stimulated secretion requires a specific trigger before secretory vesicles release their contents.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 28"}, {"topic": "Lysosomes", "q": "What do lysosomes contain, and what is their primary function?", "choices": ["Hydrolytic enzymes (acid hydrolases) such as phosphatases, nucleases, proteases, and lysozymes, for digesting material", "Oxidases, for detoxifying alcohol", "DNA polymerase, for replication", "Ribosomes, for protein synthesis"], "answer": 0, "correct": "Lysosomes are vesicular organelles formed from budding Golgi that contain hydrolytic acid hydrolases (phosphatases, nucleases, proteases, lipid-degrading enzymes, lysozymes) and fuse with endocytotic vesicles to digest their contents.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 30"}, {"topic": "Resting Membrane Potential", "q": "Why is the resting membrane potential of a typical neuron so close to the potassium equilibrium potential (EK)?", "choices": ["Na+ and K+ permeability are equal at rest", "The membrane is far more permeable to K+ than Na+ (about 100x more K+ leak channels)", "There are no leak channels at rest", "The membrane is far more permeable to Na+ than K+"], "answer": 1, "correct": "The resting membrane potential is close to EK because the membrane is far more permeable to K+ than Na+ at rest, due to roughly 100x more K+ leak channels than Na+ leak channels.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 6"}, {"topic": "Resting Vm of RBCs", "q": "Why is the resting membrane potential of red blood cells (RBCs) so close to 0 mV, unlike most other cells?", "choices": ["RBCs actively pump chloride out", "RBCs have no membrane proteins", "RBCs have no potassium channels at all", "Resting membrane permeability to sodium ions is high compared to most other cell types"], "answer": 3, "correct": "The resting membrane potential of RBCs is close to 0 mV because their resting membrane permeability to sodium ions is high compared to most other cell types (unlike neurons, which are much more K+-permeable at rest).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 8"}, {"topic": "Electrochemical Driving Force", "q": "How is the electrochemical driving force (VDF) on an ion calculated, and what does a positive VDF indicate?", "choices": ["VDF = Eion - Vm; a positive VDF always means no net movement", "VDF = Vm - Eion; a positive VDF means the ion enters the cell (influx)", "VDF = Vm - Eion; a positive VDF means the ion exits the cell (efflux)", "VDF cannot be calculated for individual ions"], "answer": 2, "correct": "The electrochemical driving force (VDF) for any ion equals Vm - Eion; a positive VDF means the ion exits the cell (efflux), while a negative VDF means the ion enters the cell (influx).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 11"}, {"topic": "Serum K+ and Excitability", "q": "How does an increase in extracellular potassium concentration affect cell excitability, and why?", "choices": ["It increases excitability because the resting membrane potential moves closer to the threshold potential", "It has no effect on excitability", "It decreases excitability by hyperpolarizing the cell", "It only affects skeletal muscle, not neurons"], "answer": 0, "correct": "An increase in extracellular potassium concentration depolarizes the resting membrane potential, bringing it closer to the threshold potential and thus increasing cell excitability.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 13"}, {"topic": "Calcium and Threshold Potential", "q": "What is the effect of low plasma calcium on threshold potential and excitability?", "choices": ["Low calcium abolishes the action potential entirely", "Threshold potential becomes more positive, decreasing excitability", "Threshold potential becomes more negative (closer to resting Vm), increasing excitability", "Threshold potential is unaffected by calcium"], "answer": 2, "correct": "Low plasma calcium makes the threshold potential more negative, bringing it closer to the resting membrane potential and thus increasing cell excitability (this is why hypocalcemia can cause tetany/spontaneous firing).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 14"}, {"topic": "Action Potential Basics", "q": "Which of the following is a defining property of the action potential?", "choices": ["It is an all-or-none event with constant amplitude that does not summate", "It is a graded event whose amplitude varies with stimulus strength", "It requires no voltage-gated channels", "It decays exponentially with distance"], "answer": 0, "correct": "The action potential is an all-or-none event (must reach threshold) with constant amplitude — it does not summate, and it propagates without decrement by relying on voltage-gated ion channels.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 15"}, {"topic": "Conduction Velocity", "q": "According to the rule of thumb given, how is the conduction velocity of a myelinated fiber estimated from its diameter?", "choices": ["Velocity (m/s) = fiber diameter (mm) x 4.5", "Velocity (m/s) = square root of fiber diameter for myelinated fibers", "Velocity is unrelated to fiber diameter", "Velocity (m/s) = diameter (mm) squared"], "answer": 0, "correct": "For myelinated fibers, conduction velocity (m/s) is approximately fiber diameter (mm) x 4.5; for unmyelinated fibers, velocity is approximated by the square root of the fiber diameter.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 16"}, {"topic": "Local Anesthetics & Pain Fibers", "q": "Why do local anesthetics typically produce analgesia (pain relief) without paralysis?", "choices": ["They are more effective against small-diameter neurons with a large surface-area-to-volume ratio, so small C-fibers (pain) are affected more than large motor neurons", "They have no selective effect on fiber size", "They block only motor neurons", "They only work on myelinated fibers"], "answer": 0, "correct": "Local anesthetics are more effective against small-diameter neurons with a large surface-area-to-volume ratio, so small C-fibers carrying pain sensation are blocked more readily than large alpha-motorneurons, producing analgesia without paralysis.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 17"}, {"topic": "AP Membrane Permeability", "q": "What happens to Na+ and K+ permeability during the upstroke of the action potential?", "choices": ["Both decrease", "Only K+ permeability increases", "Neither changes during the upstroke", "Na+ permeability increases (opening Na+ channels, moving Vm toward ENa); K+ permeability increase follows, moving Vm toward EK"], "answer": 3, "correct": "During the upstroke of the action potential, Na+ permeability increases due to opening Na+ channels, moving the membrane potential toward ENa; K+ permeability then increases due to opening K+ channels, moving the potential toward EK.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 18"}, {"topic": "Ion Channel Gating", "q": "What are the three main stimuli that cause ion channels to \"gate\" (transition between conducting and non-conducting states)?", "choices": ["Temperature, pH, and osmolarity", "Changes in membrane potential (voltage-gated), occupation of a receptor (ligand-gated), and mechanical forces (mechanosensitive)", "Only changes in membrane potential", "Only ligand binding"], "answer": 1, "correct": "Ion channels gate in response to changes in membrane potential (voltage-gated channels), occupation of a receptor (ligand-gated/receptor-operated channels), or mechanical forces (mechanosensitive channels, important for hearing).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 19"}, {"topic": "Na+ vs K+ Channel Inactivation", "q": "How do voltage-gated Na+ channels differ from K+ channels in terms of inactivation during depolarization?", "choices": ["Neither channel type shows activation", "Both channels show inactivation", "K+ channels inactivate faster than Na+ channels", "Depolarization causes Na+ channels to both activate and inactivate; K+ channels show activation but not inactivation"], "answer": 3, "correct": "Depolarization causes Na+ channels to activate (open) but also to inactivate (enter a nonconducting state); by contrast, K+ channels show activation but not inactivation — they simply deactivate (close) upon repolarization.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 21"}, {"topic": "Refractory Periods", "q": "What is the difference between the absolute and relative refractory periods?", "choices": ["Refractory periods only apply to K+ channels", "They are identical concepts", "Absolute refractory period requires a greater-than-normal stimulus; relative refractory period makes an AP impossible", "Absolute refractory period: AP is impossible due to Na+ channel voltage inactivation; relative refractory period: a greater-than-normal stimulus is required"], "answer": 3, "correct": "During the absolute refractory period, an action potential is impossible due to voltage inactivation of Na+ channels; during the relative refractory period, a stimulus greater than normal is required to elicit an action potential.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 28"}, {"topic": "Sensory Receptor Types", "q": "Which type of sensory receptor detects deformation of tissue?", "choices": ["Thermoreceptors", "Nociceptors", "Chemoreceptors", "Mechanoreceptors"], "answer": 3, "correct": "Mechanoreceptors detect mechanical deformation, distinct from thermoreceptors (temperature change), nociceptors (tissue damage/pain), electromagnetic receptors (light), and chemoreceptors (taste, smell, CO2, O2).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 5"}, {"topic": "Labeled Line Principle", "q": "What is the \"labeled line principle\" of sensory perception?", "choices": ["Sensory information is randomly distributed to the cortex", "All receptors respond equally to every type of stimulus", "Only pain receptors follow this principle", "Each receptor responds to a limited range of stimuli and has a direct line to the brain, giving specificity of nerve fibers for transmitting only one modality of sensation"], "answer": 3, "correct": "The labeled-line principle is the concept that each receptor responds to a limited range of stimuli and has a direct line to the brain, giving specificity of nerve fibers for transmitting only one modality of sensation.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 7"}, {"topic": "Receptor Potentials", "q": "Why does a Pacinian corpuscle generate a receptor (electrotonic) potential rather than an action potential directly at the receptor?", "choices": ["There are no voltage-gated Na+ channels except in the axon", "The receptor has no membrane at all", "Receptor potentials are identical to action potentials", "Pacinian corpuscles cannot depolarize"], "answer": 0, "correct": "Mechanical distortion of a Pacinian corpuscle increases Na+ conductance, generating an electrotonic receptor potential; an action potential only occurs once this signal reaches the axon, where voltage-gated Na+ channels are present.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 9"}, {"topic": "Receptor Potential & AP Frequency", "q": "How does increased stimulus intensity affect action potential frequency in a sensory neuron?", "choices": ["Increased stimulus intensity causes an increased receptor potential, which increases AP frequency", "It changes the amplitude of individual APs", "It decreases AP frequency", "It has no effect on AP frequency"], "answer": 0, "correct": "Action potentials occur once the receptor potential rises above threshold; increased stimulus intensity causes an increased receptor potential, which in turn increases the frequency of action potentials generated.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 10"}, {"topic": "Receptor Adaptation", "q": "What is receptor adaptation, and how does the Pacinian corpuscle mechanism work?", "choices": ["The gradual decrease in receptor response to a sustained stimulus; in the Pacinian corpuscle, fluid redistribution decreases the distorting force over time", "Adaptation only occurs in photoreceptors", "Receptors always fire at a constant, unchanging rate regardless of stimulus duration", "Adaptation means the receptor becomes more sensitive over time"], "answer": 0, "correct": "Receptors adapt (respond less) to a sustained stimulus; in the Pacinian corpuscle, fluid redistribution within the corpuscle decreases the distorting force on the nerve ending over time, while photoreceptors adapt via changes in the amount of light-sensitive chemicals.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 14"}, {"topic": "Gradations in Signal Intensity", "q": "What are the two mechanisms by which gradations in sensory signal intensity are achieved?", "choices": ["Adaptation and facilitation only", "Spatial summation (increasing the number of fibers stimulated) and temporal summation (increasing the firing rate in a given number of fibers)", "Only changes in receptor potential amplitude", "Only changes in axon diameter"], "answer": 1, "correct": "Gradations in signal intensity are achieved by spatial summation (increasing the number of fibers stimulated) and temporal summation (increasing the rate of firing in a given number of fibers).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 17"}, {"topic": "Neuronal Pools", "q": "What are neuronal pools?", "choices": ["Groups of neurons with special characteristics of organization, comprising many different types of neuronal circuits (converging, diverging, reverberating, inhibitory)", "Isolated single neurons with no connections", "A type of glial cell", "Only found in the spinal cord"], "answer": 0, "correct": "Neuronal pools are groups of neurons with special characteristics of organization, comprising many different types of neuronal circuits, including converging, diverging, reverberating, and inhibitory circuits.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 20"}, {"topic": "Divergence", "q": "What is an example of the \"amplifying\" type of divergence in neuronal pathways?", "choices": ["Inhibition of an antagonist muscle pair", "Convergence of inputs onto a single neuron", "A single sensory neuron firing only once", "A single pyramidal cell in the motor cortex stimulating several hundred muscle fibers"], "answer": 3, "correct": "An amplifying type of divergence is illustrated by a single pyramidal cell in the motor cortex that can stimulate several hundred muscle fibers, spreading a single signal to many targets.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 21"}, {"topic": "Convergence", "q": "What does convergence of multiple input fibers onto a single neuron provide?", "choices": ["Reduction of all incoming signals to zero", "Only inhibitory effects", "Faster conduction velocity only", "Spatial summation, allowing correlation, summation, and sorting of information from multiple sources"], "answer": 3, "correct": "Convergence, where multiple terminals from different incoming fibers terminate on the same neuron, provides spatial summation, allowing the neuron to correlate, summate, and sort information arriving from multiple sources.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 22"}, {"topic": "Reciprocal Inhibition", "q": "What is the function of the reciprocal inhibition circuit?", "choices": ["To control antagonistic pairs of muscles and prevent over-activity in the brain", "To amplify signals to antagonist muscles equally", "To generate action potentials in the dendrite", "To increase synaptic delay"], "answer": 0, "correct": "The inhibitory (reciprocal inhibition) circuit is important for controlling all antagonistic pairs of muscles and for preventing over-activity in the brain.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 23"}, {"topic": "Reverberatory Circuits", "q": "What causes a reverberatory (oscillatory) circuit to produce a prolonged output after a brief single input stimulus, and what eventually stops it?", "choices": ["Negative feedback dampens the signal immediately", "Output stops only when the neuron dies", "The circuit requires no feedback mechanism", "Positive feedback within the circuit re-excites the input; fatigue of synaptic junctions causes sudden cessation"], "answer": 3, "correct": "A reverberatory circuit produces prolonged output via positive feedback, where the circuit re-excites its own input; the reverberation eventually stops due to fatigue of synaptic junctions (transmitter depletion, receptor inactivation, abnormal ion concentrations).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 24"}, {"topic": "Control of Synaptic Sensitivity", "q": "How does synaptic underactivity versus overactivity affect membrane receptor number?", "choices": ["Underactivity leads to downregulation; overactivity leads to upregulation", "Both underactivity and overactivity cause upregulation", "Underactivity leads to upregulation of membrane receptors; overactivity leads to downregulation", "Receptor number is fixed and never changes"], "answer": 2, "correct": "Underactivity of a synapse leads to upregulation of membrane receptors (increasing sensitivity), while overactivity leads to downregulation of membrane receptors (decreasing sensitivity) — a homeostatic mechanism.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 26"}, {"topic": "Alpha vs Gamma Motor Neurons", "q": "What is the key functional difference between alpha and gamma motor neurons?", "choices": ["Both innervate the same fiber types", "Gamma motor neurons innervate extrafusal fibers; alpha motor neurons innervate intrafusal fibers", "Alpha motor neurons innervate large extrafusal fibers (skeletal muscle force); gamma motor neurons innervate small intrafusal fibers in the muscle spindle (controlling muscle tone)", "Alpha motor neurons are smaller in diameter than gamma motor neurons"], "answer": 2, "correct": "Alpha motor neurons (large type A-alpha fibers, ~14 microns) innervate large extrafusal fibers that generate force for muscle contraction, while gamma motor neurons (smaller type A-gamma fibers, ~5 microns) innervate small intrafusal fibers within the muscle spindle to control basic muscle tone.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 5"}, {"topic": "Motor Unit Definition", "q": "What is a motor unit, as defined via the alpha motor neuron?", "choices": ["A single muscle fiber with no innervation", "An alpha motor neuron plus all the skeletal muscle fibers it innervates (which can range from 3 to over 100 fibers)", "A single gamma motor neuron and its intrafusal fibers", "The muscle spindle alone"], "answer": 1, "correct": "A motor unit is the alpha motor neuron plus the skeletal (extrafusal) muscle fibers it innervates after branching within the muscle — stimulation can excite anywhere from 3 to over 100 fibers depending on the unit.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 5"}, {"topic": "Renshaw Cells", "q": "What is the function of Renshaw cells, and what negative feedback mechanism do they mediate?", "choices": ["They are excitatory interneurons that amplify alpha motor neuron output with no feedback", "They only affect gamma motor neurons", "They release glutamate to excite motor neurons further", "They are inhibitory (glycine-releasing) interneurons that receive an excitatory collateral from an alpha motor neuron and send an inhibitory axon back to that neuron (or others in the same motor pool), mediating negative feedback"], "answer": 3, "correct": "Renshaw cells are inhibitory interneurons in the anterior horn that release glycine; they receive an excitatory collateral from an alpha motor neuron's axon and send an inhibitory axon back to that neuron (or others in the motor pool), mediating a negative feedback mechanism.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 8"}, {"topic": "Muscle Spindle vs Golgi Tendon Organ", "q": "What do the muscle spindle and Golgi tendon organ each sense?", "choices": ["The muscle spindle senses tension; the Golgi tendon organ senses length", "Both sense identical information", "The muscle spindle senses muscle length and rate of change in length; the Golgi tendon organ senses tendon tension and rate of change in tension", "Neither provides feedback to the spinal cord"], "answer": 2, "correct": "The muscle spindle (located in the muscle belly) senses muscle length and its rate of change, while the Golgi tendon organ (located in the tendon) senses tendon tension and its rate of change — both feed information mainly to the spinal cord, but also to the cerebrum and cerebellum.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 9"}, {"topic": "Intrafusal vs Extrafusal Fibers", "q": "What distinguishes intrafusal muscle fibers from extrafusal fibers?", "choices": ["Extrafusal fibers make up the bulk of the muscle (innervated by alpha motoneurons) and generate contractile force; intrafusal fibers are smaller, innervated by gamma motoneurons, and encapsulated to form the muscle spindle", "Both fiber types are identical in function", "Intrafusal fibers make up the bulk of the muscle and generate contractile force; extrafusal fibers form the muscle spindle", "Intrafusal fibers are longer than extrafusal fibers"], "answer": 0, "correct": "Extrafusal fibers make up the bulk of the muscle, are innervated by alpha motoneurons, and provide contractile force; intrafusal fibers are smaller, innervated by gamma motoneurons, and are encapsulated in sheaths to form the muscle spindle, running in parallel with (but much shorter than) the extrafusal fibers.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 10"}, {"topic": "Types of Intrafusal Fibers", "q": "What is the functional difference between nuclear bag and nuclear chain intrafusal fibers?", "choices": ["Nuclear chain fibers detect dynamic changes only", "Neither fiber type is innervated by sensory afferents", "Nuclear bag fibers (Type Ia afferents) detect rate of change in length (dynamic); nuclear chain fibers (Type II afferents) detect static changes in length", "Both fiber types detect only static length changes"], "answer": 2, "correct": "Nuclear bag intrafusal fibers, innervated by Type Ia sensory afferents, detect the rate of change in length (fast, dynamic changes), while nuclear chain intrafusal fibers, innervated by Type II sensory afferents, detect static changes in length.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 12"}, {"topic": "Muscle Spindle Reflex Loop", "q": "How does the muscle spindle oppose an increase in muscle length (stretch)?", "choices": ["Stretching the spindle stimulates Type Ia and Type II afferents, which stimulate alpha motoneurons to contract and shorten the entire muscle, opposing the original stretch", "Stretching the spindle has no effect on alpha motoneurons", "The spindle directly contracts without any neural signaling", "The spindle only responds to muscle shortening, not stretching"], "answer": 0, "correct": "Stretching a muscle also stretches its spindle, stimulating Type Ia and Type II sensory afferents; Type Ia fibers stimulate alpha-motoneurons in the spinal cord, causing contraction and shortening of the entire muscle, opposing the original stretch.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 13"}, {"topic": "Alpha-Gamma Co-activation", "q": "Why are alpha and gamma motor neurons co-activated during voluntary muscle contraction?", "choices": ["To ensure the spindle contracts along with the muscle, keeping the stretch response intact rather than going slack", "Only gamma motor neurons are active during voluntary movement", "Co-activation prevents any muscle contraction from occurring", "Co-activation serves no functional purpose"], "answer": 0, "correct": "Alpha and gamma motor neurons are co-activated so that when the main (extrafusal) muscle contracts and shortens, the intrafusal fibers of the spindle also contract, keeping the spindle taut and its stretch response intact — otherwise the spindle would go slack during muscle shortening.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 13"}, {"topic": "Static vs Dynamic Response", "q": "What is the difference between the static and dynamic response of the muscle spindle?", "choices": ["Static and dynamic responses are identical", "Static response: Type Ia and Type II afferent firing increases in proportion to degree of stretch when stretched slowly; dynamic response: Type Ia afferent firing increases in proportion to rate of length change when stretched rapidly", "The dynamic response only occurs when the muscle is not moving", "Only Type II afferents contribute to the dynamic response"], "answer": 1, "correct": "The static response occurs when the spindle is stretched slowly, with Type Ia and Type II afferent impulses increasing proportional to the degree of stretch; the dynamic response occurs with rapid stretch, with Type Ia afferent impulses increasing proportional to the rate of length change.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 15"}, {"topic": "The Stretch Reflex", "q": "What type of reflex arc is the stretch (patellar-type) reflex, and what afferent fiber mediates it?", "choices": ["A disynaptic reflex arc mediated by Type II fibers", "The stretch reflex requires no afferent fibers", "A monosynaptic reflex arc mediated by Type Ia afferent fibers", "A polysynaptic reflex arc mediated by Type Ib fibers"], "answer": 2, "correct": "The stretch reflex is a monosynaptic reflex arc: sudden muscle stretch excites the muscle spindle, and Type Ia afferent fibers directly stimulate alpha-motor neurons, causing muscle contraction while synergistic muscles are activated and antagonists inhibited.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 17"}, {"topic": "Patellar Reflex", "q": "In the patellar (knee-jerk) reflex, what happens to the antagonistic hamstring muscle?", "choices": ["It has no involvement in the reflex", "It relaxes via an inhibitory interneuron, while the quadriceps contracts", "It also contracts simultaneously with the quadriceps", "It contracts before the quadriceps"], "answer": 1, "correct": "In the patellar reflex, the antagonistic hamstring (flexor) relaxes via an inhibitory interneuron while the Type Ia afferent directly (monosynaptically) stimulates the alpha-motoneuron causing the quadriceps to contract, producing the leg kick.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 19"}, {"topic": "Golgi Tendon Organ Reflex", "q": "What type of reflex arc mediates the Golgi tendon organ's autogenic inhibition reflex, and what afferent fiber is involved?", "choices": ["No reflex arc is involved — it is a purely local mechanical effect", "A monosynaptic reflex arc via Type Ia fibers", "A reflex arc using only gamma motor neurons", "A disynaptic reflex arc via Type Ib afferent fibers, producing muscle relaxation in response to high tension"], "answer": 3, "correct": "The Golgi tendon organ mediates a disynaptic reflex arc via Type Ib afferent fibers; increased muscle tension activates the reflex, causing sudden muscle relaxation (autogenic inhibition) that protects against muscle tear at very high tensions, while also equalizing force among muscle fibers across the physiological range.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 23"}, {"topic": "ANS Organization", "q": "Where are the cell bodies of preganglionic and postganglionic autonomic neurons located?", "choices": ["Preganglionic neurons have no cell body in the CNS at all", "Both cell bodies are located in the autonomic ganglia", "Postganglionic neurons are located in the brainstem", "Preganglionic cell body in the brainstem or spinal cord, thinly myelinated axon to the ganglion; postganglionic cell body in the autonomic ganglion, unmyelinated axon to the visceral effector"], "answer": 3, "correct": "The preganglionic neuron's cell body is located in the brainstem or spinal cord, with a thinly myelinated axon projecting to an autonomic ganglion; the postganglionic neuron's cell body is located within that ganglion, with an unmyelinated axon projecting to the visceral effector cell.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 4"}, {"topic": "Sympathetic vs Parasympathetic Ganglia", "q": "Where are sympathetic ganglia located compared to parasympathetic ganglia, and what does this mean for fiber length?", "choices": ["Both ganglia types are located in the effector tissue", "Sympathetic ganglia have long preganglionic and short postganglionic fibers", "Parasympathetic ganglia are always closer to the spinal cord than sympathetic ganglia", "Sympathetic ganglia are close to the spinal cord (short preganglionic, long postganglionic fibers); parasympathetic ganglia are in the effector tissue (long preganglionic, short postganglionic fibers)"], "answer": 3, "correct": "Sympathetic ganglia are located close to the spinal cord, giving short preganglionic and long postganglionic fibers, while parasympathetic ganglia are located in the effector tissues themselves, giving long preganglionic and short postganglionic fibers.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 5"}, {"topic": "Parasympathetic Cranial Nerve Origins", "q": "Which cranial nerve carries parasympathetic fibers to the pupillary sphincter and ciliary muscle?", "choices": ["CN III (oculomotor)", "CN IX (glossopharyngeal)", "CN VII (facial)", "CN X (vagus)"], "answer": 0, "correct": "Parasympathetic fibers originate from cranial nerves III, VII, IX, and X plus the sacral spinal cord: CN III carries fibers to the pupillary sphincter/ciliary muscle, CN VII to nasal/lacrimal/submandibular glands, CN IX to the parotid gland, and CN X to visceral organs.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 6"}, {"topic": "Adrenergic vs Cholinergic Nerves", "q": "What defines an \"adrenergic\" nerve versus a \"cholinergic\" nerve?", "choices": ["Adrenergic nerves release acetylcholine; cholinergic nerves release norepinephrine", "Adrenergic nerves release norepinephrine; cholinergic nerves release acetylcholine", "Adrenergic nerves are only found in the parasympathetic system", "Both terms refer to the same type of nerve"], "answer": 1, "correct": "Sympathetic nerves release norepinephrine at their endings and are called adrenergic nerves; parasympathetic nerves release acetylcholine at their endings and are called cholinergic nerves.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 7"}, {"topic": "Preganglionic Neurotransmitter", "q": "What neurotransmitter do ALL preganglionic autonomic fibers (both sympathetic and parasympathetic) release?", "choices": ["Norepinephrine", "Epinephrine", "Dopamine", "Acetylcholine"], "answer": 3, "correct": "All preganglionic sympathetic and parasympathetic nerve fibers release acetylcholine, regardless of what their corresponding postganglionic fibers release.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 8"}, {"topic": "Adrenergic Receptor Effects", "q": "What effect does activation of beta-1 adrenergic receptors have on the heart, and what does beta-2 activation cause?", "choices": ["Beta-1 increases heart rate and contractility; beta-2 causes bronchial dilation, vasodilation in skeletal muscle, calorigenesis, and glycogenolysis", "Neither receptor affects the cardiovascular or respiratory system", "Both receptors have identical effects", "Beta-1 causes bronchial dilation; beta-2 increases heart rate"], "answer": 0, "correct": "Beta-1 receptor activation increases heart rate and contractility; beta-2 receptor activation causes bronchial dilation, dilation of blood vessels in skeletal muscle, calorigenesis, and glycogenolysis. Alpha receptors, by contrast, are located on blood vessels and cause vasoconstriction.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 9"}, {"topic": "Cholinergic Receptor Types", "q": "Where are nicotinic acetylcholine receptors found, versus muscarinic receptors?", "choices": ["Muscarinic receptors are only found at the neuromuscular junction", "Nicotinic and muscarinic receptors are found in identical locations", "Nicotinic receptors are found at synapses between pre- and postganglionic neurons and at the neuromuscular junction; muscarinic receptors are found on effector cells stimulated by postganglionic parasympathetic fibers", "Muscarinic receptors are ligand-gated ion channels, like nicotinic receptors"], "answer": 2, "correct": "Nicotinic receptors (ligand-gated ion channels) are found in autonomic ganglia (between pre- and postganglionic neurons) and at the skeletal muscle neuromuscular junction; muscarinic receptors (G protein-coupled, 5 subtypes M1-M5) are found on effector cells stimulated by postganglionic parasympathetic fibers.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 10"}, {"topic": "Preganglionic Synapse Location", "q": "Where do parasympathetic preganglionic fibers typically synapse, compared to sympathetic preganglionic fibers?", "choices": ["PNS fibers synapse in the target organ (except CN III, VII, IX); SNS fibers synapse outside the target organ in the sympathetic chain/ganglion (except the adrenal medulla)", "SNS fibers always synapse within the target organ", "PNS fibers never synapse near the target organ", "Both synapse exclusively within the target organ"], "answer": 0, "correct": "Parasympathetic preganglionic fibers typically synapse within the target organ (with the exception of CN III, VII, and IX), while sympathetic preganglionic fibers synapse outside the target organ in the sympathetic chain or a ganglion (with the exception of the adrenal medulla).", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 11"}, {"topic": "Norepinephrine vs Epinephrine Receptor Selectivity", "q": "How does norepinephrine's receptor selectivity differ from epinephrine's?", "choices": ["NE mostly activates alpha receptors (with a small effect on beta); Epi activates alpha and beta receptors about equally", "NE activates alpha and beta receptors equally; Epi mostly activates alpha receptors", "NE only activates beta-2 receptors", "Neither hormone activates alpha receptors"], "answer": 0, "correct": "Norepinephrine mostly activates alpha receptors (with a small effect on beta receptors), while epinephrine activates alpha and beta receptors about equally.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Sympathomimetic Drugs", "q": "What is albuterol, and what is it used for clinically?", "choices": ["A non-selective beta agonist used for bradycardia", "An alpha blocker used to treat hypertension", "A selective beta-2 agonist, used as a short-acting bronchodilator for COPD, asthma, and emphysema", "A selective alpha-1 agonist used to raise blood pressure"], "answer": 2, "correct": "Albuterol is a selective beta-2 agonist used as a short-acting bronchodilator to treat COPD, asthma, and emphysema, in contrast to isoproterenol (non-selective beta agonist, used for bradycardia) and phenylephrine (selective alpha-1 agonist, used to raise BP or shrink nasal blood vessels).", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Adrenal Medulla Function", "q": "What percentage of catecholamines released by the adrenal medulla is epinephrine versus norepinephrine, and how does the duration of circulating catecholamine effects compare to direct sympathetic stimulation?", "choices": ["100% Epi; effects are instantaneous with no duration", "50/50 Epi and NE; effects are shorter than direct stimulation", "80% Epi, 20% NE; effects last 5-10x longer (2-4 minutes) than direct sympathetic stimulation", "20% Epi, 80% NE; effects last the same duration as direct stimulation"], "answer": 2, "correct": "The adrenal medulla releases about 80% epinephrine and 20% norepinephrine into the blood; circulating catecholamine effects last 5-10 times longer (2-4 minutes) than the effects of direct sympathetic nerve stimulation.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 17"}, {"topic": "Epinephrine vs Norepinephrine Effects", "q": "Why does epinephrine have a greater effect on stimulating the heart, while norepinephrine has a greater effect on constricting blood vessels?", "choices": ["Epinephrine stimulates beta receptors more (heart); norepinephrine stimulates alpha receptors more (vasoconstriction, increasing TPR and arterial pressure)", "Norepinephrine has a greater effect on the heart than epinephrine", "Both hormones have identical receptor selectivity", "Epinephrine only acts on the heart; norepinephrine only acts on blood vessels"], "answer": 0, "correct": "Epinephrine has a greater effect stimulating the heart due to greater beta receptor stimulation, while norepinephrine has a greater effect constricting blood vessels due to greater alpha receptor stimulation (increasing total peripheral resistance and arterial pressure); epinephrine also increases metabolic rate 5-10x more than norepinephrine.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 17"}];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "Physiology & Homeostasis", "io": "Physiology & Homeostasis", "q": "What is the fundamental principle Claude Bernard articulated with the concept of the \"milieu interieur\"?", "opts": [["The function of the whole body is much more than the sum of its parts", "Homeostasis is the maintenance of a stable \"milieu interieur,\" and Bernard's fundamental principle is that the function of the whole body is much more than the sum of its parts."], ["Genes control all cellular behavior", ""], ["Cells reproduce via mitosis", ""], ["Disease is the study of disordered body function", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 7"}, {"topic": "Physiology & Homeostasis", "io": "Physiology & Homeostasis", "q": "What is pathophysiology?", "opts": [["The study of feedback control only", ""], ["The study of genetics", ""], ["The study of normal cell organelles", ""], ["The study of disordered body function (disease), the basis for clinical medicine", "Pathophysiology is the study of disordered body function (i.e., disease), and it forms the basis for clinical medicine."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 4"}, {"topic": "Levels of Organization", "io": "Levels of Organization", "q": "Approximately how many cells make up the human body?", "opts": [["~35 to 40 trillion", "Cells are the basic structural and functional unit of the body, numbering approximately 35 to 40 trillion."], ["~35 to 40 billion", ""], ["~100 trillion", ""], ["~1 million", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 5"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "The baroreceptor reflex response to hemorrhage (increased sympathetic activity, increased heart rate, vasoconstriction to restore arterial pressure) is an example of what kind of control?", "opts": [["Negative feedback, promoting stability", "The baroreceptor reflex's response to hemorrhage/decreased arterial pressure is negative feedback, which promotes stability by counteracting the change."], ["Positive feedback", ""], ["No feedback at all", ""], ["Feed-forward control", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 11"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "Cardiopulmonary reflexes that anticipate an upcoming change in blood pressure (rather than responding after the fact) are examples of what kind of control?", "opts": [["Negative feedback", ""], ["Feed-forward control", "Feed-forward control anticipates change, as with cardiopulmonary reflexes, in contrast to feedback control which responds after a change has occurred."], ["Positive feedback", ""], ["Genomic control", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 13"}, {"topic": "Feedback Control", "io": "Feedback Control", "q": "Hemorrhagic shock and the depolarization phase of the action potential are both classic physiological examples of what type of feedback?", "opts": [["No feedback", ""], ["Negative feedback", ""], ["Positive feedback", "Both hemorrhagic shock (a dangerous, self-amplifying cycle) and the action potential's rapid depolarization are examples of positive feedback, where the response amplifies the initial change."], ["Feed-forward control", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 16"}, {"topic": "Physiological Variability", "io": "Physiological Variability", "q": "Which of the following is most precisely, tightly controlled in the body?", "opts": [["Plasma [H+] concentration", "Some variables, like plasma [H+] concentration (~3-5 x 10^-8 moles/L), are precisely controlled, while others like blood pressure, blood flow, and metabolic rate vary more with sex, age, body size, and circadian rhythms."], ["Blood pressure", ""], ["Blood flow", ""], ["Metabolic rate", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 17"}, {"topic": "Cell Composition", "io": "Cell Composition", "q": "What percentage of cell mass is typically composed of water?", "opts": [["70-85%", "Water makes up 70-85% of cell mass, with proteins at 10-20%, lipids at 2-95% (highly variable by cell type), and carbohydrates at 1-6%."], ["10-20%", ""], ["2-95%", ""], ["1-6%", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 19"}, {"topic": "Endoplasmic Reticulum", "io": "Endoplasmic Reticulum", "q": "What distinguishes rough (granular) ER from smooth ER?", "opts": [["They are functionally identical", ""], ["Rough ER has ribosomes on its outer surface and processes newly synthesized proteins; smooth ER is the site of lipid synthesis", "Rough (granular) ER has ribosomes covering its outer surface and extrudes/processes newly synthesized proteins into its matrix, while smooth ER is the site of lipid synthesis (phospholipids, cholesterol)."], ["Rough ER is the site of lipid synthesis; smooth ER has ribosomes", ""], ["Rough ER is found only in the nucleus", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 23"}, {"topic": "Golgi Apparatus", "io": "Golgi Apparatus", "q": "What happens to substances after they arrive at the Golgi apparatus from the smooth ER?", "opts": [["They are degraded by lysosomal enzymes", ""], ["They are processed (phosphorylated, glycosylated), then concentrated, sorted, and packaged for secretion", "The Golgi apparatus receives transport vesicles from the smooth ER and processes substances (phosphorylation, glycosylation) before concentrating, sorting, and packaging them for secretion."], ["They are immediately released into the nucleus", ""], ["They are used to form new DNA", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 26"}, {"topic": "Secretion", "io": "Secretion", "q": "What is the difference between constitutive and stimulated secretion?", "opts": [["Constitutive secretion requires a trigger; stimulated secretion happens randomly", ""], ["Constitutive secretion happens randomly; stimulated secretion requires a trigger", "Constitutive secretion happens randomly (continuously), while stimulated secretion requires a specific trigger before secretory vesicles release their contents."], ["They are the same process", ""], ["Only stimulated secretion involves the Golgi apparatus", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 28"}, {"topic": "Lysosomes", "io": "Lysosomes", "q": "What do lysosomes contain, and what is their primary function?", "opts": [["Hydrolytic enzymes (acid hydrolases) such as phosphatases, nucleases, proteases, and lysozymes, for digesting material", "Lysosomes are vesicular organelles formed from budding Golgi that contain hydrolytic acid hydrolases (phosphatases, nucleases, proteases, lipid-degrading enzymes, lysozymes) and fuse with endocytotic vesicles to digest their contents."], ["Oxidases, for detoxifying alcohol", ""], ["DNA polymerase, for replication", ""], ["Ribosomes, for protein synthesis", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 30"}, {"topic": "Resting Membrane Potential", "io": "Resting Membrane Potential", "q": "Why is the resting membrane potential of a typical neuron so close to the potassium equilibrium potential (EK)?", "opts": [["Na+ and K+ permeability are equal at rest", ""], ["The membrane is far more permeable to K+ than Na+ (about 100x more K+ leak channels)", "The resting membrane potential is close to EK because the membrane is far more permeable to K+ than Na+ at rest, due to roughly 100x more K+ leak channels than Na+ leak channels."], ["There are no leak channels at rest", ""], ["The membrane is far more permeable to Na+ than K+", ""]], "c": 1, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 6"}, {"topic": "Resting Vm of RBCs", "io": "Resting Vm of RBCs", "q": "Why is the resting membrane potential of red blood cells (RBCs) so close to 0 mV, unlike most other cells?", "opts": [["RBCs actively pump chloride out", ""], ["RBCs have no membrane proteins", ""], ["RBCs have no potassium channels at all", ""], ["Resting membrane permeability to sodium ions is high compared to most other cell types", "The resting membrane potential of RBCs is close to 0 mV because their resting membrane permeability to sodium ions is high compared to most other cell types (unlike neurons, which are much more K+-permeable at rest)."]], "c": 3, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 8"}, {"topic": "Electrochemical Driving Force", "io": "Electrochemical Driving Force", "q": "How is the electrochemical driving force (VDF) on an ion calculated, and what does a positive VDF indicate?", "opts": [["VDF = Eion - Vm; a positive VDF always means no net movement", ""], ["VDF = Vm - Eion; a positive VDF means the ion enters the cell (influx)", ""], ["VDF = Vm - Eion; a positive VDF means the ion exits the cell (efflux)", "The electrochemical driving force (VDF) for any ion equals Vm - Eion; a positive VDF means the ion exits the cell (efflux), while a negative VDF means the ion enters the cell (influx)."], ["VDF cannot be calculated for individual ions", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 11"}, {"topic": "Serum K+ and Excitability", "io": "Serum K+ and Excitability", "q": "How does an increase in extracellular potassium concentration affect cell excitability, and why?", "opts": [["It increases excitability because the resting membrane potential moves closer to the threshold potential", "An increase in extracellular potassium concentration depolarizes the resting membrane potential, bringing it closer to the threshold potential and thus increasing cell excitability."], ["It has no effect on excitability", ""], ["It decreases excitability by hyperpolarizing the cell", ""], ["It only affects skeletal muscle, not neurons", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 13"}, {"topic": "Calcium and Threshold Potential", "io": "Calcium and Threshold Potential", "q": "What is the effect of low plasma calcium on threshold potential and excitability?", "opts": [["Low calcium abolishes the action potential entirely", ""], ["Threshold potential becomes more positive, decreasing excitability", ""], ["Threshold potential becomes more negative (closer to resting Vm), increasing excitability", "Low plasma calcium makes the threshold potential more negative, bringing it closer to the resting membrane potential and thus increasing cell excitability (this is why hypocalcemia can cause tetany/spontaneous firing)."], ["Threshold potential is unaffected by calcium", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 14"}, {"topic": "Action Potential Basics", "io": "Action Potential Basics", "q": "Which of the following is a defining property of the action potential?", "opts": [["It is an all-or-none event with constant amplitude that does not summate", "The action potential is an all-or-none event (must reach threshold) with constant amplitude — it does not summate, and it propagates without decrement by relying on voltage-gated ion channels."], ["It is a graded event whose amplitude varies with stimulus strength", ""], ["It requires no voltage-gated channels", ""], ["It decays exponentially with distance", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 15"}, {"topic": "Conduction Velocity", "io": "Conduction Velocity", "q": "According to the rule of thumb given, how is the conduction velocity of a myelinated fiber estimated from its diameter?", "opts": [["Velocity (m/s) = fiber diameter (mm) x 4.5", "For myelinated fibers, conduction velocity (m/s) is approximately fiber diameter (mm) x 4.5; for unmyelinated fibers, velocity is approximated by the square root of the fiber diameter."], ["Velocity (m/s) = square root of fiber diameter for myelinated fibers", ""], ["Velocity is unrelated to fiber diameter", ""], ["Velocity (m/s) = diameter (mm) squared", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 16"}, {"topic": "Local Anesthetics & Pain Fibers", "io": "Local Anesthetics & Pain Fibers", "q": "Why do local anesthetics typically produce analgesia (pain relief) without paralysis?", "opts": [["They are more effective against small-diameter neurons with a large surface-area-to-volume ratio, so small C-fibers (pain) are affected more than large motor neurons", "Local anesthetics are more effective against small-diameter neurons with a large surface-area-to-volume ratio, so small C-fibers carrying pain sensation are blocked more readily than large alpha-motorneurons, producing analgesia without paralysis."], ["They have no selective effect on fiber size", ""], ["They block only motor neurons", ""], ["They only work on myelinated fibers", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 17"}, {"topic": "AP Membrane Permeability", "io": "AP Membrane Permeability", "q": "What happens to Na+ and K+ permeability during the upstroke of the action potential?", "opts": [["Both decrease", ""], ["Only K+ permeability increases", ""], ["Neither changes during the upstroke", ""], ["Na+ permeability increases (opening Na+ channels, moving Vm toward ENa); K+ permeability increase follows, moving Vm toward EK", "During the upstroke of the action potential, Na+ permeability increases due to opening Na+ channels, moving the membrane potential toward ENa; K+ permeability then increases due to opening K+ channels, moving the potential toward EK."]], "c": 3, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 18"}, {"topic": "Ion Channel Gating", "io": "Ion Channel Gating", "q": "What are the three main stimuli that cause ion channels to \"gate\" (transition between conducting and non-conducting states)?", "opts": [["Temperature, pH, and osmolarity", ""], ["Changes in membrane potential (voltage-gated), occupation of a receptor (ligand-gated), and mechanical forces (mechanosensitive)", "Ion channels gate in response to changes in membrane potential (voltage-gated channels), occupation of a receptor (ligand-gated/receptor-operated channels), or mechanical forces (mechanosensitive channels, important for hearing)."], ["Only changes in membrane potential", ""], ["Only ligand binding", ""]], "c": 1, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 19"}, {"topic": "Na+ vs K+ Channel Inactivation", "io": "Na+ vs K+ Channel Inactivation", "q": "How do voltage-gated Na+ channels differ from K+ channels in terms of inactivation during depolarization?", "opts": [["Neither channel type shows activation", ""], ["Both channels show inactivation", ""], ["K+ channels inactivate faster than Na+ channels", ""], ["Depolarization causes Na+ channels to both activate and inactivate; K+ channels show activation but not inactivation", "Depolarization causes Na+ channels to activate (open) but also to inactivate (enter a nonconducting state); by contrast, K+ channels show activation but not inactivation — they simply deactivate (close) upon repolarization."]], "c": 3, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 21"}, {"topic": "Refractory Periods", "io": "Refractory Periods", "q": "What is the difference between the absolute and relative refractory periods?", "opts": [["Refractory periods only apply to K+ channels", ""], ["They are identical concepts", ""], ["Absolute refractory period requires a greater-than-normal stimulus; relative refractory period makes an AP impossible", ""], ["Absolute refractory period: AP is impossible due to Na+ channel voltage inactivation; relative refractory period: a greater-than-normal stimulus is required", "During the absolute refractory period, an action potential is impossible due to voltage inactivation of Na+ channels; during the relative refractory period, a stimulus greater than normal is required to elicit an action potential."]], "c": 3, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 28"}, {"topic": "Sensory Receptor Types", "io": "Sensory Receptor Types", "q": "Which type of sensory receptor detects deformation of tissue?", "opts": [["Thermoreceptors", ""], ["Nociceptors", ""], ["Chemoreceptors", ""], ["Mechanoreceptors", "Mechanoreceptors detect mechanical deformation, distinct from thermoreceptors (temperature change), nociceptors (tissue damage/pain), electromagnetic receptors (light), and chemoreceptors (taste, smell, CO2, O2)."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 5"}, {"topic": "Labeled Line Principle", "io": "Labeled Line Principle", "q": "What is the \"labeled line principle\" of sensory perception?", "opts": [["Sensory information is randomly distributed to the cortex", ""], ["All receptors respond equally to every type of stimulus", ""], ["Only pain receptors follow this principle", ""], ["Each receptor responds to a limited range of stimuli and has a direct line to the brain, giving specificity of nerve fibers for transmitting only one modality of sensation", "The labeled-line principle is the concept that each receptor responds to a limited range of stimuli and has a direct line to the brain, giving specificity of nerve fibers for transmitting only one modality of sensation."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 7"}, {"topic": "Receptor Potentials", "io": "Receptor Potentials", "q": "Why does a Pacinian corpuscle generate a receptor (electrotonic) potential rather than an action potential directly at the receptor?", "opts": [["There are no voltage-gated Na+ channels except in the axon", "Mechanical distortion of a Pacinian corpuscle increases Na+ conductance, generating an electrotonic receptor potential; an action potential only occurs once this signal reaches the axon, where voltage-gated Na+ channels are present."], ["The receptor has no membrane at all", ""], ["Receptor potentials are identical to action potentials", ""], ["Pacinian corpuscles cannot depolarize", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 9"}, {"topic": "Receptor Potential & AP Frequency", "io": "Receptor Potential & AP Frequency", "q": "How does increased stimulus intensity affect action potential frequency in a sensory neuron?", "opts": [["Increased stimulus intensity causes an increased receptor potential, which increases AP frequency", "Action potentials occur once the receptor potential rises above threshold; increased stimulus intensity causes an increased receptor potential, which in turn increases the frequency of action potentials generated."], ["It changes the amplitude of individual APs", ""], ["It decreases AP frequency", ""], ["It has no effect on AP frequency", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 10"}, {"topic": "Receptor Adaptation", "io": "Receptor Adaptation", "q": "What is receptor adaptation, and how does the Pacinian corpuscle mechanism work?", "opts": [["The gradual decrease in receptor response to a sustained stimulus; in the Pacinian corpuscle, fluid redistribution decreases the distorting force over time", "Receptors adapt (respond less) to a sustained stimulus; in the Pacinian corpuscle, fluid redistribution within the corpuscle decreases the distorting force on the nerve ending over time, while photoreceptors adapt via changes in the amount of light-sensitive chemicals."], ["Adaptation only occurs in photoreceptors", ""], ["Receptors always fire at a constant, unchanging rate regardless of stimulus duration", ""], ["Adaptation means the receptor becomes more sensitive over time", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 14"}, {"topic": "Gradations in Signal Intensity", "io": "Gradations in Signal Intensity", "q": "What are the two mechanisms by which gradations in sensory signal intensity are achieved?", "opts": [["Adaptation and facilitation only", ""], ["Spatial summation (increasing the number of fibers stimulated) and temporal summation (increasing the firing rate in a given number of fibers)", "Gradations in signal intensity are achieved by spatial summation (increasing the number of fibers stimulated) and temporal summation (increasing the rate of firing in a given number of fibers)."], ["Only changes in receptor potential amplitude", ""], ["Only changes in axon diameter", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 17"}, {"topic": "Neuronal Pools", "io": "Neuronal Pools", "q": "What are neuronal pools?", "opts": [["Groups of neurons with special characteristics of organization, comprising many different types of neuronal circuits (converging, diverging, reverberating, inhibitory)", "Neuronal pools are groups of neurons with special characteristics of organization, comprising many different types of neuronal circuits, including converging, diverging, reverberating, and inhibitory circuits."], ["Isolated single neurons with no connections", ""], ["A type of glial cell", ""], ["Only found in the spinal cord", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 20"}, {"topic": "Divergence", "io": "Divergence", "q": "What is an example of the \"amplifying\" type of divergence in neuronal pathways?", "opts": [["Inhibition of an antagonist muscle pair", ""], ["Convergence of inputs onto a single neuron", ""], ["A single sensory neuron firing only once", ""], ["A single pyramidal cell in the motor cortex stimulating several hundred muscle fibers", "An amplifying type of divergence is illustrated by a single pyramidal cell in the motor cortex that can stimulate several hundred muscle fibers, spreading a single signal to many targets."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 21"}, {"topic": "Convergence", "io": "Convergence", "q": "What does convergence of multiple input fibers onto a single neuron provide?", "opts": [["Reduction of all incoming signals to zero", ""], ["Only inhibitory effects", ""], ["Faster conduction velocity only", ""], ["Spatial summation, allowing correlation, summation, and sorting of information from multiple sources", "Convergence, where multiple terminals from different incoming fibers terminate on the same neuron, provides spatial summation, allowing the neuron to correlate, summate, and sort information arriving from multiple sources."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 22"}, {"topic": "Reciprocal Inhibition", "io": "Reciprocal Inhibition", "q": "What is the function of the reciprocal inhibition circuit?", "opts": [["To control antagonistic pairs of muscles and prevent over-activity in the brain", "The inhibitory (reciprocal inhibition) circuit is important for controlling all antagonistic pairs of muscles and for preventing over-activity in the brain."], ["To amplify signals to antagonist muscles equally", ""], ["To generate action potentials in the dendrite", ""], ["To increase synaptic delay", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 23"}, {"topic": "Reverberatory Circuits", "io": "Reverberatory Circuits", "q": "What causes a reverberatory (oscillatory) circuit to produce a prolonged output after a brief single input stimulus, and what eventually stops it?", "opts": [["Negative feedback dampens the signal immediately", ""], ["Output stops only when the neuron dies", ""], ["The circuit requires no feedback mechanism", ""], ["Positive feedback within the circuit re-excites the input; fatigue of synaptic junctions causes sudden cessation", "A reverberatory circuit produces prolonged output via positive feedback, where the circuit re-excites its own input; the reverberation eventually stops due to fatigue of synaptic junctions (transmitter depletion, receptor inactivation, abnormal ion concentrations)."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 24"}, {"topic": "Control of Synaptic Sensitivity", "io": "Control of Synaptic Sensitivity", "q": "How does synaptic underactivity versus overactivity affect membrane receptor number?", "opts": [["Underactivity leads to downregulation; overactivity leads to upregulation", ""], ["Both underactivity and overactivity cause upregulation", ""], ["Underactivity leads to upregulation of membrane receptors; overactivity leads to downregulation", "Underactivity of a synapse leads to upregulation of membrane receptors (increasing sensitivity), while overactivity leads to downregulation of membrane receptors (decreasing sensitivity) — a homeostatic mechanism."], ["Receptor number is fixed and never changes", ""]], "c": 2, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 26"}, {"topic": "Alpha vs Gamma Motor Neurons", "io": "Alpha vs Gamma Motor Neurons", "q": "What is the key functional difference between alpha and gamma motor neurons?", "opts": [["Both innervate the same fiber types", ""], ["Gamma motor neurons innervate extrafusal fibers; alpha motor neurons innervate intrafusal fibers", ""], ["Alpha motor neurons innervate large extrafusal fibers (skeletal muscle force); gamma motor neurons innervate small intrafusal fibers in the muscle spindle (controlling muscle tone)", "Alpha motor neurons (large type A-alpha fibers, ~14 microns) innervate large extrafusal fibers that generate force for muscle contraction, while gamma motor neurons (smaller type A-gamma fibers, ~5 microns) innervate small intrafusal fibers within the muscle spindle to control basic muscle tone."], ["Alpha motor neurons are smaller in diameter than gamma motor neurons", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 5"}, {"topic": "Motor Unit Definition", "io": "Motor Unit Definition", "q": "What is a motor unit, as defined via the alpha motor neuron?", "opts": [["A single muscle fiber with no innervation", ""], ["An alpha motor neuron plus all the skeletal muscle fibers it innervates (which can range from 3 to over 100 fibers)", "A motor unit is the alpha motor neuron plus the skeletal (extrafusal) muscle fibers it innervates after branching within the muscle — stimulation can excite anywhere from 3 to over 100 fibers depending on the unit."], ["A single gamma motor neuron and its intrafusal fibers", ""], ["The muscle spindle alone", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 5"}, {"topic": "Renshaw Cells", "io": "Renshaw Cells", "q": "What is the function of Renshaw cells, and what negative feedback mechanism do they mediate?", "opts": [["They are excitatory interneurons that amplify alpha motor neuron output with no feedback", ""], ["They only affect gamma motor neurons", ""], ["They release glutamate to excite motor neurons further", ""], ["They are inhibitory (glycine-releasing) interneurons that receive an excitatory collateral from an alpha motor neuron and send an inhibitory axon back to that neuron (or others in the same motor pool), mediating negative feedback", "Renshaw cells are inhibitory interneurons in the anterior horn that release glycine; they receive an excitatory collateral from an alpha motor neuron's axon and send an inhibitory axon back to that neuron (or others in the motor pool), mediating a negative feedback mechanism."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 8"}, {"topic": "Muscle Spindle vs Golgi Tendon Organ", "io": "Muscle Spindle vs Golgi Tendon Organ", "q": "What do the muscle spindle and Golgi tendon organ each sense?", "opts": [["The muscle spindle senses tension; the Golgi tendon organ senses length", ""], ["Both sense identical information", ""], ["The muscle spindle senses muscle length and rate of change in length; the Golgi tendon organ senses tendon tension and rate of change in tension", "The muscle spindle (located in the muscle belly) senses muscle length and its rate of change, while the Golgi tendon organ (located in the tendon) senses tendon tension and its rate of change — both feed information mainly to the spinal cord, but also to the cerebrum and cerebellum."], ["Neither provides feedback to the spinal cord", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 9"}, {"topic": "Intrafusal vs Extrafusal Fibers", "io": "Intrafusal vs Extrafusal Fibers", "q": "What distinguishes intrafusal muscle fibers from extrafusal fibers?", "opts": [["Extrafusal fibers make up the bulk of the muscle (innervated by alpha motoneurons) and generate contractile force; intrafusal fibers are smaller, innervated by gamma motoneurons, and encapsulated to form the muscle spindle", "Extrafusal fibers make up the bulk of the muscle, are innervated by alpha motoneurons, and provide contractile force; intrafusal fibers are smaller, innervated by gamma motoneurons, and are encapsulated in sheaths to form the muscle spindle, running in parallel with (but much shorter than) the extrafusal fibers."], ["Both fiber types are identical in function", ""], ["Intrafusal fibers make up the bulk of the muscle and generate contractile force; extrafusal fibers form the muscle spindle", ""], ["Intrafusal fibers are longer than extrafusal fibers", ""]], "c": 0, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 10"}, {"topic": "Types of Intrafusal Fibers", "io": "Types of Intrafusal Fibers", "q": "What is the functional difference between nuclear bag and nuclear chain intrafusal fibers?", "opts": [["Nuclear chain fibers detect dynamic changes only", ""], ["Neither fiber type is innervated by sensory afferents", ""], ["Nuclear bag fibers (Type Ia afferents) detect rate of change in length (dynamic); nuclear chain fibers (Type II afferents) detect static changes in length", "Nuclear bag intrafusal fibers, innervated by Type Ia sensory afferents, detect the rate of change in length (fast, dynamic changes), while nuclear chain intrafusal fibers, innervated by Type II sensory afferents, detect static changes in length."], ["Both fiber types detect only static length changes", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 12"}, {"topic": "Muscle Spindle Reflex Loop", "io": "Muscle Spindle Reflex Loop", "q": "How does the muscle spindle oppose an increase in muscle length (stretch)?", "opts": [["Stretching the spindle stimulates Type Ia and Type II afferents, which stimulate alpha motoneurons to contract and shorten the entire muscle, opposing the original stretch", "Stretching a muscle also stretches its spindle, stimulating Type Ia and Type II sensory afferents; Type Ia fibers stimulate alpha-motoneurons in the spinal cord, causing contraction and shortening of the entire muscle, opposing the original stretch."], ["Stretching the spindle has no effect on alpha motoneurons", ""], ["The spindle directly contracts without any neural signaling", ""], ["The spindle only responds to muscle shortening, not stretching", ""]], "c": 0, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 13"}, {"topic": "Alpha-Gamma Co-activation", "io": "Alpha-Gamma Co-activation", "q": "Why are alpha and gamma motor neurons co-activated during voluntary muscle contraction?", "opts": [["To ensure the spindle contracts along with the muscle, keeping the stretch response intact rather than going slack", "Alpha and gamma motor neurons are co-activated so that when the main (extrafusal) muscle contracts and shortens, the intrafusal fibers of the spindle also contract, keeping the spindle taut and its stretch response intact — otherwise the spindle would go slack during muscle shortening."], ["Only gamma motor neurons are active during voluntary movement", ""], ["Co-activation prevents any muscle contraction from occurring", ""], ["Co-activation serves no functional purpose", ""]], "c": 0, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 13"}, {"topic": "Static vs Dynamic Response", "io": "Static vs Dynamic Response", "q": "What is the difference between the static and dynamic response of the muscle spindle?", "opts": [["Static and dynamic responses are identical", ""], ["Static response: Type Ia and Type II afferent firing increases in proportion to degree of stretch when stretched slowly; dynamic response: Type Ia afferent firing increases in proportion to rate of length change when stretched rapidly", "The static response occurs when the spindle is stretched slowly, with Type Ia and Type II afferent impulses increasing proportional to the degree of stretch; the dynamic response occurs with rapid stretch, with Type Ia afferent impulses increasing proportional to the rate of length change."], ["The dynamic response only occurs when the muscle is not moving", ""], ["Only Type II afferents contribute to the dynamic response", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 15"}, {"topic": "The Stretch Reflex", "io": "The Stretch Reflex", "q": "What type of reflex arc is the stretch (patellar-type) reflex, and what afferent fiber mediates it?", "opts": [["A disynaptic reflex arc mediated by Type II fibers", ""], ["The stretch reflex requires no afferent fibers", ""], ["A monosynaptic reflex arc mediated by Type Ia afferent fibers", "The stretch reflex is a monosynaptic reflex arc: sudden muscle stretch excites the muscle spindle, and Type Ia afferent fibers directly stimulate alpha-motor neurons, causing muscle contraction while synergistic muscles are activated and antagonists inhibited."], ["A polysynaptic reflex arc mediated by Type Ib fibers", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 17"}, {"topic": "Patellar Reflex", "io": "Patellar Reflex", "q": "In the patellar (knee-jerk) reflex, what happens to the antagonistic hamstring muscle?", "opts": [["It has no involvement in the reflex", ""], ["It relaxes via an inhibitory interneuron, while the quadriceps contracts", "In the patellar reflex, the antagonistic hamstring (flexor) relaxes via an inhibitory interneuron while the Type Ia afferent directly (monosynaptically) stimulates the alpha-motoneuron causing the quadriceps to contract, producing the leg kick."], ["It also contracts simultaneously with the quadriceps", ""], ["It contracts before the quadriceps", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 19"}, {"topic": "Golgi Tendon Organ Reflex", "io": "Golgi Tendon Organ Reflex", "q": "What type of reflex arc mediates the Golgi tendon organ's autogenic inhibition reflex, and what afferent fiber is involved?", "opts": [["No reflex arc is involved — it is a purely local mechanical effect", ""], ["A monosynaptic reflex arc via Type Ia fibers", ""], ["A reflex arc using only gamma motor neurons", ""], ["A disynaptic reflex arc via Type Ib afferent fibers, producing muscle relaxation in response to high tension", "The Golgi tendon organ mediates a disynaptic reflex arc via Type Ib afferent fibers; increased muscle tension activates the reflex, causing sudden muscle relaxation (autogenic inhibition) that protects against muscle tear at very high tensions, while also equalizing force among muscle fibers across the physiological range."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 23"}, {"topic": "ANS Organization", "io": "ANS Organization", "q": "Where are the cell bodies of preganglionic and postganglionic autonomic neurons located?", "opts": [["Preganglionic neurons have no cell body in the CNS at all", ""], ["Both cell bodies are located in the autonomic ganglia", ""], ["Postganglionic neurons are located in the brainstem", ""], ["Preganglionic cell body in the brainstem or spinal cord, thinly myelinated axon to the ganglion; postganglionic cell body in the autonomic ganglion, unmyelinated axon to the visceral effector", "The preganglionic neuron's cell body is located in the brainstem or spinal cord, with a thinly myelinated axon projecting to an autonomic ganglion; the postganglionic neuron's cell body is located within that ganglion, with an unmyelinated axon projecting to the visceral effector cell."]], "c": 3, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 4"}, {"topic": "Sympathetic vs Parasympathetic Ganglia", "io": "Sympathetic vs Parasympathetic Ganglia", "q": "Where are sympathetic ganglia located compared to parasympathetic ganglia, and what does this mean for fiber length?", "opts": [["Both ganglia types are located in the effector tissue", ""], ["Sympathetic ganglia have long preganglionic and short postganglionic fibers", ""], ["Parasympathetic ganglia are always closer to the spinal cord than sympathetic ganglia", ""], ["Sympathetic ganglia are close to the spinal cord (short preganglionic, long postganglionic fibers); parasympathetic ganglia are in the effector tissue (long preganglionic, short postganglionic fibers)", "Sympathetic ganglia are located close to the spinal cord, giving short preganglionic and long postganglionic fibers, while parasympathetic ganglia are located in the effector tissues themselves, giving long preganglionic and short postganglionic fibers."]], "c": 3, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 5"}, {"topic": "Parasympathetic Cranial Nerve Origins", "io": "Parasympathetic Cranial Nerve Origins", "q": "Which cranial nerve carries parasympathetic fibers to the pupillary sphincter and ciliary muscle?", "opts": [["CN III (oculomotor)", "Parasympathetic fibers originate from cranial nerves III, VII, IX, and X plus the sacral spinal cord: CN III carries fibers to the pupillary sphincter/ciliary muscle, CN VII to nasal/lacrimal/submandibular glands, CN IX to the parotid gland, and CN X to visceral organs."], ["CN IX (glossopharyngeal)", ""], ["CN VII (facial)", ""], ["CN X (vagus)", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 6"}, {"topic": "Adrenergic vs Cholinergic Nerves", "io": "Adrenergic vs Cholinergic Nerves", "q": "What defines an \"adrenergic\" nerve versus a \"cholinergic\" nerve?", "opts": [["Adrenergic nerves release acetylcholine; cholinergic nerves release norepinephrine", ""], ["Adrenergic nerves release norepinephrine; cholinergic nerves release acetylcholine", "Sympathetic nerves release norepinephrine at their endings and are called adrenergic nerves; parasympathetic nerves release acetylcholine at their endings and are called cholinergic nerves."], ["Adrenergic nerves are only found in the parasympathetic system", ""], ["Both terms refer to the same type of nerve", ""]], "c": 1, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 7"}, {"topic": "Preganglionic Neurotransmitter", "io": "Preganglionic Neurotransmitter", "q": "What neurotransmitter do ALL preganglionic autonomic fibers (both sympathetic and parasympathetic) release?", "opts": [["Norepinephrine", ""], ["Epinephrine", ""], ["Dopamine", ""], ["Acetylcholine", "All preganglionic sympathetic and parasympathetic nerve fibers release acetylcholine, regardless of what their corresponding postganglionic fibers release."]], "c": 3, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 8"}, {"topic": "Adrenergic Receptor Effects", "io": "Adrenergic Receptor Effects", "q": "What effect does activation of beta-1 adrenergic receptors have on the heart, and what does beta-2 activation cause?", "opts": [["Beta-1 increases heart rate and contractility; beta-2 causes bronchial dilation, vasodilation in skeletal muscle, calorigenesis, and glycogenolysis", "Beta-1 receptor activation increases heart rate and contractility; beta-2 receptor activation causes bronchial dilation, dilation of blood vessels in skeletal muscle, calorigenesis, and glycogenolysis. Alpha receptors, by contrast, are located on blood vessels and cause vasoconstriction."], ["Neither receptor affects the cardiovascular or respiratory system", ""], ["Both receptors have identical effects", ""], ["Beta-1 causes bronchial dilation; beta-2 increases heart rate", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 9"}, {"topic": "Cholinergic Receptor Types", "io": "Cholinergic Receptor Types", "q": "Where are nicotinic acetylcholine receptors found, versus muscarinic receptors?", "opts": [["Muscarinic receptors are only found at the neuromuscular junction", ""], ["Nicotinic and muscarinic receptors are found in identical locations", ""], ["Nicotinic receptors are found at synapses between pre- and postganglionic neurons and at the neuromuscular junction; muscarinic receptors are found on effector cells stimulated by postganglionic parasympathetic fibers", "Nicotinic receptors (ligand-gated ion channels) are found in autonomic ganglia (between pre- and postganglionic neurons) and at the skeletal muscle neuromuscular junction; muscarinic receptors (G protein-coupled, 5 subtypes M1-M5) are found on effector cells stimulated by postganglionic parasympathetic fibers."], ["Muscarinic receptors are ligand-gated ion channels, like nicotinic receptors", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 10"}, {"topic": "Preganglionic Synapse Location", "io": "Preganglionic Synapse Location", "q": "Where do parasympathetic preganglionic fibers typically synapse, compared to sympathetic preganglionic fibers?", "opts": [["PNS fibers synapse in the target organ (except CN III, VII, IX); SNS fibers synapse outside the target organ in the sympathetic chain/ganglion (except the adrenal medulla)", "Parasympathetic preganglionic fibers typically synapse within the target organ (with the exception of CN III, VII, and IX), while sympathetic preganglionic fibers synapse outside the target organ in the sympathetic chain or a ganglion (with the exception of the adrenal medulla)."], ["SNS fibers always synapse within the target organ", ""], ["PNS fibers never synapse near the target organ", ""], ["Both synapse exclusively within the target organ", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 11"}, {"topic": "Norepinephrine vs Epinephrine Receptor Selectivity", "io": "Norepinephrine vs Epinephrine Receptor Selectivity", "q": "How does norepinephrine's receptor selectivity differ from epinephrine's?", "opts": [["NE mostly activates alpha receptors (with a small effect on beta); Epi activates alpha and beta receptors about equally", "Norepinephrine mostly activates alpha receptors (with a small effect on beta receptors), while epinephrine activates alpha and beta receptors about equally."], ["NE activates alpha and beta receptors equally; Epi mostly activates alpha receptors", ""], ["NE only activates beta-2 receptors", ""], ["Neither hormone activates alpha receptors", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Sympathomimetic Drugs", "io": "Sympathomimetic Drugs", "q": "What is albuterol, and what is it used for clinically?", "opts": [["A non-selective beta agonist used for bradycardia", ""], ["An alpha blocker used to treat hypertension", ""], ["A selective beta-2 agonist, used as a short-acting bronchodilator for COPD, asthma, and emphysema", "Albuterol is a selective beta-2 agonist used as a short-acting bronchodilator to treat COPD, asthma, and emphysema, in contrast to isoproterenol (non-selective beta agonist, used for bradycardia) and phenylephrine (selective alpha-1 agonist, used to raise BP or shrink nasal blood vessels)."], ["A selective alpha-1 agonist used to raise blood pressure", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Adrenal Medulla Function", "io": "Adrenal Medulla Function", "q": "What percentage of catecholamines released by the adrenal medulla is epinephrine versus norepinephrine, and how does the duration of circulating catecholamine effects compare to direct sympathetic stimulation?", "opts": [["100% Epi; effects are instantaneous with no duration", ""], ["50/50 Epi and NE; effects are shorter than direct stimulation", ""], ["80% Epi, 20% NE; effects last 5-10x longer (2-4 minutes) than direct sympathetic stimulation", "The adrenal medulla releases about 80% epinephrine and 20% norepinephrine into the blood; circulating catecholamine effects last 5-10 times longer (2-4 minutes) than the effects of direct sympathetic nerve stimulation."], ["20% Epi, 80% NE; effects last the same duration as direct stimulation", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 17"}, {"topic": "Epinephrine vs Norepinephrine Effects", "io": "Epinephrine vs Norepinephrine Effects", "q": "Why does epinephrine have a greater effect on stimulating the heart, while norepinephrine has a greater effect on constricting blood vessels?", "opts": [["Epinephrine stimulates beta receptors more (heart); norepinephrine stimulates alpha receptors more (vasoconstriction, increasing TPR and arterial pressure)", "Epinephrine has a greater effect stimulating the heart due to greater beta receptor stimulation, while norepinephrine has a greater effect constricting blood vessels due to greater alpha receptor stimulation (increasing total peripheral resistance and arterial pressure); epinephrine also increases metabolic rate 5-10x more than norepinephrine."], ["Norepinephrine has a greater effect on the heart than epinephrine", ""], ["Both hormones have identical receptor selectivity", ""], ["Epinephrine only acts on the heart; norepinephrine only acts on blood vessels", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 17"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -469,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -500,436 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  // Optional per-question image (item.img) -- purely additive, every
-  // existing quiz's questions simply omit this field and render exactly
-  // as before via the hidden default state.
-  if (item.img) {
-    el('qImg').src = item.img;
-    el('qImg').alt = item.imgAlt || '';
-    el('qImgCaption').textContent = item.imgCaption || '';
-    el('qFig').classList.remove('hidden');
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
   } else {
-    el('qFig').classList.add('hidden');
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
   }
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
-    });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
-    return;
-  }
-
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
-  });
-
-  const fb = el('feedback');
-  fb.classList.remove('show');
-  el('nextBtn').classList.add('hidden');
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  /* breakdown by topic */
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  // count correct = total - missed per topic
-  const missedByTopic = {};
-  state.missed.forEach(m => {
-    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
-  });
-  Object.keys(topics).forEach(t => {
-    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
-  });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  /* missed review */
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -977,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>

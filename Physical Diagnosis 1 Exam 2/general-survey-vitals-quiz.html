@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Human Nutrition Quiz — Set 1 (CAM/Nutrition Exam 1)
-  Source: Prof. Allen's "Human Nutrition 2026" lecture deck (PAJ 5508)
-  Single self-contained file. Retrofitted from the site's Anatomy-family quiz engine.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -13,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #5c8a72; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #2f6690; }
   }
 </style>
 
@@ -52,835 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>General Survey &amp; Vital Signs — Set 1 (Physical Diagnosis 1)</title>
+<title>General Survey & Vital Signs — Set 1 (Physical Diagnosis 1)</title>
 <style>
   :root{
-    --ink:#20232b;
-    --ink-soft:#4b5162;
-    --paper:#eef0f7;
-    --paper-2:#f8f9fc;
-    --line:#d7dae6;
-    --oxblood:#7a2e3f;
-    --oxblood-soft:#9c4558;
-    --brass:#2f6690;
-    --teal:#5c8a72;
-    --teal-deep:#2f5245;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(32,35,43,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#642634; --indigo:#5c8a72; --gold:#2f6690; --ice:#e4ede8;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(194,121,58,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(63,122,92,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Masthead */
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  /* Intro */
-  .intro h2{
-    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
-  }
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{
-    list-style:none;padding:0;margin:16px 0 6px;
-    display:grid;gap:8px;
-  }
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{
-    font-weight:700;color:var(--oxblood);
-    font-size:12px;min-width:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;
-    border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{
-    background:var(--oxblood);color:#fdf6ee;
-    box-shadow:0 6px 16px rgba(124,33,48,.28);
-  }
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  /* Progress bar */
-  .status{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:14px;margin-bottom:14px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{
-    font-size:13px;font-weight:700;color:var(--teal-deep);
-    background:var(--paper);border:1px solid var(--line);
-    padding:6px 12px;border-radius:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    display:inline-block;text-transform:uppercase;
-    letter-spacing:.16em;font-size:10.5px;font-weight:700;
-    color:var(--teal);margin-bottom:12px;
-  }
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;
-    text-align:left;width:100%;
-    background:var(--paper-2);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;cursor:pointer;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{
-    font-weight:700;color:var(--oxblood);
-    min-width:22px;font-size:14px;
-    border-right:1px solid var(--line);padding-right:11px;
-  }
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{
-    margin-top:20px;border-radius:10px;padding:16px 18px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    border:1px solid var(--line);background:var(--paper);
-    display:none;
-  }
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{
-    margin-top:10px;font-size:12px;color:var(--ink-soft);
-    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  /* Results */
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{
-    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
-    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{
-    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
-    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
-    margin:34px 0 12px;text-align:left;
-  }
-  .bd-row{
-    display:flex;align-items:center;gap:12px;margin:0 0 9px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{
-    border:1px solid var(--line);border-left:3px solid var(--wrong);
-    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
-  }
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
-  }
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
-    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    color:var(--correct);background:var(--correct-bg);
-    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
-  }
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{
-    text-align:center;margin-top:40px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
-    letter-spacing:.03em;
-  }
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;}
-  }
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5300 &middot; Physical Diagnosis 1</p>
-    <h1>General Survey &amp; Vital Signs<span class="sys">Exam 2 Review — Set 1</span></h1>
-    <p class="sub">30 questions from "General Survey &amp; Vital Signs" lecture &middot; Pain assessment &amp; general survey &middot; Temperature &amp; pulse technique &middot; Respirations &middot; Blood pressure technique &amp; classification</p>
+  <header>
+    <h1>General Survey & Vital SignsExam 2 Review — Set 1</h1>
+    <div class="sub">30 questions from "General Survey & Vital Signs" lecture · Pain assessment & general survey · Temperature & pulse technique · Respirations · Blood pressure technique & classification</div>
+    <span class="pill">30 questions</span>
   </header>
 
-  <!-- INTRO -->
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>Thirty questions built from "General Survey &amp; Vital Signs" lecture &mdash; covering patient introduction and pain/constitutional history (OPQRST), the general survey, accurate technique for temperature, pulse, and respiratory rate assessment, and thorough blood pressure measurement technique including common sources of error, BP classification, and orthostatic vitals.</p><p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Describe patient introduction/identification and the constitutional/pain history, including the OPQRST mnemonic.</span></li>
-      <li><span class="n">2</span><span>Describe the components of the general survey, including apparent state of health, grooming, affect, posture/gait, and habitus/BMI.</span></li>
-      <li><span class="n">3</span><span>Describe and perform accurate temperature measurement across multiple sites and techniques.</span></li>
-      <li><span class="n">4</span><span>Describe and perform accurate pulse assessment, including rate, rhythm, and quality at multiple sites.</span></li>
-      <li><span class="n">5</span><span>Describe and perform accurate respiratory rate assessment and recognize abnormal breathing patterns.</span></li>
-      <li><span class="n">6</span><span>Describe and perform accurate blood pressure measurement technique, including proper technique, common errors, classification, and orthostatic assessment.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Describe patient introduction/identification and the constitutional/pain history, including the OPQRST mnemonic.</span><span class="chip">Describe the components of the general survey, including apparent state of health, grooming, affect, posture/gait, and habitus/BMI.</span><span class="chip">Describe and perform accurate temperature measurement across multiple sites and techniques.</span><span class="chip">Describe and perform accurate pulse assessment, including rate, rhythm, and quality at multiple sites.</span><span class="chip">Describe and perform accurate respiratory rate assessment and recognize abnormal breathing patterns.</span><span class="chip">Describe and perform accurate blood pressure measurement technique, including proper technique, common errors, classification, and orthostatic assessment.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 20</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
-
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
+  </div>
 
   <!-- RESULTS -->
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 20</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Built from Prof. Allen's <em>Human Nutrition 2026</em> lecture deck &middot; PAJ 5508 &middot; for study use.
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 20 items, from Prof. Allen's "Human Nutrition 2026"
-   lecture deck (PAJ 5508). Set 1 of 2.
-   answer = index (0-3) of correct choice.
-   ============================================================ */
-const QUESTIONS = [
-  {
-    "topic": "Pain assessment",
-    "q": "The OPQRST mnemonic used to characterize pain history stands for onset, palliative/provocative factors, quality, radiation, severity, and...",
-    "choices": [
-      "temperature",
-      "timing",
-      "tenderness",
-      "treatment"
-    ],
-    "answer": 1,
-    "correct": "OPQRST covers Onset, Palliative/Provocative factors, Quality, Radiation, Severity, and Timing — the seven features used to systematically characterize a pain complaint.",
-    "why": "Temperature is a vital sign, not part of the OPQRST pain-characterization mnemonic, whose final element is timing. Tenderness is a physical exam finding, not the 'T' in OPQRST, which stands for timing. While previous treatments are separately asked about, the 'T' in the OPQRST mnemonic itself specifically stands for timing.",
-    "src": "General Survey & Vital Signs lecture, Slide 9"
-  },
-  {
-    "topic": "Pain assessment",
-    "q": "Acute pain is typically defined as lasting less than approximately...",
-    "choices": [
-      "3 to 6 months, resolving as the injury heals",
-      "10 years",
-      "there is no time-based definition of acute pain",
-      "1 hour"
-    ],
-    "answer": 0,
-    "correct": "Acute pain is typically defined as lasting less than about 3-6 months and resolving as the underlying injury heals, in contrast to chronic pain, which persists beyond a month past the expected resolution of an illness/injury or lasts more than 3-6 months.",
-    "why": "This timeframe is far too long for acute pain, which is defined as typically less than 3-6 months. A specific time-based definition (typically less than 3-6 months) is explicitly given for acute pain. This timeframe is far too short for the defined acute pain window (up to 3-6 months); very brief pain isn't specifically what this acute/chronic distinction addresses.",
-    "src": "General Survey & Vital Signs lecture, Slide 8"
-  },
-  {
-    "topic": "Pain assessment",
-    "q": "Nociceptive pain, one of the two general pain categories discussed, results from...",
-    "choices": [
-      "tissue damage, such as to skin, musculoskeletal structures, or viscera",
-      "psychological factors exclusively, with no physical basis",
-      "normal, non-painful sensory processing",
-      "damage or disease affecting the nervous system itself"
-    ],
-    "answer": 0,
-    "correct": "Nociceptive pain arises from actual or potential tissue damage (skin, musculoskeletal, or visceral), detected by nociceptors, in contrast to neuropathic pain, which results from damage or disease affecting the nervous system itself.",
-    "why": "Nociceptive pain has a physical basis (tissue damage), not a purely psychological one. Nociceptive pain is, by definition, a painful sensation arising from tissue damage, not normal non-painful processing. This describes neuropathic pain, not nociceptive pain, which specifically arises from tissue damage.",
-    "src": "General Survey & Vital Signs lecture, Slide 8"
-  },
-  {
-    "topic": "Pain assessment",
-    "q": "When using a 1-10 conceptual pain scale, an important technique tip is to...",
-    "choices": [
-      "ask the patient what their personal '10' reference point is (for example, childbirth, a fracture)",
-      "assume every patient's '10' means the exact same intensity",
-      "use only a scale of 1-3, never 1-10",
-      "never ask about the patient's reference point"
-    ],
-    "answer": 0,
-    "correct": "Because pain is subjective, asking the patient what experience represents their personal '10' (for example, childbirth, a fracture, a paper cut) helps the examiner better interpret and contextualize the numeric rating they give for their current pain.",
-    "why": "This is precisely the assumption the technique tip cautions against, since pain is subjective and a personal '10' reference varies between patients. The described scale is specifically a 1-10 conceptual pain scale, not a 1-3 scale. Asking about the patient's personal reference point for '10' is the specifically recommended technique, not something to avoid asking.",
-    "src": "General Survey & Vital Signs lecture, Slide 10"
-  },
-  {
-    "topic": "General survey",
-    "q": "The general survey begins with the examiner's initial impression of the patient upon entering the room, paying particular attention to appearance, apparent state of health, discomfort/distress, skin color, dress, grooming/hygiene, facial expression/affect, posture, gait, and...",
-    "choices": [
-      "visual acuity number",
-      "mobility/motor activity",
-      "nothing beyond appearance",
-      "blood type"
-    ],
-    "answer": 1,
-    "correct": "The general survey checklist includes mobility and motor activity, alongside appearance, apparent state of health, distress, skin color, dress, grooming, affect, posture, and gait — forming a broad initial impression before the focused exam begins.",
-    "why": "Visual acuity is a specific, separate eye exam measurement, not part of the general survey checklist. The general survey checklist is much broader than appearance alone, including many other observational categories. Blood type is a lab value, not part of the visual/observational general survey checklist.",
-    "src": "General Survey & Vital Signs lecture, Slide 12"
-  },
-  {
-    "topic": "Vital signs overview",
-    "q": "The traditional vital signs include blood pressure, heart rate, respiratory rate, and temperature; which additional measurement is increasingly included when available, though not traditionally classified as a vital sign?",
-    "choices": [
-      "pulse oximetry",
-      "hearing threshold",
-      "grip strength",
-      "visual acuity"
-    ],
-    "answer": 0,
-    "correct": "Pulse oximetry (measuring blood oxygen saturation) is increasingly included alongside the four traditional vital signs (BP (blood pressure), heart rate, respiratory rate, temperature) when the equipment is available, even though it isn't traditionally classified as one of the core vital signs.",
-    "why": "Hearing threshold is not the described additional vital-sign-adjacent measurement; pulse oximetry is. Grip strength is a musculoskeletal exam finding, not the described additional measurement (pulse oximetry). Visual acuity is a distinct eye exam measurement, not the additional measurement described here (pulse oximetry).",
-    "src": "General Survey & Vital Signs lecture, Slide 22"
-  },
-  {
-    "topic": "Temperature",
-    "q": "Normal oral body temperature is approximately 37°C (98.6°F), and may vary diurnally by about 1 degree, being...",
-    "choices": [
-      "constant throughout the entire day with no variation",
-      "highest at midnight specifically",
-      "highest in the morning and lowest in the evening",
-      "lowest in the morning and highest in the evening"
-    ],
-    "answer": 3,
-    "correct": "Body temperature normally follows a diurnal pattern, being lowest in the early morning (AM) and highest in the evening (PM), with normal variation of about 1 degree across the day.",
-    "why": "A normal diurnal variation of about 1 degree is expected, not a perfectly constant temperature throughout the day. The described pattern is lowest in the AM and highest in the PM generally, not specifically peaking at midnight. This reverses the actual normal diurnal pattern, which is lowest in the AM and highest in the PM.",
-    "src": "General Survey & Vital Signs lecture, Slide 24"
-  },
-  {
-    "topic": "Temperature",
-    "q": "Compared with oral temperature, rectal temperature readings are typically...",
-    "choices": [
-      "identical to oral temperature in all cases",
-      "0.4-0.5°C higher",
-      "2-3°C higher",
-      "0.4-0.5°C lower"
-    ],
-    "answer": 1,
-    "correct": "Rectal temperature readings are typically 0.4-0.5°C higher than oral readings, while axillary temperatures run about 1°C lower than oral, and tympanic readings are more variable.",
-    "why": "Rectal temperature is specifically taught to run higher than oral, not identical. This overstates the typical rectal-to-oral temperature difference, which is about 0.4-0.5°C, not 2-3°C. This describes the relationship in the wrong direction; rectal readings run higher, not lower, than oral by this amount.",
-    "src": "General Survey & Vital Signs lecture, Slide 24"
-  },
-  {
-    "topic": "Temperature",
-    "q": "Compared with oral temperature, axillary temperature readings are typically...",
-    "choices": [
-      "identical to rectal temperature",
-      "about 1°C lower",
-      "about 1°C higher",
-      "always inaccurate and never used"
-    ],
-    "answer": 1,
-    "correct": "Axillary temperature readings typically run about 1°C lower than oral readings, while rectal readings run 0.4-0.5°C higher than oral.",
-    "why": "Axillary and rectal readings differ meaningfully from oral in opposite directions (axillary lower, rectal higher), not identical to each other. This reverses the actual relationship; axillary readings run lower, not higher, than oral by about 1°C. While more variable than some other sites, axillary temperature is a described, usable measurement site, not one that is never used.",
-    "src": "General Survey & Vital Signs lecture, Slide 24"
-  },
-  {
-    "topic": "Temperature",
-    "q": "When taking an oral temperature, the thermometer should be placed...",
-    "choices": [
-      "between the cheek and gums, with the mouth open",
-      "it does not matter where in the mouth it is placed",
-      "on top of the tongue near the front teeth",
-      "under the tongue, along the lingual frenulum, as far back as possible, with the mouth closed"
-    ],
-    "answer": 3,
-    "correct": "Proper oral temperature technique places the thermometer under the tongue along the lingual frenulum, positioned as far back as possible, with the patient's mouth closed around it for an accurate reading.",
-    "why": "Proper oral thermometry technique specifically places the probe under the tongue along the lingual frenulum with the mouth closed, not in the cheek/gum area with the mouth open. Specific correct placement (under the tongue, along the lingual frenulum, as far back as possible) is explicitly taught for accurate oral temperature measurement. The thermometer should be placed under the tongue as far back as possible, not on top near the front teeth.",
-    "src": "General Survey & Vital Signs lecture, Slide 27"
-  },
-  {
-    "topic": "Temperature",
-    "q": "For rectal temperature measurement, the lubricated thermometer tip should be inserted into the anal canal to a depth of approximately...",
-    "choices": [
-      "3-4 cm",
-      "there is no specific insertion depth",
-      "15-20 cm",
-      "0.5 cm"
-    ],
-    "answer": 0,
-    "correct": "Rectal temperature technique calls for inserting the lubricated thermometer tip approximately 3-4 cm into the anal canal for an accurate core-temperature-adjacent reading.",
-    "why": "A specific insertion depth (approximately 3-4 cm) is explicitly taught for rectal temperature technique. This depth is far greater than appropriate for rectal thermometry, which uses approximately 3-4 cm. This depth is too shallow for an accurate rectal reading; the taught depth is approximately 3-4 cm.",
-    "src": "General Survey & Vital Signs lecture, Slide 27"
-  },
-  {
-    "topic": "Temperature",
-    "q": "For tympanic temperature measurement to be accurate, the ear canal must be clear to the tympanic membrane, and the infrared beam must...",
-    "choices": [
-      "never actually touch the ear",
-      "be aimed away from the ear entirely",
-      "aim at the outer ear canal wall only",
-      "aim directly at the tympanic membrane"
-    ],
-    "answer": 3,
-    "correct": "Accurate tympanic temperature measurement requires the ear canal to be clear (for example, no significant cerumen obstruction) and the infrared beam to be properly aimed directly at the tympanic membrane.",
-    "why": "While the probe doesn't need to touch the TM (tympanic membrane) directly, proper positioning/aiming at the TM (tympanic membrane) is required, not merely avoiding any ear contact. The beam must be aimed at the tympanic membrane for tympanic thermometry to work, not away from the ear. The beam must aim at the tympanic membrane itself for an accurate reading, not simply the outer canal wall.",
-    "src": "General Survey & Vital Signs lecture, Slide 28"
-  },
-  {
-    "topic": "Temperature",
-    "q": "For temporal artery temperature measurement, the technique involves placing the probe on the center of the forehead and then...",
-    "choices": [
-      "moving it across the forehead, down the cheek, and behind the earlobe without lifting it",
-      "lifting and repositioning it several times during the reading",
-      "inserting it into the ear canal",
-      "holding it perfectly still in one spot on the forehead"
-    ],
-    "answer": 0,
-    "correct": "Temporal artery thermometry technique involves sliding the probe continuously (without lifting) from the center of the forehead, across the forehead, down the cheek, and behind the earlobe.",
-    "why": "The probe should move continuously without lifting, not be lifted and repositioned multiple times. Insertion into the ear canal describes tympanic thermometry, not the temporal artery technique, which involves a forehead/cheek sweep. The technique specifically involves continuous movement across the forehead/cheek/behind the earlobe, not holding the probe still in one spot.",
-    "src": "General Survey & Vital Signs lecture, Slide 28"
-  },
-  {
-    "topic": "Temperature",
-    "q": "Factors that can cause a falsely inaccurate oral temperature reading include mouth breathing, smoking, drinking hot/cold liquids, and...",
-    "choices": [
-      "poor technique",
-      "nothing else affects oral temperature accuracy",
-      "only the type of thermometer used",
-      "normal room temperature"
-    ],
-    "answer": 0,
-    "correct": "Beyond patient-related factors like mouth breathing, smoking, or recent hot/cold liquid intake, poor measurement technique itself is explicitly listed as a cause of false temperature readings.",
-    "why": "Multiple additional factors (poor technique, cerumen for tympanic readings, TM (tympanic membrane) perforation, environment) are explicitly listed as causes of inaccurate readings. While instrument type matters generally, the specifically listed additional factor alongside mouth breathing/smoking/hot-cold liquids is poor technique. Normal room temperature is not itself listed as a cause of false readings; extreme environmental conditions could matter, but 'poor technique' is the specifically listed additional factor here.",
-    "src": "General Survey & Vital Signs lecture, Slide 29"
-  },
-  {
-    "topic": "Pulses",
-    "q": "Before palpating the carotid pulses, the examiner should always...",
-    "choices": [
-      "palpate both carotids simultaneously with firm pressure",
-      "palpate them vigorously with firm pressure first",
-      "skip auscultation entirely for carotid pulses",
-      "auscultate the carotid pulses first"
-    ],
-    "answer": 3,
-    "correct": "The carotid pulses should always be auscultated (listening for a bruit) before palpating them, since vigorous palpation of a carotid artery with significant stenosis could theoretically dislodge plaque or, in a sensitive patient, trigger a vagal response.",
-    "why": "Auscultation comes first; and even when palpating, carotids are typically assessed one side at a time with gentle pressure, not simultaneous firm bilateral pressure. Auscultation should come first, before any palpation, not vigorous palpation as the initial step. Auscultation before palpation is an explicit, standard step for the carotid pulses specifically, not something to skip.",
-    "src": "General Survey & Vital Signs lecture, Slide 33"
-  },
-  {
-    "topic": "Pulses",
-    "q": "The listed pulse locations to be familiar with include carotid, brachial, radial, apical, femoral, popliteal, dorsalis pedis, and...",
-    "choices": [
-      "temporal pulse only, with no others in the lower extremity",
-      "posterior tibialis",
-      "no pulse locations are specified",
-      "only the radial pulse is ever assessed"
-    ],
-    "answer": 1,
-    "correct": "The full listed set of pulse locations includes carotid, brachial, radial, apical, femoral, popliteal, dorsalis pedis, and posterior tibialis pulses.",
-    "why": "The listed set specifically includes lower extremity pulses (femoral, popliteal, dorsalis pedis, posterior tibialis), not simply a temporal pulse alone. Eight specific pulse locations are explicitly listed in this material. While the radial pulse is commonly used for heart rate, the full listed set of pulse locations extends well beyond radial alone.",
-    "src": "General Survey & Vital Signs lecture, Slide 32"
-  },
-  {
-    "topic": "Pulses",
-    "q": "The normal adult heart rate range, assessed via the radial pulse, is approximately...",
-    "choices": [
-      "20-40 beats per minute",
-      "150-200 beats per minute",
-      "60-100 beats per minute",
-      "there is no defined normal range"
-    ],
-    "answer": 2,
-    "correct": "The normal adult heart rate range, though it varies with age, fitness level, and medications, is approximately 60-100 beats per minute.",
-    "why": "This range is far too slow to be the normal adult heart rate range, which is approximately 60-100 bpm. This range is far too fast for a normal resting adult heart rate, which is approximately 60-100 bpm. A specific normal range (60-100 bpm) is explicitly taught for adult heart rate.",
-    "src": "General Survey & Vital Signs lecture, Slide 39"
-  },
-  {
-    "topic": "Pulses",
-    "q": "When assessing a regular pulse, the standard technique is to count for 30 seconds and multiply by 2; for an irregular pulse, the examiner should instead...",
-    "choices": [
-      "use the same 30-second method as for a regular pulse",
-      "count for only 10 seconds and multiply by 6",
-      "count for a full minute",
-      "not count the pulse at all if irregular"
-    ],
-    "answer": 2,
-    "correct": "Because an irregular pulse may not be evenly distributed across a 30-second sample, a full minute of counting is used instead of the 30-second-times-2 shortcut used for regular pulses, giving a more accurate rate.",
-    "why": "The 30-second-times-2 method is specifically for a regular pulse; an irregular pulse requires a full minute of counting for accuracy. This shorter sampling window is not the recommended approach for an irregular pulse, which specifically calls for a full minute of counting. An irregular pulse should still be counted (for a full minute), not skipped entirely.",
-    "src": "General Survey & Vital Signs lecture, Slide 39"
-  },
-  {
-    "topic": "Respirations",
-    "q": "The normal adult respiratory rate is approximately...",
-    "choices": [
-      "40-60 breaths per minute",
-      "1-5 breaths per minute",
-      "there is no normal adult respiratory rate range",
-      "12-20 breaths per minute"
-    ],
-    "answer": 3,
-    "correct": "Normal adult respiratory rate is approximately 12-20 breaths per minute; normal rates are considerably faster in infants and young children (for example, over 60/min at birth to 2 months) and gradually decrease toward the adult range through childhood.",
-    "why": "This rate is far too fast for a normal adult; the normal adult range is approximately 12-20 breaths per minute. This rate is far too slow to be normal for an adult; the normal range is approximately 12-20 breaths per minute. A specific normal adult range (12-20/min) is explicitly taught.",
-    "src": "General Survey & Vital Signs lecture, Slide 43"
-  },
-  {
-    "topic": "Respirations",
-    "q": "To obtain the most accurate respiratory rate, the recommended technique is to...",
-    "choices": [
-      "observe respirations while still palpating the radial pulse, so the patient is unaware they are being observed",
-      "ask the patient to breathe as fast as possible",
-      "count for only 5 seconds and multiply by 12",
-      "announce clearly that you are now counting respirations"
-    ],
-    "answer": 0,
-    "correct": "Because patients may unconsciously alter their breathing pattern if they know it's being observed, the recommended technique is to continue palpating the radial pulse (as if still counting heart rate) while actually observing respirations, keeping the patient unaware.",
-    "why": "The goal is to observe the patient's natural, unaltered breathing pattern, not to have them deliberately breathe fast. Respiratory rate should be counted for a full minute, not a brief 5-second sample multiplied up. This would make the patient aware, potentially altering their natural breathing pattern; the recommended technique specifically keeps the patient unaware by continuing to appear focused on the pulse.",
-    "src": "General Survey & Vital Signs lecture, Slide 44"
-  },
-  {
-    "topic": "Respirations",
-    "q": "When assessing respirations, the examiner observes rate, rhythm, depth, and...",
-    "choices": [
-      "visual acuity",
-      "effort",
-      "pupil size",
-      "hearing threshold"
-    ],
-    "answer": 1,
-    "correct": "A complete respiratory assessment includes rate, rhythm, depth, and effort (for example, use of accessory muscles, labored appearance), observed visually and, as needed, with the stethoscope.",
-    "why": "Visual acuity is an eye exam measurement, unrelated to respiratory assessment. Pupil size is unrelated to respiratory assessment, which focuses on rate, rhythm, depth, and effort. Hearing threshold is unrelated to respiratory assessment.",
-    "src": "General Survey & Vital Signs lecture, Slide 44"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "Blood pressure represents a peripheral measurement of cardiovascular function; pulse pressure is calculated as...",
-    "choices": [
-      "systolic minus diastolic pressure",
-      "diastolic minus systolic pressure",
-      "systolic plus diastolic pressure",
-      "systolic divided by diastolic pressure"
-    ],
-    "answer": 0,
-    "correct": "Pulse pressure is calculated as systolic blood pressure minus diastolic blood pressure, reflecting the difference between the peak and trough arterial pressures during the cardiac cycle.",
-    "why": "This would typically yield a negative number since systolic normally exceeds diastolic; pulse pressure is specifically systolic minus diastolic, not the reverse. Pulse pressure is the difference (systolic minus diastolic), not the sum, of these two values. Pulse pressure is calculated by subtraction (systolic minus diastolic), not division.",
-    "src": "General Survey & Vital Signs lecture, Slide 46"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "Regarding blood pressure cuff size, using a cuff that is too small for the patient's upper arm circumference will produce a reading that is...",
-    "choices": [
-      "exactly accurate regardless of size mismatch",
-      "artificially low",
-      "artificially high",
-      "unaffected by cuff size"
-    ],
-    "answer": 2,
-    "correct": "A cuff that is too small for the arm circumference will produce a falsely elevated (artificially high) blood pressure reading, since more external pressure is needed to compress the artery through the narrower effective cuff coverage.",
-    "why": "An improperly sized cuff introduces significant error (too small = high, too large = low), not exact accuracy. This describes the effect of a cuff that is too large, not too small; a too-small cuff produces an artificially high reading. Cuff size meaningfully affects reading accuracy — too small produces artificially high readings, and too large produces artificially low readings.",
-    "src": "General Survey & Vital Signs lecture, Slide 48"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "Using a blood pressure cuff that is too large for the patient's upper arm circumference will produce a reading that is...",
-    "choices": [
-      "exactly accurate regardless of size mismatch",
-      "artificially low",
-      "unaffected by cuff size",
-      "artificially high"
-    ],
-    "answer": 1,
-    "correct": "A cuff that is too large for the arm circumference will produce a falsely low (artificially low) blood pressure reading, the opposite effect of an undersized cuff, which produces artificially high readings.",
-    "why": "An oversized cuff introduces meaningful error (artificially low readings), not exact accuracy. Cuff size significantly affects accuracy in both directions depending on whether it's too small or too large. This describes the effect of a cuff that is too small, not too large; a too-large cuff produces an artificially low reading.",
-    "src": "General Survey & Vital Signs lecture, Slide 48"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "Proper blood pressure cuff position places the lower cuff border approximately how far above the antecubital crease?",
-    "choices": [
-      "there is no specific recommended cuff position",
-      "2.5 cm",
-      "15 cm",
-      "0 cm, directly touching the antecubital crease"
-    ],
-    "answer": 1,
-    "correct": "The lower border of the BP (blood pressure) cuff should be positioned approximately 2.5 cm above the antecubital crease, with the cuff's marker aligned over the brachial artery to properly center the bladder.",
-    "why": "A specific recommended position (approximately 2.5 cm above the antecubital crease) is explicitly taught. This distance is far greater than the recommended cuff position, which is approximately 2.5 cm above the antecubital crease. A small gap (approximately 2.5 cm) above the antecubital crease is the recommended positioning, not directly touching it.",
-    "src": "General Survey & Vital Signs lecture, Slide 48"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "For accurate blood pressure measurement, proper patient positioning includes being seated with back supported, feet on the ground with legs uncrossed, and having rested for approximately how long before measurement?",
-    "choices": [
-      "no rest period is needed",
-      "30 seconds",
-      "2 hours",
-      "5 minutes"
-    ],
-    "answer": 3,
-    "correct": "The patient should rest for approximately 5 minutes before blood pressure measurement, seated with back supported and feet flat on the ground with legs uncrossed, and should avoid smoking or caffeinated beverages for 30 minutes prior.",
-    "why": "A specific rest period (approximately 5 minutes) is explicitly recommended before blood pressure measurement. This rest period is far too brief; the recommended rest period before BP (blood pressure) measurement is approximately 5 minutes. This rest period is far longer than necessary; the recommended rest period is approximately 5 minutes, not hours.",
-    "src": "General Survey & Vital Signs lecture, Slide 49"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "Blood pressure should not be assessed on an arm with an IV line, an AV (atrioventricular) fistula for hemodialysis, a brachial artery bruit, or...",
-    "choices": [
-      "there are no contraindicated sites for BP (blood pressure) cuff placement",
-      "a radical mastectomy/lymph node dissection on that side, or lymphedema",
-      "a normal, healthy arm with no history",
-      "an arm with well-manicured nails"
-    ],
-    "answer": 1,
-    "correct": "BP (blood pressure) should be avoided on an arm with an IV line, AV (atrioventricular) fistula, brachial artery bruit, prior radical mastectomy/lymph node dissection on that side, lymphedema, thrombophlebitis, or recent fracture/trauma, all of which can either be harmed by cuff pressure or produce an inaccurate reading.",
-    "why": "Several specific contraindicated conditions are explicitly listed for BP (blood pressure) cuff placement on a given arm. A normal, healthy arm with no relevant history is exactly the type of arm appropriate for BP (blood pressure) measurement, not a contraindication. Nail appearance is not a listed contraindication for BP (blood pressure) measurement on that arm.",
-    "src": "General Survey & Vital Signs lecture, Slide 52"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "To estimate the systolic pressure before formal auscultatory BP (blood pressure) assessment, the examiner palpates the radial artery, inflates the cuff until the pulse disappears, notes that pressure, and then...",
-    "choices": [
-      "uses that exact reading with no adjustment as the target inflation value",
-      "disregards the palpated reading entirely",
-      "subtracts 30 mmHg from that reading",
-      "adds 30 mmHg to that reading to determine the target inflation value for the actual BP (blood pressure) assessment"
-    ],
-    "answer": 3,
-    "correct": "Adding 30 mmHg to the palpated pulse-obliteration pressure gives a target inflation value that ensures the cuff is inflated well above the true systolic pressure during the actual auscultatory measurement, helping avoid missing the systolic reading due to an auscultatory gap.",
-    "why": "A 30 mmHg addition is specifically made to that reading, not used as-is without adjustment. The palpated pulse-obliteration pressure is specifically used (plus 30 mmHg) to set the target inflation value, not disregarded. The technique specifically adds (not subtracts) 30 mmHg to establish an adequately high target inflation value.",
-    "src": "General Survey & Vital Signs lecture, Slide 53"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "The auscultatory gap, a period of silence between the systolic and diastolic Korotkoff sounds, can cause errors including...",
-    "choices": [
-      "having no effect on BP (blood pressure) readings at all",
-      "overestimating both systolic and diastolic pressure equally",
-      "underestimating the true systolic pressure and overestimating the true diastolic pressure",
-      "only affecting heart rate measurement, not blood pressure"
-    ],
-    "answer": 2,
-    "correct": "If unrecognized, the auscultatory gap can cause the examiner to record a systolic pressure lower than the true value (if the cuff wasn't inflated high enough to hear the first Korotkoff sound before the gap) and a diastolic pressure higher than the true value, which is why the palpated-pressure-plus-30-mmHg technique is used to avoid this error.",
-    "why": "The auscultatory gap is explicitly described as a source of measurement error, not something without effect. The auscultatory gap specifically causes underestimation of systolic and overestimation of diastolic, not equal overestimation of both. The auscultatory gap specifically affects blood pressure (systolic/diastolic) measurement, not heart rate.",
-    "src": "General Survey & Vital Signs lecture, Slide 54"
-  },
-  {
-    "topic": "Blood pressure technique",
-    "q": "During blood pressure auscultation, the first Korotkoff sound heard marks the systolic pressure, while the disappearance of sound marks...",
-    "choices": [
-      "nothing of clinical significance",
-      "the diastolic pressure",
-      "a second systolic reading",
-      "the pulse pressure directly"
-    ],
-    "answer": 1,
-    "correct": "As the cuff slowly deflates, the first Korotkoff sound heard marks the systolic pressure, and the point where the sound disappears marks the diastolic pressure.",
-    "why": "The disappearance of sound is a specifically meaningful marker (diastolic pressure), not clinically insignificant. The disappearance of sound marks diastolic pressure, not a second systolic reading. Pulse pressure is calculated afterward (systolic minus diastolic); the disappearance of sound itself specifically marks the diastolic pressure.",
-    "src": "General Survey & Vital Signs lecture, Slide 56"
-  }
-];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "Pain assessment", "io": "Pain assessment", "q": "The OPQRST mnemonic used to characterize pain history stands for onset, palliative/provocative factors, quality, radiation, severity, and...", "opts": [["temperature", "Temperature is a vital sign, not part of the OPQRST pain-characterization mnemonic, whose final element is timing. Tenderness is a physical exam finding, not the 'T' in OPQRST, which stands for timing. While previous treatments are separately asked about, the 'T' in the OPQRST mnemonic itself specifically stands for timing."], ["timing", "OPQRST covers Onset, Palliative/Provocative factors, Quality, Radiation, Severity, and Timing — the seven features used to systematically characterize a pain complaint."], ["tenderness", "Temperature is a vital sign, not part of the OPQRST pain-characterization mnemonic, whose final element is timing. Tenderness is a physical exam finding, not the 'T' in OPQRST, which stands for timing. While previous treatments are separately asked about, the 'T' in the OPQRST mnemonic itself specifically stands for timing."], ["treatment", "Temperature is a vital sign, not part of the OPQRST pain-characterization mnemonic, whose final element is timing. Tenderness is a physical exam finding, not the 'T' in OPQRST, which stands for timing. While previous treatments are separately asked about, the 'T' in the OPQRST mnemonic itself specifically stands for timing."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 9"}, {"topic": "Pain assessment", "io": "Pain assessment", "q": "Acute pain is typically defined as lasting less than approximately...", "opts": [["3 to 6 months, resolving as the injury heals", "Acute pain is typically defined as lasting less than about 3-6 months and resolving as the underlying injury heals, in contrast to chronic pain, which persists beyond a month past the expected resolution of an illness/injury or lasts more than 3-6 months."], ["10 years", "This timeframe is far too long for acute pain, which is defined as typically less than 3-6 months. A specific time-based definition (typically less than 3-6 months) is explicitly given for acute pain. This timeframe is far too short for the defined acute pain window (up to 3-6 months); very brief pain isn't specifically what this acute/chronic distinction addresses."], ["there is no time-based definition of acute pain", "This timeframe is far too long for acute pain, which is defined as typically less than 3-6 months. A specific time-based definition (typically less than 3-6 months) is explicitly given for acute pain. This timeframe is far too short for the defined acute pain window (up to 3-6 months); very brief pain isn't specifically what this acute/chronic distinction addresses."], ["1 hour", "This timeframe is far too long for acute pain, which is defined as typically less than 3-6 months. A specific time-based definition (typically less than 3-6 months) is explicitly given for acute pain. This timeframe is far too short for the defined acute pain window (up to 3-6 months); very brief pain isn't specifically what this acute/chronic distinction addresses."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 8"}, {"topic": "Pain assessment", "io": "Pain assessment", "q": "Nociceptive pain, one of the two general pain categories discussed, results from...", "opts": [["tissue damage, such as to skin, musculoskeletal structures, or viscera", "Nociceptive pain arises from actual or potential tissue damage (skin, musculoskeletal, or visceral), detected by nociceptors, in contrast to neuropathic pain, which results from damage or disease affecting the nervous system itself."], ["psychological factors exclusively, with no physical basis", "Nociceptive pain has a physical basis (tissue damage), not a purely psychological one. Nociceptive pain is, by definition, a painful sensation arising from tissue damage, not normal non-painful processing. This describes neuropathic pain, not nociceptive pain, which specifically arises from tissue damage."], ["normal, non-painful sensory processing", "Nociceptive pain has a physical basis (tissue damage), not a purely psychological one. Nociceptive pain is, by definition, a painful sensation arising from tissue damage, not normal non-painful processing. This describes neuropathic pain, not nociceptive pain, which specifically arises from tissue damage."], ["damage or disease affecting the nervous system itself", "Nociceptive pain has a physical basis (tissue damage), not a purely psychological one. Nociceptive pain is, by definition, a painful sensation arising from tissue damage, not normal non-painful processing. This describes neuropathic pain, not nociceptive pain, which specifically arises from tissue damage."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 8"}, {"topic": "Pain assessment", "io": "Pain assessment", "q": "When using a 1-10 conceptual pain scale, an important technique tip is to...", "opts": [["ask the patient what their personal '10' reference point is (for example, childbirth, a fracture)", "Because pain is subjective, asking the patient what experience represents their personal '10' (for example, childbirth, a fracture, a paper cut) helps the examiner better interpret and contextualize the numeric rating they give for their current pain."], ["assume every patient's '10' means the exact same intensity", "This is precisely the assumption the technique tip cautions against, since pain is subjective and a personal '10' reference varies between patients. The described scale is specifically a 1-10 conceptual pain scale, not a 1-3 scale. Asking about the patient's personal reference point for '10' is the specifically recommended technique, not something to avoid asking."], ["use only a scale of 1-3, never 1-10", "This is precisely the assumption the technique tip cautions against, since pain is subjective and a personal '10' reference varies between patients. The described scale is specifically a 1-10 conceptual pain scale, not a 1-3 scale. Asking about the patient's personal reference point for '10' is the specifically recommended technique, not something to avoid asking."], ["never ask about the patient's reference point", "This is precisely the assumption the technique tip cautions against, since pain is subjective and a personal '10' reference varies between patients. The described scale is specifically a 1-10 conceptual pain scale, not a 1-3 scale. Asking about the patient's personal reference point for '10' is the specifically recommended technique, not something to avoid asking."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 10"}, {"topic": "General survey", "io": "General survey", "q": "The general survey begins with the examiner's initial impression of the patient upon entering the room, paying particular attention to appearance, apparent state of health, discomfort/distress, skin color, dress, grooming/hygiene, facial expression/affect, posture, gait, and...", "opts": [["visual acuity number", "Visual acuity is a specific, separate eye exam measurement, not part of the general survey checklist. The general survey checklist is much broader than appearance alone, including many other observational categories. Blood type is a lab value, not part of the visual/observational general survey checklist."], ["mobility/motor activity", "The general survey checklist includes mobility and motor activity, alongside appearance, apparent state of health, distress, skin color, dress, grooming, affect, posture, and gait — forming a broad initial impression before the focused exam begins."], ["nothing beyond appearance", "Visual acuity is a specific, separate eye exam measurement, not part of the general survey checklist. The general survey checklist is much broader than appearance alone, including many other observational categories. Blood type is a lab value, not part of the visual/observational general survey checklist."], ["blood type", "Visual acuity is a specific, separate eye exam measurement, not part of the general survey checklist. The general survey checklist is much broader than appearance alone, including many other observational categories. Blood type is a lab value, not part of the visual/observational general survey checklist."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 12"}, {"topic": "Vital signs overview", "io": "Vital signs overview", "q": "The traditional vital signs include blood pressure, heart rate, respiratory rate, and temperature; which additional measurement is increasingly included when available, though not traditionally classified as a vital sign?", "opts": [["pulse oximetry", "Pulse oximetry (measuring blood oxygen saturation) is increasingly included alongside the four traditional vital signs (BP (blood pressure), heart rate, respiratory rate, temperature) when the equipment is available, even though it isn't traditionally classified as one of the core vital signs."], ["hearing threshold", "Hearing threshold is not the described additional vital-sign-adjacent measurement; pulse oximetry is. Grip strength is a musculoskeletal exam finding, not the described additional measurement (pulse oximetry). Visual acuity is a distinct eye exam measurement, not the additional measurement described here (pulse oximetry)."], ["grip strength", "Hearing threshold is not the described additional vital-sign-adjacent measurement; pulse oximetry is. Grip strength is a musculoskeletal exam finding, not the described additional measurement (pulse oximetry). Visual acuity is a distinct eye exam measurement, not the additional measurement described here (pulse oximetry)."], ["visual acuity", "Hearing threshold is not the described additional vital-sign-adjacent measurement; pulse oximetry is. Grip strength is a musculoskeletal exam finding, not the described additional measurement (pulse oximetry). Visual acuity is a distinct eye exam measurement, not the additional measurement described here (pulse oximetry)."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 22"}, {"topic": "Temperature", "io": "Temperature", "q": "Normal oral body temperature is approximately 37°C (98.6°F), and may vary diurnally by about 1 degree, being...", "opts": [["constant throughout the entire day with no variation", "A normal diurnal variation of about 1 degree is expected, not a perfectly constant temperature throughout the day. The described pattern is lowest in the AM and highest in the PM generally, not specifically peaking at midnight. This reverses the actual normal diurnal pattern, which is lowest in the AM and highest in the PM."], ["highest at midnight specifically", "A normal diurnal variation of about 1 degree is expected, not a perfectly constant temperature throughout the day. The described pattern is lowest in the AM and highest in the PM generally, not specifically peaking at midnight. This reverses the actual normal diurnal pattern, which is lowest in the AM and highest in the PM."], ["highest in the morning and lowest in the evening", "A normal diurnal variation of about 1 degree is expected, not a perfectly constant temperature throughout the day. The described pattern is lowest in the AM and highest in the PM generally, not specifically peaking at midnight. This reverses the actual normal diurnal pattern, which is lowest in the AM and highest in the PM."], ["lowest in the morning and highest in the evening", "Body temperature normally follows a diurnal pattern, being lowest in the early morning (AM) and highest in the evening (PM), with normal variation of about 1 degree across the day."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 24"}, {"topic": "Temperature", "io": "Temperature", "q": "Compared with oral temperature, rectal temperature readings are typically...", "opts": [["identical to oral temperature in all cases", "Rectal temperature is specifically taught to run higher than oral, not identical. This overstates the typical rectal-to-oral temperature difference, which is about 0.4-0.5°C, not 2-3°C. This describes the relationship in the wrong direction; rectal readings run higher, not lower, than oral by this amount."], ["0.4-0.5°C higher", "Rectal temperature readings are typically 0.4-0.5°C higher than oral readings, while axillary temperatures run about 1°C lower than oral, and tympanic readings are more variable."], ["2-3°C higher", "Rectal temperature is specifically taught to run higher than oral, not identical. This overstates the typical rectal-to-oral temperature difference, which is about 0.4-0.5°C, not 2-3°C. This describes the relationship in the wrong direction; rectal readings run higher, not lower, than oral by this amount."], ["0.4-0.5°C lower", "Rectal temperature is specifically taught to run higher than oral, not identical. This overstates the typical rectal-to-oral temperature difference, which is about 0.4-0.5°C, not 2-3°C. This describes the relationship in the wrong direction; rectal readings run higher, not lower, than oral by this amount."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 24"}, {"topic": "Temperature", "io": "Temperature", "q": "Compared with oral temperature, axillary temperature readings are typically...", "opts": [["identical to rectal temperature", "Axillary and rectal readings differ meaningfully from oral in opposite directions (axillary lower, rectal higher), not identical to each other. This reverses the actual relationship; axillary readings run lower, not higher, than oral by about 1°C. While more variable than some other sites, axillary temperature is a described, usable measurement site, not one that is never used."], ["about 1°C lower", "Axillary temperature readings typically run about 1°C lower than oral readings, while rectal readings run 0.4-0.5°C higher than oral."], ["about 1°C higher", "Axillary and rectal readings differ meaningfully from oral in opposite directions (axillary lower, rectal higher), not identical to each other. This reverses the actual relationship; axillary readings run lower, not higher, than oral by about 1°C. While more variable than some other sites, axillary temperature is a described, usable measurement site, not one that is never used."], ["always inaccurate and never used", "Axillary and rectal readings differ meaningfully from oral in opposite directions (axillary lower, rectal higher), not identical to each other. This reverses the actual relationship; axillary readings run lower, not higher, than oral by about 1°C. While more variable than some other sites, axillary temperature is a described, usable measurement site, not one that is never used."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 24"}, {"topic": "Temperature", "io": "Temperature", "q": "When taking an oral temperature, the thermometer should be placed...", "opts": [["between the cheek and gums, with the mouth open", "Proper oral thermometry technique specifically places the probe under the tongue along the lingual frenulum with the mouth closed, not in the cheek/gum area with the mouth open. Specific correct placement (under the tongue, along the lingual frenulum, as far back as possible) is explicitly taught for accurate oral temperature measurement. The thermometer should be placed under the tongue as far back as possible, not on top near the front teeth."], ["it does not matter where in the mouth it is placed", "Proper oral thermometry technique specifically places the probe under the tongue along the lingual frenulum with the mouth closed, not in the cheek/gum area with the mouth open. Specific correct placement (under the tongue, along the lingual frenulum, as far back as possible) is explicitly taught for accurate oral temperature measurement. The thermometer should be placed under the tongue as far back as possible, not on top near the front teeth."], ["on top of the tongue near the front teeth", "Proper oral thermometry technique specifically places the probe under the tongue along the lingual frenulum with the mouth closed, not in the cheek/gum area with the mouth open. Specific correct placement (under the tongue, along the lingual frenulum, as far back as possible) is explicitly taught for accurate oral temperature measurement. The thermometer should be placed under the tongue as far back as possible, not on top near the front teeth."], ["under the tongue, along the lingual frenulum, as far back as possible, with the mouth closed", "Proper oral temperature technique places the thermometer under the tongue along the lingual frenulum, positioned as far back as possible, with the patient's mouth closed around it for an accurate reading."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 27"}, {"topic": "Temperature", "io": "Temperature", "q": "For rectal temperature measurement, the lubricated thermometer tip should be inserted into the anal canal to a depth of approximately...", "opts": [["3-4 cm", "Rectal temperature technique calls for inserting the lubricated thermometer tip approximately 3-4 cm into the anal canal for an accurate core-temperature-adjacent reading."], ["there is no specific insertion depth", "A specific insertion depth (approximately 3-4 cm) is explicitly taught for rectal temperature technique. This depth is far greater than appropriate for rectal thermometry, which uses approximately 3-4 cm. This depth is too shallow for an accurate rectal reading; the taught depth is approximately 3-4 cm."], ["15-20 cm", "A specific insertion depth (approximately 3-4 cm) is explicitly taught for rectal temperature technique. This depth is far greater than appropriate for rectal thermometry, which uses approximately 3-4 cm. This depth is too shallow for an accurate rectal reading; the taught depth is approximately 3-4 cm."], ["0.5 cm", "A specific insertion depth (approximately 3-4 cm) is explicitly taught for rectal temperature technique. This depth is far greater than appropriate for rectal thermometry, which uses approximately 3-4 cm. This depth is too shallow for an accurate rectal reading; the taught depth is approximately 3-4 cm."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 27"}, {"topic": "Temperature", "io": "Temperature", "q": "For tympanic temperature measurement to be accurate, the ear canal must be clear to the tympanic membrane, and the infrared beam must...", "opts": [["never actually touch the ear", "While the probe doesn't need to touch the TM (tympanic membrane) directly, proper positioning/aiming at the TM (tympanic membrane) is required, not merely avoiding any ear contact. The beam must be aimed at the tympanic membrane for tympanic thermometry to work, not away from the ear. The beam must aim at the tympanic membrane itself for an accurate reading, not simply the outer canal wall."], ["be aimed away from the ear entirely", "While the probe doesn't need to touch the TM (tympanic membrane) directly, proper positioning/aiming at the TM (tympanic membrane) is required, not merely avoiding any ear contact. The beam must be aimed at the tympanic membrane for tympanic thermometry to work, not away from the ear. The beam must aim at the tympanic membrane itself for an accurate reading, not simply the outer canal wall."], ["aim at the outer ear canal wall only", "While the probe doesn't need to touch the TM (tympanic membrane) directly, proper positioning/aiming at the TM (tympanic membrane) is required, not merely avoiding any ear contact. The beam must be aimed at the tympanic membrane for tympanic thermometry to work, not away from the ear. The beam must aim at the tympanic membrane itself for an accurate reading, not simply the outer canal wall."], ["aim directly at the tympanic membrane", "Accurate tympanic temperature measurement requires the ear canal to be clear (for example, no significant cerumen obstruction) and the infrared beam to be properly aimed directly at the tympanic membrane."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 28"}, {"topic": "Temperature", "io": "Temperature", "q": "For temporal artery temperature measurement, the technique involves placing the probe on the center of the forehead and then...", "opts": [["moving it across the forehead, down the cheek, and behind the earlobe without lifting it", "Temporal artery thermometry technique involves sliding the probe continuously (without lifting) from the center of the forehead, across the forehead, down the cheek, and behind the earlobe."], ["lifting and repositioning it several times during the reading", "The probe should move continuously without lifting, not be lifted and repositioned multiple times. Insertion into the ear canal describes tympanic thermometry, not the temporal artery technique, which involves a forehead/cheek sweep. The technique specifically involves continuous movement across the forehead/cheek/behind the earlobe, not holding the probe still in one spot."], ["inserting it into the ear canal", "The probe should move continuously without lifting, not be lifted and repositioned multiple times. Insertion into the ear canal describes tympanic thermometry, not the temporal artery technique, which involves a forehead/cheek sweep. The technique specifically involves continuous movement across the forehead/cheek/behind the earlobe, not holding the probe still in one spot."], ["holding it perfectly still in one spot on the forehead", "The probe should move continuously without lifting, not be lifted and repositioned multiple times. Insertion into the ear canal describes tympanic thermometry, not the temporal artery technique, which involves a forehead/cheek sweep. The technique specifically involves continuous movement across the forehead/cheek/behind the earlobe, not holding the probe still in one spot."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 28"}, {"topic": "Temperature", "io": "Temperature", "q": "Factors that can cause a falsely inaccurate oral temperature reading include mouth breathing, smoking, drinking hot/cold liquids, and...", "opts": [["poor technique", "Beyond patient-related factors like mouth breathing, smoking, or recent hot/cold liquid intake, poor measurement technique itself is explicitly listed as a cause of false temperature readings."], ["nothing else affects oral temperature accuracy", "Multiple additional factors (poor technique, cerumen for tympanic readings, TM (tympanic membrane) perforation, environment) are explicitly listed as causes of inaccurate readings. While instrument type matters generally, the specifically listed additional factor alongside mouth breathing/smoking/hot-cold liquids is poor technique. Normal room temperature is not itself listed as a cause of false readings; extreme environmental conditions could matter, but 'poor technique' is the specifically listed additional factor here."], ["only the type of thermometer used", "Multiple additional factors (poor technique, cerumen for tympanic readings, TM (tympanic membrane) perforation, environment) are explicitly listed as causes of inaccurate readings. While instrument type matters generally, the specifically listed additional factor alongside mouth breathing/smoking/hot-cold liquids is poor technique. Normal room temperature is not itself listed as a cause of false readings; extreme environmental conditions could matter, but 'poor technique' is the specifically listed additional factor here."], ["normal room temperature", "Multiple additional factors (poor technique, cerumen for tympanic readings, TM (tympanic membrane) perforation, environment) are explicitly listed as causes of inaccurate readings. While instrument type matters generally, the specifically listed additional factor alongside mouth breathing/smoking/hot-cold liquids is poor technique. Normal room temperature is not itself listed as a cause of false readings; extreme environmental conditions could matter, but 'poor technique' is the specifically listed additional factor here."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 29"}, {"topic": "Pulses", "io": "Pulses", "q": "Before palpating the carotid pulses, the examiner should always...", "opts": [["palpate both carotids simultaneously with firm pressure", "Auscultation comes first; and even when palpating, carotids are typically assessed one side at a time with gentle pressure, not simultaneous firm bilateral pressure. Auscultation should come first, before any palpation, not vigorous palpation as the initial step. Auscultation before palpation is an explicit, standard step for the carotid pulses specifically, not something to skip."], ["palpate them vigorously with firm pressure first", "Auscultation comes first; and even when palpating, carotids are typically assessed one side at a time with gentle pressure, not simultaneous firm bilateral pressure. Auscultation should come first, before any palpation, not vigorous palpation as the initial step. Auscultation before palpation is an explicit, standard step for the carotid pulses specifically, not something to skip."], ["skip auscultation entirely for carotid pulses", "Auscultation comes first; and even when palpating, carotids are typically assessed one side at a time with gentle pressure, not simultaneous firm bilateral pressure. Auscultation should come first, before any palpation, not vigorous palpation as the initial step. Auscultation before palpation is an explicit, standard step for the carotid pulses specifically, not something to skip."], ["auscultate the carotid pulses first", "The carotid pulses should always be auscultated (listening for a bruit) before palpating them, since vigorous palpation of a carotid artery with significant stenosis could theoretically dislodge plaque or, in a sensitive patient, trigger a vagal response."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 33"}, {"topic": "Pulses", "io": "Pulses", "q": "The listed pulse locations to be familiar with include carotid, brachial, radial, apical, femoral, popliteal, dorsalis pedis, and...", "opts": [["temporal pulse only, with no others in the lower extremity", "The listed set specifically includes lower extremity pulses (femoral, popliteal, dorsalis pedis, posterior tibialis), not simply a temporal pulse alone. Eight specific pulse locations are explicitly listed in this material. While the radial pulse is commonly used for heart rate, the full listed set of pulse locations extends well beyond radial alone."], ["posterior tibialis", "The full listed set of pulse locations includes carotid, brachial, radial, apical, femoral, popliteal, dorsalis pedis, and posterior tibialis pulses."], ["no pulse locations are specified", "The listed set specifically includes lower extremity pulses (femoral, popliteal, dorsalis pedis, posterior tibialis), not simply a temporal pulse alone. Eight specific pulse locations are explicitly listed in this material. While the radial pulse is commonly used for heart rate, the full listed set of pulse locations extends well beyond radial alone."], ["only the radial pulse is ever assessed", "The listed set specifically includes lower extremity pulses (femoral, popliteal, dorsalis pedis, posterior tibialis), not simply a temporal pulse alone. Eight specific pulse locations are explicitly listed in this material. While the radial pulse is commonly used for heart rate, the full listed set of pulse locations extends well beyond radial alone."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 32"}, {"topic": "Pulses", "io": "Pulses", "q": "The normal adult heart rate range, assessed via the radial pulse, is approximately...", "opts": [["20-40 beats per minute", "This range is far too slow to be the normal adult heart rate range, which is approximately 60-100 bpm. This range is far too fast for a normal resting adult heart rate, which is approximately 60-100 bpm. A specific normal range (60-100 bpm) is explicitly taught for adult heart rate."], ["150-200 beats per minute", "This range is far too slow to be the normal adult heart rate range, which is approximately 60-100 bpm. This range is far too fast for a normal resting adult heart rate, which is approximately 60-100 bpm. A specific normal range (60-100 bpm) is explicitly taught for adult heart rate."], ["60-100 beats per minute", "The normal adult heart rate range, though it varies with age, fitness level, and medications, is approximately 60-100 beats per minute."], ["there is no defined normal range", "This range is far too slow to be the normal adult heart rate range, which is approximately 60-100 bpm. This range is far too fast for a normal resting adult heart rate, which is approximately 60-100 bpm. A specific normal range (60-100 bpm) is explicitly taught for adult heart rate."]], "c": 2, "cite": "General Survey & Vital Signs lecture, Slide 39"}, {"topic": "Pulses", "io": "Pulses", "q": "When assessing a regular pulse, the standard technique is to count for 30 seconds and multiply by 2; for an irregular pulse, the examiner should instead...", "opts": [["use the same 30-second method as for a regular pulse", "The 30-second-times-2 method is specifically for a regular pulse; an irregular pulse requires a full minute of counting for accuracy. This shorter sampling window is not the recommended approach for an irregular pulse, which specifically calls for a full minute of counting. An irregular pulse should still be counted (for a full minute), not skipped entirely."], ["count for only 10 seconds and multiply by 6", "The 30-second-times-2 method is specifically for a regular pulse; an irregular pulse requires a full minute of counting for accuracy. This shorter sampling window is not the recommended approach for an irregular pulse, which specifically calls for a full minute of counting. An irregular pulse should still be counted (for a full minute), not skipped entirely."], ["count for a full minute", "Because an irregular pulse may not be evenly distributed across a 30-second sample, a full minute of counting is used instead of the 30-second-times-2 shortcut used for regular pulses, giving a more accurate rate."], ["not count the pulse at all if irregular", "The 30-second-times-2 method is specifically for a regular pulse; an irregular pulse requires a full minute of counting for accuracy. This shorter sampling window is not the recommended approach for an irregular pulse, which specifically calls for a full minute of counting. An irregular pulse should still be counted (for a full minute), not skipped entirely."]], "c": 2, "cite": "General Survey & Vital Signs lecture, Slide 39"}, {"topic": "Respirations", "io": "Respirations", "q": "The normal adult respiratory rate is approximately...", "opts": [["40-60 breaths per minute", "This rate is far too fast for a normal adult; the normal adult range is approximately 12-20 breaths per minute. This rate is far too slow to be normal for an adult; the normal range is approximately 12-20 breaths per minute. A specific normal adult range (12-20/min) is explicitly taught."], ["1-5 breaths per minute", "This rate is far too fast for a normal adult; the normal adult range is approximately 12-20 breaths per minute. This rate is far too slow to be normal for an adult; the normal range is approximately 12-20 breaths per minute. A specific normal adult range (12-20/min) is explicitly taught."], ["there is no normal adult respiratory rate range", "This rate is far too fast for a normal adult; the normal adult range is approximately 12-20 breaths per minute. This rate is far too slow to be normal for an adult; the normal range is approximately 12-20 breaths per minute. A specific normal adult range (12-20/min) is explicitly taught."], ["12-20 breaths per minute", "Normal adult respiratory rate is approximately 12-20 breaths per minute; normal rates are considerably faster in infants and young children (for example, over 60/min at birth to 2 months) and gradually decrease toward the adult range through childhood."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 43"}, {"topic": "Respirations", "io": "Respirations", "q": "To obtain the most accurate respiratory rate, the recommended technique is to...", "opts": [["observe respirations while still palpating the radial pulse, so the patient is unaware they are being observed", "Because patients may unconsciously alter their breathing pattern if they know it's being observed, the recommended technique is to continue palpating the radial pulse (as if still counting heart rate) while actually observing respirations, keeping the patient unaware."], ["ask the patient to breathe as fast as possible", "The goal is to observe the patient's natural, unaltered breathing pattern, not to have them deliberately breathe fast. Respiratory rate should be counted for a full minute, not a brief 5-second sample multiplied up. This would make the patient aware, potentially altering their natural breathing pattern; the recommended technique specifically keeps the patient unaware by continuing to appear focused on the pulse."], ["count for only 5 seconds and multiply by 12", "The goal is to observe the patient's natural, unaltered breathing pattern, not to have them deliberately breathe fast. Respiratory rate should be counted for a full minute, not a brief 5-second sample multiplied up. This would make the patient aware, potentially altering their natural breathing pattern; the recommended technique specifically keeps the patient unaware by continuing to appear focused on the pulse."], ["announce clearly that you are now counting respirations", "The goal is to observe the patient's natural, unaltered breathing pattern, not to have them deliberately breathe fast. Respiratory rate should be counted for a full minute, not a brief 5-second sample multiplied up. This would make the patient aware, potentially altering their natural breathing pattern; the recommended technique specifically keeps the patient unaware by continuing to appear focused on the pulse."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 44"}, {"topic": "Respirations", "io": "Respirations", "q": "When assessing respirations, the examiner observes rate, rhythm, depth, and...", "opts": [["visual acuity", "Visual acuity is an eye exam measurement, unrelated to respiratory assessment. Pupil size is unrelated to respiratory assessment, which focuses on rate, rhythm, depth, and effort. Hearing threshold is unrelated to respiratory assessment."], ["effort", "A complete respiratory assessment includes rate, rhythm, depth, and effort (for example, use of accessory muscles, labored appearance), observed visually and, as needed, with the stethoscope."], ["pupil size", "Visual acuity is an eye exam measurement, unrelated to respiratory assessment. Pupil size is unrelated to respiratory assessment, which focuses on rate, rhythm, depth, and effort. Hearing threshold is unrelated to respiratory assessment."], ["hearing threshold", "Visual acuity is an eye exam measurement, unrelated to respiratory assessment. Pupil size is unrelated to respiratory assessment, which focuses on rate, rhythm, depth, and effort. Hearing threshold is unrelated to respiratory assessment."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 44"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "Blood pressure represents a peripheral measurement of cardiovascular function; pulse pressure is calculated as...", "opts": [["systolic minus diastolic pressure", "Pulse pressure is calculated as systolic blood pressure minus diastolic blood pressure, reflecting the difference between the peak and trough arterial pressures during the cardiac cycle."], ["diastolic minus systolic pressure", "This would typically yield a negative number since systolic normally exceeds diastolic; pulse pressure is specifically systolic minus diastolic, not the reverse. Pulse pressure is the difference (systolic minus diastolic), not the sum, of these two values. Pulse pressure is calculated by subtraction (systolic minus diastolic), not division."], ["systolic plus diastolic pressure", "This would typically yield a negative number since systolic normally exceeds diastolic; pulse pressure is specifically systolic minus diastolic, not the reverse. Pulse pressure is the difference (systolic minus diastolic), not the sum, of these two values. Pulse pressure is calculated by subtraction (systolic minus diastolic), not division."], ["systolic divided by diastolic pressure", "This would typically yield a negative number since systolic normally exceeds diastolic; pulse pressure is specifically systolic minus diastolic, not the reverse. Pulse pressure is the difference (systolic minus diastolic), not the sum, of these two values. Pulse pressure is calculated by subtraction (systolic minus diastolic), not division."]], "c": 0, "cite": "General Survey & Vital Signs lecture, Slide 46"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "Regarding blood pressure cuff size, using a cuff that is too small for the patient's upper arm circumference will produce a reading that is...", "opts": [["exactly accurate regardless of size mismatch", "An improperly sized cuff introduces significant error (too small = high, too large = low), not exact accuracy. This describes the effect of a cuff that is too large, not too small; a too-small cuff produces an artificially high reading. Cuff size meaningfully affects reading accuracy — too small produces artificially high readings, and too large produces artificially low readings."], ["artificially low", "An improperly sized cuff introduces significant error (too small = high, too large = low), not exact accuracy. This describes the effect of a cuff that is too large, not too small; a too-small cuff produces an artificially high reading. Cuff size meaningfully affects reading accuracy — too small produces artificially high readings, and too large produces artificially low readings."], ["artificially high", "A cuff that is too small for the arm circumference will produce a falsely elevated (artificially high) blood pressure reading, since more external pressure is needed to compress the artery through the narrower effective cuff coverage."], ["unaffected by cuff size", "An improperly sized cuff introduces significant error (too small = high, too large = low), not exact accuracy. This describes the effect of a cuff that is too large, not too small; a too-small cuff produces an artificially high reading. Cuff size meaningfully affects reading accuracy — too small produces artificially high readings, and too large produces artificially low readings."]], "c": 2, "cite": "General Survey & Vital Signs lecture, Slide 48"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "Using a blood pressure cuff that is too large for the patient's upper arm circumference will produce a reading that is...", "opts": [["exactly accurate regardless of size mismatch", "An oversized cuff introduces meaningful error (artificially low readings), not exact accuracy. Cuff size significantly affects accuracy in both directions depending on whether it's too small or too large. This describes the effect of a cuff that is too small, not too large; a too-large cuff produces an artificially low reading."], ["artificially low", "A cuff that is too large for the arm circumference will produce a falsely low (artificially low) blood pressure reading, the opposite effect of an undersized cuff, which produces artificially high readings."], ["unaffected by cuff size", "An oversized cuff introduces meaningful error (artificially low readings), not exact accuracy. Cuff size significantly affects accuracy in both directions depending on whether it's too small or too large. This describes the effect of a cuff that is too small, not too large; a too-large cuff produces an artificially low reading."], ["artificially high", "An oversized cuff introduces meaningful error (artificially low readings), not exact accuracy. Cuff size significantly affects accuracy in both directions depending on whether it's too small or too large. This describes the effect of a cuff that is too small, not too large; a too-large cuff produces an artificially low reading."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 48"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "Proper blood pressure cuff position places the lower cuff border approximately how far above the antecubital crease?", "opts": [["there is no specific recommended cuff position", "A specific recommended position (approximately 2.5 cm above the antecubital crease) is explicitly taught. This distance is far greater than the recommended cuff position, which is approximately 2.5 cm above the antecubital crease. A small gap (approximately 2.5 cm) above the antecubital crease is the recommended positioning, not directly touching it."], ["2.5 cm", "The lower border of the BP (blood pressure) cuff should be positioned approximately 2.5 cm above the antecubital crease, with the cuff's marker aligned over the brachial artery to properly center the bladder."], ["15 cm", "A specific recommended position (approximately 2.5 cm above the antecubital crease) is explicitly taught. This distance is far greater than the recommended cuff position, which is approximately 2.5 cm above the antecubital crease. A small gap (approximately 2.5 cm) above the antecubital crease is the recommended positioning, not directly touching it."], ["0 cm, directly touching the antecubital crease", "A specific recommended position (approximately 2.5 cm above the antecubital crease) is explicitly taught. This distance is far greater than the recommended cuff position, which is approximately 2.5 cm above the antecubital crease. A small gap (approximately 2.5 cm) above the antecubital crease is the recommended positioning, not directly touching it."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 48"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "For accurate blood pressure measurement, proper patient positioning includes being seated with back supported, feet on the ground with legs uncrossed, and having rested for approximately how long before measurement?", "opts": [["no rest period is needed", "A specific rest period (approximately 5 minutes) is explicitly recommended before blood pressure measurement. This rest period is far too brief; the recommended rest period before BP (blood pressure) measurement is approximately 5 minutes. This rest period is far longer than necessary; the recommended rest period is approximately 5 minutes, not hours."], ["30 seconds", "A specific rest period (approximately 5 minutes) is explicitly recommended before blood pressure measurement. This rest period is far too brief; the recommended rest period before BP (blood pressure) measurement is approximately 5 minutes. This rest period is far longer than necessary; the recommended rest period is approximately 5 minutes, not hours."], ["2 hours", "A specific rest period (approximately 5 minutes) is explicitly recommended before blood pressure measurement. This rest period is far too brief; the recommended rest period before BP (blood pressure) measurement is approximately 5 minutes. This rest period is far longer than necessary; the recommended rest period is approximately 5 minutes, not hours."], ["5 minutes", "The patient should rest for approximately 5 minutes before blood pressure measurement, seated with back supported and feet flat on the ground with legs uncrossed, and should avoid smoking or caffeinated beverages for 30 minutes prior."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 49"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "Blood pressure should not be assessed on an arm with an IV line, an AV (atrioventricular) fistula for hemodialysis, a brachial artery bruit, or...", "opts": [["there are no contraindicated sites for BP (blood pressure) cuff placement", "Several specific contraindicated conditions are explicitly listed for BP (blood pressure) cuff placement on a given arm. A normal, healthy arm with no relevant history is exactly the type of arm appropriate for BP (blood pressure) measurement, not a contraindication. Nail appearance is not a listed contraindication for BP (blood pressure) measurement on that arm."], ["a radical mastectomy/lymph node dissection on that side, or lymphedema", "BP (blood pressure) should be avoided on an arm with an IV line, AV (atrioventricular) fistula, brachial artery bruit, prior radical mastectomy/lymph node dissection on that side, lymphedema, thrombophlebitis, or recent fracture/trauma, all of which can either be harmed by cuff pressure or produce an inaccurate reading."], ["a normal, healthy arm with no history", "Several specific contraindicated conditions are explicitly listed for BP (blood pressure) cuff placement on a given arm. A normal, healthy arm with no relevant history is exactly the type of arm appropriate for BP (blood pressure) measurement, not a contraindication. Nail appearance is not a listed contraindication for BP (blood pressure) measurement on that arm."], ["an arm with well-manicured nails", "Several specific contraindicated conditions are explicitly listed for BP (blood pressure) cuff placement on a given arm. A normal, healthy arm with no relevant history is exactly the type of arm appropriate for BP (blood pressure) measurement, not a contraindication. Nail appearance is not a listed contraindication for BP (blood pressure) measurement on that arm."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 52"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "To estimate the systolic pressure before formal auscultatory BP (blood pressure) assessment, the examiner palpates the radial artery, inflates the cuff until the pulse disappears, notes that pressure, and then...", "opts": [["uses that exact reading with no adjustment as the target inflation value", "A 30 mmHg addition is specifically made to that reading, not used as-is without adjustment. The palpated pulse-obliteration pressure is specifically used (plus 30 mmHg) to set the target inflation value, not disregarded. The technique specifically adds (not subtracts) 30 mmHg to establish an adequately high target inflation value."], ["disregards the palpated reading entirely", "A 30 mmHg addition is specifically made to that reading, not used as-is without adjustment. The palpated pulse-obliteration pressure is specifically used (plus 30 mmHg) to set the target inflation value, not disregarded. The technique specifically adds (not subtracts) 30 mmHg to establish an adequately high target inflation value."], ["subtracts 30 mmHg from that reading", "A 30 mmHg addition is specifically made to that reading, not used as-is without adjustment. The palpated pulse-obliteration pressure is specifically used (plus 30 mmHg) to set the target inflation value, not disregarded. The technique specifically adds (not subtracts) 30 mmHg to establish an adequately high target inflation value."], ["adds 30 mmHg to that reading to determine the target inflation value for the actual BP (blood pressure) assessment", "Adding 30 mmHg to the palpated pulse-obliteration pressure gives a target inflation value that ensures the cuff is inflated well above the true systolic pressure during the actual auscultatory measurement, helping avoid missing the systolic reading due to an auscultatory gap."]], "c": 3, "cite": "General Survey & Vital Signs lecture, Slide 53"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "The auscultatory gap, a period of silence between the systolic and diastolic Korotkoff sounds, can cause errors including...", "opts": [["having no effect on BP (blood pressure) readings at all", "The auscultatory gap is explicitly described as a source of measurement error, not something without effect. The auscultatory gap specifically causes underestimation of systolic and overestimation of diastolic, not equal overestimation of both. The auscultatory gap specifically affects blood pressure (systolic/diastolic) measurement, not heart rate."], ["overestimating both systolic and diastolic pressure equally", "The auscultatory gap is explicitly described as a source of measurement error, not something without effect. The auscultatory gap specifically causes underestimation of systolic and overestimation of diastolic, not equal overestimation of both. The auscultatory gap specifically affects blood pressure (systolic/diastolic) measurement, not heart rate."], ["underestimating the true systolic pressure and overestimating the true diastolic pressure", "If unrecognized, the auscultatory gap can cause the examiner to record a systolic pressure lower than the true value (if the cuff wasn't inflated high enough to hear the first Korotkoff sound before the gap) and a diastolic pressure higher than the true value, which is why the palpated-pressure-plus-30-mmHg technique is used to avoid this error."], ["only affecting heart rate measurement, not blood pressure", "The auscultatory gap is explicitly described as a source of measurement error, not something without effect. The auscultatory gap specifically causes underestimation of systolic and overestimation of diastolic, not equal overestimation of both. The auscultatory gap specifically affects blood pressure (systolic/diastolic) measurement, not heart rate."]], "c": 2, "cite": "General Survey & Vital Signs lecture, Slide 54"}, {"topic": "Blood pressure technique", "io": "Blood pressure technique", "q": "During blood pressure auscultation, the first Korotkoff sound heard marks the systolic pressure, while the disappearance of sound marks...", "opts": [["nothing of clinical significance", "The disappearance of sound is a specifically meaningful marker (diastolic pressure), not clinically insignificant. The disappearance of sound marks diastolic pressure, not a second systolic reading. Pulse pressure is calculated afterward (systolic minus diastolic); the disappearance of sound itself specifically marks the diastolic pressure."], ["the diastolic pressure", "As the cuff slowly deflates, the first Korotkoff sound heard marks the systolic pressure, and the point where the sound disappears marks the diastolic pressure."], ["a second systolic reading", "The disappearance of sound is a specifically meaningful marker (diastolic pressure), not clinically insignificant. The disappearance of sound marks diastolic pressure, not a second systolic reading. Pulse pressure is calculated afterward (systolic minus diastolic); the disappearance of sound itself specifically marks the diastolic pressure."], ["the pulse pressure directly", "The disappearance of sound is a specifically meaningful marker (diastolic pressure), not clinically insignificant. The disappearance of sound marks diastolic pressure, not a second systolic reading. Pulse pressure is calculated afterward (systolic minus diastolic); the disappearance of sound itself specifically marks the diastolic pressure."]], "c": 1, "cite": "General Survey & Vital Signs lecture, Slide 56"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -889,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -920,425 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
     });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
     return;
   }
 
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
   });
-
-  const fb = el('feedback');
-  fb.classList.remove('show');
-  el('nextBtn').classList.add('hidden');
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of human nutrition fundamentals.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  /* breakdown by topic */
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  // count correct = total - missed per topic
-  const missedByTopic = {};
-  state.missed.forEach(m => {
-    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
-  });
-  Object.keys(topics).forEach(t => {
-    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
-  });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  /* missed review */
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -1386,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>

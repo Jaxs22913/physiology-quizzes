@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Anatomy Integration Exam - Gastrointestinal Tract I & II
-  Source: "GI_I___II.pdf" (PAJ 5000 Anatomy, Gastrointestinal Tract I & II, H. Rappa, MD)
-  Single self-contained file. To publish on GitHub Pages, save as index.html.
-  All questions are drawn only from the uploaded lecture material.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -14,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #2f6d70; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #b8863b; }
   }
 </style>
 
@@ -53,784 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gastrointestinal Tract I &amp; II — Anatomy Exam 3</title>
+<title>Gastrointestinal Tract I & II — Anatomy Exam 3</title>
 <style>
   :root{
-    --ink:#1c2a33;
-    --ink-soft:#4a5b66;
-    --paper:#f3efe6;
-    --paper-2:#fbf9f4;
-    --line:#d8cfbd;
-    --oxblood:#7c2130;
-    --oxblood-soft:#9c3a48;
-    --brass:#b8863b;
-    --teal:#2f6d70;
-    --teal-deep:#1f4f52;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(28,42,51,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#641b27; --indigo:#2f6d70; --gold:#b8863b; --ice:#addadd;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(184,134,59,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(47,109,112,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  .intro h2{font-size:22px;margin:0 0 8px;color:var(--teal-deep);}
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{list-style:none;padding:0;margin:16px 0 6px;display:grid;gap:8px;}
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{font-weight:700;color:var(--oxblood);font-size:12px;min-width:20px;font-variant-numeric:tabular-nums;}
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{background:var(--oxblood);color:#fdf6ee;box-shadow:0 6px 16px rgba(124,33,48,.28);}
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  .status{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;font-family:"Helvetica Neue",Arial,sans-serif;}
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{font-size:13px;font-weight:700;color:var(--teal-deep);background:var(--paper);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-variant-numeric:tabular-nums;}
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{font-family:"Helvetica Neue",Arial,sans-serif;display:inline-block;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;font-weight:700;color:var(--teal);margin-bottom:12px;}
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;text-align:left;width:100%;
-    background:var(--paper-2);border:1.5px solid var(--line);border-radius:10px;
-    padding:14px 16px;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{font-weight:700;color:var(--oxblood);min-width:22px;font-size:14px;border-right:1px solid var(--line);padding-right:11px;}
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{margin-top:20px;border-radius:10px;padding:16px 18px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);display:none;}
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{margin-top:10px;font-size:12px;color:var(--ink-soft);font-style:italic;border-top:1px dashed var(--line);padding-top:9px;}
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;}
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);margin:34px 0 12px;text-align:left;}
-  .bd-row{display:flex;align-items:center;gap:12px;margin:0 0 9px;font-family:"Helvetica Neue",Arial,sans-serif;}
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{border:1px solid var(--line);border-left:3px solid var(--wrong);border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);}
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;}
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;}
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--correct);background:var(--correct-bg);border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;}
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{text-align:center;margin-top:40px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
-    <h1>Anatomy Integration Exam<span class="sys">Gastrointestinal Tract I &amp; II</span></h1>
-    <p class="sub">Peritoneum &middot; Oral cavity &middot; Esophagus &middot; Stomach &middot; Small &amp; large intestine &middot; Liver &middot; Gallbladder &middot; Pancreas &middot; Spleen &middot; Vasculature</p>
+  <header>
+    <h1>Anatomy Integration ExamGastrointestinal Tract I & II</h1>
+    <div class="sub">Peritoneum · Oral cavity · Esophagus · Stomach · Small & large intestine · Liver · Gallbladder · Pancreas · Spleen · Vasculature</div>
+    <span class="pill">50 questions</span>
   </header>
 
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>This exam covers the gross and histological anatomy of the gastrointestinal tract and its accessory organs from the GI I &amp; II lecture. Every item is drawn only from that material and is built around the lecture's instructional objectives.</p>
-    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Describe the regions of the abdomen and compare the parietal and visceral peritoneum and their relationships to the abdominal organs.</span></li>
-      <li><span class="n">2</span><span>Describe the cell types, tissues, and organs of the GI tract and the anatomy of the stomach, small and large intestine.</span></li>
-      <li><span class="n">3</span><span>Identify the anatomy of the liver, gallbladder, pancreas, and spleen and their relationships with other organs.</span></li>
-      <li><span class="n">4</span><span>Describe the abdominal aorta, portal system, IVC, and lymphatic drainage that supply the GI tract.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Describe the regions of the abdomen and compare the parietal and visceral peritoneum and their relationships to the abdominal organs.</span><span class="chip">Describe the cell types, tissues, and organs of the GI tract and the anatomy of the stomach, small and large intestine.</span><span class="chip">Identify the anatomy of the liver, gallbladder, pancreas, and spleen and their relationships with other organs.</span><span class="chip">Describe the abdominal aorta, portal system, IVC, and lymphatic drainage that supply the GI tract.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=anatomy-gi-i-ii" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
+  </div>
 
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 50</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
-
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 50</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
-
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Built from <em>GI_I___II.pdf</em> &middot; PAJ 5000 Anatomy &middot; for study use.
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 50 items, drawn only from the GI I & II lecture.
-   ============================================================ */
-const QUESTIONS = [
-  {
-    topic:"General GI Structure",
-    q:"The digestive organs that form the continuous tube from mouth to anus are collectively called the GI tract. Which of the following is an accessory digestive organ rather than part of that tube?",
-    choices:["Liver","Stomach","Esophagus","Small intestine"],
-    answer:0,
-    correct:"The liver is an accessory digestive organ — it does not form the GI tube but connects to it (by ducts) and assists in digestion.",
-    why:"The esophagus, stomach, and small intestine are all segments of the continuous GI tube itself.",
-    src:"'General Structure and Functions of the GI Tract' — accessory organs (Teeth, Tongue, Salivary glands, Liver, Gallbladder, Pancreas)"
-  },
-  {
-    topic:"General GI Structure",
-    q:"From the lumen outward, the four tunics of the GI tract wall are arranged in which order?",
-    choices:["Serosa, muscularis, submucosa, mucosa","Mucosa, submucosa, muscularis externa, serosa","Submucosa, mucosa, serosa, muscularis","Mucosa, muscularis, submucosa, serosa"],
-    answer:1,
-    correct:"From the lumen outward the layers are mucosa, submucosa, muscularis (externa), then serosa.",
-    why:"The other sequences scramble the order; the mucosa lines the lumen and the serosa is outermost.",
-    src:"'GI tract tunics' diagram (pp. 10–11)"
-  },
-  {
-    topic:"General GI Structure",
-    q:"The muscularis externa of the GI tract consists of which two smooth-muscle layers?",
-    choices:["Inner longitudinal and outer circular","Two circular layers","Inner circular and outer longitudinal","Two longitudinal layers"],
-    answer:2,
-    correct:"The muscularis externa has an inner circular layer and an outer longitudinal layer.",
-    why:"The layers are not both circular or both longitudinal, and the circular layer is the inner one (not the longitudinal).",
-    src:"'GI tract tunics' — Muscularis externa (Longitudinal, Circular)"
-  },
-  {
-    topic:"General GI Structure",
-    q:"Unlike the rest of the GI tract, the esophagus is covered by which outer layer instead of a serosa?",
-    choices:["Submucosa","Mesentery","Peritoneum","Adventitia"],
-    answer:3,
-    correct:"The esophagus is not covered by serosa; its outer layer is adventitia (noted directly on the tunics slide).",
-    why:"A mesentery and peritoneum are serosal reflections; the submucosa is an inner wall layer, not an outer covering.",
-    src:"'GI tract tunics' handwritten note — 'esophagus not covered by serosa (adventitia)'"
-  },
-  {
-    topic:"General GI Structure",
-    q:"The intrinsic (enteric) innervation of the GI tract is distributed in two intramural plexuses. Which pair is named in the lecture?",
-    choices:["Myenteric and submucosal plexuses","Celiac and mesenteric plexuses","Cardiac and pulmonary plexuses","Sympathetic and parasympathetic trunks"],
-    answer:0,
-    correct:"The two intrinsic plexuses are the myenteric nerve plexus and the submucosal nerve plexus.",
-    why:"Celiac/mesenteric plexuses are prevertebral autonomic ganglia, cardiac/pulmonary plexuses are thoracic, and the sympathetic/parasympathetic trunks are extrinsic, not the intramural plexuses.",
-    src:"'GI tract tunics' — Intrinsic nerve plexuses; 'Special Features' — enteric nervous system"
-  },
-  {
-    topic:"Peritoneum",
-    q:"The peritoneum is a serous membrane lining the abdomen and pelvis. Its two named potential spaces are the:",
-    choices:["Pleural and pericardial sacs","Greater sac and lesser sac","Supracolic and infracolic sacs","Right and left subphrenic sacs"],
-    answer:1,
-    correct:"The peritoneal cavity contains the greater sac and the lesser sac.",
-    why:"Pleural/pericardial sacs are thoracic; supracolic/infracolic compartments and subphrenic recesses are subdivisions, not the two named sacs.",
-    src:"'Peritoneum' — Greater sac, Lesser sac"
-  },
-  {
-    topic:"Peritoneum",
-    q:"The greater omentum extends from which structure and drapes over the transverse colon and small bowel?",
-    choices:["Lesser curvature of the stomach","Porta hepatis","Greater curvature of the stomach","Root of the mesentery"],
-    answer:2,
-    correct:"The greater omentum extends from the greater curvature of the stomach and covers the transverse colon and small bowel.",
-    why:"The lesser omentum arises from the lesser curvature; the porta hepatis and mesenteric root are attachment sites of other peritoneal folds.",
-    src:"'Greater Omentum' — extends from greater curvature of stomach"
-  },
-  {
-    topic:"Peritoneum",
-    q:"The lesser omentum extends from the porta hepatis to the lesser curvature of the stomach and comprises which two ligaments?",
-    choices:["Falciform and coronary ligaments","Triangular and round ligaments","Splenorenal and gastrosplenic ligaments","Hepatogastric and hepatoduodenal ligaments"],
-    answer:3,
-    correct:"The lesser omentum is made of the hepatogastric and hepatoduodenal ligaments.",
-    why:"Falciform/coronary and triangular/round ligaments are liver peritoneal reflections; splenorenal/gastrosplenic ligaments relate to the spleen.",
-    src:"'Peritoneal Reflections' — Lesser Omentum"
-  },
-  {
-    topic:"Peritoneum",
-    q:"The mesentery proper suspends the jejunum and ileum. Its root runs from the duodenojejunal flexure to which landmark?",
-    choices:["Right iliac fossa","Left iliac fossa","Porta hepatis","Splenic flexure"],
-    answer:0,
-    correct:"The root of the mesentery proper runs from the duodenojejunal flexure to the right iliac fossa.",
-    why:"It does not run to the left iliac fossa, porta hepatis, or splenic flexure; those are unrelated attachment points.",
-    src:"'Mesentery' — Root from duodenojejunal flexure to right iliac fossa"
-  },
-  {
-    topic:"Peritoneum",
-    q:"The mesentery proper carries which structures between its two peritoneal layers?",
-    choices:["Bile and pancreatic ducts","Blood vessels, lymphatics, and nerves","Ureters and gonadal vessels","Cerebrospinal fluid"],
-    answer:1,
-    correct:"Blood vessels, lymphatics, and nerves run between the layers of the mesentery proper.",
-    why:"Bile/pancreatic ducts travel in the lesser omentum/retroperitoneum; ureters and gonadal vessels are retroperitoneal; CSF is not found in the peritoneum.",
-    src:"'Mesentery' — Blood vessels, lymphatics, nerves between layers"
-  },
-  {
-    topic:"Peritoneum",
-    q:"Which peritoneal fold is described as extending from the greater curvature and hanging down 'like an apron' over the abdominal viscera?",
-    choices:["Lesser omentum","Transverse mesocolon","Greater omentum","Falciform ligament"],
-    answer:2,
-    correct:"The greater omentum hangs like an apron from the greater curvature over the bowel.",
-    why:"The lesser omentum connects liver to stomach/duodenum, the transverse mesocolon suspends the transverse colon, and the falciform ligament attaches the liver to the anterior wall.",
-    src:"'Omenta' cadaver slide — greater omentum 'hangs like apron'"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"The lateral walls of the oral cavity are formed by the cheeks, which contain which muscle?",
-    choices:["Masseter","Mylohyoid","Orbicularis oris","Buccinator"],
-    answer:3,
-    correct:"The cheeks forming the lateral walls contain the buccinator muscles.",
-    why:"The masseter is a muscle of mastication (not in the cheek wall of the cavity itself), the orbicularis oris is in the lips, and the mylohyoid forms the floor.",
-    src:"'Oral Cavity' — lateral walls formed by cheeks, contain buccinator muscles"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"The lips (labia) are covered by which type of epithelium and contain which muscle?",
-    choices:["Keratinized stratified squamous ET; orbicularis oris","Nonkeratinized ET; buccinator","Simple columnar ET; mylohyoid","Pseudostratified ET; masseter"],
-    answer:0,
-    correct:"The lips contain the orbicularis oris muscle and are covered by keratinized stratified squamous epithelium.",
-    why:"Nonkeratinized ET with buccinator describes the cheeks/gingivae context; simple columnar and pseudostratified epithelia are not the lip covering.",
-    src:"'Oral Cavity' — Lips: orbicularis oris, keratinized stratified squamous ET"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"The floor (inferior surface) of the oral cavity is formed by the tongue and which muscle covered with mucosa?",
-    choices:["Buccinator muscle","Mylohyoid muscle","Masseter muscle","Digastric muscle"],
-    answer:1,
-    correct:"The floor of the oral cavity is formed by the tongue and the mylohyoid muscle covered with mucosa.",
-    why:"The buccinator forms the cheek, the masseter elevates the mandible, and the digastric is a suprahyoid strap muscle — none is named as the mucosa-covered floor.",
-    src:"'Oral Cavity (mouth)' — floor: tongue and mylohyoid muscle"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"The tongue is formed from skeletal muscle and manipulates food to form what during chewing?",
-    choices:["Colloid","The chyme","The bolus","Feces"],
-    answer:2,
-    correct:"The tongue mixes ingested materials and forms the bolus, a globular mass of partially digested material.",
-    why:"Chyme forms in the stomach, colloid is a thyroid follicle content, and feces form in the large intestine.",
-    src:"'Tongue' — forms the bolus"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"Which pair of salivary glands is the largest and lies anterior and inferior to the ear, partially overlying the masseter?",
-    choices:["Submandibular glands","Lingual glands","Sublingual glands","Parotid glands"],
-    answer:3,
-    correct:"The parotid glands are the largest salivary glands, located anterior/inferior to the ear and overlying the masseter, with a close relationship to the facial nerve.",
-    why:"The submandibular glands lie inferior to the mandible, the sublingual glands lie under the tongue, and 'lingual glands' are not one of the three major pairs.",
-    src:"'The Parotid Glands'"
-  },
-  {
-    topic:"Oral Cavity & Accessories",
-    q:"The parotid gland empties into the oral cavity by way of which duct?",
-    choices:["Stensen's duct","Wharton's duct","Duct of Wirsung","Bartholin's duct"],
-    answer:0,
-    correct:"The parotid gland opens by way of the parotid (Stensen's) duct into the oral cavity.",
-    why:"Wharton's duct drains the submandibular gland, the duct of Wirsung is the main pancreatic duct, and Bartholin's/Rivinus ducts relate to the sublingual gland.",
-    src:"'The Parotid Glands' — opens by way of Stensen's duct"
-  },
-  {
-    topic:"Esophagus",
-    q:"The esophagus is described in the lecture as having which three portions along its course?",
-    choices:["Cardiac, fundic, pyloric","Cervical, mediastinal, abdominal","Ascending, transverse, descending","Superior, descending, horizontal"],
-    answer:1,
-    correct:"The esophagus has cervical, mediastinal (thoracic), and abdominal portions.",
-    why:"Cardiac/fundic/pyloric are stomach regions, ascending/transverse/descending are colon segments, and superior/descending/horizontal describe the duodenum.",
-    src:"'Esophagus' — Portions: Cervical, Mediastinal, Abdominal"
-  },
-  {
-    topic:"Esophagus",
-    q:"The esophagus passes through the diaphragm at the esophageal hiatus at which vertebral level?",
-    choices:["T8","T12","T10","L1"],
-    answer:2,
-    correct:"The esophagus passes through the diaphragm at the esophageal hiatus at the T10 level, terminating at about T11.",
-    why:"T8 is the caval hiatus level, T12 is the aortic hiatus level, and L1 is near the transpyloric plane — none is the esophageal hiatus level.",
-    src:"'Esophageal Relationships' (T10); 'Esophagus' — Diaphragm (T10), Termination (T11)"
-  },
-  {
-    topic:"Esophagus",
-    q:"The esophageal mucosa is lined by which epithelium?",
-    choices:["Simple columnar epithelium","Pseudostratified ciliated columnar epithelium","Simple cuboidal epithelium","Nonkeratinized stratified squamous epithelium"],
-    answer:3,
-    correct:"The esophageal mucosa is lined by nonkeratinized stratified squamous epithelium.",
-    why:"Simple columnar epithelium lines the stomach and intestines; simple cuboidal and pseudostratified ciliated columnar epithelia are found elsewhere (glands, airway).",
-    src:"'Esophagus' — Histology: Mucosa nonkeratinized stratified squamous ep."
-  },
-  {
-    topic:"Esophagus",
-    q:"The superior esophageal sphincter, located where the pharynx and esophagus meet, is composed of which muscle type?",
-    choices:["Skeletal muscle (cricopharyngeus)","Circular smooth muscle","Cardiac muscle","Elastic connective tissue"],
-    answer:0,
-    correct:"The superior esophageal sphincter is skeletal muscle — the cricopharyngeus — where the pharynx and esophagus meet.",
-    why:"The inferior (cardiac) sphincter is circular smooth muscle; cardiac muscle and elastic tissue do not form this sphincter.",
-    src:"'Esophagus' — Superior esophageal sphincter: skeletal muscle, cricopharyngeus"
-  },
-  {
-    topic:"Esophagus",
-    q:"The inferior esophageal (cardiac) sphincter is described as circular smooth muscle whose function is assisted by which structure, since it is 'not a true sphincter'?",
-    choices:["The liver","The diaphragm","The transverse colon","The greater omentum"],
-    answer:1,
-    correct:"The inferior/cardiac sphincter is circular smooth muscle that is not a true sphincter; its function is helped by the diaphragm.",
-    why:"The liver, transverse colon, and greater omentum are unrelated to reinforcing the gastroesophageal junction in this lecture.",
-    src:"'Esophagus' — Inferior esophageal sphincter, function helped by diaphragm"
-  },
-  {
-    topic:"Stomach",
-    q:"Which of the following is the most superior region of the stomach?",
-    choices:["Cardia","Body","Fundus","Pyloric antrum"],
-    answer:2,
-    correct:"The fundus is the most superior region of the stomach.",
-    why:"The cardia surrounds the esophageal opening, the body is the central region, and the pyloric antrum lies distally near the pyloric sphincter.",
-    src:"'The Stomach' — Regions: Cardia, Fundus (most superior), Body, Pyloric"
-  },
-  {
-    topic:"Stomach",
-    q:"The pyloric region of the stomach is subdivided into which parts?",
-    choices:["Greater and lesser curvatures","Fundus and body","Cardia and notch","Antrum and canal (with the pyloric sphincter)"],
-    answer:3,
-    correct:"The pyloric region includes the antrum and the canal, ending at the pyloric sphincter.",
-    why:"Fundus/body and cardia are separate stomach regions; the greater and lesser curvatures are the stomach's borders, not pyloric subdivisions.",
-    src:"'The Stomach' — Pyloric: Antrum, Canal, Sphincter"
-  },
-  {
-    topic:"Stomach",
-    q:"The two curvatures of the stomach are the:",
-    choices:["Greater and lesser curvatures","Anterior and posterior curvatures","Superior and inferior curvatures","Medial and lateral curvatures"],
-    answer:0,
-    correct:"The stomach has a greater curvature and a lesser curvature.",
-    why:"The stomach's curvatures are named greater and lesser, not by the anterior/posterior, superior/inferior, or medial/lateral axes.",
-    src:"'The Stomach' — Curvatures: Greater, Lesser"
-  },
-  {
-    topic:"Stomach",
-    q:"Which mucosal specialization of the stomach interior consists of longitudinal folds that allow the stomach to expand?",
-    choices:["Plicae circulares","Rugae","Haustra","Villi"],
-    answer:1,
-    correct:"Rugae are the longitudinal mucosal folds of the stomach interior (along with the gastric canal, pits, and glands).",
-    why:"Plicae circulares are permanent folds of the small intestine, haustra are sacculations of the colon, and villi are small-intestinal projections.",
-    src:"'Stomach Interior' — Mucosal specializations: Rugae, gastric canal, pits, glands"
-  },
-  {
-    topic:"Stomach",
-    q:"The greater omentum attaches along the greater curvature of the stomach. The lesser omentum attaches along which stomach border?",
-    choices:["Greater curvature","Anterior surface","Lesser curvature","Pyloric antrum"],
-    answer:2,
-    correct:"The lesser omentum attaches along the lesser curvature of the stomach (extending to the porta hepatis).",
-    why:"The greater curvature anchors the greater omentum; the anterior surface and pyloric antrum are not the lesser omentum's attachment.",
-    src:"'Peritoneal Reflections' — lesser omentum to lesser curvature; 'The Stomach' — curvatures"
-  },
-  {
-    topic:"Small Intestine",
-    q:"The small intestine extends from the pylorus of the stomach to which structure of the large intestine?",
-    choices:["Sigmoid colon","Splenic flexure","Rectum","Cecum"],
-    answer:3,
-    correct:"The small intestine extends from the pylorus of the stomach to the cecum of the large intestine.",
-    why:"The sigmoid colon, rectum, and splenic flexure are downstream large-intestinal structures, not the junction with the small intestine.",
-    src:"'Small Intestine' — extends from pylorus to cecum"
-  },
-  {
-    topic:"Small Intestine",
-    q:"Which segment is the first part of the small intestine, is approximately 25 cm (10 inches) long, and contains the major duodenal papilla?",
-    choices:["Duodenum","Jejunum","Ileum","Cecum"],
-    answer:0,
-    correct:"The duodenum is the first segment (~25 cm), originating at the pyloric sphincter and containing the major duodenal papilla.",
-    why:"The jejunum is the middle segment, the ileum is the last segment, and the cecum is part of the large intestine.",
-    src:"'Small Intestine' — The duodenum"
-  },
-  {
-    topic:"Small Intestine",
-    q:"The small intestine terminates at the ileocecal valve, a sphincter located at the end of which segment?",
-    choices:["Duodenum","Ileum","Jejunum","Pylorus"],
-    answer:1,
-    correct:"The ileum is the last region of the small intestine and terminates at the ileocecal valve.",
-    why:"The duodenum and jejunum are proximal segments, and the pylorus is the stomach outlet — none terminates at the ileocecal valve.",
-    src:"'Small Intestine' — The ileum terminates at the ileocecal valve"
-  },
-  {
-    topic:"Small Intestine",
-    q:"The plicae circulares of the small intestine are described as:",
-    choices:["Temporary folds that flatten when the intestine fills","Longitudinal folds identical to gastric rugae","Permanent transverse folds that do not disappear when the intestine fills","Sacculations formed by muscle tone"],
-    answer:2,
-    correct:"Plicae circulares are permanent transverse folds that do not disappear when the small intestine fills.",
-    why:"Gastric rugae are the temporary folds that flatten; haustra are the muscle-tone sacculations of the colon; plicae are neither temporary nor longitudinal.",
-    src:"'Plicae' — permanent, do not disappear when small intestine fills"
-  },
-  {
-    topic:"Small Intestine",
-    q:"Which portion of the duodenum is the shortest, retroperitoneal, and (for its first part / duodenal cap) intraperitoneal?",
-    choices:["Ascending part","Descending part","Transverse (horizontal) part","Superior part"],
-    answer:3,
-    correct:"The superior part is the shortest and widest; its first portion, the duodenal cap (ampulla), is intraperitoneal, while the rest of the duodenum is retroperitoneal.",
-    why:"The descending part contains the greater and lesser papillae, the transverse part is the longest, and the ascending part ends at the duodenojejunal flexure.",
-    src:"'Duodenum' — Superior part / Duodenal cap"
-  },
-  {
-    topic:"Small Intestine",
-    q:"Distinguishing features of the jejunum compared with the ileum include which of the following?",
-    choices:["Larger diameter, thicker walls, and more prominent plicae circulares","Smaller diameter and thinner walls","Presence of numerous Peyer's patches","Location mainly in the right lower quadrant"],
-    answer:0,
-    correct:"The jejunum has a larger diameter, thicker walls, more plicae circulares, and is more vascular; it lies mostly in the left upper quadrant.",
-    why:"Smaller diameter/thinner walls, abundant Peyer's patches, and a right-lower-quadrant location are features of the ileum instead.",
-    src:"'Jejunum' — larger diameter, thicker walls, plicae circulares, more vascular"
-  },
-  {
-    topic:"Large Intestine",
-    q:"The large intestine is composed of which four segments?",
-    choices:["Duodenum, jejunum, ileum, cecum","Cecum, colon, rectum, anal canal","Fundus, body, antrum, pylorus","Ascending, transverse, descending, sigmoid only"],
-    answer:1,
-    correct:"The large intestine is composed of the cecum, colon, rectum, and anal canal.",
-    why:"Duodenum/jejunum/ileum are small-intestinal; fundus/body/antrum/pylorus are stomach regions; the four colon parts alone omit the cecum, rectum, and anal canal.",
-    src:"'Large Intestine' — cecum, colon, rectum, anal canal"
-  },
-  {
-    topic:"Large Intestine",
-    q:"Which three anatomic specializations are characteristic of the colon but absent in the rectum and appendix?",
-    choices:["Villi, plicae, rugae","Peyer's patches, crypts, microvilli","Taeniae coli, haustra (sacculations), and omental appendices","Fundus, antrum, pylorus"],
-    answer:2,
-    correct:"The colon shows three taeniae coli, haustra (sacculations), and omental appendices — features absent in the rectum and appendix.",
-    why:"Villi/plicae/rugae and microvilli/crypts are mucosal features of other regions, and fundus/antrum/pylorus are stomach terms.",
-    src:"'Large Intestine' — Taeniae coli (3), sacculations (haustra), omental appendices"
-  },
-  {
-    topic:"Large Intestine",
-    q:"The appendix (vermiform appendix) is a slender hollow appendage anchored by which structure and dominated by which tissue?",
-    choices:["Phrenicocolic ligament; villi","Transverse mesocolon; goblet cells","Falciform ligament; smooth muscle","Mesoappendix; lymphoid nodules"],
-    answer:3,
-    correct:"The appendix is fixed by the mesoappendix and is dominated by lymphoid nodules (a lymphoid organ).",
-    why:"The transverse mesocolon suspends the transverse colon; the falciform ligament attaches the liver; villi belong to the small intestine.",
-    src:"'Cecum and Appendix'; 'The Appendix' — mesoappendix, lymphoid nodules"
-  },
-  {
-    topic:"Large Intestine",
-    q:"The ascending colon terminates at which flexure?",
-    choices:["Right colic (hepatic) flexure","Left colic (splenic) flexure","Duodenojejunal flexure","Sigmoid flexure"],
-    answer:0,
-    correct:"The ascending colon terminates at the right colic (hepatic) flexure.",
-    why:"The left colic (splenic) flexure ends the transverse colon; the duodenojejunal flexure is in the small intestine; there is no 'sigmoid flexure' as the ascending colon's end.",
-    src:"'Ascending Colon' — terminates at right colic (hepatic) flexure"
-  },
-  {
-    topic:"Large Intestine",
-    q:"Which segment of the colon is described as the most mobile and longest, is intraperitoneal, and is suspended by the transverse mesocolon?",
-    choices:["Ascending colon","Transverse colon","Descending colon","Sigmoid colon"],
-    answer:1,
-    correct:"The transverse colon is the most mobile and longest portion, is intraperitoneal, and is suspended by the transverse mesocolon between the right and left colic flexures.",
-    why:"The ascending and descending colon are retroperitoneal and less mobile; the sigmoid colon extends into the pelvis but is not described as the longest/most mobile here.",
-    src:"'Transverse Colon'"
-  },
-  {
-    topic:"Liver & Gallbladder",
-    q:"The liver is the largest visceral organ and largest gland. It is completely covered by which capsule?",
-    choices:["Gerota's fascia","Bowman's capsule","Glisson's capsule","Tenon's capsule"],
-    answer:2,
-    correct:"The liver is completely covered by Glisson's capsule (with incomplete peritoneal covering).",
-    why:"Gerota's fascia surrounds the kidney, Bowman's capsule is in the renal corpuscle, and Tenon's capsule is around the eyeball.",
-    src:"'The Liver' — completely covered by Glisson's Capsule"
-  },
-  {
-    topic:"Liver & Gallbladder",
-    q:"The liver receives a triple blood supply. Which vessel delivers the inflow of blood needing metabolic processing?",
-    choices:["Hepatic artery","Cystic artery","Hepatic veins","Portal vein"],
-    answer:3,
-    correct:"The portal vein delivers inflow of blood needing metabolic processing to the liver.",
-    why:"The hepatic artery supplies mainly the bile ducts (~15% of tissue flow), the hepatic veins carry outflow to the right atrium, and the cystic artery supplies the gallbladder.",
-    src:"'Liver triple blood supply' — Portal vein"
-  },
-  {
-    topic:"Liver & Gallbladder",
-    q:"The caudate lobe of the liver lies between the inferior vena cava and which structure?",
-    choices:["Ligamentum venosum","Ligamentum teres","Gallbladder","Falciform ligament"],
-    answer:0,
-    correct:"The caudate lobe lies between the inferior vena cava and the ligamentum venosum.",
-    why:"The quadrate lobe lies between the gallbladder and ligamentum teres; the falciform ligament separates the right and left lobes.",
-    src:"'Lobes of the Liver' — Caudate: between IVC and ligamentum venosum"
-  },
-  {
-    topic:"Liver & Gallbladder",
-    q:"The quadrate lobe of the liver is located between which two structures?",
-    choices:["The IVC and the ligamentum venosum","The gallbladder and the ligamentum teres","The falciform and coronary ligaments","The porta hepatis and the bare area"],
-    answer:1,
-    correct:"The quadrate lobe lies between the gallbladder and the ligamentum teres (round ligament).",
-    why:"The IVC and ligamentum venosum bound the caudate lobe; the falciform/coronary ligaments and porta hepatis/bare area are other liver landmarks.",
-    src:"'Lobes of the Liver' — Quadrate: between gall bladder and ligamentum teres"
-  },
-  {
-    topic:"Liver & Gallbladder",
-    q:"The portal triad — found at the corners of a liver lobule — consists of branches of which three structures?",
-    choices:["Hepatic artery, cystic duct, and central vein","Central vein, hepatic vein, and lymphatic","Portal vein, hepatic artery, and bile duct","Portal vein, hepatic vein, and pancreatic duct"],
-    answer:2,
-    correct:"The portal triad consists of a branch of the portal vein, hepatic artery, and bile duct.",
-    why:"The central vein drains the lobule center (not part of the triad), and cystic/pancreatic ducts and hepatic veins are not components of the triad.",
-    src:"'Histology of the liver' — Portal triad: portal vein, hepatic artery, bile duct"
-  },
-  {
-    topic:"Pancreas & Spleen",
-    q:"The pancreas is described as retroperitoneal with which regions?",
-    choices:["Cardia, fundus, body, pylorus","Fundus, body, neck","Superior, descending, horizontal, ascending","Head, uncinate process, neck, body, and tail"],
-    answer:3,
-    correct:"The pancreas has a head, uncinate process, neck, body, and tail.",
-    why:"Cardia/fundus/pylorus are stomach regions, the four-part scheme describes the duodenum, and fundus/body/neck describes the gallbladder.",
-    src:"'The Pancreas' — Regions: Head, Uncinate process, Neck, body, tail"
-  },
-  {
-    topic:"Pancreas & Spleen",
-    q:"The main pancreatic duct is also known by which eponym?",
-    choices:["Duct of Wirsung","Duct of Santorini","Duct of Wharton","Duct of Stensen"],
-    answer:0,
-    correct:"The principal (main) pancreatic duct is the duct of Wirsung; the accessory duct is the duct of Santorini.",
-    why:"The duct of Santorini is the accessory pancreatic duct; Wharton's and Stensen's ducts are salivary (submandibular and parotid).",
-    src:"'Pancreas' — Principal pancreatic duct (of Wirsung), accessory (of Santorini)"
-  },
-  {
-    topic:"Pancreas & Spleen",
-    q:"The pancreatic islets, the endocrine tissue of the pancreas, make up approximately what fraction of pancreatic cells?",
-    choices:["About 25%","About 1%","About 50%","About 75%"],
-    answer:1,
-    correct:"The pancreatic islets are scattered endocrine tissue making up about 1% of pancreatic cells.",
-    why:"The remaining ~99% of the pancreas is exocrine (acinar) tissue, so 25%, 50%, and 75% are far too high.",
-    src:"'Pancreatic Islets' — scattered (1% of pancreatic cells)"
-  },
-  {
-    topic:"Abdominal Vasculature",
-    q:"The celiac trunk arises from the aorta at the aortic hiatus and gives which three branches?",
-    choices:["Right gastric, cystic, and gastroduodenal arteries","Superior mesenteric, inferior mesenteric, and renal arteries","Left gastric, splenic, and common hepatic arteries","Splenic, superior mesenteric, and left colic arteries"],
-    answer:2,
-    correct:"The celiac trunk branches into the left gastric, splenic, and common hepatic arteries.",
-    why:"The SMA/IMA/renal arteries are separate aortic branches; right gastric/cystic/gastroduodenal are downstream branches of the hepatic system; the left colic is an IMA branch.",
-    src:"'Arterial Supply of the Abdomen — The Celiac Trunk'"
-  },
-  {
-    topic:"Abdominal Vasculature",
-    q:"The common hepatic artery continues as the proper hepatic artery and also gives off which branch that descends toward the duodenum and pancreas?",
-    choices:["Left gastric artery","Superior mesenteric artery","Splenic artery","Gastroduodenal artery"],
-    answer:3,
-    correct:"The common hepatic artery gives off the gastroduodenal artery (and the proper hepatic continues to the liver, giving right gastric and right/left hepatic branches).",
-    why:"The left gastric and splenic arteries are separate celiac branches; the superior mesenteric artery arises directly from the aorta.",
-    src:"'Common Hepatic Artery' — Proper hepatic, Right gastric, Gastroduodenal, Supraduodenal"
-  },
-  {
-    topic:"Abdominal Vasculature",
-    q:"Which artery supplying the esophagus is a branch of the celiac artery?",
-    choices:["Left gastric branch of the celiac artery","Inferior thyroid branch of the thyrocervical trunk","Bronchial arteries","Internal thoracic artery"],
-    answer:0,
-    correct:"The left gastric branch of the celiac artery supplies the (abdominal) esophagus.",
-    why:"The inferior thyroid branch (thyrocervical trunk), descending thoracic aorta, and left inferior phrenic also supply the esophagus, but only the left gastric is a celiac branch; the internal thoracic is not listed.",
-    src:"'Esophagus' — arterial supply (left gastric branch of the celiac artery)"
-  },
-  {
-    topic:"Abdominal Vasculature",
-    q:"The hepatic veins that drain the liver empty directly into which vessel?",
-    choices:["Portal vein","Inferior vena cava","Splenic vein","Superior mesenteric vein"],
-    answer:1,
-    correct:"The hepatic veins drain into the inferior vena cava, carrying outflow toward the right atrium.",
-    why:"The portal, splenic, and superior mesenteric veins deliver blood toward the liver/portal system rather than receiving hepatic venous outflow.",
-    src:"'Histology of the liver' — Hepatic veins drain into inferior vena cava; 'Liver triple blood supply'"
-  }
-];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "General GI Structure", "io": "General GI Structure", "q": "The digestive organs that form the continuous tube from mouth to anus are collectively called the GI tract. Which of the following is an accessory digestive organ rather than part of that tube?", "opts": [["Liver", "The liver is an accessory digestive organ — it does not form the GI tube but connects to it (by ducts) and assists in digestion."], ["Stomach", "The esophagus, stomach, and small intestine are all segments of the continuous GI tube itself."], ["Esophagus", "The esophagus, stomach, and small intestine are all segments of the continuous GI tube itself."], ["Small intestine", "The esophagus, stomach, and small intestine are all segments of the continuous GI tube itself."]], "c": 0, "cite": "'General Structure and Functions of the GI Tract' — accessory organs (Teeth, Tongue, Salivary glands, Liver, Gallbladder, Pancreas)"}, {"topic": "General GI Structure", "io": "General GI Structure", "q": "From the lumen outward, the four tunics of the GI tract wall are arranged in which order?", "opts": [["Serosa, muscularis, submucosa, mucosa", "The other sequences scramble the order; the mucosa lines the lumen and the serosa is outermost."], ["Mucosa, submucosa, muscularis externa, serosa", "From the lumen outward the layers are mucosa, submucosa, muscularis (externa), then serosa."], ["Submucosa, mucosa, serosa, muscularis", "The other sequences scramble the order; the mucosa lines the lumen and the serosa is outermost."], ["Mucosa, muscularis, submucosa, serosa", "The other sequences scramble the order; the mucosa lines the lumen and the serosa is outermost."]], "c": 1, "cite": "'GI tract tunics' diagram (pp. 10–11)"}, {"topic": "General GI Structure", "io": "General GI Structure", "q": "The muscularis externa of the GI tract consists of which two smooth-muscle layers?", "opts": [["Inner longitudinal and outer circular", "The layers are not both circular or both longitudinal, and the circular layer is the inner one (not the longitudinal)."], ["Two circular layers", "The layers are not both circular or both longitudinal, and the circular layer is the inner one (not the longitudinal)."], ["Inner circular and outer longitudinal", "The muscularis externa has an inner circular layer and an outer longitudinal layer."], ["Two longitudinal layers", "The layers are not both circular or both longitudinal, and the circular layer is the inner one (not the longitudinal)."]], "c": 2, "cite": "'GI tract tunics' — Muscularis externa (Longitudinal, Circular)"}, {"topic": "General GI Structure", "io": "General GI Structure", "q": "Unlike the rest of the GI tract, the esophagus is covered by which outer layer instead of a serosa?", "opts": [["Submucosa", "A mesentery and peritoneum are serosal reflections; the submucosa is an inner wall layer, not an outer covering."], ["Mesentery", "A mesentery and peritoneum are serosal reflections; the submucosa is an inner wall layer, not an outer covering."], ["Peritoneum", "A mesentery and peritoneum are serosal reflections; the submucosa is an inner wall layer, not an outer covering."], ["Adventitia", "The esophagus is not covered by serosa; its outer layer is adventitia (noted directly on the tunics slide)."]], "c": 3, "cite": "'GI tract tunics' handwritten note — 'esophagus not covered by serosa (adventitia)'"}, {"topic": "General GI Structure", "io": "General GI Structure", "q": "The intrinsic (enteric) innervation of the GI tract is distributed in two intramural plexuses. Which pair is named in the lecture?", "opts": [["Myenteric and submucosal plexuses", "The two intrinsic plexuses are the myenteric nerve plexus and the submucosal nerve plexus."], ["Celiac and mesenteric plexuses", "Celiac/mesenteric plexuses are prevertebral autonomic ganglia, cardiac/pulmonary plexuses are thoracic, and the sympathetic/parasympathetic trunks are extrinsic, not the intramural plexuses."], ["Cardiac and pulmonary plexuses", "Celiac/mesenteric plexuses are prevertebral autonomic ganglia, cardiac/pulmonary plexuses are thoracic, and the sympathetic/parasympathetic trunks are extrinsic, not the intramural plexuses."], ["Sympathetic and parasympathetic trunks", "Celiac/mesenteric plexuses are prevertebral autonomic ganglia, cardiac/pulmonary plexuses are thoracic, and the sympathetic/parasympathetic trunks are extrinsic, not the intramural plexuses."]], "c": 0, "cite": "'GI tract tunics' — Intrinsic nerve plexuses; 'Special Features' — enteric nervous system"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "The peritoneum is a serous membrane lining the abdomen and pelvis. Its two named potential spaces are the:", "opts": [["Pleural and pericardial sacs", "Pleural/pericardial sacs are thoracic; supracolic/infracolic compartments and subphrenic recesses are subdivisions, not the two named sacs."], ["Greater sac and lesser sac", "The peritoneal cavity contains the greater sac and the lesser sac."], ["Supracolic and infracolic sacs", "Pleural/pericardial sacs are thoracic; supracolic/infracolic compartments and subphrenic recesses are subdivisions, not the two named sacs."], ["Right and left subphrenic sacs", "Pleural/pericardial sacs are thoracic; supracolic/infracolic compartments and subphrenic recesses are subdivisions, not the two named sacs."]], "c": 1, "cite": "'Peritoneum' — Greater sac, Lesser sac"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "The greater omentum extends from which structure and drapes over the transverse colon and small bowel?", "opts": [["Lesser curvature of the stomach", "The lesser omentum arises from the lesser curvature; the porta hepatis and mesenteric root are attachment sites of other peritoneal folds."], ["Porta hepatis", "The lesser omentum arises from the lesser curvature; the porta hepatis and mesenteric root are attachment sites of other peritoneal folds."], ["Greater curvature of the stomach", "The greater omentum extends from the greater curvature of the stomach and covers the transverse colon and small bowel."], ["Root of the mesentery", "The lesser omentum arises from the lesser curvature; the porta hepatis and mesenteric root are attachment sites of other peritoneal folds."]], "c": 2, "cite": "'Greater Omentum' — extends from greater curvature of stomach"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "The lesser omentum extends from the porta hepatis to the lesser curvature of the stomach and comprises which two ligaments?", "opts": [["Falciform and coronary ligaments", "Falciform/coronary and triangular/round ligaments are liver peritoneal reflections; splenorenal/gastrosplenic ligaments relate to the spleen."], ["Triangular and round ligaments", "Falciform/coronary and triangular/round ligaments are liver peritoneal reflections; splenorenal/gastrosplenic ligaments relate to the spleen."], ["Splenorenal and gastrosplenic ligaments", "Falciform/coronary and triangular/round ligaments are liver peritoneal reflections; splenorenal/gastrosplenic ligaments relate to the spleen."], ["Hepatogastric and hepatoduodenal ligaments", "The lesser omentum is made of the hepatogastric and hepatoduodenal ligaments."]], "c": 3, "cite": "'Peritoneal Reflections' — Lesser Omentum"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "The mesentery proper suspends the jejunum and ileum. Its root runs from the duodenojejunal flexure to which landmark?", "opts": [["Right iliac fossa", "The root of the mesentery proper runs from the duodenojejunal flexure to the right iliac fossa."], ["Left iliac fossa", "It does not run to the left iliac fossa, porta hepatis, or splenic flexure; those are unrelated attachment points."], ["Porta hepatis", "It does not run to the left iliac fossa, porta hepatis, or splenic flexure; those are unrelated attachment points."], ["Splenic flexure", "It does not run to the left iliac fossa, porta hepatis, or splenic flexure; those are unrelated attachment points."]], "c": 0, "cite": "'Mesentery' — Root from duodenojejunal flexure to right iliac fossa"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "The mesentery proper carries which structures between its two peritoneal layers?", "opts": [["Bile and pancreatic ducts", "Bile/pancreatic ducts travel in the lesser omentum/retroperitoneum; ureters and gonadal vessels are retroperitoneal; CSF is not found in the peritoneum."], ["Blood vessels, lymphatics, and nerves", "Blood vessels, lymphatics, and nerves run between the layers of the mesentery proper."], ["Ureters and gonadal vessels", "Bile/pancreatic ducts travel in the lesser omentum/retroperitoneum; ureters and gonadal vessels are retroperitoneal; CSF is not found in the peritoneum."], ["Cerebrospinal fluid", "Bile/pancreatic ducts travel in the lesser omentum/retroperitoneum; ureters and gonadal vessels are retroperitoneal; CSF is not found in the peritoneum."]], "c": 1, "cite": "'Mesentery' — Blood vessels, lymphatics, nerves between layers"}, {"topic": "Peritoneum", "io": "Peritoneum", "q": "Which peritoneal fold is described as extending from the greater curvature and hanging down 'like an apron' over the abdominal viscera?", "opts": [["Lesser omentum", "The lesser omentum connects liver to stomach/duodenum, the transverse mesocolon suspends the transverse colon, and the falciform ligament attaches the liver to the anterior wall."], ["Transverse mesocolon", "The lesser omentum connects liver to stomach/duodenum, the transverse mesocolon suspends the transverse colon, and the falciform ligament attaches the liver to the anterior wall."], ["Greater omentum", "The greater omentum hangs like an apron from the greater curvature over the bowel."], ["Falciform ligament", "The lesser omentum connects liver to stomach/duodenum, the transverse mesocolon suspends the transverse colon, and the falciform ligament attaches the liver to the anterior wall."]], "c": 2, "cite": "'Omenta' cadaver slide — greater omentum 'hangs like apron'"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "The lateral walls of the oral cavity are formed by the cheeks, which contain which muscle?", "opts": [["Masseter", "The masseter is a muscle of mastication (not in the cheek wall of the cavity itself), the orbicularis oris is in the lips, and the mylohyoid forms the floor."], ["Mylohyoid", "The masseter is a muscle of mastication (not in the cheek wall of the cavity itself), the orbicularis oris is in the lips, and the mylohyoid forms the floor."], ["Orbicularis oris", "The masseter is a muscle of mastication (not in the cheek wall of the cavity itself), the orbicularis oris is in the lips, and the mylohyoid forms the floor."], ["Buccinator", "The cheeks forming the lateral walls contain the buccinator muscles."]], "c": 3, "cite": "'Oral Cavity' — lateral walls formed by cheeks, contain buccinator muscles"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "The lips (labia) are covered by which type of epithelium and contain which muscle?", "opts": [["Keratinized stratified squamous ET; orbicularis oris", "The lips contain the orbicularis oris muscle and are covered by keratinized stratified squamous epithelium."], ["Nonkeratinized ET; buccinator", "Nonkeratinized ET with buccinator describes the cheeks/gingivae context; simple columnar and pseudostratified epithelia are not the lip covering."], ["Simple columnar ET; mylohyoid", "Nonkeratinized ET with buccinator describes the cheeks/gingivae context; simple columnar and pseudostratified epithelia are not the lip covering."], ["Pseudostratified ET; masseter", "Nonkeratinized ET with buccinator describes the cheeks/gingivae context; simple columnar and pseudostratified epithelia are not the lip covering."]], "c": 0, "cite": "'Oral Cavity' — Lips: orbicularis oris, keratinized stratified squamous ET"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "The floor (inferior surface) of the oral cavity is formed by the tongue and which muscle covered with mucosa?", "opts": [["Buccinator muscle", "The buccinator forms the cheek, the masseter elevates the mandible, and the digastric is a suprahyoid strap muscle — none is named as the mucosa-covered floor."], ["Mylohyoid muscle", "The floor of the oral cavity is formed by the tongue and the mylohyoid muscle covered with mucosa."], ["Masseter muscle", "The buccinator forms the cheek, the masseter elevates the mandible, and the digastric is a suprahyoid strap muscle — none is named as the mucosa-covered floor."], ["Digastric muscle", "The buccinator forms the cheek, the masseter elevates the mandible, and the digastric is a suprahyoid strap muscle — none is named as the mucosa-covered floor."]], "c": 1, "cite": "'Oral Cavity (mouth)' — floor: tongue and mylohyoid muscle"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "The tongue is formed from skeletal muscle and manipulates food to form what during chewing?", "opts": [["Colloid", "Chyme forms in the stomach, colloid is a thyroid follicle content, and feces form in the large intestine."], ["The chyme", "Chyme forms in the stomach, colloid is a thyroid follicle content, and feces form in the large intestine."], ["The bolus", "The tongue mixes ingested materials and forms the bolus, a globular mass of partially digested material."], ["Feces", "Chyme forms in the stomach, colloid is a thyroid follicle content, and feces form in the large intestine."]], "c": 2, "cite": "'Tongue' — forms the bolus"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "Which pair of salivary glands is the largest and lies anterior and inferior to the ear, partially overlying the masseter?", "opts": [["Submandibular glands", "The submandibular glands lie inferior to the mandible, the sublingual glands lie under the tongue, and 'lingual glands' are not one of the three major pairs."], ["Lingual glands", "The submandibular glands lie inferior to the mandible, the sublingual glands lie under the tongue, and 'lingual glands' are not one of the three major pairs."], ["Sublingual glands", "The submandibular glands lie inferior to the mandible, the sublingual glands lie under the tongue, and 'lingual glands' are not one of the three major pairs."], ["Parotid glands", "The parotid glands are the largest salivary glands, located anterior/inferior to the ear and overlying the masseter, with a close relationship to the facial nerve."]], "c": 3, "cite": "'The Parotid Glands'"}, {"topic": "Oral Cavity & Accessories", "io": "Oral Cavity & Accessories", "q": "The parotid gland empties into the oral cavity by way of which duct?", "opts": [["Stensen's duct", "The parotid gland opens by way of the parotid (Stensen's) duct into the oral cavity."], ["Wharton's duct", "Wharton's duct drains the submandibular gland, the duct of Wirsung is the main pancreatic duct, and Bartholin's/Rivinus ducts relate to the sublingual gland."], ["Duct of Wirsung", "Wharton's duct drains the submandibular gland, the duct of Wirsung is the main pancreatic duct, and Bartholin's/Rivinus ducts relate to the sublingual gland."], ["Bartholin's duct", "Wharton's duct drains the submandibular gland, the duct of Wirsung is the main pancreatic duct, and Bartholin's/Rivinus ducts relate to the sublingual gland."]], "c": 0, "cite": "'The Parotid Glands' — opens by way of Stensen's duct"}, {"topic": "Esophagus", "io": "Esophagus", "q": "The esophagus is described in the lecture as having which three portions along its course?", "opts": [["Cardiac, fundic, pyloric", "Cardiac/fundic/pyloric are stomach regions, ascending/transverse/descending are colon segments, and superior/descending/horizontal describe the duodenum."], ["Cervical, mediastinal, abdominal", "The esophagus has cervical, mediastinal (thoracic), and abdominal portions."], ["Ascending, transverse, descending", "Cardiac/fundic/pyloric are stomach regions, ascending/transverse/descending are colon segments, and superior/descending/horizontal describe the duodenum."], ["Superior, descending, horizontal", "Cardiac/fundic/pyloric are stomach regions, ascending/transverse/descending are colon segments, and superior/descending/horizontal describe the duodenum."]], "c": 1, "cite": "'Esophagus' — Portions: Cervical, Mediastinal, Abdominal"}, {"topic": "Esophagus", "io": "Esophagus", "q": "The esophagus passes through the diaphragm at the esophageal hiatus at which vertebral level?", "opts": [["T8", "T8 is the caval hiatus level, T12 is the aortic hiatus level, and L1 is near the transpyloric plane — none is the esophageal hiatus level."], ["T12", "T8 is the caval hiatus level, T12 is the aortic hiatus level, and L1 is near the transpyloric plane — none is the esophageal hiatus level."], ["T10", "The esophagus passes through the diaphragm at the esophageal hiatus at the T10 level, terminating at about T11."], ["L1", "T8 is the caval hiatus level, T12 is the aortic hiatus level, and L1 is near the transpyloric plane — none is the esophageal hiatus level."]], "c": 2, "cite": "'Esophageal Relationships' (T10); 'Esophagus' — Diaphragm (T10), Termination (T11)"}, {"topic": "Esophagus", "io": "Esophagus", "q": "The esophageal mucosa is lined by which epithelium?", "opts": [["Simple columnar epithelium", "Simple columnar epithelium lines the stomach and intestines; simple cuboidal and pseudostratified ciliated columnar epithelia are found elsewhere (glands, airway)."], ["Pseudostratified ciliated columnar epithelium", "Simple columnar epithelium lines the stomach and intestines; simple cuboidal and pseudostratified ciliated columnar epithelia are found elsewhere (glands, airway)."], ["Simple cuboidal epithelium", "Simple columnar epithelium lines the stomach and intestines; simple cuboidal and pseudostratified ciliated columnar epithelia are found elsewhere (glands, airway)."], ["Nonkeratinized stratified squamous epithelium", "The esophageal mucosa is lined by nonkeratinized stratified squamous epithelium."]], "c": 3, "cite": "'Esophagus' — Histology: Mucosa nonkeratinized stratified squamous ep."}, {"topic": "Esophagus", "io": "Esophagus", "q": "The superior esophageal sphincter, located where the pharynx and esophagus meet, is composed of which muscle type?", "opts": [["Skeletal muscle (cricopharyngeus)", "The superior esophageal sphincter is skeletal muscle — the cricopharyngeus — where the pharynx and esophagus meet."], ["Circular smooth muscle", "The inferior (cardiac) sphincter is circular smooth muscle; cardiac muscle and elastic tissue do not form this sphincter."], ["Cardiac muscle", "The inferior (cardiac) sphincter is circular smooth muscle; cardiac muscle and elastic tissue do not form this sphincter."], ["Elastic connective tissue", "The inferior (cardiac) sphincter is circular smooth muscle; cardiac muscle and elastic tissue do not form this sphincter."]], "c": 0, "cite": "'Esophagus' — Superior esophageal sphincter: skeletal muscle, cricopharyngeus"}, {"topic": "Esophagus", "io": "Esophagus", "q": "The inferior esophageal (cardiac) sphincter is described as circular smooth muscle whose function is assisted by which structure, since it is 'not a true sphincter'?", "opts": [["The liver", "The liver, transverse colon, and greater omentum are unrelated to reinforcing the gastroesophageal junction in this lecture."], ["The diaphragm", "The inferior/cardiac sphincter is circular smooth muscle that is not a true sphincter; its function is helped by the diaphragm."], ["The transverse colon", "The liver, transverse colon, and greater omentum are unrelated to reinforcing the gastroesophageal junction in this lecture."], ["The greater omentum", "The liver, transverse colon, and greater omentum are unrelated to reinforcing the gastroesophageal junction in this lecture."]], "c": 1, "cite": "'Esophagus' — Inferior esophageal sphincter, function helped by diaphragm"}, {"topic": "Stomach", "io": "Stomach", "q": "Which of the following is the most superior region of the stomach?", "opts": [["Cardia", "The cardia surrounds the esophageal opening, the body is the central region, and the pyloric antrum lies distally near the pyloric sphincter."], ["Body", "The cardia surrounds the esophageal opening, the body is the central region, and the pyloric antrum lies distally near the pyloric sphincter."], ["Fundus", "The fundus is the most superior region of the stomach."], ["Pyloric antrum", "The cardia surrounds the esophageal opening, the body is the central region, and the pyloric antrum lies distally near the pyloric sphincter."]], "c": 2, "cite": "'The Stomach' — Regions: Cardia, Fundus (most superior), Body, Pyloric"}, {"topic": "Stomach", "io": "Stomach", "q": "The pyloric region of the stomach is subdivided into which parts?", "opts": [["Greater and lesser curvatures", "Fundus/body and cardia are separate stomach regions; the greater and lesser curvatures are the stomach's borders, not pyloric subdivisions."], ["Fundus and body", "Fundus/body and cardia are separate stomach regions; the greater and lesser curvatures are the stomach's borders, not pyloric subdivisions."], ["Cardia and notch", "Fundus/body and cardia are separate stomach regions; the greater and lesser curvatures are the stomach's borders, not pyloric subdivisions."], ["Antrum and canal (with the pyloric sphincter)", "The pyloric region includes the antrum and the canal, ending at the pyloric sphincter."]], "c": 3, "cite": "'The Stomach' — Pyloric: Antrum, Canal, Sphincter"}, {"topic": "Stomach", "io": "Stomach", "q": "The two curvatures of the stomach are the:", "opts": [["Greater and lesser curvatures", "The stomach has a greater curvature and a lesser curvature."], ["Anterior and posterior curvatures", "The stomach's curvatures are named greater and lesser, not by the anterior/posterior, superior/inferior, or medial/lateral axes."], ["Superior and inferior curvatures", "The stomach's curvatures are named greater and lesser, not by the anterior/posterior, superior/inferior, or medial/lateral axes."], ["Medial and lateral curvatures", "The stomach's curvatures are named greater and lesser, not by the anterior/posterior, superior/inferior, or medial/lateral axes."]], "c": 0, "cite": "'The Stomach' — Curvatures: Greater, Lesser"}, {"topic": "Stomach", "io": "Stomach", "q": "Which mucosal specialization of the stomach interior consists of longitudinal folds that allow the stomach to expand?", "opts": [["Plicae circulares", "Plicae circulares are permanent folds of the small intestine, haustra are sacculations of the colon, and villi are small-intestinal projections."], ["Rugae", "Rugae are the longitudinal mucosal folds of the stomach interior (along with the gastric canal, pits, and glands)."], ["Haustra", "Plicae circulares are permanent folds of the small intestine, haustra are sacculations of the colon, and villi are small-intestinal projections."], ["Villi", "Plicae circulares are permanent folds of the small intestine, haustra are sacculations of the colon, and villi are small-intestinal projections."]], "c": 1, "cite": "'Stomach Interior' — Mucosal specializations: Rugae, gastric canal, pits, glands"}, {"topic": "Stomach", "io": "Stomach", "q": "The greater omentum attaches along the greater curvature of the stomach. The lesser omentum attaches along which stomach border?", "opts": [["Greater curvature", "The greater curvature anchors the greater omentum; the anterior surface and pyloric antrum are not the lesser omentum's attachment."], ["Anterior surface", "The greater curvature anchors the greater omentum; the anterior surface and pyloric antrum are not the lesser omentum's attachment."], ["Lesser curvature", "The lesser omentum attaches along the lesser curvature of the stomach (extending to the porta hepatis)."], ["Pyloric antrum", "The greater curvature anchors the greater omentum; the anterior surface and pyloric antrum are not the lesser omentum's attachment."]], "c": 2, "cite": "'Peritoneal Reflections' — lesser omentum to lesser curvature; 'The Stomach' — curvatures"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "The small intestine extends from the pylorus of the stomach to which structure of the large intestine?", "opts": [["Sigmoid colon", "The sigmoid colon, rectum, and splenic flexure are downstream large-intestinal structures, not the junction with the small intestine."], ["Splenic flexure", "The sigmoid colon, rectum, and splenic flexure are downstream large-intestinal structures, not the junction with the small intestine."], ["Rectum", "The sigmoid colon, rectum, and splenic flexure are downstream large-intestinal structures, not the junction with the small intestine."], ["Cecum", "The small intestine extends from the pylorus of the stomach to the cecum of the large intestine."]], "c": 3, "cite": "'Small Intestine' — extends from pylorus to cecum"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "Which segment is the first part of the small intestine, is approximately 25 cm (10 inches) long, and contains the major duodenal papilla?", "opts": [["Duodenum", "The duodenum is the first segment (~25 cm), originating at the pyloric sphincter and containing the major duodenal papilla."], ["Jejunum", "The jejunum is the middle segment, the ileum is the last segment, and the cecum is part of the large intestine."], ["Ileum", "The jejunum is the middle segment, the ileum is the last segment, and the cecum is part of the large intestine."], ["Cecum", "The jejunum is the middle segment, the ileum is the last segment, and the cecum is part of the large intestine."]], "c": 0, "cite": "'Small Intestine' — The duodenum"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "The small intestine terminates at the ileocecal valve, a sphincter located at the end of which segment?", "opts": [["Duodenum", "The duodenum and jejunum are proximal segments, and the pylorus is the stomach outlet — none terminates at the ileocecal valve."], ["Ileum", "The ileum is the last region of the small intestine and terminates at the ileocecal valve."], ["Jejunum", "The duodenum and jejunum are proximal segments, and the pylorus is the stomach outlet — none terminates at the ileocecal valve."], ["Pylorus", "The duodenum and jejunum are proximal segments, and the pylorus is the stomach outlet — none terminates at the ileocecal valve."]], "c": 1, "cite": "'Small Intestine' — The ileum terminates at the ileocecal valve"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "The plicae circulares of the small intestine are described as:", "opts": [["Temporary folds that flatten when the intestine fills", "Gastric rugae are the temporary folds that flatten; haustra are the muscle-tone sacculations of the colon; plicae are neither temporary nor longitudinal."], ["Longitudinal folds identical to gastric rugae", "Gastric rugae are the temporary folds that flatten; haustra are the muscle-tone sacculations of the colon; plicae are neither temporary nor longitudinal."], ["Permanent transverse folds that do not disappear when the intestine fills", "Plicae circulares are permanent transverse folds that do not disappear when the small intestine fills."], ["Sacculations formed by muscle tone", "Gastric rugae are the temporary folds that flatten; haustra are the muscle-tone sacculations of the colon; plicae are neither temporary nor longitudinal."]], "c": 2, "cite": "'Plicae' — permanent, do not disappear when small intestine fills"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "Which portion of the duodenum is the shortest, retroperitoneal, and (for its first part / duodenal cap) intraperitoneal?", "opts": [["Ascending part", "The descending part contains the greater and lesser papillae, the transverse part is the longest, and the ascending part ends at the duodenojejunal flexure."], ["Descending part", "The descending part contains the greater and lesser papillae, the transverse part is the longest, and the ascending part ends at the duodenojejunal flexure."], ["Transverse (horizontal) part", "The descending part contains the greater and lesser papillae, the transverse part is the longest, and the ascending part ends at the duodenojejunal flexure."], ["Superior part", "The superior part is the shortest and widest; its first portion, the duodenal cap (ampulla), is intraperitoneal, while the rest of the duodenum is retroperitoneal."]], "c": 3, "cite": "'Duodenum' — Superior part / Duodenal cap"}, {"topic": "Small Intestine", "io": "Small Intestine", "q": "Distinguishing features of the jejunum compared with the ileum include which of the following?", "opts": [["Larger diameter, thicker walls, and more prominent plicae circulares", "The jejunum has a larger diameter, thicker walls, more plicae circulares, and is more vascular; it lies mostly in the left upper quadrant."], ["Smaller diameter and thinner walls", "Smaller diameter/thinner walls, abundant Peyer's patches, and a right-lower-quadrant location are features of the ileum instead."], ["Presence of numerous Peyer's patches", "Smaller diameter/thinner walls, abundant Peyer's patches, and a right-lower-quadrant location are features of the ileum instead."], ["Location mainly in the right lower quadrant", "Smaller diameter/thinner walls, abundant Peyer's patches, and a right-lower-quadrant location are features of the ileum instead."]], "c": 0, "cite": "'Jejunum' — larger diameter, thicker walls, plicae circulares, more vascular"}, {"topic": "Large Intestine", "io": "Large Intestine", "q": "The large intestine is composed of which four segments?", "opts": [["Duodenum, jejunum, ileum, cecum", "Duodenum/jejunum/ileum are small-intestinal; fundus/body/antrum/pylorus are stomach regions; the four colon parts alone omit the cecum, rectum, and anal canal."], ["Cecum, colon, rectum, anal canal", "The large intestine is composed of the cecum, colon, rectum, and anal canal."], ["Fundus, body, antrum, pylorus", "Duodenum/jejunum/ileum are small-intestinal; fundus/body/antrum/pylorus are stomach regions; the four colon parts alone omit the cecum, rectum, and anal canal."], ["Ascending, transverse, descending, sigmoid only", "Duodenum/jejunum/ileum are small-intestinal; fundus/body/antrum/pylorus are stomach regions; the four colon parts alone omit the cecum, rectum, and anal canal."]], "c": 1, "cite": "'Large Intestine' — cecum, colon, rectum, anal canal"}, {"topic": "Large Intestine", "io": "Large Intestine", "q": "Which three anatomic specializations are characteristic of the colon but absent in the rectum and appendix?", "opts": [["Villi, plicae, rugae", "Villi/plicae/rugae and microvilli/crypts are mucosal features of other regions, and fundus/antrum/pylorus are stomach terms."], ["Peyer's patches, crypts, microvilli", "Villi/plicae/rugae and microvilli/crypts are mucosal features of other regions, and fundus/antrum/pylorus are stomach terms."], ["Taeniae coli, haustra (sacculations), and omental appendices", "The colon shows three taeniae coli, haustra (sacculations), and omental appendices — features absent in the rectum and appendix."], ["Fundus, antrum, pylorus", "Villi/plicae/rugae and microvilli/crypts are mucosal features of other regions, and fundus/antrum/pylorus are stomach terms."]], "c": 2, "cite": "'Large Intestine' — Taeniae coli (3), sacculations (haustra), omental appendices"}, {"topic": "Large Intestine", "io": "Large Intestine", "q": "The appendix (vermiform appendix) is a slender hollow appendage anchored by which structure and dominated by which tissue?", "opts": [["Phrenicocolic ligament; villi", "The transverse mesocolon suspends the transverse colon; the falciform ligament attaches the liver; villi belong to the small intestine."], ["Transverse mesocolon; goblet cells", "The transverse mesocolon suspends the transverse colon; the falciform ligament attaches the liver; villi belong to the small intestine."], ["Falciform ligament; smooth muscle", "The transverse mesocolon suspends the transverse colon; the falciform ligament attaches the liver; villi belong to the small intestine."], ["Mesoappendix; lymphoid nodules", "The appendix is fixed by the mesoappendix and is dominated by lymphoid nodules (a lymphoid organ)."]], "c": 3, "cite": "'Cecum and Appendix'; 'The Appendix' — mesoappendix, lymphoid nodules"}, {"topic": "Large Intestine", "io": "Large Intestine", "q": "The ascending colon terminates at which flexure?", "opts": [["Right colic (hepatic) flexure", "The ascending colon terminates at the right colic (hepatic) flexure."], ["Left colic (splenic) flexure", "The left colic (splenic) flexure ends the transverse colon; the duodenojejunal flexure is in the small intestine; there is no 'sigmoid flexure' as the ascending colon's end."], ["Duodenojejunal flexure", "The left colic (splenic) flexure ends the transverse colon; the duodenojejunal flexure is in the small intestine; there is no 'sigmoid flexure' as the ascending colon's end."], ["Sigmoid flexure", "The left colic (splenic) flexure ends the transverse colon; the duodenojejunal flexure is in the small intestine; there is no 'sigmoid flexure' as the ascending colon's end."]], "c": 0, "cite": "'Ascending Colon' — terminates at right colic (hepatic) flexure"}, {"topic": "Large Intestine", "io": "Large Intestine", "q": "Which segment of the colon is described as the most mobile and longest, is intraperitoneal, and is suspended by the transverse mesocolon?", "opts": [["Ascending colon", "The ascending and descending colon are retroperitoneal and less mobile; the sigmoid colon extends into the pelvis but is not described as the longest/most mobile here."], ["Transverse colon", "The transverse colon is the most mobile and longest portion, is intraperitoneal, and is suspended by the transverse mesocolon between the right and left colic flexures."], ["Descending colon", "The ascending and descending colon are retroperitoneal and less mobile; the sigmoid colon extends into the pelvis but is not described as the longest/most mobile here."], ["Sigmoid colon", "The ascending and descending colon are retroperitoneal and less mobile; the sigmoid colon extends into the pelvis but is not described as the longest/most mobile here."]], "c": 1, "cite": "'Transverse Colon'"}, {"topic": "Liver & Gallbladder", "io": "Liver & Gallbladder", "q": "The liver is the largest visceral organ and largest gland. It is completely covered by which capsule?", "opts": [["Gerota's fascia", "Gerota's fascia surrounds the kidney, Bowman's capsule is in the renal corpuscle, and Tenon's capsule is around the eyeball."], ["Bowman's capsule", "Gerota's fascia surrounds the kidney, Bowman's capsule is in the renal corpuscle, and Tenon's capsule is around the eyeball."], ["Glisson's capsule", "The liver is completely covered by Glisson's capsule (with incomplete peritoneal covering)."], ["Tenon's capsule", "Gerota's fascia surrounds the kidney, Bowman's capsule is in the renal corpuscle, and Tenon's capsule is around the eyeball."]], "c": 2, "cite": "'The Liver' — completely covered by Glisson's Capsule"}, {"topic": "Liver & Gallbladder", "io": "Liver & Gallbladder", "q": "The liver receives a triple blood supply. Which vessel delivers the inflow of blood needing metabolic processing?", "opts": [["Hepatic artery", "The hepatic artery supplies mainly the bile ducts (~15% of tissue flow), the hepatic veins carry outflow to the right atrium, and the cystic artery supplies the gallbladder."], ["Cystic artery", "The hepatic artery supplies mainly the bile ducts (~15% of tissue flow), the hepatic veins carry outflow to the right atrium, and the cystic artery supplies the gallbladder."], ["Hepatic veins", "The hepatic artery supplies mainly the bile ducts (~15% of tissue flow), the hepatic veins carry outflow to the right atrium, and the cystic artery supplies the gallbladder."], ["Portal vein", "The portal vein delivers inflow of blood needing metabolic processing to the liver."]], "c": 3, "cite": "'Liver triple blood supply' — Portal vein"}, {"topic": "Liver & Gallbladder", "io": "Liver & Gallbladder", "q": "The caudate lobe of the liver lies between the inferior vena cava and which structure?", "opts": [["Ligamentum venosum", "The caudate lobe lies between the inferior vena cava and the ligamentum venosum."], ["Ligamentum teres", "The quadrate lobe lies between the gallbladder and ligamentum teres; the falciform ligament separates the right and left lobes."], ["Gallbladder", "The quadrate lobe lies between the gallbladder and ligamentum teres; the falciform ligament separates the right and left lobes."], ["Falciform ligament", "The quadrate lobe lies between the gallbladder and ligamentum teres; the falciform ligament separates the right and left lobes."]], "c": 0, "cite": "'Lobes of the Liver' — Caudate: between IVC and ligamentum venosum"}, {"topic": "Liver & Gallbladder", "io": "Liver & Gallbladder", "q": "The quadrate lobe of the liver is located between which two structures?", "opts": [["The IVC and the ligamentum venosum", "The IVC and ligamentum venosum bound the caudate lobe; the falciform/coronary ligaments and porta hepatis/bare area are other liver landmarks."], ["The gallbladder and the ligamentum teres", "The quadrate lobe lies between the gallbladder and the ligamentum teres (round ligament)."], ["The falciform and coronary ligaments", "The IVC and ligamentum venosum bound the caudate lobe; the falciform/coronary ligaments and porta hepatis/bare area are other liver landmarks."], ["The porta hepatis and the bare area", "The IVC and ligamentum venosum bound the caudate lobe; the falciform/coronary ligaments and porta hepatis/bare area are other liver landmarks."]], "c": 1, "cite": "'Lobes of the Liver' — Quadrate: between gall bladder and ligamentum teres"}, {"topic": "Liver & Gallbladder", "io": "Liver & Gallbladder", "q": "The portal triad — found at the corners of a liver lobule — consists of branches of which three structures?", "opts": [["Hepatic artery, cystic duct, and central vein", "The central vein drains the lobule center (not part of the triad), and cystic/pancreatic ducts and hepatic veins are not components of the triad."], ["Central vein, hepatic vein, and lymphatic", "The central vein drains the lobule center (not part of the triad), and cystic/pancreatic ducts and hepatic veins are not components of the triad."], ["Portal vein, hepatic artery, and bile duct", "The portal triad consists of a branch of the portal vein, hepatic artery, and bile duct."], ["Portal vein, hepatic vein, and pancreatic duct", "The central vein drains the lobule center (not part of the triad), and cystic/pancreatic ducts and hepatic veins are not components of the triad."]], "c": 2, "cite": "'Histology of the liver' — Portal triad: portal vein, hepatic artery, bile duct"}, {"topic": "Pancreas & Spleen", "io": "Pancreas & Spleen", "q": "The pancreas is described as retroperitoneal with which regions?", "opts": [["Cardia, fundus, body, pylorus", "Cardia/fundus/pylorus are stomach regions, the four-part scheme describes the duodenum, and fundus/body/neck describes the gallbladder."], ["Fundus, body, neck", "Cardia/fundus/pylorus are stomach regions, the four-part scheme describes the duodenum, and fundus/body/neck describes the gallbladder."], ["Superior, descending, horizontal, ascending", "Cardia/fundus/pylorus are stomach regions, the four-part scheme describes the duodenum, and fundus/body/neck describes the gallbladder."], ["Head, uncinate process, neck, body, and tail", "The pancreas has a head, uncinate process, neck, body, and tail."]], "c": 3, "cite": "'The Pancreas' — Regions: Head, Uncinate process, Neck, body, tail"}, {"topic": "Pancreas & Spleen", "io": "Pancreas & Spleen", "q": "The main pancreatic duct is also known by which eponym?", "opts": [["Duct of Wirsung", "The principal (main) pancreatic duct is the duct of Wirsung; the accessory duct is the duct of Santorini."], ["Duct of Santorini", "The duct of Santorini is the accessory pancreatic duct; Wharton's and Stensen's ducts are salivary (submandibular and parotid)."], ["Duct of Wharton", "The duct of Santorini is the accessory pancreatic duct; Wharton's and Stensen's ducts are salivary (submandibular and parotid)."], ["Duct of Stensen", "The duct of Santorini is the accessory pancreatic duct; Wharton's and Stensen's ducts are salivary (submandibular and parotid)."]], "c": 0, "cite": "'Pancreas' — Principal pancreatic duct (of Wirsung), accessory (of Santorini)"}, {"topic": "Pancreas & Spleen", "io": "Pancreas & Spleen", "q": "The pancreatic islets, the endocrine tissue of the pancreas, make up approximately what fraction of pancreatic cells?", "opts": [["About 25%", "The remaining ~99% of the pancreas is exocrine (acinar) tissue, so 25%, 50%, and 75% are far too high."], ["About 1%", "The pancreatic islets are scattered endocrine tissue making up about 1% of pancreatic cells."], ["About 50%", "The remaining ~99% of the pancreas is exocrine (acinar) tissue, so 25%, 50%, and 75% are far too high."], ["About 75%", "The remaining ~99% of the pancreas is exocrine (acinar) tissue, so 25%, 50%, and 75% are far too high."]], "c": 1, "cite": "'Pancreatic Islets' — scattered (1% of pancreatic cells)"}, {"topic": "Abdominal Vasculature", "io": "Abdominal Vasculature", "q": "The celiac trunk arises from the aorta at the aortic hiatus and gives which three branches?", "opts": [["Right gastric, cystic, and gastroduodenal arteries", "The SMA/IMA/renal arteries are separate aortic branches; right gastric/cystic/gastroduodenal are downstream branches of the hepatic system; the left colic is an IMA branch."], ["Superior mesenteric, inferior mesenteric, and renal arteries", "The SMA/IMA/renal arteries are separate aortic branches; right gastric/cystic/gastroduodenal are downstream branches of the hepatic system; the left colic is an IMA branch."], ["Left gastric, splenic, and common hepatic arteries", "The celiac trunk branches into the left gastric, splenic, and common hepatic arteries."], ["Splenic, superior mesenteric, and left colic arteries", "The SMA/IMA/renal arteries are separate aortic branches; right gastric/cystic/gastroduodenal are downstream branches of the hepatic system; the left colic is an IMA branch."]], "c": 2, "cite": "'Arterial Supply of the Abdomen — The Celiac Trunk'"}, {"topic": "Abdominal Vasculature", "io": "Abdominal Vasculature", "q": "The common hepatic artery continues as the proper hepatic artery and also gives off which branch that descends toward the duodenum and pancreas?", "opts": [["Left gastric artery", "The left gastric and splenic arteries are separate celiac branches; the superior mesenteric artery arises directly from the aorta."], ["Superior mesenteric artery", "The left gastric and splenic arteries are separate celiac branches; the superior mesenteric artery arises directly from the aorta."], ["Splenic artery", "The left gastric and splenic arteries are separate celiac branches; the superior mesenteric artery arises directly from the aorta."], ["Gastroduodenal artery", "The common hepatic artery gives off the gastroduodenal artery (and the proper hepatic continues to the liver, giving right gastric and right/left hepatic branches)."]], "c": 3, "cite": "'Common Hepatic Artery' — Proper hepatic, Right gastric, Gastroduodenal, Supraduodenal"}, {"topic": "Abdominal Vasculature", "io": "Abdominal Vasculature", "q": "Which artery supplying the esophagus is a branch of the celiac artery?", "opts": [["Left gastric branch of the celiac artery", "The left gastric branch of the celiac artery supplies the (abdominal) esophagus."], ["Inferior thyroid branch of the thyrocervical trunk", "The inferior thyroid branch (thyrocervical trunk), descending thoracic aorta, and left inferior phrenic also supply the esophagus, but only the left gastric is a celiac branch; the internal thoracic is not listed."], ["Bronchial arteries", "The inferior thyroid branch (thyrocervical trunk), descending thoracic aorta, and left inferior phrenic also supply the esophagus, but only the left gastric is a celiac branch; the internal thoracic is not listed."], ["Internal thoracic artery", "The inferior thyroid branch (thyrocervical trunk), descending thoracic aorta, and left inferior phrenic also supply the esophagus, but only the left gastric is a celiac branch; the internal thoracic is not listed."]], "c": 0, "cite": "'Esophagus' — arterial supply (left gastric branch of the celiac artery)"}, {"topic": "Abdominal Vasculature", "io": "Abdominal Vasculature", "q": "The hepatic veins that drain the liver empty directly into which vessel?", "opts": [["Portal vein", "The portal, splenic, and superior mesenteric veins deliver blood toward the liver/portal system rather than receiving hepatic venous outflow."], ["Inferior vena cava", "The hepatic veins drain into the inferior vena cava, carrying outflow toward the right atrium."], ["Splenic vein", "The portal, splenic, and superior mesenteric veins deliver blood toward the liver/portal system rather than receiving hepatic venous outflow."], ["Superior mesenteric vein", "The portal, splenic, and superior mesenteric veins deliver blood toward the liver/portal system rather than receiving hepatic venous outflow."]], "c": 1, "cite": "'Histology of the liver' — Hepatic veins drain into inferior vena cava; 'Liver triple blood supply'"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -839,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -870,417 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
     });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " \u00b7 " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
     return;
   }
 
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: GI_I___II.pdf — ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
   });
-
-  el('feedback').classList.remove('show');
-  el('nextBtn').classList.add('hidden');
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: GI_I___II.pdf — ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review \u2014 all questions' : 'Review \u2014 missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of GI anatomy.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  const missedByTopic = {};
-  state.missed.forEach(m => { missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1; });
-  Object.keys(topics).forEach(t => { topics[t].correct = topics[t].total - (missedByTopic[t]||0); });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: GI_I___II.pdf — ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: GI_I___II.pdf — ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -1328,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>

@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Physiology Exam 2 - Circulatory Physiology I (Set 2)
-  Single self-contained file. To publish on GitHub Pages, save as index.html.
-  All questions are drawn only from the uploaded lecture material.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -13,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #4a2f6b; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #0e7c86; }
   }
 </style>
 
@@ -52,415 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Circulatory Physiology I — Physiology Exam 2 — Set 2</title>
 <style>
   :root{
-    --ink:#132635;
-    --ink-soft:#48607a;
-    --paper:#eef4f8;
-    --paper-2:#f9fcfd;
-    --line:#c9dbe6;
-    --oxblood:#7a2048;
-    --oxblood-soft:#2e6a92;
-    --brass:#0e7c86;
-    --teal:#4a2f6b;
-    --teal-deep:#0b5a54;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(19,38,53,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#621a3a; --indigo:#4a2f6b; --gold:#0e7c86; --ice:#c0abda;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Masthead */
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  /* Intro */
-  .intro h2{
-    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
-  }
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{
-    list-style:none;padding:0;margin:16px 0 6px;
-    display:grid;gap:8px;
-  }
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{
-    font-weight:700;color:var(--oxblood);
-    font-size:12px;min-width:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;
-    border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{
-    background:var(--oxblood);color:#fdf6ee;
-    box-shadow:0 6px 16px rgba(27,79,114,.28);
-  }
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  /* Progress bar */
-  .status{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:14px;margin-bottom:14px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{
-    font-size:13px;font-weight:700;color:var(--teal-deep);
-    background:var(--paper);border:1px solid var(--line);
-    padding:6px 12px;border-radius:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    display:inline-block;text-transform:uppercase;
-    letter-spacing:.16em;font-size:10.5px;font-weight:700;
-    color:var(--teal);margin-bottom:12px;
-  }
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
-  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
-  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;
-    text-align:left;width:100%;
-    background:var(--paper-2);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;cursor:pointer;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{
-    font-weight:700;color:var(--oxblood);
-    min-width:22px;font-size:14px;
-    border-right:1px solid var(--line);padding-right:11px;
-  }
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{
-    margin-top:20px;border-radius:10px;padding:16px 18px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    border:1px solid var(--line);background:var(--paper);
-    display:none;
-  }
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{
-    margin-top:10px;font-size:12px;color:var(--ink-soft);
-    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  /* Results */
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{
-    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
-    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{
-    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
-    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
-    margin:34px 0 12px;text-align:left;
-  }
-  .bd-row{
-    display:flex;align-items:center;gap:12px;margin:0 0 9px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{
-    border:1px solid var(--line);border-left:3px solid var(--wrong);
-    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
-  }
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
-  }
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
-    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    color:var(--correct);background:var(--correct-bg);
-    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
-  }
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{
-    text-align:center;margin-top:40px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
-    letter-spacing:.03em;
-  }
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;}
-  }
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
-    <h1>Physiology Exam<span class="sys">Circulatory Physiology I — Set 2</span></h1>
-    <p class="sub">Vascular Tree &amp; Pressure-Flow-Resistance &middot; Capillary Exchange &amp; Starling Forces &middot; Lymphatics &amp; Local Blood Flow Control</p>
+  <header>
+    <h1>Physiology ExamCirculatory Physiology I — Set 2</h1>
+    <div class="sub">Vascular Tree & Pressure-Flow-Resistance · Capillary Exchange & Starling Forces · Lymphatics & Local Blood Flow Control</div>
+    <span class="pill">30 questions</span>
   </header>
 
-  <!-- INTRO -->
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>This exam covers Circulation Physiology I, spanning the components/cross-sectional area/pressure profile of the vascular tree, the determinants of blood flow (Q=&Delta;P/R), vascular distensibility/capacitance and arterial pulse pressure, capillary structure and Starling forces governing fluid exchange, the lymphatic system, and local/long-term control of tissue blood flow. Every item is drawn only from that lecture and is built around its instructional objectives.</p>
-    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Outline the flow of blood through the systemic and pulmonary circulations, and describe how blood pressure changes throughout the cardiovascular system.</span></li>
-      <li><span class="n">2</span><span>Discuss the role and components of the lymphatic system, and compare and contrast how solutes and fluids are exchanged in capillaries.</span></li>
-      <li><span class="n">3</span><span>Describe the factors that regulate the volume of blood flow, and describe the factors that determine mean arterial pressure and systemic vascular resistance.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Outline the flow of blood through the systemic and pulmonary circulations, and describe how blood pressure changes throughout the cardiovascular system.</span><span class="chip">Discuss the role and components of the lymphatic system, and compare and contrast how solutes and fluids are exchanged in capillaries.</span><span class="chip">Describe the factors that regulate the volume of blood flow, and describe the factors that determine mean arterial pressure and systemic vascular resistance.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=circulatory-physiology-1-2" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 60</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
-
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
+  </div>
 
   <!-- RESULTS -->
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 60</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Built from the Circulation Physiology I lecture &middot; PAJ 5000 Physiology &middot; for study use. (Set 2)
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 30 items, drawn only from the circulatory physiology I lecture (Set 2).
-   answer = index (0-3) of correct choice.
-   ============================================================ */
-const QUESTIONS = [{"topic": "Capillary Wall Structure", "q": "What is the structure of the capillary wall, and what are the two routes for solutes/water to cross it?", "choices": ["A multilayered epithelium; solutes cross only through active transport", "Capillary walls are impermeable to all substances", "A unicellular layer of endothelial cells surrounded by a basement membrane; solutes/water cross via intercellular clefts or plasmalemmal vesicles", "A thick smooth muscle layer with no endothelium"], "answer": 2, "correct": "The capillary wall is composed of a unicellular layer of endothelial cells surrounded by a basement membrane (capillary diameter 4-9 microns); solutes and water cross via intercellular clefts (spaces between cells) or via plasmalemmal vesicles.", "src": "9. Circulatory Physiology I.pptx, Slide 51"}, {"topic": "Lipid-Soluble vs Lipid-Insoluble Capillary Transport", "q": "How do lipid-soluble substances (e.g., CO2, O2) cross the capillary wall, compared to lipid-insoluble substances (e.g., water, Na+, glucose)?", "choices": ["Both cross exclusively via intercellular clefts", "Lipid-insoluble substances diffuse directly through the membrane, and lipid-soluble substances use clefts", "Lipid-soluble substances diffuse directly through the capillary cell membrane; lipid-insoluble substances cross via intercellular clefts", "Lipid-soluble substances cannot cross the capillary wall at all"], "answer": 2, "correct": "Lipid-soluble substances like CO2 and O2 diffuse directly through the capillary endothelial cell membrane, while lipid-insoluble substances like water, Na+, Cl-, and glucose cross via intercellular clefts (spaces between adjacent endothelial cells).", "src": "9. Circulatory Physiology I.pptx, Slide 52"}, {"topic": "Capillary Pore Size", "q": "What is the approximate width of the intercellular slit pores in capillary walls?", "choices": ["600-700 nanometers", "6-7 micrometers", "6-7 nanometers", "6-7 millimeters"], "answer": 2, "correct": "The width of capillary intercellular slit pores is about 6-7 nanometers, and capillary permeability to different substances varies according to their molecular diameter relative to this pore size.", "src": "9. Circulatory Physiology I.pptx, Slide 53"}, {"topic": "Molecular Size and Capillary Permeability", "q": "Based on the relative permeability table, how does albumin's capillary permeability compare to water's?", "choices": ["Molecular weight has no effect on capillary permeability", "Albumin is far less permeable than water (about 0.0001 vs 1.00), due to its much larger molecular weight", "Albumin is more permeable than water", "Albumin and water have identical permeability"], "answer": 1, "correct": "Albumin (molecular weight ~69,000) has a relative permeability of about 0.0001 compared to water's permeability of 1.00, illustrating how capillary permeability decreases dramatically as molecular size increases.", "src": "9. Circulatory Physiology I.pptx, Slide 54"}, {"topic": "Interstitium Structure", "q": "What are the two major solid structures found in the interstitium, and in what form is most interstitial fluid found?", "choices": ["Muscle fibers and nerve fibers", "Collagen fibers and proteoglycan filaments; most fluid exists as a gel (proteoglycan-fluid mixture) rather than free fluid", "Only free-flowing fluid with no solid structures", "Elastin fibers and reticular fibers only"], "answer": 1, "correct": "The interstitium contains collagen fibers and proteoglycan filaments (coiled hyaluronic acid molecules) as its major solid structures; almost all interstitial fluid exists as a gel (fluid-proteoglycan mixture), with very little free fluid under normal conditions.", "src": "9. Circulatory Physiology I.pptx, Slide 55"}, {"topic": "Starling Forces — Capillary Hydrostatic Pressure", "q": "What direction does capillary hydrostatic pressure (Pc) tend to move fluid?", "choices": ["It only affects protein movement, not fluid", "Inward, into the capillary", "Outward, through the capillary membrane into the interstitium", "It has no effect on fluid movement"], "answer": 2, "correct": "Capillary hydrostatic pressure (Pc) tends to force fluid outward through the capillary membrane, into the interstitial space — one of the four Starling forces governing capillary fluid exchange.", "src": "9. Circulatory Physiology I.pptx, Slide 56"}, {"topic": "Starling Forces — Plasma Colloid Osmotic Pressure", "q": "What direction does plasma colloid osmotic pressure move fluid, and what causes changes in it?", "choices": ["It promotes filtration outward; caused by red blood cell concentration", "It has no effect on capillary fluid movement", "It opposes filtration, causing osmosis of water inward; changes are caused by conditions like cirrhosis, nephrosis, or dilutional states affecting plasma protein concentration", "It only affects lymphatic flow, not capillary exchange"], "answer": 2, "correct": "Plasma colloid osmotic pressure opposes filtration, causing osmosis of water inward through the capillary membrane; conditions like cirrhosis, nephrosis, or dilutional states (which lower plasma protein concentration) reduce this pressure and promote edema.", "src": "9. Circulatory Physiology I.pptx, Slide 59"}, {"topic": "Sources of Plasma Colloid Osmotic Pressure", "q": "What percentage of total plasma colloid osmotic pressure comes from albumin versus globulins?", "choices": ["100% albumin, 0% globulins", "25% albumin, 75% globulins", "75% albumin, 25% globulins", "50% albumin, 50% globulins"], "answer": 2, "correct": "About 75% of total plasma colloid osmotic pressure results from albumin, and about 25% is due to globulins (with a small additional contribution from fibrinogen).", "src": "9. Circulatory Physiology I.pptx, Slide 64"}, {"topic": "Net Filtration Pressure Equation", "q": "What is the equation for net filtration pressure (NP) across a capillary, incorporating all four Starling forces?", "choices": ["NP = Pc − πp + Pif − πif", "NP = Pc + πp + Pif + πif", "NP is independent of any of these forces", "NP = Pc − πp − Pif + πif"], "answer": 3, "correct": "Net filtration pressure is NP = Pc − πp − Pif + πif, where Pc is capillary hydrostatic pressure (outward), πp is plasma colloid osmotic pressure (inward), Pif is interstitial fluid pressure (opposes filtration if positive), and πif is interstitial colloid osmotic pressure (outward, promoting filtration).", "src": "9. Circulatory Physiology I.pptx, Slide 62"}, {"topic": "Interstitial Fluid Pressure", "q": "What is normal interstitial fluid pressure in most tissues, and what is it in encapsulated organs?", "choices": ["Normally negative (about -3 mm Hg) in most tissues, but positive (+5 to +10 mm Hg) in encapsulated organs, with the negative pressure attributed to lymphatic pumping", "Always zero regardless of tissue type", "Normally positive (+10 mm Hg) in most tissues; negative in encapsulated organs", "Always equal to capillary hydrostatic pressure"], "answer": 0, "correct": "Interstitial fluid pressure in most tissues is normally slightly negative (about -3 mm Hg), caused by pumping of the lymphatic system, while encapsulated organs have positive interstitial pressures (+5 to +10 mm Hg) due to their surrounding capsule.", "src": "9. Circulatory Physiology I.pptx, Slide 63"}, {"topic": "Filtration at the Arteriolar End", "q": "At the arteriolar end of a typical capillary, is the net force outward (filtration) or inward (absorption), and what is its approximate magnitude?", "choices": ["Net outward force of about 13 mm Hg (filtration)", "Net inward force of about 13 mm Hg (absorption)", "No net force — forces are perfectly balanced", "Net outward force of about 41 mm Hg"], "answer": 0, "correct": "At the arteriolar end of the capillary, total outward force (about 41 mm Hg, mainly capillary pressure) exceeds total inward force (about 28 mm Hg, plasma colloid osmotic pressure), yielding a net outward filtration force of about 13 mm Hg.", "src": "9. Circulatory Physiology I.pptx, Slide 70"}, {"topic": "Reabsorption at the Venous End", "q": "At the venous end of a typical capillary, is the net force outward or inward, and what is its approximate magnitude?", "choices": ["Net outward force of about 13 mm Hg", "No net force at the venous end", "Net outward force of about 28 mm Hg", "Net inward force of about 7 mm Hg (reabsorption), since capillary pressure has fallen along the capillary length"], "answer": 3, "correct": "At the venous end of the capillary, capillary pressure has fallen (to about 10 mm Hg) while plasma colloid osmotic pressure remains about 28 mm Hg, producing a net inward force of about 7 mm Hg that reabsorbs fluid back into the capillary.", "src": "9. Circulatory Physiology I.pptx, Slide 72"}, {"topic": "Net Fluid Filtration for the Body", "q": "What is the approximate net filtration rate for the entire body, given a mean net filtration pressure of about 0.3 mm Hg?", "choices": ["20 L/min", "200 mL/min", "0 mL/min — there is no net filtration", "2 mL/min"], "answer": 3, "correct": "The mean net filtration pressure across capillaries throughout the body is about 0.3 mm Hg, producing a net filtration rate of approximately 2 mL/min for the entire body — this small excess is returned to the circulation via the lymphatics.", "src": "9. Circulatory Physiology I.pptx, Slide 75"}, {"topic": "Fate of Filtered Fluid", "q": "What percentage of filtered capillary fluid is reabsorbed at the venous end, and what happens to the remainder?", "choices": ["None of the filtered fluid is ever reabsorbed", "50% is reabsorbed; 50% remains as edema", "90% is reabsorbed at the venous end; the remaining 10% is returned to circulation via the lymphatics", "100% is reabsorbed, with none entering the lymphatics"], "answer": 2, "correct": "About 90% of filtered fluid is reabsorbed at the venous end of the capillary; the remaining 10% is returned to the circulation via the lymphatic system, preventing net fluid accumulation (edema) under normal conditions.", "src": "9. Circulatory Physiology I.pptx, Slide 68"}, {"topic": "Lymphatic System Functions", "q": "What are the major functions of the lymphatic system described in this lecture?", "choices": ["An accessory route for fluid/protein return to blood (preventing edema), a major route for GI nutrient absorption, and a role in immune function", "Regulating heart rate directly", "Only removing waste products, with no role in immunity or nutrient absorption", "Producing red blood cells exclusively"], "answer": 0, "correct": "The lymphatic system serves as an accessory route for fluid and protein to flow from interstitial spaces back to the blood (important in preventing edema), is a major route for absorption of nutrients from the GI tract, and plays an important role in the immune system.", "src": "9. Circulatory Physiology I.pptx, Slide 76"}, {"topic": "Lymphatic Valve Structure", "q": "What structural feature of lymphatic capillaries allows easy entry of high-molecular-weight substances and proteins while preventing backflow?", "choices": ["A continuous basement membrane with no gaps", "Overlapping endothelial cells that form valves preventing backflow while allowing easy entry of large molecules/proteins", "Lymphatic capillaries have no valve-like structures at all", "Tight junctions with no overlap between cells"], "answer": 1, "correct": "Overlap between endothelial cells in lymphatic capillaries forms flap-like valves that prevent backflow of lymph while allowing easy entry of high-molecular-weight substances and proteins that cannot easily enter blood capillaries.", "src": "9. Circulatory Physiology I.pptx, Slide 77"}, {"topic": "Lymph Flow Determinants", "q": "What two major factors determine the rate of lymph flow?", "choices": ["Lymph flow is constant and unregulated", "Only blood pressure in the aorta", "Only the activity of the lymphatic pump", "Interstitial fluid (IF) pressure and the activity of the lymphatic pump (smooth muscle contraction, external compression, arterial pulsation, and valves)"], "answer": 3, "correct": "Lymph flow is a function of interstitial fluid (IF) pressure and the activity of the lymphatic pump — driven by smooth muscle contraction in lymph vessel walls, external compression (e.g., skeletal muscle), pulsation of surrounding arteries, and one-way lymphatic valves.", "src": "9. Circulatory Physiology I.pptx, Slide 79"}, {"topic": "Local Control of Blood Flow", "q": "What determines how much blood flow a given tissue receives under local control?", "choices": ["Each tissue controls its own blood flow in proportion to its needs (oxygen delivery, nutrient delivery, waste removal), closely related to metabolic rate", "Blood flow is fixed and unrelated to tissue activity", "Blood flow is determined solely by total blood volume", "Only the autonomic nervous system determines local tissue blood flow"], "answer": 0, "correct": "Each tissue controls its own blood flow in proportion to its needs — delivery of oxygen and nutrients, removal of CO2 and other metabolites, and transport of hormones — with flow closely related to the tissue's metabolic rate.", "src": "9. Circulatory Physiology I.pptx, Slide 80"}, {"topic": "Vasodilator Theory", "q": "According to the vasodilator theory of local blood flow control, which substances act as vasodilators released by metabolically active tissue?", "choices": ["Only norepinephrine", "Adenosine, CO2, lactic acid, ADP compounds, histamine, K+ ions, and H+ ions", "Only albumin", "Only oxygen"], "answer": 1, "correct": "The vasodilator theory proposes that metabolically active tissue releases vasodilator substances — adenosine, CO2, lactic acid, ADP compounds, histamine, K+ ions, and H+ ions — that increase local blood flow to meet metabolic demand.", "src": "9. Circulatory Physiology I.pptx, Slide 84"}, {"topic": "Oxygen Demand Theory", "q": "What does the oxygen demand theory propose about the relationship between oxygen availability and local blood flow?", "choices": ["Oxygen availability has no effect on local blood flow", "Only CO2, not oxygen, affects local blood flow", "Reduced oxygen availability decreases blood flow further", "Reduced oxygen availability increases blood flow, providing acute local feedback control matching flow to oxygen need"], "answer": 3, "correct": "The oxygen demand theory proposes that reduced oxygen availability to a tissue increases local blood flow, providing acute feedback control that helps match blood flow delivery to the tissue's oxygen needs.", "src": "9. Circulatory Physiology I.pptx, Slide 86"}, {"topic": "Autoregulation of Blood Flow", "q": "What is autoregulation of blood flow?", "choices": ["The ability of a tissue to maintain blood flow relatively constant over a wide range of arterial pressures", "A phenomenon that only occurs in the heart", "A mechanism requiring direct cortical control", "The inability of any tissue to control its own blood flow"], "answer": 0, "correct": "Autoregulation is the ability of a tissue to maintain blood flow relatively constant over a wide range of arterial pressures, explained by both metabolic theory (pressure drop → reduced O2/nutrient delivery → vasodilator release) and myogenic theory (arterioles intrinsically dilate in response to decreased wall tension).", "src": "9. Circulatory Physiology I.pptx, Slide 88"}, {"topic": "Myogenic Theory & Laplace's Law", "q": "According to Laplace's law, how is the wall tension of a hollow structure (like a blood vessel) related to internal pressure, radius, and wall thickness?", "choices": ["Wall tension is unrelated to any of these variables", "Wall tension only depends on wall thickness", "Wall tension is inversely related to internal pressure and radius, and directly related to wall thickness", "Wall tension is directly related to internal pressure and radius, and inversely related to wall thickness"], "answer": 3, "correct": "Laplace's law states that the wall tension of a hollow structure (vessel, ventricle, alveolus) is directly related to internal pressure and radius, and inversely related to wall thickness — thicker walls reduce wall tension for a given pressure and radius.", "src": "9. Circulatory Physiology I.pptx, Slide 90"}, {"topic": "Long-Term Blood Flow Regulation", "q": "How does long-term regulation of blood flow occur, compared to acute mechanisms?", "choices": ["Long-term regulation does not exist; only acute mechanisms operate", "By changing heart rate exclusively", "By instantaneous changes in vessel diameter only", "By changing the degree of vascularity of tissues (size and number of vessels), with oxygen as an important stimulus; long-term mechanisms are more effective than acute ones"], "answer": 3, "correct": "Long-term regulation of blood flow occurs by changing the degree of vascularity of tissues (altering the size and number of vessels present), with oxygen serving as an important stimulus for this vascular remodeling; long-term mechanisms are more effective than acute regulatory mechanisms.", "src": "9. Circulatory Physiology I.pptx, Slide 92"}, {"topic": "Angiogenesis", "q": "What is angiogenesis, and what triggers it?", "choices": ["A process exclusive to the developing fetus", "A process with no known trigger", "The destruction of existing blood vessels; triggered by high oxygen tension", "The growth of new blood vessels, occurring in response to angiogenic factors released from ischemic tissue, rapidly growing tissue, or tissue with high metabolic rates"], "answer": 3, "correct": "Angiogenesis is the growth of new blood vessels, occurring in response to angiogenic factors (such as VEGF, FGF, and angiogenin) released from ischemic tissue, rapidly growing tissue, or tissue with high metabolic rates.", "src": "9. Circulatory Physiology I.pptx, Slide 94"}, {"topic": "Humoral Vasoconstrictors", "q": "Which of the following is a humoral (bloodborne) vasoconstrictor agent?", "choices": ["Histamine", "Angiotensin II", "Nitric oxide", "Bradykinin"], "answer": 1, "correct": "Angiotensin II is a potent humoral vasoconstrictor, along with norepinephrine, epinephrine, vasopressin, and endothelin; bradykinin, serotonin, histamine, prostaglandins, and nitric oxide are humoral vasodilators.", "src": "9. Circulatory Physiology I.pptx, Slide 95"}, {"topic": "Higher Brain Centers and the VMC", "q": "Can higher brain centers, such as the hypothalamus, influence the vasomotor center (VMC)?", "choices": ["Yes — many higher centers of the brain, such as the hypothalamus, can exert powerful excitatory or inhibitory effects on the VMC", "Only the cerebellum can influence the VMC", "Higher brain centers can only inhibit, never excite, the VMC", "No, the VMC operates completely independently of higher brain centers"], "answer": 0, "correct": "Many higher centers of the brain, including the hypothalamus, can exert powerful excitatory or inhibitory effects on the vasomotor center, integrating broader physiological and emotional states into cardiovascular control.", "src": "9. Circulatory Physiology I.pptx, Slide 104"}, {"topic": "Interstitial Colloid Osmotic Pressure", "q": "What is the approximate normal interstitial colloid osmotic pressure, and what causes it?", "choices": ["About 100 mm Hg", "About 28 mm Hg, identical to plasma colloid osmotic pressure", "0 mm Hg, since interstitial fluid contains no protein", "About 8 mm Hg, caused by an interstitial protein concentration of approximately 3 g/dL"], "answer": 3, "correct": "Interstitial colloid osmotic pressure is normally about 8 mm Hg, resulting from an interstitial protein concentration of approximately 3 g/dL — lower than plasma's protein concentration but still exerting a meaningful osmotic pull that promotes filtration.", "src": "9. Circulatory Physiology I.pptx, Slide 65"}, {"topic": "Filtration Coefficient", "q": "What two factors make up the filtration coefficient (Kf) used to calculate filtration rate?", "choices": ["Blood viscosity and vessel length", "Plasma protein concentration and interstitial pressure", "Heart rate and stroke volume", "Surface area and the hydraulic conductivity of the membrane"], "answer": 3, "correct": "The filtration coefficient (Kf) is the product of the capillary surface area and the hydraulic conductivity of the membrane; filtration rate = net filtration pressure (NFP) multiplied by Kf.", "src": "9. Circulatory Physiology I.pptx, Slide 66"}, {"topic": "Hematocrit and Blood Viscosity", "q": "How does an increase in hematocrit affect blood viscosity and vascular resistance?", "choices": ["Increased hematocrit decreases blood viscosity and vascular resistance", "Increased hematocrit only affects heart rate, not vessel resistance", "Increased hematocrit increases blood viscosity, which increases vascular resistance", "Hematocrit has no relationship to blood viscosity"], "answer": 2, "correct": "An increase in hematocrit increases blood viscosity, which in turn increases vascular resistance (consistent with Poiseuille's law, where flow is inversely proportional to viscosity).", "src": "9. Circulatory Physiology I.pptx, Slide 31"}, {"topic": "Microcirculation Surface Area", "q": "Approximately how many capillaries are estimated to exist in the body, and what total surface area do they provide for exchange?", "choices": ["1 million capillaries, 1 square meter of surface area", "Capillary number and surface area cannot be estimated", "Over 10 billion capillaries, with a surface area of 500-700 square meters", "1000 capillaries, 10 square meters"], "answer": 2, "correct": "The microcirculation contains over 10 billion capillaries, providing a total surface area of 500-700 square meters for the transport of nutrients and removal of waste products via solute and fluid exchange.", "src": "9. Circulatory Physiology I.pptx, Slide 50"}];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "Capillary Wall Structure", "io": "Capillary Wall Structure", "q": "What is the structure of the capillary wall, and what are the two routes for solutes/water to cross it?", "opts": [["A multilayered epithelium; solutes cross only through active transport", ""], ["Capillary walls are impermeable to all substances", ""], ["A unicellular layer of endothelial cells surrounded by a basement membrane; solutes/water cross via intercellular clefts or plasmalemmal vesicles", "The capillary wall is composed of a unicellular layer of endothelial cells surrounded by a basement membrane (capillary diameter 4-9 microns); solutes and water cross via intercellular clefts (spaces between cells) or via plasmalemmal vesicles."], ["A thick smooth muscle layer with no endothelium", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 51"}, {"topic": "Lipid-Soluble vs Lipid-Insoluble Capillary Transport", "io": "Lipid-Soluble vs Lipid-Insoluble Capillary Transport", "q": "How do lipid-soluble substances (e.g., CO2, O2) cross the capillary wall, compared to lipid-insoluble substances (e.g., water, Na+, glucose)?", "opts": [["Both cross exclusively via intercellular clefts", ""], ["Lipid-insoluble substances diffuse directly through the membrane, and lipid-soluble substances use clefts", ""], ["Lipid-soluble substances diffuse directly through the capillary cell membrane; lipid-insoluble substances cross via intercellular clefts", "Lipid-soluble substances like CO2 and O2 diffuse directly through the capillary endothelial cell membrane, while lipid-insoluble substances like water, Na+, Cl-, and glucose cross via intercellular clefts (spaces between adjacent endothelial cells)."], ["Lipid-soluble substances cannot cross the capillary wall at all", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 52"}, {"topic": "Capillary Pore Size", "io": "Capillary Pore Size", "q": "What is the approximate width of the intercellular slit pores in capillary walls?", "opts": [["600-700 nanometers", ""], ["6-7 micrometers", ""], ["6-7 nanometers", "The width of capillary intercellular slit pores is about 6-7 nanometers, and capillary permeability to different substances varies according to their molecular diameter relative to this pore size."], ["6-7 millimeters", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 53"}, {"topic": "Molecular Size and Capillary Permeability", "io": "Molecular Size and Capillary Permeability", "q": "Based on the relative permeability table, how does albumin's capillary permeability compare to water's?", "opts": [["Molecular weight has no effect on capillary permeability", ""], ["Albumin is far less permeable than water (about 0.0001 vs 1.00), due to its much larger molecular weight", "Albumin (molecular weight ~69,000) has a relative permeability of about 0.0001 compared to water's permeability of 1.00, illustrating how capillary permeability decreases dramatically as molecular size increases."], ["Albumin is more permeable than water", ""], ["Albumin and water have identical permeability", ""]], "c": 1, "cite": "9. Circulatory Physiology I.pptx, Slide 54"}, {"topic": "Interstitium Structure", "io": "Interstitium Structure", "q": "What are the two major solid structures found in the interstitium, and in what form is most interstitial fluid found?", "opts": [["Muscle fibers and nerve fibers", ""], ["Collagen fibers and proteoglycan filaments; most fluid exists as a gel (proteoglycan-fluid mixture) rather than free fluid", "The interstitium contains collagen fibers and proteoglycan filaments (coiled hyaluronic acid molecules) as its major solid structures; almost all interstitial fluid exists as a gel (fluid-proteoglycan mixture), with very little free fluid under normal conditions."], ["Only free-flowing fluid with no solid structures", ""], ["Elastin fibers and reticular fibers only", ""]], "c": 1, "cite": "9. Circulatory Physiology I.pptx, Slide 55"}, {"topic": "Starling Forces — Capillary Hydrostatic Pressure", "io": "Starling Forces — Capillary Hydrostatic Pressure", "q": "What direction does capillary hydrostatic pressure (Pc) tend to move fluid?", "opts": [["It only affects protein movement, not fluid", ""], ["Inward, into the capillary", ""], ["Outward, through the capillary membrane into the interstitium", "Capillary hydrostatic pressure (Pc) tends to force fluid outward through the capillary membrane, into the interstitial space — one of the four Starling forces governing capillary fluid exchange."], ["It has no effect on fluid movement", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 56"}, {"topic": "Starling Forces — Plasma Colloid Osmotic Pressure", "io": "Starling Forces — Plasma Colloid Osmotic Pressure", "q": "What direction does plasma colloid osmotic pressure move fluid, and what causes changes in it?", "opts": [["It promotes filtration outward; caused by red blood cell concentration", ""], ["It has no effect on capillary fluid movement", ""], ["It opposes filtration, causing osmosis of water inward; changes are caused by conditions like cirrhosis, nephrosis, or dilutional states affecting plasma protein concentration", "Plasma colloid osmotic pressure opposes filtration, causing osmosis of water inward through the capillary membrane; conditions like cirrhosis, nephrosis, or dilutional states (which lower plasma protein concentration) reduce this pressure and promote edema."], ["It only affects lymphatic flow, not capillary exchange", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 59"}, {"topic": "Sources of Plasma Colloid Osmotic Pressure", "io": "Sources of Plasma Colloid Osmotic Pressure", "q": "What percentage of total plasma colloid osmotic pressure comes from albumin versus globulins?", "opts": [["100% albumin, 0% globulins", ""], ["25% albumin, 75% globulins", ""], ["75% albumin, 25% globulins", "About 75% of total plasma colloid osmotic pressure results from albumin, and about 25% is due to globulins (with a small additional contribution from fibrinogen)."], ["50% albumin, 50% globulins", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 64"}, {"topic": "Net Filtration Pressure Equation", "io": "Net Filtration Pressure Equation", "q": "What is the equation for net filtration pressure (NP) across a capillary, incorporating all four Starling forces?", "opts": [["NP = Pc − πp + Pif − πif", ""], ["NP = Pc + πp + Pif + πif", ""], ["NP is independent of any of these forces", ""], ["NP = Pc − πp − Pif + πif", "Net filtration pressure is NP = Pc − πp − Pif + πif, where Pc is capillary hydrostatic pressure (outward), πp is plasma colloid osmotic pressure (inward), Pif is interstitial fluid pressure (opposes filtration if positive), and πif is interstitial colloid osmotic pressure (outward, promoting filtration)."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 62"}, {"topic": "Interstitial Fluid Pressure", "io": "Interstitial Fluid Pressure", "q": "What is normal interstitial fluid pressure in most tissues, and what is it in encapsulated organs?", "opts": [["Normally negative (about -3 mm Hg) in most tissues, but positive (+5 to +10 mm Hg) in encapsulated organs, with the negative pressure attributed to lymphatic pumping", "Interstitial fluid pressure in most tissues is normally slightly negative (about -3 mm Hg), caused by pumping of the lymphatic system, while encapsulated organs have positive interstitial pressures (+5 to +10 mm Hg) due to their surrounding capsule."], ["Always zero regardless of tissue type", ""], ["Normally positive (+10 mm Hg) in most tissues; negative in encapsulated organs", ""], ["Always equal to capillary hydrostatic pressure", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 63"}, {"topic": "Filtration at the Arteriolar End", "io": "Filtration at the Arteriolar End", "q": "At the arteriolar end of a typical capillary, is the net force outward (filtration) or inward (absorption), and what is its approximate magnitude?", "opts": [["Net outward force of about 13 mm Hg (filtration)", "At the arteriolar end of the capillary, total outward force (about 41 mm Hg, mainly capillary pressure) exceeds total inward force (about 28 mm Hg, plasma colloid osmotic pressure), yielding a net outward filtration force of about 13 mm Hg."], ["Net inward force of about 13 mm Hg (absorption)", ""], ["No net force — forces are perfectly balanced", ""], ["Net outward force of about 41 mm Hg", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 70"}, {"topic": "Reabsorption at the Venous End", "io": "Reabsorption at the Venous End", "q": "At the venous end of a typical capillary, is the net force outward or inward, and what is its approximate magnitude?", "opts": [["Net outward force of about 13 mm Hg", ""], ["No net force at the venous end", ""], ["Net outward force of about 28 mm Hg", ""], ["Net inward force of about 7 mm Hg (reabsorption), since capillary pressure has fallen along the capillary length", "At the venous end of the capillary, capillary pressure has fallen (to about 10 mm Hg) while plasma colloid osmotic pressure remains about 28 mm Hg, producing a net inward force of about 7 mm Hg that reabsorbs fluid back into the capillary."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 72"}, {"topic": "Net Fluid Filtration for the Body", "io": "Net Fluid Filtration for the Body", "q": "What is the approximate net filtration rate for the entire body, given a mean net filtration pressure of about 0.3 mm Hg?", "opts": [["20 L/min", ""], ["200 mL/min", ""], ["0 mL/min — there is no net filtration", ""], ["2 mL/min", "The mean net filtration pressure across capillaries throughout the body is about 0.3 mm Hg, producing a net filtration rate of approximately 2 mL/min for the entire body — this small excess is returned to the circulation via the lymphatics."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 75"}, {"topic": "Fate of Filtered Fluid", "io": "Fate of Filtered Fluid", "q": "What percentage of filtered capillary fluid is reabsorbed at the venous end, and what happens to the remainder?", "opts": [["None of the filtered fluid is ever reabsorbed", ""], ["50% is reabsorbed; 50% remains as edema", ""], ["90% is reabsorbed at the venous end; the remaining 10% is returned to circulation via the lymphatics", "About 90% of filtered fluid is reabsorbed at the venous end of the capillary; the remaining 10% is returned to the circulation via the lymphatic system, preventing net fluid accumulation (edema) under normal conditions."], ["100% is reabsorbed, with none entering the lymphatics", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 68"}, {"topic": "Lymphatic System Functions", "io": "Lymphatic System Functions", "q": "What are the major functions of the lymphatic system described in this lecture?", "opts": [["An accessory route for fluid/protein return to blood (preventing edema), a major route for GI nutrient absorption, and a role in immune function", "The lymphatic system serves as an accessory route for fluid and protein to flow from interstitial spaces back to the blood (important in preventing edema), is a major route for absorption of nutrients from the GI tract, and plays an important role in the immune system."], ["Regulating heart rate directly", ""], ["Only removing waste products, with no role in immunity or nutrient absorption", ""], ["Producing red blood cells exclusively", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 76"}, {"topic": "Lymphatic Valve Structure", "io": "Lymphatic Valve Structure", "q": "What structural feature of lymphatic capillaries allows easy entry of high-molecular-weight substances and proteins while preventing backflow?", "opts": [["A continuous basement membrane with no gaps", ""], ["Overlapping endothelial cells that form valves preventing backflow while allowing easy entry of large molecules/proteins", "Overlap between endothelial cells in lymphatic capillaries forms flap-like valves that prevent backflow of lymph while allowing easy entry of high-molecular-weight substances and proteins that cannot easily enter blood capillaries."], ["Lymphatic capillaries have no valve-like structures at all", ""], ["Tight junctions with no overlap between cells", ""]], "c": 1, "cite": "9. Circulatory Physiology I.pptx, Slide 77"}, {"topic": "Lymph Flow Determinants", "io": "Lymph Flow Determinants", "q": "What two major factors determine the rate of lymph flow?", "opts": [["Lymph flow is constant and unregulated", ""], ["Only blood pressure in the aorta", ""], ["Only the activity of the lymphatic pump", ""], ["Interstitial fluid (IF) pressure and the activity of the lymphatic pump (smooth muscle contraction, external compression, arterial pulsation, and valves)", "Lymph flow is a function of interstitial fluid (IF) pressure and the activity of the lymphatic pump — driven by smooth muscle contraction in lymph vessel walls, external compression (e.g., skeletal muscle), pulsation of surrounding arteries, and one-way lymphatic valves."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 79"}, {"topic": "Local Control of Blood Flow", "io": "Local Control of Blood Flow", "q": "What determines how much blood flow a given tissue receives under local control?", "opts": [["Each tissue controls its own blood flow in proportion to its needs (oxygen delivery, nutrient delivery, waste removal), closely related to metabolic rate", "Each tissue controls its own blood flow in proportion to its needs — delivery of oxygen and nutrients, removal of CO2 and other metabolites, and transport of hormones — with flow closely related to the tissue's metabolic rate."], ["Blood flow is fixed and unrelated to tissue activity", ""], ["Blood flow is determined solely by total blood volume", ""], ["Only the autonomic nervous system determines local tissue blood flow", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 80"}, {"topic": "Vasodilator Theory", "io": "Vasodilator Theory", "q": "According to the vasodilator theory of local blood flow control, which substances act as vasodilators released by metabolically active tissue?", "opts": [["Only norepinephrine", ""], ["Adenosine, CO2, lactic acid, ADP compounds, histamine, K+ ions, and H+ ions", "The vasodilator theory proposes that metabolically active tissue releases vasodilator substances — adenosine, CO2, lactic acid, ADP compounds, histamine, K+ ions, and H+ ions — that increase local blood flow to meet metabolic demand."], ["Only albumin", ""], ["Only oxygen", ""]], "c": 1, "cite": "9. Circulatory Physiology I.pptx, Slide 84"}, {"topic": "Oxygen Demand Theory", "io": "Oxygen Demand Theory", "q": "What does the oxygen demand theory propose about the relationship between oxygen availability and local blood flow?", "opts": [["Oxygen availability has no effect on local blood flow", ""], ["Only CO2, not oxygen, affects local blood flow", ""], ["Reduced oxygen availability decreases blood flow further", ""], ["Reduced oxygen availability increases blood flow, providing acute local feedback control matching flow to oxygen need", "The oxygen demand theory proposes that reduced oxygen availability to a tissue increases local blood flow, providing acute feedback control that helps match blood flow delivery to the tissue's oxygen needs."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 86"}, {"topic": "Autoregulation of Blood Flow", "io": "Autoregulation of Blood Flow", "q": "What is autoregulation of blood flow?", "opts": [["The ability of a tissue to maintain blood flow relatively constant over a wide range of arterial pressures", "Autoregulation is the ability of a tissue to maintain blood flow relatively constant over a wide range of arterial pressures, explained by both metabolic theory (pressure drop → reduced O2/nutrient delivery → vasodilator release) and myogenic theory (arterioles intrinsically dilate in response to decreased wall tension)."], ["A phenomenon that only occurs in the heart", ""], ["A mechanism requiring direct cortical control", ""], ["The inability of any tissue to control its own blood flow", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 88"}, {"topic": "Myogenic Theory & Laplace's Law", "io": "Myogenic Theory & Laplace's Law", "q": "According to Laplace's law, how is the wall tension of a hollow structure (like a blood vessel) related to internal pressure, radius, and wall thickness?", "opts": [["Wall tension is unrelated to any of these variables", ""], ["Wall tension only depends on wall thickness", ""], ["Wall tension is inversely related to internal pressure and radius, and directly related to wall thickness", ""], ["Wall tension is directly related to internal pressure and radius, and inversely related to wall thickness", "Laplace's law states that the wall tension of a hollow structure (vessel, ventricle, alveolus) is directly related to internal pressure and radius, and inversely related to wall thickness — thicker walls reduce wall tension for a given pressure and radius."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 90"}, {"topic": "Long-Term Blood Flow Regulation", "io": "Long-Term Blood Flow Regulation", "q": "How does long-term regulation of blood flow occur, compared to acute mechanisms?", "opts": [["Long-term regulation does not exist; only acute mechanisms operate", ""], ["By changing heart rate exclusively", ""], ["By instantaneous changes in vessel diameter only", ""], ["By changing the degree of vascularity of tissues (size and number of vessels), with oxygen as an important stimulus; long-term mechanisms are more effective than acute ones", "Long-term regulation of blood flow occurs by changing the degree of vascularity of tissues (altering the size and number of vessels present), with oxygen serving as an important stimulus for this vascular remodeling; long-term mechanisms are more effective than acute regulatory mechanisms."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 92"}, {"topic": "Angiogenesis", "io": "Angiogenesis", "q": "What is angiogenesis, and what triggers it?", "opts": [["A process exclusive to the developing fetus", ""], ["A process with no known trigger", ""], ["The destruction of existing blood vessels; triggered by high oxygen tension", ""], ["The growth of new blood vessels, occurring in response to angiogenic factors released from ischemic tissue, rapidly growing tissue, or tissue with high metabolic rates", "Angiogenesis is the growth of new blood vessels, occurring in response to angiogenic factors (such as VEGF, FGF, and angiogenin) released from ischemic tissue, rapidly growing tissue, or tissue with high metabolic rates."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 94"}, {"topic": "Humoral Vasoconstrictors", "io": "Humoral Vasoconstrictors", "q": "Which of the following is a humoral (bloodborne) vasoconstrictor agent?", "opts": [["Histamine", ""], ["Angiotensin II", "Angiotensin II is a potent humoral vasoconstrictor, along with norepinephrine, epinephrine, vasopressin, and endothelin; bradykinin, serotonin, histamine, prostaglandins, and nitric oxide are humoral vasodilators."], ["Nitric oxide", ""], ["Bradykinin", ""]], "c": 1, "cite": "9. Circulatory Physiology I.pptx, Slide 95"}, {"topic": "Higher Brain Centers and the VMC", "io": "Higher Brain Centers and the VMC", "q": "Can higher brain centers, such as the hypothalamus, influence the vasomotor center (VMC)?", "opts": [["Yes — many higher centers of the brain, such as the hypothalamus, can exert powerful excitatory or inhibitory effects on the VMC", "Many higher centers of the brain, including the hypothalamus, can exert powerful excitatory or inhibitory effects on the vasomotor center, integrating broader physiological and emotional states into cardiovascular control."], ["Only the cerebellum can influence the VMC", ""], ["Higher brain centers can only inhibit, never excite, the VMC", ""], ["No, the VMC operates completely independently of higher brain centers", ""]], "c": 0, "cite": "9. Circulatory Physiology I.pptx, Slide 104"}, {"topic": "Interstitial Colloid Osmotic Pressure", "io": "Interstitial Colloid Osmotic Pressure", "q": "What is the approximate normal interstitial colloid osmotic pressure, and what causes it?", "opts": [["About 100 mm Hg", ""], ["About 28 mm Hg, identical to plasma colloid osmotic pressure", ""], ["0 mm Hg, since interstitial fluid contains no protein", ""], ["About 8 mm Hg, caused by an interstitial protein concentration of approximately 3 g/dL", "Interstitial colloid osmotic pressure is normally about 8 mm Hg, resulting from an interstitial protein concentration of approximately 3 g/dL — lower than plasma's protein concentration but still exerting a meaningful osmotic pull that promotes filtration."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 65"}, {"topic": "Filtration Coefficient", "io": "Filtration Coefficient", "q": "What two factors make up the filtration coefficient (Kf) used to calculate filtration rate?", "opts": [["Blood viscosity and vessel length", ""], ["Plasma protein concentration and interstitial pressure", ""], ["Heart rate and stroke volume", ""], ["Surface area and the hydraulic conductivity of the membrane", "The filtration coefficient (Kf) is the product of the capillary surface area and the hydraulic conductivity of the membrane; filtration rate = net filtration pressure (NFP) multiplied by Kf."]], "c": 3, "cite": "9. Circulatory Physiology I.pptx, Slide 66"}, {"topic": "Hematocrit and Blood Viscosity", "io": "Hematocrit and Blood Viscosity", "q": "How does an increase in hematocrit affect blood viscosity and vascular resistance?", "opts": [["Increased hematocrit decreases blood viscosity and vascular resistance", ""], ["Increased hematocrit only affects heart rate, not vessel resistance", ""], ["Increased hematocrit increases blood viscosity, which increases vascular resistance", "An increase in hematocrit increases blood viscosity, which in turn increases vascular resistance (consistent with Poiseuille's law, where flow is inversely proportional to viscosity)."], ["Hematocrit has no relationship to blood viscosity", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 31"}, {"topic": "Microcirculation Surface Area", "io": "Microcirculation Surface Area", "q": "Approximately how many capillaries are estimated to exist in the body, and what total surface area do they provide for exchange?", "opts": [["1 million capillaries, 1 square meter of surface area", ""], ["Capillary number and surface area cannot be estimated", ""], ["Over 10 billion capillaries, with a surface area of 500-700 square meters", "The microcirculation contains over 10 billion capillaries, providing a total surface area of 500-700 square meters for the transport of nutrients and removal of waste products via solute and fluid exchange."], ["1000 capillaries, 10 square meters", ""]], "c": 2, "cite": "9. Circulatory Physiology I.pptx, Slide 50"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -469,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -500,436 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  // Optional per-question image (item.img) -- purely additive, every
-  // existing quiz's questions simply omit this field and render exactly
-  // as before via the hidden default state.
-  if (item.img) {
-    el('qImg').src = item.img;
-    el('qImg').alt = item.imgAlt || '';
-    el('qImgCaption').textContent = item.imgCaption || '';
-    el('qFig').classList.remove('hidden');
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
   } else {
-    el('qFig').classList.add('hidden');
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
   }
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
-    });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
-    return;
-  }
-
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
-  });
-
-  const fb = el('feedback');
-  fb.classList.remove('show');
-  el('nextBtn').classList.add('hidden');
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  /* breakdown by topic */
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  // count correct = total - missed per topic
-  const missedByTopic = {};
-  state.missed.forEach(m => {
-    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
-  });
-  Object.keys(topics).forEach(t => {
-    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
-  });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  /* missed review */
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -977,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>

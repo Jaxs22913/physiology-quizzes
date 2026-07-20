@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Physiology Comprehensive Master Exam — Form C
-  Single self-contained file. To publish on GitHub Pages, save as index.html.
-  All questions are drawn only from the uploaded lecture material.
--->
 <html lang="en">
 <head>
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
@@ -13,34 +8,23 @@
 <style>
   html, body { overscroll-behavior-y: contain; }
   #pull-refresh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
   }
   #pull-refresh svg { width: 100%; height: 44px; }
   #pull-refresh path {
-    fill: none;
-    stroke: #2563eb;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
   }
-  #pull-refresh.refreshing path {
-    animation: ekg-sweep 0.9s linear infinite;
-  }
-  @keyframes ekg-sweep {
-    0% { stroke-dashoffset: 420; }
-    100% { stroke-dashoffset: -420; }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #1f6b4a; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #c68a1f; }
   }
 </style>
 
@@ -52,415 +36,216 @@
   gtag('js', new Date());
   gtag('config', 'G-2K06TXC2KK');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Physiology Comprehensive Master Exam — Form C</title>
 <style>
   :root{
-    --ink:#132635;
-    --ink-soft:#48607a;
-    --paper:#eef4f8;
-    --paper-2:#f9fcfd;
-    --line:#c9dbe6;
-    --oxblood:#2c4a7c;
-    --oxblood-soft:#2e6a92;
-    --brass:#c68a1f;
-    --teal:#1f6b4a;
-    --teal-deep:#0b5a54;
-    --correct:#2f6d4f;
-    --correct-bg:#e7f1ea;
-    --wrong:#a2323f;
-    --wrong-bg:#f6e7e8;
-    --shadow:0 12px 30px rgba(19,38,53,.12);
-    --exam-toolbar-accent:var(--oxblood);
+    --navy:#243d65; --indigo:#1f6b4a; --gold:#c68a1f; --ice:#94e0bf;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 12% -5%, rgba(63,143,163,.10), transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(27,79,114,.10), transparent 38%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Masthead */
-  header.mast{
-    border-top:3px solid var(--oxblood);
-    border-bottom:1px solid var(--line);
-    padding:22px 0 18px;
-    margin-bottom:26px;
-  }
-  .eyebrow{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.32em;
-    font-size:11px;
-    font-weight:700;
-    color:var(--brass);
-    margin:0 0 10px;
-  }
-  h1{
-    font-size:clamp(30px,6vw,46px);
-    line-height:1.02;
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.01em;
-  }
-  h1 .sys{color:var(--oxblood);display:block;font-style:italic;}
-  .sub{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13px;color:var(--ink-soft);margin-top:12px;
-    letter-spacing:.02em;
-  }
-
-  .card{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:26px 26px 24px;
-  }
-
-  /* Intro */
-  .intro h2{
-    font-size:22px;margin:0 0 8px;color:var(--teal-deep);
-  }
-  .intro p{margin:0 0 14px;color:var(--ink-soft);}
-  .obj-list{
-    list-style:none;padding:0;margin:16px 0 6px;
-    display:grid;gap:8px;
-  }
-  .obj-list li{
-    display:flex;gap:12px;align-items:baseline;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:13.5px;color:var(--ink);
-    padding:9px 12px;background:var(--paper);
-    border:1px solid var(--line);border-radius:8px;
-  }
-  .obj-list .n{
-    font-weight:700;color:var(--oxblood);
-    font-size:12px;min-width:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .btn{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-weight:600;font-size:15px;
-    border:none;border-radius:10px;
-    padding:13px 26px;cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    letter-spacing:.02em;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .btn-primary{
-    background:var(--oxblood);color:#fdf6ee;
-    box-shadow:0 6px 16px rgba(27,79,114,.28);
-  }
-  .btn-primary:hover{background:var(--oxblood-soft);}
-  .btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
-  .start-row{margin-top:22px;display:flex;flex-direction:column;align-items:center;}
-
-  /* Progress bar */
-  .status{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:14px;margin-bottom:14px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .qcount{font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em;}
-  .score{
-    font-size:13px;font-weight:700;color:var(--teal-deep);
-    background:var(--paper);border:1px solid var(--line);
-    padding:6px 12px;border-radius:20px;
-    font-variant-numeric:tabular-nums;
-  }
-  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px;}
-  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--oxblood));transition:width .35s ease;}
-
-  .topic-tag{
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    display:inline-block;text-transform:uppercase;
-    letter-spacing:.16em;font-size:10.5px;font-weight:700;
-    color:var(--teal);margin-bottom:12px;
-  }
-  .qtext{font-size:20px;line-height:1.4;margin:0 0 20px;font-weight:600;}
-  .q-fig{margin:0 0 20px;padding:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;text-align:center;}
-  .q-fig img{max-width:100%;height:auto;border-radius:6px;background:#fff;display:block;margin:0 auto;}
-  .q-fig figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;text-align:left;}
-
-  .choices{display:grid;gap:11px;}
-  .choice{
-    display:flex;gap:13px;align-items:flex-start;
-    text-align:left;width:100%;
-    background:var(--paper-2);
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;cursor:pointer;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    font-size:15px;color:var(--ink);
-    transition:border-color .12s ease, background .12s ease, transform .08s ease;
-  }
-  .choice:hover:not(:disabled){border-color:var(--brass);background:#fff;}
-  .choice:disabled{cursor:default;}
-  .choice .key{
-    font-weight:700;color:var(--oxblood);
-    min-width:22px;font-size:14px;
-    border-right:1px solid var(--line);padding-right:11px;
-  }
-  .choice.correct{background:var(--correct-bg);border-color:var(--correct);}
-  .choice.correct .key{color:var(--correct);}
-  .choice.wrong{background:var(--wrong-bg);border-color:var(--wrong);}
-  .choice.wrong .key{color:var(--wrong);}
-  .choice.selected-exam{background:var(--paper);border-color:var(--teal);}
-  .choice.selected-exam .key{color:var(--teal);}
-  .choice.dim{opacity:.62;}
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
   .optlabel{flex:1}
-  .choice.crossed .optlabel{text-decoration:line-through;opacity:.55}
-  .cross-toggle{
-    flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:var(--ink-soft);border:1px solid var(--line);cursor:pointer;
-  }
-  .cross-toggle:hover{border-color:var(--wrong);color:var(--wrong)}
-  .choice.crossed .cross-toggle{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong)}
-
-  .feedback{
-    margin-top:20px;border-radius:10px;padding:16px 18px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    border:1px solid var(--line);background:var(--paper);
-    display:none;
-  }
-  .feedback.show{display:block;animation:rise .28s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .verdict{font-weight:700;font-size:15px;margin:0 0 8px;letter-spacing:.02em;}
-  .verdict.right{color:var(--correct);}
-  .verdict.miss{color:var(--wrong);}
-  .feedback p{margin:0 0 9px;color:var(--ink);}
-  .feedback .why{color:var(--ink-soft);font-size:13.5px;}
-  .feedback .src{
-    margin-top:10px;font-size:12px;color:var(--ink-soft);
-    font-style:italic;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .nav-row{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
-
-  /* Results */
-  .results{text-align:center;}
-  .results h2{font-size:26px;color:var(--teal-deep);margin:0 0 4px;}
-  .bigscore{
-    font-size:clamp(52px,14vw,84px);line-height:1;margin:14px 0 2px;
-    color:var(--oxblood);font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .pct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-soft);letter-spacing:.05em;}
-  .verdict-line{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;margin-top:12px;color:var(--ink);}
-
-  .bd-title{
-    font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
-    letter-spacing:.18em;font-size:11px;font-weight:700;color:var(--brass);
-    margin:34px 0 12px;text-align:left;
-  }
-  .bd-row{
-    display:flex;align-items:center;gap:12px;margin:0 0 9px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-  }
-  .bd-name{font-size:13px;color:var(--ink);flex:0 0 44%;text-align:left;}
-  .bd-bar{flex:1;height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
-  .bd-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));}
-  .bd-frac{font-size:12px;color:var(--ink-soft);flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;}
-
-  .missed-wrap{margin-top:34px;text-align:left;}
-  .missed-item{
-    border:1px solid var(--line);border-left:3px solid var(--wrong);
-    border-radius:8px;padding:15px 17px;margin-bottom:13px;background:var(--paper);
-  }
-  .missed-item .mq{font-weight:600;font-size:15px;margin:0 0 9px;}
-  .missed-item .ma{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;margin:0 0 4px;
-  }
-  .missed-item .ma.yours{color:var(--wrong);}
-  .missed-item .ma.right{color:var(--correct);font-weight:600;}
-  .missed-item .mexp{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);
-    margin:9px 0 0;border-top:1px dashed var(--line);padding-top:9px;
-  }
-  .missed-item .msrc{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:7px;}
-  .perfect{
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;
-    color:var(--correct);background:var(--correct-bg);
-    border:1px solid var(--correct);border-radius:8px;padding:14px;margin-top:24px;
-  }
-  .actions{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-ghost{background:transparent;border:1.5px solid var(--oxblood);color:var(--oxblood);}
-  .btn-ghost:hover{background:var(--oxblood);color:#fdf6ee;}
-
-  footer{
-    text-align:center;margin-top:40px;
-    font-family:"Helvetica Neue",Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);
-    letter-spacing:.03em;
-  }
-  .hidden{display:none;}
-
-  @media (max-width:520px){
-    .wrap{padding:18px 14px 60px;}
-    .card{padding:20px 16px;}
-    .qtext{font-size:18px;}
-    .bd-name{flex-basis:50%;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;}
-  }
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
 </style>
 </head>
 <body>
-<style>
-  .footer-mark-ink { stroke: #1f2937; }
-  .footer-mark-accent { stroke: #2563eb; }
-  @media (prefers-color-scheme: dark) {
-    .footer-mark-ink { stroke: #e5e7eb; }
-    .footer-mark-accent { stroke: #60a5fa; }
-  }
-</style>
-<div id="quiz-footer-logo" class="hidden" style="position:fixed;bottom:14px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;pointer-events:none;z-index:500;">
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-  <a href="../index.html" aria-label="Back to home" style="pointer-events:auto;cursor:pointer;flex-shrink:0;display:block;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:100px;height:auto;display:block;">
-    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
-    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
-    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
-  </svg>
-  </a>
-  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));"></span>
-</div>
-
 <div id="pull-refresh">
   <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
   </svg>
 </div>
-
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
-  <header class="mast">
-    <p class="eyebrow">PAJ 5000 &middot; Graduate Anatomy</p>
-    <h1>Physiology Comprehensive Master Exam<span class="sys">Form C</span></h1>
-    <p class="sub">Cell Physiology &amp; Membranes &middot; Membrane Potentials &amp; Action Potentials &middot; Nervous System: Sensory &amp; Motor &middot; CNS Function</p>
+  <header>
+    <h1>Physiology Comprehensive Master ExamForm C</h1>
+    <div class="sub">Cell Physiology & Membranes · Membrane Potentials & Action Potentials · Nervous System: Sensory & Motor · CNS Function</div>
+    <span class="pill">60 questions</span>
   </header>
 
-  <!-- INTRO -->
-  <section id="intro" class="card intro">
+  <div id="start" class="card start">
     <h2>Before you begin</h2>
-    <p>This comprehensive master exam draws cumulatively across all five Physiology Exam 1 topics — Cell Physiology and Cell Membranes, Cell Membrane Potentials and Action Potentials, Nervous System: Intro and Sensory, Nervous System: Motor, and Central Nervous System Function. Each of the five forms (A–E) contains 60 genuinely distinct questions, evenly distributed across all five topics, drawn from the same validated question banks as the individual topic quizzes.</p>
-    <p>You'll answer one question at a time. After each answer you'll see whether you were right, an explanation, and why the other choices don't fit. A running score and progress bar track you along the way. At the end you get a full breakdown by topic and a review of everything you missed.</p>
-    <ul class="obj-list">
-      <li><span class="n">1</span><span>Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span></li>
-      <li><span class="n">2</span><span>Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span></li>
-      <li><span class="n">3</span><span>Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></li>
-    </ul>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
       Shuffle question order
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 8px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
       <input type="checkbox" id="exam-mode-toggle" style="width:16px;height:16px">
       Exam Mode (no feedback until you submit, flag &amp; jump between questions)
     </label>
-    <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 16px;cursor:pointer">
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
       <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
       Hard time limit (1 minute per question)
     </label>
-    <div class="start-row">
-          <div id="resume-banner" class="hidden" style="background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:12px;padding:16px 18px;margin:0 0 20px">
-      <p style="color:#9a5b0a;font-weight:700;margin:0 0 6px">Progress saved</p>
-      <p id="resume-text" style="margin:0 0 12px;font-size:15px"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="resumeBtn" class="btn btn-primary">Resume &rarr;</button>
-        <button id="discardBtn" class="btn btn-ghost">Discard &amp; start over</button>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
       </div>
     </div>
-    <button id="startBtn" class="btn btn-primary">Start the exam</button>
-    <p style="text-align:center;font-size:13.5px;color:#6b7280;margin:14px 0 0">Studying with friends? <a href="../group-host.html?quiz=physiology-master-c" style="color:#2563eb;font-weight:600"><svg style="width:14px;height:14px;vertical-align:-2px;margin-right:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg> Host a Group Study session →</a></p>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
     </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden">
-    <div class="status">
-      <span class="qcount" id="qcount">Question 1 of 60</span>
-      <span class="score" id="timerpill">00:00</span>
-      <button type="button" class="examctl-btn" id="pausebtn">&#10074;&#10074; Pause</button>
-      <span class="score" id="score">Score: 0 / 0</span><button id="midRestartBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;margin-left:10px">&#8635; Restart</button>
-    </div>
-    <div class="track"><i id="bar"></i></div>
-    <div id="examtoolbar" class="examtoolbar hidden">
-      <button type="button" class="examctl-btn-primary" id="flagbtn">&#9873; Flag</button>
-      <button type="button" class="examctl-btn-primary" id="navbtn">&#9776; Questions<span id="navbadge"></span></button>
-      <button type="button" class="examctl-btn-submit" id="examtoolbarSubmit">Submit exam &rarr;</button>
-    </div>
-
-    <div class="topic-tag" id="topicTag">Topic</div>
-    <h2 class="qtext" id="qtext">Question text</h2>
-    <figure class="q-fig hidden" id="qFig"><img id="qImg" src="" alt=""><figcaption id="qImgCaption"></figcaption></figure>
-    <div class="choices" id="choices"></div>
-
-    <div class="feedback" id="feedback">
-      <p class="verdict" id="verdict"></p>
-      <p id="fbCorrect"></p>
-      <p class="why" id="fbWhy"></p>
-      <p class="src" id="fbSrc"></p>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn btn-ghost" disabled>&larr; Back</button>
-      <button id="nextBtn" class="btn btn-primary hidden">Next question</button>
-    </div>
-  </section>
+  </div>
 
   <!-- RESULTS -->
-  <section id="results" class="card results hidden">
-    <h2>Exam complete</h2>
-    <div class="bigscore" id="finalScore">0 / 60</div>
-    <div class="pct" id="finalPct">0%</div>
-    <div class="pct" id="finalTime"></div>
-    <div class="verdict-line" id="finalVerdict"></div>
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
 
-    <div class="bd-title">Breakdown by topic</div>
-    <div id="breakdown"></div>
-
-    <div class="missed-wrap" id="missedWrap">
-      <div class="bd-title">Review &mdash; missed questions</div>
-      <div id="missedList"></div>
-    </div>
-
-    <div class="actions">
-      <button id="retryBtn" class="btn btn-primary">Retake exam</button>
-      <button id="reviewTopBtn" class="btn btn-ghost">Back to top</button>
-      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;">&larr; Back to Homepage</a>
-    </div>
-  </section>
-
-  <footer>
-    Comprehensive master exam covering all Physiology Exam 1 topics &middot; PAJ 5000 Physiology &middot; for study use. (Form C)
-  </footer>
-  <p style="text-align:center;margin-top:14px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;font-style:italic">★ <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n'); var t=document.createElement('div'); t.textContent='Opening your email app…'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font:600 13px sans-serif;z-index:5000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease;'; document.body.appendChild(t); requestAnimationFrame(function(){ t.style.opacity='1'; }); setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 250); }, 2500);">If you see any mistakes, click here to report it</a> ★</p>
 </div>
 
 <script>
-/* ============================================================
-   QUESTION BANK — 60 items, drawn cumulatively from all five Physiology Exam 1 topics, cumulative (Form C).
-   answer = index (0-3) of correct choice.
-   ============================================================ */
-const QUESTIONS = [{"topic": "Genomics & Proteomics", "q": "Approximately how genetically identical are humans at the genome level, according to this lecture?", "choices": ["100% identical with no variation", "50% identical", "99.8% identical at the genome level, 99.999% identical in coding regions", "75% identical"], "answer": 2, "correct": "Humans are approximately 99.8% identical at the genome level and 99.999% identical in the coding regions, despite having an estimated 25,000-30,000 genes.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 95"}, {"topic": "Cell Cycle", "q": "What are the three phases of interphase (which makes up more than 95% of the cell life cycle)?", "choices": ["Transcription, translation, replication", "G1 phase, S phase (DNA synthesis), and G2 phase", "Mitosis, cytokinesis, apoptosis", "Prophase, metaphase, anaphase"], "answer": 1, "correct": "Interphase (>95% of the cell cycle) consists of the G1 phase, S phase (DNA synthesis), and G2 phase, distinct from the M phase (mitosis and cytokinesis).", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 97"}, {"topic": "DNA Replication", "q": "What forms on the lagging strand during DNA replication (S phase)?", "choices": ["Only continuous new DNA with no fragments", "Okazaki fragments", "Ribosomal subunits", "Clathrin-coated pits"], "answer": 1, "correct": "During S phase, DNA replication involves formation of Okazaki fragments on the lagging strand, with \"new\" DNA proofread by DNA polymerase and gaps filled by DNA ligase.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 99"}, {"topic": "DNA Repair & Mutations", "q": "What is the role of DNA ligase in DNA repair?", "choices": ["It forms ribosomes", "It unwinds the DNA double helix", "It transcribes mRNA", "It replaces mismatches (cut out by DNA polymerase during proofreading) with complementary nucleotides"], "answer": 3, "correct": "After DNA polymerase \"proofreads\" new DNA and cuts out mismatches, DNA ligase replaces the mismatches with complementary nucleotides; a mistake during transcription resulting in an abnormal protein is called a mutation.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 101"}, {"topic": "Cell Differentiation", "q": "What is the basis for cell differentiation, according to this lecture?", "choices": ["Loss of genes as cells proliferate", "Selective repression/expression of specific genes (not loss of genes), often via one part of the body inducing effects on another", "Increased mitochondrial number", "Random mutation only"], "answer": 1, "correct": "Cell differentiation results not from the loss of genes but from the selective repression/expression of specific genes, with development occurring in large part through \"inductions\" — one part of the body affecting another.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 106"}, {"topic": "Control of Cell Growth", "q": "Which tissues are described as having rapid rates of cell growth/turnover?", "choices": ["Bone marrow, skin, and intestinal epithelia", "None — all tissues grow at the same rate", "Neurons and striated muscle", "Cardiac muscle only"], "answer": 0, "correct": "Bone marrow, skin, and intestinal epithelia show rapid cell growth, while smooth muscle, neurons, and striated muscle grow slowly or never; growth factors, contact inhibition, and negative-feedback cellular secretions determine growth rate.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 105"}, {"topic": "Cell Membrane Basics", "q": "What does the lipid bilayer act as, functionally?", "choices": ["A pump requiring ATP for all transport", "A barrier to water and water-soluble substances", "A source of genetic information", "A site of ATP synthesis only"], "answer": 1, "correct": "The lipid bilayer acts as a barrier to water and to substances that dissolve in water, though specific molecules can still cross via membrane proteins.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 46"}, {"topic": "Membrane Proteins", "q": "Roughly how many different proteins involved in transport do cell membranes contain?", "choices": ["Fewer than 10", "Over 10,000", "Over 300", "About 50"], "answer": 2, "correct": "Cell membranes contain over 300 different proteins that play a role in transport, providing specificity and function (ion channels, carrier proteins).", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 49"}, {"topic": "Diffusion vs Active Transport", "q": "What is the key difference between diffusion and active transport across the cell membrane?", "choices": ["Active transport only occurs during mitosis", "They are the same process", "Diffusion occurs down a concentration gradient with no additional energy required; active transport occurs against a gradient and requires ATP", "Diffusion requires ATP; active transport does not"], "answer": 2, "correct": "Diffusion occurs down a concentration gradient and requires no additional energy, while active transport occurs against a concentration gradient and requires energy (ATP), using a protein carrier.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 50"}, {"topic": "Simple vs Facilitated Diffusion", "q": "What distinguishes facilitated diffusion from simple diffusion?", "choices": ["Facilitated diffusion requires ATP directly", "Simple diffusion only occurs in muscle cells", "There is no difference", "Facilitated diffusion involves water-soluble molecules crossing via protein channels/transport proteins, while simple diffusion is for lipid-soluble molecules crossing directly through the membrane"], "answer": 3, "correct": "Simple diffusion allows lipid-soluble molecules to move readily across the membrane based on lipid solubility, while facilitated diffusion allows water-soluble molecules to cross via protein channels and other transport proteins.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 51"}, {"topic": "Aquaporins", "q": "What do aquaglyceroporins transport, in addition to water?", "choices": ["Only calcium", "Only glucose", "Only sodium ions", "Glycerol, urea, and ammonia"], "answer": 3, "correct": "Aquaglyceroporins are a subset of aquaporins that transport glycerol, urea, and ammonia across cell membranes, in addition to water.", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 52"}, {"topic": "Ion Channels", "q": "What are the two main types of ion channels?", "choices": ["Aquaporins and aquaglyceroporins", "Primary and secondary active transporters", "Symporters and antiporters", "Ungated channels and gated channels (voltage-gated or chemical/ligand-gated)"], "answer": 3, "correct": "Ion channels are either ungated (transport determined by size, shape, and charge) or gated — either voltage-gated (e.g., voltage-gated Na+ channels) or chemical/ligand-gated (e.g., nicotinic acetylcholine receptor channels).", "src": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 54"}, {"topic": "End-Plate Potential Termination", "q": "What terminates the end-plate potential at the neuromuscular junction?", "choices": ["Diffusion of ACh away from the synapse only", "Closure of voltage-gated Ca2+ channels alone", "Acetylcholinesterase (AChE), which breaks down ACh", "Reuptake of ACh into the presynaptic terminal"], "answer": 2, "correct": "Acetylcholinesterase (AChE) breaks down ACh in the synaptic cleft, terminating the end-plate potential and allowing the neuromuscular junction to reset for the next signal.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 49"}, {"topic": "Ligands", "q": "What is a ligand?", "choices": ["Any substance that binds to a receptor", "A structural protein in muscle", "A type of ion channel", "Only a substance made by the body"], "answer": 0, "correct": "A ligand is any substance that binds to a receptor; acetylcholine and norepinephrine are considered \"physiological\" ligands (provided by the body), and receptors are often classified/named by reference to their ligand.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 40"}, {"topic": "ACh Receptor Subtypes", "q": "What distinguishes nicotinic (nACh) from muscarinic (mACh) acetylcholine receptors?", "choices": ["They are functionally identical", "Nicotinic receptors do not respond to acetylcholine", "Nicotinic receptors are stimulated by nicotine; muscarinic receptors are stimulated by muscarine — both are subtypes of ACh receptor named by their distinguishing ligand", "Muscarinic receptors are found only in skeletal muscle"], "answer": 2, "correct": "ACh receptors are subdivided into nicotinic (nACh, stimulated by nicotine) and muscarinic (mACh, stimulated by muscarine) receptors, illustrating how receptors are often classified by reference to distinguishing ligands.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 40"}, {"topic": "Vesicle Formation", "q": "Approximately how many acetylcholine molecules are contained in a single synaptic vesicle at the neuromuscular junction?", "choices": ["~1,000,000", "~100", "~10,000", "~10"], "answer": 2, "correct": "Each synaptic vesicle at the neuromuscular junction contains approximately 10,000 molecules of ACh, with roughly 300,000 vesicles formed per nerve terminal.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 45"}, {"topic": "Action Potential Frequency Coding", "q": "How is information encoded by a series of action potentials, given that their amplitude is constant?", "choices": ["By the frequency of action potentials", "Information cannot be encoded by APs", "By reversing the direction of propagation", "By varying the AP amplitude"], "answer": 0, "correct": "Because action potential amplitude is constant (they do not summate), information is encoded by the frequency of action potentials rather than by amplitude.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 17"}, {"topic": "Threshold Voltage", "q": "What is the typical threshold voltage for initiating an action potential, relative to resting potential?", "choices": ["About 100 mV negative to resting potential", "About 15 mV positive to resting potential", "About 50 mV positive to resting potential", "Exactly equal to resting potential"], "answer": 1, "correct": "Action potentials are typically initiated once the membrane depolarizes to about 15 mV positive to the resting potential (the threshold voltage), triggering the all-or-none upstroke.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 16"}, {"topic": "T-Tubules & SR", "q": "What is the function of T-tubules in excitation-contraction coupling?", "choices": ["They are invaginations of the sarcolemma, filled with extracellular fluid, that transmit action potentials deep into the muscle fiber", "They synthesize ATP for contraction", "They are the site of actin-myosin cross-bridge cycling", "They store Ca2+ long-term like the SR"], "answer": 0, "correct": "T-tubules are invaginations of the sarcolemma filled with extracellular fluid that penetrate, branch, and form networks within the muscle fiber, transmitting action potentials deep into the fiber to trigger Ca2+ release from the sarcoplasmic reticulum.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 50"}, {"topic": "The Triad", "q": "What structures make up the \"triad\" in skeletal muscle excitation-contraction coupling?", "choices": ["Three myofibrils bundled together", "The junction of two terminal cisternae of the SR with one T-tubule", "Two T-tubules and one terminal cisterna", "Actin, myosin, and titin"], "answer": 1, "correct": "The \"triad\" is the junction between two terminal cisternae of the sarcoplasmic reticulum and a T-tubule, where the DHP receptor (voltage sensor on the T-tubule) communicates with the ryanodine receptor (Ca2+ release channel on the SR).", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 52"}, {"topic": "EC Coupling: Skeletal vs Cardiac", "q": "What is the key difference between skeletal and cardiac muscle excitation-contraction coupling?", "choices": ["Skeletal muscle uses Calcium-Activated Calcium Release (CACR); cardiac uses Voltage-Activated Calcium Release (VACR)", "Both use identical mechanisms with no meaningful difference", "Neither muscle type uses the ryanodine receptor", "Skeletal muscle uses Voltage-Activated Calcium Release (VACR) via the DHP receptor; cardiac muscle uses Calcium-Activated Calcium Release (CACR), where Ca2+ entry through an L-type channel triggers further SR Ca2+ release"], "answer": 3, "correct": "In skeletal muscle, the trigger for SR Ca2+ release is voltage (Voltage-Activated Calcium Release, sensed by the T-tubule DHP receptor); in cardiac muscle, the trigger is Ca2+ itself (Calcium-Activated Calcium Release), where Ca2+ entering via a voltage-gated L-type channel triggers further Ca2+ release from the SR via the ryanodine receptor.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 55"}, {"topic": "Ca2+ Storage", "q": "What protein does Ca2+ bind to within the sarcoplasmic reticulum to facilitate its storage after being pumped back in?", "choices": ["Calsequestrin", "Titin", "Calmodulin", "Troponin"], "answer": 0, "correct": "After a muscle contraction, Ca2+ is pumped back into the SR by a Ca2+ pump, where it binds to calsequestrin to facilitate storage, terminating the contraction.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 54"}, {"topic": "The Sarcomere", "q": "What is the sarcomere?", "choices": ["The membrane surrounding a muscle fiber", "The junction between a T-tubule and the SR", "The smallest contractile unit of a muscle fiber", "A type of neuroglia"], "answer": 2, "correct": "The sarcomere is the smallest contractile unit of a muscle fiber, composed of interdigitating thick (myosin) and thin (actin) filaments.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 58"}, {"topic": "Titin", "q": "What is the function of titin (connectin) in the sarcomere?", "choices": ["It forms the thin filament backbone", "It acts as a molecular spring providing passive elasticity, prevents overstretching, and stabilizes thick filaments centered between actin filaments", "It binds Ca2+ to trigger contraction like troponin", "It hydrolyzes ATP to power contraction"], "answer": 1, "correct": "Titin is a large, springy filamentous protein spanning half the sarcomere (Z disc to M band) that acts as a molecular spring preventing overstretching, provides passive elasticity, stabilizes the thick myosin filaments centered between actin filaments, and contributes to active tension generation.", "src": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 61"}, {"topic": "Neuropeptides", "q": "What kinds of long-term changes can neuropeptides cause at synapses?", "choices": ["Changes in the number of neuron receptors, long-term opening/closure of ion channels, and changes in the number and size of synapses", "No lasting changes — they act only transiently like small molecule transmitters", "Immediate, brief ion channel opening only", "Only changes in synaptic delay"], "answer": 0, "correct": "Neuropeptides cause long-term changes including altered numbers of neuron receptors, long-term opening or closure of ion channels, and changes in the number and size of synapses; they act on metabotropic receptors and are often co-released with small molecule transmitters.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 55"}, {"topic": "Classification of Somatic Sensations", "q": "Which category of somatic sensation includes static position sense and rate of change (proprioception)?", "choices": ["Thermoreceptive", "Nociceptive", "Mechanoreceptive (specifically proprioceptive)", "None of these categories"], "answer": 2, "correct": "Somatic sensations are classified as mechanoreceptive (including tactile — touch, pressure, vibration, tickle, itch — and proprioceptive — static position, rate of change), thermoreceptive (heat/cold), and nociceptive (pain/tissue damage).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 56"}, {"topic": "Free Nerve Endings", "q": "What type of nerve fiber carries signals from unmyelinated free nerve endings that detect pain, temperature, and itch?", "choices": ["Type A-beta fibers", "Type C fibers", "Type A-alpha fibers", "Only myelinated fibers can detect pain"], "answer": 1, "correct": "Unmyelinated free nerve endings that detect pain, temperature, and itch use slowly adapting type C fibers, while myelinated free nerve endings (pain, temperature) use type A-delta fibers.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 58"}, {"topic": "Sensory Nerve Classification", "q": "What are the four classes of sensory nerve fibers mentioned that transmit receptor information to the brain?", "choices": ["Alpha, beta, gamma, delta", "A, B, C, D", "Fast, medium, slow, very slow", "Type I, II, III, IV"], "answer": 0, "correct": "Sensory nerve fibers are classified as alpha, beta, gamma, and delta types, transmitting receptor information to the brain at different conduction velocities.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 15"}, {"topic": "Stimulus Strength Discrimination", "q": "How does the relationship between stimulus strength and receptor potential allow a wide response range?", "choices": ["Only large changes can ever be discerned, regardless of baseline intensity", "Small changes in stimulus strength can be discerned at low intensity, while only large changes can be discerned at high intensity", "Discrimination ability is constant regardless of baseline stimulus intensity", "Receptor potential is completely independent of stimulus strength"], "answer": 1, "correct": "Small changes in stimulus strength can be discerned when baseline intensity is low, while only large changes can be discerned when intensity is already high — this logarithmic-like relationship allows receptors to function over a wide range of stimulus intensities.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 11"}, {"topic": "Organization of the Nervous System", "q": "What are the three broad divisions of the nervous system described in the overview?", "choices": ["Central, peripheral, and autonomic", "Sensory division, integrative division, and motor division", "Somatic, visceral, and enteric", "Cortical, subcortical, and spinal"], "answer": 1, "correct": "The nervous system is organized into a sensory division (tactile, visual, auditory, olfactory), an integrative division (processing information, creating memory), and a motor division (responding to and moving within the environment).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 3"}, {"topic": "Dorsal Column-Medial Lemniscal System", "q": "What type of sensory information does the dorsal column-medial lemniscal system transmit, and what is its key structural feature?", "choices": ["Only visceral sensations", "Only pain, via three neurons decussating in the spinal cord", "Touch, vibration, position, and fine pressure, via large myelinated A-beta fibers with high spatial fidelity, decussating in the medulla", "Pain and temperature, via slow unmyelinated fibers with poor spatial fidelity"], "answer": 2, "correct": "The dorsal column-medial lemniscal system contains large myelinated A-beta fibers (30-110 m/sec) that transmit touch, vibration, position, and fine pressure rapidly, with high spatial fidelity maintained throughout the tract, and decussates in the medulla oblongata.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 59"}, {"topic": "The Anterolateral System", "q": "How does the anterolateral system differ from the dorsal column-medial lemniscal system?", "choices": ["It only transmits fine touch and vibration", "It uses smaller myelinated (A-delta) and unmyelinated (C) fibers for slower transmission, decussates in the spinal cord, has low spatial orientation, and transmits a broad spectrum including pain, temperature, crude touch, and itch", "It never decussates", "It transmits with higher spatial fidelity and faster conduction velocity"], "answer": 1, "correct": "The anterolateral system uses smaller myelinated (A-delta) and unmyelinated (C) fibers for slower transmission (0.5-40 m/sec), decussates in the spinal cord, has a low degree of spatial orientation, and transmits a broad spectrum of modalities including pain, thermal sensations, crude touch/pressure, tickle, and itch.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 60"}, {"topic": "Dermatomes", "q": "What clinical uses do dermatomes have?", "choices": ["No clinical significance", "Only relevant to the motor system", "Localizing spinal cord lesions and explaining rash patterns from viruses like varicella zoster that hibernate in ganglia", "Only used to diagnose brain tumors"], "answer": 2, "correct": "A dermatome is the area of skin supplied by sensory neurons from a single spinal nerve ganglion; dermatomes are clinically useful for localizing cord lesions and explain why viruses like varicella zoster (hibernating in ganglia) cause rash in an associated dermatome (shingles).", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 61"}, {"topic": "Somatosensory Cortex", "q": "What is notable about the representation of different body parts in the somatosensory cortex (postcentral gyrus)?", "choices": ["The lips have the greatest area of cortical representation, followed by the face and thumb, while the trunk and lower body have the least", "The trunk has the greatest representation", "Representation is randomly distributed", "All body parts have equal representation"], "answer": 0, "correct": "The somatosensory cortex (postcentral gyrus) shows unequal representation of the body: the lips have the greatest area of representation, followed by the face and thumb, while the trunk and lower body have the least — illustrated by the sensory homunculus.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 62"}, {"topic": "Somatosensory Association Area", "q": "What happens when the somatosensory association area (Brodmann areas 5 and 7) is lost?", "choices": ["No functional deficit occurs", "Only motor deficits occur", "Complete loss of all sensation", "Inability to recognize complex objects, and neglect of (or refusal to acknowledge) the contralateral body/world"], "answer": 3, "correct": "Loss of the somatosensory association area (Brodmann areas 5 and 7 in the parietal lobe, which deciphers complex sensory associations) causes an inability to recognize complex objects and can cause neglect of, or even refusal to acknowledge ownership of, the contralateral body.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 66"}, {"topic": "Lateral Inhibition", "q": "What is lateral inhibition, and what does it improve?", "choices": ["The mechanism by which neurons summate spatially", "The capacity of an excited neuron to reduce activity of neighboring neurons, improving contrast and two-point discrimination", "A process that decreases overall sensory resolution", "A mechanism that only occurs in motor pathways"], "answer": 1, "correct": "Lateral inhibition is the capacity of an excited neuron to reduce the activity of neighboring neurons, improving the degree of contrast and thus improving two-point discrimination; it occurs at every synaptic level of the dorsal column system.", "src": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 69"}, {"topic": "Cerebellar Disease Sign", "q": "What sign, seen during a reflex test like the patellar reflex, suggests cerebellar disease?", "choices": ["A delayed reflex onset only", "Complete absence of the reflex", "An unusually strong single kick with no oscillation", "Multiple oscillations of the leg"], "answer": 3, "correct": "Multiple oscillations of the leg during a reflex test (like the patellar reflex) is a sign of cerebellar disease, reflecting impaired damping of the motor response.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 19"}, {"topic": "Muscle Spindle Loading", "q": "What would happen to the stretch reflex response if only the extrafusal muscle contracted without the intrafusal (spindle) fibers contracting?", "choices": ["The spindle would become more sensitive", "The spindle would go slack (unloaded), making the stretch response unavailable", "The muscle would be unable to contract at all", "The stretch response would be unaffected"], "answer": 1, "correct": "If the extrafusal muscle contracts without corresponding contraction of the intrafusal fiber ends (i.e., without alpha-gamma co-activation), the spindle goes slack and the stretch response becomes temporarily unavailable — this is why co-activation is necessary during voluntary movement.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 14"}, {"topic": "Proprioception Definition", "q": "What is proprioception?", "choices": ["The sensing of the relative position of body parts and the strength of effort used in movement", "The sense of taste and smell", "The perception of pain only", "The detection of light by the retina"], "answer": 0, "correct": "Proprioception (from Latin proprius, \"one's own,\" and perception) is the sensing of the relative position of body parts and the strength of effort used in movement, contributed to significantly by propriospinal fibers, muscle spindles, and Golgi tendon organs.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 7"}, {"topic": "Sensory Receptors of Muscle — Consciousness", "q": "Are signals from muscle spindles and Golgi tendon organs mainly processed consciously or subconsciously?", "choices": ["They are never processed by the brain at all", "Mainly subconsciously, for intrinsic muscle control, though they also transmit information to the cerebrum and cerebellum", "Mainly consciously, requiring active attention", "Only Golgi tendon organ signals are subconscious"], "answer": 1, "correct": "Signals from muscle spindle and Golgi tendon organ sensory receptors are used mainly for intrinsic (subconscious) muscle control, occurring mainly subconsciously, though they also transmit information to the cerebrum and cerebellum.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 9"}, {"topic": "Motor Neuron Location and Size", "q": "Where are motor neurons located in the spinal cord, and how do they compare in size to other neurons?", "choices": ["They are located in the posterior (dorsal) horn and are smaller than other neurons", "They are located in the anterior portion of the cord and are 50-100% larger than other neurons", "Size is unrelated to location for motor neurons", "They are located in the lateral horn only"], "answer": 1, "correct": "Motor neurons are located in the anterior portion of the spinal cord and are 50-100% larger than other neurons, giving rise to nerve fibers that leave the cord via the anterior roots.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 4"}, {"topic": "Sensory Fibers Entering the Cord", "q": "Once sensory fibers enter the spinal cord, what two general things can happen to their signal?", "choices": ["They are transmitted to higher centers, or they synapse locally to elicit motor reflexes", "They are always destroyed immediately", "They can only travel to the brainstem, never synapsing locally", "They always bypass the spinal cord entirely"], "answer": 0, "correct": "Sensory fibers entering the spinal cord are either transmitted onward to higher centers, or synapse locally within the cord to elicit motor reflexes — illustrating the cord's dual role in relay and local reflex processing.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 4"}, {"topic": "Motor Cortex Subareas", "q": "What are the three subareas of the motor cortex?", "choices": ["Occipital, temporal, and parietal motor areas", "Broca's area, Wernicke's area, and the insula", "Only the primary motor cortex — there are no subareas", "Primary motor cortex, premotor area, and supplemental motor area"], "answer": 3, "correct": "The motor cortex is divided into the primary motor cortex (fine motor movement, unequal topographic representation), the premotor area (movement of muscle groups for a task), and the supplemental motor area (bilateral movements, positional/attitudinal support for fine control).", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 27"}, {"topic": "Broca's Area", "q": "What deficit results from damage to Broca's area?", "choices": ["Motor apraxia of the hands", "Loss of equilibrium", "Loss of vision", "Decreased speech capability (motor aphasia)"], "answer": 3, "correct": "Damage to Broca's area causes decreased speech capability; a closely associated area controls the appropriate respiratory function needed for speech.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 32"}, {"topic": "Hand Skills Area", "q": "What deficit results from damage to the hand skills area of the motor cortex?", "choices": ["Loss of the patellar reflex", "Loss of hearing", "Motor apraxia — the inability to perform fine hand movements", "Complete paralysis of the entire body"], "answer": 2, "correct": "Damage to the hand skills area of the motor cortex causes motor apraxia, the inability to perform fine hand movements.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 32"}, {"topic": "Corticospinal Tract Origin", "q": "From what three cortical regions does the corticospinal tract originate, and in what approximate proportions?", "choices": ["Occipital cortex (50%) and temporal cortex (50%)", "Entirely from the cerebellum", "Primary motor cortex (30%), supplementary motor areas (30%), and somatic sensory areas (40%)", "Entirely from the primary motor cortex (100%)"], "answer": 2, "correct": "The corticospinal tract originates from the primary motor cortex (about 30%), supplementary motor areas (about 30%), and somatic sensory areas (about 40%).", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Betz Cells", "q": "What are Betz cells, and what fraction of corticospinal fibers do they contribute?", "choices": ["Glial cells supporting the corticospinal tract", "Small interneurons that make up the majority of corticospinal fibers", "Giant pyramidal cells that give rise to large, fast-conducting fibers (~70 m/sec), but make up only about 3% of total corticospinal fibers", "Sensory neurons found only in the thalamus"], "answer": 2, "correct": "Betz cells are giant pyramidal cells in the primary motor cortex that give rise to large corticospinal fibers with fast transmission rates (~70 m/sec), but the roughly 34,000 Betz cell fibers make up only about 3% of the total ~1 million corticospinal fibers — the remaining 97% are small-diameter fibers conducting background tonic signals.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Corticospinal Tract Decussation", "q": "Where do most corticospinal fibers cross to the opposite side of the body?", "choices": ["In the spinal cord at the level of exit", "They never cross to the opposite side", "In the thalamus", "In the medulla, descending afterward in the lateral corticospinal tracts"], "answer": 3, "correct": "The majority of corticospinal fibers cross to the opposite side in the medulla and then descend in the lateral corticospinal tracts, synapsing with interneurons, anterior motor neurons, and a few sensory relay neurons in the cord's gray matter.", "src": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Receptor Agonist/Antagonist Definitions", "q": "What is the difference between a receptor agonist and a receptor antagonist?", "choices": ["Agonists and antagonists both always increase receptor activity", "An agonist blocks a biological response; an antagonist initiates one", "An agonist initiates a physiological response when it combines with its receptor; an antagonist blocks a biological response by binding to and blocking the receptor", "They are synonyms for the same concept"], "answer": 2, "correct": "A receptor agonist is a substance that initiates a physiological response when it combines with its receptor; a receptor antagonist is a substance that blocks a biological response by binding to and blocking the receptor.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Sympathetic Exceptions to Adrenergic Rule", "q": "Which effector tissues are exceptions to the rule that postganglionic sympathetic nerves release norepinephrine?", "choices": ["There are no exceptions", "Sweat glands, piloerector muscles, and select blood vessels (which are cholinergic)", "Only the adrenal medulla", "The heart and lungs"], "answer": 1, "correct": "Almost all postganglionic sympathetic nerves release norepinephrine, except for those innervating sweat glands, piloerector muscles, and select blood vessels, which release acetylcholine instead (sympathetic-cholinergic fibers).", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 7"}, {"topic": "Adrenergic Antagonist Drugs", "q": "What class of drug are phentolamine and phenoxybenzamine, and what do they block?", "choices": ["Ganglionic blockers, blocking autonomic ganglia", "Alpha blockers, blocking alpha receptors", "Cholinesterase inhibitors", "Beta blockers, blocking beta receptors"], "answer": 1, "correct": "Phentolamine and phenoxybenzamine are alpha blockers, blocking alpha adrenergic receptors, in contrast to beta blockers like propranolol (blocks beta-1 and beta-2) and metoprolol (blocks beta-1 selectively).", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Beta Blocker Selectivity", "q": "What is the key difference between propranolol and metoprolol as beta blockers?", "choices": ["Neither drug blocks any adrenergic receptor", "Both drugs have identical receptor selectivity", "Metoprolol blocks both beta-1 and beta-2; propranolol is beta-1 selective", "Propranolol blocks both beta-1 and beta-2 receptors; metoprolol selectively blocks beta-1 receptors"], "answer": 3, "correct": "Propranolol is a non-selective beta blocker (blocking both beta-1 and beta-2 receptors), while metoprolol selectively blocks beta-1 receptors.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Indirect-Acting Sympathomimetics", "q": "How do drugs like ephedrine, tyramine, and amphetamine act on the sympathetic nervous system?", "choices": ["They directly bind and activate alpha and beta receptors", "They destroy norepinephrine storage vesicles permanently", "They act indirectly by increasing the release of norepinephrine from its storage terminals", "They have no effect on the sympathetic nervous system"], "answer": 2, "correct": "Ephedrine, tyramine, and amphetamine act indirectly on the sympathetic nervous system by increasing the release of norepinephrine from its storage terminals, rather than directly binding adrenergic receptors themselves.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 24"}, {"topic": "Reserpine & Guanethidine", "q": "How do reserpine and guanethidine differ in their mechanism of blocking sympathetic effects?", "choices": ["Reserpine blocks synthesis and storage of norepinephrine; guanethidine blocks its release from the nerve terminal", "Reserpine and guanethidine are ganglionic blockers", "Neither drug affects norepinephrine at all", "Both drugs block postsynaptic alpha receptors directly"], "answer": 0, "correct": "Reserpine blocks the synthesis and storage of norepinephrine, while guanethidine blocks its release from the nerve terminal — both reduce sympathetic effects but through different steps in the norepinephrine life cycle.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Cerebral Cortex & Thalamus", "q": "What happens to cortical function if the thalamic connection to a cortical area is lost, and which sensory pathway is the exception to passing through the thalamus?", "choices": ["Cortical function is unaffected; the auditory pathway is the exception", "Cortical function increases; the visual pathway is the exception", "Cortical function stops; the olfactory tract is the exception (does not pass through the thalamus)", "All sensory pathways pass through the thalamus with no exceptions"], "answer": 2, "correct": "Each area of the cortex is connected to a specific part of the thalamus, and when that thalamic connection is lost, cortical function stops; all sensory pathways pass through the thalamus except the olfactory tract.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 27"}, {"topic": "Dominant Hemisphere", "q": "What percentage of the population has a left-dominant hemisphere, and what is Wernicke's area responsible for in the dominant hemisphere?", "choices": ["50%; Wernicke's area controls motor speech", "95%; Wernicke's area (up to 50% larger in the dominant hemisphere) is responsible for verbal symbolism and related intelligence", "100%; Wernicke's area has no specific function", "5%; Wernicke's area controls only music perception"], "answer": 1, "correct": "95% of the population has a left-dominant hemisphere, where Wernicke's area (which can be up to 50% larger than in the nondominant hemisphere) is responsible for verbal symbolism and related intelligence.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 32"}, {"topic": "Nondominant Hemisphere", "q": "What type of intelligence is the nondominant hemisphere more associated with?", "choices": ["Other forms of sensory intelligence, such as music and sensory feelings", "Only autonomic regulation", "Only motor coordination", "Verbal symbolism and language"], "answer": 0, "correct": "While the dominant hemisphere (usually left) is specialized for verbal symbolism via Wernicke's area, the nondominant hemisphere is related to other forms of sensory intelligence, such as music and sensory feelings.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 33"}, {"topic": "Prefrontal Association Area", "q": "What deficit results from damage to the prefrontal association area?", "choices": ["Inability to keep track of simultaneous bits of information and being easily distracted, impairing concerted logical thinking", "Loss of vision only", "Loss of the patellar reflex", "Complete loss of all memory"], "answer": 0, "correct": "The prefrontal association area is responsible for calling forth stored information toward a goal and concerted logical thinking; damage causes an inability to keep track of simultaneous bits of information and easy distractibility.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 34"}, {"topic": "Auditory Communication Pathway", "q": "In the pathway for auditory communication (hearing a word and responding), what happens after the primary auditory area recognizes a sound as a word and Wernicke's area interprets it?", "choices": ["The signal goes directly to the cerebellum for storage", "Nothing further happens — comprehension is the final step", "The signal is immediately sent to the spinal cord, bypassing all other areas", "The word/thought is formed, transmitted via the arcuate fasciculus to Broca's area, which activates motor programs for word formation, then signals are sent to the motor cortex to control speech muscles"], "answer": 3, "correct": "After the primary auditory area recognizes a sound as a word and Wernicke's area interprets its meaning, the word that expresses the thought is formed, transmitted via the arcuate fasciculus to Broca's area, which activates motor programs for word formation, and finally signals are sent to the motor cortex to control the speech muscles.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 37"}, {"topic": "Wernicke Aphasia", "q": "What is the functional consequence of destroying the visual and auditory association areas (Wernicke aphasia)?", "choices": ["Loss of motor speech coordination only", "An inability to understand the written or spoken word", "Loss of all long-term memory", "Complete paralysis"], "answer": 1, "correct": "Wernicke aphasia results from destruction of the visual and auditory association areas and causes an inability to understand the written or spoken word — a receptive/comprehension deficit, distinct from Broca's area's motor speech deficit.", "src": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 39"}];
-
-/* ============================================================
-   ENGINE
-   ============================================================ */
-const state = { i:0, score:0, answered:false, missed:[] };
-let order = QUESTIONS.map((_,i)=>i);
-let examMode = false, hardCutoff = false, cutoffMs = 0, autoSubmitTriggered = false;
-let flagged = new Set();
-let examResponses = {};
+const QUESTIONS = [{"topic": "Genomics & Proteomics", "io": "Genomics & Proteomics", "q": "Approximately how genetically identical are humans at the genome level, according to this lecture?", "opts": [["100% identical with no variation", ""], ["50% identical", ""], ["99.8% identical at the genome level, 99.999% identical in coding regions", "Humans are approximately 99.8% identical at the genome level and 99.999% identical in the coding regions, despite having an estimated 25,000-30,000 genes."], ["75% identical", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 95"}, {"topic": "Cell Cycle", "io": "Cell Cycle", "q": "What are the three phases of interphase (which makes up more than 95% of the cell life cycle)?", "opts": [["Transcription, translation, replication", ""], ["G1 phase, S phase (DNA synthesis), and G2 phase", "Interphase (>95% of the cell cycle) consists of the G1 phase, S phase (DNA synthesis), and G2 phase, distinct from the M phase (mitosis and cytokinesis)."], ["Mitosis, cytokinesis, apoptosis", ""], ["Prophase, metaphase, anaphase", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 97"}, {"topic": "DNA Replication", "io": "DNA Replication", "q": "What forms on the lagging strand during DNA replication (S phase)?", "opts": [["Only continuous new DNA with no fragments", ""], ["Okazaki fragments", "During S phase, DNA replication involves formation of Okazaki fragments on the lagging strand, with \"new\" DNA proofread by DNA polymerase and gaps filled by DNA ligase."], ["Ribosomal subunits", ""], ["Clathrin-coated pits", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 99"}, {"topic": "DNA Repair & Mutations", "io": "DNA Repair & Mutations", "q": "What is the role of DNA ligase in DNA repair?", "opts": [["It forms ribosomes", ""], ["It unwinds the DNA double helix", ""], ["It transcribes mRNA", ""], ["It replaces mismatches (cut out by DNA polymerase during proofreading) with complementary nucleotides", "After DNA polymerase \"proofreads\" new DNA and cuts out mismatches, DNA ligase replaces the mismatches with complementary nucleotides; a mistake during transcription resulting in an abnormal protein is called a mutation."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 101"}, {"topic": "Cell Differentiation", "io": "Cell Differentiation", "q": "What is the basis for cell differentiation, according to this lecture?", "opts": [["Loss of genes as cells proliferate", ""], ["Selective repression/expression of specific genes (not loss of genes), often via one part of the body inducing effects on another", "Cell differentiation results not from the loss of genes but from the selective repression/expression of specific genes, with development occurring in large part through \"inductions\" — one part of the body affecting another."], ["Increased mitochondrial number", ""], ["Random mutation only", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 106"}, {"topic": "Control of Cell Growth", "io": "Control of Cell Growth", "q": "Which tissues are described as having rapid rates of cell growth/turnover?", "opts": [["Bone marrow, skin, and intestinal epithelia", "Bone marrow, skin, and intestinal epithelia show rapid cell growth, while smooth muscle, neurons, and striated muscle grow slowly or never; growth factors, contact inhibition, and negative-feedback cellular secretions determine growth rate."], ["None — all tissues grow at the same rate", ""], ["Neurons and striated muscle", ""], ["Cardiac muscle only", ""]], "c": 0, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 105"}, {"topic": "Cell Membrane Basics", "io": "Cell Membrane Basics", "q": "What does the lipid bilayer act as, functionally?", "opts": [["A pump requiring ATP for all transport", ""], ["A barrier to water and water-soluble substances", "The lipid bilayer acts as a barrier to water and to substances that dissolve in water, though specific molecules can still cross via membrane proteins."], ["A source of genetic information", ""], ["A site of ATP synthesis only", ""]], "c": 1, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 46"}, {"topic": "Membrane Proteins", "io": "Membrane Proteins", "q": "Roughly how many different proteins involved in transport do cell membranes contain?", "opts": [["Fewer than 10", ""], ["Over 10,000", ""], ["Over 300", "Cell membranes contain over 300 different proteins that play a role in transport, providing specificity and function (ion channels, carrier proteins)."], ["About 50", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 49"}, {"topic": "Diffusion vs Active Transport", "io": "Diffusion vs Active Transport", "q": "What is the key difference between diffusion and active transport across the cell membrane?", "opts": [["Active transport only occurs during mitosis", ""], ["They are the same process", ""], ["Diffusion occurs down a concentration gradient with no additional energy required; active transport occurs against a gradient and requires ATP", "Diffusion occurs down a concentration gradient and requires no additional energy, while active transport occurs against a concentration gradient and requires energy (ATP), using a protein carrier."], ["Diffusion requires ATP; active transport does not", ""]], "c": 2, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 50"}, {"topic": "Simple vs Facilitated Diffusion", "io": "Simple vs Facilitated Diffusion", "q": "What distinguishes facilitated diffusion from simple diffusion?", "opts": [["Facilitated diffusion requires ATP directly", ""], ["Simple diffusion only occurs in muscle cells", ""], ["There is no difference", ""], ["Facilitated diffusion involves water-soluble molecules crossing via protein channels/transport proteins, while simple diffusion is for lipid-soluble molecules crossing directly through the membrane", "Simple diffusion allows lipid-soluble molecules to move readily across the membrane based on lipid solubility, while facilitated diffusion allows water-soluble molecules to cross via protein channels and other transport proteins."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 51"}, {"topic": "Aquaporins", "io": "Aquaporins", "q": "What do aquaglyceroporins transport, in addition to water?", "opts": [["Only calcium", ""], ["Only glucose", ""], ["Only sodium ions", ""], ["Glycerol, urea, and ammonia", "Aquaglyceroporins are a subset of aquaporins that transport glycerol, urea, and ammonia across cell membranes, in addition to water."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 52"}, {"topic": "Ion Channels", "io": "Ion Channels", "q": "What are the two main types of ion channels?", "opts": [["Aquaporins and aquaglyceroporins", ""], ["Primary and secondary active transporters", ""], ["Symporters and antiporters", ""], ["Ungated channels and gated channels (voltage-gated or chemical/ligand-gated)", "Ion channels are either ungated (transport determined by size, shape, and charge) or gated — either voltage-gated (e.g., voltage-gated Na+ channels) or chemical/ligand-gated (e.g., nicotinic acetylcholine receptor channels)."]], "c": 3, "cite": "Lecture 1 - Cell Physiology and Cell Membranes.pptx, Slide 54"}, {"topic": "End-Plate Potential Termination", "io": "End-Plate Potential Termination", "q": "What terminates the end-plate potential at the neuromuscular junction?", "opts": [["Diffusion of ACh away from the synapse only", ""], ["Closure of voltage-gated Ca2+ channels alone", ""], ["Acetylcholinesterase (AChE), which breaks down ACh", "Acetylcholinesterase (AChE) breaks down ACh in the synaptic cleft, terminating the end-plate potential and allowing the neuromuscular junction to reset for the next signal."], ["Reuptake of ACh into the presynaptic terminal", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 49"}, {"topic": "Ligands", "io": "Ligands", "q": "What is a ligand?", "opts": [["Any substance that binds to a receptor", "A ligand is any substance that binds to a receptor; acetylcholine and norepinephrine are considered \"physiological\" ligands (provided by the body), and receptors are often classified/named by reference to their ligand."], ["A structural protein in muscle", ""], ["A type of ion channel", ""], ["Only a substance made by the body", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 40"}, {"topic": "ACh Receptor Subtypes", "io": "ACh Receptor Subtypes", "q": "What distinguishes nicotinic (nACh) from muscarinic (mACh) acetylcholine receptors?", "opts": [["They are functionally identical", ""], ["Nicotinic receptors do not respond to acetylcholine", ""], ["Nicotinic receptors are stimulated by nicotine; muscarinic receptors are stimulated by muscarine — both are subtypes of ACh receptor named by their distinguishing ligand", "ACh receptors are subdivided into nicotinic (nACh, stimulated by nicotine) and muscarinic (mACh, stimulated by muscarine) receptors, illustrating how receptors are often classified by reference to distinguishing ligands."], ["Muscarinic receptors are found only in skeletal muscle", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 40"}, {"topic": "Vesicle Formation", "io": "Vesicle Formation", "q": "Approximately how many acetylcholine molecules are contained in a single synaptic vesicle at the neuromuscular junction?", "opts": [["~1,000,000", ""], ["~100", ""], ["~10,000", "Each synaptic vesicle at the neuromuscular junction contains approximately 10,000 molecules of ACh, with roughly 300,000 vesicles formed per nerve terminal."], ["~10", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 45"}, {"topic": "Action Potential Frequency Coding", "io": "Action Potential Frequency Coding", "q": "How is information encoded by a series of action potentials, given that their amplitude is constant?", "opts": [["By the frequency of action potentials", "Because action potential amplitude is constant (they do not summate), information is encoded by the frequency of action potentials rather than by amplitude."], ["Information cannot be encoded by APs", ""], ["By reversing the direction of propagation", ""], ["By varying the AP amplitude", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 17"}, {"topic": "Threshold Voltage", "io": "Threshold Voltage", "q": "What is the typical threshold voltage for initiating an action potential, relative to resting potential?", "opts": [["About 100 mV negative to resting potential", ""], ["About 15 mV positive to resting potential", "Action potentials are typically initiated once the membrane depolarizes to about 15 mV positive to the resting potential (the threshold voltage), triggering the all-or-none upstroke."], ["About 50 mV positive to resting potential", ""], ["Exactly equal to resting potential", ""]], "c": 1, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 16"}, {"topic": "T-Tubules & SR", "io": "T-Tubules & SR", "q": "What is the function of T-tubules in excitation-contraction coupling?", "opts": [["They are invaginations of the sarcolemma, filled with extracellular fluid, that transmit action potentials deep into the muscle fiber", "T-tubules are invaginations of the sarcolemma filled with extracellular fluid that penetrate, branch, and form networks within the muscle fiber, transmitting action potentials deep into the fiber to trigger Ca2+ release from the sarcoplasmic reticulum."], ["They synthesize ATP for contraction", ""], ["They are the site of actin-myosin cross-bridge cycling", ""], ["They store Ca2+ long-term like the SR", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 50"}, {"topic": "The Triad", "io": "The Triad", "q": "What structures make up the \"triad\" in skeletal muscle excitation-contraction coupling?", "opts": [["Three myofibrils bundled together", ""], ["The junction of two terminal cisternae of the SR with one T-tubule", "The \"triad\" is the junction between two terminal cisternae of the sarcoplasmic reticulum and a T-tubule, where the DHP receptor (voltage sensor on the T-tubule) communicates with the ryanodine receptor (Ca2+ release channel on the SR)."], ["Two T-tubules and one terminal cisterna", ""], ["Actin, myosin, and titin", ""]], "c": 1, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 52"}, {"topic": "EC Coupling: Skeletal vs Cardiac", "io": "EC Coupling: Skeletal vs Cardiac", "q": "What is the key difference between skeletal and cardiac muscle excitation-contraction coupling?", "opts": [["Skeletal muscle uses Calcium-Activated Calcium Release (CACR); cardiac uses Voltage-Activated Calcium Release (VACR)", ""], ["Both use identical mechanisms with no meaningful difference", ""], ["Neither muscle type uses the ryanodine receptor", ""], ["Skeletal muscle uses Voltage-Activated Calcium Release (VACR) via the DHP receptor; cardiac muscle uses Calcium-Activated Calcium Release (CACR), where Ca2+ entry through an L-type channel triggers further SR Ca2+ release", "In skeletal muscle, the trigger for SR Ca2+ release is voltage (Voltage-Activated Calcium Release, sensed by the T-tubule DHP receptor); in cardiac muscle, the trigger is Ca2+ itself (Calcium-Activated Calcium Release), where Ca2+ entering via a voltage-gated L-type channel triggers further Ca2+ release from the SR via the ryanodine receptor."]], "c": 3, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 55"}, {"topic": "Ca2+ Storage", "io": "Ca2+ Storage", "q": "What protein does Ca2+ bind to within the sarcoplasmic reticulum to facilitate its storage after being pumped back in?", "opts": [["Calsequestrin", "After a muscle contraction, Ca2+ is pumped back into the SR by a Ca2+ pump, where it binds to calsequestrin to facilitate storage, terminating the contraction."], ["Titin", ""], ["Calmodulin", ""], ["Troponin", ""]], "c": 0, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 54"}, {"topic": "The Sarcomere", "io": "The Sarcomere", "q": "What is the sarcomere?", "opts": [["The membrane surrounding a muscle fiber", ""], ["The junction between a T-tubule and the SR", ""], ["The smallest contractile unit of a muscle fiber", "The sarcomere is the smallest contractile unit of a muscle fiber, composed of interdigitating thick (myosin) and thin (actin) filaments."], ["A type of neuroglia", ""]], "c": 2, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 58"}, {"topic": "Titin", "io": "Titin", "q": "What is the function of titin (connectin) in the sarcomere?", "opts": [["It forms the thin filament backbone", ""], ["It acts as a molecular spring providing passive elasticity, prevents overstretching, and stabilizes thick filaments centered between actin filaments", "Titin is a large, springy filamentous protein spanning half the sarcomere (Z disc to M band) that acts as a molecular spring preventing overstretching, provides passive elasticity, stabilizes the thick myosin filaments centered between actin filaments, and contributes to active tension generation."], ["It binds Ca2+ to trigger contraction like troponin", ""], ["It hydrolyzes ATP to power contraction", ""]], "c": 1, "cite": "Lecture 2 - Cell Membrane Potentials and Action Potentials.pptx, Slide 61"}, {"topic": "Neuropeptides", "io": "Neuropeptides", "q": "What kinds of long-term changes can neuropeptides cause at synapses?", "opts": [["Changes in the number of neuron receptors, long-term opening/closure of ion channels, and changes in the number and size of synapses", "Neuropeptides cause long-term changes including altered numbers of neuron receptors, long-term opening or closure of ion channels, and changes in the number and size of synapses; they act on metabotropic receptors and are often co-released with small molecule transmitters."], ["No lasting changes — they act only transiently like small molecule transmitters", ""], ["Immediate, brief ion channel opening only", ""], ["Only changes in synaptic delay", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 55"}, {"topic": "Classification of Somatic Sensations", "io": "Classification of Somatic Sensations", "q": "Which category of somatic sensation includes static position sense and rate of change (proprioception)?", "opts": [["Thermoreceptive", ""], ["Nociceptive", ""], ["Mechanoreceptive (specifically proprioceptive)", "Somatic sensations are classified as mechanoreceptive (including tactile — touch, pressure, vibration, tickle, itch — and proprioceptive — static position, rate of change), thermoreceptive (heat/cold), and nociceptive (pain/tissue damage)."], ["None of these categories", ""]], "c": 2, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 56"}, {"topic": "Free Nerve Endings", "io": "Free Nerve Endings", "q": "What type of nerve fiber carries signals from unmyelinated free nerve endings that detect pain, temperature, and itch?", "opts": [["Type A-beta fibers", ""], ["Type C fibers", "Unmyelinated free nerve endings that detect pain, temperature, and itch use slowly adapting type C fibers, while myelinated free nerve endings (pain, temperature) use type A-delta fibers."], ["Type A-alpha fibers", ""], ["Only myelinated fibers can detect pain", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 58"}, {"topic": "Sensory Nerve Classification", "io": "Sensory Nerve Classification", "q": "What are the four classes of sensory nerve fibers mentioned that transmit receptor information to the brain?", "opts": [["Alpha, beta, gamma, delta", "Sensory nerve fibers are classified as alpha, beta, gamma, and delta types, transmitting receptor information to the brain at different conduction velocities."], ["A, B, C, D", ""], ["Fast, medium, slow, very slow", ""], ["Type I, II, III, IV", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 15"}, {"topic": "Stimulus Strength Discrimination", "io": "Stimulus Strength Discrimination", "q": "How does the relationship between stimulus strength and receptor potential allow a wide response range?", "opts": [["Only large changes can ever be discerned, regardless of baseline intensity", ""], ["Small changes in stimulus strength can be discerned at low intensity, while only large changes can be discerned at high intensity", "Small changes in stimulus strength can be discerned when baseline intensity is low, while only large changes can be discerned when intensity is already high — this logarithmic-like relationship allows receptors to function over a wide range of stimulus intensities."], ["Discrimination ability is constant regardless of baseline stimulus intensity", ""], ["Receptor potential is completely independent of stimulus strength", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 11"}, {"topic": "Organization of the Nervous System", "io": "Organization of the Nervous System", "q": "What are the three broad divisions of the nervous system described in the overview?", "opts": [["Central, peripheral, and autonomic", ""], ["Sensory division, integrative division, and motor division", "The nervous system is organized into a sensory division (tactile, visual, auditory, olfactory), an integrative division (processing information, creating memory), and a motor division (responding to and moving within the environment)."], ["Somatic, visceral, and enteric", ""], ["Cortical, subcortical, and spinal", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 3"}, {"topic": "Dorsal Column-Medial Lemniscal System", "io": "Dorsal Column-Medial Lemniscal System", "q": "What type of sensory information does the dorsal column-medial lemniscal system transmit, and what is its key structural feature?", "opts": [["Only visceral sensations", ""], ["Only pain, via three neurons decussating in the spinal cord", ""], ["Touch, vibration, position, and fine pressure, via large myelinated A-beta fibers with high spatial fidelity, decussating in the medulla", "The dorsal column-medial lemniscal system contains large myelinated A-beta fibers (30-110 m/sec) that transmit touch, vibration, position, and fine pressure rapidly, with high spatial fidelity maintained throughout the tract, and decussates in the medulla oblongata."], ["Pain and temperature, via slow unmyelinated fibers with poor spatial fidelity", ""]], "c": 2, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 59"}, {"topic": "The Anterolateral System", "io": "The Anterolateral System", "q": "How does the anterolateral system differ from the dorsal column-medial lemniscal system?", "opts": [["It only transmits fine touch and vibration", ""], ["It uses smaller myelinated (A-delta) and unmyelinated (C) fibers for slower transmission, decussates in the spinal cord, has low spatial orientation, and transmits a broad spectrum including pain, temperature, crude touch, and itch", "The anterolateral system uses smaller myelinated (A-delta) and unmyelinated (C) fibers for slower transmission (0.5-40 m/sec), decussates in the spinal cord, has a low degree of spatial orientation, and transmits a broad spectrum of modalities including pain, thermal sensations, crude touch/pressure, tickle, and itch."], ["It never decussates", ""], ["It transmits with higher spatial fidelity and faster conduction velocity", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 60"}, {"topic": "Dermatomes", "io": "Dermatomes", "q": "What clinical uses do dermatomes have?", "opts": [["No clinical significance", ""], ["Only relevant to the motor system", ""], ["Localizing spinal cord lesions and explaining rash patterns from viruses like varicella zoster that hibernate in ganglia", "A dermatome is the area of skin supplied by sensory neurons from a single spinal nerve ganglion; dermatomes are clinically useful for localizing cord lesions and explain why viruses like varicella zoster (hibernating in ganglia) cause rash in an associated dermatome (shingles)."], ["Only used to diagnose brain tumors", ""]], "c": 2, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 61"}, {"topic": "Somatosensory Cortex", "io": "Somatosensory Cortex", "q": "What is notable about the representation of different body parts in the somatosensory cortex (postcentral gyrus)?", "opts": [["The lips have the greatest area of cortical representation, followed by the face and thumb, while the trunk and lower body have the least", "The somatosensory cortex (postcentral gyrus) shows unequal representation of the body: the lips have the greatest area of representation, followed by the face and thumb, while the trunk and lower body have the least — illustrated by the sensory homunculus."], ["The trunk has the greatest representation", ""], ["Representation is randomly distributed", ""], ["All body parts have equal representation", ""]], "c": 0, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 62"}, {"topic": "Somatosensory Association Area", "io": "Somatosensory Association Area", "q": "What happens when the somatosensory association area (Brodmann areas 5 and 7) is lost?", "opts": [["No functional deficit occurs", ""], ["Only motor deficits occur", ""], ["Complete loss of all sensation", ""], ["Inability to recognize complex objects, and neglect of (or refusal to acknowledge) the contralateral body/world", "Loss of the somatosensory association area (Brodmann areas 5 and 7 in the parietal lobe, which deciphers complex sensory associations) causes an inability to recognize complex objects and can cause neglect of, or even refusal to acknowledge ownership of, the contralateral body."]], "c": 3, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 66"}, {"topic": "Lateral Inhibition", "io": "Lateral Inhibition", "q": "What is lateral inhibition, and what does it improve?", "opts": [["The mechanism by which neurons summate spatially", ""], ["The capacity of an excited neuron to reduce activity of neighboring neurons, improving contrast and two-point discrimination", "Lateral inhibition is the capacity of an excited neuron to reduce the activity of neighboring neurons, improving the degree of contrast and thus improving two-point discrimination; it occurs at every synaptic level of the dorsal column system."], ["A process that decreases overall sensory resolution", ""], ["A mechanism that only occurs in motor pathways", ""]], "c": 1, "cite": "Lecture 3 -Nervous System - Intro and Sensory-2.pptx, Slide 69"}, {"topic": "Cerebellar Disease Sign", "io": "Cerebellar Disease Sign", "q": "What sign, seen during a reflex test like the patellar reflex, suggests cerebellar disease?", "opts": [["A delayed reflex onset only", ""], ["Complete absence of the reflex", ""], ["An unusually strong single kick with no oscillation", ""], ["Multiple oscillations of the leg", "Multiple oscillations of the leg during a reflex test (like the patellar reflex) is a sign of cerebellar disease, reflecting impaired damping of the motor response."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 19"}, {"topic": "Muscle Spindle Loading", "io": "Muscle Spindle Loading", "q": "What would happen to the stretch reflex response if only the extrafusal muscle contracted without the intrafusal (spindle) fibers contracting?", "opts": [["The spindle would become more sensitive", ""], ["The spindle would go slack (unloaded), making the stretch response unavailable", "If the extrafusal muscle contracts without corresponding contraction of the intrafusal fiber ends (i.e., without alpha-gamma co-activation), the spindle goes slack and the stretch response becomes temporarily unavailable — this is why co-activation is necessary during voluntary movement."], ["The muscle would be unable to contract at all", ""], ["The stretch response would be unaffected", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 14"}, {"topic": "Proprioception Definition", "io": "Proprioception Definition", "q": "What is proprioception?", "opts": [["The sensing of the relative position of body parts and the strength of effort used in movement", "Proprioception (from Latin proprius, \"one's own,\" and perception) is the sensing of the relative position of body parts and the strength of effort used in movement, contributed to significantly by propriospinal fibers, muscle spindles, and Golgi tendon organs."], ["The sense of taste and smell", ""], ["The perception of pain only", ""], ["The detection of light by the retina", ""]], "c": 0, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 7"}, {"topic": "Sensory Receptors of Muscle — Consciousness", "io": "Sensory Receptors of Muscle — Consciousness", "q": "Are signals from muscle spindles and Golgi tendon organs mainly processed consciously or subconsciously?", "opts": [["They are never processed by the brain at all", ""], ["Mainly subconsciously, for intrinsic muscle control, though they also transmit information to the cerebrum and cerebellum", "Signals from muscle spindle and Golgi tendon organ sensory receptors are used mainly for intrinsic (subconscious) muscle control, occurring mainly subconsciously, though they also transmit information to the cerebrum and cerebellum."], ["Mainly consciously, requiring active attention", ""], ["Only Golgi tendon organ signals are subconscious", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 9"}, {"topic": "Motor Neuron Location and Size", "io": "Motor Neuron Location and Size", "q": "Where are motor neurons located in the spinal cord, and how do they compare in size to other neurons?", "opts": [["They are located in the posterior (dorsal) horn and are smaller than other neurons", ""], ["They are located in the anterior portion of the cord and are 50-100% larger than other neurons", "Motor neurons are located in the anterior portion of the spinal cord and are 50-100% larger than other neurons, giving rise to nerve fibers that leave the cord via the anterior roots."], ["Size is unrelated to location for motor neurons", ""], ["They are located in the lateral horn only", ""]], "c": 1, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 4"}, {"topic": "Sensory Fibers Entering the Cord", "io": "Sensory Fibers Entering the Cord", "q": "Once sensory fibers enter the spinal cord, what two general things can happen to their signal?", "opts": [["They are transmitted to higher centers, or they synapse locally to elicit motor reflexes", "Sensory fibers entering the spinal cord are either transmitted onward to higher centers, or synapse locally within the cord to elicit motor reflexes — illustrating the cord's dual role in relay and local reflex processing."], ["They are always destroyed immediately", ""], ["They can only travel to the brainstem, never synapsing locally", ""], ["They always bypass the spinal cord entirely", ""]], "c": 0, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 4"}, {"topic": "Motor Cortex Subareas", "io": "Motor Cortex Subareas", "q": "What are the three subareas of the motor cortex?", "opts": [["Occipital, temporal, and parietal motor areas", ""], ["Broca's area, Wernicke's area, and the insula", ""], ["Only the primary motor cortex — there are no subareas", ""], ["Primary motor cortex, premotor area, and supplemental motor area", "The motor cortex is divided into the primary motor cortex (fine motor movement, unequal topographic representation), the premotor area (movement of muscle groups for a task), and the supplemental motor area (bilateral movements, positional/attitudinal support for fine control)."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 27"}, {"topic": "Broca's Area", "io": "Broca's Area", "q": "What deficit results from damage to Broca's area?", "opts": [["Motor apraxia of the hands", ""], ["Loss of equilibrium", ""], ["Loss of vision", ""], ["Decreased speech capability (motor aphasia)", "Damage to Broca's area causes decreased speech capability; a closely associated area controls the appropriate respiratory function needed for speech."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 32"}, {"topic": "Hand Skills Area", "io": "Hand Skills Area", "q": "What deficit results from damage to the hand skills area of the motor cortex?", "opts": [["Loss of the patellar reflex", ""], ["Loss of hearing", ""], ["Motor apraxia — the inability to perform fine hand movements", "Damage to the hand skills area of the motor cortex causes motor apraxia, the inability to perform fine hand movements."], ["Complete paralysis of the entire body", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 32"}, {"topic": "Corticospinal Tract Origin", "io": "Corticospinal Tract Origin", "q": "From what three cortical regions does the corticospinal tract originate, and in what approximate proportions?", "opts": [["Occipital cortex (50%) and temporal cortex (50%)", ""], ["Entirely from the cerebellum", ""], ["Primary motor cortex (30%), supplementary motor areas (30%), and somatic sensory areas (40%)", "The corticospinal tract originates from the primary motor cortex (about 30%), supplementary motor areas (about 30%), and somatic sensory areas (about 40%)."], ["Entirely from the primary motor cortex (100%)", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Betz Cells", "io": "Betz Cells", "q": "What are Betz cells, and what fraction of corticospinal fibers do they contribute?", "opts": [["Glial cells supporting the corticospinal tract", ""], ["Small interneurons that make up the majority of corticospinal fibers", ""], ["Giant pyramidal cells that give rise to large, fast-conducting fibers (~70 m/sec), but make up only about 3% of total corticospinal fibers", "Betz cells are giant pyramidal cells in the primary motor cortex that give rise to large corticospinal fibers with fast transmission rates (~70 m/sec), but the roughly 34,000 Betz cell fibers make up only about 3% of the total ~1 million corticospinal fibers — the remaining 97% are small-diameter fibers conducting background tonic signals."], ["Sensory neurons found only in the thalamus", ""]], "c": 2, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Corticospinal Tract Decussation", "io": "Corticospinal Tract Decussation", "q": "Where do most corticospinal fibers cross to the opposite side of the body?", "opts": [["In the spinal cord at the level of exit", ""], ["They never cross to the opposite side", ""], ["In the thalamus", ""], ["In the medulla, descending afterward in the lateral corticospinal tracts", "The majority of corticospinal fibers cross to the opposite side in the medulla and then descend in the lateral corticospinal tracts, synapsing with interneurons, anterior motor neurons, and a few sensory relay neurons in the cord's gray matter."]], "c": 3, "cite": "Lecture 4 - Nervous System - Motor-2.pptx, Slide 34"}, {"topic": "Receptor Agonist/Antagonist Definitions", "io": "Receptor Agonist/Antagonist Definitions", "q": "What is the difference between a receptor agonist and a receptor antagonist?", "opts": [["Agonists and antagonists both always increase receptor activity", ""], ["An agonist blocks a biological response; an antagonist initiates one", ""], ["An agonist initiates a physiological response when it combines with its receptor; an antagonist blocks a biological response by binding to and blocking the receptor", "A receptor agonist is a substance that initiates a physiological response when it combines with its receptor; a receptor antagonist is a substance that blocks a biological response by binding to and blocking the receptor."], ["They are synonyms for the same concept", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 13"}, {"topic": "Sympathetic Exceptions to Adrenergic Rule", "io": "Sympathetic Exceptions to Adrenergic Rule", "q": "Which effector tissues are exceptions to the rule that postganglionic sympathetic nerves release norepinephrine?", "opts": [["There are no exceptions", ""], ["Sweat glands, piloerector muscles, and select blood vessels (which are cholinergic)", "Almost all postganglionic sympathetic nerves release norepinephrine, except for those innervating sweat glands, piloerector muscles, and select blood vessels, which release acetylcholine instead (sympathetic-cholinergic fibers)."], ["Only the adrenal medulla", ""], ["The heart and lungs", ""]], "c": 1, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 7"}, {"topic": "Adrenergic Antagonist Drugs", "io": "Adrenergic Antagonist Drugs", "q": "What class of drug are phentolamine and phenoxybenzamine, and what do they block?", "opts": [["Ganglionic blockers, blocking autonomic ganglia", ""], ["Alpha blockers, blocking alpha receptors", "Phentolamine and phenoxybenzamine are alpha blockers, blocking alpha adrenergic receptors, in contrast to beta blockers like propranolol (blocks beta-1 and beta-2) and metoprolol (blocks beta-1 selectively)."], ["Cholinesterase inhibitors", ""], ["Beta blockers, blocking beta receptors", ""]], "c": 1, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Beta Blocker Selectivity", "io": "Beta Blocker Selectivity", "q": "What is the key difference between propranolol and metoprolol as beta blockers?", "opts": [["Neither drug blocks any adrenergic receptor", ""], ["Both drugs have identical receptor selectivity", ""], ["Metoprolol blocks both beta-1 and beta-2; propranolol is beta-1 selective", ""], ["Propranolol blocks both beta-1 and beta-2 receptors; metoprolol selectively blocks beta-1 receptors", "Propranolol is a non-selective beta blocker (blocking both beta-1 and beta-2 receptors), while metoprolol selectively blocks beta-1 receptors."]], "c": 3, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Indirect-Acting Sympathomimetics", "io": "Indirect-Acting Sympathomimetics", "q": "How do drugs like ephedrine, tyramine, and amphetamine act on the sympathetic nervous system?", "opts": [["They directly bind and activate alpha and beta receptors", ""], ["They destroy norepinephrine storage vesicles permanently", ""], ["They act indirectly by increasing the release of norepinephrine from its storage terminals", "Ephedrine, tyramine, and amphetamine act indirectly on the sympathetic nervous system by increasing the release of norepinephrine from its storage terminals, rather than directly binding adrenergic receptors themselves."], ["They have no effect on the sympathetic nervous system", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 24"}, {"topic": "Reserpine & Guanethidine", "io": "Reserpine & Guanethidine", "q": "How do reserpine and guanethidine differ in their mechanism of blocking sympathetic effects?", "opts": [["Reserpine blocks synthesis and storage of norepinephrine; guanethidine blocks its release from the nerve terminal", "Reserpine blocks the synthesis and storage of norepinephrine, while guanethidine blocks its release from the nerve terminal — both reduce sympathetic effects but through different steps in the norepinephrine life cycle."], ["Reserpine and guanethidine are ganglionic blockers", ""], ["Neither drug affects norepinephrine at all", ""], ["Both drugs block postsynaptic alpha receptors directly", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 25"}, {"topic": "Cerebral Cortex & Thalamus", "io": "Cerebral Cortex & Thalamus", "q": "What happens to cortical function if the thalamic connection to a cortical area is lost, and which sensory pathway is the exception to passing through the thalamus?", "opts": [["Cortical function is unaffected; the auditory pathway is the exception", ""], ["Cortical function increases; the visual pathway is the exception", ""], ["Cortical function stops; the olfactory tract is the exception (does not pass through the thalamus)", "Each area of the cortex is connected to a specific part of the thalamus, and when that thalamic connection is lost, cortical function stops; all sensory pathways pass through the thalamus except the olfactory tract."], ["All sensory pathways pass through the thalamus with no exceptions", ""]], "c": 2, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 27"}, {"topic": "Dominant Hemisphere", "io": "Dominant Hemisphere", "q": "What percentage of the population has a left-dominant hemisphere, and what is Wernicke's area responsible for in the dominant hemisphere?", "opts": [["50%; Wernicke's area controls motor speech", ""], ["95%; Wernicke's area (up to 50% larger in the dominant hemisphere) is responsible for verbal symbolism and related intelligence", "95% of the population has a left-dominant hemisphere, where Wernicke's area (which can be up to 50% larger than in the nondominant hemisphere) is responsible for verbal symbolism and related intelligence."], ["100%; Wernicke's area has no specific function", ""], ["5%; Wernicke's area controls only music perception", ""]], "c": 1, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 32"}, {"topic": "Nondominant Hemisphere", "io": "Nondominant Hemisphere", "q": "What type of intelligence is the nondominant hemisphere more associated with?", "opts": [["Other forms of sensory intelligence, such as music and sensory feelings", "While the dominant hemisphere (usually left) is specialized for verbal symbolism via Wernicke's area, the nondominant hemisphere is related to other forms of sensory intelligence, such as music and sensory feelings."], ["Only autonomic regulation", ""], ["Only motor coordination", ""], ["Verbal symbolism and language", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 33"}, {"topic": "Prefrontal Association Area", "io": "Prefrontal Association Area", "q": "What deficit results from damage to the prefrontal association area?", "opts": [["Inability to keep track of simultaneous bits of information and being easily distracted, impairing concerted logical thinking", "The prefrontal association area is responsible for calling forth stored information toward a goal and concerted logical thinking; damage causes an inability to keep track of simultaneous bits of information and easy distractibility."], ["Loss of vision only", ""], ["Loss of the patellar reflex", ""], ["Complete loss of all memory", ""]], "c": 0, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 34"}, {"topic": "Auditory Communication Pathway", "io": "Auditory Communication Pathway", "q": "In the pathway for auditory communication (hearing a word and responding), what happens after the primary auditory area recognizes a sound as a word and Wernicke's area interprets it?", "opts": [["The signal goes directly to the cerebellum for storage", ""], ["Nothing further happens — comprehension is the final step", ""], ["The signal is immediately sent to the spinal cord, bypassing all other areas", ""], ["The word/thought is formed, transmitted via the arcuate fasciculus to Broca's area, which activates motor programs for word formation, then signals are sent to the motor cortex to control speech muscles", "After the primary auditory area recognizes a sound as a word and Wernicke's area interprets its meaning, the word that expresses the thought is formed, transmitted via the arcuate fasciculus to Broca's area, which activates motor programs for word formation, and finally signals are sent to the motor cortex to control the speech muscles."]], "c": 3, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 37"}, {"topic": "Wernicke Aphasia", "io": "Wernicke Aphasia", "q": "What is the functional consequence of destroying the visual and auditory association areas (Wernicke aphasia)?", "opts": [["Loss of motor speech coordination only", ""], ["An inability to understand the written or spoken word", "Wernicke aphasia results from destruction of the visual and auditory association areas and causes an inability to understand the written or spoken word — a receptive/comprehension deficit, distinct from Broca's area's motor speech deficit."], ["Loss of all long-term memory", ""], ["Complete paralysis", ""]], "c": 1, "cite": "Lecture 5 - Nervous System - Central Nervous System Function-2.pptx, Slide 39"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let examMode=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
 let crossedOut = {};
 function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
 function toggleCross(qi,ci){
@@ -469,17 +254,13 @@ function toggleCross(qi,ci){
   if(s.has(ci)) s.delete(ci); else s.add(ci);
   saveProgress();
 }
-// Adds the cross-out toggle to a not-yet-answered/free-navigation choice
-// button. It's a plain <span>, not a nested <button>, and stops
-// propagation so tapping it never also selects that choice -- crossing
-// out is purely a visual aid (still fully clickable as your answer).
 function addCrossToggle(b,i){
-  if(isCrossed(state.i,i)) b.classList.add("crossed");
+  if(isCrossed(idx,i)) b.classList.add("crossed");
   const x = document.createElement("span");
   x.className = "cross-toggle";
   x.title = "Cross out this choice";
   x.innerHTML = "&#10005;";
-  x.addEventListener("click", (e)=>{ e.stopPropagation(); toggleCross(state.i,i); render(); });
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
   b.appendChild(x);
 }
 
@@ -500,436 +281,318 @@ function fmtTime(ms){
   return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
 }
 function updateTimerDisplay(){
-  const e=document.getElementById('timerpill'); if(!e) return;
+  const el=document.getElementById('timerpill'); if(!el) return;
   if(examMode && hardCutoff){
     const remain = Math.max(0, cutoffMs - currentElapsedMs());
-    e.textContent = fmtTime(remain);
-    e.classList.toggle('danger', remain <= cutoffMs*0.2);
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
     if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
   } else {
-    e.textContent = fmtTime(currentElapsedMs());
+    el.textContent = fmtTime(currentElapsedMs());
   }
 }
 function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
-function stopTimerInterval(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
 function pauseQuiz(){
   timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
   saveProgress();
   window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
 }
-
-const el = id => document.getElementById(id);
-const intro = el('intro'), quiz = el('quiz'), results = el('results');
-
 function applyExamModeUI(){
-  el('score').classList.toggle('hidden', examMode);
-  el('examtoolbar').classList.toggle('hidden', !examMode);
-  el('timerpill').classList.add('examctl-timer');
+  document.getElementById('scoretxt').classList.toggle('hidden', examMode);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !examMode);
+  document.getElementById('timerpill').classList.add('examctl-timer');
   if (examMode) window.startExamModeTour();
 }
 
-el('flagbtn').addEventListener('click', toggleFlag);
-el('navbtn').addEventListener('click', openNav);
-el('examtoolbarSubmit').addEventListener('click', () => submitExam());
-el('pausebtn').addEventListener('click', pauseQuiz);
-
-el('startBtn').addEventListener('click', () => {
-  clearProgress();
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  intro.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('nextBtn').addEventListener('click', () => {
-  if(examMode){
-    if(state.i < QUESTIONS.length-1){ state.i++; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-    else { submitExam(); }
-    return;
-  }
-  state.i++;saveProgress();
-  if (state.i >= QUESTIONS.length){ finish(); }
-  else { render(); window.scrollTo({top:0,behavior:'smooth'}); }
-});
-
-el('prevBtn').addEventListener('click', () => {
-  if (state.i === 0) return;
-  state.i--;saveProgress();render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-
-el('retryBtn').addEventListener('click', () => {
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  results.classList.add('hidden');
-  quiz.classList.remove('hidden'); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-});
-el('reviewTopBtn').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-
 const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
-function saveProgress(){
-  const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]);
-  localStorage.setItem(PKEY, JSON.stringify({i:state.i, score:state.score, total:QUESTIONS.length, missed:state.missed.map(m=>({qIndex:QUESTIONS.indexOf(m.item), chosen:m.chosen})), order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), examResponses, crossedOut: co}));
-}
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), examMode, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
 function clearProgress(){ localStorage.removeItem(PKEY); }
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
 function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
 function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  examMode = !!(document.getElementById('exam-mode-toggle') && document.getElementById('exam-mode-toggle').checked);
+  hardCutoff = examMode && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
 function resumeQuiz(){
   const saved = loadProgress();
   if(!saved) return;
-  state.i = saved.i; state.score = saved.score;
-  state.missed = saved.missed.map(m=>({item:QUESTIONS[m.qIndex], chosen:m.chosen}));
-  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : order;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
   timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
   examMode = !!saved.examMode; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
-  flagged = new Set(saved.flagged || []); examResponses = saved.examResponses || {}; autoSubmitTriggered = false;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
   crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
   applyExamModeUI();
-  el("resume-banner").classList.add("hidden");
-  intro.classList.add("hidden");
-  quiz.classList.remove("hidden"); el('quiz-footer-logo').classList.remove('hidden');
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-el("resumeBtn").addEventListener("click", resumeQuiz);
-el("discardBtn").addEventListener("click", () => { clearProgress(); el("resume-banner").classList.add("hidden"); });
-el("midRestartBtn").addEventListener("click", () => {
-  if(!confirm("Restart this quiz from the beginning?")) return;
-  clearProgress();
-  state.i = 0; state.score = 0; state.answered = false; state.missed = [];
-  order = QUESTIONS.map((_,i)=>i);
-  if(el('shuffle-toggle').checked) shuffleArray(order);
-  examMode = !!(el('exam-mode-toggle') && el('exam-mode-toggle').checked);
-  hardCutoff = examMode && !!(el('hard-cutoff-toggle') && el('hard-cutoff-toggle').checked);
-  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
-  flagged = new Set(); examResponses = {}; autoSubmitTriggered = false; crossedOut = {};
-  applyExamModeUI();
-  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
-  render();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+
 (function checkForSavedProgress(){
   const saved = loadProgress();
   if(!saved) return;
-  el("resume-text").textContent = "Question "+(saved.i+1)+" of "+QUESTIONS.length+" — Score: "+saved.score;
-  el("resume-banner").classList.remove("hidden");
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
 })();
 
-function render(){
-  const item = QUESTIONS[order[state.i]];
-  const total = QUESTIONS.length;
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
 
-  el('qcount').textContent = `Question ${state.i+1} of ${total}`;
-  el('bar').style.width = `${(state.i/total)*100}%`;
-  el('topicTag').textContent = item.topic;
-  el('qtext').textContent = item.q;
-  // Optional per-question image (item.img) -- purely additive, every
-  // existing quiz's questions simply omit this field and render exactly
-  // as before via the hidden default state.
-  if (item.img) {
-    el('qImg').src = item.img;
-    el('qImg').alt = item.imgAlt || '';
-    el('qImgCaption').textContent = item.imgCaption || '';
-    el('qFig').classList.remove('hidden');
+  if(examMode){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
   } else {
-    el('qFig').classList.add('hidden');
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
   }
-  el('prevBtn').disabled = (state.i === 0);
-  el('nextBtn').textContent = (state.i === total-1) ? 'See results' : 'Next question';
-
-  const letters = ['A','B','C','D'];
-  const box = el('choices');
-  box.innerHTML = '';
-
-  if (examMode){
-    el('nextBtn').textContent = (state.i === total-1) ? 'Submit exam' : 'Next question';
-    const priorResp = examResponses[state.i];
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      if (priorResp && idx === priorResp.choice) b.classList.add('selected-exam');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-      b.addEventListener('click', () => select(idx));
-      addCrossToggle(b, idx);
-      box.appendChild(b);
-    });
-    el('feedback').classList.remove('show');
-    el('nextBtn').classList.remove('hidden');
-    el('flagbtn').classList.toggle('flagged', flagged.has(state.i));
-    el('flagbtn').innerHTML = flagged.has(state.i) ? '&#9873; Flagged' : '&#9873; Flag';
-    document.getElementById("navbadge").textContent = (QUESTIONS.length-Object.keys(examResponses).length) > 0 ? " · " + (QUESTIONS.length-Object.keys(examResponses).length) + " left" : "";
-    return;
-  }
-
-  const missedEntry = state.missed.find(m => QUESTIONS.indexOf(m.item) === order[state.i]);
-
-  if (state.i < answeredCount()){
-    state.answered = true;
-    const chosen = missedEntry ? missedEntry.chosen : item.answer;
-    const right = !missedEntry;
-
-    item.choices.forEach((c, idx) => {
-      const b = document.createElement('button');
-      b.className = 'choice';
-      b.disabled = true;
-      if (idx === item.answer) b.classList.add('correct');
-      else if (idx === chosen) b.classList.add('wrong');
-      else b.classList.add('dim');
-      b.innerHTML = `<span class="key">${letters[idx]}</span><span>${c}</span>`;
-      box.appendChild(b);
-    });
-
-    el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-    const verdict = el('verdict');
-    verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-    verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-    el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-    el('fbWhy').textContent = item.why;
-    el('fbSrc').textContent = `Source: ${item.src}`;
-    el('feedback').classList.add('show');
-    el('nextBtn').classList.remove('hidden');
-    return;
-  }
-
-  state.answered = false;
-  el('score').textContent = `Score: ${state.score} / ${state.i}`;
-  item.choices.forEach((c, idx) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<span class="key">${letters[idx]}</span><span class="optlabel">${c}</span>`;
-    b.addEventListener('click', () => select(idx));
-    addCrossToggle(b, idx);
-    box.appendChild(b);
-  });
-
-  const fb = el('feedback');
-  fb.classList.remove('show');
-  el('nextBtn').classList.add('hidden');
 }
-function answeredCount(){ return state.score + state.missed.length; }
 
-function select(idx){
-  const item = QUESTIONS[order[state.i]];
-  if (examMode){
-    examResponses[state.i] = { choice: idx, isCorrect: idx === item.answer };
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(examMode){
+    answers[idx]=sel;
     saveProgress();
-    render();
+    renderQ();
     return;
   }
-  if (state.answered) return;
-  state.answered = true;
-  const buttons = el('choices').querySelectorAll('.choice');
-  const letters = ['A','B','C','D'];
-
-  buttons.forEach((b,i) => {
-    b.disabled = true;
-    if (i === item.answer) b.classList.add('correct');
-    else if (i === idx) b.classList.add('wrong');
-    else b.classList.add('dim');
-  });
-
-  const right = idx === item.answer;
-  if (right){ state.score++; }
-  if (window.trackAnswerStreak) window.trackAnswerStreak(right);
-  if (!right) { state.missed.push({ item, chosen: idx }); }
-
-  el('score').textContent = `Score: ${state.score} / ${state.i+1}`;
-
-  const verdict = el('verdict');
-  verdict.textContent = right ? '✓ Correct' : '✗ Incorrect';
-  verdict.className = 'verdict ' + (right ? 'right' : 'miss');
-
-  el('fbCorrect').innerHTML = `<strong>${letters[item.answer]}.</strong> ${item.correct}`;
-  el('fbWhy').textContent = item.why;
-  el('fbSrc').textContent = `Source: ${item.src}`;
-
-  el('feedback').classList.add('show');
-  el('nextBtn').classList.remove('hidden');
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
   saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function toggleFlag(){
-  if (flagged.has(state.i)) flagged.delete(state.i); else flagged.add(state.i);
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
   saveProgress();
-  render();
+  renderQ();
 }
 
 function openNav(){
   window.openQuestionNav({
     total: QUESTIONS.length,
-    current: state.i,
-    getStatus: i => ({ answered: examResponses[i] !== undefined, flagged: flagged.has(i) }),
-    onJump: i => { state.i = i; saveProgress(); render(); window.scrollTo({top:0,behavior:'smooth'}); },
-    onSubmit: () => submitExam()
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
   });
 }
 
 function submitExam(auto){
-  if (!auto){
-    const unanswered = QUESTIONS.length - Object.keys(examResponses).length;
-    if (unanswered > 0){
-      if (!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
     }
   }
-  finish();
+  showResults();
 }
 
-function finish(){
-  stopTimerInterval();
-  const finalMs = currentElapsedMs();
-  if (examMode){
-    state.score = Object.values(examResponses).filter(r=>r.isCorrect).length;
-    state.missed = order.map((qi,i)=>({qi,i})).filter(({i})=>!(examResponses[i] && examResponses[i].isCorrect)).map(({qi,i})=>({item:QUESTIONS[qi], chosen: examResponses[i] ? examResponses[i].choice : -1}));
-  }
-  clearProgress();markCompleted(state.score, QUESTIONS.length, finalMs);
-  quiz.classList.add('hidden');
-  results.classList.remove('hidden');
-  el('bar').style.width = '100%';
-  const missedTitleEl = document.querySelector('#missedWrap .bd-title');
-  if(missedTitleEl) missedTitleEl.textContent = examMode ? 'Review — all questions' : 'Review — missed questions';
-
-  const total = QUESTIONS.length;
-  const pct = Math.round((state.score/total)*100);
-  el('finalScore').textContent = `${state.score} / ${total}`;
-  el('finalPct').textContent = `${pct}%`;
-  el('finalTime').textContent = `Time: ${fmtTime(finalMs)}`;
-
-  let msg;
-  if (pct >= 90) msg = 'Excellent — you have strong command of the renal and urinary anatomy.';
-  else if (pct >= 80) msg = 'Solid work. Review the missed items to tighten the gaps.';
-  else if (pct >= 70) msg = 'Passing range. Focus your review on the weaker topics below.';
-  else msg = 'Keep studying — work through the missed questions and topic breakdown below.';
-  el('finalVerdict').textContent = msg;
-
-  /* breakdown by topic */
-  const topics = {};
-  QUESTIONS.forEach(q => {
-    topics[q.topic] = topics[q.topic] || {correct:0,total:0};
-    topics[q.topic].total++;
-  });
-  // count correct = total - missed per topic
-  const missedByTopic = {};
-  state.missed.forEach(m => {
-    missedByTopic[m.item.topic] = (missedByTopic[m.item.topic]||0) + 1;
-  });
-  Object.keys(topics).forEach(t => {
-    topics[t].correct = topics[t].total - (missedByTopic[t]||0);
-  });
-
-  const bd = el('breakdown');
-  bd.innerHTML = '';
-  Object.keys(topics).forEach(t => {
-    const {correct,total:tt} = topics[t];
-    const p = Math.round((correct/tt)*100);
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <span class="bd-name">${t}</span>
-      <span class="bd-bar"><i style="width:${p}%"></i></span>
-      <span class="bd-frac">${correct}/${tt}</span>`;
-    bd.appendChild(row);
-  });
-
-  if (examMode){
-    const list = el('missedList');
-    list.innerHTML = '';
-    const letters = ['A','B','C','D'];
-    order.forEach((qi, i) => {
-      const item = QUESTIONS[qi];
-      const r = examResponses[i];
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      if (r && r.isCorrect) div.style.borderLeftColor = 'var(--correct)';
-      const yourAnswer = r ? `${letters[r.choice]}. ${item.choices[r.choice]}` : 'Not answered';
-      div.innerHTML = `
-        <p class="mq">Q${i+1}. ${item.q}</p>
-        <p class="ma ${r && r.isCorrect ? 'right' : 'yours'}">Your answer: ${yourAnswer}</p>
-        ${r && r.isCorrect ? '' : `<p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>`}
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
-    saveReview();
+function nextQ(){
+  if(examMode){
+    if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else submitExam();
     return;
   }
-
-  /* missed review */
-  const wrap = el('missedWrap');
-  const list = el('missedList');
-  const letters = ['A','B','C','D'];
-  if (state.missed.length === 0){
-    list.innerHTML = '';
-    const p = document.createElement('div');
-    p.className = 'perfect';
-    p.textContent = 'Perfect score — no missed questions to review. Well done.';
-    wrap.replaceChildren(p);
-  } else {
-    list.innerHTML = '';
-    state.missed.forEach(m => {
-      const item = m.item;
-      const div = document.createElement('div');
-      div.className = 'missed-item';
-      div.innerHTML = `
-        <p class="mq">${item.q}</p>
-        <p class="ma yours">Your answer: ${letters[m.chosen]}. ${item.choices[m.chosen]}</p>
-        <p class="ma right">Correct answer: ${letters[item.answer]}. ${item.choices[item.answer]}</p>
-        <p class="mexp">${item.correct} ${item.why}</p>
-        <p class="msrc">Source: ${item.src}</p>`;
-      list.appendChild(div);
-    });
-  }
-
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showResults();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(examMode) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = examMode ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
   saveReview();
 }
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener('keydown', (e)=>{
   if(e.ctrlKey || e.metaKey || e.altKey) return;
-  if(quiz.classList.contains('hidden')) return;
-  const k = e.key;
-  if(k === "ArrowLeft"){ e.preventDefault(); el('prevBtn').click(); return; }
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
   if(examMode){
-    if(k === "ArrowRight" || k === "Enter"){ e.preventDefault(); el('nextBtn').click(); return; }
-    if(k.toLowerCase() === "f"){ e.preventDefault(); toggleFlag(); return; }
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    if(k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
     return;
   }
-  if(!state.answered){
-    const map = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
-    const i = map[k.toLowerCase()];
-    if(i !== undefined && i < QUESTIONS[order[state.i]].choices.length){
-      e.preventDefault();
-      select(i);
-    }
-  } else {
-    if(k === "Enter" || k === "ArrowRight"){ e.preventDefault(); el('nextBtn').click(); }
-  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
 });
 </script>
 <script>
@@ -977,23 +640,23 @@ document.addEventListener("keydown", (e)=>{
   });
 })();
 </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      const hadController = !!navigator.serviceWorker.controller;
-      function showSWUpdateBanner() {
-        if (document.getElementById("sw-update-banner")) return;
-        const bar = document.createElement("div");
-        bar.id = "sw-update-banner";
-        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
-        bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
-        bar.querySelector("button").addEventListener("click", () => location.reload());
-        document.body.prepend(bar);
-      }
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (hadController) showSWUpdateBanner();
-      });
-      window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
     }
-  </script>
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>
