@@ -78,7 +78,10 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 HTTP_PORT = 8791
 CDP_PORT = 9391
 
-EXCLUDE_DIR_SUBSTRINGS = ("Anatomy Practicum",)  # type-in answers, no index bias possible
+EXCLUDE_DIR_SUBSTRINGS = (
+    "Anatomy Practicum",  # type-in answers, no index bias possible
+    os.path.join("tools", ""),  # template files with unrendered __PLACEHOLDER__ tokens, not live quizzes
+)
 
 
 def discover_files(explicit_targets):
@@ -220,7 +223,10 @@ def check_file(rel_path):
         send("Page.enable"); recv_until(_id)
         recv_until(send("Page.navigate", {"url": url_enc}), timeout=8)
         time.sleep(0.3)
-        return eval_js(CHECK_EXPR)
+        result = eval_js(CHECK_EXPR)
+        if result is None:
+            return {"error": "no-value (page likely errored before CHECK_EXPR could run)"}
+        return result
     except Exception as e:
         return {"error": f"exception: {e}"}
     finally:
