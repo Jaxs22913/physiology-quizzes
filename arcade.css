@@ -261,6 +261,42 @@ body {
 .streak-pill span { color: var(--muted); font-weight: 600; }
 .streak-pill b { color: var(--ink); font-weight: 800; }
 
+/* RPG campaign section (additive -- doesn't touch the Study/Learn/Sprint/Match
+   deck grid above). One card per campaign; genre color comes from each
+   campaign's own theme rather than the site's accent rotation, since a
+   campaign owns its own visual identity once you're inside it. */
+.rpg-section { margin-top: 30px; }
+.rpg-section-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+.rpg-section-header h2 { font-size: 15px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.rpg-section-header .rpg-badge-new { font-size: 11px; font-weight: 800; color: var(--accent4); background: var(--accent4-soft); padding: 3px 8px; border-radius: 999px; }
+.rpg-campaign-card {
+  position: relative; overflow: hidden; display: block; text-decoration: none; color: inherit;
+  background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+  padding: 20px; margin-bottom: 14px; box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.rpg-campaign-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.rpg-campaign-card.pulsing { animation: rpgPillPulse .45s ease; }
+@keyframes rpgPillPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(.97); } }
+.rpg-campaign-card .rpg-genre-tag {
+  font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--rpg-accent, var(--accent4)); margin-bottom: 4px;
+}
+.rpg-campaign-card .rpg-title { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+.rpg-campaign-card .rpg-exam-name { font-size: 13.5px; color: var(--muted); margin-bottom: 12px; }
+.rpg-campaign-card .rpg-progress-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+.rpg-campaign-card .rpg-progress-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.rpg-campaign-card .rpg-progress-fill { height: 100%; background: var(--rpg-accent, var(--accent4)); border-radius: 999px; }
+.rpg-campaign-card .rpg-enter-cta {
+  margin-top: 14px; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; font-weight: 700; color: var(--rpg-accent, var(--accent4));
+}
+@media (prefers-reduced-motion: reduce) {
+  .rpg-campaign-card { transition: none; }
+  .rpg-campaign-card:hover { transform: none; }
+  .rpg-campaign-card.pulsing { animation: none; }
+}
+
 .deck-card {
   background: var(--card); border: 1px solid var(--border); border-top-width: 4px;
   border-radius: 18px; padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow);

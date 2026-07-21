@@ -42,6 +42,14 @@
   </div>
   <div class="streak-pill" id="streak-pill"><span class="flame">🔥</span><b id="streak-count">0</b><span>-day streak</span></div>
 
+  <div class="rpg-section" id="rpg-section">
+    <div class="rpg-section-header">
+      <h2>RPG Campaigns</h2>
+      <span class="rpg-badge-new">NEW</span>
+    </div>
+    <div id="rpg-campaign-list"></div>
+  </div>
+
   <div class="semester">
     <h2 class="semester-header">Summer Semester 1 - 2026</h2>
     <div class="tabs" id="class-tabs"></div>
@@ -92,6 +100,58 @@
     );
   }
 
+  // RPG campaigns (additive to the Study/Learn/Sprint/Match decks above --
+  // each campaign is its own self-contained page under /rpg/). Add future
+  // campaigns to this array only; the render logic below is generic.
+  var RPG_CAMPAIGNS = [
+    {
+      id: "physio-exam3",
+      examName: "Physiology Exam 3 Comprehensive",
+      title: "Thicker Than Water",
+      genre: "Noir mystery",
+      accent: "#c94a3b",
+      href: "rpg/physio-exam3.html",
+      zoneCount: 5
+    }
+  ];
+
+  function renderRpgCampaigns() {
+    var listEl = document.getElementById("rpg-campaign-list");
+    if (!listEl) return;
+    listEl.innerHTML = RPG_CAMPAIGNS.map(function (c) {
+      var saved = null;
+      try { saved = JSON.parse(localStorage.getItem("rpg_" + c.id)); } catch (e) { saved = null; }
+      var zonesDone = saved && saved.bossesDefeated ? saved.bossesDefeated.length : 0;
+      var pct = Math.round((zonesDone / c.zoneCount) * 100);
+      var progressLabel = saved
+        ? (saved.finished ? "Case closed — replay anytime" : "Level " + saved.level + " — " + zonesDone + "/" + c.zoneCount + " cases closed")
+        : "Not started";
+      return (
+        '<a class="rpg-campaign-card" style="--rpg-accent:' + c.accent + '" href="' + c.href + '" data-campaign="' + c.id + '">' +
+          '<div class="rpg-genre-tag">' + c.genre + '</div>' +
+          '<div class="rpg-title">' + c.title + '</div>' +
+          '<div class="rpg-exam-name">' + c.examName + '</div>' +
+          '<div class="rpg-progress-row">' +
+            '<span>' + progressLabel + '</span>' +
+          '</div>' +
+          '<div class="rpg-progress-bar"><div class="rpg-progress-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="rpg-enter-cta">' + (saved ? "Continue investigation" : "Enter the case") + ' &rarr;</div>' +
+        '</a>'
+      );
+    }).join("");
+    // Brief pill-pulse feedback on tap, then hand off -- the campaign's own
+    // page carries the full pixelate/portal-ring/title-card sequence once
+    // the player commits to entering (its "New Case"/"Continue" buttons).
+    listEl.querySelectorAll(".rpg-campaign-card").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        e.preventDefault();
+        card.classList.add("pulsing");
+        setTimeout(function () { window.location.href = card.getAttribute("href"); }, 260);
+      });
+    });
+  }
+
   var ACTIVE_TAB_KEY = "fc_active_tab";
 
   function renderHome() {
@@ -131,6 +191,7 @@
 
   initHeader();
   renderHome();
+  renderRpgCampaigns();
 })();
 </script>
 </body>
