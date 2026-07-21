@@ -556,17 +556,6 @@
       );
       soundToggle.row.classList.add("quick-action");
       panel.appendChild(soundToggle.row);
-
-      // Gold-coin fall on Arcade homescreen open (arcade.html's
-      // spawnCoinRain()) -- only reads this key on page load, so unlike
-      // Sound effects there's no live in-memory flag to flip immediately.
-      var coinToggle = makeToggleRow(
-        "Coin fall animation",
-        localStorage.getItem("fc_coin_rain_v1") !== "0",
-        function (checked) { localStorage.setItem("fc_coin_rain_v1", checked ? "1" : "0"); }
-      );
-      coinToggle.row.classList.add("quick-action");
-      panel.appendChild(coinToggle.row);
     }
 
     // setTimeout(...,0) defers the delegated click until after this click

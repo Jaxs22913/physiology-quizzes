@@ -165,37 +165,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .edge-decor.flash-strong, .edge-decor.flash-strong circle { animation: none; opacity: .18; }
 }
-
-/* One-time gold-coin fall on Arcade homescreen open. Coins are real CSS
-   3D objects (perspective + rotateY spin, not a flat sprite) with a
-   tiny JS physics sim (arcade.html) that bounces them off deck cards /
-   the streak pill / tabs and lets them roll off the edge before
-   continuing to fall -- see spawnCoinRain() in arcade.html. */
-.coin-rain-layer {
-  position: fixed; inset: 0; z-index: 3000; pointer-events: none;
-  overflow: hidden; perspective: 700px;
-}
-.gold-coin {
-  position: absolute; top: 0; left: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 26%, #fffce6 0%, #ffec9e 12%, #ffd452 32%, #eda91f 55%, #b87c0f 78%, #6e4c05 100%);
-  box-shadow:
-    inset -5px -5px 8px rgba(0,0,0,.55),
-    inset 4px 4px 6px rgba(255,255,255,.8),
-    inset 0 0 0 2px rgba(255,241,181,.6),
-    0 5px 12px rgba(0,0,0,.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 800; color: #6e4c05; text-shadow: 0 1px 0 rgba(255,255,255,.6);
-  transform-style: preserve-3d;
-  will-change: transform, filter;
-}
-.gold-coin::before {
-  content: ""; position: absolute; inset: 13%;
-  border-radius: 50%; border: 1.5px dashed rgba(110,76,5,.55);
-}
-@media (prefers-reduced-motion: reduce) {
-  .coin-rain-layer { display: none; }
-}
 .page {
   max-width: 640px; margin: 0 auto; padding: 28px 22px 60px; position: relative;
   animation: page-in .35s cubic-bezier(.2,.7,.3,1) both;
