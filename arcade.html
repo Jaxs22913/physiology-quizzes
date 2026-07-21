@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="arcade.css">
 </head>
 <body>
-<svg class="edge-decor left" aria-hidden="true">
+<svg class="edge-decor left flash-strong" aria-hidden="true">
   <defs>
     <pattern id="zigzag-pattern" width="74" height="120" patternUnits="userSpaceOnUse">
       <circle cx="37" cy="15" r="10" fill="var(--accent)"/>
@@ -20,7 +20,7 @@
   </defs>
   <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
 </svg>
-<svg class="edge-decor right" aria-hidden="true">
+<svg class="edge-decor right flash-strong" aria-hidden="true">
   <rect width="100%" height="100%" fill="url(#zigzag-pattern)"/>
 </svg>
 <div class="page page-home">
@@ -129,8 +129,127 @@
     });
   }
 
+  // One-time gold-coin fall on open: real CSS 3D coins (perspective +
+  // rotateY spin) driven by a small gravity/collision sim so they land on
+  // deck cards / the streak pill / tabs, bounce, roll to the edge under
+  // friction, then fall off and continue down. Runs once per page load;
+  // skipped entirely under prefers-reduced-motion.
+  function spawnCoinRain() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (localStorage.getItem("fc_coin_rain_v1") === "0") return;
+
+    var collidables = Array.prototype.slice.call(
+      document.querySelectorAll(".brand-row, .streak-pill, .tabs, .semester-header, .deck-card")
+    ).map(function (el) {
+      var r = el.getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom, left: r.left, right: r.right };
+    }).filter(function (r) {
+      return r.right > r.left && r.bottom > r.top && r.top < window.innerHeight * 1.4 && r.bottom > -50;
+    });
+
+    var layer = document.createElement("div");
+    layer.className = "coin-rain-layer";
+    document.body.appendChild(layer);
+
+    var GRAVITY = 1900;      // px/s^2
+    var BOUNCE = 0.32;       // energy kept on bounce
+    var glyphs = ["$", "★"];
+    var coins = [];
+    var count = Math.min(16, Math.max(8, Math.round(window.innerWidth / 90)));
+
+    for (var i = 0; i < count; i++) {
+      var size = 24 + Math.random() * 14;
+      var el = document.createElement("div");
+      el.className = "gold-coin";
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.fontSize = Math.round(size * 0.42) + "px";
+      el.textContent = glyphs[Math.random() < 0.8 ? 0 : 1];
+      layer.appendChild(el);
+      coins.push({
+        el: el,
+        size: size,
+        x: Math.random() * (window.innerWidth - size),
+        y: -(60 + Math.random() * 500),
+        vx: (Math.random() - 0.5) * 60,
+        vy: 0,
+        spin: Math.random() * 360,
+        spinSpeed: 480 + Math.random() * 420,
+        restingRect: null,
+        rollBias: 0,
+        born: null,
+        dead: false
+      });
+    }
+
+    var last = null;
+    var LIFETIME = 7000;
+    function tick(now) {
+      if (last === null) last = now;
+      var dt = Math.min((now - last) / 1000, 0.032);
+      last = now;
+      var alive = false;
+
+      coins.forEach(function (c) {
+        if (c.dead) return;
+        if (c.born === null) c.born = now;
+        alive = true;
+
+        if (c.restingRect) {
+          c.vx *= Math.pow(0.32, dt);
+          if (Math.abs(c.vx) < 8) c.vx += c.rollBias * dt;
+          c.x += c.vx * dt * 60;
+          c.y = c.restingRect.top - c.size;
+          c.spinSpeed = Math.abs(c.vx) * 5 + 40;
+          if (c.x + c.size < c.restingRect.left || c.x > c.restingRect.right) {
+            c.restingRect = null;
+          }
+        } else {
+          c.vy += GRAVITY * dt;
+          c.x += c.vx * dt;
+          c.y += c.vy * dt;
+          if (c.vy > 0) {
+            for (var i = 0; i < collidables.length; i++) {
+              var r = collidables[i];
+              var cx = c.x + c.size / 2;
+              var bottom = c.y + c.size;
+              if (bottom >= r.top && (bottom - c.vy * dt) < r.top && cx > r.left - 4 && cx < r.right + 4) {
+                c.y = r.top - c.size;
+                c.vy = -c.vy * BOUNCE;
+                if (Math.abs(c.vy) < 70) {
+                  c.vy = 0;
+                  c.restingRect = r;
+                  c.vx = (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 80);
+                  c.rollBias = c.vx > 0 ? 35 : -35;
+                }
+                break;
+              }
+            }
+          }
+        }
+
+        c.spin += c.spinSpeed * dt;
+        c.el.style.transform = "translate3d(" + c.x.toFixed(1) + "px," + c.y.toFixed(1) + "px,0) rotateY(" + (c.spin % 360).toFixed(1) + "deg)";
+
+        if (c.y > window.innerHeight + 60 || (now - c.born) > LIFETIME) {
+          c.dead = true;
+          c.el.remove();
+        }
+      });
+
+      coins = coins.filter(function (c) { return !c.dead; });
+      if (alive && coins.length) {
+        requestAnimationFrame(tick);
+      } else {
+        layer.remove();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
   initHeader();
   renderHome();
+  spawnCoinRain();
 })();
 </script>
 </body>

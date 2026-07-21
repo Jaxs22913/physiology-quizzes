@@ -140,6 +140,61 @@ body {
 @media (min-width: 1000px) {
   .edge-decor { display: block; }
 }
+/* Homescreen-only marquee boost (arcade.html specifically, via the
+   .flash-strong modifier -- the other 4 arcade pages keep the subtler
+   base .edge-decor twinkle above). Swaps the one-time intro pulse for a
+   continuous glow, and pushes each dot's twinkle into a real on/off flash
+   with a longer stagger so the 4-color sequence reads as chasing down the
+   column rather than just shimmering in place. */
+@keyframes homescreen-edge-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+@keyframes dot-flash-strong {
+  0%, 100% { opacity: .22; filter: brightness(1); }
+  45% { opacity: 1; filter: brightness(1.7); }
+}
+.edge-decor.flash-strong {
+  animation: homescreen-edge-glow 2.6s ease-in-out infinite;
+}
+.edge-decor.flash-strong circle { animation: dot-flash-strong 1.8s ease-in-out infinite; }
+.edge-decor.flash-strong circle:nth-of-type(1) { animation-delay: 0s; }
+.edge-decor.flash-strong circle:nth-of-type(2) { animation-delay: .45s; }
+.edge-decor.flash-strong circle:nth-of-type(3) { animation-delay: .9s; }
+.edge-decor.flash-strong circle:nth-of-type(4) { animation-delay: 1.35s; }
+@media (prefers-reduced-motion: reduce) {
+  .edge-decor.flash-strong, .edge-decor.flash-strong circle { animation: none; opacity: .18; }
+}
+
+/* One-time gold-coin fall on Arcade homescreen open. Coins are real CSS
+   3D objects (perspective + rotateY spin, not a flat sprite) with a
+   tiny JS physics sim (arcade.html) that bounces them off deck cards /
+   the streak pill / tabs and lets them roll off the edge before
+   continuing to fall -- see spawnCoinRain() in arcade.html. */
+.coin-rain-layer {
+  position: fixed; inset: 0; z-index: 3000; pointer-events: none;
+  overflow: hidden; perspective: 500px;
+}
+.gold-coin {
+  position: absolute; top: 0; left: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff8d6 0%, #ffe680 16%, #f7c948 42%, #d69a1a 72%, #8a6508 100%);
+  box-shadow:
+    inset -3px -3px 5px rgba(0,0,0,.45),
+    inset 2px 2px 4px rgba(255,255,255,.65),
+    0 4px 10px rgba(0,0,0,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #8a6205; text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.gold-coin::before {
+  content: ""; position: absolute; inset: 13%;
+  border-radius: 50%; border: 1.5px dashed rgba(138,98,8,.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .coin-rain-layer { display: none; }
+}
 .page {
   max-width: 640px; margin: 0 auto; padding: 28px 22px 60px; position: relative;
   animation: page-in .35s cubic-bezier(.2,.7,.3,1) both;
