@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #1f6b4a; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #c68a1f; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physiology Comprehensive Master Exam — Form B</title>
+<style>
+  :root{
+    --navy:#243d65; --indigo:#1f6b4a; --gold:#c68a1f; --ice:#94e0bf;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Physiology Comprehensive Master ExamForm B</h1>
+    <div class="sub">Endocrine Physiology I &middot; Endocrine Physiology II &middot; Endocrine Physiology III &middot; Renal Physiology I &middot; Renal Physiology II &middot; Bone &amp; Muscle Physiology</div>
+    <span class="pill">60 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Integrate cell physiology, membrane transport, membrane potentials, and action potential/muscle physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate sensory and motor nervous system physiology across Physiology Exam 1's full topic range.</span><span class="chip">Integrate autonomic nervous system, cerebral cortex, and limbic system physiology, demonstrating cumulative mastery of all five Physiology Exam 1 topics at the level expected for the unit exam.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Growth Hormone Actions", "io": "Growth Hormone Actions", "q": "Growth hormone's carbohydrate-sparing, fat-mobilizing metabolic profile is sometimes described using which term, reflecting its tendency to raise blood glucose?", "opts": [["Anabolic effects", "'Anabolic effects' is too generic and doesn't specifically capture the glucose-raising carbohydrate-sparing profile named here; anti-inflammatory and natriuretic effects are not the terms this lecture uses for GH's glucose-related metabolic actions."], ["Natriuretic effects", "'Anabolic effects' is too generic and doesn't specifically capture the glucose-raising carbohydrate-sparing profile named here; anti-inflammatory and natriuretic effects are not the terms this lecture uses for GH's glucose-related metabolic actions."], ["Diabetogenic effects", "GH's metabolic actions (decreased carbohydrate utilization, increased gluconeogenesis) are described using the term 'diabetogenic effects,' reflecting the tendency to raise blood glucose."], ["Anti-inflammatory effects", "'Anabolic effects' is too generic and doesn't specifically capture the glucose-raising carbohydrate-sparing profile named here; anti-inflammatory and natriuretic effects are not the terms this lecture uses for GH's glucose-related metabolic actions."]], "c": 2, "cite": "Endocrine Physiology I.pptx, Slide 47"}, {"topic": "Aldosterone", "io": "Aldosterone", "q": "Which set of findings is associated with LOW aldosterone levels?", "opts": [["Hyperkalemia, increased muscle excitability early on, arrhythmias/ventricular fibrillation, cell acidosis", "Low aldosterone is associated with hyperkalemia, increased muscle excitability early on, arrhythmias/ventricular fibrillation, and cell acidosis."], ["No measurable physiological consequence on potassium, muscle, or cardiac rhythm", "Hypokalemia/weakness/alkalosis describes HIGH, not low, aldosterone; the lecture describes clear consequences; and hypertension/edema are more associated with excess, not deficient, aldosterone."], ["Hypokalemia, progressive generalized muscle weakness, and cell alkalosis with a normal heart rhythm", "Hypokalemia/weakness/alkalosis describes HIGH, not low, aldosterone; the lecture describes clear consequences; and hypertension/edema are more associated with excess, not deficient, aldosterone."], ["Hypertension and generalized peripheral edema, with no described change in serum potassium", "Hypokalemia/weakness/alkalosis describes HIGH, not low, aldosterone; the lecture describes clear consequences; and hypertension/edema are more associated with excess, not deficient, aldosterone."]], "c": 0, "cite": "19. Endocrime Physiology II.pptx, Slide 13"}, {"topic": "Male Reproductive Physiology", "io": "Male Reproductive Physiology", "q": "GnRH is secreted in pulses at approximately what interval, driving LH/FSH release?", "opts": [["Once every 24 hours", "Once every 24 hours substantially understates the described pulse frequency; the lecture specifically describes a pulsatile (not continuous) pattern; this pulsatile GnRH pattern applies broadly, not just once per menstrual cycle (which is female-cycle-specific terminology anyway)."], ["Continuously, with no pulsatile pattern", "Once every 24 hours substantially understates the described pulse frequency; the lecture specifically describes a pulsatile (not continuous) pattern; this pulsatile GnRH pattern applies broadly, not just once per menstrual cycle (which is female-cycle-specific terminology anyway)."], ["Every 1–3 hours", "GnRH is secreted approximately every 1–3 hours, a pulsatile pattern that drives LH release (and testosterone production via LH's action on Leydig cells)."], ["Once per menstrual cycle only", "Once every 24 hours substantially understates the described pulse frequency; the lecture specifically describes a pulsatile (not continuous) pattern; this pulsatile GnRH pattern applies broadly, not just once per menstrual cycle (which is female-cycle-specific terminology anyway)."]], "c": 2, "cite": "20. Endocrine Physiology III-2.pptx, Slide 24"}, {"topic": "Glomerular Filtration", "io": "Glomerular Filtration", "q": "In the general clearance equation C = (U × V) / P, what does 'U' represent?", "opts": [["Ultrafiltration coefficient", "Urine flow rate is represented by V, not U; plasma concentration of the substance is represented by P, not U; 'ultrafiltration coefficient' is not part of this clearance equation's variable set (that concept is represented separately by Kf)."], ["Plasma concentration of the substance", "Urine flow rate is represented by V, not U; plasma concentration of the substance is represented by P, not U; 'ultrafiltration coefficient' is not part of this clearance equation's variable set (that concept is represented separately by Kf)."], ["Urine flow rate", "Urine flow rate is represented by V, not U; plasma concentration of the substance is represented by P, not U; 'ultrafiltration coefficient' is not part of this clearance equation's variable set (that concept is represented separately by Kf)."], ["Urine concentration of the substance", "In the clearance equation, U is the urine concentration of the substance being measured."]], "c": 3, "cite": "Renal I - Summer 2026.pptx, Slide 34"}, {"topic": "Juxtaglomerular Apparatus", "io": "Juxtaglomerular Apparatus", "q": "In tubuloglomerular feedback, what happens to renin release when NaCl delivery to the macula densa decreases?", "opts": [["Renin release increases", "Decreased NaCl delivery to the macula densa increases renin release; conversely, increased NaCl delivery suppresses renin."], ["Renin release decreases", "Renin release increases (not decreases) with decreased NaCl delivery; there is a clear, described effect, so 'unaffected' is incorrect; renin release and angiotensin II conversion are sequential steps, not the same event."], ["Renin is converted directly to angiotensin II without release", "Renin release increases (not decreases) with decreased NaCl delivery; there is a clear, described effect, so 'unaffected' is incorrect; renin release and angiotensin II conversion are sequential steps, not the same event."], ["Renin release is unaffected", "Renin release increases (not decreases) with decreased NaCl delivery; there is a clear, described effect, so 'unaffected' is incorrect; renin release and angiotensin II conversion are sequential steps, not the same event."]], "c": 0, "cite": "Renal II - Summer 2026.pptx, Slide 16"}, {"topic": "Osteoblasts", "io": "Ossification and osteoblast secretion", "q": "During ossification, osteoblasts secrete which set of products?", "opts": [["Cathepsin K, protons, and matrix metalloproteinases", "Wrong: these are osteoclast products used to resorb bone, not osteoblast secretions."], ["Type I collagen, bone sialoproteins, and osteocalcin", "Correct: osteoblasts secrete mostly type I collagen along with bone sialoproteins and osteocalcin."], ["Parathyroid hormone and calcitonin", "Wrong: these calcium-regulating hormones come from the parathyroid and thyroid glands, not osteoblasts."], ["Fully formed hydroxyapatite crystals ready for deposit", "Wrong: hydroxyapatite precipitates onto secreted collagen; osteoblasts do not secrete the finished crystals."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 47"}, {"topic": "Pituitary Cell Types & Hormones", "io": "Pituitary Cell Types & Hormones", "q": "Which hypothalamic hormone stimulates GH secretion by somatotropes?", "opts": [["Gonadotropin-releasing hormone", "Growth hormone-inhibitory hormone does the opposite — it inhibits, not stimulates, GH secretion; prolactin-inhibiting hormone (dopamine) inhibits prolactin, not GH; gonadotropin-releasing hormone stimulates FSH/LH secretion, not GH."], ["Growth hormone-releasing hormone (GHRH)", "Growth hormone-releasing hormone (GHRH) is the hypothalamic peptide that stimulates GH secretion by somatotropes."], ["Growth hormone-inhibitory hormone", "Growth hormone-inhibitory hormone does the opposite — it inhibits, not stimulates, GH secretion; prolactin-inhibiting hormone (dopamine) inhibits prolactin, not GH; gonadotropin-releasing hormone stimulates FSH/LH secretion, not GH."], ["Prolactin-inhibiting hormone (dopamine)", "Growth hormone-inhibitory hormone does the opposite — it inhibits, not stimulates, GH secretion; prolactin-inhibiting hormone (dopamine) inhibits prolactin, not GH; gonadotropin-releasing hormone stimulates FSH/LH secretion, not GH."]], "c": 1, "cite": "Endocrine Physiology I.pptx, Slide 55"}, {"topic": "Aldosterone", "io": "Aldosterone", "q": "What percentage of circulating aldosterone is bound to corticosteroid binding globulin (CBG)?", "opts": [["About 60%", "About 60% of aldosterone is bound to corticosteroid binding globulin (CBG) and other plasma proteins (albumin, prealbumin)."], ["About 100%", "10% substantially understates aldosterone's protein-bound fraction; 90% is actually closer to cortisol's CBG-bound fraction, not aldosterone's; 100% would leave no free/unbound aldosterone, which contradicts normal steroid hormone transport physiology."], ["About 10%", "10% substantially understates aldosterone's protein-bound fraction; 90% is actually closer to cortisol's CBG-bound fraction, not aldosterone's; 100% would leave no free/unbound aldosterone, which contradicts normal steroid hormone transport physiology."], ["About 90%", "10% substantially understates aldosterone's protein-bound fraction; 90% is actually closer to cortisol's CBG-bound fraction, not aldosterone's; 100% would leave no free/unbound aldosterone, which contradicts normal steroid hormone transport physiology."]], "c": 0, "cite": "19. Endocrime Physiology II.pptx, Slide 10"}, {"topic": "Male Reproductive Physiology", "io": "Male Reproductive Physiology", "q": "Which hormone stimulates testosterone production from Leydig cells, secreted every 1–3 hours from the hypothalamus?", "opts": [["FSH, acting on Sertoli cells", "FSH targets Sertoli cells, not Leydig cell testosterone production; inhibin suppresses GnRH release; and estrogen is made FROM testosterone, not a stimulator of its production."], ["Inhibin, a Sertoli cell product", "FSH targets Sertoli cells, not Leydig cell testosterone production; inhibin suppresses GnRH release; and estrogen is made FROM testosterone, not a stimulator of its production."], ["LH, downstream of pulsatile GnRH", "LH, released downstream of pulsatile GnRH (secreted every 1–3 hours), stimulates testosterone production from Leydig cells."], ["Estrogen, a downstream product", "FSH targets Sertoli cells, not Leydig cell testosterone production; inhibin suppresses GnRH release; and estrogen is made FROM testosterone, not a stimulator of its production."]], "c": 2, "cite": "20. Endocrine Physiology III-2.pptx, Slide 24"}, {"topic": "Glomerular Filtration", "io": "Glomerular Filtration", "q": "A substance with a filterability of 1.0 is filtered:", "opts": [["As freely as water itself", "A filterability of 1.0 means a substance passes across the glomerular membrane as freely as water does."], ["75% as rapidly as water", "A filterability of 0 (not 1.0) would mean no filtration at all; 75% as rapid as water corresponds to a filterability of 0.75, not 1.0; glomerular filtration is a passive, pressure-driven process, not active transport."], ["Not at all across the glomerular membrane", "A filterability of 0 (not 1.0) would mean no filtration at all; 75% as rapid as water corresponds to a filterability of 0.75, not 1.0; glomerular filtration is a passive, pressure-driven process, not active transport."], ["Only after active transport into the filtrate", "A filterability of 0 (not 1.0) would mean no filtration at all; 75% as rapid as water corresponds to a filterability of 0.75, not 1.0; glomerular filtration is a passive, pressure-driven process, not active transport."]], "c": 0, "cite": "Renal I - Summer 2026.pptx, Slide 31"}, {"topic": "Hormone Regulation", "io": "Hormone Regulation", "q": "Using the lecture's shorthand summary, which hormone 'adds sodium'?", "opts": [["ANP hormone", "ADH 'adds water' in this mnemonic, not sodium; ANP 'allows sodium and water to leave' (the opposite of adding); PTH 'preserves calcium, tosses phosphate,' not a sodium-focused hormone in this summary."], ["PTH hormone", "ADH 'adds water' in this mnemonic, not sodium; ANP 'allows sodium and water to leave' (the opposite of adding); PTH 'preserves calcium, tosses phosphate,' not a sodium-focused hormone in this summary."], ["Aldosterone", "In the lecture's mnemonic summary, aldosterone 'adds sodium' (drives Na+ reabsorption)."], ["ADH hormone", "ADH 'adds water' in this mnemonic, not sodium; ANP 'allows sodium and water to leave' (the opposite of adding); PTH 'preserves calcium, tosses phosphate,' not a sodium-focused hormone in this summary."]], "c": 2, "cite": "Renal II - Summer 2026.pptx, Slide 28"}, {"topic": "Ossification", "io": "Ossification and collagen synthesis", "q": "Collagen produced by osteoblasts requires which vitamin as a cofactor for the enzyme lysyl hydroxylase?", "opts": [["Vitamin A", "Wrong: vitamin A is not cited as a cofactor for collagen synthesis here."], ["Vitamin C (ascorbic acid)", "Correct: ascorbic acid is the required cofactor for lysyl hydroxylase in collagen synthesis."], ["Vitamin D", "Wrong: vitamin D supports intestinal calcium absorption, not lysyl hydroxylase."], ["Vitamin K", "Wrong: vitamin K assists osteocalcin, not lysyl hydroxylase, in this lecture."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 47"}, {"topic": "Hormone Classes & Feedback", "io": "Hormone Classes & Feedback", "q": "Negative feedback, described as the most common hormone control mechanism, works by:", "opts": [["The biological effect further stimulating more hormone release, in an escalating loop", "An escalating self-reinforcing loop describes positive, not negative, feedback; a fixed daily clock independent of biological effect describes a circadian mechanism, not the feedback mechanism itself; hormones are released repeatedly, not just once per lifetime."], ["The biological effect suppressing further hormone release from the endocrine cell", "In negative feedback, the biological effect produced by the hormone feeds back to suppress further release from the endocrine cell — the most common control mechanism."], ["Hormone levels rising and falling on a fixed daily clock, independent of biological effect", "An escalating self-reinforcing loop describes positive, not negative, feedback; a fixed daily clock independent of biological effect describes a circadian mechanism, not the feedback mechanism itself; hormones are released repeatedly, not just once per lifetime."], ["Hormones only being released once per lifetime", "An escalating self-reinforcing loop describes positive, not negative, feedback; a fixed daily clock independent of biological effect describes a circadian mechanism, not the feedback mechanism itself; hormones are released repeatedly, not just once per lifetime."]], "c": 1, "cite": "Endocrine Physiology I.pptx, Slide 20"}, {"topic": "Aldosterone", "io": "Aldosterone", "q": "Between potassium and the renin-angiotensin system (RAS), how does the lecture characterize their importance in controlling aldosterone?", "opts": [["Neither potassium nor RAS is important; only ACTH matters for regulation", "ACTH is described as necessary for secretion but not the primary regulator, and both potassium and RAS are named as important, not just one of the two."], ["Only the RAS pathway matters for regulation; potassium levels are entirely irrelevant", "ACTH is described as necessary for secretion but not the primary regulator, and both potassium and RAS are named as important, not just one of the two."], ["Both are described as the most important regulators of aldosterone", "Both increased potassium and increased RAS activity are described as the most important regulators that increase aldosterone secretion."], ["Only potassium matters for regulation; the RAS pathway is entirely irrelevant", "ACTH is described as necessary for secretion but not the primary regulator, and both potassium and RAS are named as important, not just one of the two."]], "c": 2, "cite": "19. Endocrime Physiology II.pptx, Slide 14"}, {"topic": "Puberty & Menstrual Cycle", "io": "Puberty & Menstrual Cycle", "q": "FSH and LH accelerate growth of approximately how many primary follicles per month?", "opts": [["1–2", "1-2 substantially understates the described number of follicles recruited; 20-30 and over 100 both substantially overstate the 6-12 figure given."], ["6–12", "FSH (and LH) accelerate growth of approximately 6–12 primary follicles per month."], ["20–30", "1-2 substantially understates the described number of follicles recruited; 20-30 and over 100 both substantially overstate the 6-12 figure given."], ["Over 100", "1-2 substantially understates the described number of follicles recruited; 20-30 and over 100 both substantially overstate the 6-12 figure given."]], "c": 1, "cite": "20. Endocrine Physiology III-2.pptx, Slide 34"}, {"topic": "Bladder Anatomy & Innervation", "io": "Bladder Anatomy & Innervation", "q": "Which nerve provides the parasympathetic motor supply to the detrusor muscle and carries sensory fibers detecting bladder wall stretch?", "opts": [["Ilioinguinal nerve", "The hypogastric nerve carries sympathetic fibers mainly to blood vessels, not detrusor motor supply; the pudendal nerve supplies skeletal motor fibers to the external sphincter, not the detrusor; the ilioinguinal nerve is not part of bladder innervation in this lecture."], ["Pudendal nerve", "The hypogastric nerve carries sympathetic fibers mainly to blood vessels, not detrusor motor supply; the pudendal nerve supplies skeletal motor fibers to the external sphincter, not the detrusor; the ilioinguinal nerve is not part of bladder innervation in this lecture."], ["Pelvic nerve", "The pelvic nerves connect with the spinal cord primarily at S2–S3, carrying sensory fibers that detect bladder wall stretch and parasympathetic motor fibers terminating on ganglion cells that innervate the detrusor."], ["Hypogastric nerve", "The hypogastric nerve carries sympathetic fibers mainly to blood vessels, not detrusor motor supply; the pudendal nerve supplies skeletal motor fibers to the external sphincter, not the detrusor; the ilioinguinal nerve is not part of bladder innervation in this lecture."]], "c": 2, "cite": "Renal I - Summer 2026.pptx, Slide 8"}, {"topic": "Hormone Regulation", "io": "Hormone Regulation", "q": "Aldosterone increases K+ secretion in which cell type?", "opts": [["Podocytes", "Intercalated cells are where aldosterone increases H+ secretion, not K+ secretion; podocytes are filtration-barrier cells with no aldosterone-driven secretory role described; proximal tubule cells are not the site of aldosterone's K+ secretion effect."], ["Principal cells", "Aldosterone increases both Na+ reabsorption and K+ secretion in principal cells of the late distal and collecting tubules/ducts."], ["Intercalated cells", "Intercalated cells are where aldosterone increases H+ secretion, not K+ secretion; podocytes are filtration-barrier cells with no aldosterone-driven secretory role described; proximal tubule cells are not the site of aldosterone's K+ secretion effect."], ["Proximal tubule cells", "Intercalated cells are where aldosterone increases H+ secretion, not K+ secretion; podocytes are filtration-barrier cells with no aldosterone-driven secretory role described; proximal tubule cells are not the site of aldosterone's K+ secretion effect."]], "c": 1, "cite": "Renal II - Summer 2026.pptx, Slide 21"}, {"topic": "PTH", "io": "Renal actions of parathyroid hormone", "q": "How does parathyroid hormone (PTH) alter renal handling of calcium and phosphate?", "opts": [["It increases reabsorption of both calcium and phosphate", "Wrong: PTH inhibits phosphate reabsorption, so phosphate is not retained."], ["It increases phosphate reabsorption and increases calcium excretion", "Wrong: PTH does the opposite, retaining calcium and increasing phosphate excretion."], ["It decreases calcium reabsorption and decreases phosphate excretion", "Wrong: PTH increases calcium reabsorption and increases phosphate excretion."], ["It increases calcium reabsorption in the distal tubule and increases phosphate excretion", "Correct: PTH raises distal-tubule calcium reabsorption and inhibits proximal phosphate reabsorption, increasing phosphate excretion."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 61"}, {"topic": "Thyroid Hormone", "io": "Thyroid Hormone", "q": "Large increases in thyroid hormone can decrease heart strength due to:", "opts": [["Excessive protein catabolism", "Large increases in thyroid hormone can decrease heart strength due to excessive protein catabolism, in contrast to the mild strength-increasing effect seen at slight increases in thyroid hormone."], ["Excessive protein synthesis only, with no catabolism", "The mechanism is catabolism, not solely synthesis with no catabolism; the heart doesn't stop contracting entirely — this describes decreased strength, not complete cessation; cardiac output is actually increased by thyroid hormone overall, not the described cause of decreased heart strength here."], ["Decreased cardiac output", "The mechanism is catabolism, not solely synthesis with no catabolism; the heart doesn't stop contracting entirely — this describes decreased strength, not complete cessation; cardiac output is actually increased by thyroid hormone overall, not the described cause of decreased heart strength here."], ["Complete cessation of cardiac contraction", "The mechanism is catabolism, not solely synthesis with no catabolism; the heart doesn't stop contracting entirely — this describes decreased strength, not complete cessation; cardiac output is actually increased by thyroid hormone overall, not the described cause of decreased heart strength here."]], "c": 0, "cite": "Endocrine Physiology I.pptx, Slide 73"}, {"topic": "Cortisol", "io": "Cortisol", "q": "Cortisol's effect on liver protein handling includes promoting amino acid uptake, protein synthesis, gluconeogenesis, and:", "opts": [["Complete cessation of liver protein activity", "Cortisol promotes (increases), not decreases, plasma protein formation in the liver; the liver's protein handling is actively promoted, not shut down, under cortisol; the liver is the described EXCEPTION to cortisol's catabolic effect seen in other tissues, not a tissue where catabolism matches the rest of the body."], ["Increased protein catabolism in the liver, matching other tissues", "Cortisol promotes (increases), not decreases, plasma protein formation in the liver; the liver's protein handling is actively promoted, not shut down, under cortisol; the liver is the described EXCEPTION to cortisol's catabolic effect seen in other tissues, not a tissue where catabolism matches the rest of the body."], ["Decreased plasma protein formation", "Cortisol promotes (increases), not decreases, plasma protein formation in the liver; the liver's protein handling is actively promoted, not shut down, under cortisol; the liver is the described EXCEPTION to cortisol's catabolic effect seen in other tissues, not a tissue where catabolism matches the rest of the body."], ["Promotion of plasma protein formation in the liver", "Cortisol promotes plasma protein formation in the liver, alongside promoting amino acid uptake, protein synthesis, and gluconeogenesis there."]], "c": 3, "cite": "19. Endocrime Physiology II.pptx, Slide 24"}, {"topic": "Puberty & Menstrual Cycle", "io": "Puberty & Menstrual Cycle", "q": "What happens hormonally that allows a new ovulatory cycle to begin?", "opts": [["LH production permanently and completely stops, with no further cycles occurring.", "The corpus luteum is described as involuting, not persisting indefinitely, and LH is not permanently stopped — it resumes for the new cycle."], ["Estrogen and progesterone rise further, extending suppression indefinitely", "Rising (not falling) hormone levels would extend suppression, preventing a new cycle, the opposite of what's described; LH is not permanently stopped — it resumes for the new cycle; the corpus luteum is described as involuting, not persisting indefinitely, absent pregnancy."], ["The corpus luteum persists indefinitely without ever involuting or losing function", "The corpus luteum is described as involuting, not persisting indefinitely, and LH is not permanently stopped — it resumes for the new cycle."], ["Estrogen and progesterone from the corpus luteum fall, relieving suppression of GnRH/LH/FSH", "As the corpus luteum involutes, estrogen and progesterone levels fall, relieving the suppression on GnRH/LH/FSH and allowing a new cycle to begin."]], "c": 3, "cite": "20. Endocrine Physiology III-2.pptx, Slide 45"}, {"topic": "Micturition Reflex", "io": "Micturition Reflex", "q": "What triggers the onset of the micturition reflex?", "opts": [["A sudden drop in systemic blood pressure sensed by arterial baroreceptors", "There is no fixed timer driving the reflex — it is tension-dependent; blood pressure/baroreceptor sensing is unrelated to this bladder-filling reflex; it is bladder wall stretch, not isolated ureteral stretch, that drives it."], ["Stretch of the ureteral wall alone, independent of the bladder", "There is no fixed timer driving the reflex — it is tension-dependent; blood pressure/baroreceptor sensing is unrelated to this bladder-filling reflex; it is bladder wall stretch, not isolated ureteral stretch, that drives it."], ["Bladder wall tension rising above a threshold level as the bladder fills", "The bladder fills progressively until wall tension rises above a threshold level, at which point the micturition reflex is triggered to empty the bladder."], ["A fixed time interval elapsing since the previous voiding event", "There is no fixed timer driving the reflex — it is tension-dependent; blood pressure/baroreceptor sensing is unrelated to this bladder-filling reflex; it is bladder wall stretch, not isolated ureteral stretch, that drives it."]], "c": 2, "cite": "Renal I - Summer 2026.pptx, Slide 12"}, {"topic": "Nephron Segments & Transport", "io": "Nephron Segments & Transport", "q": "Per the summary table of nephron segments, which segment shows high water and high NaCl reabsorption with the key role of 'bulk reabsorption'?", "opts": [["Thick ascending limb segment", "The descending limb reabsorbs high water but low NaCl (water removal is its role); the ascending limb reabsorbs no water but high NaCl (salt removal); the early DCT reabsorbs no water and only moderate NaCl (dilution)."], ["Early distal convoluted tubule", "The descending limb reabsorbs high water but low NaCl (water removal is its role); the ascending limb reabsorbs no water but high NaCl (salt removal); the early DCT reabsorbs no water and only moderate NaCl (dilution)."], ["Thin descending limb segment", "The descending limb reabsorbs high water but low NaCl (water removal is its role); the ascending limb reabsorbs no water but high NaCl (salt removal); the early DCT reabsorbs no water and only moderate NaCl (dilution)."], ["Proximal convoluted tubule (PCT)", "The PCT shows high water and high NaCl reabsorption, with 'bulk reabsorption' as its key physiologic role."]], "c": 3, "cite": "Renal II - Summer 2026.pptx, Slide 15"}, {"topic": "Muscle Tone", "io": "Explain the causes of muscle tone", "q": "If the nerve supply to a muscle is destroyed, what happens to that muscle?", "opts": [["It hypertrophies in response to continuous muscle spindle firing", "Denervation removes the neural drive, so hypertrophy from spindle firing does not occur."], ["It loses its tone, becomes flaccid, and eventually wastes away", "Correct: without stimulation the fibers lose tone, become flaccid, and the muscle eventually wastes away."], ["It increases its resting tone and becomes progressively rigid", "Loss of innervation removes the stimulation needed for tone, so the muscle does not become rigid."], ["It maintains its normal tone through intact muscle spindle reflexes", "Spindle-mediated tone depends on intact innervation, which has been destroyed."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 36"}, {"topic": "Hormone Classes & Feedback", "io": "Hormone Classes & Feedback", "q": "Protein and peptide hormones, such as growth hormone, ACTH, and insulin, share which general property?", "opts": [["Water-soluble, stored in secretory vesicles", "Protein and peptide hormones (3-200 amino acids) are water-soluble and stored in secretory vesicles."], ["Derived from cholesterol", "Lipid solubility with free cytoplasmic storage describes steroid hormones, not proteins/peptides; cholesterol-derivation describes steroid hormones; thyroxine-binding globulin is specifically how lipid-soluble thyroid hormones are transported, not a protein/peptide hormone property."], ["Lipid soluble, stored freely in the cytoplasm", "Lipid solubility with free cytoplasmic storage describes steroid hormones, not proteins/peptides; cholesterol-derivation describes steroid hormones; thyroxine-binding globulin is specifically how lipid-soluble thyroid hormones are transported, not a protein/peptide hormone property."], ["Bound exclusively to thyroxine-binding globulin", "Lipid solubility with free cytoplasmic storage describes steroid hormones, not proteins/peptides; cholesterol-derivation describes steroid hormones; thyroxine-binding globulin is specifically how lipid-soluble thyroid hormones are transported, not a protein/peptide hormone property."]], "c": 0, "cite": "Endocrine Physiology I.pptx, Slide 8"}, {"topic": "Pancreatic & Parathyroid Hormones", "io": "Pancreatic & Parathyroid Hormones", "q": "Glucagon secretion is inhibited by glucose, somatostatin, and:", "opts": [["Fasting (a stimulating effect)", "Amino acids, fasting, and exercise are all listed as STIMULATING, not inhibiting, glucagon secretion in this lecture."], ["Insulin (direct effect)", "Insulin has a direct inhibitory effect on glucagon secretion, alongside glucose and somatostatin."], ["Amino acids (a stimulating effect)", "Amino acids, fasting, and exercise are all listed as STIMULATING, not inhibiting, glucagon secretion in this lecture."], ["Exercise (a stimulating effect)", "Amino acids, fasting, and exercise are all listed as STIMULATING, not inhibiting, glucagon secretion in this lecture."]], "c": 1, "cite": "19. Endocrime Physiology II.pptx, Slide 62"}, {"topic": "Male Reproductive Physiology", "io": "Male Reproductive Physiology", "q": "Testosterone's skeletal effects include increased bone thickness and calcium deposition, but prolonged exposure eventually causes:", "opts": [["Fusion of the epiphyses/shaft, which can decrease final height if levels are abnormally high", "Prolonged testosterone exposure causes fusion of the bone epiphyses/shaft; abnormally high levels can cause this fusion to occur early, resulting in a net decrease in final height."], ["Complete and permanent cessation of all bone mineralization activity throughout the skeleton.", "Bone growth does not continue without limit — it is capped by epiphyseal fusion; mineralization does not cease, since testosterone increases calcium deposition; and density increases, not decreases."], ["Bones becoming progressively more radiolucent with no change in overall density.", "Bone growth does not continue without limit — it is capped by epiphyseal fusion; mineralization does not cease, since testosterone increases calcium deposition; and density increases, not decreases."], ["Continuous linear bone growth that never plateaus, slows, or reaches any eventual final limit.", "Bone growth does not continue without limit — it is capped by epiphyseal fusion; mineralization does not cease, since testosterone increases calcium deposition; and density increases, not decreases."]], "c": 0, "cite": "20. Endocrine Physiology III-2.pptx, Slide 20"}, {"topic": "Regulation of GFR", "io": "Regulation of GFR", "q": "Of the four Starling forces governing GFR, which one is described as the determinant most subject to physiological control?", "opts": [["Hydrostatic pressure in Bowman's capsule (PB)", "PB normally follows GFR rather than regulating it; πB is largely negligible under normal conditions in this lecture's framework; πG changes are driven mainly by filtration itself along the capillary length, not primarily by independent physiological regulation the way PG is."], ["Colloid osmotic pressure of glomerular plasma proteins (πG)", "PB normally follows GFR rather than regulating it; πB is largely negligible under normal conditions in this lecture's framework; πG changes are driven mainly by filtration itself along the capillary length, not primarily by independent physiological regulation the way PG is."], ["Colloid osmotic pressure in Bowman's capsule (πB)", "PB normally follows GFR rather than regulating it; πB is largely negligible under normal conditions in this lecture's framework; πG changes are driven mainly by filtration itself along the capillary length, not primarily by independent physiological regulation the way PG is."], ["Glomerular hydrostatic pressure (PG)", "Glomerular hydrostatic pressure (PG) is the determinant of GFR most subject to physiological control, since PB normally just changes as a function of GFR rather than driving it."]], "c": 3, "cite": "Renal I - Summer 2026.pptx, Slide 54"}, {"topic": "RAAS Pathway", "io": "RAAS Pathway", "q": "Full RAAS activation results in vasoconstriction of the efferent arterioles, Na+ reabsorption, increased ADH, and:", "opts": [["Decreased thirst", "Thirst increases, not decreases, with RAAS activation; there is a described change, so 'no change' is incorrect; the effect is not a permanent suppression — it's an active, reversible increase in thirst tied to the physiologic state driving RAAS activation."], ["Increased thirst", "RAAS activation results in increased thirst, alongside efferent arteriole vasoconstriction, Na+ (and water) reabsorption, and increased ADH."], ["Suppression of the thirst center permanently", "Thirst increases, not decreases, with RAAS activation; there is a described change, so 'no change' is incorrect; the effect is not a permanent suppression — it's an active, reversible increase in thirst tied to the physiologic state driving RAAS activation."], ["No change in thirst sensation", "Thirst increases, not decreases, with RAAS activation; there is a described change, so 'no change' is incorrect; the effect is not a permanent suppression — it's an active, reversible increase in thirst tied to the physiologic state driving RAAS activation."]], "c": 1, "cite": "Renal II - Summer 2026.pptx, Slide 34"}, {"topic": "Neuromuscular Junction", "io": "Describe the neuromuscular junction", "q": "The neuromuscular junction is best defined as which of the following?", "opts": [["An invagination of the sarcolemma that stores calcium", "Calcium storage occurs in the sarcoplasmic reticulum, and T-tubules are the sarcolemmal invaginations, not the neuromuscular junction."], ["A specialized synapse between a motoneuron and a muscle fiber", "Correct: the slides define it as a specialized synapse between a motoneuron and a muscle fiber at the motor end plate."], ["The junction of two terminal cisternae and a T-tubule", "That arrangement defines the triad of excitation-contraction coupling, not the neuromuscular junction."], ["An electrical gap junction linking adjacent muscle fibers", "Electrical coupling between fibers describes smooth muscle syncytium, not the skeletal neuromuscular junction."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 6"}, {"topic": "Pituitary Cell Types & Hormones", "io": "Pituitary Cell Types & Hormones", "q": "Gonadotropes secrete FSH and LH. Which combined actions are these hormones responsible for?", "opts": [["Stimulating increased hepatic gluconeogenesis and glycogen breakdown in the liver to raise blood glucose.", "Adrenal glucocorticoid/androgen stimulation describes ACTH, hepatic gluconeogenesis describes a GH-related effect, and thyroid/milk stimulation describes TSH and prolactin — none is a gonadotropin function."], ["Stimulating the release of glucocorticoid and androgen hormones specifically from cells of the adrenal cortex.", "Adrenal glucocorticoid/androgen stimulation describes ACTH, hepatic gluconeogenesis describes a GH-related effect, and thyroid/milk stimulation describes TSH and prolactin — none is a gonadotropin function."], ["Stimulating follicular cells in the ovary/spermatogenesis in the testis, and stimulating sex-steroid production from the gonads", "FSH and LH stimulate follicular cells in the ovary and spermatogenesis in the testis, and stimulate production of estrogen/progesterone from the ovary and testosterone from the testis."], ["Stimulating thyroid follicular cell activity and directly stimulating milk production from the mammary glands.", "Adrenal glucocorticoid/androgen stimulation describes ACTH, hepatic gluconeogenesis describes a GH-related effect, and thyroid/milk stimulation describes TSH and prolactin — none is a gonadotropin function."]], "c": 2, "cite": "Endocrine Physiology I.pptx, Slide 34"}, {"topic": "Cortisol", "io": "Cortisol", "q": "What triggers hypothalamic control of cortisol release, per this lecture's list of stressors?", "opts": [["Trauma, infection, heat/cold, surgery, and other stressors", "Trauma, infection, heat/cold, sympathetic activation, surgery, and restraint/disease are all listed as stressors triggering hypothalamic control of cortisol release."], ["Only dietary sodium intake, with no stress-related trigger involved", "Dietary sodium intake is not a listed cortisol trigger — that's more relevant to aldosterone/RAAS."], ["Only genetic factors, with no environmental triggers", "The lecture lists clear environmental/physical stress triggers, so 'only genetic factors' is incorrect; dietary sodium intake is not a listed cortisol trigger (that's more relevant to aldosterone/RAAS); cortisol control does include an acute stress response in addition to circadian rhythm, so 'only circadian' is incomplete/incorrect."], ["Only circadian rhythm, with no acute stress response", "The lecture lists clear environmental/physical stress triggers, so 'only genetic factors' is incorrect; dietary sodium intake is not a listed cortisol trigger (that's more relevant to aldosterone/RAAS); cortisol control does include an acute stress response in addition to circadian rhythm, so 'only circadian' is incomplete/incorrect."]], "c": 0, "cite": "19. Endocrime Physiology II.pptx, Slide 28"}, {"topic": "Labor & Lactation", "io": "Labor & Lactation", "q": "Which hormone, increasing starting at gestation week 5 from the anterior pituitary, directly promotes milk secretion?", "opts": [["Oxytocin", "Oxytocin (from the posterior pituitary) drives milk let-down/ejection, not milk secretion itself; relaxin's role relates to pelvic ligaments, not milk secretion; hCG's major roles relate to corpus luteum support, not directly promoting milk secretion."], ["hCG hormone", "hCG's major roles relate to corpus luteum support in early pregnancy, not directly promoting milk secretion."], ["Relaxin", "Oxytocin (from the posterior pituitary) drives milk let-down/ejection, not milk secretion itself; relaxin's role relates to pelvic ligaments, not milk secretion; hCG's major roles relate to corpus luteum support, not directly promoting milk secretion."], ["Prolactin", "Prolactin, from the anterior pituitary, increases starting at gestation week 5 and promotes milk secretion."]], "c": 3, "cite": "20. Endocrine Physiology III-2.pptx, Slide 86"}, {"topic": "Regulation of GFR", "io": "Regulation of GFR", "q": "In the myogenic mechanism of renal autoregulation, increased arterial pressure leads to:", "opts": [["Afferent arteriole stretch, triggering smooth muscle contraction and constriction, stabilizing GFR", "Increased arterial pressure stretches the afferent arteriole; this stretch activates smooth muscle contraction, constricting the arteriole and preventing excessive increases in glomerular hydrostatic pressure, which helps maintain a stable GFR."], ["No vascular response at all, allowing GFR to rise passively and unchecked", "Relaxation (not contraction) would allow GFR to keep rising rather than stabilizing it; the myogenic mechanism is described as an afferent, not efferent, arteriolar response; the mechanism specifically prevents GFR from rising passively with pressure — that's the whole point of autoregulation."], ["Afferent arteriole relaxation, which further increases GFR beyond normal", "Relaxation (not contraction) would allow GFR to keep rising rather than stabilizing it; the myogenic mechanism is described as an afferent, not efferent, arteriolar response; the mechanism specifically prevents GFR from rising passively with pressure — that's the whole point of autoregulation."], ["Efferent arteriole dilation only, occurring with no afferent arteriolar response", "Relaxation (not contraction) would allow GFR to keep rising rather than stabilizing it; the myogenic mechanism is described as an afferent, not efferent, arteriolar response; the mechanism specifically prevents GFR from rising passively with pressure — that's the whole point of autoregulation."]], "c": 0, "cite": "Renal I - Summer 2026.pptx, Slide 55"}, {"topic": "Nephron Segments & Transport", "io": "Nephron Segments & Transport", "q": "The early distal tubule is described as 'not very permeable to urea' and also not permeable to:", "opts": [["Magnesium", "Sodium, chloride, and magnesium are all actively reabsorbed in the early distal tubule per this lecture, meaning the segment does interact with them (unlike its impermeability to water)."], ["Chloride", "Sodium, chloride, and magnesium are all actively reabsorbed in the early distal tubule per this lecture, meaning the segment does interact with them (unlike its impermeability to water)."], ["Water (H2O)", "The early distal tubule is not permeable to water, in addition to having low permeability to urea."], ["Sodium ion", "Sodium, chloride, and magnesium are all actively reabsorbed in the early distal tubule per this lecture, meaning the segment does interact with them (unlike its impermeability to water)."]], "c": 2, "cite": "Renal II - Summer 2026.pptx, Slide 14"}, {"topic": "Smooth Muscle EC Coupling", "io": "EC coupling in smooth muscle", "q": "During smooth-muscle excitation-contraction coupling, calcium initiates contraction by binding to:", "opts": [["Calmodulin, since the troponin complex is absent", "Correct: with troponin absent, calcium binds calmodulin, which is structurally similar."], ["Tropomyosin, displacing it directly from actin", "Wrong: regulation is myosin-based, and calcium acts through calmodulin, not tropomyosin."], ["Troponin C on the thin filament", "Wrong: the troponin complex is absent in smooth muscle."], ["Calsequestrin within the sarcoplasmic reticulum", "Wrong: calsequestrin is a storage protein and is not the calcium receptor for contraction."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 43"}, {"topic": "Pituitary Cell Types & Hormones", "io": "Pituitary Cell Types & Hormones", "q": "Which anterior pituitary cell type produces growth hormone (somatotropin)?", "opts": [["Corticotropes", "Corticotropes produce ACTH; thyrotropes produce TSH; lactotropes produce prolactin — none of these are the GH-producing cell type."], ["Thyrotropes", "Corticotropes produce ACTH; thyrotropes produce TSH; lactotropes produce prolactin — none of these are the GH-producing cell type."], ["Somatotropes", "Somatotropes produce growth hormone (GH, or somatotropin)."], ["Lactotropes", "Corticotropes produce ACTH; thyrotropes produce TSH; lactotropes produce prolactin — none of these are the GH-producing cell type."]], "c": 2, "cite": "Endocrine Physiology I.pptx, Slide 33"}, {"topic": "Adrenal Cortex Overview", "io": "Adrenal Cortex Overview", "q": "How long does cortisol typically take to produce a cellular response after binding the glucocorticoid response element?", "opts": [["Several days", "An immediate (seconds) response would be more typical of membrane-receptor-mediated signaling, not this genomic steroid mechanism; 24 hours substantially overstates the described 45-60 minute latency; several days is far too long for this described response window."], ["Immediately (seconds)", "An immediate (seconds) response would be more typical of membrane-receptor-mediated signaling, not this genomic steroid mechanism; 24 hours substantially overstates the described 45-60 minute latency; several days is far too long for this described response window."], ["45–60 minutes", "Cortisol's genomic action via the glucocorticoid response element takes about 45–60 minutes to produce a cellular response."], ["24 hours", "An immediate (seconds) response would be more typical of membrane-receptor-mediated signaling, not this genomic steroid mechanism; 24 hours substantially overstates the described 45-60 minute latency; several days is far too long for this described response window."]], "c": 2, "cite": "19. Endocrime Physiology II.pptx, Slide 22"}, {"topic": "Labor & Lactation", "io": "Labor & Lactation", "q": "Colostrum, the first milk, differs from mature milk in that it:", "opts": [["Contains essentially no protein content at all, unlike mature breast milk", "Colostrum does contain protein and antibodies; it is not the fat content that's absent from protein, and it is produced right after birth, not only after weaning."], ["Has essentially the same content as milk but with no fat", "Colostrum has essentially the same content as regular milk but contains no fat."], ["Contains essentially no maternal antibodies at all", "Colostrum does contain protein and antibodies; it is not the fat content that's absent from protein, and it is produced right after birth, not only after weaning."], ["Is produced by the breast only after weaning begins", "Colostrum does contain protein and antibodies; it is not the fat content that's absent from protein, and it is produced right after birth, not only after weaning."]], "c": 1, "cite": "20. Endocrine Physiology III-2.pptx, Slide 86"}, {"topic": "Glomerular Filtration", "io": "Glomerular Filtration", "q": "Glomerular filtration rate (GFR) is defined as:", "opts": [["The volume of fluid filtered from the glomerular capillaries into Bowman's capsule each minute", "GFR is the rate at which the glomeruli filter blood plasma — effectively the volume of fluid filtered from the glomerular capillaries into Bowman's capsule each minute."], ["The total volume of urine that is ultimately excreted from the bladder each minute", "Total renal blood flow is a related but distinct measurement from filtration rate specifically; urine output is much smaller than GFR because most filtrate is reabsorbed; tubular reabsorption is a separate downstream process, not what GFR measures."], ["The overall rate of tubular reabsorption occurring along the entire nephron", "Total renal blood flow is a related but distinct measurement from filtration rate specifically; urine output is much smaller than GFR because most filtrate is reabsorbed; tubular reabsorption is a separate downstream process, not what GFR measures."], ["The total volume of blood flowing through both kidneys each minute", "Total renal blood flow is a related but distinct measurement from filtration rate specifically; urine output is much smaller than GFR because most filtrate is reabsorbed; tubular reabsorption is a separate downstream process, not what GFR measures."]], "c": 0, "cite": "Renal I - Summer 2026.pptx, Slide 31"}, {"topic": "Juxtaglomerular Apparatus", "io": "Juxtaglomerular Apparatus", "q": "Which cell type of the JGA releases renin?", "opts": [["Extraglomerular mesangial cells", "Macula densa cells sense NaCl delivery but are not themselves described as releasing renin; extraglomerular mesangial cells support communication within the JGA rather than releasing renin; principal cells are a distal-nephron/collecting-duct cell type unrelated to the JGA's renin release."], ["Principal cells", "Macula densa cells sense NaCl delivery but are not themselves described as releasing renin; extraglomerular mesangial cells support communication within the JGA rather than releasing renin; principal cells are a distal-nephron/collecting-duct cell type unrelated to the JGA's renin release."], ["Macula densa cells", "Macula densa cells sense NaCl delivery but are not themselves described as releasing renin; extraglomerular mesangial cells support communication within the JGA rather than releasing renin; principal cells are a distal-nephron/collecting-duct cell type unrelated to the JGA's renin release."], ["Granular (JG) cells", "Granular (JG) cells, modified smooth muscle cells, are the ones that release renin."]], "c": 3, "cite": "Renal II - Summer 2026.pptx, Slide 16"}, {"topic": "MLCK/Calmodulin", "io": "EC coupling in smooth muscle", "q": "Myosin light chain kinase (MLCK) can phosphorylate the regulatory light chain only when:", "opts": [["Troponin C on the thin filament releases its bound calcium", "Wrong: smooth muscle has no troponin; MLCK activation depends on calcium-calmodulin."], ["Myosin light chain phosphatase is simultaneously active", "Wrong: the phosphatase opposes MLCK and promotes relaxation, not activation."], ["Calcium is bound to calmodulin, activating the kinase", "Correct: MLCK is active only in the presence of calmodulin that has calcium bound."], ["Adenosine triphosphate levels fall below their resting baseline", "Wrong: low adenosine triphosphate would impair, not activate, phosphorylation."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 43"}, {"topic": "Posterior Pituitary", "io": "Posterior Pituitary", "q": "ADH's alternate name, reflecting its vasoactive properties, is:", "opts": [["Somatostatin", "Thyroxine-releasing peptide is not a real alternate name used for ADH in this lecture; ADH is not described as a corticotropin analog; somatostatin is a separate inhibitory hormone, not an alternate name for ADH."], ["Corticotropin analog", "Thyroxine-releasing peptide is not a real alternate name used for ADH in this lecture; ADH is not described as a corticotropin analog; somatostatin is a separate inhibitory hormone, not an alternate name for ADH."], ["Thyroxine-releasing peptide", "Thyroxine-releasing peptide is not a real alternate name used for ADH in this lecture; ADH is not described as a corticotropin analog; somatostatin is a separate inhibitory hormone, not an alternate name for ADH."], ["Arginine vasopressin", "ADH is also called arginine vasopressin (AVP), reflecting its vasoconstrictive/pressor properties."]], "c": 3, "cite": "Endocrine Physiology I.pptx, Slide 58"}, {"topic": "Cortisol", "io": "Cortisol", "q": "Which best describes cortisol's site of action, per its basic hormone profile?", "opts": [["The adrenal cortex itself, exclusively", "Cortisol doesn't act exclusively on the adrenal cortex that produces it; peripheral tissues is the broad site given, not the kidney alone; cortisol does provide negative feedback to the anterior pituitary/hypothalamus, but its site of action is described broadly as peripheral tissues, not limited to the pituitary."], ["Only the anterior pituitary", "Cortisol doesn't act exclusively on the adrenal cortex that produces it; peripheral tissues is the broad site given, not the kidney alone; cortisol does provide negative feedback to the anterior pituitary/hypothalamus, but its site of action is described broadly as peripheral tissues, not limited to the pituitary."], ["Only the kidney", "Cortisol doesn't act exclusively on the adrenal cortex that produces it; peripheral tissues is the broad site given, not the kidney alone; cortisol does provide negative feedback to the anterior pituitary/hypothalamus, but its site of action is described broadly as peripheral tissues, not limited to the pituitary."], ["Peripheral tissues", "Cortisol acts on peripheral tissues broadly."]], "c": 3, "cite": "19. Endocrime Physiology II.pptx, Slide 18"}, {"topic": "Puberty & Menstrual Cycle", "io": "Puberty & Menstrual Cycle", "q": "Estrogen's effect on the fallopian tube's ciliated epithelium helps accomplish which function?", "opts": [["Producing progesterone locally within the fallopian tube epithelium", "This ciliary action promotes, rather than prevents, ovum transport; the tube doesn't produce progesterone; and this mechanism transports the ovum rather than destroying it."], ["Guiding/moving the ovum toward the tube opening (ostium) after it enters the fallopian tube", "Estrogen stimulates the ciliated epithelium of the fallopian tube's fimbriated ends, which helps move the ovum toward the tube's opening (ostium), with a described 98% success rate."], ["Preventing ovum transport entirely once it has left the ovarian follicle", "This ciliary action promotes, rather than prevents, ovum transport; the tube doesn't produce progesterone; and this mechanism transports the ovum rather than destroying it."], ["Actively destroying and enzymatically breaking down any unfertilized ova present.", "This ciliary action promotes, rather than prevents, ovum transport; the tube doesn't produce progesterone; and this mechanism transports the ovum rather than destroying it."]], "c": 1, "cite": "20. Endocrine Physiology III-2.pptx, Slide 57"}, {"topic": "Glomerular Filtration", "io": "Glomerular Filtration", "q": "All layers of the glomerular capillary wall together act as a barrier primarily to:", "opts": [["Small solutes specifically, while completely blocking the passage of water molecules themselves", "Water is not what the barrier restricts — it passes rapidly; the barrier does restrict proteins, not just leave small solutes blocked while proteins pass; the barrier restricts plasma proteins specifically, not just cellular elements like red blood cells while ignoring proteins."], ["Red blood cells specifically, while placing no restriction at all on plasma proteins", "Water is not what the barrier restricts — it passes rapidly; the barrier does restrict proteins, not just leave small solutes blocked while proteins pass; the barrier restricts plasma proteins specifically, not just cellular elements like red blood cells while ignoring proteins."], ["Plasma proteins, while still permitting rapid filtration of water and most solutes", "All layers of the glomerular capillary wall provide a barrier to the filtration of plasma proteins while still permitting rapid filtration of water and most solutes."], ["Water molecules specifically, while blocking the passage of essentially all solutes and proteins", "Water is not what the barrier restricts — it passes rapidly; the barrier does restrict proteins, not just leave small solutes blocked while proteins pass; the barrier restricts plasma proteins specifically, not just cellular elements like red blood cells while ignoring proteins."]], "c": 2, "cite": "Renal I - Summer 2026.pptx, Slide 39"}, {"topic": "Hormone Regulation", "io": "Hormone Regulation", "q": "Angiotensin II's role in urine formation includes constricting efferent arterioles and increasing filtration fraction. What does this ultimately cause?", "opts": [["Na+ and water loss, with waste product accumulation", "The described effect is retention, not loss, of Na+ and water; filtration is modulated, not stopped entirely; both sodium and water retention are described together, not water alone."], ["Only water retention, with no effect on sodium", "The described effect is retention, not loss, of Na+ and water; filtration is modulated, not stopped entirely; both sodium and water retention are described together, not water alone."], ["Na+ and H2O retention, maintaining excretion of waste products", "Angiotensin II's actions (efferent constriction, decreased peritubular capillary hydrostatic pressure, increased peritubular colloid osmotic pressure) cause Na+ and H2O retention while still maintaining excretion of waste products."], ["Complete and total cessation of glomerular filtration", "The described effect is retention, not loss, of Na+ and water; filtration is modulated, not stopped entirely; both sodium and water retention are described together, not water alone."]], "c": 2, "cite": "Renal II - Summer 2026.pptx, Slide 22"}, {"topic": "Sarcomere", "io": "Describe the structural proteins of the sarcomere", "q": "Within the sarcomere, titin is best described as which of the following?", "opts": [["The thin filament composed of actin", "The thin filament is actin; titin is a separate large elastic protein."], ["A large filamentous structural protein", "Correct: the slides identify titin as a filamentous structural protein of the sarcomere."], ["The protein that caps actin at the M line", "Actin is tethered at the Z disc, and titin is a structural protein rather than an actin cap at the M line."], ["The thick filament composed of myosin", "The thick filament is myosin itself; titin is a distinct structural protein."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 20"}, {"topic": "Thyroid Hormone", "io": "Thyroid Hormone", "q": "At high T3/T4 levels, protein metabolism shows which combination of effects?", "opts": [["No measurable effect on either protein synthesis or protein breakdown", "There is a clear, described effect on protein metabolism at high T3/T4 levels, so 'no effect' is incorrect."], ["Increased synthesis with no change in proteolysis", "Decreased synthesis and decreased proteolysis together describes the LOW T3/T4 state, not high; while synthesis does increase, proteolysis also increases (not stays unchanged) at high levels; there is a clear, described effect on protein metabolism, so 'no effect' is incorrect."], ["Decreased synthesis and decreased proteolysis", "Decreased synthesis and decreased proteolysis together describes the LOW T3/T4 state, not high; while synthesis does increase, proteolysis also increases (not stays unchanged) at high levels; there is a clear, described effect on protein metabolism, so 'no effect' is incorrect."], ["Increased synthesis and increased proteolysis (muscle wasting)", "High T3/T4 increases both protein synthesis AND proteolysis, with the increased proteolysis contributing to muscle wasting."]], "c": 3, "cite": "Endocrine Physiology I.pptx, Slide 72"}, {"topic": "Cortisol", "io": "Cortisol", "q": "Cortisol's carbohydrate metabolism effects include increased gluconeogenesis and:", "opts": [["Complete cessation of hepatic glucose production", "Cortisol raises, not lowers, blood glucose; a clear effect on blood glucose is described, so 'no change' is incorrect; cortisol increases (not stops) hepatic glucose production via gluconeogenesis."], ["Increased blood glucose (the best-known metabolic effect)", "Cortisol increases blood glucose — described as its best-known metabolic effect — via increased gluconeogenesis and moderately decreased glucose utilization."], ["No change at all in fasting blood glucose", "Cortisol raises, not lowers, blood glucose, and a clear effect on blood glucose is described, so 'no change' is incorrect."], ["Decreased blood glucose (a hypoglycemic effect)", "Cortisol raises, not lowers, blood glucose, and a clear effect on blood glucose is described, so 'no change' is incorrect."]], "c": 1, "cite": "19. Endocrime Physiology II.pptx, Slide 23"}, {"topic": "Estrogen & Progesterone Actions", "io": "Estrogen & Progesterone Actions", "q": "Which hormone, secreted from granulosa/corpus luteum cells, suppresses GnRH release as part of ovarian feedback?", "opts": [["Inhibin", "Inhibin suppresses GnRH release as part of the ovarian feedback system."], ["Prolactin", "Prolactin, oxytocin, and ADH are not the hormone described as suppressing GnRH release in this specific ovarian feedback context — that's inhibin."], ["Oxytocin", "Prolactin, oxytocin, and ADH are not the hormone described as suppressing GnRH release in this specific ovarian feedback context — that's inhibin."], ["ADH", "Prolactin, oxytocin, and ADH are not the hormone described as suppressing GnRH release in this specific ovarian feedback context — that's inhibin."]], "c": 0, "cite": "20. Endocrine Physiology III-2.pptx, Slide 51"}, {"topic": "Bladder Anatomy & Innervation", "io": "Bladder Anatomy & Innervation", "q": "Once the micturition reflex becomes powerful enough, it triggers a second reflex that travels through which nerve to inhibit the external sphincter?", "opts": [["Hypogastric nerve", "The pelvic nerve carries the primary parasympathetic detrusor drive, not this secondary inhibitory signal to the external sphincter; the hypogastric nerve is sympathetic and involved in storage, not this inhibitory step; the genitofemoral nerve is not part of this pathway."], ["Pelvic nerve", "The pelvic nerve carries the primary parasympathetic detrusor drive, not this secondary inhibitory signal to the external sphincter; the hypogastric nerve is sympathetic and involved in storage, not this inhibitory step; the genitofemoral nerve is not part of this pathway."], ["Genitofemoral nerve", "The pelvic nerve carries the primary parasympathetic detrusor drive, not this secondary inhibitory signal to the external sphincter; the hypogastric nerve is sympathetic and involved in storage, not this inhibitory step; the genitofemoral nerve is not part of this pathway."], ["Pudendal nerve", "A sufficiently powerful micturition reflex triggers a second reflex that passes through the pudendal nerves to inhibit the external sphincter."]], "c": 3, "cite": "Renal I - Summer 2026.pptx, Slide 20"}, {"topic": "Hormone Regulation", "io": "Hormone Regulation", "q": "Besides hormones, which factor listed in this lecture also regulates tubular reabsorption via arterial pressure?", "opts": [["Circadian rhythm alone", "The lecture explicitly lists non-hormonal factors too, so 'only hormonal signals' is incorrect; body temperature regulation is not among the listed regulators of tubular reabsorption; circadian rhythm is not listed either."], ["Glomerulotubular balance and pressure natriuresis", "Glomerulotubular balance, peritubular physical forces, the sympathetic nervous system, arterial pressure (via pressure natriuresis), and osmotic factors are all listed alongside hormones as regulators of tubular reabsorption."], ["Body temperature regulation", "The lecture explicitly lists non-hormonal factors too, so 'only hormonal signals' is incorrect; body temperature regulation is not among the listed regulators of tubular reabsorption; circadian rhythm is not listed either."], ["Only hormonal signals, with no pressure-based mechanism", "The lecture explicitly lists non-hormonal factors too, so 'only hormonal signals' is incorrect; body temperature regulation is not among the listed regulators of tubular reabsorption; circadian rhythm is not listed either."]], "c": 1, "cite": "Renal II - Summer 2026.pptx, Slide 19"}, {"topic": "Fiber Types", "io": "Contrast slow and fast fibers", "q": "Which set of features correctly characterizes slow (Type I) skeletal muscle fibers?", "opts": [["Glycolytic, small diameter, few mitochondria", "Slow fibers are oxidative with many mitochondria, so this glycolytic profile is incorrect."], ["Oxidative, large diameter, low capillary density", "This mixes traits incorrectly: slow fibers are small in diameter with high capillary density."], ["Oxidative, small diameter, high myoglobin content", "Correct: slow (Type I) fibers are oxidative, small in diameter, and high in myoglobin."], ["Glycolytic, large diameter, low myoglobin content", "These are the properties of fast (Type II) fibers, not slow fibers."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 32"}, {"topic": "Posterior Pituitary", "io": "Posterior Pituitary", "q": "Oxytocin's two described physiological functions are milk let-down and:", "opts": [["Uterine contraction", "Oxytocin's two described functions are milk let-down and uterine contraction."], ["Bone growth", "Water reabsorption in the kidney is ADH's function, not oxytocin's; bone growth is a GH-driven process; thyroid hormone synthesis is a thyroid-gland process — neither is one of oxytocin's two named functions here."], ["Thyroid hormone synthesis", "Water reabsorption in the kidney is ADH's function, not oxytocin's; bone growth is a GH-driven process; thyroid hormone synthesis is a thyroid-gland process — neither is one of oxytocin's two named functions here."], ["Water reabsorption in the kidney", "Water reabsorption in the kidney is ADH's function, not oxytocin's; bone growth is a GH-driven process; thyroid hormone synthesis is a thyroid-gland process — neither is one of oxytocin's two named functions here."]], "c": 0, "cite": "Endocrine Physiology I.pptx, Slide 64"}, {"topic": "Pancreatic & Parathyroid Hormones", "io": "Pancreatic & Parathyroid Hormones", "q": "The major actions of parathyroid hormone (PTH) include increasing plasma calcium and increasing renal production of which active compound?", "opts": [["1,25-dihydroxycholecalciferol (active vitamin D)", "PTH increases renal production of 1,25-dihydroxycholecalciferol (active vitamin D/calcitriol), alongside directly increasing plasma calcium and promoting calcium/phosphate release from bone."], ["Aldosterone, a mineralocorticoid hormone", "Calcitonin is PTH's functional antagonist, not something PTH promotes; aldosterone and angiotensin II are part of a separate hormonal system (RAAS) unrelated to PTH's calcium-regulating actions."], ["Angiotensin II, a vasoconstrictor peptide", "Calcitonin is PTH's functional antagonist, not something PTH promotes; aldosterone and angiotensin II are part of a separate hormonal system (RAAS) unrelated to PTH's calcium-regulating actions."], ["Calcitonin, PTH's functional antagonist", "Calcitonin is PTH's functional antagonist, not something PTH promotes; aldosterone and angiotensin II are part of a separate hormonal system (RAAS) unrelated to PTH's calcium-regulating actions."]], "c": 0, "cite": "19. Endocrime Physiology II.pptx, Slide 91"}, {"topic": "Male Reproductive Physiology", "io": "Male Reproductive Physiology", "q": "Increased metabolic rate from testosterone contributes to which hematologic change?", "opts": [["No effect on hematocrit", "More red blood cells would increase, not decrease, hematocrit — this option reverses the relationship; the lecture describes a clear hematologic effect, so 'no effect' is incorrect; the described change involves red blood cells specifically, not white blood cells."], ["Decreased white blood cell count", "More red blood cells would increase, not decrease, hematocrit — this option reverses the relationship; the lecture describes a clear hematologic effect, so 'no effect' is incorrect; the described change involves red blood cells specifically, not white blood cells."], ["Decreased hematocrit due to more red blood cells", "More red blood cells would increase, not decrease, hematocrit — this option reverses the relationship; the lecture describes a clear hematologic effect, so 'no effect' is incorrect; the described change involves red blood cells specifically, not white blood cells."], ["Increased hematocrit due to more red blood cells", "Testosterone's increased metabolic rate increases hematocrit, due to an increase in red blood cells."]], "c": 3, "cite": "20. Endocrine Physiology III-2.pptx, Slide 21"}, {"topic": "Regulation of GFR", "io": "Regulation of GFR", "q": "Tubuloglomerular feedback is mediated by which cells monitoring NaCl delivery to the distal tubule?", "opts": [["Podocytes of the glomerular filtration barrier", "Principal and intercalated cells are collecting-duct cell types involved in Na+/K+/H+ handling, not NaCl-sensing feedback to the glomerulus; podocytes are part of the filtration barrier, not the NaCl-sensing mechanism."], ["Intercalated cells of the collecting duct", "Principal and intercalated cells are collecting-duct cell types involved in Na+/K+/H+ handling, not NaCl-sensing feedback to the glomerulus; podocytes are part of the filtration barrier, not the NaCl-sensing mechanism."], ["Principal cells of the collecting duct", "Principal and intercalated cells are collecting-duct cell types involved in Na+/K+/H+ handling, not NaCl-sensing feedback to the glomerulus; podocytes are part of the filtration barrier, not the NaCl-sensing mechanism."], ["Macula densa cells of the juxtaglomerular apparatus", "Macula densa cells, part of the juxtaglomerular apparatus, monitor NaCl delivery in the distal tubule and mediate tubuloglomerular feedback."]], "c": 3, "cite": "Renal I - Summer 2026.pptx, Slide 55"}, {"topic": "Countercurrent Multiplier", "io": "Countercurrent Multiplier", "q": "In the countercurrent multiplier's 'Single Effect' step, what happens in the thin/thick ascending limb?", "opts": [["Sodium is actively transported into the interstitium, concentrating it", "The 'Single Effect' is active transport of sodium out of the ascending limb into the interstitium, concentrating the interstitial fluid."], ["Urea is actively secreted into the tubular lumen at this site", "Water reabsorption is not the ascending limb's role — it is water-impermeable; urea secretion into the tubule is not the 'Single Effect' step described; the ascending limb is specifically water-IMpermeable, the opposite of highly permeable."], ["The segment suddenly becomes highly permeable to water molecules", "Water reabsorption is not the ascending limb's role — it is water-impermeable; urea secretion into the tubule is not the 'Single Effect' step described; the ascending limb is specifically water-IMpermeable, the opposite of highly permeable."], ["Water is passively reabsorbed into the surrounding interstitium", "Water reabsorption is not the ascending limb's role — it is water-impermeable; urea secretion into the tubule is not the 'Single Effect' step described; the ascending limb is specifically water-IMpermeable, the opposite of highly permeable."]], "c": 0, "cite": "Renal II - Summer 2026.pptx, Slide 42"}, {"topic": "Osteoclasts", "io": "Mechanism of bone resorption", "q": "Osteoclasts degrade bone matrix by releasing protons together with which enzymes across the ruffled border?", "opts": [["Lysyl hydroxylase and osteocalcin", "Wrong: these participate in collagen synthesis and matrix bonding, not resorption."], ["Myosin light chain kinase and calmodulin", "Wrong: these are smooth-muscle contractile regulators, unrelated to bone resorption."], ["Alkaline phosphatase and osteonectin", "Wrong: these are osteoblast/matrix proteins, not the degradative enzymes of osteoclasts."], ["Cathepsin K and matrix metalloproteinases", "Correct: osteoclasts release protons plus cathepsin K and matrix metalloproteinases to degrade the matrix."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 57"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

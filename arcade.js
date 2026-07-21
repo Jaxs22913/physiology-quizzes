@@ -1068,6 +1068,49 @@ var DEMO_DECKS = [
       ["Lactase deficiency", "Underlies lactose intolerance"],
       ["Anaphylaxis warning signs", "Difficulty breathing, low blood pressure, rapid heart rate"]
     ]},
+  { id: "physio-bone-muscle", name: "Bone & Muscle Physiology", color: "accent4",
+    icon: '<path d="M3 12h18"/><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/>',
+    cards: [
+      ["What is the smallest contractile unit of skeletal muscle?", "The sarcomere."],
+      ["What is the neuromuscular junction?", "The specialized synapse between a motor neuron and a muscle fiber, occurring at the motor end plate (usually one per fiber)."],
+      ["What terminates acetylcholine signaling in the synaptic cleft?", "Acetylcholinesterase, which rapidly hydrolyzes acetylcholine so each nerve impulse produces one muscle response."],
+      ["What type of channel is the nicotinic acetylcholine receptor?", "A nonselective cation channel (Na+, K+, Ca2+) that produces a net inward positive current, mostly Na+."],
+      ["What triggers acetylcholine release from the motor neuron terminal?", "Ca2+ influx through voltage-gated channels at the dense bars, which fuses ~125 synaptic vesicles with the membrane."],
+      ["Name the two receptors that pair across the skeletal-muscle triad.", "The dihydropyridine receptor (T-tubule voltage sensor) and the ryanodine receptor (the sarcoplasmic reticulum's Ca2+-release channel)."],
+      ["What triggers sarcoplasmic reticulum calcium release in SKELETAL muscle?", "Voltage: the dihydropyridine receptor mechanically opens the ryanodine receptor (Voltage-Activated Calcium Release). No extracellular calcium is needed."],
+      ["What triggers sarcoplasmic reticulum calcium release in CARDIAC muscle?", "Calcium: Ca2+ entering through the dihydropyridine receptor opens the ryanodine receptor (Calcium-Activated Calcium Release)."],
+      ["What protein buffers calcium stored inside the sarcoplasmic reticulum?", "Calsequestrin."],
+      ["What does each troponin subunit bind on the thin filament?", "Troponin I binds actin, troponin T binds tropomyosin, and troponin C binds calcium."],
+      ["What determines the speed of skeletal-muscle contraction?", "The Vmax of myosin ATPase — high Vmax gives fast (white) fibers, low Vmax gives slow (red) fibers."],
+      ["Contrast slow (Type I) and fast (Type II) fibers.", "Slow Type I: oxidative, high myoglobin and mitochondria, fatigue-resistant, small diameter. Fast Type II: glycolytic, large diameter, powerful but quick to fatigue."],
+      ["What is a motor unit?", "All the muscle fibers innervated by a single motor neuron — and all fibers in one unit are the same type (fast or slow)."],
+      ["How is smooth-muscle contraction regulated, unlike skeletal muscle?", "It is myosin-based: troponin is absent, so Ca2+ binds calmodulin, and Ca2+-calmodulin activates myosin light chain kinase to phosphorylate myosin."],
+      ["What relaxes smooth muscle?", "Myosin light chain phosphatase dephosphorylates the myosin light chain."],
+      ["What are the two organizations of smooth muscle?", "Unitary (visceral) — electrically coupled cells acting as a syncytium; and multiunit — discrete, densely innervated bundles that contract only when stimulated."],
+      ["What does the osteoblast secrete?", "Type I collagen (90% of bone protein) plus matrix proteins such as osteocalcin, forming unmineralized osteoid; collagen synthesis needs vitamin C."],
+      ["What is an osteocyte?", "A mature osteoblast trapped in the matrix it secreted, living in a lacuna and communicating through canaliculi; it senses mechanical load (piezoelectric) and maintains bone."],
+      ["What is the origin and job of the osteoclast?", "Derived from fused hemopoietic (monocyte/macrophage) progenitors; it resorbs bone in Howship's lacuna using acid and cathepsin K."],
+      ["How does parathyroid hormone raise blood calcium at bone?", "It binds osteoblasts, which then make RANKL and macrophage colony-stimulating factor to mature osteoclasts; it also lowers osteoprotegerin (the RANKL decoy)."],
+      ["What does calcitonin do?", "It inhibits osteoclasts to lower blood calcium; it is released by thyroid C-cells (parafollicular cells) in response to hypercalcemia."]
+    ],
+    matchCards: [
+      ["Sarcomere", "Smallest contractile unit"],
+      ["Acetylcholinesterase", "Terminates the acetylcholine signal"],
+      ["Dihydropyridine receptor", "T-tubule voltage sensor"],
+      ["Ryanodine receptor", "Sarcoplasmic reticulum Ca2+ release channel"],
+      ["Calsequestrin", "Buffers stored SR calcium"],
+      ["Troponin C", "Binds calcium (skeletal thin filament)"],
+      ["Calmodulin", "Smooth-muscle calcium sensor"],
+      ["Myosin light chain kinase", "Phosphorylates myosin → contraction"],
+      ["Myosin light chain phosphatase", "Dephosphorylates myosin → relaxation"],
+      ["Osteoblast", "Secretes collagen and osteoid"],
+      ["Osteoclast", "Resorbs bone in Howship's lacuna"],
+      ["Osteocyte", "Mature bone cell in a lacuna"],
+      ["Type I fiber", "Slow, oxidative, fatigue-resistant"],
+      ["Type II fiber", "Fast, glycolytic, fatigable"],
+      ["Parathyroid hormone", "Raises blood calcium"],
+      ["Calcitonin", "Lowers blood calcium"]
+    ]},
   { id: "physio-cellphys-membranes", name: "Cell Physiology & Membranes", color: "accent",
     icon: '<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2z"/>',
     cards: [
@@ -2991,7 +3034,8 @@ var DEMO_CLASSES = [
     ] },
     { id: "exam4", name: "Exam 4", deckIds: [
       "physio-renal-1", "physio-renal-2",
-      "physio-endocrine-1", "physio-endocrine-2", "physio-endocrine-3"
+      "physio-endocrine-1", "physio-endocrine-2", "physio-endocrine-3",
+      "physio-bone-muscle"
     ] }
   ]},
   { id: "cam-nutrition", name: "CAM/Nutrition", exams: [

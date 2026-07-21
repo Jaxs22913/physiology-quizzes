@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0369a1; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #38bdf8; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smooth Muscle & Bone Physiology — Quiz (30 Questions)</title>
+<style>
+  :root{
+    --navy:#0c4a6e; --indigo:#0369a1; --gold:#38bdf8; --ice:#f0f9ff;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Physiology Integration ExamSmooth Muscle & Bone Physiology</h1>
+    <div class="sub">Smooth Muscle Contraction · Bone Cells & Remodeling · Ossification · Calcium & Phosphate Regulation</div>
+    <span class="pill">30 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Describe the micturition reflex.</span><span class="chip">Identify bladder innervation.</span><span class="chip">Describe glomerular filtration.</span><span class="chip">Calculate glomerular filtration rate (GFR).</span><span class="chip">Identify mechanisms that regulate glomerular filtration rate (GFR).</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Smooth Muscle Types", "io": "Distribution and cellular organization of smooth muscle", "q": "Unitary (visceral) smooth muscle, such as that of the gut and blood vessels, behaves as a functional syncytium mainly because:", "opts": [["Its cells are electrically coupled by gap junctions and contract in unison", "Correct: unitary/visceral muscle is a sheet of electrically coupled cells that acts together, often spontaneously."], ["Its cells are densely innervated and contract only when stimulated", "Wrong: this describes the multiunitary type (e.g., vas deferens, iris), not unitary muscle."], ["Each cell is individually controlled by its own dedicated motor neuron", "Wrong: individual innervation of discrete cells is a feature of multiunitary, not unitary, muscle."], ["Its cells are physically fused into a single giant multinucleated fiber", "Wrong: coupling is functional through gap junctions; the cells remain individual mononucleate cells."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 40"}, {"topic": "Smooth Muscle Types", "io": "Distribution and cellular organization of smooth muscle", "q": "Which structure is an example of MULTIUNITARY smooth muscle?", "opts": [["The muscular wall of the gut", "Wrong: the gut is unitary/visceral smooth muscle that acts as a syncytium."], ["The iris of the eye", "Correct: the iris, along with the vas deferens and piloerectors, is listed as multiunitary."], ["The wall of a blood vessel", "Wrong: blood vessels are given as an example of unitary (visceral) smooth muscle."], ["The muscular wall of the airways", "Wrong: airway walls are hollow-organ visceral muscle, not the discrete multiunitary bundles cited."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 40"}, {"topic": "Smooth Muscle Types", "io": "Distribution and cellular organization of smooth muscle", "q": "As defined in the lecture, a syncytium is:", "opts": [["A single cell containing one centrally located nucleus", "Wrong: a syncytium is multinucleated, not a single mononucleate cell."], ["A bundle of discrete cells each with its own separate innervation", "Wrong: this describes multiunitary organization, not a syncytium."], ["A multinucleated mass of protoplasm produced by the merging of cells", "Correct: this is the lecture's exact definition of a syncytium."], ["A network of cells joined only by mechanical desmosome junctions", "Wrong: the defining feature is merging into a multinucleated mass, not desmosomal linkage."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 40"}, {"topic": "Smooth Muscle Features", "io": "Special features of smooth muscle", "q": "Compared with skeletal muscle, smooth muscle can shorten over a much larger range, achieving approximately what percentage of shortening?", "opts": [["10-20%", "Wrong: this understates smooth muscle's shortening capacity."], ["30-45%", "Wrong: this is still well below the range cited for smooth muscle."], ["85-95%", "Wrong: this overstates the shortening range given in the lecture."], ["60-75%", "Correct: smooth muscle can operate over a large length range, with 60-75% shortening possible."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 41"}, {"topic": "Smooth Muscle Features", "io": "Special features of smooth muscle", "q": "Smooth muscle is remarkably energy efficient; its oxygen consumption is approximately:", "opts": [["1% that of skeletal muscle at the same tension", "Correct: the lecture states smooth muscle uses about 1% of the oxygen of an equal weight of skeletal muscle at the same tension."], ["10% that of skeletal muscle at the same tension", "Wrong: this overstates smooth muscle oxygen use relative to the value given."], ["Equal to skeletal muscle at the same tension", "Wrong: smooth muscle is far more efficient, not equal, in oxygen consumption."], ["Twice that of skeletal muscle at the same tension", "Wrong: smooth muscle uses less, not more, oxygen than skeletal muscle."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 41"}, {"topic": "Smooth Muscle Features", "io": "Special features of smooth muscle", "q": "Which feature allows smooth muscle to maintain force for hours, days, or weeks with minimal energy expenditure?", "opts": [["Rapid cross-bridge cycling driven by high myosin ATPase activity", "Wrong: rapid cycling would consume more energy, the opposite of sustained low-cost force."], ["The latch state of attached cross-bridges", "Correct: the latch state lets smooth muscle maintain force for prolonged periods."], ["Continuous high-frequency firing of action potentials", "Wrong: sustained tone comes from the latch state, not constant action-potential firing."], ["Ongoing release of acetylcholine at a motor end plate", "Wrong: smooth muscle lacks a discrete end plate, and sustained force is due to the latch state."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 41"}, {"topic": "Smooth Muscle Features", "io": "Special features of smooth muscle", "q": "In smooth muscle, the structures that anchor thin filaments and are considered analogous to the Z discs of striated muscle are the:", "opts": [["Gap junctions", "Wrong: gap junctions electrically couple cells; they do not anchor thin filaments."], ["Intermediate filaments", "Wrong: intermediate filaments form the structural backbone but are not the Z-disc analog."], ["Dense bodies", "Correct: dense bodies are the membrane-associated dense areas analogous to Z discs."], ["Terminal cisternae", "Wrong: terminal cisternae belong to the sarcoplasmic reticulum, which is poorly developed here."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 41"}, {"topic": "Smooth Muscle NMJ", "io": "Smooth muscle neuromuscular junction", "q": "How is neurotransmitter delivered at the smooth-muscle neuromuscular junction?", "opts": [["Through a single discrete motor end plate located on each fiber", "Wrong: a single motor end plate per fiber is a skeletal-muscle feature, not smooth muscle."], ["From varicosities in diffuse junctions, diffusing to the muscle cells", "Correct: autonomic fibers form diffuse junctions whose varicosities release transmitter that diffuses to the cells."], ["By direct cytoplasmic transfer of transmitter through gap junctions", "Wrong: gap junctions couple muscle cells electrically; they do not deliver neurotransmitter from nerves."], ["Via acetylcholinesterase packaged within the synaptic cleft", "Wrong: acetylcholinesterase degrades transmitter and is not the delivery mechanism."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 42"}, {"topic": "Smooth Muscle EC Coupling", "io": "EC coupling in smooth muscle", "q": "During smooth-muscle excitation-contraction coupling, calcium initiates contraction by binding to:", "opts": [["Troponin C on the thin filament", "Wrong: the troponin complex is absent in smooth muscle."], ["Calsequestrin within the sarcoplasmic reticulum", "Wrong: calsequestrin is a storage protein and is not the calcium receptor for contraction."], ["Calmodulin, since the troponin complex is absent", "Correct: with troponin absent, calcium binds calmodulin, which is structurally similar."], ["Tropomyosin, displacing it directly from actin", "Wrong: regulation is myosin-based, and calcium acts through calmodulin, not tropomyosin."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 43"}, {"topic": "MLCK/Calmodulin", "io": "EC coupling in smooth muscle", "q": "Myosin light chain kinase (MLCK) can phosphorylate the regulatory light chain only when:", "opts": [["Calcium is bound to calmodulin, activating the kinase", "Correct: MLCK is active only in the presence of calmodulin that has calcium bound."], ["Adenosine triphosphate levels fall below their resting baseline", "Wrong: low adenosine triphosphate would impair, not activate, phosphorylation."], ["Myosin light chain phosphatase is simultaneously active", "Wrong: the phosphatase opposes MLCK and promotes relaxation, not activation."], ["Troponin C on the thin filament releases its bound calcium", "Wrong: smooth muscle has no troponin; MLCK activation depends on calcium-calmodulin."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 43"}, {"topic": "Contraction-Relaxation", "io": "Control of smooth muscle contraction and relaxation", "q": "Relaxation of smooth muscle is produced when:", "opts": [["Myosin light chain kinase phosphorylates the regulatory light chain", "Wrong: phosphorylation by the kinase produces contraction, not relaxation."], ["Myosin light chain phosphatase dephosphorylates the light chain", "Correct: dephosphorylation of the myosin light chain by the phosphatase causes relaxation."], ["Calcium binds to calmodulin to form an active complex", "Wrong: calcium-calmodulin formation drives contraction, not relaxation."], ["A second molecule of adenosine triphosphate is hydrolyzed", "Wrong: the second adenosine triphosphate releases the myosin head during cycling, not relaxation."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 44"}, {"topic": "Contraction-Relaxation", "io": "Control of smooth muscle contraction and relaxation", "q": "In smooth-muscle cross-bridge cycling, what is the role of the SECOND molecule of adenosine triphosphate (ATP)?", "opts": [["It phosphorylates calmodulin to activate the kinase", "Wrong: calmodulin is activated by calcium binding, not by adenosine triphosphate."], ["It directly energizes myosin light chain phosphatase", "Wrong: the phosphatase removes phosphate and does not require this energizing step."], ["It releases the myosin head from actin", "Correct: the first adenosine triphosphate supports phosphorylation, and a second is needed to release the head from actin."], ["It pumps calcium back into the sarcoplasmic reticulum", "Wrong: calcium reuptake is a separate process, not the role of this second molecule."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 44"}, {"topic": "Diverse Control", "io": "Diverse control of smooth muscle", "q": "Which pairing of an ENDOCRINE agent with its effect on smooth muscle is correct?", "opts": [["Cholecystokinin causes gallbladder contraction", "Correct: cholecystokinin is listed as an endocrine stimulus for gallbladder contraction."], ["Nitric oxide causes gastric contraction", "Wrong: nitric oxide is a paracrine mediator that relaxes blood vessels."], ["Histamine causes relaxation of blood vessels", "Wrong: histamine is paracrine and stimulates gastric contraction."], ["Adenosine causes constriction of blood vessels", "Wrong: adenosine is a paracrine mediator that relaxes blood vessels."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 46"}, {"topic": "Diverse Control", "io": "Diverse control of smooth muscle", "q": "Which substance is a PARACRINE mediator that relaxes vascular smooth muscle?", "opts": [["Angiotensin II", "Wrong: angiotensin II is an endocrine agent that constricts blood vessels."], ["Antidiuretic hormone", "Wrong: antidiuretic hormone is an endocrine agent that constricts blood vessels."], ["Nitric oxide", "Correct: nitric oxide is a paracrine mediator that relaxes blood vessels."], ["Cholecystokinin", "Wrong: cholecystokinin is an endocrine agent that contracts the gallbladder."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 46"}, {"topic": "Ossification", "io": "Ossification and collagen synthesis", "q": "Collagen produced by osteoblasts requires which vitamin as a cofactor for the enzyme lysyl hydroxylase?", "opts": [["Vitamin K", "Wrong: vitamin K assists osteocalcin, not lysyl hydroxylase, in this lecture."], ["Vitamin D", "Wrong: vitamin D supports intestinal calcium absorption, not lysyl hydroxylase."], ["Vitamin C (ascorbic acid)", "Correct: ascorbic acid is the required cofactor for lysyl hydroxylase in collagen synthesis."], ["Vitamin A", "Wrong: vitamin A is not cited as a cofactor for collagen synthesis here."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 47"}, {"topic": "Osteoblasts", "io": "Ossification and osteoblast secretion", "q": "During ossification, osteoblasts secrete which set of products?", "opts": [["Type I collagen, bone sialoproteins, and osteocalcin", "Correct: osteoblasts secrete mostly type I collagen along with bone sialoproteins and osteocalcin."], ["Cathepsin K, protons, and matrix metalloproteinases", "Wrong: these are osteoclast products used to resorb bone, not osteoblast secretions."], ["Parathyroid hormone and calcitonin", "Wrong: these calcium-regulating hormones come from the parathyroid and thyroid glands, not osteoblasts."], ["Fully formed hydroxyapatite crystals ready for deposit", "Wrong: hydroxyapatite precipitates onto secreted collagen; osteoblasts do not secrete the finished crystals."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 47"}, {"topic": "Osteocytes", "io": "Ossification and bone cell maturation", "q": "Once the matrix calcifies around them, osteoblasts become which cell, residing within lacunae and canaliculi?", "opts": [["Osteoclasts", "Wrong: osteoclasts are separate multinucleated resorbing cells from a different lineage."], ["Chondroblasts", "Wrong: chondroblasts form cartilage and are not the buried mature bone cell."], ["Fibroblasts", "Wrong: the fibroblast is a relative of the osteoblast, not what it becomes in bone."], ["Osteocytes", "Correct: entombed osteoblasts become osteocytes within the canaliculi and lacunae."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 48"}, {"topic": "Bone Structure", "io": "Structure of bone and mineralization", "q": "In the hardening of bone, what precipitates onto the collagen BEFORE calcium and phosphate salts are deposited?", "opts": [["Osteoprotegerin", "Wrong: osteoprotegerin regulates osteoclast differentiation and is not a mineral crystal."], ["Cathepsin K", "Wrong: cathepsin K is an osteoclast enzyme that degrades matrix, not a precipitate."], ["Mucopolysaccharide organic glue", "Wrong: this is a component of hyaline cartilage matrix, not the crystal that precipitates onto collagen."], ["Hydroxyapatite crystals", "Correct: hydroxyapatite crystals precipitate onto the collagen, after which calcium and phosphate salts are deposited."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 50"}, {"topic": "Osteoblasts", "io": "Bone matrix composition", "q": "Type I collagen secreted by osteoblasts constitutes approximately what fraction of the protein in bone?", "opts": [["45%", "Wrong: this figure is not the fraction of bone protein made of type I collagen."], ["70%", "Wrong: 70% refers to the inorganic salt content of bone, not its collagen protein fraction."], ["90%", "Correct: type I collagen makes up about 90% of the protein in bone."], ["100%", "Wrong: bone protein also includes matrix proteins such as osteocalcin and osteonectin."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 51"}, {"topic": "Osteocalcin", "io": "Bone matrix proteins", "q": "What is the function of osteocalcin, and which vitamin assists it?", "opts": [["It resorbs bone matrix; it is assisted by vitamin D", "Wrong: osteocalcin bonds matrix rather than resorbing it, and vitamin K is its helper."], ["It bonds hydroxyapatite to collagen; it is assisted by vitamin K", "Correct: osteocalcin bonds hydroxyapatite to collagen, and vitamin K helps it do this."], ["It degrades collagen fibers; it is assisted by vitamin C", "Wrong: collagen degradation is an osteoclast function; osteocalcin bonds mineral to collagen."], ["It transports calcium in the plasma; it is assisted by vitamin A", "Wrong: osteocalcin acts in bone matrix bonding, and vitamin A is not its cofactor."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 51"}, {"topic": "Osteocytes", "io": "Osteocyte function in bone maintenance", "q": "Which statement about osteocytes is correct?", "opts": [["They respond to mechanical (piezoelectric) stimuli and maintain the bone matrix", "Correct: osteocytes sense mechanical/piezoelectric stimuli and are responsible for maintaining the matrix."], ["They are large multinucleated cells that actively resorb bone", "Wrong: that description fits osteoclasts, not osteocytes."], ["They secrete parathyroid hormone in response to low calcium", "Wrong: parathyroid hormone comes from the parathyroid glands, not osteocytes."], ["They are immature dividing cells found only within growth plates", "Wrong: osteocytes are mature bone cells embedded in matrix, not dividing growth-plate cells."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 53"}, {"topic": "Osteoclasts", "io": "Osteoclast origin", "q": "Osteoclasts, the large multinucleated bone-resorbing cells, are derived from the fusion of which progenitor cells?", "opts": [["Osteoprogenitor (mesenchymal) cells", "Wrong: mesenchymal osteoprogenitors give rise to osteoblasts, not osteoclasts."], ["Chondrocytes of the epiphyseal growth plate", "Wrong: chondrocytes form cartilage and are not the source of osteoclasts."], ["Parafollicular C-cells of the thyroid gland", "Wrong: C-cells secrete calcitonin and are unrelated to osteoclast formation."], ["Granulocyte/macrophage progenitor cells", "Correct: osteoclasts arise from fusion of granulocyte/macrophage progenitor (hemopoietic) cells."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 55"}, {"topic": "Osteoclasts", "io": "Bone resorption structures", "q": "The shallow resorption bay formed in bone directly beneath an active osteoclast is called:", "opts": [["A canaliculus", "Wrong: canaliculi are the channels housing osteocyte processes, not the resorption bay."], ["Howship's lacuna", "Correct: the resorption bay under an osteoclast is known as Howship's lacuna."], ["The epiphyseal plate", "Wrong: the epiphyseal plate is the growth-plate cartilage, not a resorption site."], ["The ruffled border", "Wrong: the ruffled border is part of the osteoclast membrane, not the bay in the bone."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 55"}, {"topic": "Osteoclasts", "io": "Mechanism of bone resorption", "q": "Osteoclasts degrade bone matrix by releasing protons together with which enzymes across the ruffled border?", "opts": [["Alkaline phosphatase and osteonectin", "Wrong: these are osteoblast/matrix proteins, not the degradative enzymes of osteoclasts."], ["Lysyl hydroxylase and osteocalcin", "Wrong: these participate in collagen synthesis and matrix bonding, not resorption."], ["Myosin light chain kinase and calmodulin", "Wrong: these are smooth-muscle contractile regulators, unrelated to bone resorption."], ["Cathepsin K and matrix metalloproteinases", "Correct: osteoclasts release protons plus cathepsin K and matrix metalloproteinases to degrade the matrix."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 57"}, {"topic": "Calcium Regulation", "io": "Hormonal regulation of blood calcium", "q": "Which pair correctly matches each hormone with its effect on blood calcium?", "opts": [["Parathyroid hormone lowers calcium; calcitonin raises calcium", "Wrong: the effects are reversed; parathyroid hormone raises and calcitonin lowers calcium."], ["Both parathyroid hormone and calcitonin raise blood calcium", "Wrong: calcitonin lowers blood calcium rather than raising it."], ["Parathyroid hormone raises calcium; calcitonin lowers calcium", "Correct: parathyroid hormone raises blood calcium while calcitonin lowers it."], ["Both parathyroid hormone and calcitonin lower blood calcium", "Wrong: parathyroid hormone raises blood calcium rather than lowering it."]], "c": 2, "cite": "23. Bone & Muscle Physiology, Slide 59"}, {"topic": "Growth Hormone/IGF-I", "io": "Hormonal control of bone growth", "q": "Chondrocytes in the epiphyseal growth plates are primarily regulated by:", "opts": [["Calcitonin secreted by the thyroid C-cells", "Wrong: calcitonin lowers calcium and does not drive growth-plate chondrocytes."], ["Insulin-like growth factor I (IGF-I) produced by the liver", "Correct: growth-plate chondrocytes are regulated by IGF-I, made by the liver in response to growth hormone."], ["Parathyroid hormone from the parathyroid glands", "Wrong: parathyroid hormone regulates calcium, not directly the growth-plate chondrocytes."], ["Cathepsin K released by activated osteoclasts", "Wrong: cathepsin K degrades matrix and does not regulate chondrocyte growth."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 59"}, {"topic": "PTH", "io": "Parathyroid hormone and plasma calcium", "q": "Which statement about parathyroid hormone (PTH) and plasma calcium is correct?", "opts": [["PTH is released when calcium-sensing receptors detect low serum calcium", "Correct: calcium-sensing receptors in the parathyroid gland trigger PTH release when serum calcium falls."], ["Roughly 60% of plasma calcium is protein bound and inactive", "Wrong: about 40% is protein bound while 60% is free and filterable."], ["Protein-bound calcium is the only biologically active form", "Wrong: only free, ionized calcium is biologically active."], ["PTH is released when serum calcium rises above the normal range", "Wrong: PTH is released in response to a fall, not a rise, in serum calcium."]], "c": 0, "cite": "23. Bone & Muscle Physiology, Slide 60"}, {"topic": "PTH", "io": "Renal actions of parathyroid hormone", "q": "How does parathyroid hormone (PTH) alter renal handling of calcium and phosphate?", "opts": [["It increases reabsorption of both calcium and phosphate", "Wrong: PTH inhibits phosphate reabsorption, so phosphate is not retained."], ["It increases phosphate reabsorption and increases calcium excretion", "Wrong: PTH does the opposite, retaining calcium and increasing phosphate excretion."], ["It decreases calcium reabsorption and decreases phosphate excretion", "Wrong: PTH increases calcium reabsorption and increases phosphate excretion."], ["It increases calcium reabsorption in the distal tubule and increases phosphate excretion", "Correct: PTH raises distal-tubule calcium reabsorption and inhibits proximal phosphate reabsorption, increasing phosphate excretion."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 61"}, {"topic": "PTH", "io": "Parathyroid hormone and osteoclast formation", "q": "By what mechanism does parathyroid hormone (PTH) increase osteoclast formation?", "opts": [["By binding receptors directly on mature osteoclasts to activate them", "Wrong: PTH acts on osteoblasts, which then signal preosteoclasts; it does not act directly on mature osteoclasts."], ["By stimulating osteoblasts to produce RANKL and decreasing osteoprotegerin (OPG)", "Correct: PTH makes osteoblasts form RANKL and release M-CSF while lowering OPG, promoting osteoclast differentiation."], ["By increasing osteoprotegerin (OPG) so that RANKL is released", "Wrong: PTH decreases OPG; OPG actually blocks RANKL rather than freeing it."], ["By converting growth-plate chondrocytes into mature osteoclasts", "Wrong: osteoclasts arise from hemopoietic progenitors, not from chondrocytes."]], "c": 1, "cite": "23. Bone & Muscle Physiology, Slide 63"}, {"topic": "Calcitonin", "io": "Calcitonin action on bone", "q": "Calcitonin, secreted by thyroid C-cells during hypercalcemia, lowers blood calcium primarily by:", "opts": [["Stimulating osteoclasts to accelerate bone resorption", "Wrong: calcitonin inhibits, rather than stimulates, osteoclasts."], ["Increasing intestinal absorption of dietary calcium", "Wrong: calcitonin has only minor intestinal effects and would not raise absorption to lower calcium."], ["Activating myosin light chain kinase within bone cells", "Wrong: myosin light chain kinase is a smooth-muscle enzyme unrelated to calcitonin's action."], ["Inhibiting osteoclasts and thereby reducing bone resorption", "Correct: calcitonin acts mainly by inhibiting osteoclasts, reducing bone resorption and lowering blood calcium."]], "c": 3, "cite": "23. Bone & Muscle Physiology, Slide 64"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
