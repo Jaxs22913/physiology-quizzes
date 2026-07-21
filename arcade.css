@@ -125,8 +125,8 @@ body {
   position: fixed; top: 0; width: 74px; height: 100vh;
   opacity: 0.18; pointer-events: none; z-index: 2001; display: none;
   animation: decor-pulse-intro 2.2s ease-in-out 1;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
 }
 .edge-decor circle { animation: dot-twinkle 2.4s ease-in-out infinite; }
 .edge-decor circle:nth-of-type(2) { animation-delay: .3s; }
