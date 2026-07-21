@@ -151,14 +151,14 @@
     layer.className = "coin-rain-layer";
     document.body.appendChild(layer);
 
-    var GRAVITY = 1900;      // px/s^2
-    var BOUNCE = 0.32;       // energy kept on bounce
+    var GRAVITY = 850;       // px/s^2 -- gentle enough to actually watch the spin/bounce
+    var BOUNCE = 0.48;       // energy kept per bounce -- lets it arc 2-3 times before settling
     var glyphs = ["$", "★"];
     var coins = [];
     var count = Math.min(16, Math.max(8, Math.round(window.innerWidth / 90)));
 
     for (var i = 0; i < count; i++) {
-      var size = 24 + Math.random() * 14;
+      var size = 26 + Math.random() * 14;
       var el = document.createElement("div");
       el.className = "gold-coin";
       el.style.width = size + "px";
@@ -170,20 +170,21 @@
         el: el,
         size: size,
         x: Math.random() * (window.innerWidth - size),
-        y: -(60 + Math.random() * 500),
-        vx: (Math.random() - 0.5) * 60,
+        y: -(60 + Math.random() * 420),
+        vx: (Math.random() - 0.5) * 40,
         vy: 0,
         spin: Math.random() * 360,
-        spinSpeed: 480 + Math.random() * 420,
+        spinSpeed: 130 + Math.random() * 110,
+        squash: 0,
+        bounces: 0,
         restingRect: null,
-        rollBias: 0,
         born: null,
         dead: false
       });
     }
 
     var last = null;
-    var LIFETIME = 7000;
+    var LIFETIME = 9000;
     function tick(now) {
       if (last === null) last = now;
       var dt = Math.min((now - last) / 1000, 0.032);
@@ -196,13 +197,19 @@
         alive = true;
 
         if (c.restingRect) {
-          c.vx *= Math.pow(0.32, dt);
-          if (Math.abs(c.vx) < 8) c.vx += c.rollBias * dt;
+          // Rolling on top of a UI element: keep whatever horizontal
+          // momentum it already had from the fall (never reassigned to a
+          // fresh random value -- that's what made landings look like a
+          // teleport) and just let friction bleed it off as it drifts to
+          // the edge, matching real coin-on-a-shelf behavior.
+          c.vx *= Math.pow(0.2, dt);
+          if (Math.abs(c.vx) < 10) c.vx += (c.vx >= 0 ? 1 : -1) * 12 * dt;
           c.x += c.vx * dt * 60;
           c.y = c.restingRect.top - c.size;
-          c.spinSpeed = Math.abs(c.vx) * 5 + 40;
+          c.spinSpeed = Math.abs(c.vx) * 6 + 25;
           if (c.x + c.size < c.restingRect.left || c.x > c.restingRect.right) {
             c.restingRect = null;
+            c.bounces = 0;
           }
         } else {
           c.vy += GRAVITY * dt;
@@ -216,11 +223,11 @@
               if (bottom >= r.top && (bottom - c.vy * dt) < r.top && cx > r.left - 4 && cx < r.right + 4) {
                 c.y = r.top - c.size;
                 c.vy = -c.vy * BOUNCE;
-                if (Math.abs(c.vy) < 70) {
+                c.bounces++;
+                c.squash = 1;
+                if (Math.abs(c.vy) < 90 || c.bounces >= 3) {
                   c.vy = 0;
                   c.restingRect = r;
-                  c.vx = (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 80);
-                  c.rollBias = c.vx > 0 ? 35 : -35;
                 }
                 break;
               }
@@ -229,7 +236,24 @@
         }
 
         c.spin += c.spinSpeed * dt;
-        c.el.style.transform = "translate3d(" + c.x.toFixed(1) + "px," + c.y.toFixed(1) + "px,0) rotateY(" + (c.spin % 360).toFixed(1) + "deg)";
+        c.squash = Math.max(0, c.squash - dt * 6);
+
+        // Lighting isn't faked with a static gradient -- brightness is
+        // recomputed every frame from the actual rotateY angle (edge-on
+        // near 90/270deg reads dark, face-on near 0/180deg reads bright),
+        // so the coin genuinely catches light as it spins instead of just
+        // silhouette-flattening.
+        var rad = (c.spin % 360) * Math.PI / 180;
+        var shade = Math.abs(Math.cos(rad));
+        var brightness = (0.55 + shade * 0.75).toFixed(2);
+        var squashY = 1 - c.squash * 0.3;
+        var squashX = 1 + c.squash * 0.22;
+
+        c.el.style.filter = "brightness(" + brightness + ")";
+        c.el.style.transform =
+          "translate3d(" + c.x.toFixed(1) + "px," + c.y.toFixed(1) + "px,0) " +
+          "rotateY(" + (c.spin % 360).toFixed(1) + "deg) " +
+          "scale(" + squashX.toFixed(2) + "," + squashY.toFixed(2) + ")";
 
         if (c.y > window.innerHeight + 60 || (now - c.born) > LIFETIME) {
           c.dead = true;
