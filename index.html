@@ -2374,6 +2374,7 @@
     <details class="more-links">
       <summary>More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
       <button type="button" id="request-open" class="request-link">Have a feature idea or want a new exam added? Request it &rarr;</button>
+      <button type="button" class="request-link" onclick="window.reportMistake()">Found a mistake on a quiz or the site? Report it &rarr;</button>
       <button type="button" id="archived-open" class="request-link">Looking for old/superseded quizzes? View Archived &rarr;</button>
       <button type="button" id="tour-open" class="request-link">Need a guide? Take the tour &rarr;</button>
       <button type="button" id="whatsnew-open" class="request-link">See what's new on the site &rarr;</button>
@@ -3049,11 +3050,18 @@
       document.getElementById("request-send").addEventListener("click", () => {
         const message = textarea.value.trim();
         if (!message) { textarea.focus(); return; }
-        const subject = encodeURIComponent("Quiz site feature/exam request");
-        const body = encodeURIComponent(message);
-        window.location.href = "mailto:jaxonluke22913@gmail.com?subject=" + subject + "&body=" + body;
-        closeModal();
-        showToast("Opening your email app… hit send there to submit your request.");
+        const btn = document.getElementById("request-send");
+        btn.disabled = true; btn.textContent = "Sending…";
+        fetch("https://formspree.io/f/xdaqleod", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ message: message, _subject: "PA Quizzes Feature/Exam Request", page: location.href })
+        }).then((r) => {
+          if (!r.ok) throw new Error("bad");
+          closeModal(); showToast("Thanks! Your request was sent.");
+        }).catch(() => {
+          showToast("Could not send — please email jaxonluke22913@gmail.com.");
+        }).finally(() => { btn.disabled = false; btn.textContent = "Send request"; });
       });
     })();
   </script>

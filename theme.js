@@ -3501,3 +3501,52 @@ window.openPauseOverlay = function (opts) {
   requestAnimationFrame(step);
 })();
 
+
+/* ---- Report-a-mistake: in-page form -> Formspree (added 2026-07-22) ---- */
+(function () {
+  var FORMSPREE = "https://formspree.io/f/xdaqleod";
+  function show() {
+    var ov = document.getElementById("report-modal-overlay");
+    ov.style.display = "flex";
+    document.getElementById("report-status").textContent = "";
+    var m = document.getElementById("report-msg"); if (m) { m.value = ""; m.focus(); }
+    var e = document.getElementById("report-email"); if (e) e.value = "";
+  }
+  function hide() { var ov = document.getElementById("report-modal-overlay"); if (ov) ov.style.display = "none"; }
+  function send() {
+    var msg = (document.getElementById("report-msg").value || "").trim();
+    var email = (document.getElementById("report-email").value || "").trim();
+    var status = document.getElementById("report-status");
+    if (!msg) { status.style.color = "#c93a3a"; status.textContent = "Please describe the mistake first."; return; }
+    var btn = document.getElementById("report-send"); btn.disabled = true; btn.textContent = "Sending…";
+    status.style.color = "#6b7280"; status.textContent = "";
+    var data = { message: msg, page: location.href, quiz: document.title, _subject: "PA Quizzes Bug Report: " + document.title };
+    if (email) data.email = email;
+    fetch(FORMSPREE, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error("bad"); status.style.color = "#1f8f52"; status.textContent = "Thanks! Your report was sent."; setTimeout(hide, 1500); })
+      .catch(function () { status.style.color = "#c93a3a"; status.textContent = "Could not send — please email jaxonluke22913@gmail.com."; })
+      .finally(function () { btn.disabled = false; btn.textContent = "Send report"; });
+  }
+  window.reportMistake = function () {
+    if (document.getElementById("report-modal-overlay")) { show(); return; }
+    var ov = document.createElement("div");
+    ov.id = "report-modal-overlay";
+    ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:6000;padding:16px;";
+    ov.innerHTML =
+      '<div style="background:#fff;color:#111827;max-width:440px;width:100%;border-radius:14px;padding:22px 22px 18px;box-shadow:0 12px 40px rgba(0,0,0,.35);font-family:system-ui,-apple-system,Segoe UI,sans-serif;">' +
+      '<h3 style="margin:0 0 4px;font-size:17px;">Report a mistake</h3>' +
+      '<p style="margin:0 0 12px;font-size:13px;color:#6b7280;">Tell us what looks wrong on this page and it will get fixed. Thanks!</p>' +
+      '<textarea id="report-msg" rows="4" placeholder="Describe the mistake (which question, what is wrong)…" style="width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:9px;padding:10px;font:14px inherit;resize:vertical;"></textarea>' +
+      '<input id="report-email" type="email" placeholder="Your email (optional, for a reply)" style="width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:9px;padding:9px 10px;font:14px inherit;margin-top:8px;">' +
+      '<div id="report-status" style="font-size:13px;margin-top:8px;min-height:18px;"></div>' +
+      '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;">' +
+      '<button id="report-cancel" style="border:none;background:#e5e7eb;color:#111827;border-radius:9px;padding:9px 16px;font:600 14px inherit;cursor:pointer;">Cancel</button>' +
+      '<button id="report-send" style="border:none;background:#2563eb;color:#fff;border-radius:9px;padding:9px 18px;font:600 14px inherit;cursor:pointer;">Send report</button>' +
+      '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener("click", function (e) { if (e.target === ov) hide(); });
+    document.getElementById("report-cancel").onclick = hide;
+    document.getElementById("report-send").onclick = send;
+    show();
+  };
+})();
