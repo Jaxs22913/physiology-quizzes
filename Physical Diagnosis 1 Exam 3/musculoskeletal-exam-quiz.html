@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #5c8a72; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #2f6690; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musculoskeletal Physical Examination — Set 1 (Physical Diagnosis 1)</title>
+<style>
+  :root{
+    --navy:#642634; --indigo:#5c8a72; --gold:#2f6690; --ice:#e4ede8;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Musculoskeletal Physical Examination — Exam 3 Review — Set 1</h1>
+    <div class="sub">30 questions from the Musculoskeletal Physical Examination lecture · Joint structure &amp; types · IPROMS exam order &amp; muscle strength grading · Joint-by-joint inspection, palpation &amp; range of motion</div>
+    <span class="pill">30 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Review the anatomy and types of joints (synovial, fibrous, cartilaginous) and their supporting structures.</span><span class="chip">Apply the IPROMS order — Inspection, Palpation, Range of Motion, Special maneuvers — and the 0-to-5 muscle strength scale.</span><span class="chip">Examine the temporomandibular joint, spine, and upper and lower extremity joints, including normal ranges of motion.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Joint Structure", "io": "Joint Structure", "q": "Which fibrous bands connect bone to bone?", "opts": [["Tendons", "Tendons are strong fibrous collagen fibers that connect muscle to bone, not bone to bone; bursae are pouches of synovial fluid that cushion movement of tendons and muscles; and cartilage is a collagen matrix overlying bony surfaces."], ["Bursae", "Tendons are strong fibrous collagen fibers that connect muscle to bone, not bone to bone; bursae are pouches of synovial fluid that cushion movement of tendons and muscles; and cartilage is a collagen matrix overlying bony surfaces."], ["Cartilage", "Tendons are strong fibrous collagen fibers that connect muscle to bone, not bone to bone; bursae are pouches of synovial fluid that cushion movement of tendons and muscles; and cartilage is a collagen matrix overlying bony surfaces."], ["Ligaments", "Ligaments are ropelike bundles of fibrous tissue that connect bone to bone."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 3"}, {"topic": "Joint Structure", "io": "Joint Structure", "q": "Which structures connect muscle to bone?", "opts": [["Ligaments", "Ligaments connect bone to bone, not muscle to bone; bursae are synovial-fluid pouches that cushion movement; and the synovium is the membrane lining the joint that secretes synovial fluid."], ["Tendons", "Tendons are inelastic strong fibrous collagen fibers that connect muscle to bone."], ["Bursae", "Ligaments connect bone to bone, not muscle to bone; bursae are synovial-fluid pouches that cushion movement; and the synovium is the membrane lining the joint that secretes synovial fluid."], ["Synovium", "Ligaments connect bone to bone, not muscle to bone; bursae are synovial-fluid pouches that cushion movement; and the synovium is the membrane lining the joint that secretes synovial fluid."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 3"}, {"topic": "Joint Structure", "io": "Joint Structure", "q": "What is a bursa?", "opts": [["A band that connects bone to bone", "A band connecting bone to bone is a ligament; a collagen matrix overlying bone is cartilage; and a fibrous cord attaching muscle to bone is a tendon, none of which is a cushioning fluid pouch."], ["A collagen matrix overlying a bony surface", "A band connecting bone to bone is a ligament; a collagen matrix overlying bone is cartilage; and a fibrous cord attaching muscle to bone is a tendon, none of which is a cushioning fluid pouch."], ["A pouch of synovial fluid that cushions movement over a joint", "Bursae are pouches of synovial fluid that cushion the movement of tendons and muscles over bone or other joint structures."], ["A fibrous cord attaching muscle to bone", "A band connecting bone to bone is a ligament; a collagen matrix overlying bone is cartilage; and a fibrous cord attaching muscle to bone is a tendon, none of which is a cushioning fluid pouch."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 3"}, {"topic": "Joint Types", "io": "Joint Types", "q": "Which joint type is freely movable, with bones covered by articular cartilage and separated by a fluid-filled cavity?", "opts": [["A fibrous joint", "A fibrous joint has no appreciable movement with bones separated by fibrous tissue; a cartilaginous joint is only slightly movable with fibrocartilaginous discs; and 'juxta-articular' refers to bone near a joint, not a joint type."], ["A cartilaginous joint", "A fibrous joint has no appreciable movement with bones separated by fibrous tissue; a cartilaginous joint is only slightly movable with fibrocartilaginous discs; and 'juxta-articular' refers to bone near a joint, not a joint type."], ["A synovial joint", "A synovial joint is freely movable, its bones covered by articular cartilage and separated by a synovial cavity whose membrane secretes lubricating synovial fluid."], ["A juxta-articular joint", "A fibrous joint has no appreciable movement with bones separated by fibrous tissue; a cartilaginous joint is only slightly movable with fibrocartilaginous discs; and 'juxta-articular' refers to bone near a joint, not a joint type."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 5"}, {"topic": "Joint Types", "io": "Joint Types", "q": "Which type of joint has essentially no appreciable movement?", "opts": [["A synovial joint", "A synovial joint is freely movable; a cartilaginous joint is slightly movable via fibrocartilaginous discs; and a spheroidal (ball-and-socket) joint is a freely movable synovial subtype, none of which is immovable."], ["A cartilaginous joint", "A synovial joint is freely movable; a cartilaginous joint is slightly movable via fibrocartilaginous discs; and a spheroidal (ball-and-socket) joint is a freely movable synovial subtype, none of which is immovable."], ["A spheroidal joint", "A synovial joint is freely movable; a cartilaginous joint is slightly movable via fibrocartilaginous discs; and a spheroidal (ball-and-socket) joint is a freely movable synovial subtype, none of which is immovable."], ["A fibrous joint", "A fibrous joint has no appreciable movement, its bones separated by fibrous tissue or cartilage."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 7"}, {"topic": "Joint Types", "io": "Joint Types", "q": "A cartilaginous joint, such as between vertebral bodies, is described as what?", "opts": [["Slightly movable, with bones separated by fibrocartilaginous discs", "A cartilaginous joint is slightly movable, with bones separated by fibrocartilaginous discs whose nucleus pulposus cushions bony movement."], ["Freely movable, with a synovial cavity", "A freely movable joint with a synovial cavity is a synovial joint; a completely immovable joint is fibrous; and a ball-and-socket joint is a synovial subtype, none of which is the slightly-movable cartilaginous type."], ["Completely immovable, with fused bone", "A freely movable joint with a synovial cavity is a synovial joint; a completely immovable joint is fibrous; and a ball-and-socket joint is a synovial subtype, none of which is the slightly-movable cartilaginous type."], ["Freely movable, with a ball-and-socket shape", "A freely movable joint with a synovial cavity is a synovial joint; a completely immovable joint is fibrous; and a ball-and-socket joint is a synovial subtype, none of which is the slightly-movable cartilaginous type."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 7"}, {"topic": "Joint Types", "io": "Joint Types", "q": "Which synovial joint type is a ball-and-socket allowing wide-ranging motion, as in the shoulder and hip?", "opts": [["Hinge joint", "A hinge joint permits motion in only one plane (flexion and extension), as in the elbow; a condylar joint has articulating surfaces that are not dissociable, as in the knee; and a fibrous joint is immovable, none of which is the ball-and-socket type."], ["Spheroidal joint", "A spheroidal (ball-and-socket) joint fits a convex surface into a concave cavity, allowing wide-ranging flexion, extension, abduction, adduction, rotation, and circumduction, as in the shoulder and hip."], ["Condylar joint", "A hinge joint permits motion in only one plane (flexion and extension), as in the elbow; a condylar joint has articulating surfaces that are not dissociable, as in the knee; and a fibrous joint is immovable, none of which is the ball-and-socket type."], ["Fibrous joint", "A hinge joint permits motion in only one plane (flexion and extension), as in the elbow; a condylar joint has articulating surfaces that are not dissociable, as in the knee; and a fibrous joint is immovable, none of which is the ball-and-socket type."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 6"}, {"topic": "Joint Types", "io": "Joint Types", "q": "A hinge joint, such as the elbow or interphalangeal joints, permits what motion?", "opts": [["Wide-ranging motion in all planes", "Wide-ranging motion in all planes describes a spheroidal ball-and-socket joint; no appreciable movement describes a fibrous joint; and only slight movement describes a cartilaginous joint, none of which is the single-plane hinge."], ["Motion in one plane — flexion and extension", "A hinge joint permits motion in one plane, flexion and extension, as in the elbow and the interphalangeal joints of the hand and foot."], ["No appreciable movement at all", "Wide-ranging motion in all planes describes a spheroidal ball-and-socket joint; no appreciable movement describes a fibrous joint; and only slight movement describes a cartilaginous joint, none of which is the single-plane hinge."], ["Only slight gliding movement", "Wide-ranging motion in all planes describes a spheroidal ball-and-socket joint; no appreciable movement describes a fibrous joint; and only slight movement describes a cartilaginous joint, none of which is the single-plane hinge."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 6"}, {"topic": "Health History", "io": "Health History", "q": "When taking a musculoskeletal history for an injury, which question addresses the 'mechanism of injury'?", "opts": [["What is your temperature right now?", "Temperature, blood type, and primary care provider are not the mechanism of injury; the mechanism specifically asks how the injury occurred."], ["What is your blood type?", "Temperature, blood type, and primary care provider are not the mechanism of injury; the mechanism specifically asks how the injury occurred."], ["How did the injury happen?", "The mechanism of injury asks how the injury happened, a key part of an accurate musculoskeletal history."], ["Who is your primary care provider?", "Temperature, blood type, and primary care provider are not the mechanism of injury; the mechanism specifically asks how the injury occurred."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 8"}, {"topic": "Health History", "io": "Health History", "q": "Which is listed as a common or concerning musculoskeletal symptom?", "opts": [["Improved energy after exercise", "Improved energy, a normal painless appetite, and full painless range of motion are normal or reassuring findings, not the concerning systemic joint symptoms emphasized in the history."], ["Joint pain with fever, chills, rash, or weight loss", "Joint pain accompanied by systemic features such as fever, chills, rash, anorexia, weight loss, or weakness is a concerning musculoskeletal symptom."], ["A normal appetite with no pain", "Improved energy, a normal painless appetite, and full painless range of motion are normal or reassuring findings, not the concerning systemic joint symptoms emphasized in the history."], ["Full painless range of motion", "Improved energy, a normal painless appetite, and full painless range of motion are normal or reassuring findings, not the concerning systemic joint symptoms emphasized in the history."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 8"}, {"topic": "Order of Exam", "io": "Order of Exam", "q": "In the musculoskeletal exam, what does the 'IPROMS' order of examination stand for?", "opts": [["Injection, Percussion, Reflexes, Motor strength", "IPROMS does not include injection, percussion, reflexes, sensation, imaging, reduction, or splinting; it stands specifically for Inspection, Palpation, Range of motion, and Special maneuvers."], ["Inspection, Palpation, Range of motion, Special maneuvers", "The IPROMS order of the musculoskeletal exam is Inspection, Palpation, Range of Motion, and Special maneuvers."], ["Inspection, Percussion, Reflexes, Sensation", "IPROMS does not include injection, percussion, reflexes, sensation, imaging, reduction, or splinting; it stands specifically for Inspection, Palpation, Range of motion, and Special maneuvers."], ["Imaging, Palpation, Reduction, Splinting", "IPROMS does not include injection, percussion, reflexes, sensation, imaging, reduction, or splinting; it stands specifically for Inspection, Palpation, Range of motion, and Special maneuvers."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 10"}, {"topic": "Inspection", "io": "Inspection", "q": "During inspection of the musculoskeletal system, the examiner primarily does what?", "opts": [["Uses the eyes to observe posture, symmetry, and deformities", "Inspection means using the eyes to observe the patient's general posture, body symmetry, and any apparent deformities, curvature, muscle wasting, or swelling."], ["Uses the hands to feel for tenderness and warmth", "Feeling for tenderness and warmth is palpation; moving joints is range-of-motion testing; and striking tendons is reflex testing, none of which is the looking step of inspection."], ["Moves each joint through its range of motion", "Feeling for tenderness and warmth is palpation; moving joints is range-of-motion testing; and striking tendons is reflex testing, none of which is the looking step of inspection."], ["Strikes tendons to elicit reflexes", "Feeling for tenderness and warmth is palpation; moving joints is range-of-motion testing; and striking tendons is reflex testing, none of which is the looking step of inspection."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 12"}, {"topic": "Palpation", "io": "Palpation", "q": "During palpation of a joint, the examiner assesses for what?", "opts": [["Visual curvature of the spine", "Visual spine curvature is assessed on inspection; reflex responses are elicited with a hammer during the neuro exam; and active range of motion is the movement step, none of which is what palpation assesses."], ["Reflex responses to a hammer", "Visual spine curvature is assessed on inspection; reflex responses are elicited with a hammer during the neuro exam; and active range of motion is the movement step, none of which is what palpation assesses."], ["Tenderness, warmth, and irregularities", "Palpation uses the hands to feel the joints, muscles, and surrounding tissues for tenderness, warmth, or irregularities."], ["The patient's active range of motion", "Visual spine curvature is assessed on inspection; reflex responses are elicited with a hammer during the neuro exam; and active range of motion is the movement step, none of which is what palpation assesses."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 13"}, {"topic": "Range of Motion", "io": "Range of Motion", "q": "What distinguishes active range of motion (active ROM) from passive range of motion?", "opts": [["In active ROM the examiner moves the joint for the patient", "The examiner moving the joint describes passive range of motion; imaging the joint is not range-of-motion testing; and holding the joint still is not movement at all, none of which describes active range of motion."], ["In active ROM the joint is imaged rather than moved", "The examiner moving the joint describes passive range of motion; imaging the joint is not range-of-motion testing; and holding the joint still is not movement at all, none of which describes active range of motion."], ["In active ROM the patient performs the movement themselves", "In active range of motion, the patient actively performs the movement, whereas in passive range of motion the examiner moves the joint."], ["In active ROM the joint is held completely still", "The examiner moving the joint describes passive range of motion; imaging the joint is not range-of-motion testing; and holding the joint still is not movement at all, none of which describes active range of motion."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 15"}, {"topic": "Range of Motion", "io": "Range of Motion", "q": "During passive range of motion, what does the examiner do?", "opts": [["The examiner moves the patient's joint through its range", "In passive range of motion the examiner passively moves the patient's joint to assess range of motion, comparing the end points to the active range."], ["The patient moves the joint on their own", "The patient moving the joint on their own is active range of motion; striking the joint elicits a reflex; and only observing the joint is inspection, none of which is passive range of motion."], ["The joint is struck to elicit a reflex", "The patient moving the joint on their own is active range of motion; striking the joint elicits a reflex; and only observing the joint is inspection, none of which is passive range of motion."], ["The joint is only observed, not moved", "The patient moving the joint on their own is active range of motion; striking the joint elicits a reflex; and only observing the joint is inspection, none of which is passive range of motion."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 16"}, {"topic": "Muscle Strength", "io": "Muscle Strength", "q": "On the 0-to-5 muscle strength scale, what does a grade of 5 indicate?", "opts": [["Full range of motion against gravity with full resistance", "A muscle strength grade of 5 is full range of motion against gravity with full resistance — normal strength."], ["Full range of motion but not against gravity", "Full range of motion but not against gravity is grade 2; only a trace of movement is grade 1; and no evidence of movement is grade 0, none of which is the normal grade 5."], ["Only a trace of movement", "Full range of motion but not against gravity is grade 2; only a trace of movement is grade 1; and no evidence of movement is grade 0, none of which is the normal grade 5."], ["No evidence of movement at all", "Full range of motion but not against gravity is grade 2; only a trace of movement is grade 1; and no evidence of movement is grade 0, none of which is the normal grade 5."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 18"}, {"topic": "Muscle Strength", "io": "Muscle Strength", "q": "On the muscle strength scale, a grade of 3 corresponds to what?", "opts": [["No evidence of any muscle movement", "No evidence of movement is grade 0; full strength against full resistance is grade 5; and movement only with gravity eliminated is grade 2, none of which is grade 3."], ["Full range of motion against gravity but not against resistance", "Grade 3 muscle strength is full range of motion against gravity but not against added resistance."], ["Full muscle strength against full resistance", "No evidence of movement is grade 0; full strength against full resistance is grade 5; and movement only with gravity eliminated is grade 2, none of which is grade 3."], ["Movement only with gravity eliminated", "No evidence of movement is grade 0; full strength against full resistance is grade 5; and movement only with gravity eliminated is grade 2, none of which is grade 3."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 18"}, {"topic": "Muscle Strength", "io": "Muscle Strength", "q": "A muscle that shows only a trace of movement is graded as what?", "opts": [["Grade 1", "A trace of muscle movement is graded 1 on the 0-to-5 muscle strength scale."], ["Grade 0", "Grade 0 is no evidence of movement; grade 3 is full motion against gravity; and grade 5 is normal full strength, none of which is the trace-of-movement grade 1."], ["Grade 3", "Grade 0 is no evidence of movement; grade 3 is full motion against gravity; and grade 5 is normal full strength, none of which is the trace-of-movement grade 1."], ["Grade 5", "Grade 0 is no evidence of movement; grade 3 is full motion against gravity; and grade 5 is normal full strength, none of which is the trace-of-movement grade 1."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 18"}, {"topic": "Temporomandibular Joint", "io": "Temporomandibular Joint", "q": "To palpate the temporomandibular joint, where does the examiner place the fingertips?", "opts": [["Just in front of the tragus of each ear", "To assess the temporomandibular joint, the examiner places the fingertips just in front of the tragus of each ear and has the patient open and close the mouth."], ["Over the mastoid process behind each ear", "The mastoid process behind the ear, the angle of the mandible, and the midline of the hard palate are not the joint location; the temporomandibular joint is palpated just anterior to the tragus."], ["At the angle of the mandible near the chin", "The mastoid process behind the ear, the angle of the mandible, and the midline of the hard palate are not the joint location; the temporomandibular joint is palpated just anterior to the tragus."], ["Along the midline of the hard palate", "The mastoid process behind the ear, the angle of the mandible, and the midline of the hard palate are not the joint location; the temporomandibular joint is palpated just anterior to the tragus."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 20"}, {"topic": "Temporomandibular Joint", "io": "Temporomandibular Joint", "q": "Which movement is tested as part of temporomandibular joint range of motion?", "opts": [["Shrugging the shoulders upward", "Shrugging the shoulders tests the accessory nerve and trapezius; neck rotation tests cervical range of motion; and elbow flexion tests the elbow, none of which is temporomandibular joint motion."], ["Rotating the neck to look over the shoulder", "Shrugging the shoulders tests the accessory nerve and trapezius; neck rotation tests cervical range of motion; and elbow flexion tests the elbow, none of which is temporomandibular joint motion."], ["Flexing the elbow to ninety degrees", "Shrugging the shoulders tests the accessory nerve and trapezius; neck rotation tests cervical range of motion; and elbow flexion tests the elbow, none of which is temporomandibular joint motion."], ["Moving the jaw laterally to each side", "Temporomandibular joint range of motion includes opening and closing the mouth, moving the jaw laterally to each side, and protruding and retracting the jaw."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 20"}, {"topic": "Cervical Spine", "io": "Cervical Spine", "q": "Which cervical range-of-motion maneuver is normally about 70 degrees and occurs mainly at the C1-C2 level?", "opts": [["Forward flexion — chin to chest", "Forward flexion (chin to chest, ~45 degrees) and hyperextension (looking up, ~55 degrees) occur at the skull and C1, and lateral bending (~40 degrees) occurs at C2-C7, none of which is the ~70-degree C1-C2 rotation."], ["Rotation — looking over each shoulder", "Cervical rotation, looking over each shoulder, is normally about 70 degrees and occurs primarily at the C1-C2 (atlas-axis) level."], ["Hyperextension — looking at the ceiling", "Forward flexion (chin to chest, ~45 degrees) and hyperextension (looking up, ~55 degrees) occur at the skull and C1, and lateral bending (~40 degrees) occurs at C2-C7, none of which is the ~70-degree C1-C2 rotation."], ["Lateral bending — ear to shoulder", "Forward flexion (chin to chest, ~45 degrees) and hyperextension (looking up, ~55 degrees) occur at the skull and C1, and lateral bending (~40 degrees) occurs at C2-C7, none of which is the ~70-degree C1-C2 rotation."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 24"}, {"topic": "Cervical Spine", "io": "Cervical Spine", "q": "Cervical forward flexion, bringing the chin to the chest, is normally about how many degrees?", "opts": [["About 90 degrees", "About 90, 110, and 160 degrees overstate cervical flexion; normal cervical forward flexion is approximately 45 degrees."], ["About 110 degrees", "About 90, 110, and 160 degrees overstate cervical flexion; normal cervical forward flexion is approximately 45 degrees."], ["About 45 degrees", "Cervical forward flexion, bringing the chin to the chest, is normally about 45 degrees and occurs at the skull and C1 (atlas)."], ["About 160 degrees", "About 90, 110, and 160 degrees overstate cervical flexion; normal cervical forward flexion is approximately 45 degrees."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 24"}, {"topic": "Cervical Spine", "io": "Cervical Spine", "q": "On inspection of the posterior neck, the spinous process is most prominent at which level?", "opts": [["The C1 and C2 level", "The C1-C2, mid-thoracic T6, and lumbosacral L5 levels are not where the spinous process is most prominent on the neck; the prominent landmark is at C7 and T1."], ["The mid-thoracic T6 level", "The C1-C2, mid-thoracic T6, and lumbosacral L5 levels are not where the spinous process is most prominent on the neck; the prominent landmark is at C7 and T1."], ["The lumbosacral L5 level", "The C1-C2, mid-thoracic T6, and lumbosacral L5 levels are not where the spinous process is most prominent on the neck; the prominent landmark is at C7 and T1."], ["The C7 and T1 level", "The spinous process is most prominent at the C7 and T1 level and serves as a surface landmark when inspecting the posterior spine."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 22"}, {"topic": "Thoracic & Lumbar Spine", "io": "Thoracic & Lumbar Spine", "q": "A lateral curvature of the thoracic and lumbar spine, assessed by inspecting from behind, is called what?", "opts": [["Scoliosis", "A lateral curvature of the spine, assessed by inspecting the thoracic and lumbar spine from behind, is called scoliosis."], ["Lordosis", "Lordosis is the normal inward curve of the lumbar spine, crepitus is a crunching or popping with movement, and bursitis is inflammation of a bursa, none of which is a lateral spinal curvature."], ["Crepitus", "Lordosis is the normal inward curve of the lumbar spine, crepitus is a crunching or popping with movement, and bursitis is inflammation of a bursa, none of which is a lateral spinal curvature."], ["Bursitis", "Lordosis is the normal inward curve of the lumbar spine, crepitus is a crunching or popping with movement, and bursitis is inflammation of a bursa, none of which is a lateral spinal curvature."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 28"}, {"topic": "Thoracic & Lumbar Spine", "io": "Thoracic & Lumbar Spine", "q": "Which maneuver tests forward flexion of the thoracic and lumbar spine (normally about 40 to 60 degrees)?", "opts": [["Asking the patient to shrug the shoulders", "Shrugging tests the shoulders and accessory nerve, looking up tests cervical hyperextension, and making a fist tests finger flexion, none of which is thoracolumbar forward flexion."], ["Asking the patient to look up at the ceiling", "Shrugging tests the shoulders and accessory nerve, looking up tests cervical hyperextension, and making a fist tests finger flexion, none of which is thoracolumbar forward flexion."], ["Asking the patient to make a fist", "Shrugging tests the shoulders and accessory nerve, looking up tests cervical hyperextension, and making a fist tests finger flexion, none of which is thoracolumbar forward flexion."], ["Asking the patient to try to touch their toes", "Thoracolumbar forward flexion, normally about 40 to 60 degrees, is tested by asking the patient to try to touch their toes."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 30"}, {"topic": "Shoulder", "io": "Shoulder", "q": "The glenohumeral joint of the shoulder is formed by which two structures?", "opts": [["The medial clavicle and the upper sternum", "The medial clavicle and sternum form the sternoclavicular joint, the lateral clavicle and acromion form the acromioclavicular joint, and the radius and capitulum form part of the elbow, none of which is the glenohumeral joint."], ["The lateral clavicle and the acromion", "The medial clavicle and sternum form the sternoclavicular joint, the lateral clavicle and acromion form the acromioclavicular joint, and the radius and capitulum form part of the elbow, none of which is the glenohumeral joint."], ["The head of the humerus and the glenoid fossa of the scapula", "The glenohumeral joint is formed by the head of the humerus articulating with the glenoid fossa of the scapula."], ["The radius and the capitulum of the humerus", "The medial clavicle and sternum form the sternoclavicular joint, the lateral clavicle and acromion form the acromioclavicular joint, and the radius and capitulum form part of the elbow, none of which is the glenohumeral joint."]], "c": 2, "cite": "Musculoskeletal Physical Examination lecture, Slide 32"}, {"topic": "Shoulder", "io": "Shoulder", "q": "The acromioclavicular joint of the shoulder is formed by which structures?", "opts": [["The lateral end of the clavicle with the acromion of the scapula", "The acromioclavicular joint is formed by the lateral end of the clavicle articulating with the acromion of the scapula."], ["The head of the humerus with the glenoid fossa", "The humeral head with the glenoid fossa is the glenohumeral joint, the medial clavicle with the sternum is the sternoclavicular joint, and the scapula against the ribs is the scapulothoracic articulation, none of which is the acromioclavicular joint."], ["The medial clavicle with the upper sternum", "The humeral head with the glenoid fossa is the glenohumeral joint, the medial clavicle with the sternum is the sternoclavicular joint, and the scapula against the ribs is the scapulothoracic articulation, none of which is the acromioclavicular joint."], ["The scapula with the posterior rib cage", "The humeral head with the glenoid fossa is the glenohumeral joint, the medial clavicle with the sternum is the sternoclavicular joint, and the scapula against the ribs is the scapulothoracic articulation, none of which is the acromioclavicular joint."]], "c": 0, "cite": "Musculoskeletal Physical Examination lecture, Slide 32"}, {"topic": "Shoulder", "io": "Shoulder", "q": "The rotator cuff muscles are remembered by the mnemonic 'SITS.' Which muscles does it represent?", "opts": [["Sternocleidomastoid, iliopsoas, trapezius, soleus", "The other options list unrelated muscles; the SITS rotator cuff muscles are specifically the supraspinatus, infraspinatus, teres minor, and subscapularis."], ["Supraspinatus, infraspinatus, teres minor, subscapularis", "The rotator cuff mnemonic SITS stands for the supraspinatus, infraspinatus, teres minor, and subscapularis."], ["Supinator, interossei, triceps, sartorius", "The other options list unrelated muscles; the SITS rotator cuff muscles are specifically the supraspinatus, infraspinatus, teres minor, and subscapularis."], ["Subclavius, intercostals, teres major, serratus", "The other options list unrelated muscles; the SITS rotator cuff muscles are specifically the supraspinatus, infraspinatus, teres minor, and subscapularis."]], "c": 1, "cite": "Musculoskeletal Physical Examination lecture, Slide 32"}, {"topic": "Elbow", "io": "Elbow", "q": "Normal elbow flexion, bending the elbow, is approximately how many degrees?", "opts": [["About 45 degrees", "About 45 and 90 degrees understate elbow flexion, and 220 degrees exceeds it; normal elbow flexion is approximately 160 degrees."], ["About 90 degrees", "About 45 and 90 degrees understate elbow flexion, and 220 degrees exceeds it; normal elbow flexion is approximately 160 degrees."], ["About 220 degrees", "About 45 and 90 degrees understate elbow flexion, and 220 degrees exceeds it; normal elbow flexion is approximately 160 degrees."], ["About 160 degrees", "Normal elbow flexion, bending the elbow, is approximately 160 degrees, with extension at about 0 to negative 5 degrees."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 41"}, {"topic": "Health History", "io": "Health History", "q": "Which additional detail is part of an accurate musculoskeletal pain history?", "opts": [["The patient's favorite hobby", "The patient's hobby, the room color, and the examiner's glove size are irrelevant to the pain history; the duration of the complaint is a standard part of an accurate musculoskeletal history."], ["The color of the examination room", "The patient's hobby, the room color, and the examiner's glove size are irrelevant to the pain history; the duration of the complaint is a standard part of an accurate musculoskeletal history."], ["The examiner's own glove size", "The patient's hobby, the room color, and the examiner's glove size are irrelevant to the pain history; the duration of the complaint is a standard part of an accurate musculoskeletal history."], ["The duration of the complaint", "An accurate musculoskeletal history includes the mechanism of injury, the location and nature of pain, a pain scale, the duration of the complaint, and exacerbating or relieving maneuvers."]], "c": 3, "cite": "Musculoskeletal Physical Examination lecture, Slide 8"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

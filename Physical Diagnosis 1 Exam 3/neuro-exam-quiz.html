@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #5c8a72; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #2f6690; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neurological Exam (Central &amp; Peripheral Nervous System) — Set 1 (Physical Diagnosis 1)</title>
+<style>
+  :root{
+    --navy:#642634; --indigo:#5c8a72; --gold:#2f6690; --ice:#e4ede8;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Neurological Exam — Central &amp; Peripheral Nervous System — Exam 3 Review — Set 1</h1>
+    <div class="sub">30 questions from the Neurological Assessment lecture · Mental status &amp; levels of consciousness · Cranial nerves I–XII · Motor, reflexes &amp; sensory exam · Coordination, station &amp; gait</div>
+    <span class="pill">30 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Review central and peripheral nervous system anatomy, sensory and motor tracts, and dermatomes.</span><span class="chip">Assess mental status and level of consciousness, the twelve cranial nerves, motor strength, and deep tendon reflexes.</span><span class="chip">Perform the sensory exam, discriminative sensations, coordination, Romberg, pronator drift, and gait assessment.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Neuro Exam Overview", "io": "Neuro Exam Overview", "q": "Which is one of the six categories of the neurological examination?", "opts": [["Cranial nerves", "The six categories of the neuro exam are mental status, cranial nerves, motor system, reflexes, sensory system, and coordination/station/gait."], ["Blood pressure", "Blood pressure, heart auscultation, and abdominal percussion belong to other parts of the physical exam; cranial nerves are one of the six neurological exam categories."], ["Heart auscultation", "Blood pressure, heart auscultation, and abdominal percussion belong to other parts of the physical exam; cranial nerves are one of the six neurological exam categories."], ["Abdominal percussion", "Blood pressure, heart auscultation, and abdominal percussion belong to other parts of the physical exam; cranial nerves are one of the six neurological exam categories."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 7"}, {"topic": "Mental Status", "io": "Mental Status", "q": "When is the mental status typically assessed during the examination?", "opts": [["During the initial interview", "Mental status is typically obtained during the initial interview, while cranial nerves are assessed with the head and neck exam."], ["Only after the reflex testing", "Mental status is not reserved for the reflex, sensory, or gait portions of the exam; it is obtained during the initial interview with the patient."], ["Only during the sensory exam", "Mental status is not reserved for the reflex, sensory, or gait portions of the exam; it is obtained during the initial interview with the patient."], ["Only while assessing the gait", "Mental status is not reserved for the reflex, sensory, or gait portions of the exam; it is obtained during the initial interview with the patient."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 8"}, {"topic": "Level of Consciousness", "io": "Level of Consciousness", "q": "A patient who appears drowsy, opens the eyes and looks at you, but falls asleep when not stimulated is described as what?", "opts": [["Alert", "An alert patient responds fully and stays awake, a stuporous patient arouses only to painful stimuli, and a comatose patient is unarousable, none of which is the drowsy-but-rousable lethargic state."], ["Lethargic", "A lethargic patient appears drowsy, opens the eyes and looks at the examiner, and responds to questions but then falls asleep."], ["Stuporous", "An alert patient responds fully and stays awake, a stuporous patient arouses only to painful stimuli, and a comatose patient is unarousable, none of which is the drowsy-but-rousable lethargic state."], ["Comatose", "An alert patient responds fully and stays awake, a stuporous patient arouses only to painful stimuli, and a comatose patient is unarousable, none of which is the drowsy-but-rousable lethargic state."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 10"}, {"topic": "Level of Consciousness", "io": "Level of Consciousness", "q": "A patient who arouses only after painful stimuli and lapses back to unresponsiveness when the stimulus stops is in what state?", "opts": [["Alertness", "An alert patient responds fully, a lethargic patient is drowsy but rousable to voice, and an obtunded patient opens the eyes but responds slowly, none of which requires painful stimuli to arouse as in stupor."], ["Stupor", "In stupor, the patient arouses from sleep only after painful stimuli, gives slow or absent verbal responses, and lapses back into unresponsiveness when the stimulus ceases."], ["Lethargy", "An alert patient responds fully, a lethargic patient is drowsy but rousable to voice, and an obtunded patient opens the eyes but responds slowly, none of which requires painful stimuli to arouse as in stupor."], ["Obtundation", "An alert patient responds fully, a lethargic patient is drowsy but rousable to voice, and an obtunded patient opens the eyes but responds slowly, none of which requires painful stimuli to arouse as in stupor."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 10"}, {"topic": "Level of Consciousness", "io": "Level of Consciousness", "q": "Which term describes a patient who is unarousable, with eyes closed and no response even to painful stimuli?", "opts": [["Stupor", "A stuporous patient still arouses briefly to pain, a lethargic patient rouses to voice, and an obtunded patient opens the eyes but responds slowly, none of which is the fully unresponsive coma."], ["Lethargy", "A stuporous patient still arouses briefly to pain, a lethargic patient rouses to voice, and an obtunded patient opens the eyes but responds slowly, none of which is the fully unresponsive coma."], ["Obtundation", "A stuporous patient still arouses briefly to pain, a lethargic patient rouses to voice, and an obtunded patient opens the eyes but responds slowly, none of which is the fully unresponsive coma."], ["Coma", "A comatose patient is unarousable with eyes closed and shows no response to painful stimuli."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 10"}, {"topic": "Orientation", "io": "Orientation", "q": "A patient oriented to person, place, and time is documented as oriented to what degree?", "opts": [["Oriented times one", "Times one implies only one sphere of orientation, times four adds event to person, place, and time, and times five is not a standard designation, none of which is the person-place-time designation of times three."], ["Oriented times four", "Times one implies only one sphere of orientation, times four adds event to person, place, and time, and times five is not a standard designation, none of which is the person-place-time designation of times three."], ["Oriented times five", "Times one implies only one sphere of orientation, times four adds event to person, place, and time, and times five is not a standard designation, none of which is the person-place-time designation of times three."], ["Oriented times three", "A patient oriented to person, place, and time is documented as oriented times three; adding event makes it times four."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 13"}, {"topic": "Orientation", "io": "Orientation", "q": "Adding awareness of the event or circumstances of the illness to person, place, and time makes a patient oriented to what degree?", "opts": [["Oriented times two", "Times two covers only two spheres, times three covers person, place, and time without event, and times six is not a standard designation, none of which includes event as in times four."], ["Oriented times three", "Times two covers only two spheres, times three covers person, place, and time without event, and times six is not a standard designation, none of which includes event as in times four."], ["Oriented times six", "Times two covers only two spheres, times three covers person, place, and time without event, and times six is not a standard designation, none of which includes event as in times four."], ["Oriented times four", "Orientation to person, place, time, and event is documented as oriented times four."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 13"}, {"topic": "Mental Status", "io": "Mental Status", "q": "Serial sevens and spelling the word WORLD backwards are tests of what?", "opts": [["Cranial nerve function", "Cranial nerve function, deep tendon reflexes, and peripheral vibratory sense are separate parts of the neuro exam; serial sevens and spelling backwards test calculation and cognition."], ["Calculation and cognitive function", "Serial sevens, digit span, and spelling WORLD backwards test calculation and cognitive function during the mental status exam."], ["Deep tendon reflexes", "Cranial nerve function, deep tendon reflexes, and peripheral vibratory sense are separate parts of the neuro exam; serial sevens and spelling backwards test calculation and cognition."], ["Peripheral vibratory sense", "Cranial nerve function, deep tendon reflexes, and peripheral vibratory sense are separate parts of the neuro exam; serial sevens and spelling backwards test calculation and cognition."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 15"}, {"topic": "Mental Status", "io": "Mental Status", "q": "Evaluating a patient for aphasia is part of assessing which mental status component?", "opts": [["Muscle tone", "Muscle tone, coordination, and the pupillary reflex are not language functions; evaluating for aphasia specifically assesses language."], ["Coordination", "Muscle tone, coordination, and the pupillary reflex are not language functions; evaluating for aphasia specifically assesses language."], ["Pupillary reflex", "Muscle tone, coordination, and the pupillary reflex are not language functions; evaluating for aphasia specifically assesses language."], ["Language", "Evaluating for aphasia assesses language, including word comprehension, repetition, naming, reading comprehension, and writing."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 14"}, {"topic": "Equipment", "io": "Equipment", "q": "A 128 Hertz tuning fork is used in the neuro exam to test what?", "opts": [["Vibratory sense", "A 128 Hertz tuning fork is used to test vibratory sense, whereas a 512 Hertz fork is used for the Rinne and Weber hearing tests."], ["Visual acuity", "Visual acuity is tested with an eye chart, deep tendon reflexes with a reflex hammer, and smell with an aromatic substance, none of which uses a 128 Hertz tuning fork like vibratory sense."], ["Deep tendon reflexes", "Visual acuity is tested with an eye chart, deep tendon reflexes with a reflex hammer, and smell with an aromatic substance, none of which uses a 128 Hertz tuning fork like vibratory sense."], ["Sense of smell", "Visual acuity is tested with an eye chart, deep tendon reflexes with a reflex hammer, and smell with an aromatic substance, none of which uses a 128 Hertz tuning fork like vibratory sense."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 17"}, {"topic": "Equipment", "io": "Equipment", "q": "Which tuning fork is used for the Rinne and Weber hearing tests?", "opts": [["A 128 Hertz tuning fork", "A 128 Hertz fork is used for vibratory sense, and 60 or 1000 Hertz forks are not the standard used here; the Rinne and Weber tests use a 512 Hertz tuning fork."], ["A 60 Hertz tuning fork", "A 128 Hertz fork is used for vibratory sense, and 60 or 1000 Hertz forks are not the standard used here; the Rinne and Weber tests use a 512 Hertz tuning fork."], ["A 512 Hertz tuning fork", "A 512 Hertz tuning fork is used for the Rinne and Weber hearing tests, while a 128 Hertz fork tests vibratory sense."], ["A 1000 Hertz tuning fork", "A 128 Hertz fork is used for vibratory sense, and 60 or 1000 Hertz forks are not the standard used here; the Rinne and Weber tests use a 512 Hertz tuning fork."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 17"}, {"topic": "Cranial Nerve I", "io": "Cranial Nerve I", "q": "Cranial nerve one, the olfactory nerve, is tested by assessing what?", "opts": [["The sense of vision", "Vision is cranial nerve two, hearing is cranial nerve eight, and taste involves cranial nerves seven, nine, and ten, none of which is the smell tested for the olfactory nerve."], ["The sense of smell", "Cranial nerve one, the olfactory nerve, is a sensory nerve tested by assessing the sense of smell in each nostril with a familiar aroma such as coffee or cinnamon."], ["The sense of hearing", "Vision is cranial nerve two, hearing is cranial nerve eight, and taste involves cranial nerves seven, nine, and ten, none of which is the smell tested for the olfactory nerve."], ["The sense of taste", "Vision is cranial nerve two, hearing is cranial nerve eight, and taste involves cranial nerves seven, nine, and ten, none of which is the smell tested for the olfactory nerve."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 20"}, {"topic": "Cranial Nerve I", "io": "Cranial Nerve I", "q": "When testing the olfactory nerve, which type of substance should be avoided?", "opts": [["Pleasant familiar aromas like coffee", "Pleasant familiar aromas are exactly what should be used, a recognizable substance is appropriate, and testing with eyes closed is correct technique, none of which is the irritant that should be avoided."], ["Any substance the patient recognizes", "Pleasant familiar aromas are exactly what should be used, a recognizable substance is appropriate, and testing with eyes closed is correct technique, none of which is the irritant that should be avoided."], ["Substances tested with eyes closed", "Pleasant familiar aromas are exactly what should be used, a recognizable substance is appropriate, and testing with eyes closed is correct technique, none of which is the irritant that should be avoided."], ["Irritating substances such as menthol or ammonia", "When testing smell, irritating substances such as menthol or ammonia should be avoided; a pleasant familiar aroma like coffee or cinnamon is preferred."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 20"}, {"topic": "Cranial Nerve II", "io": "Cranial Nerve II", "q": "Cranial nerve two, the optic nerve, is tested by which of the following?", "opts": [["Testing the sense of smell", "Smell tests the olfactory nerve, palpating the masseter tests the trigeminal nerve, and shrugging the shoulders tests the accessory nerve, none of which assesses the optic nerve."], ["Palpating the masseter muscle", "Smell tests the olfactory nerve, palpating the masseter tests the trigeminal nerve, and shrugging the shoulders tests the accessory nerve, none of which assesses the optic nerve."], ["Having the patient shrug the shoulders", "Smell tests the olfactory nerve, palpating the masseter tests the trigeminal nerve, and shrugging the shoulders tests the accessory nerve, none of which assesses the optic nerve."], ["Testing visual acuity with an eye chart", "The optic nerve is tested through visual acuity with an eye chart, inspection of the optic fundi, visual fields by confrontation, and the pupillary light reflex."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 21"}, {"topic": "Cranial Nerve II", "io": "Cranial Nerve II", "q": "During the optic nerve exam, what must be done before shining a light in the patient's eyes?", "opts": [["The gag reflex must be tested first", "The gag reflex, deep tendon reflexes, and tongue inspection are unrelated to the eye exam sequence; visual acuity specifically must be tested before shining light in the eyes."], ["Visual acuity must be tested first", "Visual acuity must be tested before shining a light in the patient's eyes, because bright light can transiently affect the acuity assessment."], ["The reflexes must be graded first", "The gag reflex, deep tendon reflexes, and tongue inspection are unrelated to the eye exam sequence; visual acuity specifically must be tested before shining light in the eyes."], ["The tongue must be inspected first", "The gag reflex, deep tendon reflexes, and tongue inspection are unrelated to the eye exam sequence; visual acuity specifically must be tested before shining light in the eyes."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 21"}, {"topic": "Cranial Nerve III", "io": "Cranial Nerve III", "q": "The abbreviation PERRL, used with cranial nerve three, stands for what?", "opts": [["Painless extraocular rotation, right and left", "PERRL does not describe rotation, a strength scale, or a lung exam; it stands for pupils equal, round, and reactive to light."], ["Pupils equal, round, and reactive to light", "PERRL stands for pupils equal, round, and reactive to light, documenting the pupillary exam related to the oculomotor nerve."], ["Position, extension, resistance, and reflex level", "PERRL does not describe rotation, a strength scale, or a lung exam; it stands for pupils equal, round, and reactive to light."], ["Palpate each rib, then reassess the lungs", "PERRL does not describe rotation, a strength scale, or a lung exam; it stands for pupils equal, round, and reactive to light."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 23"}, {"topic": "Cranial Nerve III", "io": "Cranial Nerve III", "q": "Which cranial nerve carries the motor (efferent) limb of the pupillary light reflex, constricting the pupil?", "opts": [["The oculomotor nerve (cranial nerve three)", "The oculomotor nerve, cranial nerve three, carries the parasympathetic motor limb of the pupillary light reflex and constricts the pupil."], ["The optic nerve (cranial nerve two)", "The optic nerve is the sensory (afferent) limb of the light reflex, and the trochlear and abducens nerves move single eye muscles, none of which constricts the pupil like the oculomotor nerve."], ["The trochlear nerve (cranial nerve four)", "The optic nerve is the sensory (afferent) limb of the light reflex, and the trochlear and abducens nerves move single eye muscles, none of which constricts the pupil like the oculomotor nerve."], ["The abducens nerve (cranial nerve six)", "The optic nerve is the sensory (afferent) limb of the light reflex, and the trochlear and abducens nerves move single eye muscles, none of which constricts the pupil like the oculomotor nerve."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 23"}, {"topic": "Extraocular Movements", "io": "Extraocular Movements", "q": "By the mnemonic 'SO4, LR6, all the rest are 3,' the lateral rectus muscle is innervated by which nerve?", "opts": [["The trochlear nerve (cranial nerve four)", "The trochlear nerve (four) supplies the superior oblique, the oculomotor nerve (three) supplies the rest of the eye muscles, and the trigeminal nerve is not an eye-mover, none of which supplies the lateral rectus."], ["The oculomotor nerve (cranial nerve three)", "The trochlear nerve (four) supplies the superior oblique, the oculomotor nerve (three) supplies the rest of the eye muscles, and the trigeminal nerve is not an eye-mover, none of which supplies the lateral rectus."], ["The trigeminal nerve (cranial nerve five)", "The trochlear nerve (four) supplies the superior oblique, the oculomotor nerve (three) supplies the rest of the eye muscles, and the trigeminal nerve is not an eye-mover, none of which supplies the lateral rectus."], ["The abducens nerve (cranial nerve six)", "By the mnemonic SO4, LR6, all the rest are 3, the lateral rectus is innervated by the abducens nerve (cranial nerve six)."]], "c": 3, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 24"}, {"topic": "Extraocular Movements", "io": "Extraocular Movements", "q": "Which single eye muscle is innervated by the trochlear nerve (cranial nerve four)?", "opts": [["The lateral rectus", "The lateral rectus is supplied by the abducens nerve, and the medial and inferior recti are supplied by the oculomotor nerve, none of which is the superior oblique supplied by the trochlear nerve."], ["The medial rectus", "The lateral rectus is supplied by the abducens nerve, and the medial and inferior recti are supplied by the oculomotor nerve, none of which is the superior oblique supplied by the trochlear nerve."], ["The superior oblique", "By the mnemonic SO4, the superior oblique is innervated by the trochlear nerve (cranial nerve four)."], ["The inferior rectus", "The lateral rectus is supplied by the abducens nerve, and the medial and inferior recti are supplied by the oculomotor nerve, none of which is the superior oblique supplied by the trochlear nerve."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 24"}, {"topic": "Cranial Nerve V", "io": "Cranial Nerve V", "q": "The trigeminal nerve (cranial nerve five) provides motor innervation to which muscles?", "opts": [["The muscles of mastication (temporalis and masseter)", "The trigeminal nerve provides motor innervation to the muscles of mastication, the temporalis and masseter, and sensation to the face through its three divisions."], ["The muscles of facial expression", "The muscles of facial expression are supplied by the facial nerve, the tongue by the hypoglossal nerve, and the sternocleidomastoid and trapezius by the accessory nerve, none of which is the mastication muscles of the trigeminal nerve."], ["The intrinsic muscles of the tongue", "The muscles of facial expression are supplied by the facial nerve, the tongue by the hypoglossal nerve, and the sternocleidomastoid and trapezius by the accessory nerve, none of which is the mastication muscles of the trigeminal nerve."], ["The sternocleidomastoid and trapezius", "The muscles of facial expression are supplied by the facial nerve, the tongue by the hypoglossal nerve, and the sternocleidomastoid and trapezius by the accessory nerve, none of which is the mastication muscles of the trigeminal nerve."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 25"}, {"topic": "Cranial Nerve V", "io": "Cranial Nerve V", "q": "How is the sensory function of the trigeminal nerve tested?", "opts": [["By asking the patient to smell coffee", "Smelling coffee tests the olfactory nerve, saying Ah tests the vagus and glossopharyngeal nerves, and grip strength tests the hand, none of which is the facial light touch of the trigeminal nerve."], ["By having the patient say the word Ah", "Smelling coffee tests the olfactory nerve, saying Ah tests the vagus and glossopharyngeal nerves, and grip strength tests the hand, none of which is the facial light touch of the trigeminal nerve."], ["By testing light touch in all three facial divisions", "Trigeminal sensory function is tested by applying light touch (and pain) with a cotton wisp or swab in all three divisions — ophthalmic, maxillary, and mandibular."], ["By checking the patient's grip strength", "Smelling coffee tests the olfactory nerve, saying Ah tests the vagus and glossopharyngeal nerves, and grip strength tests the hand, none of which is the facial light touch of the trigeminal nerve."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 25"}, {"topic": "Cranial Nerve VII", "io": "Cranial Nerve VII", "q": "The facial nerve (cranial nerve seven) is tested for motor function by which maneuver?", "opts": [["Shrugging the shoulders against resistance", "Shrugging tests the accessory nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the facial-expression testing of the facial nerve."], ["Raising the eyebrows and closing the eyes tightly", "The facial nerve is tested by assessing facial symmetry and having the patient raise the eyebrows, close the eyes tightly, smile or show teeth, and puff out the cheeks."], ["Protruding the tongue to each side", "Shrugging tests the accessory nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the facial-expression testing of the facial nerve."], ["Clenching the teeth while palpating the jaw", "Shrugging tests the accessory nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the facial-expression testing of the facial nerve."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 27"}, {"topic": "Cranial Nerve VIII", "io": "Cranial Nerve VIII", "q": "The vestibulocochlear nerve (cranial nerve eight) is responsible for which two functions?", "opts": [["Smell and taste", "Smell and taste, vision and eye movement, and chewing and facial expression involve other cranial nerves, none of which is the balance and hearing of the vestibulocochlear nerve."], ["Vision and eye movement", "Smell and taste, vision and eye movement, and chewing and facial expression involve other cranial nerves, none of which is the balance and hearing of the vestibulocochlear nerve."], ["Balance and hearing", "The vestibulocochlear nerve, cranial nerve eight, is a sensory nerve responsible for balance (vestibular) and hearing (cochlear)."], ["Chewing and facial expression", "Smell and taste, vision and eye movement, and chewing and facial expression involve other cranial nerves, none of which is the balance and hearing of the vestibulocochlear nerve."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 29"}, {"topic": "Cranial Nerves IX & X", "io": "Cranial Nerves IX & X", "q": "Having the patient say 'Ah' and observing the soft palate and uvula tests which cranial nerves?", "opts": [["The olfactory and optic nerves (one and two)", "The olfactory and optic nerves handle smell and vision, the trochlear and abducens move eye muscles, and the accessory and hypoglossal nerves move the neck and tongue, none of which is tested by saying Ah like nerves nine and ten."], ["The trochlear and abducens nerves (four and six)", "The olfactory and optic nerves handle smell and vision, the trochlear and abducens move eye muscles, and the accessory and hypoglossal nerves move the neck and tongue, none of which is tested by saying Ah like nerves nine and ten."], ["The glossopharyngeal and vagus nerves (nine and ten)", "Saying Ah to observe symmetric rise of the soft palate and midline uvula, plus the gag reflex and swallowing, tests the glossopharyngeal and vagus nerves together."], ["The accessory and hypoglossal nerves (eleven and twelve)", "The olfactory and optic nerves handle smell and vision, the trochlear and abducens move eye muscles, and the accessory and hypoglossal nerves move the neck and tongue, none of which is tested by saying Ah like nerves nine and ten."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 30"}, {"topic": "Cranial Nerve XI", "io": "Cranial Nerve XI", "q": "The spinal accessory nerve (cranial nerve eleven) is tested by which maneuver?", "opts": [["Raising the eyebrows and smiling widely", "Raising the eyebrows tests the facial nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the shoulder-shrug and head-turn of the accessory nerve."], ["Shrugging the shoulders and turning the head against resistance", "The spinal accessory nerve is tested by having the patient shrug the shoulders (trapezius) and turn the head (sternocleidomastoid) against resistance."], ["Protruding the tongue and moving it sideways", "Raising the eyebrows tests the facial nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the shoulder-shrug and head-turn of the accessory nerve."], ["Clenching the teeth and puffing the cheeks", "Raising the eyebrows tests the facial nerve, tongue protrusion tests the hypoglossal nerve, and clenching the teeth tests the trigeminal nerve, none of which is the shoulder-shrug and head-turn of the accessory nerve."]], "c": 1, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 31"}, {"topic": "Cranial Nerve XII", "io": "Cranial Nerve XII", "q": "The hypoglossal nerve (cranial nerve twelve) is tested by asking the patient to do what?", "opts": [["Protrude the tongue and move it side to side", "The hypoglossal nerve, which innervates the intrinsic tongue muscles, is tested by having the patient protrude the tongue and move it side to side, watching for deviation, atrophy, or fasciculations."], ["Shrug the shoulders upward strongly", "Shrugging tests the accessory nerve, following a finger tests eye movements, and identifying an odor tests the olfactory nerve, none of which is the tongue protrusion of the hypoglossal nerve."], ["Follow a finger through the cardinal gazes", "Shrugging tests the accessory nerve, following a finger tests eye movements, and identifying an odor tests the olfactory nerve, none of which is the tongue protrusion of the hypoglossal nerve."], ["Identify a familiar odor with eyes closed", "Shrugging tests the accessory nerve, following a finger tests eye movements, and identifying an odor tests the olfactory nerve, none of which is the tongue protrusion of the hypoglossal nerve."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 32"}, {"topic": "Nervous System Anatomy", "io": "Nervous System Anatomy", "q": "Which structures make up the central nervous system?", "opts": [["The brain and spinal cord", "The central nervous system is made up of the brain and the spinal cord, while the cranial and spinal nerves make up the peripheral nervous system."], ["The cranial nerves and spinal nerves", "The cranial and spinal nerves and the peripheral nerves and dermatomes belong to the peripheral nervous system, and muscles and tendons are not nervous tissue, none of which is the brain and spinal cord of the central nervous system."], ["The dermatomes and peripheral nerves", "The cranial and spinal nerves and the peripheral nerves and dermatomes belong to the peripheral nervous system, and muscles and tendons are not nervous tissue, none of which is the brain and spinal cord of the central nervous system."], ["The muscles and tendons of the limbs", "The cranial and spinal nerves and the peripheral nerves and dermatomes belong to the peripheral nervous system, and muscles and tendons are not nervous tissue, none of which is the brain and spinal cord of the central nervous system."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 4"}, {"topic": "Nervous System Anatomy", "io": "Nervous System Anatomy", "q": "How many pairs of spinal nerves are part of the peripheral nervous system?", "opts": [["12 pairs", "Twelve is the number of cranial nerve pairs, and 24 or 40 pairs do not match the spinal count; there are 31 pairs of spinal nerves."], ["24 pairs", "Twelve is the number of cranial nerve pairs, and 24 or 40 pairs do not match the spinal count; there are 31 pairs of spinal nerves."], ["31 pairs", "The peripheral nervous system includes the twelve cranial nerves and 31 pairs of spinal nerves, each with an anterior motor root and a posterior sensory root."], ["40 pairs", "Twelve is the number of cranial nerve pairs, and 24 or 40 pairs do not match the spinal count; there are 31 pairs of spinal nerves."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 4"}, {"topic": "Cranial Nerve III", "io": "Cranial Nerve III", "q": "Besides constricting the pupil, the oculomotor nerve elevates the upper eyelid by innervating which muscle?", "opts": [["The orbicularis oculi muscle", "The orbicularis oculi closes the eye and is supplied by the facial nerve, and the superior oblique and lateral rectus are supplied by the trochlear and abducens nerves, none of which is the eyelid elevator of the oculomotor nerve."], ["The superior oblique muscle", "The orbicularis oculi closes the eye and is supplied by the facial nerve, and the superior oblique and lateral rectus are supplied by the trochlear and abducens nerves, none of which is the eyelid elevator of the oculomotor nerve."], ["The levator palpebrae superioris", "The oculomotor nerve elevates the upper eyelid by innervating the levator palpebrae superioris, in addition to constricting the pupil and moving most eye muscles."], ["The lateral rectus muscle", "The orbicularis oculi closes the eye and is supplied by the facial nerve, and the superior oblique and lateral rectus are supplied by the trochlear and abducens nerves, none of which is the eyelid elevator of the oculomotor nerve."]], "c": 2, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 23"}, {"topic": "Mental Status", "io": "Mental Status", "q": "Interpreting a proverb such as 'you can't judge a book by its cover' tests which mental status function?", "opts": [["Abstract reasoning", "Interpreting proverbs and solving problems tests abstract reasoning during the mental status exam."], ["Peripheral vibratory sense", "Peripheral vibratory sense, deep tendon reflexes, and grip strength are motor or sensory findings, not cognitive tasks; interpreting a proverb tests abstract reasoning."], ["Deep tendon reflex activity", "Peripheral vibratory sense, deep tendon reflexes, and grip strength are motor or sensory findings, not cognitive tasks; interpreting a proverb tests abstract reasoning."], ["Hand grip strength testing", "Peripheral vibratory sense, deep tendon reflexes, and grip strength are motor or sensory findings, not cognitive tasks; interpreting a proverb tests abstract reasoning."]], "c": 0, "cite": "Neurological Assessment: CNS and PNS lecture, Slide 15"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
