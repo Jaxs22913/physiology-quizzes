@@ -1963,6 +1963,82 @@ var DEMO_DECKS = [
       ["Breast palpation fingers", "2nd, 3rd, 4th finger pads"],
       ["Breast lymphatic drainage to axilla", "~75%"]
     ]},
+  { id: "pd1-musculoskeletal-exam", name: "Musculoskeletal Physical Examination", color: "accent4",
+    icon: '<path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/>',
+    cards: [
+      ["What type of tissue connects bone to bone?", "A ligament."],
+      ["What type of tissue connects muscle to bone?", "A tendon."],
+      ["What is a bursa?", "A synovial-fluid pouch that cushions tendon and muscle movement over bone."],
+      ["Which joint type is freely movable with articular cartilage and a synovial cavity?", "A synovial joint."],
+      ["Which joint type has no appreciable movement?", "A fibrous joint (e.g., skull sutures)."],
+      ["Which joint type is slightly movable with fibrocartilaginous discs?", "A cartilaginous joint (e.g., intervertebral)."],
+      ["Which synovial joint type is ball-and-socket?", "Spheroidal — the shoulder and hip."],
+      ["What does the IPROMS exam order stand for?", "Inspection, Palpation, Range of motion, Special maneuvers."],
+      ["How do active and passive range of motion differ?", "In active ROM the patient moves the joint; in passive ROM the examiner moves it."],
+      ["What is muscle strength grade 5 out of 5?", "Full range of motion against gravity with full resistance (normal)."],
+      ["What is muscle strength grade 3 out of 5?", "Full range of motion against gravity but not against resistance."],
+      ["Where are the fingertips placed to palpate the temporomandibular joint?", "Just in front of the tragus of each ear."],
+      ["Normal cervical rotation is about how many degrees, at which level?", "About 70 degrees, at C1-C2."],
+      ["Name the three joints of the shoulder.", "Glenohumeral, sternoclavicular, and acromioclavicular."],
+      ["What muscles does the rotator cuff mnemonic SITS represent?", "Supraspinatus, infraspinatus, teres minor, subscapularis."],
+      ["Normal elbow flexion is approximately how many degrees?", "About 160 degrees."],
+      ["Where is the ulnar nerve palpated at the elbow?", "Posteriorly, between the olecranon and the medial epicondyle."],
+      ["Normal hip flexion (knee to chest, supine) is about what range?", "About 110 to 130 degrees."],
+      ["Normal ankle dorsiflexion is about what range?", "About 10 to 20 degrees."]
+    ],
+    matchCards: [
+      ["Ligament", "Connects bone to bone"],
+      ["Tendon", "Connects muscle to bone"],
+      ["Bursa", "Synovial-fluid cushion over bone"],
+      ["Synovial joint", "Freely movable"],
+      ["Fibrous joint", "No appreciable movement"],
+      ["Cartilaginous joint", "Slightly movable, disc"],
+      ["Spheroidal joint", "Ball-and-socket (shoulder, hip)"],
+      ["Hinge joint", "One plane (elbow)"],
+      ["Condylar joint", "Knee, TMJ"],
+      ["SITS", "Rotator cuff muscles"],
+      ["Muscle grade 5", "Normal full strength"],
+      ["IPROMS", "Inspect, Palpate, ROM, Special"]
+    ]},
+  { id: "pd1-neuro-exam", name: "Neurological Exam (Central & Peripheral Nervous System)", color: "accent",
+    icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+    cards: [
+      ["What are the six categories of the neuro exam?", "Mental status, cranial nerves, motor system, reflexes, sensory system, and coordination/station/gait."],
+      ["What makes up the central nervous system?", "The brain and the spinal cord."],
+      ["How many pairs of spinal nerves are there?", "31 pairs."],
+      ["Which tract carries pain and temperature?", "The spinothalamic tracts."],
+      ["Which pathway carries vibration and proprioception?", "The posterior columns."],
+      ["A 128 Hz tuning fork tests what?", "Vibratory sense."],
+      ["A 512 Hz tuning fork is used for which tests?", "The Rinne and Weber hearing tests."],
+      ["A patient who rouses only to painful stimuli and lapses back is in what state?", "Stupor."],
+      ["A patient oriented to person, place, and time is oriented to what degree?", "Times three (adding event makes it times four)."],
+      ["Cranial nerve I is tested by assessing what?", "The sense of smell."],
+      ["Besides eye movement, what does cranial nerve III do to the pupil?", "It constricts the pupil (the motor limb of the light reflex)."],
+      ["Which cranial nerve supplies the superior oblique (SO4)?", "The trochlear nerve, cranial nerve IV."],
+      ["Which cranial nerve supplies the lateral rectus (LR6)?", "The abducens nerve, cranial nerve VI."],
+      ["What is the motor function of cranial nerve V?", "The muscles of mastication — the temporalis and masseter."],
+      ["Cranial nerve XI is tested by which maneuvers?", "Shrugging the shoulders and turning the head against resistance."],
+      ["The biceps deep tendon reflex tests which roots?", "C5 and C6."],
+      ["The Achilles reflex tests which root?", "S1."],
+      ["What reflex grade is average and normal?", "2+ (4+ is hyperactive with clonus)."],
+      ["What is the normal adult plantar (Babinski) response?", "Downgoing — flexion of the toes."],
+      ["What is stereognosis?", "Recognizing a familiar object by touch with the eyes closed."],
+      ["The Romberg test assesses what?", "Station and position sense (standing with feet together, eyes closed)."]
+    ],
+    matchCards: [
+      ["Spinothalamic tract", "Pain & temperature"],
+      ["Posterior columns", "Vibration & proprioception"],
+      ["128 Hz fork", "Vibratory sense"],
+      ["512 Hz fork", "Rinne & Weber"],
+      ["Cranial nerve I", "Smell"],
+      ["Cranial nerve II", "Vision"],
+      ["Cranial nerve VII", "Facial expression"],
+      ["Cranial nerve XII", "Tongue movement"],
+      ["Biceps reflex", "C5, C6"],
+      ["Achilles reflex", "S1"],
+      ["2+ reflex", "Normal"],
+      ["Romberg test", "Station / position sense"]
+    ]},
   { id: "anatomy-appendicular-muscle-innervation", name: "Appendicular Muscles — Innervation", color: "accent",
     icon: "<path d=\"M22 12h-4l-3 9L9 3l-3 9H2\"/>",
     cards: [
@@ -3051,7 +3127,7 @@ var DEMO_CLASSES = [
       "pd1-lung-thorax-exam", "pd1-skin-hair-nail-exam", "pd1-eye-exam",
       "pd1-general-survey-vitals", "pd1-cardio-pv-exam", "pd1-hent-exam"
     ] },
-    { id: "exam3", name: "Exam 3", deckIds: ["pd1-pelvic-exam", "pd1-breast-exam"] }
+    { id: "exam3", name: "Exam 3", deckIds: ["pd1-pelvic-exam", "pd1-breast-exam", "pd1-musculoskeletal-exam", "pd1-neuro-exam"] }
   ]}
 ];
 
