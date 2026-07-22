@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #3f8fa3; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Axial Skeleton — Anatomy Exam 4 — Set 4</title>
+<style>
+  :root{
+    --navy:#153e59; --indigo:#0f766e; --gold:#3f8fa3; --ice:#81efe6;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Anatomy Integration ExamThe Axial Skeleton — Set 4</h1>
+    <div class="sub">Osseous Tissue & Bone Growth · Skull · Vertebral Column & Thoracic Cage</div>
+    <span class="pill">30 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Describe the histological classification of bone and the process of bone growth, including primary and secondary ossification centers and the epiphyseal plate.</span><span class="chip">Identify the bones of the skull and their key surface landmarks, sutures, and cranial foramina, including the structures that pass through each foramen.</span><span class="chip">Identify the regions and individual bones of the vertebral column, and describe the structure and function of the thoracic cage.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Vertebra Anatomy", "io": "Vertebra Anatomy", "q": "Which part of a typical vertebra bears weight and lies anteriorly?", "opts": [["The spinous process", "The spinous process projects posteriorly for muscle attachment; the transverse processes project laterally; and the superior articular facet joins the vertebra above, none of which is the anterior weight-bearing block."], ["The transverse process", "The spinous process projects posteriorly for muscle attachment; the transverse processes project laterally; and the superior articular facet joins the vertebra above, none of which is the anterior weight-bearing block."], ["The superior articular facet", "The spinous process projects posteriorly for muscle attachment; the transverse processes project laterally; and the superior articular facet joins the vertebra above, none of which is the anterior weight-bearing block."], ["The body (centrum)", "The vertebral body, or centrum, is the thick anterior weight-bearing portion of a typical vertebra."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 70"}, {"topic": "Vertebra Anatomy", "io": "Vertebra Anatomy", "q": "The vertebral foramen of a typical vertebra transmits which structure?", "opts": [["The spinal cord", "The vertebral foramen is the central opening through which the spinal cord passes; the stacked foramina form the vertebral canal."], ["The vertebral artery only", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."], ["A spinal nerve root only", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."], ["The esophagus", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 70"}, {"topic": "Vertebra Anatomy", "io": "Vertebra Anatomy", "q": "The vertebral arch is formed by which two paired structures?", "opts": [["The body and the spinous process", "The body lies in front of the arch and the spinous process projects from it, so neither forms the arch itself; the transverse and spinous processes are projections off the arch, not its walls; and a vertebra has only one body, not superior and inferior ones."], ["The transverse and spinous processes", "The body lies in front of the arch and the spinous process projects from it, so neither forms the arch itself; the transverse and spinous processes are projections off the arch, not its walls; and a vertebra has only one body, not superior and inferior ones."], ["The pedicles and the laminae", "The vertebral arch is formed by the paired pedicles anteriorly and the paired laminae posteriorly, enclosing the vertebral foramen."], ["The superior and inferior bodies", "The body lies in front of the arch and the spinous process projects from it, so neither forms the arch itself; the transverse and spinous processes are projections off the arch, not its walls; and a vertebra has only one body, not superior and inferior ones."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 70"}, {"topic": "Cervical Vertebrae", "io": "Cervical Vertebrae", "q": "Which feature is unique to cervical vertebrae and transmits the vertebral artery?", "opts": [["The transverse foramina", "Cervical vertebrae uniquely possess transverse foramina in their transverse processes, which transmit the vertebral arteries."], ["The costal facets", "Costal facets are found on thoracic vertebrae for rib articulation; a large oval body characterizes lumbar vertebrae; and the sacral hiatus is at the base of the sacrum, none of which is the cervical transverse foramen."], ["The large oval body", "Costal facets are found on thoracic vertebrae for rib articulation; a large oval body characterizes lumbar vertebrae; and the sacral hiatus is at the base of the sacrum, none of which is the cervical transverse foramen."], ["The sacral hiatus", "Costal facets are found on thoracic vertebrae for rib articulation; a large oval body characterizes lumbar vertebrae; and the sacral hiatus is at the base of the sacrum, none of which is the cervical transverse foramen."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 76"}, {"topic": "Atlas & Axis", "io": "Atlas & Axis", "q": "What is the distinguishing feature of the atlas (C1)?", "opts": [["It bears the dens (odontoid process)", "The dens belongs to the axis (C2), not the atlas; the longest palpable spinous process is on C7; and costal facets are thoracic features, none of which describes the atlas."], ["It has the longest spinous process", "The dens belongs to the axis (C2), not the atlas; the longest palpable spinous process is on C7; and costal facets are thoracic features, none of which describes the atlas."], ["It carries costal facets for ribs", "The dens belongs to the axis (C2), not the atlas; the longest palpable spinous process is on C7; and costal facets are thoracic features, none of which describes the atlas."], ["It lacks a body and a spinous process", "The atlas (C1) is a ring-like bone that lacks both a vertebral body and a true spinous process, supporting the skull."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 78"}, {"topic": "Atlas & Axis", "io": "Atlas & Axis", "q": "Which peg-like projection of the axis (C2) allows the head to rotate?", "opts": [["The mastoid process", "The mastoid process is a temporal-bone landmark; the spinous process of C7 is the palpable neck bump, not a pivot; and the transverse process of C1 is a lateral projection, none of which is the rotational peg."], ["The spinous process of C7", "The mastoid process is a temporal-bone landmark; the spinous process of C7 is the palpable neck bump, not a pivot; and the transverse process of C1 is a lateral projection, none of which is the rotational peg."], ["The transverse process of C1", "The mastoid process is a temporal-bone landmark; the spinous process of C7 is the palpable neck bump, not a pivot; and the transverse process of C1 is a lateral projection, none of which is the rotational peg."], ["The dens (odontoid process)", "The dens, or odontoid process, projects upward from the axis (C2) and forms the pivot around which the atlas and head rotate."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 78"}, {"topic": "C7 / Vertebra Prominens", "io": "C7 / Vertebra Prominens", "q": "Why is C7 called the vertebra prominens?", "opts": [["It bears the dens for skull rotation", "The dens belongs to the axis (C2), not C7; lacking a body describes the atlas (C1); and fusion into the sacrum occurs with the sacral vertebrae, none of which applies to C7."], ["Its long spinous process is easily felt", "C7 is called the vertebra prominens because its long, non-bifid spinous process forms a prominent, easily palpable bump at the base of the neck."], ["It lacks a vertebral body entirely", "The dens belongs to the axis (C2), not C7; lacking a body describes the atlas (C1); and fusion into the sacrum occurs with the sacral vertebrae, none of which applies to C7."], ["It is fused into the sacral bone", "The dens belongs to the axis (C2), not C7; lacking a body describes the atlas (C1); and fusion into the sacrum occurs with the sacral vertebrae, none of which applies to C7."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 80"}, {"topic": "Thoracic Vertebrae", "io": "Thoracic Vertebrae", "q": "Which feature of thoracic vertebrae allows them to articulate with the ribs?", "opts": [["Transverse foramina in the processes", "Transverse foramina are cervical features for the vertebral artery; a bifid spinous process is typical of cervical vertebrae; and a missing body describes the atlas, none of which is the rib-articulating feature."], ["A bifid, two-pronged spinous process", "Transverse foramina are cervical features for the vertebral artery; a bifid spinous process is typical of cervical vertebrae; and a missing body describes the atlas, none of which is the rib-articulating feature."], ["Costal facets (demifacets) on the body", "Thoracic vertebrae bear costal facets, often as demifacets, on their bodies and transverse processes for articulation with the ribs."], ["A completely missing vertebral body", "Transverse foramina are cervical features for the vertebral artery; a bifid spinous process is typical of cervical vertebrae; and a missing body describes the atlas, none of which is the rib-articulating feature."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 85"}, {"topic": "Lumbar Vertebrae", "io": "Lumbar Vertebrae", "q": "Which feature best distinguishes lumbar vertebrae from the others?", "opts": [["Transverse foramina in the transverse processes", "Transverse foramina are cervical features; costal facets are thoracic features for ribs; and a ring shape with no body describes the atlas, none of which distinguishes lumbar vertebrae."], ["Costal facets on the body for the rib heads", "Transverse foramina are cervical features; costal facets are thoracic features for ribs; and a ring shape with no body describes the atlas, none of which distinguishes lumbar vertebrae."], ["Large, thick bodies with short spinous processes", "Lumbar vertebrae have the largest, thickest bodies and short, blunt, posteriorly directed spinous processes to bear body weight."], ["A thin ring shape with no vertebral body", "Transverse foramina are cervical features; costal facets are thoracic features for ribs; and a ring shape with no body describes the atlas, none of which distinguishes lumbar vertebrae."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 87"}, {"topic": "Sacrum", "io": "Sacrum", "q": "How many vertebrae fuse to form the sacrum?", "opts": [["3 fused vertebrae", "3 to 4 fused segments describe the coccyx, not the sacrum; 7 is the number of cervical vertebrae; and 12 is the number of thoracic vertebrae, none of which is the sacral fusion count."], ["5 fused vertebrae", "The sacrum is formed by the fusion of 5 sacral vertebrae into a single triangular bone."], ["7 fused vertebrae", "3 to 4 fused segments describe the coccyx, not the sacrum; 7 is the number of cervical vertebrae; and 12 is the number of thoracic vertebrae, none of which is the sacral fusion count."], ["12 fused vertebrae", "3 to 4 fused segments describe the coccyx, not the sacrum; 7 is the number of cervical vertebrae; and 12 is the number of thoracic vertebrae, none of which is the sacral fusion count."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 92"}, {"topic": "Sacrum", "io": "Sacrum", "q": "Which anterior sacral ridge projects into the pelvic cavity at the sacrum's superior border?", "opts": [["The sacral promontory", "The sacral promontory is the anterior projecting ridge of the first sacral vertebra's body, an important pelvic landmark."], ["The median sacral crest", "The median sacral crest is the fused posterior spinous ridge; the sacral hiatus is the inferior opening of the sacral canal; and the coccygeal cornu is a small horn on the coccyx, none of which is the anterior superior promontory."], ["The sacral hiatus", "The median sacral crest is the fused posterior spinous ridge; the sacral hiatus is the inferior opening of the sacral canal; and the coccygeal cornu is a small horn on the coccyx, none of which is the anterior superior promontory."], ["The coccygeal cornu", "The median sacral crest is the fused posterior spinous ridge; the sacral hiatus is the inferior opening of the sacral canal; and the coccygeal cornu is a small horn on the coccyx, none of which is the anterior superior promontory."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 92"}, {"topic": "Sacrum", "io": "Sacrum", "q": "The inferior opening at the end of the sacral canal, used for certain anesthetic injections, is called what?", "opts": [["The greater sciatic notch", "The greater sciatic notch is on the hip bone; the obturator foramen is the large opening in the hip bone; and the intervertebral foramina are lateral openings between vertebrae, none of which is the inferior sacral canal opening."], ["The sacral hiatus", "The sacral hiatus is the opening at the inferior end of the sacral canal, formed where the laminae of the fifth sacral vertebra fail to fuse."], ["The obturator foramen", "The greater sciatic notch is on the hip bone; the obturator foramen is the large opening in the hip bone; and the intervertebral foramina are lateral openings between vertebrae, none of which is the inferior sacral canal opening."], ["The intervertebral foramen", "The greater sciatic notch is on the hip bone; the obturator foramen is the large opening in the hip bone; and the intervertebral foramina are lateral openings between vertebrae, none of which is the inferior sacral canal opening."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 92"}, {"topic": "Coccyx", "io": "Coccyx", "q": "How many vertebrae typically fuse to form the coccyx?", "opts": [["Always exactly 7", "7 is the cervical count and 12 the thoracic count, neither describing the coccyx; and while 5 segments can occur, the coccyx commonly has 4 and may have as few as 3, so it is not always exactly 5."], ["Always exactly 12", "7 is the cervical count and 12 the thoracic count, neither describing the coccyx; and while 5 segments can occur, the coccyx commonly has 4 and may have as few as 3, so it is not always exactly 5."], ["Usually 4 (range 3 to 5)", "The coccyx usually forms from the fusion of 4 small coccygeal vertebrae, though the number ranges from 3 to 5."], ["Always exactly 5, never fewer", "7 is the cervical count and 12 the thoracic count, neither describing the coccyx; and while 5 segments can occur, the coccyx commonly has 4 and may have as few as 3, so it is not always exactly 5."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 94"}, {"topic": "Ribs", "io": "Ribs", "q": "Which ribs are classified as true ribs, attaching to the sternum by their own costal cartilage?", "opts": [["Ribs 8 through 10", "Ribs 8 through 10 are false ribs that attach indirectly through shared cartilage; ribs 11 and 12 are floating ribs with no sternal attachment; and ribs 1 through 5 omit true ribs 6 and 7."], ["Ribs 11 and 12", "Ribs 8 through 10 are false ribs that attach indirectly through shared cartilage; ribs 11 and 12 are floating ribs with no sternal attachment; and ribs 1 through 5 omit true ribs 6 and 7."], ["Ribs 1 through 5", "Ribs 8 through 10 are false ribs that attach indirectly through shared cartilage; ribs 11 and 12 are floating ribs with no sternal attachment; and ribs 1 through 5 omit true ribs 6 and 7."], ["Ribs 1 through 7", "True ribs are ribs 1 through 7, each attaching directly to the sternum by its own costal cartilage."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 98"}, {"topic": "Ribs", "io": "Ribs", "q": "Which ribs are the floating ribs, lacking any anterior attachment?", "opts": [["Ribs 1 and 2", "Ribs 1 and 2 are true ribs attaching directly to the sternum; ribs 8 through 10 are false ribs sharing cartilage; and ribs 6 and 7 are true ribs, none of which float freely."], ["Ribs 11 and 12", "Ribs 11 and 12 are floating ribs; their anterior ends are free, with no attachment to the sternum or costal cartilage above."], ["Ribs 8 through 10", "Ribs 1 and 2 are true ribs attaching directly to the sternum; ribs 8 through 10 are false ribs sharing cartilage; and ribs 6 and 7 are true ribs, none of which float freely."], ["Ribs 6 and 7", "Ribs 1 and 2 are true ribs attaching directly to the sternum; ribs 8 through 10 are false ribs sharing cartilage; and ribs 6 and 7 are true ribs, none of which float freely."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 98"}, {"topic": "Ribs", "io": "Ribs", "q": "Along the inferior inner surface of a typical rib, which groove protects the intercostal vessels and nerve?", "opts": [["The costal groove", "The costal groove runs along the inferior internal margin of a typical rib and shelters the intercostal vein, artery, and nerve."], ["The intertubercular groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."], ["The radial groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."], ["The mylohyoid groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 98"}, {"topic": "Sternum", "io": "Sternum", "q": "Which three regions make up the sternum from superior to inferior?", "opts": [["Manubrium, body, and xiphoid process", "The sternum consists of the manubrium superiorly, the body in the middle, and the xiphoid process inferiorly."], ["Head, neck, and shaft", "Head, neck, and shaft describe a long bone such as a rib or femur, not the sternum; ala, promontory, and hiatus are sacral features; and ramus, angle, and condyle are mandibular features, none of which are the sternal regions."], ["Ala, promontory, and hiatus", "Head, neck, and shaft describe a long bone such as a rib or femur, not the sternum; ala, promontory, and hiatus are sacral features; and ramus, angle, and condyle are mandibular features, none of which are the sternal regions."], ["Ramus, angle, and condyle", "Head, neck, and shaft describe a long bone such as a rib or femur, not the sternum; ala, promontory, and hiatus are sacral features; and ramus, angle, and condyle are mandibular features, none of which are the sternal regions."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 102"}, {"topic": "Sternum", "io": "Sternum", "q": "The sternal angle (angle of Louis) marks the articulation of which rib with the sternum?", "opts": [["The first rib", "The first rib articulates with the manubrium above the sternal angle; the seventh rib is the last true rib joining lower on the body; and the twelfth rib is a floating rib with no sternal attachment, none of which meets the sternum at the sternal angle."], ["The seventh rib", "The first rib articulates with the manubrium above the sternal angle; the seventh rib is the last true rib joining lower on the body; and the twelfth rib is a floating rib with no sternal attachment, none of which meets the sternum at the sternal angle."], ["The second rib", "The sternal angle, the ridge between the manubrium and body, marks the level where the second costal cartilage joins the sternum."], ["The twelfth rib", "The first rib articulates with the manubrium above the sternal angle; the seventh rib is the last true rib joining lower on the body; and the twelfth rib is a floating rib with no sternal attachment, none of which meets the sternum at the sternal angle."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 102"}, {"topic": "Sternum", "io": "Sternum", "q": "Which superior notch of the manubrium is easily palpated at the base of the throat?", "opts": [["The mandibular notch of the jaw", "The mandibular notch is between the two processes of the mandible; the greater sciatic notch is on the hip bone; and the radial notch is on the ulna, none of which is the notch at the top of the sternum."], ["The greater sciatic notch of the hip", "The mandibular notch is between the two processes of the mandible; the greater sciatic notch is on the hip bone; and the radial notch is on the ulna, none of which is the notch at the top of the sternum."], ["The jugular (suprasternal) notch", "The jugular, or suprasternal, notch is the central depression on the superior manubrium, readily felt at the base of the throat."], ["The radial notch of the ulna", "The mandibular notch is between the two processes of the mandible; the greater sciatic notch is on the hip bone; and the radial notch is on the ulna, none of which is the notch at the top of the sternum."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 102"}, {"topic": "Spinal Curves", "io": "Spinal Curves", "q": "Which two spinal curves are the primary (fetal) curves, concave anteriorly?", "opts": [["The cervical and lumbar curves", "The cervical and lumbar curves are the secondary curves that develop after birth; pairing cervical with thoracic or lumbar with sacral mixes a primary with a secondary curve, so neither is a pair of primary curves."], ["The cervical and thoracic curves", "The cervical and lumbar curves are the secondary curves that develop after birth; pairing cervical with thoracic or lumbar with sacral mixes a primary with a secondary curve, so neither is a pair of primary curves."], ["The lumbar and sacral curves", "The cervical and lumbar curves are the secondary curves that develop after birth; pairing cervical with thoracic or lumbar with sacral mixes a primary with a secondary curve, so neither is a pair of primary curves."], ["The thoracic and sacral curves", "The thoracic and sacral curves are the primary curves, present from fetal life and concave anteriorly."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 64"}, {"topic": "Spinal Curves", "io": "Spinal Curves", "q": "Which two spinal curves are the secondary curves that develop after birth?", "opts": [["The cervical and lumbar curves", "The cervical and lumbar curves are the secondary curves, developing after birth as an infant holds up the head and begins to walk."], ["The thoracic and sacral curves", "The thoracic and sacral curves are the primary curves present before birth; pairing thoracic with lumbar or cervical with sacral mixes a primary with a secondary curve, so neither is a pair of secondary curves."], ["The thoracic and lumbar curves", "The thoracic and sacral curves are the primary curves present before birth; pairing thoracic with lumbar or cervical with sacral mixes a primary with a secondary curve, so neither is a pair of secondary curves."], ["The cervical and sacral curves", "The thoracic and sacral curves are the primary curves present before birth; pairing thoracic with lumbar or cervical with sacral mixes a primary with a secondary curve, so neither is a pair of secondary curves."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 64"}, {"topic": "Thoracic Cage", "io": "Thoracic Cage", "q": "Which structures together form the bony thoracic cage?", "opts": [["The ribs, sternum, and thoracic vertebrae", "The thoracic cage is formed by the 12 pairs of ribs, the sternum anteriorly, and the 12 thoracic vertebrae posteriorly."], ["The clavicles, scapulae, and ribs", "The clavicles and scapulae belong to the pectoral girdle, not the thoracic cage; the hyoid is a neck bone unrelated to the cage; and the lumbar vertebrae and pelvis lie below the thorax."], ["The sternum, hyoid, and clavicles", "The clavicles and scapulae belong to the pectoral girdle, not the thoracic cage; the hyoid is a neck bone unrelated to the cage; and the lumbar vertebrae and pelvis lie below the thorax."], ["The lumbar vertebrae and pelvis", "The clavicles and scapulae belong to the pectoral girdle, not the thoracic cage; the hyoid is a neck bone unrelated to the cage; and the lumbar vertebrae and pelvis lie below the thorax."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 97"}, {"topic": "Occipital Bone", "io": "Occipital Bone", "q": "Which midline bump on the external occipital bone is a palpable muscle-attachment landmark?", "opts": [["The sella turcica of the sphenoid", "The sella turcica is an internal sphenoid depression; the crista galli is an internal ethmoid ridge; and the mental protuberance is the chin of the mandible, none of which is the external bump on the occiput."], ["The crista galli of the ethmoid", "The sella turcica is an internal sphenoid depression; the crista galli is an internal ethmoid ridge; and the mental protuberance is the chin of the mandible, none of which is the external bump on the occiput."], ["The mental protuberance of the chin", "The sella turcica is an internal sphenoid depression; the crista galli is an internal ethmoid ridge; and the mental protuberance is the chin of the mandible, none of which is the external bump on the occiput."], ["The external occipital protuberance", "The external occipital protuberance is the midline bump on the back of the occipital bone, palpable and serving as a muscle and ligament attachment."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 27"}, {"topic": "Cranial Fossa", "io": "Cranial Fossa", "q": "Which cranial fossa is the deepest and lodges the cerebellum and brainstem?", "opts": [["The anterior cranial fossa", "The anterior cranial fossa holds the frontal lobes; the middle cranial fossa holds the temporal lobes; and the pterygopalatine fossa is a small space below the orbit, none of which is the deep fossa for the cerebellum."], ["The posterior cranial fossa", "The posterior cranial fossa, formed largely by the occipital bone, is the deepest and houses the cerebellum and brainstem around the foramen magnum."], ["The middle cranial fossa", "The anterior cranial fossa holds the frontal lobes; the middle cranial fossa holds the temporal lobes; and the pterygopalatine fossa is a small space below the orbit, none of which is the deep fossa for the cerebellum."], ["The pterygopalatine fossa", "The anterior cranial fossa holds the frontal lobes; the middle cranial fossa holds the temporal lobes; and the pterygopalatine fossa is a small space below the orbit, none of which is the deep fossa for the cerebellum."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 41"}, {"topic": "Maxillae", "io": "Maxillae", "q": "Which air-filled space, the largest of the paranasal sinuses, lies within the maxilla?", "opts": [["The frontal sinus", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."], ["The sphenoidal sinus", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."], ["The maxillary sinus", "The maxillary sinus is the largest paranasal sinus, occupying the body of the maxilla on each side."], ["The mastoid air cells", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 43"}, {"topic": "Vertebral Column Basics", "io": "Vertebral Column Basics", "q": "Between adjacent vertebral bodies, what structure acts as a cushioning pad?", "opts": [["The costal cartilage", "Costal cartilage connects ribs to the sternum, not vertebrae; the nuchal ligament is a midline neck ligament, not a disc; and the hip joint capsule is in the pelvis, none of which sits between vertebral bodies."], ["The intervertebral disc", "The intervertebral disc is the fibrocartilage pad between adjacent vertebral bodies that cushions and allows slight movement."], ["The nuchal ligament", "Costal cartilage connects ribs to the sternum, not vertebrae; the nuchal ligament is a midline neck ligament, not a disc; and the hip joint capsule is in the pelvis, none of which sits between vertebral bodies."], ["The articular capsule of the hip", "Costal cartilage connects ribs to the sternum, not vertebrae; the nuchal ligament is a midline neck ligament, not a disc; and the hip joint capsule is in the pelvis, none of which sits between vertebral bodies."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 61"}, {"topic": "Other Facial Bones", "io": "Other Facial Bones", "q": "Which paired facial bones form the prominences of the cheeks?", "opts": [["The nasal bones", "The nasal bones form the bridge of the nose; the lacrimal bones lie in the medial orbital wall; and the palatine bones form part of the hard palate, none of which forms the cheek prominences."], ["The zygomatic bones", "The zygomatic bones form the prominences of the cheeks and part of the lateral orbital walls."], ["The lacrimal bones", "The nasal bones form the bridge of the nose; the lacrimal bones lie in the medial orbital wall; and the palatine bones form part of the hard palate, none of which forms the cheek prominences."], ["The palatine bones", "The nasal bones form the bridge of the nose; the lacrimal bones lie in the medial orbital wall; and the palatine bones form part of the hard palate, none of which forms the cheek prominences."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 47"}, {"topic": "Frontal Bone", "io": "Frontal Bone", "q": "The frontal bone forms the forehead and the superior margin of which structures?", "opts": [["The nasal cavity floor", "The floor of the nasal cavity is formed by the maxillae and palatine bones; the foramen magnum is in the occipital bone; and the mandibular fossa is in the temporal bone, none of which is bordered superiorly by the frontal bone."], ["The orbits (eye sockets)", "The frontal bone forms the forehead and the superior rim (supraorbital margin) of the orbits."], ["The foramen magnum", "The floor of the nasal cavity is formed by the maxillae and palatine bones; the foramen magnum is in the occipital bone; and the mandibular fossa is in the temporal bone, none of which is bordered superiorly by the frontal bone."], ["The mandibular fossa", "The floor of the nasal cavity is formed by the maxillae and palatine bones; the foramen magnum is in the occipital bone; and the mandibular fossa is in the temporal bone, none of which is bordered superiorly by the frontal bone."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 31"}, {"topic": "Vertebra Anatomy", "io": "Vertebra Anatomy", "q": "Spinal nerves exit the vertebral column through which openings between adjacent vertebrae?", "opts": [["The vertebral foramina", "The vertebral foramina stack to form the canal that holds the spinal cord itself; the transverse foramina in cervical vertebrae carry the vertebral artery; and nutrient foramina admit small vessels into bone, none of which is the exit for spinal nerves."], ["The transverse foramina", "The vertebral foramina stack to form the canal that holds the spinal cord itself; the transverse foramina in cervical vertebrae carry the vertebral artery; and nutrient foramina admit small vessels into bone, none of which is the exit for spinal nerves."], ["The nutrient foramina", "The vertebral foramina stack to form the canal that holds the spinal cord itself; the transverse foramina in cervical vertebrae carry the vertebral artery; and nutrient foramina admit small vessels into bone, none of which is the exit for spinal nerves."], ["The intervertebral foramina", "Spinal nerves pass out of the vertebral canal through the intervertebral foramina, the lateral openings between the pedicles of adjacent vertebrae."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 70"}, {"topic": "Ribs", "io": "Ribs", "q": "Which posterior part of a typical rib articulates with the bodies of the thoracic vertebrae?", "opts": [["The head of the rib", "The head of the rib, at its posterior end, articulates with the bodies of the thoracic vertebrae at the costovertebral joints."], ["The costal cartilage", "The costal cartilage is the anterior end that connects toward the sternum; the costal groove runs along the rib's inferior inner surface for vessels; and the anterior shaft lies toward the front of the chest, none of which meets the vertebral bodies."], ["The costal groove", "The costal cartilage is the anterior end that connects toward the sternum; the costal groove runs along the rib's inferior inner surface for vessels; and the anterior shaft lies toward the front of the chest, none of which meets the vertebral bodies."], ["The anterior shaft", "The costal cartilage is the anterior end that connects toward the sternum; the costal groove runs along the rib's inferior inner surface for vessels; and the anterior shaft lies toward the front of the chest, none of which meets the vertebral bodies."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 98"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

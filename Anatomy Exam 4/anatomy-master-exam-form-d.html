@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #3f8fa3; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Exam 4 Comprehensive Master Exam — Form D</title>
+<style>
+  :root{
+    --navy:#153e59; --indigo:#0f766e; --gold:#3f8fa3; --ice:#81efe6;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Anatomy Exam 4 — Comprehensive Master Exam · Form D</h1>
+    <div class="sub">Appendicular Skeleton · Axial Skeleton · Appendicular Musculature · Axial Musculature</div>
+    <span class="pill">60 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Integrate the entire Anatomy Exam 4 skeleton and musculature: the appendicular and axial skeletons and the appendicular and axial musculature.</span><span class="chip">Identify bones, surface landmarks, articulations, muscle attachments, actions, and innervations across all four topics in one cumulative exam.</span><span class="chip">Each form draws evenly from all four topics with no repeated questions between forms — take all five to cover the full body of material.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Pelvic Bones — Lateral View", "io": "Pelvic Bones — Lateral View", "q": "Which foramen is formed by the ischium and pubis together, on the lateral aspect of the coxal bone?", "opts": [["Obturator foramen", "The obturator foramen is the large opening formed jointly by the ischium and pubis on the coxal bone."], ["Iliac fossa", "The greater sciatic notch is formed primarily by the ilium and ischium posteriorly, a different structure; the acetabulum is the hip socket formed by all three bones (ilium, ischium, pubis) converging, not an opening between just two of them; and the iliac fossa is a concave surface of the ilium alone, unrelated to this foramen."], ["Acetabulum", "The greater sciatic notch is formed primarily by the ilium and ischium posteriorly, a different structure; the acetabulum is the hip socket formed by all three bones (ilium, ischium, pubis) converging, not an opening between just two of them; and the iliac fossa is a concave surface of the ilium alone, unrelated to this foramen."], ["Greater sciatic notch", "The greater sciatic notch is formed primarily by the ilium and ischium posteriorly, a different structure; the acetabulum is the hip socket formed by all three bones (ilium, ischium, pubis) converging, not an opening between just two of them; and the iliac fossa is a concave surface of the ilium alone, unrelated to this foramen."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 39"}, {"topic": "Fibula", "io": "Fibula", "q": "Which proximal fibular landmark articulates with the tibia at the superior tibiofibular joint?", "opts": [["Shaft of the fibula", "The lateral malleolus is instead a distal landmark, forming the inferior tibiofibular joint region and the ankle prominence, not the proximal articulation; the shaft is the main body of the bone, not a specific articular landmark; and the interosseous border runs along the shaft for the interosseous membrane, not for articulation with the tibia."], ["Interosseous border", "The lateral malleolus is instead a distal landmark, forming the inferior tibiofibular joint region and the ankle prominence, not the proximal articulation; the shaft is the main body of the bone, not a specific articular landmark; and the interosseous border runs along the shaft for the interosseous membrane, not for articulation with the tibia."], ["Head of the fibula", "The head of the fibula is the proximal landmark that articulates with the tibia at the superior tibiofibular joint."], ["Lateral malleolus", "The lateral malleolus is instead a distal landmark, forming the inferior tibiofibular joint region and the ankle prominence, not the proximal articulation; the shaft is the main body of the bone, not a specific articular landmark; and the interosseous border runs along the shaft for the interosseous membrane, not for articulation with the tibia."]], "c": 2, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 57"}, {"topic": "Pectoral Girdle — Scapula", "io": "Pectoral Girdle — Scapula", "q": "Which scapular structure directly receives the head of the humerus?", "opts": [["The acromion", "The acromion is the flat lateral projection of the spine that meets the clavicle, not the humerus; the subscapular fossa is the anterior surface facing the ribs; and the scapular notch is a small notch on the superior border transmitting a nerve, not an articular socket."], ["The subscapular fossa", "The acromion is the flat lateral projection of the spine that meets the clavicle, not the humerus; the subscapular fossa is the anterior surface facing the ribs; and the scapular notch is a small notch on the superior border transmitting a nerve, not an articular socket."], ["The glenoid cavity", "The glenoid cavity (fossa) is the shallow lateral socket of the scapula that articulates with the head of the humerus at the glenohumeral joint."], ["The scapular notch", "The acromion is the flat lateral projection of the spine that meets the clavicle, not the humerus; the subscapular fossa is the anterior surface facing the ribs; and the scapular notch is a small notch on the superior border transmitting a nerve, not an articular socket."]], "c": 2, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Metacarpals & Phalanges", "io": "Metacarpals & Phalanges", "q": "How many metacarpal bones are in each hand?", "opts": [["5", "There are 5 metacarpal bones in each hand, numbered I to V."], ["14", "4 undercounts the actual number; 8 is instead the number of carpal bones, not metacarpals; and 14 is the number of phalanges per hand, not metacarpals."], ["4", "4 undercounts the actual number; 8 is instead the number of carpal bones, not metacarpals; and 14 is the number of phalanges per hand, not metacarpals."], ["8", "4 undercounts the actual number; 8 is instead the number of carpal bones, not metacarpals; and 14 is the number of phalanges per hand, not metacarpals."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 29"}, {"topic": "Ulna & Radius", "io": "Ulna & Radius", "q": "Which structure connects the shafts of the radius and ulna along their length?", "opts": [["The interosseous membrane", "The interosseous membrane is the fibrous sheet that connects the interosseous borders of the radial and ulnar shafts along their length."], ["The anular ligament", "The anular ligament encircles the head of the radius at the proximal radioulnar joint rather than spanning the shafts; the elbow joint capsule surrounds the elbow articulation only; and the intertubercular sulcus is a humeral groove, not a forearm connection."], ["The joint capsule of the elbow", "The anular ligament encircles the head of the radius at the proximal radioulnar joint rather than spanning the shafts; the elbow joint capsule surrounds the elbow articulation only; and the intertubercular sulcus is a humeral groove, not a forearm connection."], ["The intertubercular sulcus", "The anular ligament encircles the head of the radius at the proximal radioulnar joint rather than spanning the shafts; the elbow joint capsule surrounds the elbow articulation only; and the intertubercular sulcus is a humeral groove, not a forearm connection."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Foot — Metatarsals & Phalanges", "io": "Foot — Metatarsals & Phalanges", "q": "Which tarsal bone articulates superiorly with the tibia and fibula to help form the ankle joint?", "opts": [["The calcaneus", "The calcaneus lies below the talus and forms the heel rather than the ankle mortise; the cuboid is a lateral midfoot bone; and the cuneiform bones lie in the anterior tarsus before the metatarsals, none of which meets the tibia and fibula at the ankle."], ["The cuboid", "The calcaneus lies below the talus and forms the heel rather than the ankle mortise; the cuboid is a lateral midfoot bone; and the cuneiform bones lie in the anterior tarsus before the metatarsals, none of which meets the tibia and fibula at the ankle."], ["The cuneiform", "The calcaneus lies below the talus and forms the heel rather than the ankle mortise; the cuboid is a lateral midfoot bone; and the cuneiform bones lie in the anterior tarsus before the metatarsals, none of which meets the tibia and fibula at the ankle."], ["The talus", "The talus is the tarsal bone that articulates with the tibia and fibula superiorly, forming the ankle (talocrural) joint."]], "c": 3, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Humerus", "io": "Humerus", "q": "What is the deltoid tuberosity, and where is it located?", "opts": [["A roughened area on the humeral shaft for deltoid muscle attachment", "The deltoid tuberosity is a roughened area on the shaft (body) of the humerus, serving as the attachment site for the deltoid muscle."], ["A proximal articular surface where the humeral head meets the scapula", "It is not an articular surface for the scapula (that would be the humeral head at the anatomical neck); it is not a distal landmark related to the radial head, which sits on the radius itself; and it is a muscle-attachment roughening, not a nerve groove (the nerve groove on the humerus is the radial groove, a separate structure carrying the radial nerve, not the ulnar nerve)."], ["A distal landmark that helps form the joint with the radial head", "It is not an articular surface for the scapula (that would be the humeral head at the anatomical neck); it is not a distal landmark related to the radial head, which sits on the radius itself; and it is a muscle-attachment roughening, not a nerve groove (the nerve groove on the humerus is the radial groove, a separate structure carrying the radial nerve, not the ulnar nerve)."], ["A groove on the posterior humerus that carries the ulnar nerve", "It is not an articular surface for the scapula (that would be the humeral head at the anatomical neck); it is not a distal landmark related to the radial head, which sits on the radius itself; and it is a muscle-attachment roughening, not a nerve groove (the nerve groove on the humerus is the radial groove, a separate structure carrying the radial nerve, not the ulnar nerve)."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 15"}, {"topic": "Pectoral Girdle", "io": "Pectoral Girdle", "q": "Which two bones form the pectoral (shoulder) girdle on each side?", "opts": [["The humerus and the scapula", "The humerus is the arm bone of the free upper limb, not part of the girdle itself; the sternum is an axial bone that the clavicle articulates with but is not part of the girdle; and the first rib is likewise an axial structure, not a girdle bone."], ["The clavicle and the scapula", "Each pectoral girdle is formed by the clavicle anteriorly and the scapula posteriorly, connecting the upper limb to the axial skeleton."], ["The clavicle and the sternum", "The humerus is the arm bone of the free upper limb, not part of the girdle itself; the sternum is an axial bone that the clavicle articulates with but is not part of the girdle; and the first rib is likewise an axial structure, not a girdle bone."], ["The scapula and the first rib", "The humerus is the arm bone of the free upper limb, not part of the girdle itself; the sternum is an axial bone that the clavicle articulates with but is not part of the girdle; and the first rib is likewise an axial structure, not a girdle bone."]], "c": 1, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Ulna", "io": "Ulna", "q": "Which anterior projection of the proximal ulna forms the lower part of the trochlear notch?", "opts": [["The olecranon", "The olecranon forms the superior/posterior part of the trochlear notch, not the anterior part; the styloid process is a distal ulnar landmark; and the radial tuberosity belongs to the radius, not the ulna."], ["The coronoid process", "The coronoid process is the anterior projection of the proximal ulna that forms the inferior margin of the trochlear notch and fits into the coronoid fossa in flexion."], ["The styloid process", "The olecranon forms the superior/posterior part of the trochlear notch, not the anterior part; the styloid process is a distal ulnar landmark; and the radial tuberosity belongs to the radius, not the ulna."], ["The radial tuberosity", "The olecranon forms the superior/posterior part of the trochlear notch, not the anterior part; the styloid process is a distal ulnar landmark; and the radial tuberosity belongs to the radius, not the ulna."]], "c": 1, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Foot — Metatarsals & Phalanges", "io": "Foot — Metatarsals & Phalanges", "q": "Which tarsal bone forms the heel and is the largest bone of the foot?", "opts": [["The talus", "The talus sits above the calcaneus and articulates with the tibia and fibula but is not the heel bone; the navicular is a smaller midfoot bone; and the cuboid lies on the lateral midfoot, neither forming the heel nor being the largest tarsal."], ["The navicular", "The talus sits above the calcaneus and articulates with the tibia and fibula but is not the heel bone; the navicular is a smaller midfoot bone; and the cuboid lies on the lateral midfoot, neither forming the heel nor being the largest tarsal."], ["The calcaneus", "The calcaneus is the largest tarsal bone and forms the heel of the foot, transmitting body weight to the ground."], ["The cuboid", "The talus sits above the calcaneus and articulates with the tibia and fibula but is not the heel bone; the navicular is a smaller midfoot bone; and the cuboid lies on the lateral midfoot, neither forming the heel nor being the largest tarsal."]], "c": 2, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 0"}, {"topic": "Foot — Metatarsals & Phalanges", "io": "Foot — Metatarsals & Phalanges", "q": "How many tarsal bones are in each foot?", "opts": [["8 tarsal bones", "8 is the number of carpal bones in the wrist, not tarsals; 5 is the number of metatarsals, not tarsals; and 14 is the number of phalanges in the foot, not the count of tarsal bones."], ["7 tarsal bones", "Each foot has 7 tarsal bones forming the posterior half of the foot, including the talus and calcaneus."], ["5 tarsal bones", "8 is the number of carpal bones in the wrist, not tarsals; 5 is the number of metatarsals, not tarsals; and 14 is the number of phalanges in the foot, not the count of tarsal bones."], ["14 tarsal bones", "8 is the number of carpal bones in the wrist, not tarsals; 5 is the number of metatarsals, not tarsals; and 14 is the number of phalanges in the foot, not the count of tarsal bones."]], "c": 1, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 2"}, {"topic": "Tibia & Fibula", "io": "Tibia & Fibula", "q": "What is the tibial tuberosity, and where is it located?", "opts": [["A proximal anterior landmark for patellar ligament attachment", "The tibial tuberosity is a proximal, anterior landmark on the tibia that serves as the attachment site for the patellar ligament."], ["A distal landmark that forms the medial malleolus of the ankle", "The medial malleolus is a distal tibial landmark, a different structure from the proximal anterior tibial tuberosity; the soleal line, not the tibial tuberosity, is the proximal posterior ridge for muscle attachment; and the tibial tuberosity belongs to the tibia, not the fibula."], ["A distal landmark located on the fibula, not the tibia", "The medial malleolus is a distal tibial landmark, a different structure from the proximal anterior tibial tuberosity; the soleal line, not the tibial tuberosity, is the proximal posterior ridge for muscle attachment; and the tibial tuberosity belongs to the tibia, not the fibula."], ["A proximal posterior ridge that serves as a muscle attachment site", "The medial malleolus is a distal tibial landmark, a different structure from the proximal anterior tibial tuberosity; the soleal line, not the tibial tuberosity, is the proximal posterior ridge for muscle attachment; and the tibial tuberosity belongs to the tibia, not the fibula."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 55"}, {"topic": "Pectoral Girdle — Clavicle", "io": "Pectoral Girdle — Clavicle", "q": "Which end of the clavicle is the acromial end?", "opts": [["The lateral end", "The acromial end of the clavicle is its lateral end, articulating with the acromion of the scapula."], ["The medial end", "The medial end is instead the sternal end, articulating with the sternum; and the clavicle's ends are described as medial/lateral, not anterior/posterior."], ["The anterior end", "The medial end is instead the sternal end, articulating with the sternum; and the clavicle's ends are described as medial/lateral, not anterior/posterior."], ["The posterior end", "The medial end is instead the sternal end, articulating with the sternum; and the clavicle's ends are described as medial/lateral, not anterior/posterior."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 7"}, {"topic": "Hip Bones — Medial Structures", "io": "Hip Bones — Medial Structures", "q": "What is the iliac fossa?", "opts": [["A bony ridge running along the pelvic brim margin", "The socket for the femoral head is the acetabulum, a distinct structure; a ridge along the pelvic brim describes the arcuate line, not the iliac fossa; and the lateral surface of the ilium (with the gluteal lines) is a different surface from the medial iliac fossa."], ["The rough outer (lateral) surface of the ilium", "The socket for the femoral head is the acetabulum, a distinct structure; a ridge along the pelvic brim describes the arcuate line, not the iliac fossa; and the lateral surface of the ilium (with the gluteal lines) is a different surface from the medial iliac fossa."], ["The smooth, concave inner (medial) surface of the ilium", "The iliac fossa is the smooth, concave medial (internal) surface of the ilium, providing origin for the iliacus muscle."], ["The deep socket that receives the femoral head", "The socket for the femoral head is the acetabulum, a distinct structure; a ridge along the pelvic brim describes the arcuate line, not the iliac fossa; and the lateral surface of the ilium (with the gluteal lines) is a different surface from the medial iliac fossa."]], "c": 2, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 41"}, {"topic": "Pectoral Girdle — Clavicle", "io": "Pectoral Girdle — Clavicle", "q": "With which part of the sternum does the sternal end of the clavicle articulate?", "opts": [["The manubrium of the sternum", "The medial (sternal) end of the clavicle articulates with the manubrium of the sternum at the sternoclavicular joint."], ["The xiphoid process below", "The xiphoid process is the small inferior tip of the sternum, far from the clavicle; the body of the sternum lies below the manubrium and articulates with ribs, not the clavicle; and the jugular notch is the depression between the two clavicles, not the articulating surface itself."], ["The body of the sternum", "The xiphoid process is the small inferior tip of the sternum, far from the clavicle; the body of the sternum lies below the manubrium and articulates with ribs, not the clavicle; and the jugular notch is the depression between the two clavicles, not the articulating surface itself."], ["The jugular notch margin", "The xiphoid process is the small inferior tip of the sternum, far from the clavicle; the body of the sternum lies below the manubrium and articulates with ribs, not the clavicle; and the jugular notch is the depression between the two clavicles, not the articulating surface itself."]], "c": 0, "cite": "Anatomy of the Appendicular Skeleton - Shahsv.pptx, Slide 1"}, {"topic": "Spinal Curves", "io": "Spinal Curves", "q": "What distinguishes a primary spinal curve from a secondary spinal curve?", "opts": [["Primary curves occur only in the cervical region; secondary only in the lumbar region", "Reversing the timing (primary after birth, secondary before) contradicts the material's stated distinction; the primary/secondary distinction is about developmental timing, not confined to specific regions like only cervical or only lumbar; and there is in fact a clear developmental-timing difference described in the source."], ["Primary curves develop after birth; secondary curves develop before birth", "Reversing the timing (primary after birth, secondary before) contradicts the material's stated distinction; the primary/secondary distinction is about developmental timing, not confined to specific regions like only cervical or only lumbar; and there is in fact a clear developmental-timing difference described in the source."], ["Primary curves develop before birth; secondary curves develop after birth", "Primary curves develop before birth, while secondary curves develop after birth (such as the cervical curve developing as an infant learns to balance its head, and the lumbar curve developing with the ability to stand)."], ["There is no developmental difference between them", "Reversing the timing (primary after birth, secondary before) contradicts the material's stated distinction; the primary/secondary distinction is about developmental timing, not confined to specific regions like only cervical or only lumbar; and there is in fact a clear developmental-timing difference described in the source."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 63"}, {"topic": "Sphenoid", "io": "Sphenoid", "q": "What is the sella turcica, and what does it house?", "opts": [["A ridge on the ethmoid bone that anchors the nasal septum superiorly", "The foramen ovale and foramen rotundum, not the sella turcica, transmit branches of the trigeminal nerve; the perpendicular plate of the ethmoid (not the sella turcica) forms part of the nasal septum; and the zygomatic arch is formed by the zygomatic and temporal bones, unrelated to the sella turcica."], ["A bony process of the temporal bone that helps form the zygomatic arch", "The foramen ovale and foramen rotundum, not the sella turcica, transmit branches of the trigeminal nerve; the perpendicular plate of the ethmoid (not the sella turcica) forms part of the nasal septum; and the zygomatic arch is formed by the zygomatic and temporal bones, unrelated to the sella turcica."], ["A paired foramen in the sphenoid transmitting branches of the trigeminal nerve", "The foramen ovale and foramen rotundum, not the sella turcica, transmit branches of the trigeminal nerve; the perpendicular plate of the ethmoid (not the sella turcica) forms part of the nasal septum; and the zygomatic arch is formed by the zygomatic and temporal bones, unrelated to the sella turcica."], ["A saddle-shaped depression on the sphenoid body that houses the pituitary gland (hypophyseal fossa)", "The sella turcica is a saddle-shaped depression on the body of the sphenoid, containing the hypophyseal fossa that houses the pituitary gland."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 36"}, {"topic": "Occipital Bone", "io": "Occipital Bone", "q": "Which large opening in the occipital bone transmits the spinal cord as it joins the brainstem?", "opts": [["The optic canal", "The optic canal in the sphenoid transmits the optic nerve; the jugular foramen transmits venous blood and several nerves but not the spinal cord; and the mental foramen is on the mandible, unrelated to the cranial base."], ["The jugular foramen", "The optic canal in the sphenoid transmits the optic nerve; the jugular foramen transmits venous blood and several nerves but not the spinal cord; and the mental foramen is on the mandible, unrelated to the cranial base."], ["The mental foramen", "The optic canal in the sphenoid transmits the optic nerve; the jugular foramen transmits venous blood and several nerves but not the spinal cord; and the mental foramen is on the mandible, unrelated to the cranial base."], ["The foramen magnum", "The foramen magnum is the large opening in the occipital bone through which the spinal cord passes to join the brainstem."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 27"}, {"topic": "Thoracic Cage", "io": "Thoracic Cage", "q": "What are the two structural functions of the thoracic cage listed in the material?", "opts": [["Forming the sella turcica of the sphenoid bone and enclosing the pituitary gland", "Producing blood cells and storing calcium are general bone tissue functions, not the specific structural functions of the thoracic cage listed here; supporting the skull and transferring weight to the lower limbs are functions of the vertebral column, a different structure; and the sella turcica and pituitary gland belong to the sphenoid bone of the skull, unrelated to the thoracic cage."], ["Producing red blood cells within its marrow and storing the body's calcium reserves", "Producing blood cells and storing calcium are general bone tissue functions, not the specific structural functions of the thoracic cage listed here; supporting the skull and transferring weight to the lower limbs are functions of the vertebral column, a different structure; and the sella turcica and pituitary gland belong to the sphenoid bone of the skull, unrelated to the thoracic cage."], ["Supporting the skull directly and transferring the body's weight down to the lower limbs", "Producing blood cells and storing calcium are general bone tissue functions, not the specific structural functions of the thoracic cage listed here; supporting the skull and transferring weight to the lower limbs are functions of the vertebral column, a different structure; and the sella turcica and pituitary gland belong to the sphenoid bone of the skull, unrelated to the thoracic cage."], ["Protecting thoracic organs and serving as an attachment site for respiration/posture/limb-movement muscles", "The thoracic cage protects the heart, lungs, thymus, and other structures within the cavity, and serves as an attachment site for muscles involved in respiration, positioning the vertebral column, and movements of the pectoral girdle and upper limb."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 97"}, {"topic": "Nasal Complex", "io": "Nasal Complex", "q": "Which unpaired facial bone forms the inferior and posterior part of the bony nasal septum?", "opts": [["The vomer bone", "The vomer is the thin, plow-shaped bone that forms the inferoposterior part of the bony nasal septum."], ["The nasal bone", "The nasal bones form the bridge of the nose, not the septum; the lacrimal bone lies in the medial orbit; and the zygomatic bone forms the cheek, none of which builds the nasal septum."], ["The lacrimal bone", "The nasal bones form the bridge of the nose, not the septum; the lacrimal bone lies in the medial orbit; and the zygomatic bone forms the cheek, none of which builds the nasal septum."], ["The zygomatic bone", "The nasal bones form the bridge of the nose, not the septum; the lacrimal bone lies in the medial orbit; and the zygomatic bone forms the cheek, none of which builds the nasal septum."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 53"}, {"topic": "Sternum", "io": "Sternum", "q": "What three parts make up the sternum?", "opts": [["Manubrium, jugular notch, and body only", "The jugular notch is a landmark on the manubrium, not a separate main part of the sternum alongside manubrium and body; the clavicular articulation/notch is a landmark on the manubrium, not a third main part replacing the xiphoid process; and costal cartilage connects the ribs to the sternum but is not itself one of the sternum's three named parts."], ["Manubrium, xiphoid process, and costal cartilage", "The jugular notch is a landmark on the manubrium, not a separate main part of the sternum alongside manubrium and body; the clavicular articulation/notch is a landmark on the manubrium, not a third main part replacing the xiphoid process; and costal cartilage connects the ribs to the sternum but is not itself one of the sternum's three named parts."], ["Manubrium, body, and xiphoid process", "The sternum consists of the manubrium, body, and xiphoid process."], ["Body, xiphoid process, and clavicular notch", "The jugular notch is a landmark on the manubrium, not a separate main part of the sternum alongside manubrium and body; the clavicular articulation/notch is a landmark on the manubrium, not a third main part replacing the xiphoid process; and costal cartilage connects the ribs to the sternum but is not itself one of the sternum's three named parts."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 102"}, {"topic": "Sacrum", "io": "Sacrum", "q": "How many originally separate vertebrae fuse to form the adult sacrum?", "opts": [["Twelve", "Seven matches the cervical vertebra count, not the number fused into the sacrum; three (or three-to-five) is instead the number of vertebrae that fuse to form the coccyx, a different bone; and twelve matches the thoracic vertebra count, unrelated to sacral fusion."], ["Three", "Seven matches the cervical vertebra count, not the number fused into the sacrum; three (or three-to-five) is instead the number of vertebrae that fuse to form the coccyx, a different bone; and twelve matches the thoracic vertebra count, unrelated to sacral fusion."], ["Five", "The sacrum consists of five fused vertebrae, though it exists as one bone in the adult."], ["Seven", "Seven matches the cervical vertebra count, not the number fused into the sacrum; three (or three-to-five) is instead the number of vertebrae that fuse to form the coccyx, a different bone; and twelve matches the thoracic vertebra count, unrelated to sacral fusion."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 92"}, {"topic": "Ethmoid", "io": "Ethmoid", "q": "Which perforated ethmoid plate transmits the olfactory nerve fibers from the nasal cavity?", "opts": [["The perpendicular plate", "The perpendicular plate of the ethmoid forms part of the nasal septum, not the olfactory sieve; the pterygoid plate belongs to the sphenoid; and the horizontal plate of the palatine forms the back of the hard palate, none of which transmits olfactory fibers."], ["The pterygoid plate", "The perpendicular plate of the ethmoid forms part of the nasal septum, not the olfactory sieve; the pterygoid plate belongs to the sphenoid; and the horizontal plate of the palatine forms the back of the hard palate, none of which transmits olfactory fibers."], ["The cribriform plate", "The cribriform plate of the ethmoid is perforated by numerous foramina that transmit olfactory nerve fibers from the nasal cavity into the cranium."], ["The horizontal plate", "The perpendicular plate of the ethmoid forms part of the nasal septum, not the olfactory sieve; the pterygoid plate belongs to the sphenoid; and the horizontal plate of the palatine forms the back of the hard palate, none of which transmits olfactory fibers."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 39"}, {"topic": "Ribs", "io": "Ribs", "q": "Along the inferior inner surface of a typical rib, which groove protects the intercostal vessels and nerve?", "opts": [["The intertubercular groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."], ["The radial groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."], ["The mylohyoid groove", "The intertubercular groove is on the humerus; the radial groove is also on the humerus for the radial nerve; and the mylohyoid groove is on the mandible, none of which is on a rib."], ["The costal groove", "The costal groove runs along the inferior internal margin of a typical rib and shelters the intercostal vein, artery, and nerve."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 98"}, {"topic": "Vertebra Anatomy", "io": "Vertebra Anatomy", "q": "The vertebral foramen of a typical vertebra transmits which structure?", "opts": [["The vertebral artery only", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."], ["The spinal cord", "The vertebral foramen is the central opening through which the spinal cord passes; the stacked foramina form the vertebral canal."], ["A spinal nerve root only", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."], ["The esophagus", "The vertebral artery passes through the transverse foramina of the cervical vertebrae, not the vertebral foramen; spinal nerve roots exit through the intervertebral foramina between vertebrae; and the esophagus lies anterior to the column entirely."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 70"}, {"topic": "The Orbits", "io": "The Orbits", "q": "Which bone forms the floor of the orbit?", "opts": [["Frontal bone", "The frontal bone forms the roof, not the floor; the sphenoid forms the posterior wall; and the zygomatic bone forms the lateral wall — each a different wall from the floor formed by the maxilla."], ["Maxilla", "The maxilla forms the floor of the orbit."], ["Zygomatic bone", "The frontal bone forms the roof, not the floor; the sphenoid forms the posterior wall; and the zygomatic bone forms the lateral wall — each a different wall from the floor formed by the maxilla."], ["Sphenoid", "The frontal bone forms the roof, not the floor; the sphenoid forms the posterior wall; and the zygomatic bone forms the lateral wall — each a different wall from the floor formed by the maxilla."]], "c": 1, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 51"}, {"topic": "Nasal Complex", "io": "Nasal Complex", "q": "What structures make up the nasal septum?", "opts": [["The sphenoid bone together with the frontal bone", "The nasal bones and lacrimal bones instead form part of the external nasal wall/orbit region, not the septum itself; the maxilla and palatine bone contribute to the hard palate and nasal floor, not the septum; and the sphenoid and frontal bone are unrelated to septal formation."], ["The paired nasal bones and the lacrimal bones", "The nasal bones and lacrimal bones instead form part of the external nasal wall/orbit region, not the septum itself; the maxilla and palatine bone contribute to the hard palate and nasal floor, not the septum; and the sphenoid and frontal bone are unrelated to septal formation."], ["The vomer and the perpendicular plate of the ethmoid", "The nasal septum is made up of the vomer (inferiorly) and the perpendicular plate of the ethmoid (superiorly)."], ["The maxilla bone together with the palatine bone", "The nasal bones and lacrimal bones instead form part of the external nasal wall/orbit region, not the septum itself; the maxilla and palatine bone contribute to the hard palate and nasal floor, not the septum; and the sphenoid and frontal bone are unrelated to septal formation."]], "c": 2, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 53"}, {"topic": "Maxillae", "io": "Maxillae", "q": "Which air-filled space, the largest of the paranasal sinuses, lies within the maxilla?", "opts": [["The frontal sinus", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."], ["The sphenoidal sinus", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."], ["The mastoid air cells", "The frontal sinus lies in the frontal bone; the sphenoidal sinus lies in the sphenoid; and the mastoid air cells are in the temporal bone, none of which is the sinus within the maxilla."], ["The maxillary sinus", "The maxillary sinus is the largest paranasal sinus, occupying the body of the maxilla on each side."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 43"}, {"topic": "Maxillae", "io": "Maxillae", "q": "The maxillae form which part of the mouth and hold which set of teeth?", "opts": [["The upper jaw, holding the upper teeth", "The maxillae fuse to form the upper jaw and hold the upper (maxillary) teeth in their alveolar processes."], ["The lower jaw, holding the lower teeth", "The lower jaw and lower teeth belong to the mandible, not the maxillae; describing the maxillae as the hard palate alone with no teeth ignores their tooth-bearing role; and the cheekbones are the zygomatic bones, which hold no teeth."], ["The hard palate only, holding no teeth", "The lower jaw and lower teeth belong to the mandible, not the maxillae; describing the maxillae as the hard palate alone with no teeth ignores their tooth-bearing role; and the cheekbones are the zygomatic bones, which hold no teeth."], ["The cheekbones, holding no teeth", "The lower jaw and lower teeth belong to the mandible, not the maxillae; describing the maxillae as the hard palate alone with no teeth ignores their tooth-bearing role; and the cheekbones are the zygomatic bones, which hold no teeth."]], "c": 0, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 43"}, {"topic": "Temporal Bone", "io": "Temporal Bone", "q": "Which slender temporal-bone spike serves as an attachment point for muscles of the tongue and pharynx?", "opts": [["The mastoid process", "The mastoid process is a rounded projection behind the ear; the zygomatic arch is a bridge of bone across the cheek; and the crista galli is an ethmoid ridge inside the cranium, none of which is the slender styloid spike."], ["The zygomatic arch", "The mastoid process is a rounded projection behind the ear; the zygomatic arch is a bridge of bone across the cheek; and the crista galli is an ethmoid ridge inside the cranium, none of which is the slender styloid spike."], ["The crista galli", "The mastoid process is a rounded projection behind the ear; the zygomatic arch is a bridge of bone across the cheek; and the crista galli is an ethmoid ridge inside the cranium, none of which is the slender styloid spike."], ["The styloid process", "The styloid process is the thin pointed projection of the temporal bone that anchors several muscles and ligaments of the tongue and pharynx."]], "c": 3, "cite": "Anatomy of the Axial Skeleton - Shahsv.pptx, Slide 34"}, {"topic": "Compartments of the Upper Limb", "io": "Compartments of the Upper Limb", "q": "What is the function of the deep fasciae separating limb muscles into compartments?", "opts": [["They are the primary structures responsible for transmitting electrical nerve signals directly into the muscle fibers", "Tendons (not deep fasciae) are the structures that attach muscle to bone; the periosteum is a distinct connective tissue covering specific to bone, not the intermuscular deep fascia; and nerve signal transmission occurs via the neuromuscular junction and nerve fibers, not the deep fasciae, which are purely connective tissue structures."], ["They form the dense fibrous tendons that anchor the ends of each skeletal muscle directly to the periosteum covering nearby bone", "Tendons (not deep fasciae) are the structures that attach muscle to bone; the periosteum is a distinct connective tissue covering specific to bone, not the intermuscular deep fascia; and nerve signal transmission occurs via the neuromuscular junction and nerve fibers, not the deep fasciae, which are purely connective tissue structures."], ["They form the periosteum, the fibrous membrane that covers and nourishes the surface of the underlying limb bones", "Tendons (not deep fasciae) are the structures that attach muscle to bone; the periosteum is a distinct connective tissue covering specific to bone, not the intermuscular deep fascia; and nerve signal transmission occurs via the neuromuscular junction and nerve fibers, not the deep fasciae, which are purely connective tissue structures."], ["They support and interconnect adjacent skeletal muscles while permitting independent movement, separating soft tissues into compartments", "The connective tissue fibers of the deep fasciae support and interconnect adjacent skeletal muscles but permit independent movement, and the deep fascia separates the soft tissues of the limb into separate compartments."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 90"}, {"topic": "Compartments of the Upper Limb", "io": "Compartments of the Upper Limb", "q": "The muscles of the posterior forearm compartment (the extensors) are supplied mainly by which nerve?", "opts": [["The median nerve", "The median nerve supplies most anterior forearm flexors; the ulnar nerve supplies a few medial forearm and most intrinsic hand muscles; and the musculocutaneous nerve supplies the arm, none of which is the extensor compartment's main nerve."], ["The radial nerve", "The posterior forearm extensor compartment is supplied by the radial nerve and its deep branch."], ["The ulnar nerve", "The median nerve supplies most anterior forearm flexors; the ulnar nerve supplies a few medial forearm and most intrinsic hand muscles; and the musculocutaneous nerve supplies the arm, none of which is the extensor compartment's main nerve."], ["The musculocutaneous nerve", "The median nerve supplies most anterior forearm flexors; the ulnar nerve supplies a few medial forearm and most intrinsic hand muscles; and the musculocutaneous nerve supplies the arm, none of which is the extensor compartment's main nerve."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 92"}, {"topic": "Clinical Correlation", "io": "Clinical Correlation", "q": "Which peripheral nerve injury is specifically associated with paralysis of the serratus anterior in the material?", "opts": [["Radial nerve lesion", "An axillary nerve lesion is instead associated with deltoid weakness, not serratus anterior paralysis; median nerve compression at the wrist causes carpal tunnel syndrome, a distinct condition also mentioned in the material but unrelated to the serratus anterior; and a radial nerve lesion classically causes wrist drop, not serratus anterior paralysis."], ["Median nerve lesion (carpal tunnel syndrome)", "An axillary nerve lesion is instead associated with deltoid weakness, not serratus anterior paralysis; median nerve compression at the wrist causes carpal tunnel syndrome, a distinct condition also mentioned in the material but unrelated to the serratus anterior; and a radial nerve lesion classically causes wrist drop, not serratus anterior paralysis."], ["Axillary nerve lesion", "An axillary nerve lesion is instead associated with deltoid weakness, not serratus anterior paralysis; median nerve compression at the wrist causes carpal tunnel syndrome, a distinct condition also mentioned in the material but unrelated to the serratus anterior; and a radial nerve lesion classically causes wrist drop, not serratus anterior paralysis."], ["Long thoracic nerve lesion", "Serratus anterior paralysis is typically due to dysfunction (a lesion) of the long thoracic nerve."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 11"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Which muscle is the prime mover of elbow flexion and also supinates the forearm?", "opts": [["The triceps brachii", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."], ["The pronator teres", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."], ["The biceps brachii", "The biceps brachii flexes the elbow and is a powerful supinator of the forearm, especially against resistance."], ["The anconeus", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which muscle produces flexion, adduction, and medial rotation of the arm at the shoulder?", "opts": [["Deltoid muscle", "Deltoid instead abducts the arm, a different action from pectoralis major's flexion/adduction/medial rotation combination; infraspinatus produces lateral rotation at the shoulder, the opposite of medial rotation; and teres minor produces adduction and lateral rotation, also opposite in rotational direction to pectoralis major."], ["Pectoralis major", "Pectoralis major produces flexion, adduction, and medial rotation of the arm at the shoulder."], ["Infraspinatus muscle", "Deltoid instead abducts the arm, a different action from pectoralis major's flexion/adduction/medial rotation combination; infraspinatus produces lateral rotation at the shoulder, the opposite of medial rotation; and teres minor produces adduction and lateral rotation, also opposite in rotational direction to pectoralis major."], ["Teres minor muscle", "Deltoid instead abducts the arm, a different action from pectoralis major's flexion/adduction/medial rotation combination; infraspinatus produces lateral rotation at the shoulder, the opposite of medial rotation; and teres minor produces adduction and lateral rotation, also opposite in rotational direction to pectoralis major."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Intrinsic Hand Muscles", "io": "Intrinsic Hand Muscles", "q": "How do the dorsal interossei and palmar interossei differ in their actions on the fingers?", "opts": [["Dorsal interossei abduct digits 2-4; palmar interossei adduct digits 2, 4, and 5", "Dorsal interossei abduct digits 2 through 4, while palmar interossei adduct digits 2, 4, and 5."], ["Dorsal interossei flex the digits; palmar interossei extend the digits", "Reversing the actions (dorsal adduct, palmar abduct) contradicts the material's description; claiming both abduct the same digits ignores the clear abduction-vs-adduction distinction given; and flexion/extension is not the action pair described for these two interossei groups, which instead differ by abduction versus adduction."], ["Dorsal interossei adduct digits 2-4; palmar interossei abduct digits 2, 4, and 5", "Reversing the actions (dorsal adduct, palmar abduct) contradicts the material's description; claiming both abduct the same digits ignores the clear abduction-vs-adduction distinction given; and flexion/extension is not the action pair described for these two interossei groups, which instead differ by abduction versus adduction."], ["Both abduct the same digits", "Reversing the actions (dorsal adduct, palmar abduct) contradicts the material's description; claiming both abduct the same digits ignores the clear abduction-vs-adduction distinction given; and flexion/extension is not the action pair described for these two interossei groups, which instead differ by abduction versus adduction."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 48"}, {"topic": "Iliopsoas Group", "io": "Iliopsoas Group", "q": "The iliopsoas is formed by the union of which two muscles?", "opts": [["The gluteus maximus and medius", "The gluteus maximus and medius are gluteal muscles; the biceps femoris and gracilis are thigh muscles of other groups; and the soleus and gastrocnemius are calf muscles, none of which unite to form the iliopsoas."], ["The biceps femoris and gracilis", "The gluteus maximus and medius are gluteal muscles; the biceps femoris and gracilis are thigh muscles of other groups; and the soleus and gastrocnemius are calf muscles, none of which unite to form the iliopsoas."], ["The psoas major and the iliacus", "The iliopsoas is formed by the psoas major, arising from the lumbar vertebrae, and the iliacus, arising from the iliac fossa."], ["The soleus and gastrocnemius", "The gluteus maximus and medius are gluteal muscles; the biceps femoris and gracilis are thigh muscles of other groups; and the soleus and gastrocnemius are calf muscles, none of which unite to form the iliopsoas."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 63"}, {"topic": "Foot and Toe Movers", "io": "Foot and Toe Movers", "q": "Which anterior leg muscle is the prime dorsiflexor of the foot at the ankle?", "opts": [["The gastrocnemius muscle", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."], ["The soleus muscle", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."], ["The tibialis anterior", "The tibialis anterior in the anterior leg compartment is the prime dorsiflexor of the foot and also inverts it."], ["The fibularis longus", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 75"}, {"topic": "Compartments of the Upper Limb", "io": "Compartments of the Upper Limb", "q": "Which muscle makes up the posterior compartment of the arm?", "opts": [["Biceps brachii", "Biceps brachii, brachialis, and coracobrachialis are instead the three muscles of the anterior compartment of the arm, not the posterior compartment, which contains triceps brachii alone."], ["Brachialis", "Biceps brachii, brachialis, and coracobrachialis are instead the three muscles of the anterior compartment of the arm, not the posterior compartment, which contains triceps brachii alone."], ["Triceps brachii", "The posterior compartment of the arm is made up of the triceps brachii."], ["Coracobrachialis", "Biceps brachii, brachialis, and coracobrachialis are instead the three muscles of the anterior compartment of the arm, not the posterior compartment, which contains triceps brachii alone."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 92"}, {"topic": "Compartments of the Lower Limb", "io": "Compartments of the Lower Limb", "q": "Which large tendon, formed by the calf muscles, is the strongest and thickest tendon in the body?", "opts": [["The calcaneal (Achilles) tendon", "The calcaneal, or Achilles, tendon formed by the gastrocnemius and soleus is the strongest and thickest tendon in the body."], ["The patellar tendon of the knee", "The patellar and quadriceps tendons act at the knee and are not the thickest; and the biceps tendon is a much smaller arm tendon, none of which is the calcaneal tendon."], ["The biceps tendon of the arm", "The patellar and quadriceps tendons act at the knee and are not the thickest; and the biceps tendon is a much smaller arm tendon, none of which is the calcaneal tendon."], ["The quadriceps tendon above", "The patellar and quadriceps tendons act at the knee and are not the thickest; and the biceps tendon is a much smaller arm tendon, none of which is the calcaneal tendon."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 75"}, {"topic": "Action Lines", "io": "Action Lines", "q": "Action lines that cross the anterior aspect of a joint classify a muscle as which type?", "opts": [["An abductor/lateral rotator", "An extensor is defined by an action line crossing the posterior aspect of a joint, the opposite side from anterior; an adductor/medial rotator is defined by an action line crossing the medial aspect, a different plane entirely from anterior/posterior; and an abductor/lateral rotator is defined by the lateral aspect, also a different plane from anterior."], ["A flexor", "Action lines that cross the anterior aspect of a joint classify a muscle as a flexor."], ["An extensor", "An extensor is defined by an action line crossing the posterior aspect of a joint, the opposite side from anterior; an adductor/medial rotator is defined by an action line crossing the medial aspect, a different plane entirely from anterior/posterior; and an abductor/lateral rotator is defined by the lateral aspect, also a different plane from anterior."], ["An adductor/medial rotator", "An extensor is defined by an action line crossing the posterior aspect of a joint, the opposite side from anterior; an adductor/medial rotator is defined by an action line crossing the medial aspect, a different plane entirely from anterior/posterior; and an abductor/lateral rotator is defined by the lateral aspect, also a different plane from anterior."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 19"}, {"topic": "Musculature Overview", "io": "Musculature Overview", "q": "How is the skeletal musculature of the body subdivided, per the material?", "opts": [["Voluntary musculature and involuntary musculature", "Voluntary/involuntary describes a physiological control distinction, not the axial/appendicular structural subdivision used here; superficial/deep describes depth of dissection, not this whole-body muscle subdivision; and flexor/extensor describes action type for individual muscles, not the two-group body-wide classification given."], ["Axial musculature and appendicular musculature", "The skeletal muscle of the body is subdivided into axial musculature (positions the head/vertebral column and moves the rib cage) and appendicular musculature (stabilizes/moves the appendicular skeleton)."], ["Superficial musculature and deep musculature", "Voluntary/involuntary describes a physiological control distinction, not the axial/appendicular structural subdivision used here; superficial/deep describes depth of dissection, not this whole-body muscle subdivision; and flexor/extensor describes action type for individual muscles, not the two-group body-wide classification given."], ["Flexor musculature and extensor musculature", "Voluntary/involuntary describes a physiological control distinction, not the axial/appendicular structural subdivision used here; superficial/deep describes depth of dissection, not this whole-body muscle subdivision; and flexor/extensor describes action type for individual muscles, not the two-group body-wide classification given."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 3"}, {"topic": "Foot and Toe Movers", "io": "Foot and Toe Movers", "q": "Which large posterior leg muscle produces plantar flexion and is notable for having its tendon become the calcaneal (Achilles) tendon along with the gastrocnemius?", "opts": [["Tibialis anterior", "Tibialis anterior instead dorsiflexes the foot and inserts on the medial cuneiform/1st metatarsal, unrelated to the calcaneal tendon; extensor digitorum longus extends toes 2-5 and inserts via a different tendon route on the toes, not the calcaneal tendon; and fibularis brevis everts the foot and inserts near the 5th metatarsal, not contributing to the calcaneal tendon."], ["Soleus", "Soleus produces plantar flexion of the foot, and together with the gastrocnemius, contributes to the calcaneal tendon."], ["Fibularis brevis", "Tibialis anterior instead dorsiflexes the foot and inserts on the medial cuneiform/1st metatarsal, unrelated to the calcaneal tendon; extensor digitorum longus extends toes 2-5 and inserts via a different tendon route on the toes, not the calcaneal tendon; and fibularis brevis everts the foot and inserts near the 5th metatarsal, not contributing to the calcaneal tendon."], ["Extensor digitorum longus", "Tibialis anterior instead dorsiflexes the foot and inserts on the medial cuneiform/1st metatarsal, unrelated to the calcaneal tendon; extensor digitorum longus extends toes 2-5 and inserts via a different tendon route on the toes, not the calcaneal tendon; and fibularis brevis everts the foot and inserts near the 5th metatarsal, not contributing to the calcaneal tendon."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 75"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which muscle is the prime mover for abduction of the arm at the shoulder past the first several degrees?", "opts": [["The supraspinatus", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."], ["The deltoid muscle", "The deltoid, especially its middle fibers, is the prime mover for abduction of the arm at the glenohumeral joint."], ["The pectoralis major", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."], ["The latissimus dorsi", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Gluteal Group", "io": "Gluteal Group", "q": "Which nerve supplies the gluteus maximus, the main thigh extensor?", "opts": [["The superior gluteal nerve", "The superior gluteal nerve supplies the gluteus medius and minimus; the tibial nerve supplies the posterior leg; and the median nerve supplies forearm and hand muscles, none of which supplies the gluteus maximus."], ["The inferior gluteal nerve", "The inferior gluteal nerve supplies the gluteus maximus, the powerful extensor of the thigh."], ["The tibial nerve", "The superior gluteal nerve supplies the gluteus medius and minimus; the tibial nerve supplies the posterior leg; and the median nerve supplies forearm and hand muscles, none of which supplies the gluteus maximus."], ["The median nerve", "The superior gluteal nerve supplies the gluteus medius and minimus; the tibial nerve supplies the posterior leg; and the median nerve supplies forearm and hand muscles, none of which supplies the gluteus maximus."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 55"}, {"topic": "Muscles of Mastication", "io": "Muscles of Mastication", "q": "Which muscle of mastication protrudes the mandible and helps open the mouth?", "opts": [["The temporalis muscle", "The temporalis and masseter mainly elevate the mandible to close the mouth; and the medial pterygoid also elevates it, none of which is the main protruder and opener."], ["The lateral pterygoid", "The lateral pterygoid protrudes the mandible and depresses it to help open the mouth."], ["The masseter muscle", "The temporalis and masseter mainly elevate the mandible to close the mouth; and the medial pterygoid also elevates it, none of which is the main protruder and opener."], ["The medial pterygoid", "The temporalis and masseter mainly elevate the mandible to close the mouth; and the medial pterygoid also elevates it, none of which is the main protruder and opener."]], "c": 1, "cite": "Axial Musculature - Shahsv.pptx, Slide 37"}, {"topic": "Muscles of the Tongue", "io": "Muscles of the Tongue", "q": "How are the tongue muscles that change its shape, rather than its position, classified?", "opts": [["As intrinsic tongue muscles", "Intrinsic tongue muscles lie entirely within the tongue and change its shape, while extrinsic muscles move its position."], ["As extrinsic tongue muscles", "Extrinsic tongue muscles change the tongue's position rather than only its shape; the muscles of mastication move the jaw; and the pharyngeal constrictors act on the pharynx, none of which are the shape-changing intrinsic muscles."], ["As muscles of mastication", "Extrinsic tongue muscles change the tongue's position rather than only its shape; the muscles of mastication move the jaw; and the pharyngeal constrictors act on the pharynx, none of which are the shape-changing intrinsic muscles."], ["As pharyngeal constrictors", "Extrinsic tongue muscles change the tongue's position rather than only its shape; the muscles of mastication move the jaw; and the pharyngeal constrictors act on the pharynx, none of which are the shape-changing intrinsic muscles."]], "c": 0, "cite": "Axial Musculature - Shahsv.pptx, Slide 40"}, {"topic": "Cervical Muscles (Scalenes)", "io": "Cervical Muscles (Scalenes)", "q": "The scalene muscles of the lateral neck perform which action on the ribs?", "opts": [["They elevate the first two ribs", "The anterior, middle, and posterior scalenes elevate the first two ribs and laterally flex the neck."], ["They depress the last two ribs", "Depressing the lower ribs is the internal intercostals' role; rotating the eyeball is an extra-ocular action; and closing the eyelids is the orbicularis oculi's role, none of which is the scalenes' action on the ribs."], ["They rotate the eyeball", "Depressing the lower ribs is the internal intercostals' role; rotating the eyeball is an extra-ocular action; and closing the eyelids is the orbicularis oculi's role, none of which is the scalenes' action on the ribs."], ["They close the eyelids", "Depressing the lower ribs is the internal intercostals' role; rotating the eyeball is an extra-ocular action; and closing the eyelids is the orbicularis oculi's role, none of which is the scalenes' action on the ribs."]], "c": 0, "cite": "Axial Musculature - Shahsv.pptx, Slide 64"}, {"topic": "Muscles of the Urogenital Triangle", "io": "Muscles of the Urogenital Triangle", "q": "The urogenital triangle is the anterior part of which body region?", "opts": [["The thoracic cavity", "The thoracic cavity houses the heart and lungs; the cranial cavity houses the brain; and the axilla is the armpit, none of which contains the urogenital triangle."], ["The cranial cavity", "The thoracic cavity houses the heart and lungs; the cranial cavity houses the brain; and the axilla is the armpit, none of which contains the urogenital triangle."], ["The perineum", "The urogenital triangle is the anterior portion of the perineum, containing the external genital and urethral structures."], ["The axilla", "The thoracic cavity houses the heart and lungs; the cranial cavity houses the brain; and the axilla is the armpit, none of which contains the urogenital triangle."]], "c": 2, "cite": "Axial Musculature - Shahsv.pptx, Slide 79"}, {"topic": "Intrinsic Back Muscles", "io": "Intrinsic Back Muscles", "q": "Which deep intrinsic back muscle extends the vertebral column and rotates the body toward the opposite side of the muscle?", "opts": [["Interspinales", "Interspinales only extends the vertebral column, without the rotational component described for multifidus; intertransversarii produces lateral flexion of the vertebral column, a different action from extension-plus-rotation; and splenius capitis is a superficial (not deep) intrinsic back muscle with a different action (running from cervical spinous processes to the mastoid process)."], ["Intertransversarii", "Interspinales only extends the vertebral column, without the rotational component described for multifidus; intertransversarii produces lateral flexion of the vertebral column, a different action from extension-plus-rotation; and splenius capitis is a superficial (not deep) intrinsic back muscle with a different action (running from cervical spinous processes to the mastoid process)."], ["Splenius capitis", "Interspinales only extends the vertebral column, without the rotational component described for multifidus; intertransversarii produces lateral flexion of the vertebral column, a different action from extension-plus-rotation; and splenius capitis is a superficial (not deep) intrinsic back muscle with a different action (running from cervical spinous processes to the mastoid process)."], ["Multifidus", "Multifidus extends the vertebral column and rotates the body toward the side opposite the muscle, innervated by cervical, thoracic, and lumbar spinal nerves."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 57"}, {"topic": "Pelvic Floor Overview", "io": "Pelvic Floor Overview", "q": "What are the main functions of the muscles of the perineum and pelvic diaphragm?", "opts": [["Rotate the head from side to side, flex the cervical spine, and stabilize the neck during swallowing", "Elevating the ribs for inhalation is a function of the scalenes and external intercostals, not the pelvic floor; rotating the head and flexing the neck are functions of muscles like the sternocleidomastoid and longus colli/capitis, unrelated to the pelvic floor; and extending the vertebral column is an erector spinae function, a different muscle group from the pelvic floor."], ["Extend the vertebral column, help maintain upright standing posture, and stabilize the trunk during lifting", "Elevating the ribs for inhalation is a function of the scalenes and external intercostals, not the pelvic floor; rotating the head and flexing the neck are functions of muscles like the sternocleidomastoid and longus colli/capitis, unrelated to the pelvic floor; and extending the vertebral column is an erector spinae function, a different muscle group from the pelvic floor."], ["Support pelvic organs, flex the joints of the sacrum/coccyx, and control movement of material through the urethra and anus", "The main functions of the muscles of the perineum and pelvic diaphragm are to support the organs of the pelvic cavity, flex the joints of the sacrum and coccyx, and control the movement of material through the urethra and anus."], ["Elevate the ribs to assist forced inhalation during heavy exercise, exertion, or singing", "Elevating the ribs for inhalation is a function of the scalenes and external intercostals, not the pelvic floor; rotating the head and flexing the neck are functions of muscles like the sternocleidomastoid and longus colli/capitis, unrelated to the pelvic floor; and extending the vertebral column is an erector spinae function, a different muscle group from the pelvic floor."]], "c": 2, "cite": "Axial Musculature - Shahsv.pptx, Slide 77"}, {"topic": "Muscles of Mastication", "io": "Muscles of Mastication", "q": "How many paired muscles of mastication move the mandible?", "opts": [["Four paired muscles", "There are four paired muscles of mastication: the masseter, temporalis, medial pterygoid, and lateral pterygoid."], ["Two paired muscles", "Two undercounts the chewing muscles; and six or eight overcount them; there are four paired muscles of mastication, so none of these totals is correct."], ["Six paired muscles", "Two undercounts the chewing muscles; and six or eight overcount them; there are four paired muscles of mastication, so none of these totals is correct."], ["Eight paired muscles", "Two undercounts the chewing muscles; and six or eight overcount them; there are four paired muscles of mastication, so none of these totals is correct."]], "c": 0, "cite": "Axial Musculature - Shahsv.pptx, Slide 37"}, {"topic": "Abdominal Muscles", "io": "Abdominal Muscles", "q": "Which is the most superficial of the three flat abdominal muscles, its fibers running downward and medially?", "opts": [["The internal oblique", "The internal oblique lies deep to the external oblique; the transversus abdominis is deeper still; and the rectus abdominis is the vertical strap muscle, none of which is the most superficial flat muscle."], ["The transversus abdominis", "The internal oblique lies deep to the external oblique; the transversus abdominis is deeper still; and the rectus abdominis is the vertical strap muscle, none of which is the most superficial flat muscle."], ["The rectus abdominis", "The internal oblique lies deep to the external oblique; the transversus abdominis is deeper still; and the rectus abdominis is the vertical strap muscle, none of which is the most superficial flat muscle."], ["The external oblique", "The external oblique is the most superficial flat abdominal muscle, with fibers directed inferomedially, like hands in the pockets."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 69"}, {"topic": "Muscles of Facial Expression", "io": "Muscles of Facial Expression", "q": "Which muscle draws the angle of the mouth upward and laterally, as in smiling?", "opts": [["The orbicularis oculi", "The orbicularis oculi closes the eye; the buccinator compresses the cheek; and the platysma depresses the lower lip, none of which produces a smile."], ["The buccinator muscle", "The orbicularis oculi closes the eye; the buccinator compresses the cheek; and the platysma depresses the lower lip, none of which produces a smile."], ["The platysma muscle", "The orbicularis oculi closes the eye; the buccinator compresses the cheek; and the platysma depresses the lower lip, none of which produces a smile."], ["The zygomaticus major", "The zygomaticus major runs from the zygomatic bone to the corner of the mouth and draws it up and out in smiling."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 14"}, {"topic": "Extra-Ocular Muscles", "io": "Extra-Ocular Muscles", "q": "Which cranial nerve supplies most of the extra-ocular muscles, except the lateral rectus and superior oblique?", "opts": [["The abducens nerve", "The abducens nerve supplies only the lateral rectus; the trochlear nerve supplies only the superior oblique; and the trigeminal nerve supplies the chewing muscles, none of which supplies most eye muscles."], ["The oculomotor nerve", "The oculomotor nerve (cranial nerve three) supplies four of the six extra-ocular muscles, all except the lateral rectus and superior oblique."], ["The trochlear nerve", "The abducens nerve supplies only the lateral rectus; the trochlear nerve supplies only the superior oblique; and the trigeminal nerve supplies the chewing muscles, none of which supplies most eye muscles."], ["The trigeminal nerve", "The abducens nerve supplies only the lateral rectus; the trochlear nerve supplies only the superior oblique; and the trigeminal nerve supplies the chewing muscles, none of which supplies most eye muscles."]], "c": 1, "cite": "Axial Musculature - Shahsv.pptx, Slide 19"}, {"topic": "Perineal Region", "io": "Perineal Region", "q": "The perineum is divided into an anterior urogenital triangle and which posterior triangle?", "opts": [["The femoral triangle", "The femoral triangle is in the thigh; the cervical triangle is in the neck; and the lumbar triangle is in the posterolateral abdominal wall, none of which is the posterior perineal triangle."], ["The cervical triangle", "The femoral triangle is in the thigh; the cervical triangle is in the neck; and the lumbar triangle is in the posterolateral abdominal wall, none of which is the posterior perineal triangle."], ["The lumbar triangle", "The femoral triangle is in the thigh; the cervical triangle is in the neck; and the lumbar triangle is in the posterolateral abdominal wall, none of which is the posterior perineal triangle."], ["The anal triangle", "The perineum is divided into the anterior urogenital triangle and the posterior anal triangle, which contains the anal opening."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 78"}, {"topic": "Intrinsic Back Muscles", "io": "Intrinsic Back Muscles", "q": "Which deeper group of intrinsic back muscles, lying beneath the erector spinae, includes the multifidus and rotates the spine?", "opts": [["The transversospinalis group", "The transversospinalis group, including the semispinalis, multifidus, and rotatores, lies deep to the erector spinae and rotates and stabilizes the spine."], ["The extrinsic back group", "The extrinsic back muscles move the limb; the abdominal obliques act on the abdominal wall; and the pharyngeal constrictors act on the pharynx, none of which is the deep transversospinalis group."], ["The abdominal oblique group", "The extrinsic back muscles move the limb; the abdominal obliques act on the abdominal wall; and the pharyngeal constrictors act on the pharynx, none of which is the deep transversospinalis group."], ["The pharyngeal constrictor group", "The extrinsic back muscles move the limb; the abdominal obliques act on the abdominal wall; and the pharyngeal constrictors act on the pharynx, none of which is the deep transversospinalis group."]], "c": 0, "cite": "Axial Musculature - Shahsv.pptx, Slide 54"}, {"topic": "Neuromuscular Junction", "io": "Neuromuscular Junction", "q": "What is the neuromuscular junction?", "opts": [["The connective tissue sheath, known as the perimysium, that surrounds an individual muscle fascicle", "The connective tissue surrounding a fascicle is the perimysium, an unrelated structural (not synaptic) concept; the tendon attachment point is a musculoskeletal junction, not a neuromuscular synapse; and a junction between two adjacent muscles is not an anatomical structure described in the material at all."], ["The fibrous point of attachment where a tendon anchors skeletal muscle firmly onto the underlying bone", "The connective tissue surrounding a fascicle is the perimysium, an unrelated structural (not synaptic) concept; the tendon attachment point is a musculoskeletal junction, not a neuromuscular synapse; and a junction between two adjacent muscles is not an anatomical structure described in the material at all."], ["A structural junction that mechanically connects two adjacent skeletal muscles to one another", "The connective tissue surrounding a fascicle is the perimysium, an unrelated structural (not synaptic) concept; the tendon attachment point is a musculoskeletal junction, not a neuromuscular synapse; and a junction between two adjacent muscles is not an anatomical structure described in the material at all."], ["A specialized synapse where a motor neuron communicates with a skeletal muscle fiber to initiate contraction", "The neuromuscular junction is a specialized synapse where a motor neuron communicates with a skeletal muscle fiber to initiate muscle contraction."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 6"}, {"topic": "Anterior Muscles of the Neck", "io": "Anterior Muscles of the Neck", "q": "The sternocleidomastoid receives its motor innervation from which cranial nerve?", "opts": [["The facial nerve", "The facial nerve supplies facial expression; the hypoglossal supplies the tongue; and the trigeminal supplies mastication, none of which drives the sternocleidomastoid."], ["The accessory nerve", "The sternocleidomastoid is supplied by the accessory nerve (cranial nerve eleven), which also supplies the trapezius."], ["The hypoglossal nerve", "The facial nerve supplies facial expression; the hypoglossal supplies the tongue; and the trigeminal supplies mastication, none of which drives the sternocleidomastoid."], ["The trigeminal nerve", "The facial nerve supplies facial expression; the hypoglossal supplies the tongue; and the trigeminal supplies mastication, none of which drives the sternocleidomastoid."]], "c": 1, "cite": "Axial Musculature - Shahsv.pptx, Slide 43"}, {"topic": "Intrinsic Back Muscles", "io": "Intrinsic Back Muscles", "q": "Which deep intrinsic back muscle produces lateral flexion of the vertebral column, distinct from the extension-focused actions of nearby deep muscles?", "opts": [["Rotatores muscle", "Multifidus instead extends the vertebral column and rotates the body, not lateral flexion; rotatores also extends the vertebral column and rotates the body toward the opposite side, similar to multifidus rather than producing lateral flexion; and interspinales simply extends the vertebral column, without the lateral flexion action of intertransversarii."], ["Interspinales muscle", "Multifidus instead extends the vertebral column and rotates the body, not lateral flexion; rotatores also extends the vertebral column and rotates the body toward the opposite side, similar to multifidus rather than producing lateral flexion; and interspinales simply extends the vertebral column, without the lateral flexion action of intertransversarii."], ["Multifidus muscle", "Multifidus instead extends the vertebral column and rotates the body, not lateral flexion; rotatores also extends the vertebral column and rotates the body toward the opposite side, similar to multifidus rather than producing lateral flexion; and interspinales simply extends the vertebral column, without the lateral flexion action of intertransversarii."], ["Intertransversarii", "Intertransversarii produces lateral flexion of the vertebral column."]], "c": 3, "cite": "Axial Musculature - Shahsv.pptx, Slide 57"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>

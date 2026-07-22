@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+
+<style>
+  html, body { overscroll-behavior-y: contain; }
+  #pull-refresh {
+    position: fixed; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; z-index: 1000;
+  }
+  #pull-refresh svg { width: 100%; height: 44px; }
+  #pull-refresh path {
+    fill: none; stroke: #2563eb; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+  }
+  #pull-refresh.refreshing path { animation: ekg-sweep 0.9s linear infinite; }
+  @keyframes ekg-sweep { 0% { stroke-dashoffset: 420; } 100% { stroke-dashoffset: -420; } }
+  .footer-mark-ink { stroke: #1f2937; }
+  .footer-mark-accent { stroke: #0f766e; }
+  @media (prefers-color-scheme: dark) {
+    .footer-mark-ink { stroke: #e5e7eb; }
+    .footer-mark-accent { stroke: #3f8fa3; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K06TXC2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2K06TXC2KK');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Appendicular Musculature — Anatomy Exam 4 — Set 3</title>
+<style>
+  :root{
+    --navy:#153e59; --indigo:#0f766e; --gold:#3f8fa3; --ice:#81efe6;
+    --ink:#20233a; --muted:#5b6178; --line:#dbe7e5;
+    --ok:#1f8f52; --ok-bg:#e9f7ef; --bad:#c93a3a; --bad-bg:#fdecec;
+    --card:#ffffff; --page:#f4f6fc;
+    --exam-toolbar-accent:var(--indigo);
+  }
+  *{box-sizing:border-box}
+  .hidden{display:none}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:'Segoe UI',Calibri,system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 22px rgba(30,33,80,.07)}
+  header{background:linear-gradient(135deg,var(--navy),var(--indigo));color:#fff;
+    border-radius:14px;padding:26px 28px;margin-bottom:18px}
+  header h1{margin:0 0 4px;font-size:24px;letter-spacing:.2px}
+  header .sub{opacity:.92;font-size:14.5px}
+  header .pill{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;font-size:12.5px}
+  .start{padding:26px 28px}
+  .start h2{margin:2px 0 10px;font-size:18px;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+  .chip{font-size:12.5px;background:var(--ice);color:var(--navy);border:1px solid var(--line);
+    padding:6px 11px;border-radius:8px}
+  .note{font-size:13px;color:var(--muted);margin:16px 0 22px}
+  .btn{cursor:pointer;border:none;border-radius:10px;font-size:15px;font-weight:600;
+    padding:13px 26px;transition:.15s;font-family:inherit}
+  .btn-primary{background:var(--indigo);color:#fff}
+  .btn-primary:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--indigo);border:1.5px solid var(--indigo)}
+  .btn-ghost:hover{background:var(--ice)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+  .bar{flex:1;height:9px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--gold));width:0;transition:width .3s}
+  .score{font-weight:600;color:var(--navy)}
+  .qbody{padding:24px 26px}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .tag-topic{background:var(--navy);color:#fff}
+  .tag-io{background:var(--ice);color:var(--navy);border:1px solid var(--line)}
+  .qtext{font-size:17.5px;font-weight:600;margin:4px 0 18px;color:var(--ink)}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 15px;
+    font-size:15px;font-family:inherit;color:var(--ink);transition:.12s;width:100%}
+  .opt:hover:not(.locked){border-color:var(--indigo);background:var(--ice)}
+  .opt .ltr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ice);
+    color:var(--navy);font-weight:700;font-size:13px;display:flex;align-items:center;
+    justify-content:center;border:1px solid var(--line)}
+  .opt.locked{cursor:default}
+  .opt.selected-exam{border-color:var(--indigo);background:var(--ice)}
+  .opt.selected-exam .ltr{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+  .opt.correct .ltr{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+  .opt.wrong .ltr{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt.dim{opacity:.72}
+  .optlabel{flex:1}
+  .opt.crossed .optlabel{text-decoration:line-through;opacity:.55}
+  .cross-toggle{flex:0 0 22px;height:22px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;color:var(--muted);border:1px solid var(--line);cursor:pointer}
+  .cross-toggle:hover{border-color:var(--bad);color:var(--bad)}
+  .opt.crossed .cross-toggle{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+  .expl{margin-top:12px;border-top:1px dashed var(--line);padding-top:14px;display:none}
+  .expl.show{display:block}
+  .verdict{font-weight:700;font-size:15px;margin-bottom:8px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .erow{font-size:13.5px;margin:9px 0;padding-left:22px;position:relative;color:#3a3f57;line-height:1.55}
+  .erow .mk{position:absolute;left:0;top:0;font-weight:700}
+  .erow.c .mk{color:var(--ok)} .erow.x .mk{color:var(--bad)}
+  .cite{font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .nav{display:flex;justify-content:flex-end;padding:0 26px 24px}
+  .res{padding:28px}
+  .res h2{margin:0 0 4px;color:var(--navy)}
+  .big{display:flex;gap:26px;align-items:center;margin:16px 0 8px;flex-wrap:wrap}
+  .ring{--p:0;width:118px;height:118px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--indigo) calc(var(--p)*1%), #e4e8f5 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring i{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:27px;color:var(--navy);line-height:1}
+  .ring s{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+  .tally{font-size:15px}
+  .tally .n{font-size:21px;font-weight:700;color:var(--navy)}
+  .breakdown{margin:20px 0 8px}
+  .breakdown h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .brow{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+  .brow .bname{flex:none;width:300px;color:#3a3f57;line-height:1.35}
+  .brow .bbar{flex:1;height:8px;background:#e4e8f5;border-radius:999px;overflow:hidden}
+  .brow .bbar>span{display:block;height:100%;background:var(--indigo)}
+  .brow .bpct{flex:none;width:48px;text-align:right;font-weight:600;color:var(--navy)}
+  .missed{margin-top:22px}
+  .missed h3{font-size:15px;color:var(--navy);margin:0 0 10px}
+  .mitem{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:9px;
+    padding:12px 14px;margin:10px 0;font-size:13.5px;background:#fff}
+  .mitem .mq{font-weight:600;margin-bottom:6px}
+  .mitem .ma{margin:3px 0}
+  .mitem .ma.you{color:var(--bad)} .mitem .ma.key{color:var(--ok)}
+  .mitem .mc{color:var(--muted);font-style:italic;margin-top:6px;font-size:12.5px;line-height:1.5}
+  .perfect{background:var(--ok-bg);border:1px solid #bfe6cf;color:#1a6b3e;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;margin-top:16px}
+  .resbtns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:560px){.brow .bname{width:150px}}
+</style>
+</head>
+<body>
+<div id="pull-refresh">
+  <svg viewBox="0 0 300 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L120,30 L135,8 L150,52 L165,30 L300,30" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>
+<div id="quiz-header-logo" style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;">
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+  <a href="../index.html" aria-label="Back to home" style="cursor:pointer;flex-shrink:0;display:block;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" style="width:60px;height:auto;display:block;">
+    <path class="footer-mark-ink" d="M148,171 L198,88 L218,125" fill="none" stroke-width="10"/>
+    <line class="footer-mark-ink" x1="226" y1="142" x2="248" y2="172" stroke-width="10"/>
+    <path class="footer-mark-accent" d="M 173 101 L 156 72 L 216 72 C 232 72 241 86 241 102 C 241 119 229 129 217 130 L 201 130 L 180 165" fill="none" stroke-width="12"/>
+  </svg>
+  </a>
+  <span style="flex:1;max-width:420px;height:3px;border-radius:2px;background:linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0));"></span>
+</div>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:13.5px;font-weight:700;margin:36px 0 14px">← Back to home</a>
+  <header>
+    <h1>Anatomy Integration ExamThe Appendicular Musculature — Set 3</h1>
+    <div class="sub">Pectoral Girdle & Upper Limb Muscles · Pelvic Girdle & Lower Limb Muscles</div>
+    <span class="pill">30 questions</span>
+  </header>
+
+  <div id="start" class="card start">
+    <h2>Before you begin</h2>
+    <p style="font-size:14.5px;margin:0 0 6px">Four choices, instant feedback, and a full explanation of every option so you learn from each answer. Turn on Exam Mode for a timer, question flagging, and jump-to-question navigation, closer to real test conditions.</p>
+    <div class="chips"><span class="chip">Identify the muscles that position the pectoral girdle and move the arm, forearm, hand, and fingers, including their actions and relevant innervation.</span><span class="chip">Identify the muscles that move the thigh, leg, foot, and toes, including their actions, group classifications, and relevant innervation.</span><span class="chip">Describe the fascial compartments of the upper and lower limbs and the muscles contained within each.</span></div>
+    <p class="note">Answers reveal only after you choose. Your score and a breakdown by objective appear at the end,
+      with a review of everything you missed.</p>
+    <div id="resume-banner" style="display:none;background:#fdf1e2;border:1px solid rgba(180,83,9,.2);border-radius:10px;padding:14px 16px;margin:0 0 18px">
+      <p style="margin:0 0 4px;font-weight:700;color:#9a5b0a;font-size:13px;text-transform:uppercase;letter-spacing:.03em">Progress saved</p>
+      <p id="resume-text" style="margin:0 0 12px;font-size:14.5px;color:var(--ink)"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resumeQuiz()">Resume &rarr;</button>
+        <button class="btn btn-ghost" onclick="startExam()">Discard &amp; start over</button>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="shuffle-toggle" style="width:16px;height:16px">
+      Shuffle question order
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="defer-feedback-toggle" style="width:16px;height:16px">
+      No feedback until you submit (review every answer at the end)
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 8px;cursor:pointer">
+      <input type="checkbox" id="flag-nav-toggle" style="width:16px;height:16px">
+      Flag questions &amp; jump between them
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:0 0 16px;cursor:pointer">
+      <input type="checkbox" id="hard-cutoff-toggle" style="width:16px;height:16px">
+      Hard time limit (1 minute per question)
+    </label>
+    <button class="btn btn-primary" onclick="startExam()">Start the quiz &rarr;</button>
+  </div>
+
+  <div id="quiz" class="card" style="display:none">
+    <div class="qbody">
+      <div class="topbar">
+        <span id="counter">Question 1 of 65</span>
+        <div class="bar"><span id="barfill"></span></div>
+        <span class="score" id="timerpill">00:00</span>
+        <button type="button" class="examctl-btn" id="pausebtn" onclick="pauseQuiz()">&#10074;&#10074; Pause</button>
+        <span class="score" id="scoretxt">Score 0</span>
+      </div>
+      <div id="examtoolbar" class="examtoolbar hidden">
+        <button type="button" class="examctl-btn-primary" id="flagbtn" onclick="toggleFlag()">&#9873; Flag</button>
+        <button type="button" class="examctl-btn-primary" id="navbtn" onclick="openNav()">&#9776; Questions<span id="navbadge"></span></button>
+        <button type="button" class="examctl-btn-submit" onclick="submitExam()">Submit exam →</button>
+      </div>
+      <div class="qmeta">
+        <span class="tag tag-topic" id="qtopic"></span>
+        <span class="tag tag-io" id="qio"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="expl" id="expl">
+        <div class="verdict" id="verdict"></div>
+        <div id="erows"></div>
+        <div class="cite" id="cite"></div>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:space-between;padding:0 26px 24px">
+      <button class="btn btn-ghost" id="prevbtn" onclick="prevQ()" disabled>&larr; Back</button>
+      <button class="btn btn-primary" id="nextbtn" style="display:none" onclick="nextQ()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="card res" style="display:none"></div>
+  <div id="resultsfoot" style="display:none;text-align:center;margin-top:6px">
+    <p style="color:var(--muted);font-size:12.5px;font-style:italic">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.location.href='mailto:jaxonluke22913@gmail.com?subject='+encodeURIComponent('Quiz mistake report: '+document.title)+'&body='+encodeURIComponent('Page: '+location.href+'\n\nDescribe the mistake:\n');">If you see any mistakes, click here to report it</a> &#9733;</p>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [{"topic": "Pectoral Girdle Muscles", "io": "Pectoral Girdle Muscles", "q": "Which muscle protracts the scapula and holds it against the thoracic wall, and is nicknamed the 'boxer's muscle'?", "opts": [["The rhomboid major", "The rhomboid major retracts the scapula rather than protracting it; the levator scapulae elevates the scapula; and the pectoralis minor depresses and tilts the scapula, none of which is the boxer's protractor."], ["The serratus anterior", "The serratus anterior protracts the scapula and holds its medial border against the rib cage; weakness produces a winged scapula."], ["The levator scapulae", "The rhomboid major retracts the scapula rather than protracting it; the levator scapulae elevates the scapula; and the pectoralis minor depresses and tilts the scapula, none of which is the boxer's protractor."], ["The pectoralis minor", "The rhomboid major retracts the scapula rather than protracting it; the levator scapulae elevates the scapula; and the pectoralis minor depresses and tilts the scapula, none of which is the boxer's protractor."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 7"}, {"topic": "Pectoral Girdle Muscles", "io": "Pectoral Girdle Muscles", "q": "Injury to the long thoracic nerve supplying the serratus anterior produces which characteristic sign?", "opts": [["A dropped wrist", "A dropped wrist follows radial nerve injury; a clawed hand follows ulnar nerve injury; and a flat-footed gait relates to lower-limb or arch problems, none of which is caused by serratus anterior weakness."], ["A clawed hand", "A dropped wrist follows radial nerve injury; a clawed hand follows ulnar nerve injury; and a flat-footed gait relates to lower-limb or arch problems, none of which is caused by serratus anterior weakness."], ["A winged scapula", "Loss of serratus anterior function from long thoracic nerve injury causes the medial scapular border to lift away from the chest, a winged scapula."], ["A flat-footed gait", "A dropped wrist follows radial nerve injury; a clawed hand follows ulnar nerve injury; and a flat-footed gait relates to lower-limb or arch problems, none of which is caused by serratus anterior weakness."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 11"}, {"topic": "Pectoral Girdle Muscles", "io": "Pectoral Girdle Muscles", "q": "Which large superficial back muscle elevates, retracts, and depresses the scapula depending on the fibers used?", "opts": [["The serratus anterior", "The serratus anterior mainly protracts the scapula; the subclavius steadies the clavicle; and the teres major acts on the humerus, none of which performs all three scapular movements like the trapezius."], ["The subclavius", "The serratus anterior mainly protracts the scapula; the subclavius steadies the clavicle; and the teres major acts on the humerus, none of which performs all three scapular movements like the trapezius."], ["The trapezius", "The trapezius is a broad superficial muscle whose upper, middle, and lower fibers elevate, retract, and depress the scapula respectively."], ["The teres major", "The serratus anterior mainly protracts the scapula; the subclavius steadies the clavicle; and the teres major acts on the humerus, none of which performs all three scapular movements like the trapezius."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 7"}, {"topic": "Pectoral Girdle Muscles", "io": "Pectoral Girdle Muscles", "q": "Which two muscles primarily retract (adduct) the scapula toward the vertebral column?", "opts": [["The serratus anterior and pectoralis minor", "The serratus anterior and pectoralis minor protract or depress the scapula rather than retracting it; the deltoid and supraspinatus act on the humerus; and the biceps and brachialis move the forearm, none of which retracts the scapula."], ["The deltoid and supraspinatus", "The serratus anterior and pectoralis minor protract or depress the scapula rather than retracting it; the deltoid and supraspinatus act on the humerus; and the biceps and brachialis move the forearm, none of which retracts the scapula."], ["The biceps and brachialis", "The serratus anterior and pectoralis minor protract or depress the scapula rather than retracting it; the deltoid and supraspinatus act on the humerus; and the biceps and brachialis move the forearm, none of which retracts the scapula."], ["The rhomboid major and rhomboid minor", "The rhomboid major and minor run from the vertebrae to the medial scapular border and retract the scapula toward the spine."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 7"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which muscle is the prime mover for abduction of the arm at the shoulder past the first several degrees?", "opts": [["The deltoid muscle", "The deltoid, especially its middle fibers, is the prime mover for abduction of the arm at the glenohumeral joint."], ["The supraspinatus", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."], ["The pectoralis major", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."], ["The latissimus dorsi", "The supraspinatus only initiates the first several degrees of abduction; the pectoralis major adducts and medially rotates the arm; and the latissimus dorsi extends and adducts the arm, none of which is the main abductor."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which rotator cuff muscle initiates the first roughly fifteen degrees of arm abduction?", "opts": [["The subscapularis", "The subscapularis medially rotates the arm; the teres major adducts and medially rotates it; and the infraspinatus laterally rotates it, none of which initiates abduction."], ["The supraspinatus", "The supraspinatus initiates abduction of the arm for the first roughly fifteen degrees before the deltoid takes over."], ["The teres major", "The subscapularis medially rotates the arm; the teres major adducts and medially rotates it; and the infraspinatus laterally rotates it, none of which initiates abduction."], ["The infraspinatus", "The subscapularis medially rotates the arm; the teres major adducts and medially rotates it; and the infraspinatus laterally rotates it, none of which initiates abduction."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which broad muscle of the back extends, adducts, and medially rotates the arm, and is called the 'swimmer's muscle'?", "opts": [["The trapezius muscle", "The trapezius and rhomboid major act on the scapula rather than powerfully moving the humerus; and the levator scapulae elevates the scapula, none of which extends and adducts the arm like the latissimus dorsi."], ["The latissimus dorsi", "The latissimus dorsi extends, adducts, and medially rotates the humerus and is nicknamed the swimmer's muscle."], ["The rhomboid major", "The trapezius and rhomboid major act on the scapula rather than powerfully moving the humerus; and the levator scapulae elevates the scapula, none of which extends and adducts the arm like the latissimus dorsi."], ["The levator scapulae", "The trapezius and rhomboid major act on the scapula rather than powerfully moving the humerus; and the levator scapulae elevates the scapula, none of which extends and adducts the arm like the latissimus dorsi."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "The four rotator cuff muscles are the supraspinatus, infraspinatus, teres minor, and which fourth muscle?", "opts": [["The subscapularis", "The rotator cuff comprises the supraspinatus, infraspinatus, teres minor, and subscapularis, which stabilize the shoulder joint."], ["The teres major", "The teres major is not a rotator cuff muscle despite its similar name; the deltoid caps the shoulder but is not part of the cuff; and the coracobrachialis flexes the arm, none of which completes the rotator cuff."], ["The deltoid muscle", "The teres major is not a rotator cuff muscle despite its similar name; the deltoid caps the shoulder but is not part of the cuff; and the coracobrachialis flexes the arm, none of which completes the rotator cuff."], ["The coracobrachialis", "The teres major is not a rotator cuff muscle despite its similar name; the deltoid caps the shoulder but is not part of the cuff; and the coracobrachialis flexes the arm, none of which completes the rotator cuff."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which rotator cuff muscle is the main medial rotator of the arm, arising from the anterior scapula?", "opts": [["The infraspinatus", "The infraspinatus and teres minor are lateral rotators of the arm; and the supraspinatus initiates abduction, none of which is the main medial rotator."], ["The teres minor", "The infraspinatus and teres minor are lateral rotators of the arm; and the supraspinatus initiates abduction, none of which is the main medial rotator."], ["The supraspinatus", "The infraspinatus and teres minor are lateral rotators of the arm; and the supraspinatus initiates abduction, none of which is the main medial rotator."], ["The subscapularis", "The subscapularis arises from the subscapular fossa on the anterior scapula and is the principal medial rotator of the arm."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Which muscle is the prime mover of elbow flexion and also supinates the forearm?", "opts": [["The triceps brachii", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."], ["The pronator teres", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."], ["The biceps brachii", "The biceps brachii flexes the elbow and is a powerful supinator of the forearm, especially against resistance."], ["The anconeus", "The triceps brachii extends the elbow rather than flexing it; the pronator teres pronates the forearm; and the anconeus assists elbow extension, none of which both flexes and supinates."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Which muscle is the prime mover of elbow extension?", "opts": [["The triceps brachii", "The triceps brachii, on the posterior arm, is the prime mover of elbow extension."], ["The biceps brachii", "The biceps brachii and brachialis both flex the elbow; and the brachioradialis also flexes the elbow, none of which extends it like the triceps."], ["The brachialis", "The biceps brachii and brachialis both flex the elbow; and the brachioradialis also flexes the elbow, none of which extends it like the triceps."], ["The brachioradialis", "The biceps brachii and brachialis both flex the elbow; and the brachioradialis also flexes the elbow, none of which extends it like the triceps."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Which deep anterior arm muscle lies beneath the biceps and is considered the strongest pure flexor of the elbow?", "opts": [["The supinator muscle", "The supinator rotates the forearm to supination; the pronator quadratus pronates the distal forearm; and the triceps extends the elbow, none of which is the deep pure elbow flexor."], ["The brachialis", "The brachialis lies deep to the biceps and is the strongest pure flexor of the elbow, acting regardless of forearm position."], ["The pronator quadratus", "The supinator rotates the forearm to supination; the pronator quadratus pronates the distal forearm; and the triceps extends the elbow, none of which is the deep pure elbow flexor."], ["The triceps brachii", "The supinator rotates the forearm to supination; the pronator quadratus pronates the distal forearm; and the triceps extends the elbow, none of which is the deep pure elbow flexor."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Muscles of the anterior compartment of the forearm generally perform which action on the wrist and fingers?", "opts": [["Extension of the wrist and fingers", "Extension of the wrist and fingers is performed by the posterior compartment; abduction of the arm is a shoulder action; and rotation of the scapula involves girdle muscles, none of which is the anterior forearm's role."], ["Abduction of the whole arm", "Extension of the wrist and fingers is performed by the posterior compartment; abduction of the arm is a shoulder action; and rotation of the scapula involves girdle muscles, none of which is the anterior forearm's role."], ["Flexion of the wrist and fingers", "The anterior forearm compartment contains the flexor muscles, which flex the wrist and fingers."], ["Rotation of the scapula", "Extension of the wrist and fingers is performed by the posterior compartment; abduction of the arm is a shoulder action; and rotation of the scapula involves girdle muscles, none of which is the anterior forearm's role."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}, {"topic": "Extrinsic Hand Muscles", "io": "Extrinsic Hand Muscles", "q": "The extrinsic muscles that move the hand and fingers have their bellies located where?", "opts": [["In the palm of the hand", "Muscles located within the palm are the intrinsic hand muscles, not extrinsic ones; the upper arm contains muscles moving the forearm; and the shoulder contains muscles moving the arm, none of which houses the extrinsic hand muscle bellies."], ["In the forearm", "Extrinsic hand muscles have their muscle bellies in the forearm and send long tendons to the hand and fingers."], ["In the upper arm", "Muscles located within the palm are the intrinsic hand muscles, not extrinsic ones; the upper arm contains muscles moving the forearm; and the shoulder contains muscles moving the arm, none of which houses the extrinsic hand muscle bellies."], ["In the shoulder", "Muscles located within the palm are the intrinsic hand muscles, not extrinsic ones; the upper arm contains muscles moving the forearm; and the shoulder contains muscles moving the arm, none of which houses the extrinsic hand muscle bellies."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 34"}, {"topic": "Intrinsic Hand Muscles", "io": "Intrinsic Hand Muscles", "q": "The intrinsic muscles forming the fleshy mass at the base of the thumb are collectively called what?", "opts": [["The thenar muscles", "The thenar muscles form the thenar eminence, the fleshy mass at the base of the thumb, and move the thumb."], ["The hypothenar muscles", "The hypothenar muscles form the eminence at the base of the little finger; the lumbricals lie between the metacarpals acting on the fingers; and the interossei lie deep between the metacarpals, none of which forms the thumb's eminence."], ["The lumbrical muscles", "The hypothenar muscles form the eminence at the base of the little finger; the lumbricals lie between the metacarpals acting on the fingers; and the interossei lie deep between the metacarpals, none of which forms the thumb's eminence."], ["The interosseous muscles", "The hypothenar muscles form the eminence at the base of the little finger; the lumbricals lie between the metacarpals acting on the fingers; and the interossei lie deep between the metacarpals, none of which forms the thumb's eminence."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 47"}, {"topic": "Intrinsic Hand Muscles", "io": "Intrinsic Hand Muscles", "q": "The hypothenar eminence is the fleshy mass at the base of which digit?", "opts": [["The thumb", "The base of the thumb bears the thenar eminence, not the hypothenar; and the index and middle fingers have no such muscular eminence at their bases, so none of these is the hypothenar location."], ["The index finger", "The base of the thumb bears the thenar eminence, not the hypothenar; and the index and middle fingers have no such muscular eminence at their bases, so none of these is the hypothenar location."], ["The middle finger", "The base of the thumb bears the thenar eminence, not the hypothenar; and the index and middle fingers have no such muscular eminence at their bases, so none of these is the hypothenar location."], ["The little finger", "The hypothenar eminence is the fleshy mass at the base of the little finger, formed by the hypothenar muscles."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 47"}, {"topic": "Muscles That Move the Thigh", "io": "Muscles That Move the Thigh", "q": "Which muscle group, crossing the front of the hip, is the primary flexor of the thigh at the hip?", "opts": [["The gluteus maximus", "The gluteus maximus extends the thigh; the hamstrings extend the thigh and flex the knee; and the gastrocnemius acts at the ankle and knee, none of which is the primary hip flexor."], ["The hamstring group", "The gluteus maximus extends the thigh; the hamstrings extend the thigh and flex the knee; and the gastrocnemius acts at the ankle and knee, none of which is the primary hip flexor."], ["The gastrocnemius", "The gluteus maximus extends the thigh; the hamstrings extend the thigh and flex the knee; and the gastrocnemius acts at the ankle and knee, none of which is the primary hip flexor."], ["The iliopsoas", "The iliopsoas, formed by the iliacus and psoas major, is the primary flexor of the thigh at the hip joint."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 63"}, {"topic": "Gluteal Group", "io": "Gluteal Group", "q": "Which muscle is the largest of the gluteal group and the main extensor of the thigh, used in climbing stairs?", "opts": [["The gluteus medius", "The gluteus medius and minimus mainly abduct and medially rotate the thigh; and the piriformis is a small lateral rotator, none of which is the large thigh extensor."], ["The gluteus minimus", "The gluteus medius and minimus mainly abduct and medially rotate the thigh; and the piriformis is a small lateral rotator, none of which is the large thigh extensor."], ["The piriformis muscle", "The gluteus medius and minimus mainly abduct and medially rotate the thigh; and the piriformis is a small lateral rotator, none of which is the large thigh extensor."], ["The gluteus maximus", "The gluteus maximus is the largest gluteal muscle and the main extensor of the thigh, powerful in climbing and rising from sitting."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 55"}, {"topic": "Gluteal Group", "io": "Gluteal Group", "q": "Weakness of the gluteus medius and minimus, which normally abduct the thigh, produces which sign when walking?", "opts": [["A winged scapula on the back", "A winged scapula follows serratus anterior weakness; a wrist drop follows radial nerve injury; and a clawed hand follows ulnar nerve injury, none of which results from gluteal weakness."], ["A wrist-drop deformity", "A winged scapula follows serratus anterior weakness; a wrist drop follows radial nerve injury; and a clawed hand follows ulnar nerve injury, none of which results from gluteal weakness."], ["A clawed-hand deformity", "A winged scapula follows serratus anterior weakness; a wrist drop follows radial nerve injury; and a clawed hand follows ulnar nerve injury, none of which results from gluteal weakness."], ["A Trendelenburg (hip-drop) sign", "Weak gluteus medius and minimus fail to stabilize the pelvis, so the opposite hip drops during walking, the Trendelenburg sign."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 55"}, {"topic": "Adductor Group", "io": "Adductor Group", "q": "The muscles of the medial thigh compartment, such as the adductor longus and gracilis, primarily perform which action?", "opts": [["Adduction of the thigh", "The medial compartment muscles, including the adductor longus, brevis, magnus, and gracilis, primarily adduct the thigh."], ["Abduction of the thigh", "Abduction of the thigh is performed by the gluteus medius and minimus; dorsiflexion is an ankle action; and elbow extension is an arm action, none of which is the medial compartment's role."], ["Dorsiflexion of the foot", "Abduction of the thigh is performed by the gluteus medius and minimus; dorsiflexion is an ankle action; and elbow extension is an arm action, none of which is the medial compartment's role."], ["Extension of the elbow", "Abduction of the thigh is performed by the gluteus medius and minimus; dorsiflexion is an ankle action; and elbow extension is an arm action, none of which is the medial compartment's role."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 60"}, {"topic": "Knee Extensors", "io": "Knee Extensors", "q": "Which four-part anterior thigh muscle group is the prime extensor of the knee?", "opts": [["The hamstring group", "The hamstrings flex the knee; the gluteal group acts at the hip; and the adductor group adducts the thigh, none of which extends the knee like the quadriceps."], ["The quadriceps femoris", "The quadriceps femoris, comprising the rectus femoris and three vasti, is the prime extensor of the knee."], ["The gluteal group", "The hamstrings flex the knee; the gluteal group acts at the hip; and the adductor group adducts the thigh, none of which extends the knee like the quadriceps."], ["The adductor group", "The hamstrings flex the knee; the gluteal group acts at the hip; and the adductor group adducts the thigh, none of which extends the knee like the quadriceps."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 67"}, {"topic": "Knee Extensors", "io": "Knee Extensors", "q": "Which of the four quadriceps muscles also flexes the thigh at the hip because it crosses two joints?", "opts": [["The vastus lateralis", "The three vasti (lateralis, medialis, and intermedius) cross only the knee and so extend the knee without flexing the hip, none acting at the hip like the rectus femoris."], ["The vastus medialis", "The three vasti (lateralis, medialis, and intermedius) cross only the knee and so extend the knee without flexing the hip, none acting at the hip like the rectus femoris."], ["The rectus femoris", "The rectus femoris crosses both the hip and knee, so besides extending the knee it also flexes the thigh at the hip."], ["The vastus intermedius", "The three vasti (lateralis, medialis, and intermedius) cross only the knee and so extend the knee without flexing the hip, none acting at the hip like the rectus femoris."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 67"}, {"topic": "Knee Flexors", "io": "Knee Flexors", "q": "The posterior thigh muscles known as the hamstrings extend the hip and perform which action at the knee?", "opts": [["Extension of the knee", "Extension of the knee is the quadriceps' action; abduction of the hip is performed by the gluteus medius and minimus; and dorsiflexion is an ankle action, none of which is the hamstrings' knee action."], ["Abduction of the hip", "Extension of the knee is the quadriceps' action; abduction of the hip is performed by the gluteus medius and minimus; and dorsiflexion is an ankle action, none of which is the hamstrings' knee action."], ["Flexion of the knee", "The hamstrings extend the thigh at the hip and flex the leg at the knee."], ["Dorsiflexion of the ankle", "Extension of the knee is the quadriceps' action; abduction of the hip is performed by the gluteus medius and minimus; and dorsiflexion is an ankle action, none of which is the hamstrings' knee action."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 69"}, {"topic": "Knee Flexors", "io": "Knee Flexors", "q": "Which three muscles make up the hamstring group of the posterior thigh?", "opts": [["Rectus femoris and the three vasti", "The rectus femoris and vasti are the quadriceps of the anterior thigh; the gluteus muscles are hip abductors and extensors; and the adductors are medial thigh muscles, none of which are the hamstrings."], ["Gluteus maximus, medius, minimus", "The rectus femoris and vasti are the quadriceps of the anterior thigh; the gluteus muscles are hip abductors and extensors; and the adductors are medial thigh muscles, none of which are the hamstrings."], ["Biceps femoris, semitendinosus, semimembranosus", "The hamstrings are the biceps femoris, semitendinosus, and semimembranosus of the posterior thigh."], ["Adductor longus, brevis, magnus", "The rectus femoris and vasti are the quadriceps of the anterior thigh; the gluteus muscles are hip abductors and extensors; and the adductors are medial thigh muscles, none of which are the hamstrings."]], "c": 2, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 69"}, {"topic": "Foot and Toe Movers", "io": "Foot and Toe Movers", "q": "Which posterior leg muscles insert via the calcaneal (Achilles) tendon to plantarflex the foot?", "opts": [["The gastrocnemius and soleus", "The gastrocnemius and soleus join to form the calcaneal (Achilles) tendon and plantarflex the foot at the ankle."], ["The tibialis anterior and toe extensors", "The tibialis anterior and long toe extensors dorsiflex the foot; the fibularis longus and brevis evert it; and the quadriceps act at the knee, none of which forms the calcaneal tendon."], ["The fibularis longus and brevis", "The tibialis anterior and long toe extensors dorsiflex the foot; the fibularis longus and brevis evert it; and the quadriceps act at the knee, none of which forms the calcaneal tendon."], ["The quadriceps femoris muscles", "The tibialis anterior and long toe extensors dorsiflex the foot; the fibularis longus and brevis evert it; and the quadriceps act at the knee, none of which forms the calcaneal tendon."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 75"}, {"topic": "Foot and Toe Movers", "io": "Foot and Toe Movers", "q": "Which anterior leg muscle is the prime dorsiflexor of the foot at the ankle?", "opts": [["The gastrocnemius muscle", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."], ["The tibialis anterior", "The tibialis anterior in the anterior leg compartment is the prime dorsiflexor of the foot and also inverts it."], ["The soleus muscle", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."], ["The fibularis longus", "The gastrocnemius and soleus plantarflex the foot; and the fibularis longus everts and plantarflexes it, none of which is the prime dorsiflexor."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 75"}, {"topic": "Lower Limb Overview", "io": "Lower Limb Overview", "q": "The muscles that move the lower limb are commonly organized by their location into what?", "opts": [["Rows within the tarsal bones", "The tarsal bones are arranged in rows but do not house the muscles; muscles do not form rings around joints as an organizing scheme; and the marrow cavity contains marrow, not muscle sheets, so none describes the compartment organization."], ["Compartments separated by fascia", "Lower-limb muscles are grouped into compartments bounded by fascia, with each compartment sharing broad actions and a nerve supply."], ["Rings around each joint", "The tarsal bones are arranged in rows but do not house the muscles; muscles do not form rings around joints as an organizing scheme; and the marrow cavity contains marrow, not muscle sheets, so none describes the compartment organization."], ["Sheets inside the marrow cavity", "The tarsal bones are arranged in rows but do not house the muscles; muscles do not form rings around joints as an organizing scheme; and the marrow cavity contains marrow, not muscle sheets, so none describes the compartment organization."]], "c": 1, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 53"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which anterior chest muscle adducts, medially rotates, and flexes the arm at the shoulder?", "opts": [["The pectoralis major", "The pectoralis major is the large anterior chest muscle that adducts, medially rotates, and flexes the arm at the shoulder."], ["The trapezius muscle", "The trapezius and rhomboid minor act on the scapula rather than the arm; and the infraspinatus laterally rotates the arm, none of which flexes and adducts the arm like the pectoralis major."], ["The rhomboid minor", "The trapezius and rhomboid minor act on the scapula rather than the arm; and the infraspinatus laterally rotates the arm, none of which flexes and adducts the arm like the pectoralis major."], ["The infraspinatus", "The trapezius and rhomboid minor act on the scapula rather than the arm; and the infraspinatus laterally rotates the arm, none of which flexes and adducts the arm like the pectoralis major."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Muscles That Move the Arm", "io": "Muscles That Move the Arm", "q": "Which muscle assists the latissimus dorsi in adducting and medially rotating the arm and runs from the scapula to the humerus?", "opts": [["The teres major", "The teres major runs from the inferior scapula to the humerus and assists the latissimus dorsi in adducting and medially rotating the arm."], ["The teres minor", "The teres minor laterally rotates the arm, the opposite action; the supraspinatus initiates abduction; and the deltoid abducts the arm, none of which assists the latissimus dorsi in adduction."], ["The supraspinatus", "The teres minor laterally rotates the arm, the opposite action; the supraspinatus initiates abduction; and the deltoid abducts the arm, none of which assists the latissimus dorsi in adduction."], ["The deltoid muscle", "The teres minor laterally rotates the arm, the opposite action; the supraspinatus initiates abduction; and the deltoid abducts the arm, none of which assists the latissimus dorsi in adduction."]], "c": 0, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 12"}, {"topic": "Forearm and Hand Movers", "io": "Forearm and Hand Movers", "q": "Which muscle forms the lateral bulge of the forearm and flexes the elbow with the forearm in a thumb-up position?", "opts": [["The pronator teres", "The pronator teres pronates the forearm; the triceps brachii extends the elbow; and the supinator rotates the forearm to supination, none of which is the lateral elbow flexor."], ["The triceps brachii", "The pronator teres pronates the forearm; the triceps brachii extends the elbow; and the supinator rotates the forearm to supination, none of which is the lateral elbow flexor."], ["The supinator muscle", "The pronator teres pronates the forearm; the triceps brachii extends the elbow; and the supinator rotates the forearm to supination, none of which is the lateral elbow flexor."], ["The brachioradialis", "The brachioradialis forms the lateral forearm bulge and flexes the elbow most effectively with the forearm midway between pronation and supination."]], "c": 3, "cite": "Appendicular Musculature - Shahsv.pptx, Slide 29"}];
+const LTR = ["A","B","C","D"];
+let order=[], idx=0, score=0, answers=[];
+let deferFeedback=false, flagNav=false, hardCutoff=false, cutoffMs=0, flagged=new Set(), autoSubmitTriggered=false;
+let crossedOut = {};
+function isCrossed(qi,ci){ return !!(crossedOut[qi] && crossedOut[qi].has(ci)); }
+function toggleCross(qi,ci){
+  if(!crossedOut[qi]) crossedOut[qi] = new Set();
+  const s = crossedOut[qi];
+  if(s.has(ci)) s.delete(ci); else s.add(ci);
+  saveProgress();
+}
+function addCrossToggle(b,i){
+  if(isCrossed(idx,i)) b.classList.add("crossed");
+  const x = document.createElement("span");
+  x.className = "cross-toggle";
+  x.title = "Cross out this choice";
+  x.innerHTML = "&#10005;";
+  x.onclick = (e)=>{ e.stopPropagation(); toggleCross(idx,i); renderQ(); };
+  b.appendChild(x);
+}
+
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let timerAccumMs=0, timerStartedAt=null, timerInterval=null;
+function currentElapsedMs(){ return timerAccumMs + (timerStartedAt ? Date.now()-timerStartedAt : 0); }
+function fmtTime(ms){
+  let s=Math.floor(ms/1000); const h=Math.floor(s/3600); s-=h*3600;
+  const m=Math.floor(s/60); s-=m*60;
+  const pad=n=>String(n).padStart(2,"0");
+  return h>0 ? (h+":"+pad(m)+":"+pad(s)) : (pad(m)+":"+pad(s));
+}
+function updateTimerDisplay(){
+  const el=document.getElementById('timerpill'); if(!el) return;
+  if(deferFeedback && hardCutoff){
+    const remain = Math.max(0, cutoffMs - currentElapsedMs());
+    el.textContent = fmtTime(remain);
+    el.classList.toggle('danger', remain <= cutoffMs*0.2);
+    if(remain <= 0 && !autoSubmitTriggered){ autoSubmitTriggered = true; submitExam(true); }
+  } else {
+    el.textContent = fmtTime(currentElapsedMs());
+  }
+}
+function startTimerInterval(){ if(timerInterval) clearInterval(timerInterval); timerInterval=setInterval(updateTimerDisplay,1000); updateTimerDisplay(); }
+function stopTimerInterval(){ if(timerInterval){clearInterval(timerInterval); timerInterval=null;} }
+function pauseQuiz(){
+  timerAccumMs = currentElapsedMs(); timerStartedAt = null; stopTimerInterval();
+  saveProgress();
+  window.openPauseOverlay({ onResume: function(){ timerStartedAt = Date.now(); startTimerInterval(); } });
+}
+function applyExamModeUI(){
+  document.getElementById('scoretxt').classList.toggle('hidden', deferFeedback);
+  document.getElementById('examtoolbar').classList.toggle('hidden', !flagNav);
+  document.getElementById('timerpill').classList.add('examctl-timer');
+  if (flagNav) window.startExamModeTour();
+}
+
+const PKEY = "qp:"+location.pathname, CKEY = "qc:"+location.pathname;
+function saveProgress(){ const co={}; for(const k in crossedOut) co[k]=Array.from(crossedOut[k]); localStorage.setItem(PKEY, JSON.stringify({idx, score, answers, order, timerMs: currentElapsedMs(), deferFeedback, flagNav, hardCutoff, cutoffMs, flagged: Array.from(flagged), crossedOut: co})); }
+function clearProgress(){ localStorage.removeItem(PKEY); }
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(PKEY)); } catch(e){ return null; } }
+function markCompleted(score, total, timeMs){ localStorage.setItem(CKEY, JSON.stringify({score, total, timeMs})); }
+function saveReview(){ try{ const c=document.getElementById('results').cloneNode(true); c.querySelectorAll('button, a.btn, .result-actions').forEach(n=>n.remove()); const cur=JSON.parse(localStorage.getItem(CKEY)||'{}'); localStorage.setItem(CKEY, JSON.stringify(Object.assign(cur,{reviewHTML:c.innerHTML}))); }catch(e){} }
+
+function startExam(){
+  clearProgress();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  order = QUESTIONS.map((_,i)=>i);
+  if(document.getElementById('shuffle-toggle') && document.getElementById('shuffle-toggle').checked) shuffleArray(order);
+  deferFeedback = !!(document.getElementById('defer-feedback-toggle') && document.getElementById('defer-feedback-toggle').checked);
+  flagNav = !!(document.getElementById('flag-nav-toggle') && document.getElementById('flag-nav-toggle').checked);
+  hardCutoff = deferFeedback && !!(document.getElementById('hard-cutoff-toggle') && document.getElementById('hard-cutoff-toggle').checked);
+  cutoffMs = hardCutoff ? QUESTIONS.length*60000 : 0;
+  idx=0; score=0; answers=new Array(QUESTIONS.length).fill(null);
+  flagged = new Set(); autoSubmitTriggered = false; crossedOut = {};
+  applyExamModeUI();
+  timerAccumMs=0; timerStartedAt=Date.now(); startTimerInterval();
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function resumeQuiz(){
+  const saved = loadProgress();
+  if(!saved) return;
+  order = (saved.order && saved.order.length===QUESTIONS.length) ? saved.order : QUESTIONS.map((_,i)=>i);
+  idx = saved.idx; score = saved.score; answers = saved.answers;
+  timerAccumMs = saved.timerMs || 0; timerStartedAt = Date.now(); startTimerInterval();
+  deferFeedback = !!saved.deferFeedback; flagNav = !!saved.flagNav; hardCutoff = !!saved.hardCutoff; cutoffMs = saved.cutoffMs || 0;
+  flagged = new Set(saved.flagged || []); autoSubmitTriggered = false;
+  crossedOut = {}; for(const k in (saved.crossedOut||{})) crossedOut[k] = new Set(saved.crossedOut[k]);
+  applyExamModeUI();
+  document.getElementById('resume-banner').style.display='none';
+  document.getElementById('resultsfoot').style.display='none';
+  document.getElementById('start').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function checkForSavedProgress(){
+  const saved = loadProgress();
+  if(!saved) return;
+  document.getElementById('resume-text').textContent = 'Question '+(saved.idx+1)+' of '+QUESTIONS.length+' — Score: '+saved.score;
+  document.getElementById('resume-banner').style.display='block';
+})();
+
+function renderQ(){
+  const q = QUESTIONS[order[idx]];
+  document.getElementById('counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('barfill').style.width = (100*idx/QUESTIONS.length)+'%';
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.getElementById('qtopic').textContent = q.topic;
+  document.getElementById('qio').textContent = 'Objective '+q.io;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('prevbtn').disabled = (idx===0);
+
+  if(flagNav){
+    document.getElementById('flagbtn').classList.toggle('flagged', flagged.has(idx));
+    document.getElementById('flagbtn').innerHTML = flagged.has(idx) ? '&#9873; Flagged' : '&#9873; Flag';
+    document.getElementById("navbadge").textContent = (QUESTIONS.length-answers.filter(a=>a!==null).length) > 0 ? " \u00b7 " + (QUESTIONS.length-answers.filter(a=>a!==null).length) + " left" : "";
+  }
+  if(deferFeedback){
+    const wrap=document.getElementById('opts'); wrap.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-i',i);
+      if(answers[idx]===i) b.classList.add('selected-exam');
+      b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+      b.onclick=()=>choose(i);
+      addCrossToggle(b,i);
+      wrap.appendChild(b);
+    });
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='inline-block';
+    document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'Submit exam \u2192':'Next \u2192';
+    return;
+  }
+
+  const wrap=document.getElementById('opts'); wrap.innerHTML='';
+  const isAnswered = answers[idx]!==null;
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.setAttribute('data-i',i);
+    b.innerHTML=`<span class="ltr">${LTR[i]}</span><span class="optlabel">${o[0]}</span>`;
+    b.onclick=()=>choose(i);
+    if(!isAnswered) addCrossToggle(b,i);
+    wrap.appendChild(b);
+  });
+  document.getElementById('nextbtn').textContent = (idx===QUESTIONS.length-1)?'See results \u2192':'Next \u2192';
+  if(isAnswered){
+    revealAnswer(answers[idx], false);
+  } else {
+    document.getElementById('expl').classList.remove('show');
+    document.getElementById('nextbtn').style.display='none';
+  }
+}
+
+function choose(sel){
+  const q = QUESTIONS[order[idx]];
+  if(deferFeedback){
+    answers[idx]=sel;
+    saveProgress();
+    renderQ();
+    return;
+  }
+  if(answers[idx]!==null) return;
+  answers[idx]=sel;
+  if(sel===q.c) score++;
+  if(window.trackAnswerStreak) window.trackAnswerStreak(sel===q.c);
+  saveProgress();
+  revealAnswer(sel, true);
+}
+
+function revealAnswer(sel, scroll){
+  const q = QUESTIONS[order[idx]];
+  const correct=q.c;
+  document.getElementById('scoretxt').textContent = `Score ${score}`;
+  document.querySelectorAll('#opts .opt').forEach(el=>{
+    const i=+el.getAttribute('data-i');
+    el.classList.add('locked');
+    if(i===correct) el.classList.add('correct');
+    else if(i===sel) el.classList.add('wrong');
+    else el.classList.add('dim');
+    el.onclick=null;
+    const ct=el.querySelector('.cross-toggle'); if(ct) ct.remove();
+  });
+  const v=document.getElementById('verdict');
+  if(sel===correct){ v.className='verdict ok'; v.textContent='Correct.'; }
+  else { v.className='verdict bad'; v.textContent='Not quite \u2014 the correct answer is '+LTR[correct]+'.'; }
+  const rows=document.getElementById('erows'); rows.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const r=document.createElement('div');
+    const isC=(i===correct);
+    r.className='erow '+(isC?'c':'x');
+    r.innerHTML=`<span class="mk">${isC?'\u2713':'\u2717'}</span><b>${LTR[i]}.</b> ${o[1]}`;
+    rows.appendChild(r);
+  });
+  document.getElementById('cite').textContent='Source: '+q.cite;
+  document.getElementById('expl').classList.add('show');
+  document.getElementById('nextbtn').style.display='inline-block';
+  if(scroll) document.getElementById('nextbtn').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function prevQ(){
+  if(idx===0) return;
+  idx--;
+  saveProgress();
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFlag(){
+  if(flagged.has(idx)) flagged.delete(idx); else flagged.add(idx);
+  saveProgress();
+  renderQ();
+}
+
+function openNav(){
+  window.openQuestionNav({
+    total: QUESTIONS.length,
+    current: idx,
+    getStatus: function(i){ return { answered: answers[i]!==null, flagged: flagged.has(i) }; },
+    onJump: function(i){ idx = i; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); },
+    onSubmit: function(){ submitExam(); }
+  });
+}
+
+function submitExam(auto){
+  if(!auto){
+    const unanswered = QUESTIONS.length - answers.filter(a=>a!==null).length;
+    if(unanswered > 0){
+      if(!confirm(unanswered+" question"+(unanswered>1?"s":"")+" unanswered. Submit anyway?")) return;
+    }
+  }
+  showResults();
+}
+
+function nextQ(){
+  if(idx<QUESTIONS.length-1){ idx++; saveProgress(); renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else submitExam();
+}
+function examReviewHTML(){
+  let out = '';
+  order.forEach((qi, i)=>{
+    const q = QUESTIONS[qi];
+    const a = answers[i];
+    const isCorrect = (a !== null && a === q.c);
+    const you = a===null ? '\u2014 (not answered)' : LTR[a]+'. '+q.opts[a][0];
+    out += `<div class="mitem"${isCorrect?' style="border-left-color:var(--ok)"':''}>
+      <div class="mq">Q${i+1}. ${q.q}</div>
+      <div class="ma ${isCorrect?'key':'you'}">Your answer: ${you}</div>
+      ${isCorrect ? '' : `<div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>`}
+      <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+    </div>`;
+  });
+  return `<div class="missed"><h3>Full review \u2014 every question</h3>${out}</div>`;
+}
+function showResults(){
+  stopTimerInterval();
+  const finalMs=currentElapsedMs();
+  if(deferFeedback) score = answers.reduce((acc,a,i)=> acc + ((a!==null && a===QUESTIONS[order[i]].c) ? 1 : 0), 0);
+  clearProgress();
+  markCompleted(score, QUESTIONS.length, finalMs);
+  document.getElementById('quiz').style.display='none';
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const stat={};
+  QUESTIONS.forEach(q=>{
+    const k=q.io; if(!stat[k]) stat[k]={c:0,n:0};
+    stat[k].n++;
+  });
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a===q.c) stat[q.io].c++;
+  });
+  let brows='';
+  Object.keys(stat).sort().forEach(k=>{
+    const s=stat[k]; const p=Math.round(100*s.c/s.n);
+    brows+=`<div class="brow"><span class="bname">${k}</span>
+      <span class="bbar"><span style="width:${p}%"></span></span>
+      <span class="bpct">${s.c}/${s.n}</span></div>`;
+  });
+  let missed='';
+  answers.forEach((a,i)=>{
+    const q=QUESTIONS[order[i]];
+    if(a!==q.c){
+      const you = a===null?'\u2014 (skipped)':LTR[a]+'. '+q.opts[a][0];
+      missed+=`<div class="mitem">
+        <div class="mq">Q${i+1}. ${q.q}</div>
+        <div class="ma you"><b>Your answer:</b> ${you}</div>
+        <div class="ma key"><b>Correct:</b> ${LTR[q.c]}. ${q.opts[q.c][0]}</div>
+        <div class="mc">${q.opts[q.c][1]} &middot; ${q.cite}</div>
+      </div>`;
+    }
+  });
+  const missCount=QUESTIONS.length-score;
+  const missBlock = deferFeedback ? examReviewHTML() : missCount===0
+    ? `<div class="perfect">Perfect score \u2014 every question correct.</div>`
+    : `<div class="missed"><h3>Review of missed questions (${missCount})</h3>${missed}</div>`;
+  const r=document.getElementById('results');
+  r.innerHTML=`
+    <h2>Your results</h2>
+    <div class="big">
+      <div class="ring" style="--p:${pct}"><i><b>${pct}%</b><s>${score}/${QUESTIONS.length}</s></i></div>
+      <div class="tally">
+        <div><span class="n">${score}</span> correct &nbsp;&middot;&nbsp; <span class="n">${missCount}</span> missed</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">out of ${QUESTIONS.length} questions</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-top:4px">Time: ${fmtTime(finalMs)}</div>
+      </div>
+    </div>
+    <div class="breakdown"><h3>Performance by objective</h3>${brows}</div>
+    ${missBlock}
+    <div class="resbtns">
+      <button class="btn btn-primary" onclick="startExam()">Restart quiz</button>
+      <a class="btn btn-ghost" href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">\u2190 Back to Homepage</a>
+    </div>`;
+  r.style.display='block';
+  document.getElementById('resultsfoot').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  saveReview();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(document.getElementById('quiz').style.display==='none') return;
+  const k=e.key;
+  if(k==='ArrowLeft'){ e.preventDefault(); prevQ(); return; }
+  if(flagNav && k.toLowerCase()==='f'){ e.preventDefault(); toggleFlag(); return; }
+  if(deferFeedback){
+    if(k==='ArrowRight' || k==='Enter'){ e.preventDefault(); nextQ(); return; }
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+    return;
+  }
+  if(answers[idx]===null){
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+    const i=map[k.toLowerCase()];
+    if(i!==undefined && i<QUESTIONS[order[idx]].opts.length){ e.preventDefault(); choose(i); }
+  } else if(k==='Enter' || k==='ArrowRight'){ e.preventDefault(); nextQ(); }
+});
+</script>
+<script>
+(function () {
+  var indicator = document.getElementById("pull-refresh");
+  var path = indicator.querySelector("path");
+  var pathLength = 420;
+  var threshold = 70;
+  var maxPull = 90;
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+
+  document.addEventListener("touchstart", function (e) {
+    if (window.scrollY === 0 && !refreshing) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (e) {
+    if (!pulling || refreshing) return;
+    var delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+      var dist = Math.min(delta * 0.5, maxPull);
+      indicator.style.height = dist + "px";
+      var progress = Math.min(dist / threshold, 1);
+      path.style.strokeDashoffset = pathLength * (1 - progress);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function () {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    var currentHeight = parseInt(indicator.style.height || "0", 10);
+    if (currentHeight >= threshold * 0.5) {
+      refreshing = true;
+      indicator.style.height = maxPull + "px";
+      indicator.classList.add("refreshing");
+      setTimeout(function () { location.reload(); }, 500);
+    } else {
+      indicator.style.height = "0px";
+      path.style.strokeDashoffset = pathLength;
+    }
+  });
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
+    function showSWUpdateBanner() {
+      if (document.getElementById("sw-update-banner")) return;
+      const bar = document.createElement("div");
+      bar.id = "sw-update-banner";
+      bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:4000;background:#2563eb;color:#fff;text-align:center;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:10px 16px;";
+      bar.innerHTML = "A new version of this site is available. <button style=\"margin-left:10px;background:#fff;color:#2563eb;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-size:13px;\">Refresh</button>";
+      bar.querySelector("button").addEventListener("click", () => location.reload());
+      document.body.prepend(bar);
+    }
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) showSWUpdateBanner();
+    });
+    window.addEventListener("load", () => { navigator.serviceWorker.register("../sw.js").catch(() => {}); });
+  }
+</script>
+</body>
+</html>
