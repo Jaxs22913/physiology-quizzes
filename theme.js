@@ -3002,6 +3002,43 @@ window.openPauseOverlay = function (opts) {
   document.head.appendChild(s);
 })();
 
+// Collapsible Contents sidebar (added 2026-07-23) -- every guide's own inline
+// CSS lays out nav.toc as a sticky flex sidebar next to <main>; on desktop
+// it's always open and eats a fair chunk of width. This adds a shared
+// minimize/restore control (state persisted per-device) so it can be tucked
+// away and main gets the full width, then brought back via a floating tab.
+// Shared here rather than per-guide so all guides get it for free. The
+// hide/show CSS lives in theme.css (body.toc-collapsed nav.toc / .toc-fab).
+(function () {
+  var toc = document.querySelector("nav.toc");
+  if (!toc) return;
+  var KEY = "tocCollapsed";
+  var collapseBtn = document.createElement("button");
+  collapseBtn.type = "button";
+  collapseBtn.className = "toc-collapse-btn";
+  collapseBtn.title = "Minimize contents";
+  collapseBtn.setAttribute("aria-label", "Minimize contents");
+  collapseBtn.innerHTML = "&laquo;";
+  var h2 = toc.querySelector("h2");
+  if (h2) h2.appendChild(collapseBtn); else toc.insertBefore(collapseBtn, toc.firstChild);
+
+  var fab = document.createElement("button");
+  fab.type = "button";
+  fab.className = "toc-fab";
+  fab.title = "Show contents";
+  fab.setAttribute("aria-label", "Show contents");
+  fab.innerHTML = "☰ Contents";
+  document.body.appendChild(fab);
+
+  function setCollapsed(on) {
+    document.body.classList.toggle("toc-collapsed", on);
+    try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
+  }
+  collapseBtn.addEventListener("click", function () { setCollapsed(true); });
+  fab.addEventListener("click", function () { setCollapsed(false); });
+  try { if (localStorage.getItem(KEY) === "1") setCollapsed(true); } catch (e) {}
+})();
+
 // Seasonal snowfall (added 2026-07-16) -- December only. Lives here rather
 // than in any one page's HTML so every current page picks it up for free
 // and every future page does too, as long as it includes theme.js like the

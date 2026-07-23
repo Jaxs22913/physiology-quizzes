@@ -217,7 +217,13 @@
   // box once a stroke has actually started.
   function onPointerDown(e) {
     if (!drawModeOn) return;
-    if (e.pointerType === "touch") { onTouchPointerDown(e); return; }
+    // Finger touches draw too, not only pen/mouse. Many iPad users have no
+    // Apple Pencil, so the old "touch scrolls, only a stylus draws" split
+    // made the feature feel broken on tablets -- you'd open the pen, try to
+    // draw with a finger, and just select text instead. While the toolbar is
+    // open a finger draws; to scroll, close the toolbar (corner Draw button,
+    // the toolbar's x, or Esc). touch-action:none on the SVG (theme.css)
+    // keeps the browser from first stealing the touch as a native scroll.
     e.preventDefault();
     var p = svgPointFromEvent(e);
     if (!p) return;
@@ -241,9 +247,8 @@
     document.addEventListener("pointercancel", onPointerUp);
   }
   function onPointerMove(e) {
-    // Touch never reaches this function -- onPointerDown routes it to
-    // onTouchPointerDown instead and returns before this listener is even
-    // registered, so there's no touch case to guard against here.
+    // Handles every pointer type now (pen, mouse, and finger) -- the stroke
+    // machinery is pointer-type-agnostic once a stroke is live.
     if (!liveStroke) return;
     e.preventDefault();
     var p = svgPointFromEvent(e);

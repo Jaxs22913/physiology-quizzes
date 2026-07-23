@@ -99,7 +99,11 @@ body.homepage #refresh-btn { display: flex; }
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  /* right padding reserves the fixed #corner-actions strip (Settings/Search/
+     Highlights/Draw, top:14px right:14px, z-index 600) so the right-aligned
+     .presence-pill never runs underneath those buttons -- was overlapping
+     on narrower screens (iPad). */
+  padding: 0 190px 0 16px;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -141,6 +145,49 @@ body.homepage #refresh-btn { display: flex; }
 }
 @media (max-width: 480px) {
   .presence-pill { font-size: 11px; padding: 4px 8px; }
+}
+
+/* Collapsible Contents sidebar (theme.js adds the buttons + toggles
+   body.toc-collapsed; state persisted per-device). Every guide styles
+   nav.toc itself inline as a sticky flex sidebar -- these shared rules only
+   handle the minimized state, so main reclaims the width, plus a floating
+   tab to bring it back. Works for any guide because they all use nav.toc in
+   a flex .layout. */
+.toc-collapse-btn {
+  float: right;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 2px;
+  color: inherit;
+  opacity: .55;
+}
+.toc-collapse-btn:hover { opacity: 1; }
+body.toc-collapsed nav.toc { display: none !important; }
+.toc-fab {
+  position: fixed;
+  left: 12px;
+  top: 48px;
+  z-index: 520;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1f2937;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+  cursor: pointer;
+}
+body.toc-collapsed .toc-fab { display: inline-flex; }
+:root[data-theme="dark"] .toc-fab {
+  background: #191c22;
+  color: #cbd5e1;
+  border-color: #2a3441;
 }
 
 /* In-guide search bar (theme.js, guide-search-* IDs). Sticky right below
