@@ -99,11 +99,7 @@ body.homepage #refresh-btn { display: flex; }
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  /* right padding reserves the fixed #corner-actions strip (Settings/Search/
-     Highlights/Draw, top:14px right:14px, z-index 600) so the right-aligned
-     .presence-pill never runs underneath those buttons -- was overlapping
-     on narrower screens (iPad). */
-  padding: 0 190px 0 16px;
+  padding: 0 16px;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -123,12 +119,13 @@ body.homepage #refresh-btn { display: flex; }
 :root[data-theme="dark"] .guide-back-link { color: #e5e7eb; }
 .guide-back-link:hover { text-decoration: underline; }
 
-/* "Who's studying now" (presence.js) -- pushed to the right edge of the
-   back bar via margin-left:auto, hidden by default (only shown once
-   presence.js confirms at least one other signed-in viewer is fresh). */
+/* "Who's studying now" (presence.js) -- sits at the left of the back bar,
+   just after the Back button (margin-left gap keeps them from crowding),
+   hidden by default (only shown once presence.js confirms at least one other
+   signed-in viewer is fresh). */
 .presence-pill {
   display: none;
-  margin-left: auto;
+  margin-left: 14px;
   font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color: #1f2937;
   background: #eff6ff;
