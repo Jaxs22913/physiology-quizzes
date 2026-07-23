@@ -33,6 +33,10 @@
    match (see theme.js), so it's not duplicated between icon and panel. */
 #refresh-btn, #theme-toggle-btn, #calc-btn, #pomo-btn, #account-btn { display: none; }
 body.homepage #refresh-btn { display: flex; }
+/* Guides page keeps Refresh as a standalone corner icon too (same as the
+   homepage and Arcade), rather than tucking it inside Settings -- it's a
+   landing/browse page people return to for "check for new material". */
+body.guides-page #refresh-btn { display: flex; }
 #install-app-btn {
   left: 14px;
 }

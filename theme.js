@@ -580,10 +580,11 @@
         if (b) b.click();
       }, 0);
     }));
-    // #refresh-btn stays a visible icon on the homepage and on Arcade (see
-    // theme.css / arcade.css) -- skip the quick-action row on both so it
-    // isn't offered in two places.
-    if (!document.body.classList.contains("homepage") && !isArcade) {
+    // #refresh-btn stays a visible icon on the homepage, Arcade, and the
+    // guides page (see theme.css / arcade.css) -- skip the quick-action row
+    // on those so it isn't offered in two places.
+    if (!document.body.classList.contains("homepage") && !isArcade &&
+        !document.body.classList.contains("guides-page")) {
       panel.appendChild(makeActionRow("Refresh / check for updates", function () {
         var b = document.getElementById("refresh-btn");
         if (b) b.click();
