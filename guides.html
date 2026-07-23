@@ -182,6 +182,13 @@
   .guide-card-title { font-size: 15px; font-weight: 700; margin: 0 0 4px; }
   .guide-card-desc { font-size: 13px; color: var(--muted); margin: 0; }
 
+  /* Within each class group, always order the cards Study Guides -> Cram
+     Sheets -> Quick References, regardless of their source order (grid items
+     honor `order`; equal-order items keep document order). */
+  .guide-card { order: 1; }
+  .guide-card.cram { order: 2; }
+  .guide-card.ref { order: 3; }
+
   /* Quick-reference guides (non-cumulative — hormones, blood flow, peritoneum,
      flow sequences, etc.) get a distinct amber treatment so they read as
      companion references rather than the main cumulative exam guide. */
@@ -206,6 +213,30 @@
     background: #f1eafe; border: 1px solid #ded0fb; padding: 3px 8px;
     border-radius: 999px; margin: 0 0 7px;
   }
+
+  /* Filter-by-type chips (added 2026-07-23). Toggle which kinds of study aid
+     show in the grid; the active chip borrows each type's own accent
+     (blue = all/guides, purple = cram, amber = reference) to tie the control
+     to the card colors it filters. */
+  .guide-filter-nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 24px; }
+  .guide-filter-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--muted); margin-right: 2px;
+  }
+  .guide-filter-chip {
+    display: inline-flex; align-items: center; gap: 6px; font-family: inherit;
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--ink);
+    cursor: pointer; box-shadow: var(--shadow);
+    transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .guide-filter-chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .guide-filter-chip .fc-count { font-size: 11px; font-weight: 700; opacity: .55; }
+  .guide-filter-chip.active { color: #fff; border-color: var(--accent); background: var(--accent); }
+  .guide-filter-chip.active:hover { color: #fff; transform: none; }
+  .guide-filter-chip.active .fc-count { opacity: .8; }
+  .guide-filter-chip[data-filter="cram"].active { background: #7c3aed; border-color: #7c3aed; }
+  .guide-filter-chip[data-filter="ref"].active { background: #d97706; border-color: #d97706; }
 
   .empty-state {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px;
@@ -262,6 +293,14 @@
     <a class="class-jump-chip" href="#group-intro-pa">Intro to PA Profession</a>
     <a class="class-jump-chip" href="#group-cam-nutrition">CAM/Nutrition</a>
     <a class="class-jump-chip" href="#group-physical-diagnosis-1">Physical Diagnosis 1</a>
+  </nav>
+
+  <nav class="guide-filter-nav" aria-label="Filter by type">
+    <span class="guide-filter-label">Show</span>
+    <button type="button" class="guide-filter-chip active" data-filter="all">All <span class="fc-count"></span></button>
+    <button type="button" class="guide-filter-chip" data-filter="guide">Study Guides <span class="fc-count"></span></button>
+    <button type="button" class="guide-filter-chip" data-filter="cram">Cram Sheets <span class="fc-count"></span></button>
+    <button type="button" class="guide-filter-chip" data-filter="ref">Quick References <span class="fc-count"></span></button>
   </nav>
 
   <div class="guide-group" id="group-physiology">
@@ -429,6 +468,50 @@
 
   <p class="mistake-note">&#9733; <a href="#" style="color:inherit;text-decoration:underline;cursor:pointer" onclick="event.preventDefault(); window.reportMistake()">If you see any mistakes, click here to report it</a> &#9733;</p>
 </div>
+<script>
+// Filter the guides grid by resource type (Study Guide / Cram Sheet / Quick
+// Reference). Card types are read from the same .cram/.ref classes that drive
+// their visual treatment; a class group with no visible cards under the
+// current filter hides itself so there are no empty section headers.
+(function () {
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".guide-filter-chip"));
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".guide-card"));
+  if (!chips.length || !cards.length) return;
+
+  function typeOf(card) {
+    if (card.classList.contains("cram")) return "cram";
+    if (card.classList.contains("ref")) return "ref";
+    return "guide";
+  }
+
+  var counts = { all: cards.length, guide: 0, cram: 0, ref: 0 };
+  cards.forEach(function (c) { counts[typeOf(c)]++; });
+  chips.forEach(function (chip) {
+    var span = chip.querySelector(".fc-count");
+    if (span) span.textContent = counts[chip.getAttribute("data-filter")] || 0;
+  });
+
+  function apply(filter) {
+    cards.forEach(function (c) {
+      c.style.display = (filter === "all" || typeOf(c) === filter) ? "" : "none";
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".guide-group"), function (g) {
+      var anyVisible = Array.prototype.some.call(g.querySelectorAll(".guide-card"), function (c) {
+        return c.style.display !== "none";
+      });
+      g.style.display = anyVisible ? "" : "none";
+    });
+    chips.forEach(function (chip) {
+      chip.classList.toggle("active", chip.getAttribute("data-filter") === filter);
+    });
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () { apply(chip.getAttribute("data-filter")); });
+  });
+  apply("all");
+})();
+</script>
 <script>
 (function () {
   const input = document.getElementById("guide-search");
