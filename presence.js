@@ -59,13 +59,23 @@
       if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
     }
 
+    // Presence runs on every page with a .guide-back-bar -- study guides,
+    // cram sheets, and the reference/flow supplements alike -- so the pill's
+    // wording adapts to the resource type instead of always saying "guide".
+    function resourcePhrase() {
+      var p = location.pathname.toLowerCase();
+      if (p.indexOf("cram-sheet") >= 0) return "on this cram sheet";
+      if (p.indexOf("study-guide") >= 0) return "studying this guide";
+      return "on this page";
+    }
+
     function renderCount(uid) {
       var now = Date.now();
       var others = lastSnapshotDocs.filter(function (v) {
         return v.uid !== uid && v.lastSeenMs != null && (now - v.lastSeenMs) < STALE_MS;
       });
       if (others.length > 0) {
-        pill.textContent = "👥 " + others.length + (others.length === 1 ? " other studying this guide" : " others studying this guide");
+        pill.textContent = "👥 " + others.length + (others.length === 1 ? " other " : " others ") + resourcePhrase();
         pill.classList.add("visible");
       } else {
         pill.classList.remove("visible");
