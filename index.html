@@ -2586,6 +2586,13 @@
       // day needs to still read as "in progress," not flip to "Semester
       // complete!" the instant that day begins.
       const SEMESTER_END = new Date(2026, 7, 14, 23, 59, 59); // Aug 14, 2026
+      // Last actual CLASS day, distinct from SEMESTER_END: the final week
+      // (Aug 10-14) is exam/remediation week, not class days. The "class days
+      // left" count runs to here, while the progress bar % still runs to
+      // SEMESTER_END. Confirmed by the user 2026-07-23 ("11 days of school
+      // left, not 16") -- 16 was the weekday count through Aug 14; excluding
+      // the Aug 10-14 exam week (5 weekdays) gives the correct 11.
+      const LAST_CLASS_DAY = new Date(2026, 7, 7, 23, 59, 59); // Aug 7, 2026 (Fri)
 
       const fill = document.getElementById("semester-progress-fill");
       const label = document.getElementById("semester-progress-label");
@@ -2603,11 +2610,10 @@
         const TOTAL_WEEKS = 12;
         const weekNum = Math.max(1, Math.min(TOTAL_WEEKS, Math.floor(elapsedMs / (7 * dayMs)) + 1));
 
-        // "Class days left" counts weekdays only (confirmed with the user
-        // 2026-07-17, "we only have 15 class days left (excluding
-        // weekends)") -- strictly after today through SEMESTER_END
-        // inclusive, so today itself is never counted as one of the days
-        // still remaining.
+        // "Class days left" counts weekdays only, strictly after today
+        // through LAST_CLASS_DAY inclusive (not SEMESTER_END -- the final
+        // Aug 10-14 exam/remediation week is excluded), so today itself is
+        // never counted as one of the days still remaining.
         function countWeekdaysLeft(fromExclusive, toInclusive) {
           let count = 0;
           const d = new Date(fromExclusive.getFullYear(), fromExclusive.getMonth(), fromExclusive.getDate() + 1);
@@ -2619,7 +2625,7 @@
           }
           return count;
         }
-        const classDaysLeft = countWeekdaysLeft(now, SEMESTER_END);
+        const classDaysLeft = countWeekdaysLeft(now, LAST_CLASS_DAY);
 
         requestAnimationFrame(() => { fill.style.width = pct + "%"; });
         if (now < SEMESTER_START) {
