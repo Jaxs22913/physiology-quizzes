@@ -321,6 +321,16 @@
   // any behavior a real drag while drawing still needs.
   function interceptTouchWhileDrawing(e) {
     if (!drawModeOn) return;
+    // Only swallow touches on the drawing surface itself. This listener runs
+    // at the document capture phase, so without this guard it would also
+    // preventDefault() the touchstart on the toolbar's own controls -- and
+    // preventDefault() on touchstart cancels the synthetic click, which made
+    // the close/tool/color buttons (and the corner Draw toggle) completely
+    // unresponsive to taps on touch devices while the pen was open. Toolbar,
+    // corner buttons, and dialogs live outside the SVG, so letting anything
+    // not inside it through restores their taps without un-blocking the
+    // native scroll/pull-to-refresh gestures over the canvas area.
+    if (!svg.contains(e.target)) return;
     e.preventDefault();
     e.stopPropagation();
   }
