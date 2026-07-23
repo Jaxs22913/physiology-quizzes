@@ -3030,8 +3030,44 @@ window.openPauseOverlay = function (opts) {
   fab.innerHTML = "☰ Contents";
   document.body.appendChild(fab);
 
+  // Collapsing/restoring the sidebar changes <main>'s width, which reflows
+  // the text to a new height -- the browser keeps the same scrollY, so the
+  // content visibly jumps. Anchor to the first content element still below
+  // the sticky top bar, then scroll by however much it moved so that element
+  // stays put across the toggle (all synchronous, so it paints once, no jump).
+  function anchorEl() {
+    var scope = document.querySelector("main") || document.querySelector(".wrap") || document.body;
+    // Leaf/text elements only -- never containers like <section>/<div>, whose
+    // box can span the whole viewport (top far above, bottom far below) and
+    // barely moves on reflow, making it a useless anchor. Pick the first leaf
+    // whose top sits just below the sticky top bar: that's what the reader is
+    // looking at, and its position tracks the reflow precisely.
+    var els = scope.querySelectorAll("h1,h2,h3,h4,h5,p,li,figcaption,td,th,dt,dd,blockquote,pre");
+    for (var i = 0; i < els.length; i++) {
+      var r = els[i].getBoundingClientRect();
+      if (r.height > 0 && r.top >= 50) return els[i];
+    }
+    return null;
+  }
   function setCollapsed(on) {
+    var a = anchorEl();
+    var before = a ? a.getBoundingClientRect().top : 0;
     document.body.classList.toggle("toc-collapsed", on);
+    if (a) {
+      var delta = a.getBoundingClientRect().top - before;
+      // Must be instant: these guides set scroll-behavior:smooth, so a plain
+      // scroll would *animate* the compensation (a visible glide that can be
+      // interrupted). Forcing scroll-behavior:auto on the root for the one
+      // scrollBy call snaps the anchor back in the same frame the reflow
+      // happened, then restores whatever was there.
+      if (delta) {
+        var root = document.documentElement;
+        var prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto";
+        window.scrollBy(0, delta);
+        root.style.scrollBehavior = prev;
+      }
+    }
     try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
   }
   collapseBtn.addEventListener("click", function () { setCollapsed(true); });
