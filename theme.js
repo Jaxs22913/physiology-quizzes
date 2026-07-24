@@ -131,6 +131,7 @@
   var SUN = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
   var MOON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
   var REFRESH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
+  var PDF_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
   var KEYBOARD = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 13h8"/></svg>';
   var GEAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
   var ARROW_LEFT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
@@ -1186,6 +1187,40 @@
 
     group.appendChild(refreshBtn);
     group.appendChild(themeBtn);
+
+    // Download-as-PDF button -- only on guides & study aids (study guides,
+    // cram sheets, reference sheets), gated on .guide-back-bar exactly like
+    // the guide's other tools (never on quizzes/homepage). Uses the browser's
+    // print-to-PDF; @media print rules (theme.css) strip the page chrome for a
+    // clean export, and we force light theme for the print so dark-mode users
+    // still get a readable, ink-friendly PDF, then restore their theme after.
+    if (document.querySelector(".guide-back-bar")) {
+      var pdfBtn = makeCornerBtn("pdf-btn", "Download as PDF");
+      pdfBtn.innerHTML = PDF_ICON;
+      pdfBtn.addEventListener("click", function () {
+        var root = document.documentElement;
+        var prev = root.getAttribute("data-theme");
+        var done = false;
+        function restore() {
+          if (done) return;
+          done = true;
+          if (prev) root.setAttribute("data-theme", prev);
+          else root.removeAttribute("data-theme");
+          window.removeEventListener("afterprint", restore);
+        }
+        window.addEventListener("afterprint", restore);
+        root.setAttribute("data-theme", "light");
+        // let the light-theme repaint land before the print snapshot, then
+        // print; the afterprint listener restores the theme, plus a fallback
+        // timeout in case afterprint never fires (e.g., iOS Safari).
+        setTimeout(function () {
+          window.print();
+          setTimeout(restore, 800);
+        }, 60);
+      });
+      group.appendChild(pdfBtn);
+    }
+
     document.body.appendChild(group);
 
     // "Back to previous page" -- fixed top-left, mirroring #corner-actions'

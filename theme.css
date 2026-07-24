@@ -2021,3 +2021,28 @@ mark.user-hl.hl-flash {
 @media (prefers-reduced-motion: reduce) {
   .confetti-piece { animation: none; display: none; }
 }
+
+/* ============================================================
+   Print / "Download as PDF" (theme.js's #pdf-btn on guides & aids).
+   Strips all page chrome so the exported PDF is just the content.
+   The button forces light theme before printing, so these rules only
+   need to handle layout + hiding, not dark-mode color inversion.
+   ============================================================ */
+@media print {
+  /* interactive chrome / overlays / decorative layers */
+  #corner-actions, #corner-actions-left, .guide-back-bar, #presence-pill,
+  #pull-refresh, #quiz-footer-logo, #guide-ink-svg, .ink-overlay, .tour-overlay,
+  .toc-fab, #install-app-btn, .guide-search-bar, canvas { display: none !important; }
+  /* the guide's Contents sidebar is navigation -- drop it, give the body the
+     full page width */
+  nav.toc { display: none !important; }
+  .layout { display: block !important; }
+  main { padding: 0 !important; max-width: none !important; }
+  html, body { background: #fff !important; }
+  /* don't clip wide tables (muscle O/I/A/N reference) at a scroll box edge */
+  .table-scroll { overflow: visible !important; }
+  /* keep related blocks together across page breaks where reasonable */
+  tr, figure, .callout, .pearl, .io-box { break-inside: avoid; }
+  h2, h3, h4 { break-after: avoid; }
+  a { text-decoration: none !important; color: inherit !important; }
+}
