@@ -147,6 +147,25 @@
   .podium-riser.first{height:110px;background:linear-gradient(180deg,#f5c344,#d89e1f)}
   .podium-riser.second{height:80px;background:linear-gradient(180deg,#b8c0cc,#8f99a8)}
   .podium-riser.third{height:58px;background:linear-gradient(180deg,#dba36a,#b97b41)}
+  /* Post-game miss review */
+  .review-wrap{margin-top:20px}
+  .review-perfect{text-align:center;color:var(--good);font-weight:700;font-size:14.5px;background:var(--goodbg);border-radius:12px;padding:14px}
+  .review-toggle{width:100%;background:#eceef6;color:var(--ink);border:0;border-radius:12px;padding:13px 16px;
+    font:600 14px inherit;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .review-toggle:hover{background:#dfe2f0}
+  .review-toggle .chev{transition:transform .2s ease}
+  .review-toggle.open .chev{transform:rotate(180deg)}
+  .miss-list{display:none;margin-top:10px}
+  .miss-list.open{display:block}
+  .miss{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:10px;padding:12px 14px;margin:10px 0;text-align:left}
+  .miss .mq{font-weight:700;font-size:14.5px;line-height:1.4;margin-bottom:9px}
+  .miss .ma{font-size:13.5px;margin:4px 0;display:flex;gap:8px;align-items:flex-start}
+  .miss .ma .tag{flex:none;font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:5px;margin-top:1px}
+  .miss .yours .tag{background:var(--badbg);color:var(--bad)}
+  .miss .yours .txt{color:var(--bad)}
+  .miss .right .tag{background:var(--goodbg);color:var(--good)}
+  .miss .right .txt{color:var(--good);font-weight:600}
+  .miss .exp{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.5;border-top:1px dashed var(--line);padding-top:8px}
 </style>
 </head>
 <body>
@@ -214,6 +233,7 @@
     <h2 style="margin-top:0;text-align:center">🏁 Final results</h2>
     <div class="podium" id="podium"></div>
     <div id="final-leaderboard"></div>
+    <div id="miss-review" class="review-wrap"></div>
     <button class="btn sec" id="join-another-btn" style="margin-top:18px">Join a different game</button>
   </section>
 </div>
@@ -332,6 +352,7 @@
         if (lastRoomState.status === "finished") {
           renderPodium("podium", latestPlayers);
           renderLeaderboard("final-leaderboard", latestPlayers, 3);
+          renderMissReview();
         }
       }
     });
@@ -538,6 +559,94 @@
     if (!podiumSounded) { podiumSounded = true; playSound("podium"); }
     renderPodium("podium", latestPlayers);
     renderLeaderboard("final-leaderboard", latestPlayers, 3);
+    renderMissReview();
+  }
+
+  // Post-game review: each player sees the questions THEY got wrong (or never
+  // answered), with the correct answer and explanation. Player answers are
+  // keyed by question POSITION (room.currentQuestionIndex at answer time), so
+  // the actual question is resolved through GroupStudy.resolveQuestionIndex
+  // just like the live screens do. Built with textContent (no HTML string
+  // building) so question/explanation text is never interpreted as markup.
+  // Re-run whenever player data refreshes after the game ends, since our own
+  // final answer doc may land a beat after the room flips to "finished".
+  function renderMissReview() {
+    var wrap = $("miss-review");
+    if (!wrap || !currentQuiz || !lastRoomState) return;
+    var lastPos = lastRoomState.currentQuestionIndex;
+    if (lastPos == null || lastPos < 0) return;
+    var me = latestPlayers.filter(function (p) { return p.uid === myUid; })[0];
+    var answers = (me && me.answers) || {};
+
+    var misses = [], shown = 0;
+    for (var pos = 0; pos <= lastPos; pos++) {
+      var q = currentQuiz.questions[GroupStudy.resolveQuestionIndex(lastRoomState, pos)];
+      if (!q) continue;
+      shown++;
+      var ans = answers[pos];
+      if (!ans || !ans.correct) misses.push({ pos: pos, q: q, ans: ans });
+    }
+    if (shown === 0) { wrap.textContent = ""; return; }
+
+    wrap.textContent = "";
+    if (misses.length === 0) {
+      var perfect = document.createElement("div");
+      perfect.className = "review-perfect";
+      perfect.textContent = "🎉 Perfect — you didn't miss a single question!";
+      wrap.appendChild(perfect);
+      return;
+    }
+
+    var toggle = document.createElement("button");
+    toggle.className = "review-toggle";
+    var lbl = document.createElement("span");
+    lbl.textContent = "📖 Review your " + misses.length + " miss" + (misses.length === 1 ? "" : "es");
+    var chev = document.createElement("span");
+    chev.className = "chev"; chev.textContent = "▾";
+    toggle.appendChild(lbl); toggle.appendChild(chev);
+
+    var list = document.createElement("div");
+    list.className = "miss-list";
+    misses.forEach(function (m) {
+      var q = m.q;
+      var item = document.createElement("div");
+      item.className = "miss";
+
+      var mq = document.createElement("div");
+      mq.className = "mq";
+      mq.textContent = "Q" + (m.pos + 1) + ". " + q.q;
+      item.appendChild(mq);
+
+      var yours = document.createElement("div");
+      yours.className = "ma yours";
+      var yt = document.createElement("span"); yt.className = "tag"; yt.textContent = "You";
+      var yv = document.createElement("span"); yv.className = "txt";
+      yv.textContent = (m.ans && m.ans.choice != null) ? q.choices[m.ans.choice] : "No answer";
+      yours.appendChild(yt); yours.appendChild(yv);
+      item.appendChild(yours);
+
+      var right = document.createElement("div");
+      right.className = "ma right";
+      var rt = document.createElement("span"); rt.className = "tag"; rt.textContent = "Correct";
+      var rv = document.createElement("span"); rv.className = "txt"; rv.textContent = q.choices[q.answer];
+      right.appendChild(rt); right.appendChild(rv);
+      item.appendChild(right);
+
+      if (q.exp) {
+        var exp = document.createElement("div");
+        exp.className = "exp";
+        exp.textContent = q.exp;
+        item.appendChild(exp);
+      }
+      list.appendChild(item);
+    });
+
+    toggle.addEventListener("click", function () {
+      toggle.classList.toggle("open");
+      list.classList.toggle("open");
+    });
+    wrap.appendChild(toggle);
+    wrap.appendChild(list);
   }
 
   $("join-another-btn").addEventListener("click", function () {
